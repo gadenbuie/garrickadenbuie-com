@@ -1,0 +1,140 @@
+p.caption {
+    font-size: 0.75em;
+    color: grey;
+    font-style: italic;
+}
+
+.content {
+  max-width: 45rem;
+}
+
+a.u-url:hover, .sidebar a:hover {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline dashed;
+}
+
+code {
+  padding: .25em .25em;
+  color: #002b36;
+  background-color: #f9f9f9;
+}
+
+@media (min-width: 48em) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 65em) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 48em) {
+  .post-author {
+    display: none !important;
+  }
+}
+
+.talk-table {
+  margin-top: 2rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: none;
+  vertical-align: top;
+  font-size: 1rem;
+}
+
+.talk-table td {
+  border: 0px;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.talk-table tbody tr td:nth-child(odd) {
+  font-weight: bold;
+  padding-left: 0px;
+  vertical-align: top;
+}
+
+.talk-table tbody tr:nth-child(odd) td,
+.talk-table tbody tr:nth-child(odd) th {
+  background-color: #ffffff;
+}
+
+.tomorrow-garrick .sidebar {
+  background-color: #373b41; /* tomorrow night selection */
+}
+.tomorrow-garrick .content a {
+  color: #cc6666; /* tomorrow night red */
+}
+
+.base16-solarized-garrick .sidebar {
+  background-color: #002b36; /* tomorrow night selection */
+}
+.base16-solarized-garrick .content a {
+  color: #dc322f; /* tomorrow night red */
+}
+.base16-solarized-garrick .content .recent h2 > a {
+  color: #002b36;
+}
+.base16-solarized-garrick .content .recent h2 > a:hover {
+  color: rgba(0, 43, 54, 0.75);
+  text-decoration: none;
+}
+
+/* Sidebar collapse */
+.sidebar {
+  transition: all .1s;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+  position: absolute;
+}
+
+.container {
+  transition: all .1s;
+}
+
+.container.expanded {
+  margin: auto;
+}
+
+.hamburger {
+  position: fixed;
+  top: 1%;
+  left: 1%;
+}
+
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  background-color: #f9f9f9;
+}
+
+.hamburger-inner.is-active, .hamburger-inner.is-active::before, .hamburger-inner.is-active::after {
+  background-color: #002b36;
+}
+
+@media screen and (max-width: 40em) {
+  .hamburger {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 65em) {
+  .hamburger {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 48em) {
+  .content {
+    padding-top: 2em;
+  }
+  .container.expanded {
+    padding-left: 3em;
+  }
+}

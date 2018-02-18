@@ -1,0 +1,38 @@
+{{ partial "head.html" . }}
+	<body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}} h-entry">
+		<main class="content container" role="main">
+			<article class="post">
+				<header>
+					<a class="u-url" href="{{ .Permalink | replaceRE "/$" "" }}">
+						<h1 class="post-title p-name">{{ .Title }}</h1>
+					</a>
+					<h3 class="post-author">{{ index .Params "author" | default .Site.Title }}</h3>
+				</header>
+				<main class="post-content e-content">
+					{{ .Content }}
+				</main>
+				<footer class="footer">
+					{{ if .Params.categories }}
+					<span>
+						Category:
+						{{ range .Params.categories }}
+						<a class="p-category" href="/categories/{{ . | lower | urlize }}/">{{ . }}</a>
+						{{ end }}
+					</span>
+					{{ end }}
+					{{ if .Params.tags }}
+					<p>
+						Tags:
+						{{ range .Params.tags }}
+						<a class="p-category" href="/tags/{{ . | urlize }}/">{{ . }}</a>
+						{{ end }}
+
+					</p>
+					{{ end }}
+				</footer>
+			</article>
+		</main>
+		{{ partial "sidebar.html" . }}
+		{{ partial "footer.html" . }}
+	</body>
+</html>

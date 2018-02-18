@@ -1,0 +1,26 @@
+{{ partial "head.html" . }}
+  <body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+		
+      {{ if and .IsHome .Content }}
+      <article class="article">
+        <div class="article-content">
+          {{ .Content }}
+        </div>
+      </article>
+      {{ else }}
+      <h1 class="page-title">{{ if eq .Title "Blogs"}}Blog{{else}}{{ .Title }}{{end}}</h1>
+      <div class="archive">
+        {{ range .Data.Pages }}
+          <article class="archive-item">
+            <h3><a href="{{ .RelPermalink }}" class="archive-item-link">{{ .Title | emojify }}</a></h3>
+            <span class="post-date">{{ .Description }}</span>
+          </article>
+        {{ end }}
+      </div>
+      {{ end }}
+
+		</main>
+  {{ partial "sidebar.html" . }}
+	</body>
+</html>

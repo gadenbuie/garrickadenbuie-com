@@ -1,0 +1,29 @@
+{{ partial "head.html" . }}
+  <body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+		
+      {{ if and .IsHome .Content }}
+      <article class="article">
+        <div class="article-content">
+          {{ .Content }}
+        </div>
+      </article>
+      {{ else }}
+      <h1 class="page-title">{{ if eq .Title "Blogs"}}Blog{{else}}{{ .Title }}{{end}}</h1>
+      <div class="archive">
+        {{ range .Data.Pages.GroupByDate "2006" }}
+        <h2 class="archive-title">{{ .Key }}</h2>
+        {{ range .Pages }}
+          <article class="archive-item">
+            <a href="{{ .RelPermalink }}" class="archive-item-link">{{ .Title }}</a>
+            <time class="pull-right post-list">{{ .Date.Format "Jan 02" }}</time>
+          </article>
+        {{ end }}
+        {{ end }}
+      </div>
+      {{ end }}
+
+		</main>
+  {{ partial "sidebar.html" . }}
+	</body>
+</html>

@@ -1,0 +1,82 @@
+title = "Garrick Aden-Buie"
+baseurl = "/"
+relativeurls = true
+languageCode = "en-us"
+theme = "hyde"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+
+
+[permalinks]
+    post = "blog/:year/:month/:day/:slug/"
+    blog = "blog/:year/:month/:day/:slug/"
+    
+[[menu.main]]
+    name = "Blog"
+    weight = 1
+    identifier = "blog"
+    url = "/blog/"
+[[menu.main]]
+    name = "About"
+    weight = -1
+    url = "/about/"
+[[menu.main]]
+    name = "Projects"
+    weight = 2
+    url = "/project/"
+[[menu.main]]
+    name = "Talks"
+    weight = 3
+    url = "/talk/"
+[[menu.main]]
+    name = "Music"
+    weight = 4
+    url = "/categories/music/"
+#[[menu.main]]
+#    name = "Photos"
+#    weight = 4
+#    url = "/categories/photos/"
+[[menu.contact]]
+    name = "Email"
+    weight = 3
+    url = "mailto:g.adenbuie@gmail.com"
+[[menu.contact]]
+    name = "GitHub"
+    weight = 2
+    url = "https://github.com/gadenbuie"
+[[menu.contact]]
+    name = "Twitter"
+    weight = 1
+    url = "https://twitter.com/grrrck"
+[[menu.contact]]
+    name = "Bandcamp"
+    weight = 100
+    url = "https://garrickadenbuie.bandcamp.com"
+    
+[author]
+    image = "images/garrick.png"
+
+    
+[params]
+    description = "Graduate student. Musician. Always learning something new."
+    EnableEmoji = true
+    contactHeader = "Links"
+    n_posts_front = 5
+    show_projects_front = true
+    n_projects_front = 5
+    show_talks_front = true
+    n_talks_front = 5
+    
+    # hyde
+    themeColor = "base16-solarized-garrick"
+    customCss = ["css/hamburgers.css", "css/custom.css"]
+    
+    # options for highlight.js (version, additional languages, and theme)
+    highlightjsVersion = "9.11.0"
+    highlightjsCDN = "//cdn.bootcss.com"
+    highlightjsLang = ["r", "yaml", "bash", "latex", "sql"]
+    highlightjsTheme = "github"
+
+    MathJaxCDN = "//cdn.bootcss.com"
+    MathJaxVersion = "2.7.1"

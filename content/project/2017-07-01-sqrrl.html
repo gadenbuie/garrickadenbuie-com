@@ -1,0 +1,1197 @@
+---
+title: ":chipmunk: Sqrrl"
+slug: "sqrrl"
+description: "Easily build bespoke SQL queries programmatically in R"
+date: 2017-07-01T00:00:00+00:00
+type: page
+tags: ["R", "R-Packages", "SQL", "MySQL", "Shiny"]
+---
+
+
+
+<p><strong>UPDATE 10/17/2017</strong>: <strong>Don’t use this!</strong> I made it for myself so it works for what I needed it for.
+But you probably shouldn’t use this package.
+There are better ways of building SQL queries that are safer and better (and probably even easier).
+For now, let me just point you in the direction of <a href="http://db.rstudio.com/">db.rstudio.com</a>, <a href="http://db.rstudio.com/dplyr#generating-queries">dplyr/dbplyr</a>, and the recently added <a href="http://glue.tidyverse.org/reference/glue_sql.html"><code>glue_sql()</code> function</a> in the <a href="http://glue.tidyverse.org">glue package</a>.</p>
+<p><strong>Project Links:</strong> <a href="https://github.com/gadenbuie/sqrrl/">source</a>, <a href="https://gadenbuie.github.io/sqrrl/">documentation</a></p>
+<p><code>sqrrl</code> is a small collection of utility functions that help build text-based SQL queries in an R-style native-feeling and functional manner.</p>
+<p>Unlike other packages that build SQL queries using an object-oriented style, <code>sqrrl</code> provides small functions that produce SQL snippets and can be linked together to compose SQL queries.
+The result is that the code to produce the SQL statement reads much like the SQL statement iteself.
+On the other hand, <code>sqrrl</code> doesn’t know anything about your database and can’t help you out with completions, etc.</p>
+<p>Where this package is most useful is with <a href="shiny">Shiny web apps</a> that interact with a MySQL backend.
+The utilities are all built so that queries can be built using column names and values stored inside ordinary R data structures.</p>
+<p>The following is a quick demonstration of how the package works using the <code>nyclights13</code> dataset.
+For more information on <code>sqrrl</code>, check out the <a href="https://gadenbuie.github.io/sqrrl/">package documentation</a>.</p>
+<div id="setup-flights-database" class="section level2">
+<h2>Setup <code>flights</code> database</h2>
+<p>To demonstrate the features in <code>sqrrl</code>, let’s set up an in-memory SQLite database using the <code>nycflights13</code> dataset featured in <code>dplyr</code> and <code>dbplyr</code>.</p>
+<p>First, load (or install) the pacakges and functions that we need.</p>
+<pre class="r"><code># ---- Workspace Setup ----
+library(&#39;nycflights13&#39;) # install.packages(&#39;nycflights13&#39;)
+library(&#39;DBI&#39;)          # install.packages(&#39;DBI&#39;)
+library(&#39;dplyr&#39;)        # install.packages(&#39;dplyr&#39;)
+library(&#39;dbplyr&#39;)       # install.packages(&#39;dbplyr&#39;)
+ 
+# Load the sqrrl pacakge
+# devtools::isntall_github(&#39;gadenbuie/sqrrl&#39;)
+library(&#39;sqrrl&#39;)
+
+# Alias to create nice tables
+as_table &lt;- function(...) knitr::kable(..., format = &#39;html&#39;)</code></pre>
+<p>Then load the <code>flights</code> data frame from <code>nycflights13</code> into the in-memory SQLite database (this code comes direclty from the <a href="http://dbplyr.tidyverse.org/articles/dbplyr.html#connecting-to-the-database">dbplyr documentation</a>).</p>
+<pre class="r"><code># ---- Example Setup ----
+# Create an in-memory SQLite database
+con &lt;- dbConnect(RSQLite::SQLite(), path = &quot;:memory:&quot;)
+
+# Use dplyr/dbplyr to copy flights table to the temp db
+copy_to(con, nycflights13::flights, &quot;flights&quot;,
+  temporary = FALSE, 
+  indexes = list(
+    c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;), 
+    &quot;carrier&quot;, 
+    &quot;tailnum&quot;,
+    &quot;dest&quot;
+  )
+)
+
+# Show first 5 rows
+dbGetQuery(con, &#39;SELECT * FROM flights LIMIT 5&#39;) %&gt;% 
+  as_table</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+month
+</th>
+<th style="text-align:right;">
+day
+</th>
+<th style="text-align:right;">
+dep_time
+</th>
+<th style="text-align:right;">
+sched_dep_time
+</th>
+<th style="text-align:right;">
+dep_delay
+</th>
+<th style="text-align:right;">
+arr_time
+</th>
+<th style="text-align:right;">
+sched_arr_time
+</th>
+<th style="text-align:right;">
+arr_delay
+</th>
+<th style="text-align:left;">
+carrier
+</th>
+<th style="text-align:right;">
+flight
+</th>
+<th style="text-align:left;">
+tailnum
+</th>
+<th style="text-align:left;">
+origin
+</th>
+<th style="text-align:left;">
+dest
+</th>
+<th style="text-align:right;">
+air_time
+</th>
+<th style="text-align:right;">
+distance
+</th>
+<th style="text-align:right;">
+hour
+</th>
+<th style="text-align:right;">
+minute
+</th>
+<th style="text-align:right;">
+time_hour
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+517
+</td>
+<td style="text-align:right;">
+515
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+830
+</td>
+<td style="text-align:right;">
+819
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+UA
+</td>
+<td style="text-align:right;">
+1545
+</td>
+<td style="text-align:left;">
+N14228
+</td>
+<td style="text-align:left;">
+EWR
+</td>
+<td style="text-align:left;">
+IAH
+</td>
+<td style="text-align:right;">
+227
+</td>
+<td style="text-align:right;">
+1400
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+1357016400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+533
+</td>
+<td style="text-align:right;">
+529
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+850
+</td>
+<td style="text-align:right;">
+830
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:left;">
+UA
+</td>
+<td style="text-align:right;">
+1714
+</td>
+<td style="text-align:left;">
+N24211
+</td>
+<td style="text-align:left;">
+LGA
+</td>
+<td style="text-align:left;">
+IAH
+</td>
+<td style="text-align:right;">
+227
+</td>
+<td style="text-align:right;">
+1416
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+1357016400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+542
+</td>
+<td style="text-align:right;">
+540
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+923
+</td>
+<td style="text-align:right;">
+850
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+N619AA
+</td>
+<td style="text-align:left;">
+JFK
+</td>
+<td style="text-align:left;">
+MIA
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+1089
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+1357016400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+544
+</td>
+<td style="text-align:right;">
+545
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+1004
+</td>
+<td style="text-align:right;">
+1022
+</td>
+<td style="text-align:right;">
+-18
+</td>
+<td style="text-align:left;">
+B6
+</td>
+<td style="text-align:right;">
+725
+</td>
+<td style="text-align:left;">
+N804JB
+</td>
+<td style="text-align:left;">
+JFK
+</td>
+<td style="text-align:left;">
+BQN
+</td>
+<td style="text-align:right;">
+183
+</td>
+<td style="text-align:right;">
+1576
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+1357016400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+554
+</td>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+-6
+</td>
+<td style="text-align:right;">
+812
+</td>
+<td style="text-align:right;">
+837
+</td>
+<td style="text-align:right;">
+-25
+</td>
+<td style="text-align:left;">
+DL
+</td>
+<td style="text-align:right;">
+461
+</td>
+<td style="text-align:left;">
+N668DN
+</td>
+<td style="text-align:left;">
+LGA
+</td>
+<td style="text-align:left;">
+ATL
+</td>
+<td style="text-align:right;">
+116
+</td>
+<td style="text-align:right;">
+762
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1357020000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="querying-flights" class="section level2">
+<h2>Querying <code>flights</code></h2>
+<p>Often, when I’m working with a database, I’ll create an alias for <code>dbGetQuery</code> with the database or table name.
+Inside the alias function I usually add any data type modifications that might need to be applied, and I suppress the warning messages that <code>DBI</code> outputs about data type conversions.</p>
+<pre class="r"><code>flights &lt;- function(query, ...) {
+  suppressWarnings(dbGetQuery(con, query, ...))
+}</code></pre>
+<p>Now we can repeat the above <code>SELECT</code> statement using <code>sqrrl</code>, this time limiting the columns selected.</p>
+<pre class="r"><code>flight_cols &lt;- c(&#39;year&#39;, &#39;month&#39;, &#39;day&#39;, 
+                 &#39;carrier&#39;, &#39;flight&#39;, &#39;tailnum&#39;)
+SELECT(flight_cols) %+%
+  FROM(&#39;flights&#39;) %+%
+  LIMIT(5) %&gt;% 
+  flights %&gt;% 
+  as_table</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+month
+</th>
+<th style="text-align:right;">
+day
+</th>
+<th style="text-align:left;">
+carrier
+</th>
+<th style="text-align:right;">
+flight
+</th>
+<th style="text-align:left;">
+tailnum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UA
+</td>
+<td style="text-align:right;">
+1545
+</td>
+<td style="text-align:left;">
+N14228
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+UA
+</td>
+<td style="text-align:right;">
+1714
+</td>
+<td style="text-align:left;">
+N24211
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+1141
+</td>
+<td style="text-align:left;">
+N619AA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+B6
+</td>
+<td style="text-align:right;">
+725
+</td>
+<td style="text-align:left;">
+N804JB
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+DL
+</td>
+<td style="text-align:right;">
+461
+</td>
+<td style="text-align:left;">
+N668DN
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note that <code>sqrrl</code> provides the <code>%+%</code> infix operator, which is essentially just an alias for <code>paste(x, y)</code>.</p>
+<pre class="r"><code>&#39;a&#39; %+% &#39;b&#39;</code></pre>
+<pre><code>## [1] &quot;a b&quot;</code></pre>
+<pre class="r"><code># or PHP style without a padded space: paste0
+&#39;a&#39; %.% &#39;b&#39;</code></pre>
+<pre><code>## [1] &quot;ab&quot;</code></pre>
+<p>We can also do more complicated queries, like finding the average arrival delay, grouped by tail number:</p>
+<pre class="r"><code>SELECT(&#39;tailnum&#39;, delay = &#39;avg(arr_delay)&#39;, n = &#39;count(*)&#39;) %+%
+  FROM(&#39;flights&#39;) %+%
+  GROUP_BY(&#39;tailnum&#39;) %+%
+  ORDER_BY(DESC(&#39;delay&#39;)) %+%
+  LIMIT(10) %&gt;% 
+  flights %&gt;% 
+  as_table</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+tailnum
+</th>
+<th style="text-align:right;">
+delay
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+N844MH
+</td>
+<td style="text-align:right;">
+320.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N911DA
+</td>
+<td style="text-align:right;">
+294.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N922EV
+</td>
+<td style="text-align:right;">
+276.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N587NW
+</td>
+<td style="text-align:right;">
+264.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N851NW
+</td>
+<td style="text-align:right;">
+219.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N928DN
+</td>
+<td style="text-align:right;">
+201.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N7715E
+</td>
+<td style="text-align:right;">
+188.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N654UA
+</td>
+<td style="text-align:right;">
+185.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N665MQ
+</td>
+<td style="text-align:right;">
+174.6667
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N427SW
+</td>
+<td style="text-align:right;">
+157.0000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p><code>sqrrl</code> also provides a wrapper around the python utility <code>sqlformat</code> that can be used to pretty-print SQL formats.</p>
+<pre class="r"><code>SELECT(&#39;tailnum&#39;, delay = &#39;avg(arr_delay)&#39;, n = &#39;count(*)&#39;) %+%
+  FROM(&#39;flights&#39;) %+%
+  GROUP_BY(&#39;tailnum&#39;) %+%
+  ORDER_BY(DESC(&#39;delay&#39;)) %+%
+  LIMIT(10) %&gt;% 
+  sqlformat %&gt;% cat</code></pre>
+<pre class="sql"><code>SELECT tailnum,
+       avg(arr_delay) AS delay,
+       count(*) AS n
+  FROM flights
+ GROUP BY tailnum
+ ORDER BY delay DESC
+ LIMIT 10</code></pre>
+<p>Let’s use the above as an inner query and filter on <code>n &gt; 100</code>:</p>
+<pre class="r"><code>query_all_arr_delay &lt;- SELECT(
+  &#39;tailnum&#39;, delay = &#39;avg(arr_delay)&#39;, n = &#39;count(*)&#39;
+) %+%
+  FROM(&#39;flights&#39;) %+%
+  GROUP_BY(&#39;tailnum&#39;) %+%
+  ORDER_BY(DESC(&#39;delay&#39;))
+
+SELECT() %+%
+  FROM(delay = parens(query_all_arr_delay)) %+%
+  WHERE(gt(n = 100)) %+%
+  LIMIT(10) %&gt;% 
+  flights %&gt;% 
+  as_table</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+tailnum
+</th>
+<th style="text-align:right;">
+delay
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+N11119
+</td>
+<td style="text-align:right;">
+30.30657
+</td>
+<td style="text-align:right;">
+148
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N16919
+</td>
+<td style="text-align:right;">
+29.88745
+</td>
+<td style="text-align:right;">
+251
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N14998
+</td>
+<td style="text-align:right;">
+27.92202
+</td>
+<td style="text-align:right;">
+230
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N15910
+</td>
+<td style="text-align:right;">
+27.61132
+</td>
+<td style="text-align:right;">
+280
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N13123
+</td>
+<td style="text-align:right;">
+25.97345
+</td>
+<td style="text-align:right;">
+121
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N11192
+</td>
+<td style="text-align:right;">
+25.85235
+</td>
+<td style="text-align:right;">
+154
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N14950
+</td>
+<td style="text-align:right;">
+25.28780
+</td>
+<td style="text-align:right;">
+219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N21130
+</td>
+<td style="text-align:right;">
+24.96610
+</td>
+<td style="text-align:right;">
+126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N24128
+</td>
+<td style="text-align:right;">
+24.91803
+</td>
+<td style="text-align:right;">
+129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N22971
+</td>
+<td style="text-align:right;">
+24.74766
+</td>
+<td style="text-align:right;">
+230
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="queries-are-just-strings" class="section level2">
+<h2>Queries are just strings</h2>
+<p>Notice that unlike other packages, <code>sqrrl</code> can’t build the nested queries for you.
+You still need to understand the structure of the database and the structure of the query.</p>
+<p>But when compared with the final output of the query, the <code>sqrrl</code> version looks a lot like SQL transliterated into R functions.</p>
+<pre class="r"><code>SELECT() %+%
+  FROM(delay = parens(
+    SELECT(&#39;tailnum&#39;, delay = &#39;avg(arr_delay)&#39;, n = &#39;count(*)&#39;) %+%
+      FROM(&#39;flights&#39;) %+%
+      GROUP_BY(&#39;tailnum&#39;) %+%
+      ORDER_BY(DESC(&#39;delay&#39;))
+  )) %+%
+  WHERE(gt(n = 100)) %+%
+  LIMIT(10) %&gt;% 
+  sqlformat %&gt;% cat</code></pre>
+<pre class="sql"><code>SELECT *
+  FROM (
+        SELECT tailnum,
+               avg(arr_delay) AS delay,
+               count(*) AS n
+          FROM flights
+         GROUP BY tailnum
+         ORDER BY delay DESC
+       ) delay
+ WHERE n&gt;100
+ LIMIT 10</code></pre>
+<p>For me, at least, where the goal is to write SQL queries as bare strings, <code>sqrrl</code> lets me write in R and think in SQL without having to add a huge number of <code>paste</code> and <code>paste0</code> functions.</p>
+<p>Everything in <code>sqrrl</code> takes input data from regular R data types and outputs an SQL snippet.</p>
+<p>For an example of nearly everything each of the functions can do, see the <a href="https://gadenbuie.github.io/sqrrl/articles/sqrrl.html">Getting Started</a> section in the documentation.</p>
+</div>
+<div id="a-more-complicated-select-query" class="section level2">
+<h2>A more complicated SELECT query</h2>
+<p>As a final example, here is a fully-loaded select query.</p>
+<pre class="r"><code>SELECT(&#39;`year`&#39;, &#39;carrier&#39;, &#39;flight&#39;, &#39;dest&#39;, 
+       n = &#39;count(*)&#39;, 
+       avg_dist = &#39;avg(distance)&#39;,
+       avg_air_time = &#39;avg(air_time)&#39;) %+%
+  FROM(f = &#39;flights&#39;) %+%
+  WHERE(
+    BETWEEN(&#39;month&#39;, 6, 12),
+    &#39;carrier&#39; %IN% c(&quot;UA&quot;, &quot;AA&quot;, &quot;US&quot;, &quot;WN&quot;),
+    geq(&#39;dep_time&#39; = 800),
+    leq(&#39;air_time&#39; = 120),
+    &#39;origin&#39; %LIKE% &#39;JFK&#39;
+  ) %+%
+  GROUP_BY(&#39;`year`&#39;, &#39;carrier&#39;, &#39;flight&#39;, &#39;dest&#39;) %+%
+  ORDER_BY(DESC(&#39;n&#39;)) %+%
+  LIMIT(10) %&gt;% 
+  { sqlformat(.) %&gt;% cat; . } %&gt;% 
+  flights %&gt;% 
+  as_table</code></pre>
+<pre class="sql"><code>SELECT `year`,
+       carrier,
+       flight,
+       dest,
+       count(*) AS n,
+       avg(distance) AS avg_dist,
+       avg(air_time) AS avg_air_time
+  FROM flights f
+ WHERE `month` BETWEEN 6 AND 12
+   AND carrier IN (&quot;UA&quot;, &quot;AA&quot;, &quot;US&quot;, &quot;WN&quot;)
+   AND dep_time&gt;=800
+   AND air_time&lt;=120
+   AND origin LIKE(&quot;JFK&quot;)
+ GROUP BY `year`,
+          carrier,
+          flight,
+          dest
+ ORDER BY n DESC
+ LIMIT 10</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:left;">
+carrier
+</th>
+<th style="text-align:right;">
+flight
+</th>
+<th style="text-align:left;">
+dest
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+avg_dist
+</th>
+<th style="text-align:right;">
+avg_air_time
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+1831
+</td>
+<td style="text-align:left;">
+CLT
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+541
+</td>
+<td style="text-align:right;">
+86.95506
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+425
+</td>
+<td style="text-align:left;">
+CLT
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:right;">
+541
+</td>
+<td style="text-align:right;">
+84.92857
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+37.94118
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+256
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+39.13675
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+2314
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+37.85217
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+US
+</td>
+<td style="text-align:right;">
+1802
+</td>
+<td style="text-align:left;">
+CLT
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:right;">
+541
+</td>
+<td style="text-align:right;">
+87.23214
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+37.95049
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+1850
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+38.46809
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+1838
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+37.83871
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:left;">
+AA
+</td>
+<td style="text-align:right;">
+1762
+</td>
+<td style="text-align:left;">
+BOS
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+187
+</td>
+<td style="text-align:right;">
+38.47674
+</td>
+</tr>
+</tbody>
+</table>
+<p>This query and table select the most popular flights from JFK between June and December of 2013 from the carriers <code>UA</code>, <code>AA</code>, <code>US</code>, and <code>WN</code> that depart JFK after 8:00 AM and have an air time of less than 2 hours.</p>
+</div>
+<div id="learn-more" class="section level2">
+<h2>Learn more</h2>
+<p>There’s more that the package can do, like <code>JOIN</code>s, <code>INSERT</code>s, and <code>UPDATE</code>s that I haven’t gone into here.</p>
+<p>There are also a number of wrappers, <a href="https://gadenbuie.github.io/sqrrl/reference/comparison.html">comparison operators</a> and <a href="https://gadenbuie.github.io/sqrrl/reference/general.html">concatenators</a> that can be used for wrapping strings in quotes — e.g. <code>quotes()</code> — comparing columns to values — e.g. <code>geq()</code>, <code>eq()</code>, <code>lt()</code>, <code>neq()</code> — and stringing together statements — e.g. <code>AND()</code>, <code>OR()</code>, <code>%LIKE%</code>, <code>%IN%</code>, <code>BETWEEN()</code>.</p>
+<p>There’s an example of nearly every single function and each of it’s possible configurations in the <a href="https://gadenbuie.github.io/sqrrl/">package documentation</a>.</p>
+<p>Hopefully this package is useful to someone other than myself (like you!).
+If you run into any problems, <a href="http://twitter.com/grrrck">let me know</a> or <a href="https://github.com/gadenbuie/sqrrl/issues">submit an issue on GitHub</a>.</p>
+</div>

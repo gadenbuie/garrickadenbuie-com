@@ -1,0 +1,26 @@
+{{ partial "head.html" . }}
+	<body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+			<section class="recent">
+				<h2>Recent Posts</h2>
+				<ul class="posts">
+					{{ range first 5 (where .Data.Pages "Section" "blog") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title }}</a>
+						<time class="post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z" }}">{{ .Date.Format "Monday, 2 January 2006" }}</time>
+					</li>
+					{{ end }}
+				</ul>
+				<h2>Projects</h2>
+				<ul class="posts">
+					{{ range first 5 (where .Data.Pages "Section" "project") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title }}</a>
+					</li>
+					{{ end }}
+				</ul>
+			</section>
+		</main>
+{{ partial "sidebar.html" . }}
+	</body>
+</html>

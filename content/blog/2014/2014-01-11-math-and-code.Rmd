@@ -1,0 +1,92 @@
+---
+title: "Math and Code"
+date: 2014-01-11T16:35:00+00:00
+categories: [Blog]
+tags: [Math, R, Data Analysis, Test Theory]
+references:
+  - id: Cronbach1951
+    title: Coefficient alpha and the internal structure of tests
+    author:
+      - family: Cronbach
+        given: Lee
+    container-title: Psychometrika
+    type: article-journal
+    issue: 3
+    issued:
+      year: 1951
+      month: 9
+---
+
+## Reliability
+
+*This article is just a quick demonstration of the power of Octopress with Pandoc, and uses all of the common elements of a data analysis write up. In fact, I stole most of the content from a paper I'm working on.*
+
+*Everything written in this article could be witten directly in an `.Rmd` file, interactively written and then compiled in [R Studio](http://rstudio.org) and published (nearly) straight to the web. This post includes code snippets, citations, tables and math. And it looks beautiful!*
+
+*p.s. This is just a demo and isn't intended to actually make sense ;-)*
+
+The term *reliability* refers to the ability of a test to consistently assess or measure the same underlying ability or concept, insofar as in a fully reliable test the only source of measurement error is random error.
+Cronbach's coefficient alpha [@Cronbach1951] is the most popular metric for evaluating reliability, and is considered a measurement of internal consistency, or the level of inter-item correlation within a test administered to a single group.
+
+In this study I compared the reliability of three final exam formats using the `CTT` package in R:
+
+```r
+require('CTT')
+
+items <- complete.all[, c(67, 39, 3:26)]
+items <- scaleMC(items)
+
+# Run item analysis
+ital <- list()
+ital.mpgpa <- list()
+for(level in levels(items$Format)){
+  # Calculate format-level test reliability 
+  # (ex: across all 'MC+PC' students)
+  ital[[level]] <- reliability(items[items$Format == level, -1:-2])
+}
+
+# Extract alpha values from item analysis
+ital.alpha <- c()
+for(name in names(ital)){
+  ital.alpha <- c(ital.alpha, ital[[name]]$alpha)
+}
+
+# Print a nice table
+t.alpha <- data.frame(
+  c("Partial Credit", "", "Dichotomous",""),
+  names(ital),
+  c('Spring 2013', 'Spring 2012', 'Spring 2012', 'Summer 2013'), 
+  ital.alpha
+)
+colnames(t.alpha) <- c("Scoring",'Format', 'Semester', "Cronbach's Alpha")
+
+kable(t.alpha)
+```
+
+### Results
+
+The coefficient alpha estimation of reliability for each of the examination formats and scoring methods is shown in [Table 8](#t.cronbach).
+For both the CR and MC+PC examination formats, alpha is near 0.74, while the dichotomously scored MC and MC+PC examination formats demonstrated reliability near 0.68.
+
+|Scoring         |Format  |Semester     |Cronbach's Alpha  |
+|:---------------|:-------|:------------|:-----------------|
+|Partial Credit  |CR      |Spring 2013  |0.746             |
+|                |MC+PC   |Spring 2012  |0.732             |
+|Dichotomous     |MC-PC   |Spring 2012  |0.675             |
+|                |MC      |Summer 2013  |0.682             |
+
+Table: Table 8. Cronbach's alpha for each final examination format
+<a id="t.cronbach"></a>
+
+
+## Cronbach's Alpha
+
+As described above, Cronbach's alpha, $\alpha$, is really just:
+
+$$\alpha = \frac{K}{K-1} \left( 1 - \frac{\sum^{K}_{i=1} \sigma^2_{Y_i}}{\sigma^2_X} \right)$$
+
+where $\sigma^2_X$ is the variance of the observed total test scores and $\sigma^2_{Y_i}$ is the variance of component $i$ for the current sample of persons[^1].
+
+[^1]: From <http://en.wikipedia.org/wiki/Cronbach's_alpha>
+
+## References

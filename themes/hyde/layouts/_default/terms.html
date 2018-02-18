@@ -1,0 +1,21 @@
+{{ partial "head.html" . }}
+  <body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+          
+       <div>
+       <h1 id="page-title">{{ .Title }}</h1>
+       {{ $data := .Data }}
+        {{ range $key,$value := .Data.Terms.ByCount }}
+        <ul>
+          <li>
+          <a href="{{ $value.Name | urlize }}"> {{ $value.Name }}</a> 
+          <span class="archive-item-date">{{ $value.Count }}</span>
+          </li>
+        </ul>
+        {{ end }}
+      </div>
+    
+		</main>
+{{ partial "sidebar.html" . }}
+	</body>
+</html>

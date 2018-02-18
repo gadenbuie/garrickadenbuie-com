@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		{{ if .IsHome }}
+		<title>{{ .Site.Title }}</title>
+		{{ else }}
+		<title>{{ .Title | emojify }} &middot; {{ .Site.Title }}</title>
+		{{ end }}
+
+		{{ if eq .URL "/" }}
+		<meta property="description" content="{{ .Site.Params.description }}">
+		{{ else }}
+			{{ if .Description }}
+			<meta property="description" content="{{ .Description }}">
+			{{ end }}
+		{{ end }}
+
+		{{ if .Keywords }}
+		<meta property="keywords" content ="{{ delimit .Keywords ", " }}">
+		{{ end }}
+
+		{{ if .RSSLink }}
+		<link href="{{ .RSSLink | relURL }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+		{{ end }}
+		{{ partial "head_highlightjs" . }}
+		{{ partial "head_custom" . }}
+
+		<link rel="stylesheet" href="{{ "font-awesome/css/font-awesome.min.css" | absURL }}" type="text/css">
+		<link rel="stylesheet" href="/css/poole.css">
+		<link rel="stylesheet" href="/css/syntax.css">
+		<link rel="stylesheet" href="/css/hyde.css">
+		<!-- Custom CSS style get applied last -->
+		{{ range .Site.Params.customCSS }}
+		<link rel="stylesheet" href="{{ . | relURL }}">
+		{{ end }}
+		<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}">
+		<link href="{{ if .IsPage }}{{ .Permalink | replaceRE "/$" "" }}{{ else }}{{ .Permalink }}{{ end }}" rel="canonical">
+	</head>

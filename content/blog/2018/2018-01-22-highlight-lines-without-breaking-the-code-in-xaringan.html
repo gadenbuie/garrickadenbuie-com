@@ -1,0 +1,85 @@
+---
+title: Highlight lines without breaking the code in Xaringan
+author: Garrick Aden-Buie
+date: '2018-01-23'
+slug: highlight-lines-without-breaking-the-code-in-xaringan
+categories:
+  - Blog
+tags:
+  - R
+  - Presentation
+  - xaringan
+---
+
+
+
+<p>Update 2: This feature <a href="https://github.com/yihui/xaringan/blob/master/NEWS.md#changes-in-xaringan-version-05">has been added</a> to the latest version of <a href="https://github.com/yihui/xaringan">xaringan</a>! See it in action: <a href="https://slides.yihui.name/xaringan/#29" class="uri">https://slides.yihui.name/xaringan/#29</a></p>
+<p>Update: I went ahead and submitted a PR with this new feature to xaringan: <a href="https://github.com/yihui/xaringan/pull/103" class="uri">https://github.com/yihui/xaringan/pull/103</a></p>
+<p>Have you met <a href="https://github.com/yihui/xaringan">xaringan</a> yet?
+It’s yet another fantastic package from Yihui Xie that makes it easy to blend R code and text into presentations that look great on the web, in print and on screens.
+Check out the <a href="https://slides.yihui.name/xaringan/">demo/intro slides</a>!</p>
+<p>It’s built on <a href="http://remarkjs.com/">remark.js</a> with few extra features, and one of my favorite features is the ability to highlight specific lines of code.
+In presentations, this draws attention to the most important part of the code demonstration, but doesn’t break the reproducibility.</p>
+<div class="figure">
+<img src="/images/2018/highlight-xaringan/highlight-demo-slides.png" alt="The line highlighting example from the xaringan demo slides." />
+<p class="caption">The line highlighting example from the <a href="https://slides.yihui.name/xaringan/">xaringan demo slides</a>.</p>
+</div>
+<p>Basically, if you wrap a line in your code with <code>{{..code..}}</code>, that line will be highlighted in the slides.
+This works because <code>{{x}}</code> is a valid expression in R that just returns <code>x</code>, so the source code in the chunk runs correctly and an output hook cleans up the line.</p>
+<p>I love the feature, but it feels a little clunky in practice.
+When you add the braces into your code, you can’t rely on RStudio’s auto-indenter to get the code alignment right.
+The alignment in the chunk is fine after compiling, with the second line highlighted, but it looks a little odd in the source code.</p>
+<pre><code>```{r} 
+paste(&quot;This looks&quot;,
+     {{&quot;a little odd&quot;}},
+      &quot;but it&#39;s right&quot;)
+```</code></pre>
+<p>Also, the braces only work when wrapped around expressions – like <code>{{&quot;a little odd&quot;}}</code> – so you have to pick out the part of the line that is a valid R expression.</p>
+<pre><code>```{r} 
+{{paste(}}
+  &quot;This won&#39;t work&quot;
+)
+```
+
+```{r} 
+{{paste}}(
+  &quot;But this works&quot;
+)
+```</code></pre>
+<p>Instead, I thought it might be easier to mark the line with a code comment on the right-hand side.
+Like this</p>
+<pre class="r"><code>```{r}
+paste(&quot;This looks&quot;,
+      &quot;kinda normal&quot;,  #&lt;&lt;
+      &quot;and it is&quot;)
+```</code></pre>
+<p>Sidenote: I picked <code>#&lt;&lt;</code> because it kinda looks like <em>hashtag looking left</em> (<code>#&lt;_&lt;</code>) but is easier to type.</p>
+<p>To make this work, just add the following lines to your setup chunk:</p>
+<pre class="r"><code>hook_source &lt;- knitr::knit_hooks$get(&#39;source&#39;)
+knitr::knit_hooks$set(source = function(x, options) {
+  x &lt;- stringr::str_replace(x, &quot;^[[:blank:]]?([^*].+?)[[:blank:]]*#&lt;&lt;[[:blank:]]*$&quot;, &quot;*\\1&quot;)
+  hook_source(x, options)
+})</code></pre>
+<p>This add a <em>source hook</em> that processes the source code of the code chunk on its way into the output document after it has been evaluated.
+Basically, any lines in the source code with the <code>#&lt;&lt;</code> mark at the end of the line are modified to have the remark.js style leading <code>*</code> highlight indicator.</p>
+<pre class="r"><code>lines &lt;- c(&#39;paste(&quot;This looks&quot;,&#39;, 
+           &#39;      &quot;kinda normal&quot;, #&lt;&lt;&#39;,
+           &#39;      &quot;and it is&quot;)&#39;)
+
+lines &lt;- stringr::str_replace(lines, &quot;^[[:blank:]]?([^*].+?)[[:blank:]]*#&lt;&lt;[[:blank:]]*$&quot;, &quot;*\\1&quot;)
+cat(lines, sep = &#39;\n&#39;)</code></pre>
+<pre><code>paste(&quot;This looks&quot;,
+*     &quot;kinda normal&quot;,
+      &quot;and it is&quot;)</code></pre>
+<p>Here’s a real example of it in practice with a code chunk from a recent presentation:</p>
+<pre><code>```{r example-plot}
+ggplot(tips) +
+  aes(x = tip) +
+  geom_histogram(   #&lt;&lt;
+    binwidth = 0.25 #&lt;&lt;
+  )                 #&lt;&lt;
+```</code></pre>
+<p><img src="/images/2018/highlight-xaringan/highlight-demo-out.png" /></p>
+<p>Notice that the code in the source chunk and the output are both lined up!
+Here’s a full slide with a few more examples.</p>
+<p><img src="/images/2018/highlight-xaringan/highlight-more-examples.png" /></p>

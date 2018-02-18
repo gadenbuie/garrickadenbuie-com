@@ -1,0 +1,47 @@
+baseurl = "/"
+relativeurls = true
+languageCode = "en-us"
+title = "A Hugo website"
+theme = "hyde"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+
+[permalinks]
+    post = "/:year/:month/:day/:slug/"
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+[[menu.main]]
+    name = "Posts"
+    url = "/post/"
+[[menu.contact]]
+    name = "GitHub"
+    url = "https://github.com/rstudio/blogdown"
+[[menu.contact]]
+    name = "Twitter"
+    url = "https://twitter.com/rstudio"
+
+[author]
+    image = 'author.jpg'
+
+[params]
+    description = "A website built through Hugo and blogdown."
+    # Change contactHeader text
+    # Or comment out to use <hr> instead
+    contactHeader = "Contact Me"
+
+    # Change Hyde theme
+    #themeColor = "theme-base-08"
+    # Overide or add custom CSS styles
+    #customCSS = "/css/custom.css"
+
+    # options for highlight.js (version, additional languages, and theme)
+    highlightjsVersion = "9.11.0"
+    highlightjsCDN = "//cdn.bootcss.com"
+    highlightjsLang = ["r", "yaml"]
+    highlightjsTheme = "github"
+
+    MathJaxCDN = "//cdn.bootcss.com"
+    MathJaxVersion = "2.7.1"

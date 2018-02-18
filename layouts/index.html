@@ -1,0 +1,47 @@
+{{ partial "head.html" . }}
+	<body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+			{{ if .Site.Params.show_projects_front }}
+			<section class='recent recent-projects'>
+				<h2><a href={{ relURL "project" }}>Projects</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_projects_front | default 10) (where .Data.Pages "Section" "project") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title | emojify }}</a>
+						<span class="post-date">{{ .Description }}</span>
+					</li>
+					{{ end }}
+				</ul>
+			</section>
+			{{ end }}
+			<section class="recent">
+				<h2><a href={{ relURL "blog" }}>Recent Posts</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_posts_front | default 10) (where .Data.Pages "Section" "blog") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title }}</a>
+						<time class="post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z" }}">{{ .Date.Format "Monday, 2 January 2006" }}</time>
+					</li>
+					{{ end }}
+				</ul>
+				<!-- <a href={{ relURL "blog" }} style="padding-left: 40px">more...</a> -->
+			</section>
+			{{ if .Site.Params.show_talks_front }}
+			<section class='recent recent-talks'>
+				<h2><a href={{ relURL "talk" }}>Talks</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_talks_front | default 10) (where .Data.Pages "Section" "talk") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title | emojify }}</a>
+						<span class="post-date">
+						   {{ .Date.Format "2 January 2006" }} — {{ .Params.talk_event }}
+						</span>
+					</li>
+					{{ end }}
+				</ul>
+			</section>
+			{{ end }}
+		</main>
+{{ partial "sidebar.html" . }}
+	</body>
+</html>
