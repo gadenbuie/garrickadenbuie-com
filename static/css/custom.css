@@ -125,7 +125,7 @@ code {
 }
 
 @media screen and (min-width: 65em) {
-  .hamburger {
+  .hamburger.is-active {
     display: none !important;
   }
 }
