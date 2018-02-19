@@ -329,7 +329,8 @@ gg_overall <- ggplot(overall_guntrends) +
   geom_line(color = "#828585") +
   geom_point(data = selected_points, color = "#c03728") +
   labs(x = "", y = "Relative Search Popularity",
-       title = 'Google Search Trends for "Gun Control"') +
+       title = 'Google Search Trends for "Gun Control"', 
+       caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans")
 
 gg_overall +
@@ -427,7 +428,7 @@ ggplot(guntrends_over_time) +
   facet_wrap(~ Title) +
   labs(x = "Days Since Event", y = "Search Popularity Within Window",
        title = 'Searching for "gun control" after a mass shooting',
-       caption = "Source: Google Trends") +
+       caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
   geom_text(data = type_labels, aes(y = 90, label = label), 
@@ -456,7 +457,7 @@ ggplot(guntrends_over_time) +
   facet_wrap(~ Title) +
   labs(x = "Days Since Event", y = "Search Popularity\nRelative to a Baseline Search",
        title = 'Searching for "gun control" after a mass shooting',
-       caption = "Source: Google Trends") +
+       caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
   scale_y_log10(breaks = c(0.1, 1, 10, 100)) +
@@ -526,7 +527,7 @@ ggplot(guntrends_similar) +
     y = "Search Popularity\nRelative to a Baseline Search",
     color = "",
     title = 'Searching for "gun control" after a mass shooting', 
-    caption = "Source: Google Trends") +
+    caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   # ggpomological::scale_color_pomological() +
   hrbrthemes::scale_color_ipsum() +
@@ -543,6 +544,7 @@ ggplot(guntrends_similar) +
 ```
 
 I'll close with this tweet from [\@davepell](https://twitter.com/davepell).
-To the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that **I hear you, and I stand with you.**
+
+But first, to the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that **I hear you, and I stand with you.**
 
 `r blogdown::shortcode("tweet", "965077119968489472")`
