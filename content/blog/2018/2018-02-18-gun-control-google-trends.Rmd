@@ -431,6 +431,7 @@ ggplot(guntrends_over_time) +
        caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
+  scale_x_continuous(breaks = seq(-7, 21, 7)) +
   geom_text(data = type_labels, aes(y = 90, label = label), 
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 0.6)
@@ -460,7 +461,9 @@ ggplot(guntrends_over_time) +
        caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
-  scale_y_log10(breaks = c(0.1, 1, 10, 100)) +
+  scale_y_log10(breaks = c(0.1, 1, 10, 100), 
+                labels =  paste0(c(0.1, 1, 10, 100), "x")) +
+  scale_x_continuous(breaks = seq(-7, 21, 7)) +
   geom_text(data = type_labels, aes(y = 90, label = label), 
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 1) +
@@ -481,6 +484,7 @@ ggplot(guntrends_over_time) +
        title = 'Google Search Trends for "Gun Control" After Mass Shooting') +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
+  scale_x_continuous(breaks = seq(-7, 21, 7)) +
   geom_text(data = type_labels, aes(y = 90, label = label), 
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 0.6)
@@ -496,7 +500,7 @@ In the mean time, just remember that Google searches aren't real things.
 If you want to make a difference or a change, support a local politician, donate to gun violence research, and register your friends to vote.
 For more ideas, take a look at [Everytown's Action Plan][everytown-action-plan] at <https://everytown.org/throwthemout/>.
 
-```{r plot2, dependson='normalize-trend'}
+```{r plot-similar, dependson='normalize-trend'}
 guntrends_similar <- guntrends_over_time %>% 
   filter(Title %in% levels(Title)[c(1:5, 7:9)])
 
@@ -537,7 +541,9 @@ ggplot(guntrends_similar) +
            family = "PT Sans", 
            size = 3, 
            color = "grey40") +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(0.1, 1, 10), 
+                labels =  paste0(c(0.1, 1, 10), "x")) +
+  scale_x_continuous(breaks = seq(-7, 21, 7)) +
   theme(
     panel.grid.major.y = element_line(size = 0.3, color = "#efe1c6", linetype = "dashed")
   )
