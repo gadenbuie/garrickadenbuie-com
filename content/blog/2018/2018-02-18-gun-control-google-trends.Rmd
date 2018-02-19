@@ -212,6 +212,10 @@ Longterm trends (such as the all time trend) are aggregated by month.
 The code below isn't exactly the code I used to gather the data, but it should give you an idea for how easy it is to use gtrendsR.
 
 ```r
+library(dplyr)
+library(purrr)
+library(gtrendsR)
+
 get_trends_for_event <- function(day) {
   gtrends(
       keyword = c("gun control", "difficult"), 

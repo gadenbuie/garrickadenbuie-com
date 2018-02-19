@@ -403,7 +403,11 @@ In my tinkering I noticed that hourly trends are only available for the last 7 d
 Earlier data is always aggregated at least by day.
 Longterm trends (such as the all time trend) are aggregated by month.</p>
 <p>The code below isn’t exactly the code I used to gather the data, but it should give you an idea for how easy it is to use gtrendsR.</p>
-<pre class="r"><code>get_trends_for_event &lt;- function(day) {
+<pre class="r"><code>library(dplyr)
+library(purrr)
+library(gtrendsR)
+
+get_trends_for_event &lt;- function(day) {
   gtrends(
       keyword = c(&quot;gun control&quot;, &quot;difficult&quot;), 
       geo = &quot;US&quot;, 
