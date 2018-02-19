@@ -439,7 +439,7 @@ ggplot(guntrends_over_time) +
 
 The above plot highlights search trends around individual mass shooting events, but it's difficult to assess how strong the response to a particular event is relative to previous events.
 
-One approach is to use a baseline search term that is relatively constant across the entire period.
+The approach that I worked out is to use a baseline search term that is relatively constant across the entire period.
 As I discussed above, I picked `"difficult"` for this role, as it nicely fits the bill.
 For each query of Google Trends, I also requested search trends for `"difficult"`.
 Then I scaled the `"gun control"` search trends relative to the hits on the baseline search.
