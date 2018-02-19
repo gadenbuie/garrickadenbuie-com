@@ -13,8 +13,8 @@ tags:
   - Markdown
 ---
 
-```{r setup}
-knitr::opts_chunk$set(cache=TRUE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE)
 ```
 
 > **tl;dr:** A [function called backstitch][gist-link] that backstitches `knitr::knit`able R Markdown files to `knitr::spin`able R Scripts.
