@@ -194,6 +194,7 @@ basic_iris_plot + theme_pomological_plain()
 
 # Or with "fancy" pomological settings
 pomological_iris <- basic_iris_plot + theme_pomological_fancy()
+pomological_iris
 
 # Painted!
 paint_pomological(pomological_iris, res = 110) %>% 

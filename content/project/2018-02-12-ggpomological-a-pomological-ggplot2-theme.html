@@ -122,8 +122,9 @@ basic_iris_plot + theme_pomological_plain() </code></pre>
 <p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-4.png" width="672" /></p>
 <pre class="r"><code># Or with &quot;fancy&quot; pomological settings
 pomological_iris &lt;- basic_iris_plot + theme_pomological_fancy()
-
-# Painted!
+pomological_iris</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-5.png" width="672" /></p>
+<pre class="r"><code># Painted!
 paint_pomological(pomological_iris, res = 110) %&gt;% 
   magick::image_write(set_filename(&quot;plot-demo-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-demo-painted.png" /></p>
