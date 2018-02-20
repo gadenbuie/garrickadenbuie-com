@@ -55,16 +55,29 @@ I didn’t do this in any systematic way, other than occasionally searching for 
 <p><img src="/images/project/ggpomological/pomological_colors.png" /></p>
 <p>From this list, I chose just a few that I thought worked well together for color and fill scales</p>
 <pre class="r"><code>scales::show_col(ggpomological:::pomological_palette)</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>and a few colors for the plot background and decoration</p>
 <pre class="r"><code>scales::show_col(unlist(ggpomological:::pomological_base))</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="setup-theme-and-scales" class="section level2">
 <h2>Setup theme and scales</h2>
-<p>I created three variants of the theme-generating function <code>theme_pomological()</code>.
-This base theme (more like an “out of the box” theme) sets the plot theme to be representative of the paper and styling of the watercolors and includes a paper-colored background.
-Two wrapper functions <code>theme_pomological_nobg()</code> and <code>theme_pomological_plain()</code> build on the first, just with a transparent (or white) background (for <code>_nobg</code>) and no crazy fonts or background (for <code>_plain</code>).</p>
+<p>I created three variants of the theme-generating function <code>theme_pomological()</code>.</p>
+<ul>
+<li><p><code>theme_pomological()</code> sets the plot theme to be representative of the paper and styling of the watercolors and includes a paper-colored background,</p></li>
+<li><p><code>theme_pomological_plain()</code> has the same styling, just with a transparent (or white) background,</p></li>
+<li><p><code>theme_pomological_fancy()</code> has the paper-colored background and defaults to a fancy handwritten font (<a href="https://fonts.google.com/specimen/Homemade+Apple/">Homemade Apple</a>).</p></li>
+</ul>
+<p>For color and fill scales, <strong>ggpomological</strong> provides <code>scale_color_pomological()</code> and <code>scale_fill_pomological()</code>.</p>
+<p>In the future, I might revisit this package to</p>
+<ol style="list-style-type: decimal">
+<li><p>Increase colors in discrete scale</p></li>
+<li><p>Setup paired color scales as there are lots of great color pairs in the extracted colors</p></li>
+<li><p>Set up continuous scale colors.</p></li>
+</ol>
+</div>
+<div id="fonts" class="section level2">
+<h2>Fonts</h2>
 <p>To get the fully authentic pomological look you really need a handwritten font style, and I found a few from Google Fonts that fit the bill.</p>
 <ul>
 <li><a href="https://fonts.google.com/specimen/Mr+De+Haviland">Mr. De Haviland</a></li>
@@ -73,13 +86,8 @@ Two wrapper functions <code>theme_pomological_nobg()</code> and <code>theme_pomo
 <li><a href="https://fonts.google.com/specimen/Mr+Bedfort/">Mr. Bedfort</a></li>
 </ul>
 <p>Alternatively, you can use something like <a href="https://www.calligraphr.com/">calligrapher.com</a> to create your own handwriting font!</p>
-<p>For color and fill scales, <strong>ggpomological</strong> provides <code>scale_color_pomological()</code> and <code>scale_fill_pomological()</code>.</p>
-<p>In the future, I might revisit this package to</p>
-<ol style="list-style-type: decimal">
-<li><p>Increase colors in discrete scale</p></li>
-<li><p>Setup paired color scales as there are lots of great color pairs in the extracted colors</p></li>
-<li><p>Set up continuous scale colors.</p></li>
-</ol>
+<p>But fonts can be painful in R, so the base functions – <code>theme_pomological()</code> and <code>theme_pomological_plain()</code> – don’t change the font by default.
+To opt into the full pomological effect, use <code>theme_pomological_fancy()</code> which is just an alias for <code>theme_pomological(base_family = &quot;Homemade Apple&quot;, base_size = 16)</code>.</p>
 </div>
 <div id="add-paper-background" class="section level2">
 <h2>Add paper background!</h2>
@@ -101,20 +109,22 @@ basic_iris_plot &lt;- ggplot(iris) +
 
 # Just your standard Iris plot
 basic_iris_plot </code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-demo-1.png" width="672" /></p>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-1.png" width="672" /></p>
+<pre class="r"><code># With pomological colors
+basic_iris_plot &lt;- basic_iris_plot + scale_color_pomological()
+basic_iris_plot</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-2.png" width="672" /></p>
 <pre class="r"><code># With pomological theme
-basic_iris_plot +
-  theme_pomological() +
-  scale_color_pomological()</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-demo-2.png" width="672" /></p>
+basic_iris_plot + theme_pomological()</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-3.png" width="672" /></p>
 <pre class="r"><code># With transparent background
-pomological_iris &lt;- basic_iris_plot +
-  theme_pomological_nobg() +
-  scale_color_pomological()
-pomological_iris </code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-demo-3.png" width="672" /></p>
-<pre class="r"><code># Painted!
-paint_pomological(pomological_iris, res = 110) %&gt;%
+basic_iris_plot + theme_pomological_plain() </code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-4.png" width="672" /></p>
+<pre class="r"><code># Or with &quot;fancy&quot; pomological settings
+pomological_iris &lt;- basic_iris_plot + theme_pomological_fancy()
+
+# Painted!
+paint_pomological(pomological_iris, res = 110) %&gt;% 
   magick::image_write(set_filename(&quot;plot-demo-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-demo-painted.png" /></p>
 </div>
@@ -125,15 +135,16 @@ paint_pomological(pomological_iris, res = 110) %&gt;%
   geom_histogram(binwidth = 850) + 
   xlab(&#39;Price (USD)&#39;) + 
   ylab(&#39;Count&#39;) + 
+  ggtitle(&quot;ggpomological&quot;) +
   scale_x_continuous(label = scales::dollar_format()) +
   scale_fill_pomological()
 
-stacked_bar_plot + theme_pomological()</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-bar-chart-1.png" width="672" /></p>
+stacked_bar_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-bar-chart-1.png" width="672" /></p>
 <pre class="r"><code>paint_pomological(
-  stacked_bar_plot + theme_pomological_nobg(),
+  stacked_bar_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;%
+) %&gt;% 
   magick::image_write(set_filename(&quot;plot-bar-chart-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-bar-chart-painted.png" /></p>
 </div>
@@ -148,12 +159,12 @@ stacked_bar_plot + theme_pomological()</code></pre>
   scale_color_pomological() +
   scale_fill_pomological()
 
-density_plot + theme_pomological()</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-density-1.png" width="672" /></p>
+density_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-density-1.png" width="672" /></p>
 <pre class="r"><code>paint_pomological(
-  density_plot + theme_pomological_nobg(),
+  density_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;%
+) %&gt;% 
   magick::image_write(set_filename(&quot;plot-density-demo-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-density-demo-painted.png" /></p>
 </div>
@@ -183,12 +194,12 @@ full_bar_stack_plot &lt;- txhousing %&gt;%
   theme(panel.grid.minor.x = element_blank()) +
   scale_fill_pomological()
 
-full_bar_stack_plot + theme_pomological()</code></pre>
-<p><img src="/rmarkdown-libs/figure-html4/plot-full-bar-stack-1.png" width="672" /></p>
+full_bar_stack_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-full-bar-stack-1.png" width="672" /></p>
 <pre class="r"><code>paint_pomological(
-  full_bar_stack_plot + theme_pomological_nobg(),
+  full_bar_stack_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;%
+) %&gt;% 
   magick::image_write(set_filename(&quot;plot-full-bar-stack-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-full-bar-stack-painted.png" /></p>
 </div>
@@ -198,7 +209,7 @@ full_bar_stack_plot + theme_pomological()</code></pre>
 <pre class="r"><code>ridges_pomological &lt;- ggplot(diamonds) + 
   aes(x = carat, y = clarity, color = clarity, fill = clarity) + 
   ggridges::geom_density_ridges(alpha = 0.75) + 
-  theme_pomological_nobg(
+  theme_pomological(
     base_family = &#39;gWriting&#39;,
     base_size = 20,
     base_theme = ggridges::theme_ridges()
@@ -206,7 +217,7 @@ full_bar_stack_plot + theme_pomological()</code></pre>
   scale_fill_pomological() + 
   scale_color_pomological()
 
-paint_pomological(ridges_pomological, res = 110) %&gt;%
+paint_pomological(ridges_pomological, res = 110) %&gt;% 
   magick::image_write(set_filename(&quot;plot-ridges-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-ridges-painted.png" /></p>
 </div>

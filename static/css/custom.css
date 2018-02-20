@@ -118,7 +118,7 @@ code {
   background-color: #002b36;
 }
 
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 48em) {
   .hamburger {
     display: none !important;
   }
