@@ -47,6 +47,8 @@ pacman::p_load("readr")
 pacman::p_load("purrr")
 pacman::p_load("ggplot2")
 setCacheDir(here::here('data/gun-control'))
+
+# From https://raw.githubusercontent.com/yihui/knitr-examples/master/063-html5-figure.Rmd
 ```
 
 ```{r ref.label='last-update', echo=FALSE, cache=FALSE, results='asis'}
@@ -314,6 +316,7 @@ Google searches for "gun control" are relatively low-volume in the United States
 with a clear increase around any mass shooting event.
 The plot below shows search interest in "gun control" since 2004, with the largest peak occurring after the Sandy Hook Elementary School mass shooting.
 
+<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-gun-control-trends-1.png" data-featherlight="image">
 ```{r plot-gun-control-trends, dependson='normalize-trend'}
 selected_points <- selected_dates %>% 
   mutate(date = lubridate::round_date(Date, "month")) %>% 
@@ -353,6 +356,7 @@ gg_overall +
   ggrepel::geom_label_repel(data = slice(selected_points, c(15)), 
                             aes(label = Title), size = 3, ylim = -3)
 ```
+</a>
 
 ## Searching for "gun control" after a mass shooting
 
@@ -404,6 +408,7 @@ The scale of searching is relative to the time period queried.
 Events such as the [Las Vegas Strip][wiki-event-la], [Orlando Night Club][wiki-event-orlando], [Aurora Theater][wiki-event-aurora] shootings show how the events caught the attention of the public and led to questions about our gun laws.
 Other events, such as the [Fort Hood Army Base][wiki-event-fh2009] attack seemed not to have caught public or media attention in the same way.
 
+<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-relative-1.png" data-featherlight="image">
 ```{r plot-relative, fig.height=7, dependson='normalize-trend'}
 type_labels <- selected_dates %>% 
   filter(ar15 | semi_automatic) %>% 
@@ -438,7 +443,7 @@ ggplot(guntrends_over_time) +
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 0.6)
 ```
-
+</a>
 
 The above plot highlights search trends around individual mass shooting events, but it's difficult to assess how strong the response to a particular event is relative to previous events.
 
@@ -450,6 +455,7 @@ Then I scaled the `"gun control"` search trends relative to the hits on the base
 What this means is that in the following plot, the search volume for `"gun control"` is shown in "units" of searches for `"difficult"`.
 A value of 10 means there are 10 times more search for `"gun control"`, whereas a value of 1 means that the search volumen is roughly equivalent.
 
+<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-difficult-1.png" data-featherlight="image">
 ```{r plot-normed-difficult, fig.height=7, dependson='normalize-trend'}
 ggplot(guntrends_over_time) +
   aes(x = since_event, y = hits.norm.difficult, group = Title, color = parkland) +
@@ -473,6 +479,7 @@ ggplot(guntrends_over_time) +
     panel.grid.major.y = element_line(size = 0.2, color = "#efe1c6", linetype = "dashed")
   )
 ```
+</a>
 
 ```{r plot-normed, eval=FALSE, fig.height=7, dependson='normalize-trend', include=FALSE}
 ggplot(guntrends_over_time) +
@@ -502,6 +509,7 @@ In the mean time, just remember that Google searches aren't real things.
 If you want to make a difference or a change, support a local politician, donate to gun violence research, and register your friends to vote.
 For more ideas, take a look at [Everytown's Action Plan][everytown-action-plan] at <https://everytown.org/throwthemout/>.
 
+<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-similar-1.png" data-featherlight="image">
 ```{r plot-similar, dependson='normalize-trend'}
 guntrends_similar <- guntrends_over_time %>% 
   filter(Title %in% levels(Title)[c(1:5, 7:9)])
@@ -550,6 +558,7 @@ ggplot(guntrends_similar) +
     panel.grid.major.y = element_line(size = 0.3, color = "#efe1c6", linetype = "dashed")
   )
 ```
+</a>
 
 I'll close with this tweet from [\@davepell](https://twitter.com/davepell).
 
