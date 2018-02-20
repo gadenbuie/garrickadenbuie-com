@@ -48,12 +48,13 @@ pacman::p_load("purrr")
 pacman::p_load("ggplot2")
 setCacheDir(here::here('data/gun-control'))
 
+baseline_term <- "baseline"
+
 # From https://raw.githubusercontent.com/yihui/knitr-examples/master/063-html5-figure.Rmd
 ```
 
 ```{r ref.label='last-update', echo=FALSE, cache=FALSE, results='asis'}
 ```
-
 
 **tl;dr:** Google searches for "gun control" after the shooting in Parkland, Florida seem to be [similar to search trends after other shootings](#this-time), although it could be different this time.
 
@@ -189,7 +190,7 @@ selected_dates %>%
   )
 ```
 
-## Query Google Trends from R with gtrendsR
+## Query Google Trends from R with gtrendsR {#query-google-trends}
 
 Then I queried Google Trends via [gtrendsR] for the search terms `"gun control"` and a reference term for
 
@@ -200,9 +201,10 @@ Then I queried Google Trends via [gtrendsR] for the search terms `"gun control"`
 There are two points to note when working with data from Google Trends.
 
 **First**, Google Trends returns search trends relative to the time period queried, so it can be hard to determine the scale of interest when looking at a smaller time period, such as a month.
-For comparison, I included the reference term `"difficult"` because this is relatively stable at ~25% from 2004 through present day[^difficult].
+For comparison, I included the reference term `"`r baseline_term`"` because this is relatively stable at ~10% from 2004 through present day[^baseline].
+**Edit 2018-02-20:** I replaced `"difficult"` with `"baseline"` as the comparison search term.
 
-[^difficult]: It turns out that it's actually rather tough to find a "stable" search term within the same general order of magnitude of searches as "gun control". The term `"difficult"` was not selected un-ironically. Try it for yourself -- go to [Google Trends](https://trends.google.com/trends/explore?date=all&geo=US&q=gun%20control,difficult) and see if you can find another non-seasonal, nearly zero-growth search term.
+[^baseline]: It turns out that it's actually rather tough to find a "stable" search term within the same general order of magnitude of searches as "gun control". The term `"difficult"` was not selected un-ironically (initally). Later I decided there was too much variation in the search trends for `"difficult"` and thought that following the irony was a good idea. So I changed the term to `"baseline"`. Anyway, try it for yourself -- go to [Google Trends](https://trends.google.com/trends/explore?date=all&geo=US&q=gun%20control,difficult) and see if you can find another non-seasonal, nearly zero-growth search term.
 
 **Second**, the data returned by Google Trends is aggregated according to the time window specified.
 In my tinkering I noticed that hourly trends are only available for the last 7 days.
@@ -218,7 +220,7 @@ library(gtrendsR)
 
 get_trends_for_event <- function(day) {
   gtrends(
-      keyword = c("gun control", "difficult"), 
+      keyword = c("gun control", "`r baseline_term`"), 
       geo = "US", 
       time = paste(glue::glue("{day - 7} {day + 21}"))
     )
@@ -227,10 +229,10 @@ get_trends_for_event <- function(day) {
 guntrends <- selected_dates %>% 
     mutate(gtrends = map(Date, get_trends_for_event))
 
-all_guntrends <- gtrends(c("gun control", "difficult"), 
+all_guntrends <- gtrends(c("gun control", "`r baseline_term`"), 
                          geo = "US", time = "all")
   
-parkland_trends <- gtrends(c("gun control", "difficult"), 
+parkland_trends <- gtrends(c("gun control", "`r baseline_term`"), 
                            geo = "US", time = "now 7-d")
 ```
 
@@ -244,7 +246,7 @@ parkland_trends <- gtrends(c("gun control", "difficult"),
 ```{r get-data, include=FALSE}
 get_trends_for_event <- function(day) {
   gtrends(
-      keyword = c("gun control", "difficult"), 
+      keyword = c("gun control", baseline_term), 
       geo = "US", 
       time = paste(glue::glue("{day - 7} {day + 21}"))
     )
@@ -256,14 +258,33 @@ simpleCache("guntrends", {
 })
 
 simpleCache("all_guntrends", {
-  gtrends(c("gun control", "difficult"), geo = "US", time = "all")
+  gtrends(c("gun control", baseline_term), geo = "US", time = "all")
 })
 
-simpleCache("parkland_trends")
-parkland_trends_previous <- parkland_trends; rm("parkland_trends")
+if (file.exists(here::here('data/gun-control/parkland_trends.RData'))) {
+  simpleCache("parkland_trends")
+  parkland_trends_previous <- parkland_trends; rm("parkland_trends")
+} else { 
+  parkland_trends_previous <- gtrends(c("gun control", baseline_term), 
+                                      geo = "US", time = "2018-02-07 2018-02-13") %>% 
+    purrr::map(function(x) {
+      if (is.null(x)) return(NULL)
+      if (!'hits' %in% names(x)) return(NULL)
+      mutate(x, 
+             hits = gsub("<", "", hits), 
+             hits = as.double(hits) * 7/92) #scaled to match hourly
+    })
+}
 
 simpleCache("parkland_trends", {
-  x <- gtrends(c("gun control", "difficult"), geo = "US", time = "now 7-d")
+  x <- gtrends(c("gun control", baseline_term), geo = "US", time = "now 7-d")  %>% 
+    purrr::map(function(x) {
+      if (is.null(x)) return(NULL)
+      if (!'hits' %in% names(x)) return(NULL)
+      mutate(x, 
+             hits = gsub("<", "", hits), 
+             hits = as.double(hits)) #scaled to match hourly
+    })
   y <- x
   for (name in names(x)) {
     y[[name]] <- bind_rows(parkland_trends_previous[[name]], x[[name]])
@@ -291,10 +312,10 @@ normalize_trend <- function(iot) {
   
   iot[['gun control']] %>% 
     mutate(
-      hits.difficult = median(iot$difficult$hits, na.rm = TRUE),
+      hits.baseline = median(iot[[baseline_term]]$hits, na.rm = TRUE),
       hits.all_trends_max = max(all_trends_hits),
       hits.all_trends_min = min(all_trends_hits),
-      hits.norm.difficult = hits/hits.difficult,
+      hits.norm.baseline = hits/hits.baseline,
       hits.orig = hits,
       hits = hits / 100 * hits.all_trends_max
     )
@@ -329,14 +350,22 @@ overall_guntrends <-
   all_guntrends$interest_over_time %>% 
   filter(keyword == "gun control")
 
-gg_overall <- ggplot(overall_guntrends) +
+gg_overall <- ggplot(all_guntrends$interest_over_time) +
   aes(x = date, y = hits) +
-  geom_line(color = "#828585") +
+  geom_line(aes(color = keyword, group = keyword)) +
+  scale_color_manual(values = c("gun control" = "#828585", "baseline" = "#c3c377")) +
   geom_point(data = selected_points, color = "#c03728") +
+  scale_x_date(expand = expand_scale(c(0.01, 0.04))) +
   labs(x = "", y = "Relative Search Popularity",
        title = 'Google Search Trends for "Gun Control"', 
+       color = "Search Term",
        caption = "Source: Google Trends\ngarrickadenbuie.com") +
-  ggpomological::theme_pomological_plain("PT Sans")
+  ggpomological::theme_pomological_plain("PT Sans") +
+  theme(
+    legend.direction = 'vertical',
+    legend.position = c(0.05, 0.85),
+    legend.justification = c(0, 1)
+  )
 
 gg_overall +
   ggrepel::geom_label_repel(data = slice(selected_points, c(14)), 
@@ -448,17 +477,17 @@ ggplot(guntrends_over_time) +
 The above plot highlights search trends around individual mass shooting events, but it's difficult to assess how strong the response to a particular event is relative to previous events.
 
 The approach that I worked out is to use a baseline search term that is relatively constant across the entire period.
-As I discussed above, I picked `"difficult"` for this role, as it nicely fits the bill.
-For each query of Google Trends, I also requested search trends for `"difficult"`.
+As I discussed above, I picked `"`r baseline_term`"` for this role, as it nicely fits the bill.
+For each query of Google Trends, I also requested search trends for `"`r baseline_term`"`.
 Then I scaled the `"gun control"` search trends relative to the hits on the baseline search.
 
-What this means is that in the following plot, the search volume for `"gun control"` is shown in "units" of searches for `"difficult"`.
+What this means is that in the following plot, the search volume for `"gun control"` is shown in "units" of searches for `"`r baseline_term`"`.
 A value of 10 means there are 10 times more search for `"gun control"`, whereas a value of 1 means that the search volumen is roughly equivalent.
 
-<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-difficult-1.png" data-featherlight="image">
-```{r plot-normed-difficult, fig.height=7, dependson='normalize-trend'}
+<a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-baseline-1.png" data-featherlight="image">
+```{r plot-normed-baseline, fig.height=7, dependson='normalize-trend'}
 ggplot(guntrends_over_time) +
-  aes(x = since_event, y = hits.norm.difficult, group = Title, color = parkland) +
+  aes(x = since_event, y = hits.norm.baseline, group = Title, color = parkland) +
   geom_line() +
   geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,  
              color = ggpomological:::pomological_base$darker_line) +
@@ -517,7 +546,7 @@ guntrends_similar <- guntrends_over_time %>%
 ggplot(guntrends_similar) +
   aes(
     x = since_event, 
-    y = hits.norm.difficult, 
+    y = hits.norm.baseline, 
     group = Title, 
     size = `Total victims`,
     color = Title
@@ -569,3 +598,8 @@ But first, to the victims in Parkland, Florida and the victims of gun violence a
 ```{r last-update, eval=FALSE, cache=FALSE}
 glue::glue("**Last updated:** {file.mtime(here::here('data/gun-control/parkland_trends.RData'))}")
 ```
+
+#### Edits 
+
+**2018-02-20:** I changed the comparison term from `"difficult"` to `"baseline"`.
+Also updated the scripts to gather data from the week prior to Feb 14, 2018.

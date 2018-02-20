@@ -15,7 +15,7 @@ tags:
 
 
 <!-- LINKS -->
-<p><strong>Last updated:</strong> 2018-02-20 13:49:43</p>
+<p><strong>Last updated:</strong> 2018-02-20 14:51:29</p>
 <p><strong>tl;dr:</strong> Google searches for “gun control” after the shooting in Parkland, Florida seem to be <a href="#this-time">similar to search trends after other shootings</a>, although it could be different this time.</p>
 <p>A civilized, modern society should be able to function nearly entirely without guns.
 We should be able to go about our lives without ever thinking about guns.
@@ -387,7 +387,7 @@ Yes
 </tbody>
 </table>
 </div>
-<div id="query-google-trends-from-r-with-gtrendsr" class="section level2">
+<div id="query-google-trends" class="section level2">
 <h2>Query Google Trends from R with gtrendsR</h2>
 <p>Then I queried Google Trends via <a href="https://github.com/PMassicotte/gtrendsR">gtrendsR</a> for the search terms <code>&quot;gun control&quot;</code> and a reference term for</p>
 <ul>
@@ -397,7 +397,8 @@ Yes
 </ul>
 <p>There are two points to note when working with data from Google Trends.</p>
 <p><strong>First</strong>, Google Trends returns search trends relative to the time period queried, so it can be hard to determine the scale of interest when looking at a smaller time period, such as a month.
-For comparison, I included the reference term <code>&quot;difficult&quot;</code> because this is relatively stable at ~25% from 2004 through present day<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+For comparison, I included the reference term <code>&quot;baseline&quot;</code> because this is relatively stable at ~10% from 2004 through present day<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.
+<strong>Edit 2018-02-20:</strong> I replaced <code>&quot;difficult&quot;</code> with <code>&quot;baseline&quot;</code> as the comparison search term.</p>
 <p><strong>Second</strong>, the data returned by Google Trends is aggregated according to the time window specified.
 In my tinkering I noticed that hourly trends are only available for the last 7 days.
 Earlier data is always aggregated at least by day.
@@ -409,7 +410,7 @@ library(gtrendsR)
 
 get_trends_for_event &lt;- function(day) {
   gtrends(
-      keyword = c(&quot;gun control&quot;, &quot;difficult&quot;), 
+      keyword = c(&quot;gun control&quot;, &quot;baseline&quot;), 
       geo = &quot;US&quot;, 
       time = paste(glue::glue(&quot;{day - 7} {day + 21}&quot;))
     )
@@ -418,10 +419,10 @@ get_trends_for_event &lt;- function(day) {
 guntrends &lt;- selected_dates %&gt;% 
     mutate(gtrends = map(Date, get_trends_for_event))
 
-all_guntrends &lt;- gtrends(c(&quot;gun control&quot;, &quot;difficult&quot;), 
+all_guntrends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;), 
                          geo = &quot;US&quot;, time = &quot;all&quot;)
   
-parkland_trends &lt;- gtrends(c(&quot;gun control&quot;, &quot;difficult&quot;), 
+parkland_trends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;), 
                            geo = &quot;US&quot;, time = &quot;now 7-d&quot;)</code></pre>
 <!--
   <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1308_RC02/embed_loader.js"></script>
@@ -451,13 +452,13 @@ Other events, such as the <a href="https://en.wikipedia.org/wiki/2009_Fort_Hood_
 </a></p>
 <p>The above plot highlights search trends around individual mass shooting events, but it’s difficult to assess how strong the response to a particular event is relative to previous events.</p>
 <p>The approach that I worked out is to use a baseline search term that is relatively constant across the entire period.
-As I discussed above, I picked <code>&quot;difficult&quot;</code> for this role, as it nicely fits the bill.
-For each query of Google Trends, I also requested search trends for <code>&quot;difficult&quot;</code>.
+As I discussed above, I picked <code>&quot;baseline&quot;</code> for this role, as it nicely fits the bill.
+For each query of Google Trends, I also requested search trends for <code>&quot;baseline&quot;</code>.
 Then I scaled the <code>&quot;gun control&quot;</code> search trends relative to the hits on the baseline search.</p>
-<p>What this means is that in the following plot, the search volume for <code>&quot;gun control&quot;</code> is shown in “units” of searches for <code>&quot;difficult&quot;</code>.
+<p>What this means is that in the following plot, the search volume for <code>&quot;gun control&quot;</code> is shown in “units” of searches for <code>&quot;baseline&quot;</code>.
 A value of 10 means there are 10 times more search for <code>&quot;gun control&quot;</code>, whereas a value of 1 means that the search volumen is roughly equivalent.</p>
-<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-difficult-1.png" data-featherlight="image">
-<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-difficult-1.png" width="960" />
+<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-baseline-1.png" data-featherlight="image">
+<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-baseline-1.png" width="960" />
 </a></p>
 </div>
 <div id="this-time" class="section level2">
@@ -474,10 +475,15 @@ For more ideas, take a look at <a href="https://everytown.org/throwthemout/">Eve
 <p>I’ll close with this tweet from <a href="https://twitter.com/davepell">@davepell</a>.</p>
 <p>But first, to the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that <strong>I hear you, and I stand with you.</strong></p>
 {{% tweet "965077119968489472" %}}
+<div id="edits" class="section level4">
+<h4>Edits</h4>
+<p><strong>2018-02-20:</strong> I changed the comparison term from <code>&quot;difficult&quot;</code> to <code>&quot;baseline&quot;</code>.
+Also updated the scripts to gather data from the week prior to Feb 14, 2018.</p>
+</div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>It turns out that it’s actually rather tough to find a “stable” search term within the same general order of magnitude of searches as “gun control”. The term <code>&quot;difficult&quot;</code> was not selected un-ironically. Try it for yourself – go to <a href="https://trends.google.com/trends/explore?date=all&amp;geo=US&amp;q=gun%20control,difficult">Google Trends</a> and see if you can find another non-seasonal, nearly zero-growth search term.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>It turns out that it’s actually rather tough to find a “stable” search term within the same general order of magnitude of searches as “gun control”. The term <code>&quot;difficult&quot;</code> was not selected un-ironically (initally). Later I decided there was too much variation in the search trends for <code>&quot;difficult&quot;</code> and thought that following the irony was a good idea. So I changed the term to <code>&quot;baseline&quot;</code>. Anyway, try it for yourself – go to <a href="https://trends.google.com/trends/explore?date=all&amp;geo=US&amp;q=gun%20control,difficult">Google Trends</a> and see if you can find another non-seasonal, nearly zero-growth search term.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
