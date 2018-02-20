@@ -34,7 +34,7 @@ tags:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE,
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, cache = TRUE,
                       fig.width=10, fig.height=5, echo=FALSE)
 
 # Using pacman for loading specific packages
@@ -49,11 +49,9 @@ pacman::p_load("ggplot2")
 setCacheDir(here::here('data/gun-control'))
 ```
 
-**Last updated:** `r file.mtime(here::here('data/gun-control/parkland_trends.RData'))`
-
-```{r setup2}
-knitr::opts_chunk$set(cache = TRUE)
+```{r ref.label='last-update', echo=FALSE, cache=FALSE, results='asis'}
 ```
+
 
 **tl;dr:** Google searches for "gun control" after the shooting in Parkland, Florida seem to be [similar to search trends after other shootings](#this-time), although it could be different this time.
 
@@ -272,7 +270,7 @@ simpleCache("parkland_trends", {
 }, recreate = TRUE)
 ```
 
-```{r normalize-trend}
+```{r normalize-trend, dependson="get-data"}
 normalize_trend <- function(iot) {
   iot <- split(iot, iot$keyword)
   dates <- iot[["gun control"]] %>% 
@@ -558,3 +556,7 @@ I'll close with this tweet from [\@davepell](https://twitter.com/davepell).
 But first, to the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that **I hear you, and I stand with you.**
 
 `r blogdown::shortcode("tweet", "965077119968489472")`
+
+```{r last-update, eval=FALSE, cache=FALSE}
+glue::glue("**Last updated:** {file.mtime(here::here('data/gun-control/parkland_trends.RData'))}")
+```
