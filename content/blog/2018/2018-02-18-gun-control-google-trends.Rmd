@@ -2,6 +2,8 @@
 title: 'Searching for "gun control" after a mass shooting'
 author: Garrick Aden-Buie
 date: '2018-02-19'
+params:
+  last_update: "2018-02-21 10:30:50"
 slug: gun-control-google-trends
 categories:
   - Blog
@@ -53,8 +55,7 @@ baseline_term <- "baseline"
 # From https://raw.githubusercontent.com/yihui/knitr-examples/master/063-html5-figure.Rmd
 ```
 
-```{r ref.label='last-update', echo=FALSE, cache=FALSE, results='asis'}
-```
+**Last updated:** `r params$last_update`
 
 **tl;dr:** Google searches for "gun control" after the shooting in Parkland, Florida seem to be [similar to search trends after other shootings](#this-time), although it could be different this time.
 
@@ -594,10 +595,6 @@ I'll close with this tweet from [\@davepell](https://twitter.com/davepell).
 But first, to the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that **I hear you, and I stand with you.**
 
 `r blogdown::shortcode("tweet", "965077119968489472")`
-
-```{r last-update, eval=FALSE, cache=FALSE}
-glue::glue("**Last updated:** {file.mtime(here::here('data/gun-control/parkland_trends.RData'))}")
-```
 
 #### Edits 
 
