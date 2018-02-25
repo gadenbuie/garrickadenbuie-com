@@ -3,7 +3,7 @@ title: 'Searching for "gun control" after a mass shooting'
 author: Garrick Aden-Buie
 date: '2018-02-19'
 params:
-  last_update: "2018-02-24 14:57"
+  last_update: "2018-02-25 13:56"
 slug: gun-control-google-trends
 categories:
   - Blog
