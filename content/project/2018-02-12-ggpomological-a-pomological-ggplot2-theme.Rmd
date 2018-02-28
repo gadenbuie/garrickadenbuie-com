@@ -84,7 +84,7 @@ I pulled together a small set of functions into a [simple package called **ggpom
 
 Before reading more about **ggpomological**, you should really check out [Aron's talk][rsconf-video] or [his slides][rsconf-slides].
 
-## Intallation
+## Installation
 
 [ggpomological] lives on GitHub for now (and probably ever), so you'll need to use the devtools (or similar) to install:
 
