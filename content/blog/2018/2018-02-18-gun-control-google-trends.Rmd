@@ -3,7 +3,7 @@ title: 'Searching for "gun control" after a mass shooting'
 author: Garrick Aden-Buie
 date: '2018-02-19'
 params:
-  last_update: "2018-02-26 10:05"
+  last_update: "2018-02-27 23:34"
 slug: gun-control-google-trends
 categories:
   - Blog
@@ -51,8 +51,6 @@ pacman::p_load("ggplot2")
 setCacheDir(here::here('data/gun-control'))
 
 baseline_term <- "baseline"
-
-# From https://raw.githubusercontent.com/yihui/knitr-examples/master/063-html5-figure.Rmd
 ```
 
 **Last updated:** `r params$last_update`
@@ -284,7 +282,7 @@ simpleCache("parkland_trends", {
       if (!'hits' %in% names(x)) return(NULL)
       mutate(x, 
              hits = gsub("<", "", hits), 
-             hits = as.double(hits)) #scaled to match hourly
+             hits = as.double(hits)) 
     })
   y <- x
   for (name in names(x)) {
@@ -328,8 +326,16 @@ guntrends <- mutate(
                 ~ modify_at(., 'interest_over_time', normalize_trend))
 )
 
-parkland_trends <- modify_at(parkland_trends, 
-                             'interest_over_time', normalize_trend)
+parkland_trends$interest_over_time <- 
+  parkland_trends$interest_over_time %>% 
+  group_by(date, keyword) %>% 
+  summarize(hits = median(hits)) %>% 
+  tidyr::spread(keyword, hits) %>% 
+  mutate(
+    hits.norm.baseline = `gun control`/baseline,
+    hits.orig = `gun control`,
+    hits.baseline = baseline
+  )
 ```
 
 ## All time search interest in "gun control" {#all-time}
@@ -341,7 +347,7 @@ The plot below shows search interest in "gun control" since 2004, with the large
 <a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-gun-control-trends-1.png" data-featherlight="image">
 ```{r plot-gun-control-trends, dependson='normalize-trend'}
 selected_points <- selected_dates %>% 
-  mutate(date = lubridate::round_date(Date, "month")) %>% 
+  mutate(date = lubridate::floor_date(Date, "month")) %>% 
   left_join(
     filter(all_guntrends$interest_over_time, keyword == "gun control"), 
     by = 'date') %>% 

@@ -6,3 +6,4 @@ blogdown
 .DS_Store
 deploy.sh
 public*/
+ISSUES.md
