@@ -52,6 +52,18 @@ Here’s the full idea:</p>
 │   └── vetting-expressions.Rmd
 ├── styles.css
 └── vetr.Rmd</code></pre>
+<p>Notice <code>related-packages.Rmd</code>.
+It’s a short R Markdown file with a list of (not surprisingly) related packages – the kind of section that might be included in the both the package overview vignette and the README.</p>
+<div id="vignettesrmdhunksrelated-packages.rmd" class="section level4">
+<h4>vignettes/rmdhunks/related-packages.Rmd &gt;</h4>
+<pre class="markdown"><code>* `stopifnot` by R Core
+* [`vetr`](https://github.com/brodieG/vetr) by Yours Truly
+* [`asserthat`](https://github.com/hadley/assertthat) by Hadley Wickham
+* [`assertive`](https://www.r-pkg.org/pkg/assertive) by Richie Cotton
+* [`checkmate`](https://github.com/mllg/checkmate) by Michel Lang
+
+The following packages also perform related tasks ...</code></pre>
+</div>
 </div>
 <div id="reference-the-repeatable-sections-using-the-child-chunk-option." class="section level3">
 <h3>Reference the repeatable sections using the <code>child</code> chunk option.</h3>
@@ -60,7 +72,7 @@ Anywhere that you would re-use the documentation, you simply include the followi
 Again, the following are from the <a href="https://github.com/brodieG/vetr">vetr package documentation files</a>.</p>
 <div id="vignettesvetr.rmd" class="section level4">
 <h4>vignettes/vetr.Rmd &gt;</h4>
-<pre><code>## Alternatives
+<pre class="markdown"><code>## Alternatives
 
 There are many alternatives available to `vetr`.  We do a survey of the
 following in our [parameter validation functions][4] review:
@@ -71,7 +83,7 @@ following in our [parameter validation functions][4] review:
 </div>
 <div id="readme.rmd" class="section level4">
 <h4>README.Rmd &gt;</h4>
-<pre><code>## Alternatives
+<pre class="markdown"><code>## Alternatives
 
 There are many alternatives available to `vetr`.  We do a survey of the
 following in our [parameter validation functions][5] review:

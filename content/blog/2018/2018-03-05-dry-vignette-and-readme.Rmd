@@ -69,6 +69,21 @@ vignettes/
 └── vetr.Rmd
 ```
 
+Notice `related-packages.Rmd`.
+It's a short R Markdown file with a list of (not surprisingly) related packages -- the kind of section that might be included in the both the package overview vignette and the README.
+
+#### vignettes/rmdhunks/related-packages.Rmd >
+
+```markdown
+* `stopifnot` by R Core
+* [`vetr`](https://github.com/brodieG/vetr) by Yours Truly
+* [`asserthat`](https://github.com/hadley/assertthat) by Hadley Wickham
+* [`assertive`](https://www.r-pkg.org/pkg/assertive) by Richie Cotton
+* [`checkmate`](https://github.com/mllg/checkmate) by Michel Lang
+
+The following packages also perform related tasks ...
+```
+
 ### Reference the repeatable sections using the `child` chunk option.
 
 Knitr provides a [child document chunk option](https://yihui.name/knitr/options/#child-documents) that you can use to embed R Markdown from an external file.
@@ -77,7 +92,7 @@ Again, the following are from the [vetr package documentation files][gh-vetr].
 
 #### vignettes/vetr.Rmd >
 
-````
+````markdown
 ## Alternatives
 
 There are many alternatives available to `vetr`.  We do a survey of the
@@ -91,7 +106,7 @@ This R Markdown "hunk" can be used anywhere else you need it, such as in the pac
 
 #### README.Rmd >
 
-````
+````markdown
 ## Alternatives
 
 There are many alternatives available to `vetr`.  We do a survey of the
