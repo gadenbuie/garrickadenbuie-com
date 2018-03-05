@@ -70,7 +70,7 @@ vignettes/
 ```
 
 Notice `related-packages.Rmd`.
-It's a short R Markdown file with a list of (not surprisingly) related packages -- the kind of section that might be included in the both the package overview vignette and the README.
+It's a short R Markdown file with a list of (not surprisingly) related packages -- the kind of section that might be included in both the package overview vignette and the README.
 
 #### vignettes/rmdhunks/related-packages.Rmd >
 
