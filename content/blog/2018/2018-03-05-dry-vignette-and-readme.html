@@ -1,0 +1,90 @@
+---
+title: 'Reuse Rmd hunks in package vignettes, README, blog posts and more'
+author: ~
+date: '2018-03-05'
+slug: dry-vignette-and-readme
+categories:
+  - Blog
+tags:
+  - R
+  - Tips
+  - Tricks
+  - R-Packages
+  - RMarkdown
+draft: yes
+---
+
+
+
+<p>Jonathan Carroll (<a href="https://twitter.com/carroll_jono">@carroll_jono</a>) posted a twitter poll that turned out to be quite interesting this weekend:</p>
+{{% tweet "969442252610191361" %}}
+<div id="what-i-love-to-see-in-a-readme" class="section level2">
+<h2>What I love to see in a README</h2>
+<p>Personally, I usually find out about a package while browsing GitHub or a blog post that leads me to check out the package on GitHub.
+So I’m very partial to a highly explanatory README.</p>
+<p>When I run into a new package, I’m hoping the README answers the following questions</p>
+<ol style="list-style-type: decimal">
+<li>Why would I want to use this package?</li>
+<li>What does it look like to use this package?</li>
+</ol>
+<p>So basically: an explanation of the problem the package solves and at least a short introduction to the functions or syntax of the package.</p>
+<p>There are a lot of READMEs out there that just answer the first question with a very basic description of the package, or maybe even a detailed overview of the problem the package solves, but they don’t showcase the package in action.
+I might not be the typical user, but this always seems like a missed opportunity to me.</p>
+<p>Of course, writing good documentation is tricky.
+And considering that a good package also has vignettes, a README, a related ([blogdown]) blog post, and possibly even a <a href="http://pkgdown.r-lib.org/">pkgdown</a> site, making sure the documentation is up-to-date in all of these places can put undue burden on the package developers.</p>
+</div>
+<div id="dont-repeat-yourself-clone-yourself" class="section level2">
+<h2>Don’t Repeat Yourself, Clone Yourself</h2>
+<p><img src="/images/2018/the-simpsons-s01e02-Bart-the-Genius.jpg" /></p>
+<p>In the spirit of Don’t Repeat Yourself and maximizing the potential of <a href="https://yihui.name/knitr">knitr</a> and <a href="https://rmarkdown.rstudio.com/">R Markdown</a> – and the fact that you can use R Markdown for all of the above pieces – I remembered recently reading about child documents in knitr.</p>
+<p>I posted my idea to <a href="https://twitter.com/carroll_jono/status/969442252610191361">Jonathan’s thread</a> and shortly afterwards <a href="https://twitter.com/BrodieGaslam">@BrodieGaslam</a> wrote back with an idea that <a href="https://twitter.com/BrodieGaslam/status/969682597214343168">really makes the best of child documents</a>.
+Here’s the full idea:</p>
+<div id="write-repeatable-sections-in-short-.rmd-files." class="section level3">
+<h3>Write repeatable sections in short .Rmd files.</h3>
+<p>Using Brodie’s <a href="https://github.com/brodieG/vetr">vetr packge</a> as an example, these files are stored in <code>vignettes/rmdhunks</code>:</p>
+<pre><code>vignettes/
+├── alike.Rmd
+├── rmdhunks
+│   ├── declarative-checks.Rmd
+│   ├── microbenchmark.Rmd
+│   ├── related-packages.Rmd
+│   ├── trust-but-verify.Rmd
+│   ├── valaddin.Rmd
+│   └── vetting-expressions.Rmd
+├── styles.css
+└── vetr.Rmd</code></pre>
+</div>
+<div id="reference-the-repeatable-sections-using-the-child-chunk-option." class="section level3">
+<h3>Reference the repeatable sections using the <code>child</code> chunk option.</h3>
+<p>Knitr provides a <a href="https://yihui.name/knitr/options/#child-documents">child document chunk option</a> that you can use to embed R Markdown from an external file.
+Anywhere that you would re-use the documentation, you simply include the following, such as in the vetr package vignette.
+Again, the following are from the <a href="https://github.com/brodieG/vetr">vetr package documentation files</a>.</p>
+<div id="vignettesvetr.rmd" class="section level4">
+<h4>vignettes/vetr.Rmd &gt;</h4>
+<pre><code>## Alternatives
+
+There are many alternatives available to `vetr`.  We do a survey of the
+following in our [parameter validation functions][4] review:
+ 
+```{r child=&#39;./rmdhunks/related-packages.Rmd&#39;} 
+```</code></pre>
+<p>This R Markdown “hunk” can be used anywhere else you need it, such as in the package README.Rmd file.</p>
+</div>
+<div id="readme.rmd" class="section level4">
+<h4>README.Rmd &gt;</h4>
+<pre><code>## Alternatives
+
+There are many alternatives available to `vetr`.  We do a survey of the
+following in our [parameter validation functions][5] review:
+
+```{r child=&#39;vignettes/rmdhunks/related-packages.Rmd&#39;} 
+```</code></pre>
+<p>The major advantage here is to be able to update the documentation in one place and have those changes propagate to “parent” documents.
+It’s also useful to be able to arrange or choose the content shown in certain places.
+For example, READMEs typically include installation instructions, but these would be redundant if included in the package vignettes.</p>
+<p>The above examples can be extended for use in pkgdown articles (which are essentially an extension of vignettes) or for blogdown posts if you develope your package and blog source on the same machine.</p>
+<hr />
+<p>Thanks <a href="https://twitter.com/BrodieGaslam">@BrodieGaslam</a> for the tip and <a href="https://twitter.com/carroll_jono">@carroll_jono</a> for kicking off this thread!</p>
+</div>
+</div>
+</div>
