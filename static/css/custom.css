@@ -1,7 +1,23 @@
 p.caption {
-    font-size: 0.75em;
+    font-size: 0.95em;
     color: grey;
     font-style: italic;
+    text-align: right;
+    margin-top: -0.8rem;
+}
+
+.figure.thumbnail {
+  width: 200px;
+  float: left;
+  margin-left: 10px;
+  border: solid 1px #002b36;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.thumbnail > .caption {
+  text-align: center;
+  margin-bottom: 0px;
 }
 
 .content {
