@@ -8,7 +8,10 @@ type: page
 <!-- ![](/images/garrick.png) -->
 
 Hello, my name is Garrick Aden-Buie.
-I’m a graduate student at the [University of South Florida](http://usf.edu/) in Tampa, FL in the [Department of Industrial and Management Sciences Engineering](http://imse.eng.usf.edu/).
+I’m a Ph.D. Candidate at the [University of South Florida](http://usf.edu/) in Tampa, FL in the [Department of Industrial and Management Sciences Engineering](http://imse.eng.usf.edu/).
+
+I build web apps using [Shiny](https://shiny.rstudio.com/), tools and packages for [R](http://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
+Browse my [list of projects](/project/) for examples of my work, or review my [full curriculum vitae (resume)](https://www.garrickadenbuie.com/resume/).
 
 My research interests include
 
