@@ -53,15 +53,15 @@ or for hands-free installation
 
 #### Overview
 
-![regexplain selection](/images/project/regexplain/regexplain-selection.gif)
+![RegExplain Selection](/images/project/regexplain/regexplain-selection.gif)
 
 #### Regular Expressions Library
 
-![regexplain library](/images/project/regexplain/regexplain-library.gif)
+![RegExplain Library](/images/project/regexplain/regexplain-library.gif)
 
 #### Try the Built-In Examples
 
-![regexplain examples](/images/project/regexplain/regexplain-try-this.gif)
+![RegExplain Examples](/images/project/regexplain/regexplain-try-this.gif)
 
 ## RStudio Addin
 
