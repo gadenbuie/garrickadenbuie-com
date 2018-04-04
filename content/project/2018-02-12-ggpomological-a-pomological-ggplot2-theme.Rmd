@@ -5,7 +5,8 @@ date: '2018-02-16'
 slug: ggpomological
 description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
 type: page
-categories: []
+categories: 
+  - Project
 tags:
   - R
   - ggplot2
