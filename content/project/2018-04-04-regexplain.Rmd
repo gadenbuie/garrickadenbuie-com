@@ -26,7 +26,7 @@ featherlight_image <- function(src, alt, ...) {
 
 [regexplain-src]: https://github.com/gadenbuie/regexplain
 
-**Project Links:** [source][regexplain-src], [installation](#installation), [overview](#overview)
+**Project Links:** [source][regexplain-src], [installation](#installation), [try the app](#demo), [overview](#overview)
 
 #### *Regular expressions are tricky.* RegExplain *makes it easier to see what you’re doing.*
 
@@ -48,6 +48,17 @@ devtools::install_github("gadenbuie/regexplain")
 or for hands-free installation
 
     source("https://install-github.me/gadenbuie/regexplain")
+
+## Try it out! {#demo}
+
+<iframe src="https://gadenbuie.shinyapps.io/regexplain/" style="border: #DDDDDD 2px solid; background-color: #F9F9F9; width: 650px; height: 750px">
+<p>Your browser doesn't support <code>iframes</code> or you have blocker enabled.
+You can try the regexplain addin live at <a href="https://gadenbuie.shinyapps.io/regexplain">https://gadenbuie.shinyapps.io/regexplain</a>.
+</iframe>
+
+A demo version of the app is available online at <a href="https://gadenbuie.shinyapps.io/regexplain">https://gadenbuie.shinyapps.io/regexplain</a>.
+Clicking the "Cancel" or "Send RegEx To Console" buttons will kill the app.
+Reload this page to restart the app.
 
 ## RegExplain in Action
 
