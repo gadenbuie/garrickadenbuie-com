@@ -42,6 +42,11 @@ set_filename <- function(fname, rel = FALSE) {
 
 **Project Links:** [source][ggpomological], [readme](https://github.com/gadenbuie/ggpomological/#readme)
 
+<!-- https://buttons.github.io/ -->
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/ggpomological" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/ggpomological on GitHub">Star</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/ggpomological/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/ggpomological on GitHub">Fork</a>
+
 ```{r header-demo, echo=FALSE}
 fruits <- c("Apple", "Apricot", "Banana", "Fig", "Cherry", "Kiwi", "Grape", "Mango", "Papaya", "Orange", "Peach", "Pear")
 readr::read_tsv("https://cs.joensuu.fi/sipu/datasets/Compound.txt", col_names = FALSE) %>% 
