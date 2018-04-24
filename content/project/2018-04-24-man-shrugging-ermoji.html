@@ -1,0 +1,57 @@
+---
+title: ":joy:   ermoji"
+description: "RStudio Addin to Search and Copy Emoji"
+author: Garrick Aden-Buie
+date: '2018-04-24'
+slug: ermoji
+type: page
+categories: ["Project"]
+tags:
+  - RStudio
+  - Addin
+  - emoji
+draft: yes
+---
+
+
+
+<p><strong>Project Links:</strong> <a href="https://github.com/gadenbuie/ermoji">source</a>, <a href="#installation">installation</a>, <a href="#usage">screenshots</a></p>
+<p>Search, find and copy emojis inside RStudio.
+Basically a <a href="https://rstudio.github.io/DT">DT</a> + <a href="https://github.com/mdlincoln/clipr">clipr</a> + <a href="http://shiny.rstudio.com/articles/gadget-ui.html">miniUI</a> wrapper around <a href="https://github.com/hadley/emo">hadley/emo</a>.</p>
+<p><strong>Why?</strong> Because 🤓. But also because I wanted an easy way to find the Unicode strings for emoji.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Install <strong>ermoji</strong> with <a href="https://github.com/r-lib/devtools">devtools</a></p>
+<pre class="r"><code>devtools::install_github(&quot;gadenbuie/ermoji&quot;)</code></pre>
+<p>Or install using Dean Attali’s <a href="https://github.com/daattali/addinslist">addinlist</a>.</p>
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<p>Open <em>Search and Copy Emoji</em> from the RStudio Addins dropdown.</p>
+<p><img src="/images/project/ermoji/addins-list.png" width="200px"></p>
+<p>Pick your emoji and use the “Copy” buttons to copy the emoji to your clipboard.</p>
+<div id="browse-the-emoji-list" class="section level3">
+<h3>Browse the Emoji List</h3>
+<p><img src="/images/project/ermoji/example-browse.png" width="400px" style="border: solid 1px black"></p>
+</div>
+<div id="search-for-emoji" class="section level3">
+<h3>Search for Emoji</h3>
+<p>You can use regular expressions to search for any text in the table of emoji.</p>
+<p><img src="/images/project/ermoji/example-global-search.png" width="400px" style="border: solid 1px black"></p>
+</div>
+<div id="search-by-emoji" class="section level3">
+<h3>Search <em>by Emoji</em></h3>
+<p>You can even search <em>by emoji</em> by pasting your emoji into the search field.</p>
+<p><img src="/images/project/ermoji/example-emoji-search.png" width="400px" style="border: solid 1px black"></p>
+</div>
+<div id="search-in-specific-columns" class="section level3">
+<h3>Search in Specific Columns</h3>
+<p>Search inside individual columns for more specific emoji finding.</p>
+<p><img src="/images/project/ermoji/example-column-search.png" width="400px" style="border: solid 1px black"></p>
+<hr />
+<p><strong>ermoji</strong> was built by <a href="https://www.garrickadenbuie.com">Garrick Aden-Buie</a> (<a href="https://twitter.com/grrrck">@grrrck</a>).</p>
+<p>Built on the shoulders of giants. Thanks to Hadley Wickham for <a href="https://github.com/hadley/emo">emo</a>, Yihui Xie and RStudio for <a href="https://rstudio.github.io/DT">DT</a>, Matthew Lincoln for <a href="https://github.com/mdlincoln/clipr">clipr</a>. Thanks to <a href="https://github.com/r-lib">r-lib</a> for <code>devtools</code> and <code>usethis</code> — from idea to package in 60 minutes.</p>
+<p>Find more great RStudio addins on the <a href="https://github.com/daattali/addinslist">addinlist</a>, like my other addin <a href="https://github.com/gadenbuie/regexplain">regexplain</a>.</p>
+<p>Feel free to <a href="https://github.com/gadenbuie/ermoji/issues">file an issue</a> if you find a bug or have a theme suggestion – or better yet, submit a pull request!</p>
+</div>
+</div>
