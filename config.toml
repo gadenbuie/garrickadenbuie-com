@@ -59,7 +59,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
     
 [params]
-    description = "Graduate student. Musician. Always learning something new."
+    description = "Data Scientist. #rstats. Musician. Always learning something new."
     EnableEmoji = true
     contactHeader = "Links"
     n_posts_front = 5
