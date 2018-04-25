@@ -26,12 +26,16 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     weight = 2
     url = "/project/"
 [[menu.main]]
-    name = "Talks"
+    name = "Shiny Apps"
     weight = 3
+    url = "https://apps.garrickadenbuie.com"
+[[menu.main]]
+    name = "Talks"
+    weight = 4
     url = "/talk/"
 [[menu.main]]
     name = "Music"
-    weight = 4
+    weight = 5
     url = "/categories/music/"
 #[[menu.main]]
 #    name = "Photos"
