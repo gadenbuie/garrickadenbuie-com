@@ -1,6 +1,6 @@
 title = "Garrick Aden-Buie"
-baseurl = "/"
-relativeurls = true
+baseurl = "https://www.garrickadenbuie.com"
+relativeurls = false
 languageCode = "en-us"
 theme = "hyde"
 googleAnalytics = ""
