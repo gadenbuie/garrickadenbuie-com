@@ -41,7 +41,7 @@ Note that you can stop at the `map_df()` line and get a list of tags with the as
 
 At this point, I decided I'd write this quick post to remind future me when I decide to actually standardize my tags.
 That's when I realized that the "New Post" addin in blogdown lists all of the previously used tags.
-A little digging in the addin script ([inst/scripts/new_post.R](https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R)) revealed thed function behind the dropdown menu.
+A little digging in the addin script ([inst/scripts/new_post.R](https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R)) revealed the function behind the dropdown menu.
 
 ```{r}
 blogdown:::collect_yaml(dir = blogdown_content_path)

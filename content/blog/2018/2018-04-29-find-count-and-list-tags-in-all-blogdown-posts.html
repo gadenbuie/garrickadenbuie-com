@@ -51,7 +51,7 @@ blogdown:::scan_yaml(blogdown_content_path) %&gt;%
 <p>Note that you can stop at the <code>map_df()</code> line and get a list of tags with the associated files in which they appear.</p>
 <p>At this point, I decided I’d write this quick post to remind future me when I decide to actually standardize my tags.
 That’s when I realized that the “New Post” addin in blogdown lists all of the previously used tags.
-A little digging in the addin script (<a href="https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R">inst/scripts/new_post.R</a>) revealed thed function behind the dropdown menu.</p>
+A little digging in the addin script (<a href="https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R">inst/scripts/new_post.R</a>) revealed the function behind the dropdown menu.</p>
 <pre class="r"><code>blogdown:::collect_yaml(dir = blogdown_content_path)</code></pre>
 <pre><code>## $categories
 ## [1] &quot;Blog&quot;    &quot;Music&quot;   &quot;Photos&quot;  &quot;Project&quot;
