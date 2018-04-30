@@ -1,0 +1,86 @@
+---
+title: Find, count and list tags in all blogdown posts
+author: Garrick Aden-Buie
+date: '2018-04-29'
+slug: find-blogdown-tags
+categories:
+  - Blog
+tags:
+  - Note to Self
+  - blogdown
+  - Scripts
+  - R
+  - Tips
+---
+
+
+
+<p>I’ve been using <a href="https://bookdown.org/yihui/blogdown">blogdown</a> for a while now and have basically been randomly selecting tags as I write each post without putting too much thought into it.
+Tonight I was searching for a method to list all of the tags I’ve used across my blogdown posts and I rolled up the following solution.</p>
+<pre class="r"><code>library(tidyverse)
+blogdown_content_path &lt;- here::here(&quot;content&quot;)
+
+# Scan yaml of all posts (run at root of blogdown project)
+blogdown:::scan_yaml(blogdown_content_path) %&gt;% 
+  # Pull out the tags
+  map(&quot;tags&quot;) %&gt;% 
+  # Drop results without any tags
+  discard(is.null) %&gt;% 
+  # Turn into a nice tibble (can stop here if you want tags + files)
+  map_df(~ tibble::data_frame(tag = .), .id = &quot;file&quot;) %&gt;% 
+  # Summarize (group and count)
+  group_by(tag) %&gt;%
+  count(sort = TRUE) %&gt;%
+  # Starts with uppercase?
+  mutate(starts_upper = substr(tag, 1, 1) %in% LETTERS)</code></pre>
+<pre><code>## # A tibble: 50 x 3
+## # Groups:   tag [50]
+##    tag               n starts_upper
+##    &lt;chr&gt;         &lt;int&gt; &lt;lgl&gt;       
+##  1 R                19 TRUE        
+##  2 Data Analysis     6 TRUE        
+##  3 Markdown          6 TRUE        
+##  4 Research          6 TRUE        
+##  5 Visualization     6 TRUE        
+##  6 R Package         5 TRUE        
+##  7 Scripts           5 TRUE        
+##  8 pandoc            4 FALSE       
+##  9 ggplot2           3 FALSE       
+## 10 INFORMS           3 TRUE        
+## # ... with 40 more rows</code></pre>
+<p>Note that you can stop at the <code>map_df()</code> line and get a list of tags with the associated files in which they appear.</p>
+<p>At this point, I decided I’d write this quick post to remind future me when I decide to actually standardize my tags.
+That’s when I realized that the “New Post” addin in blogdown lists all of the previously used tags.
+A little digging in the addin script (<a href="https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R">inst/scripts/new_post.R</a>) revealed thed function behind the dropdown menu.</p>
+<pre class="r"><code>blogdown:::collect_yaml(dir = blogdown_content_path)</code></pre>
+<pre><code>## $categories
+## [1] &quot;Blog&quot;    &quot;Music&quot;   &quot;Photos&quot;  &quot;Project&quot;
+## 
+## $tags
+##  [1] &quot;Academia&quot;                &quot;Addin&quot;                  
+##  [3] &quot;Ambient Assisted Living&quot; &quot;Ambient Intelligence&quot;   
+##  [5] &quot;Apps&quot;                    &quot;blogdown&quot;               
+##  [7] &quot;Data Analysis&quot;           &quot;Differential Equations&quot; 
+##  [9] &quot;Dynamic Systems&quot;         &quot;emoji&quot;                  
+## [11] &quot;Gadget&quot;                  &quot;Gerontechnology&quot;        
+## [13] &quot;ggplot2&quot;                 &quot;git&quot;                    
+## [15] &quot;Google Trends&quot;           &quot;Gun Control&quot;            
+## [17] &quot;Healthcare&quot;              &quot;IIE&quot;                    
+## [19] &quot;INFORMS&quot;                 &quot;Interesting Articles&quot;   
+## [21] &quot;ISERC&quot;                   &quot;LaTeX&quot;                  
+## [23] &quot;Markdown&quot;                &quot;Math&quot;                   
+## [25] &quot;MySQL&quot;                   &quot;Note to Self&quot;           
+## [27] &quot;pandoc&quot;                  &quot;Personal Data&quot;          
+## [29] &quot;Predictive Analytics&quot;    &quot;Presentation&quot;           
+## [31] &quot;Productivity&quot;            &quot;Quotes&quot;                 
+## [33] &quot;R&quot;                       &quot;R Markdown&quot;             
+## [35] &quot;R Package&quot;               &quot;Research&quot;               
+## [37] &quot;RStudio&quot;                 &quot;Scripts&quot;                
+## [39] &quot;Shiny&quot;                   &quot;Smart Home&quot;             
+## [41] &quot;SQL&quot;                     &quot;Status&quot;                 
+## [43] &quot;Test Theory&quot;             &quot;Tips&quot;                   
+## [45] &quot;Tricks&quot;                  &quot;Tutorials&quot;              
+## [47] &quot;Visualization&quot;           &quot;Workflow&quot;               
+## [49] &quot;Writing&quot;                 &quot;xaringan&quot;</code></pre>
+<p>Finally, when you want to open the files containing a particular tag, you can use blogdown’s <code>find_tags()</code> function with the option <code>open = TRUE</code>.</p>
+<pre class="r"><code>blogdown::find_tags(&quot;Note to Self&quot;, open = TRUE)</code></pre>
