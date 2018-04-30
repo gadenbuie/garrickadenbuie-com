@@ -4,7 +4,7 @@ author: ''
 date: '2018-03-30'
 slug: my-ggridges-twitter-header
 categories: ["Blog"]
-tags: ["R", "ggplo2", "Data visualization", "Scripts", "Note to self"]
+tags: ["R", "ggplot2", "Visualization", "Scripts", "Note to Self"]
 ---
 
 ```{r setup, echo=FALSE}

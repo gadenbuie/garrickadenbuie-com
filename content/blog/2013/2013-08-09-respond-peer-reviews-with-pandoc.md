@@ -5,14 +5,14 @@ title: Responding to peer reviewers with Pandoc
 categories:
 - Blog
 tags:
-- academia
+- Academia
 - git
-- latex
-- markdown
+- LaTeX
+- Markdown
 - pandoc
-- productivity
-- workflow
-- writing
+- Productivity
+- Workflow
+- Writing
 ---
 
 I'm in the process of responding to the second round of peer reviews of a paper I've spent considerable time working on over the past year. Of course, this time around I've learned a few new tricks that make the whole process easier to manage... 

@@ -8,7 +8,7 @@ tags:
   - R
   - Markdown
   - Research
-  - RMarkdown
+  - R Markdown
   - Tutorials
 
 talk_author: [Garrick Aden-Buie]

@@ -7,12 +7,11 @@ categories:
   - Blog
 tags:
   - Markdown
-  - markdown
   - pandoc
   - R
   - Tricks
   - blogdown
-  - RMarkdown
+  - R Markdown
 ---
 
 ```{r setup, include=FALSE}

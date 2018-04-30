@@ -6,10 +6,10 @@ categories:
 - Blog
 tags:
 - Apps
-- markdown
-- productivity
-- workflow
-- writing
+- Markdown
+- Productivity
+- Workflow
+- Writing
 ---
 
 I've recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages. I currently have about 90 tabs open, each a winding, twisting trail leading through the world of [Markdown](http://daringfireball.net/projects/markdown/), [Multimarkdown](fletcherpenney.net/multimarkdown/‎), [Pandoc](johnmacfarlane.net/pandoc/‎), [LaTeX](http://latex-project.org), [MathML](http://w3.org/Math), [MathJax](http://mathjax.org), and the other 500 slightly tweaked variants thereof.

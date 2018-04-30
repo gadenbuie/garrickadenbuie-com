@@ -9,7 +9,7 @@ tags:
   - pandoc
   - R
   - Scripts
-  - workflow
+  - Workflow
   - Markdown
 ---
 
