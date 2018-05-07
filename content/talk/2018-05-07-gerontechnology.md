@@ -2,7 +2,7 @@
 title: "Unsupervised behavior change detection using passive sensor systems in the homes of older adults"
 author: ~ 
 date: '2018-05-07'
-slug: gerontechnology
+slug: isg-2018
 categories: []
 tags: 
   - Research
