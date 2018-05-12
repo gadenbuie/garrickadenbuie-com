@@ -1,0 +1,77 @@
+---
+title: ":sunglasses:  xaringanthemer"
+description: "Give your xaringan slides some style without (much) CSS"
+author: Garrick Aden-Buie
+date: '2018-05-12'
+slug: xaringanthemer
+type: page
+categories: ["Project"]
+tags:
+  - xaringan
+  - R Package
+  - Slides
+  - Presentation
+  - R
+  - RStudio
+---
+
+
+
+<p><strong>Project Links:</strong> <a href="https://github.com/gadenbuie/xaringanthemer">source</a>, <a href="https://pkg.garrickadenbuie.com/xaringanthemer">docs</a>, <a href="#installation">installation</a>, <a href="#usage">usage</a></p>
+<!-- https://buttons.github.io/ -->
+<p><a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow <span class="citation">@gadenbuie</span></a> 
+<a class="github-button" href="https://github.com/gadenbuie/xaringanthemer" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/xaringanthemer on GitHub">Star</a> 
+<a class="github-button" href="https://github.com/gadenbuie/xaringanthemer/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/xaringanthemer on GitHub">Fork</a></p>
+<p>Give your <a href="https://github.com/yihui/xaringan">xaringan</a> slides some style with <strong>xaringanthemer</strong> within your <code>slides.Rmd</code> file without (much) CSS.</p>
+<p><img src="/images/project/xaringanthemer/examples.gif" /></p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p><strong>xaringanthemer</strong> currently <a href="https://github.com/gadenbuie/xaringanthemer">lives on GitHub</a>.</p>
+<pre class="r"><code># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;gadenbuie/xaringanthemer&quot;)</code></pre>
+<p>Read on for a quick overview, or read through the <a href="https://pkg.garrickadenbuie.com/xaringanthemer">xaringanthemer documentation</a> for more information.</p>
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<!-- Set link to theme-settings, template-variables, theme functions -->
+<p>First, add the <code>xaringan-themer.css</code> file to the YAML header of your xaringan slides.</p>
+<pre class="yaml"><code>output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css</code></pre>
+<p>Then, in a hidden chunk just after the knitr setup chunk, load <strong>xaringanthemer</strong> and try one of the <a href="https://pkg.garrickadenbuie.com/xaringanthemer/articles/singles/themes.html">theme functions</a>.</p>
+<pre class="markdown"><code>```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+mono_light(
+  base_color = &quot;#1c5253&quot;,
+  header_font_google = google_font(&quot;Josefin Sans&quot;),
+  text_font_google   = google_font(&quot;Montserrat&quot;, &quot;300&quot;, &quot;300i&quot;),
+  code_font_google   = google_font(&quot;Droid Mono&quot;)
+)
+```</code></pre>
+<div class="figure">
+<img src="/images/project/xaringanthemer/example_mono_light_1c5253.png" alt="xaringanthemer example with mono_light theme" />
+<p class="caption">xaringanthemer example with mono_light theme</p>
+</div>
+<div id="tab-completion" class="section level3">
+<h3>Tab Completion</h3>
+<p><strong>xaringanthemer</strong> is <kbd>Tab</kbd> friendly – <a href="https://pkg.garrickadenbuie.com/xaringanthemer/articles/xaringanthemer.html#theme-settings">use autocomplete to explore</a> the <a href="https://pkg.garrickadenbuie.com/xaringanthemer/articles/template-variables.html">template variables</a> that you can adjust in each of the themes!</p>
+<div class="figure">
+<img src="/images/project/xaringanthemer/xaringanthemer-rstudio-help.gif" alt="xaringanthemer rstudio autocompletion example" />
+<p class="caption">xaringanthemer rstudio autocompletion example</p>
+</div>
+</div>
+<div id="r-markdown-template-in-rstudio" class="section level3">
+<h3>R Markdown Template in RStudio</h3>
+<p>You can also skip the above and just create a <em>Ninja Themed Presentation</em> from the New R Markdown Document menu in RStudio.</p>
+<center>
+<img src="/images/project/xaringanthemer/rmarkdown-template-screenshot.png" alt="rstudio xaringanthemer rmarkdown template" width="350" />
+</center>
+<hr />
+<p><strong>xaringanthemer</strong> was built by <a href="https://www.garrickadenbuie.com">Garrick Aden-Buie</a> (<a href="https://twitter.com/grrrck">@grrrck</a>).</p>
+<p>Big thank you to <a href="https://yihui.name">Yihui Xie</a>, especially for <a href="https://github.com/yihui/xaringan">xaringan</a>.
+Also thanks to <a href="http://gnab.org">Ole Petter Bang</a> for <a href="https://github.com/gnab/remark">remark.js</a>.</p>
+<p>Feel free to <a href="https://github.com/gadenbuie/xaringanthemer/issues">file an issue</a>
+if you find a bug or have a theme suggestion – or better yet, submit a pull request!</p>
+</div>
+</div>
