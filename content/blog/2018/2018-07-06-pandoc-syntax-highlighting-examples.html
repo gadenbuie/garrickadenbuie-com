@@ -1,0 +1,28 @@
+---
+title: Pandoc Syntax Highlighting Examples
+date: "2018-07-06"
+draft: true
+---
+
+
+
+<p>The R Markdown book lists <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style">many syntax highlighting color schemes</a>:</p>
+<blockquote>
+<p><code>highlight</code> specifies the syntax highlighting style. Supported styles include <code>default</code>, <code>tango</code>, <code>pygments</code>, <code>kate</code>, <code>monochrome</code>, <code>espresso</code>, <code>zenburn</code>, <code>haddock</code>, and <code>textmate</code>. Pass null to prevent syntax highlighting.</p>
+</blockquote>
+<p>Which is the same as running <code>pandoc --list-highlight-styles</code> (see <a href="http://pandoc.org/MANUAL.html#syntax-highlighting">Syntax Highlighting</a> in the <a href="http://pandoc.org/MANUAL.html">pandoc manual</a>).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>But I couldn’t find a gallery for choosing among these syntax styles, so here’s a quick comparison.</p>
+<p><img src="/images/2018/pandoc-highlights/highlights_default.png" alt="highlight: default" />
+<img src="/images/2018/pandoc-highlights/highlights_espresso.png" alt="highlight: espresso" />
+<img src="/images/2018/pandoc-highlights/highlights_haddock.png" alt="highlight: haddock" />
+<img src="/images/2018/pandoc-highlights/highlights_kate.png" alt="highlight: kate" />
+<img src="/images/2018/pandoc-highlights/highlights_monochrome.png" alt="highlight: monochrome" />
+<img src="/images/2018/pandoc-highlights/highlights_pygments.png" alt="highlight: pygments" />
+<img src="/images/2018/pandoc-highlights/highlights_tango.png" alt="highlight: tango" />
+<img src="/images/2018/pandoc-highlights/highlights_zenburn.png" alt="highlight: zenburn" /></p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note that at the time of this writing 2018-07-06, pandoc has a new highlighting style <code>breezedark</code> that <code>rmarkdown::html_document</code> rejects. Also, <code>textmate</code> seems to have been deprecated because it is also rejected by <code>html_document</code>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
