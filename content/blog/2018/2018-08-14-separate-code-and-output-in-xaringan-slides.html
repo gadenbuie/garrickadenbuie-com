@@ -1,0 +1,145 @@
+---
+title: Separate Code and Output in xaringan slides
+author: Garrick Aden-Buie
+date: '2018-08-14'
+slug: separate-code-and-output-in-xaringan-slides
+categories:
+  - Blog
+tags:
+  - R
+  - xaringan
+---
+
+
+
+<p>Thanks to a recent tweet by <a href="https://twitter.com/EvaMaeRey">Gina Reynolds</a>, I was reminded that I have wanted to write up a short post detailing a couple of <a href="https://slides.yihui.name/xaringan/">xaringan</a> tricks I learned when creating <a href="https://www.garrickadenbuie.com/talk/trug-ggplot2/">my presentation</a> on <a href="https://ggplot2.tidyverse.org">ggplot2</a> for the <a href="https://tampausers.github.io/">Tampa R Users Group</a></p>
+{{% tweet "1029104656763572226" %}}
+<p>For the ggplot presentation, I really wanted to be able to highlight the code and the plot together.
+The standard appearance in RMarkdown is for the code output to appear immediately following the code chunk that created it.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(iris) + 
+  aes(Sepal.Length, Sepal.Width, color = Species) + 
+  geom_point()</code></pre>
+<p><img src="/blog/2018/2018-08-14-separate-code-and-output-in-xaringan-slides_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div id="code-and-figure-side-by-side" class="section level2">
+<h2>Code and Figure Side-by-Side</h2>
+<p>This looks great on the web, but when presenting with limited screen real estate, I wanted slides that look more like this:</p>
+<p><img src="/blog/2018/2018-08-14-separate-code-and-output-in-xaringan-slides_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>In general, with xaringan, you use a two column layout by placing the left and right column content inside <code>.pull-left[]</code> and <code>.pull-right[]</code> respectively.
+What I wanted to do, then was have the code chunk be in the left column and the plot output in the right column.</p>
+<pre class="markdown"><code>.pull-left[
+```{r}
+# code chunk here
+```
+]
+
+.pull-right[
+Plot output here!
+]</code></pre>
+<p>But the default action of <code>knitr</code> will place the plot output inside the <code>.pull-left[]</code> block, keeping it in the left column.</p>
+<p>To solve this problem, we need to tell knitr to hold off on evaluating the code output and to place the results in a different chunk.
+To do this, we can use the <code>ref.label</code> [code chunk option][TODO KNITR CHUNK LINK]:</p>
+<pre class="markdown"><code>.pull-left[
+```{r plot-label, eval=FALSE}
+# code chunk here
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point()
+```
+]
+
+.pull-right[
+```{r plot-label-out, ref.label=&quot;plot-label&quot;, echo=FALSE}
+```
+]</code></pre>
+<p><img src="/blog/2018/2018-08-14-separate-code-and-output-in-xaringan-slides_files/pull-left-right.png" /></p>
+<p>This works pretty well, but the plots ended up being somewhat squished, so I created two CSS classess for the left and right columns.</p>
+<pre class="css"><code>/* custom.css */
+.left-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}</code></pre>
+<p>I then used the following options in the YAML header of xaringan</p>
+<pre class="yaml"><code>output:
+  xaringan::moon_reader:
+    css: [&quot;default&quot;, &quot;custom.css&quot;]
+    nature:
+      ratio: 16:9</code></pre>
+<p>and changed <code>.pull-left[]</code> ➡ <code>.left-code[]</code> and <code>.pull-right[]</code> ➡ <code>.right-plot[]</code>.</p>
+<pre class="markdown"><code>.left-code[
+```{r plot-label, eval=FALSE}
+# code chunk here
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point()
+```
+]
+
+.right-plot[
+```{r plot-label-out, ref.label=&quot;plot-label&quot;, echo=FALSE, out.width=&quot;100%&quot;}
+```
+]</code></pre>
+<p><img src="/blog/2018/2018-08-14-separate-code-and-output-in-xaringan-slides_files/left-code-right-plot.png" /></p>
+</div>
+<div id="plot-in-picture---plot-in-small-callout-box" class="section level2">
+<h2>Plot-In-Picture - Plot in Small Callout Box</h2>
+<p>The <em>side-by-side</em> layout works well when the code is small, but for plot requiring more code, I wanted to be able to see all of the code while still retaining a preview of the plot we were building up.</p>
+<p>The inspiration for this layout is the “Picture in Picture” TV feature.</p>
+<p>The xarinan code looks like…</p>
+<pre class="markdown"><code>```{r large-plot, eval=FALSE}
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point(size = 4) +
+  labs(x = &#39;Sepal Length&#39;, 
+       y = &#39;Sepal Width&#39;) + 
+  theme_minimal() +
+  theme(
+    text = element_text(size = 24, family = &quot;PT Sans&quot;)
+  )
+```
+
+.plot-callout[
+```{r large-plot-callout, ref.label=&quot;large-plot&quot;, fig.callout=TRUE}
+```
+]</code></pre>
+<p>The <code>fig.callout=TRUE</code> is a custom knitr chunk option I created that sets some default chunk values for the callout chunks.</p>
+<pre class="markdown"><code>```{r setup, include=FALSE}
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo &lt;- FALSE
+    options$out.height &lt;- &quot;99%&quot;
+    options$fig.width &lt;- 16
+    options$fig.height &lt;- 8
+  }
+  options
+})
+```</code></pre>
+<p>And the CSS required</p>
+<pre class="css"><code>/* custom.css */
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}</code></pre>
+<p><img src="/blog/2018/2018-08-14-separate-code-and-output-in-xaringan-slides_files/plot-callout.png" /></p>
+</div>
