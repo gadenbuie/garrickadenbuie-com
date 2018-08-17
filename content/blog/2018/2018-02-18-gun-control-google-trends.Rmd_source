@@ -48,7 +48,7 @@ pacman::p_load("dplyr")
 pacman::p_load("readr")
 pacman::p_load("purrr")
 pacman::p_load("ggplot2")
-setCacheDir(here::here('data/gun-control'))
+setCacheDir(here::here('_data/gun-control'))
 
 baseline_term <- "baseline"
 ```
@@ -113,7 +113,7 @@ Note that total victims include casualties and injuries.
 ```{r get-kaggle-mass-shooting-data, include=FALSE}
 event_dates <- 
   read_csv(
-    here::here("data/gun-control/mass-shootings-dataset-v5.csv"),
+    here::here("_data/gun-control/mass-shootings-dataset-v5.csv"),
     col_types = cols(
       `S#` = col_integer(),
       Title = col_character(),
@@ -260,7 +260,7 @@ simpleCache("all_guntrends", {
   gtrends(c("gun control", baseline_term), geo = "US", time = "all")
 })
 
-if (file.exists(here::here('data/gun-control/parkland_trends.RData'))) {
+if (file.exists(here::here('_data/gun-control/parkland_trends.RData'))) {
   simpleCache("parkland_trends")
   parkland_trends_previous <- parkland_trends; rm("parkland_trends")
 } else { 
@@ -583,7 +583,7 @@ ggplot(guntrends_similar) +
   hrbrthemes::scale_color_ipsum() +
   annotate('text', 
            x = 19, y = 0.05, 
-           label = paste("Updated:", file.mtime(here::here('data/gun-control/parkland_trends.RData'))),
+           label = paste("Updated:", file.mtime(here::here('_data/gun-control/parkland_trends.RData'))),
            family = "PT Sans", 
            size = 3, 
            color = "grey40") +
