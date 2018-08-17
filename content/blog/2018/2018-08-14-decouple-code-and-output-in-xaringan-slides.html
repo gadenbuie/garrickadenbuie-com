@@ -1,0 +1,179 @@
+---
+title: Decouple Code and Output in xaringan slides
+author: Garrick Aden-Buie
+date: '2018-08-14'
+slug: decouple-code-and-output-in-xaringan-slides
+categories:
+  - Blog
+tags:
+  - R
+  - xaringan
+---
+
+
+
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>In this post I demonstrate how the <code>ref.label</code> <a href="https://yihui.name/knitr/options/)">knitr chunk option</a> can be used to decouple code chunks and their outputs in <a href="https://slides.yihui.name/xaringan/">xaringan</a> presentations.
+I give two examples where this could be useful, namely by showing <a href="https://ggplot2.tidyverse.org">ggplot2</a> code and plots <a href="#side-by-side">side-by-side</a> on the same slide or by placing the plot output <a href="#pip">picture-in-picture</a> style in the bottom corner of the slide.</p>
+<p>You can see this technique in action in my <a href="https://gadenbuie.github.io/trug-ggplot2">presentation on ggplot2</a>.
+Or you can <a href="https://gist.github.com/gadenbuie/3869b688f5e50882e67b684a1e092937">download the R Markdown source</a> for a minimal xaringan slide deck that demonstrates the whole process.</p>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>A recent tweet by <a href="https://twitter.com/EvaMaeRey">Gina Reynolds</a> reminded me that I’ve been sitting on this blog post for a while.</p>
+{{% tweet "1029104656763572226" %}}
+<p>I learned a few <a href="https://slides.yihui.name/xaringan/">xaringan</a> tricks<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I when creating <a href="https://www.garrickadenbuie.com/talk/trug-ggplot2/">my presentation</a> on <a href="https://ggplot2.tidyverse.org">ggplot2</a> for the <a href="https://tampausers.github.io/">Tampa R Users Group</a>, and hopefully this blog post makes it easier to replicate than digging through the messy source of that presentation.</p>
+<p>To help teach the ggplot2 syntax, I thought it was important to see the code and the plot at the same time, side-by-side.
+Unfortunately, the standard appearance in R Markdown is for the code output to appear immediately following the code chunk that created it, like this.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(iris) + 
+  aes(Sepal.Length, Sepal.Width, color = Species) + 
+  geom_point()</code></pre>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="side-by-side" class="section level2">
+<h2>Code and Figure Side-by-Side</h2>
+<p>While this looks great on the web or in documents, you quickly run out of vertical space when presenting with the limited screen real estate of a wide-screen television.
+What I wanted were slides that look more like this:</p>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>In general, with xaringan, you use a two column layout by placing the left and right column content inside <code>.pull-left[]</code> and <code>.pull-right[]</code> respectively.</p>
+<pre class="markdown"><code>.pull-left[
+```{r}
+# plot code here
+```
+]
+
+.pull-right[
+Plot output here!
+]</code></pre>
+<p>But the default action of <code>knitr</code> will place the plot output inside the <code>.pull-left[]</code> block, keeping it in the left column.</p>
+<p>To solve this problem, we need to tell knitr to hold off on evaluating the code output and to place the results in a different chunk.
+We can accomplish this by setting <code>eval=FALSE</code> in the first chunk and using the <code>ref.label</code> <a href="https://yihui.name/knitr/options/)">code chunk option</a> with <code>echo = FALSE</code> to output the result in the second:</p>
+<pre class="markdown"><code>.pull-left[
+```{r plot-label, eval=FALSE}
+# code chunk here
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point()
+```
+]
+
+.pull-right[
+```{r plot-label-out, ref.label=&quot;plot-label&quot;, echo=FALSE}
+```
+]</code></pre>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/pull-left-right.png" /></p>
+<p>This works pretty well, but the plots ended up being somewhat squished, so I created two CSS classess for the left and right columns.</p>
+<pre class="css"><code>/* custom.css */
+.left-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}</code></pre>
+<p>I then used the following options in the YAML header of xaringan</p>
+<pre class="yaml"><code>output:
+  xaringan::moon_reader:
+    css: [&quot;default&quot;, &quot;custom.css&quot;]
+    nature:
+      ratio: 16:9</code></pre>
+<p>and changed <code>.pull-left[]</code> ➡ <code>.left-code[]</code> and <code>.pull-right[]</code> ➡ <code>.right-plot[]</code>.</p>
+<pre class="markdown"><code>.left-code[
+```{r plot-label, eval=FALSE}
+# code chunk here
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point()
+```
+]
+
+.right-plot[
+```{r plot-label-out, ref.label=&quot;plot-label&quot;, echo=FALSE, fig.dim=c(4.8, 4.5), out.width=&quot;100%&quot;}
+```
+]</code></pre>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/left-code-right-plot.png" /></p>
+<p>For best results, notice that I set the figure dimentions to 4.8 x 4.5 – and aspect ratio of approximately <code>9 / (16 * 0.6)</code> – to match the <code>.right-plot</code> width in the CSS.
+I also added <code>out.width=&quot;100%&quot;</code> so that the image is automatically scaled to fill the column width.</p>
+<p>You can set this once in your setup chunk to apply these settings to all plots so that you don’t need to repeat yourself each time.</p>
+<pre class="markdown"><code>```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.dim=c(4.8, 4.5), fig.retina=2, out.width=&quot;100%&quot;)
+```</code></pre>
+</div>
+<div id="pip" class="section level2">
+<h2>Plot-In-Picture - Plot in Small Callout Box</h2>
+<p>The <em>side-by-side</em> layout works well when the code is small, but for a plot that requires longer blocks of code, I wanted to be able to see all of the code while still retaining the connection to the plot we were building up.</p>
+<p>The inspiration for this layout is the “Picture in Picture” TV feature, where the changes to the plot appear in a small callout image in the slide to preview the changes at each step.
+Then, at the end, we can reveal the final plot in full screen.</p>
+<p>The xaringan portion looks like this</p>
+<pre class="markdown"><code>```{r large-plot, eval=FALSE}
+ggplot(iris) + 
+  aes(Sepal.Length, 
+      Sepal.Width, 
+      color = Species) + 
+  geom_point(size = 4) +
+  labs(x = &#39;Sepal Length&#39;, 
+       y = &#39;Sepal Width&#39;) + 
+  theme_minimal() +
+  theme(
+    text = element_text(size = 24, family = &quot;PT Sans&quot;)
+  )
+```
+
+.plot-callout[
+```{r large-plot-callout, ref.label=&quot;large-plot&quot;, fig.callout=TRUE}
+```
+]</code></pre>
+<p>The <code>fig.callout=TRUE</code> is a custom knitr chunk option I created that sets some default chunk values for the callout chunks so that I don’t have to repeat these every time I use this layout.</p>
+<pre class="markdown"><code>```{r setup, include=FALSE}
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if (options$fig.callout) {
+    options$echo &lt;- FALSE
+    options$out.height &lt;- &quot;99%&quot;
+    options$fig.width &lt;- 16
+    options$fig.height &lt;- 8
+  }
+  options
+})
+```</code></pre>
+<p>And then finally, I used the following CSS to place the callout in the bottom right corner, set the size of the plot and style the plot image inside.</p>
+<pre class="css"><code>/* custom.css */
+.plot-callout {
+  height: 225px;
+  width: 450px;
+  bottom: 5%;
+  right: 5%;
+  position: absolute;
+  padding: 0px;
+  z-index: 100;
+}
+.plot-callout img {
+  width: 100%;
+  border: 4px solid #23373B;
+}</code></pre>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/plot-callout.png" /></p>
+<p>Then the final plot is revealed on the next slide using <code>fig.callout=TRUE</code> but without wrapping the result chunk in side <code>.plot-callout[]</code>.</p>
+<pre class="markdown"><code>```{r large-plot-full-output, ref.label=&quot;large-plot&quot;, fig.callout=TRUE}
+```</code></pre>
+<p><img src="/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/large-plot-full-slide.png" /></p>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap Up</h2>
+<p>If you want to see the whole process in action, I’ve compiled a <a href="https://gist.github.com/gadenbuie/3869b688f5e50882e67b684a1e092937">minimal xaringan presentation</a> that you can download and use as a starting point.</p>
+<p>Let me know if this was helpful on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a> and happy presenting!</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Okay, really these are R Markdown and knitr tricks and if you want to learn more you should definitely check out <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
