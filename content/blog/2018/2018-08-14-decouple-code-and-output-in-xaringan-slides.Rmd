@@ -34,7 +34,10 @@ A recent tweet by [Gina Reynolds](https://twitter.com/EvaMaeRey) reminded me tha
 
 `r blogdown::shortcode("tweet", "1029104656763572226")`
 
-I learned a few [xaringan] tricks[^rmd] I when creating [my presentation](https://www.garrickadenbuie.com/talk/trug-ggplot2/) on [ggplot2] for the [Tampa R Users Group][trug], and hopefully this blog post makes it easier to replicate than digging through the messy source of that presentation.
+I learned a few [xaringan] tricks[^rmd] when creating 
+[my presentation](https://www.garrickadenbuie.com/talk/trug-ggplot2/) 
+on [ggplot2] for the [Tampa R Users Group][trug], 
+and hopefully this blog post makes it easier to replicate than digging through the messy source of that presentation.
 
 [^rmd]: Okay, really these are R Markdown and knitr tricks and if you want to learn more you should definitely check out [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/).
 
