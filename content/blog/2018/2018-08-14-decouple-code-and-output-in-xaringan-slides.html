@@ -14,7 +14,7 @@ tags:
 
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>In this post I demonstrate how the <code>ref.label</code> <a href="https://yihui.name/knitr/options/)">knitr chunk option</a> can be used to decouple code chunks and their outputs in <a href="https://slides.yihui.name/xaringan/">xaringan</a> presentations.
+<p>In this post I demonstrate how the <code>ref.label</code> <a href="https://yihui.name/knitr/options/">knitr chunk option</a> can be used to decouple code chunks and their outputs in <a href="https://slides.yihui.name/xaringan/">xaringan</a> presentations.
 I give two examples where this could be useful, namely by showing <a href="https://ggplot2.tidyverse.org">ggplot2</a> code and plots <a href="#side-by-side">side-by-side</a> on the same slide or by placing the plot output <a href="#pip">picture-in-picture</a> style in the bottom corner of the slide.</p>
 <p>You can see this technique in action in my <a href="https://gadenbuie.github.io/trug-ggplot2">presentation on ggplot2</a>.
 Or you can <a href="https://gist.github.com/gadenbuie/3869b688f5e50882e67b684a1e092937">download the R Markdown source</a> for a minimal xaringan slide deck that demonstrates the whole process.</p>
@@ -52,7 +52,7 @@ Plot output here!
 ]</code></pre>
 <p>But the default action of <code>knitr</code> will place the plot output inside the <code>.pull-left[]</code> block, keeping it in the left column.</p>
 <p>To solve this problem, we need to tell knitr to hold off on evaluating the code output and to place the results in a different chunk.
-We can accomplish this by setting <code>eval=FALSE</code> in the first chunk and using the <code>ref.label</code> <a href="https://yihui.name/knitr/options/)">code chunk option</a> with <code>echo = FALSE</code> to output the result in the second:</p>
+We can accomplish this by setting <code>eval=FALSE</code> in the first chunk and using the <code>ref.label</code> <a href="https://yihui.name/knitr/options/">code chunk option</a> with <code>echo = FALSE</code> to output the result in the second:</p>
 <pre class="markdown"><code>.pull-left[
 ```{r plot-label, eval=FALSE}
 # code chunk here
