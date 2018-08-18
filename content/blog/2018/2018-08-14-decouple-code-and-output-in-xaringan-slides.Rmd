@@ -13,7 +13,7 @@ tags:
 [xaringan]: https://slides.yihui.name/xaringan/
 [trug]: https://tampausers.github.io/
 [ggplot2]: https://ggplot2.tidyverse.org
-[knitr-chunk-option]: https://yihui.name/knitr/options/)
+[knitr-chunk-option]: https://yihui.name/knitr/options/
 [trug-ggplot2]: https://gadenbuie.github.io/trug-ggplot2
 
 ```{r setup, include=FALSE}
