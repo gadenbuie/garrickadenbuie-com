@@ -29,7 +29,7 @@ I give two examples where this could be useful, namely by showing [ggplot2] code
 You can see this technique in action in my [presentation on ggplot2][trug-ggplot2].
 Or you can [download the R Markdown source](https://gist.github.com/gadenbuie/3869b688f5e50882e67b684a1e092937) for a minimal xaringan slide deck that demonstrates the whole process.
 
-**Update:** Yihui Xie (the author of `knitr` and `xaringan`) [pointed out on Twitter][yihui-tip] that another valid (and maybe better) option is to use `knitr::fig_chunk()` as [demonstrated here](#using-knitr-fig-chunk).
+**Update:** Yihui Xie (the author of `knitr` and `xaringan`) [pointed out on Twitter][yihui-tip] that another valid (and maybe better) option is to use `knitr::fig_chunk()`, and I've added a [demonstration of that approach to this post](#using-knitr-fig-chunk).
 Honestly, if I had known about this function before, it would have been the centerpiece of this blog post!
 
 ## Background
@@ -256,10 +256,10 @@ Then the final plot is revealed on the next slide using `fig.callout=TRUE` but w
 
 ## Using knitr's fig_chunk() {#using-knitr-fig-chunk}
 
-[Yihui Xie](https://yihui.name) pointed out [on Twitter][yihui-tip] that we can use the chunk option `fig.show="hide"` on the source chunk and then call `knitr::fig_chunk()` directly wherever we want to embed the plot.
+[Yihui Xie](https://yihui.name) pointed out [on Twitter][yihui-tip] that we can use the chunk option `fig.show="hide"` for the source chunk and then call `knitr::fig_chunk()` directly wherever we want to embed the plot.
 What's nice about this approach is `fig_chunk()` outputs the path to the image, so we are completely in control of how that image is embedded into our document.
 
-He also wrote a [helpful blog post about `fig_chunk`](https://yihui.name/en/2017/09/knitr-fig-chunk/) 
+He also wrote a [helpful blog post about `fig_chunk()`](https://yihui.name/en/2017/09/knitr-fig-chunk/) 
 where he describes his motivation for creating this function.
 (Spoiler alert: it is **exactly** the use case described in this blog post!)
 The help text for the function also helpfully describes our situation to a T:
