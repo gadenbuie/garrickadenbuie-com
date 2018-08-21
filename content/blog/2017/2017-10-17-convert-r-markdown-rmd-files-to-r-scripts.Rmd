@@ -17,6 +17,12 @@ tags:
 knitr::opts_chunk$set(cache = TRUE)
 ```
 
+> **tl; super dr:** I'm really not sure how `knitr::purl()` escaped my attention -- maybe I thought it didn't do something I felt was necessary at the time -- but if you've stumbled on this page looking for a way to convert an R Markdown file into an R script, then the function you are looking for is called `knitr::purl()`.
+>
+> Try `knitr::purl(input, output, documentation = 2)`. It's exactly what you're looking for.
+
+***
+
 > **tl;dr:** A [function called backstitch][gist-link] that backstitches `knitr::knit`able R Markdown files to `knitr::spin`able R Scripts.
 
 There are two great ways of writing R Markdown reports.
