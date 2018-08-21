@@ -18,7 +18,7 @@ tags:
 I give two examples where this could be useful, namely by showing <a href="https://ggplot2.tidyverse.org">ggplot2</a> code and plots <a href="#side-by-side">side-by-side</a> on the same slide or by placing the plot output <a href="#pip">picture-in-picture</a> style in the bottom corner of the slide.</p>
 <p>You can see this technique in action in my <a href="https://gadenbuie.github.io/trug-ggplot2">presentation on ggplot2</a>.
 Or you can <a href="https://gist.github.com/gadenbuie/3869b688f5e50882e67b684a1e092937">download the R Markdown source</a> for a minimal xaringan slide deck that demonstrates the whole process.</p>
-<p><strong>Update:</strong> Yihui Xie (the author of <code>knitr</code> and <code>xaringan</code>) <a href="https://twitter.com/xieyihui/status/1031033538743857153">pointed out on Twitter</a> that another valid (and maybe better) option is to use <code>knitr::fig_chunk()</code> as <a href="#using-knitr-fig-chunk">demonstrated here</a>.
+<p><strong>Update:</strong> Yihui Xie (the author of <code>knitr</code> and <code>xaringan</code>) <a href="https://twitter.com/xieyihui/status/1031033538743857153">pointed out on Twitter</a> that another valid (and maybe better) option is to use <code>knitr::fig_chunk()</code>, and I’ve added a <a href="#using-knitr-fig-chunk">demonstration of that approach to this post</a>.
 Honestly, if I had known about this function before, it would have been the centerpiece of this blog post!</p>
 </div>
 <div id="background" class="section level2">
@@ -173,9 +173,9 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 </div>
 <div id="using-knitr-fig-chunk" class="section level2">
 <h2>Using knitr’s fig_chunk()</h2>
-<p><a href="https://yihui.name">Yihui Xie</a> pointed out <a href="https://twitter.com/xieyihui/status/1031033538743857153">on Twitter</a> that we can use the chunk option <code>fig.show=&quot;hide&quot;</code> on the source chunk and then call <code>knitr::fig_chunk()</code> directly wherever we want to embed the plot.
+<p><a href="https://yihui.name">Yihui Xie</a> pointed out <a href="https://twitter.com/xieyihui/status/1031033538743857153">on Twitter</a> that we can use the chunk option <code>fig.show=&quot;hide&quot;</code> for the source chunk and then call <code>knitr::fig_chunk()</code> directly wherever we want to embed the plot.
 What’s nice about this approach is <code>fig_chunk()</code> outputs the path to the image, so we are completely in control of how that image is embedded into our document.</p>
-<p>He also wrote a <a href="https://yihui.name/en/2017/09/knitr-fig-chunk/">helpful blog post about <code>fig_chunk</code></a>
+<p>He also wrote a <a href="https://yihui.name/en/2017/09/knitr-fig-chunk/">helpful blog post about <code>fig_chunk()</code></a>
 where he describes his motivation for creating this function.
 (Spoiler alert: it is <strong>exactly</strong> the use case described in this blog post!)
 The help text for the function also helpfully describes our situation to a T:</p>
