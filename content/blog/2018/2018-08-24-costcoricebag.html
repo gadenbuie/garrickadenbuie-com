@@ -21,7 +21,7 @@ editor_options:
 What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?</p>
 <p>I wanted to know.
 But I didn’t want to scroll through endless tweets.
-<a href="#final-result">Jump head to the answer</a> if you’re in a hurry yourself.</p>
+<a href="#final-result">Jump ahead to the answer</a> if you’re in a hurry yourself.</p>
 <p>To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: <a href="https://rtweet.info">rtweet</a>.
 Getting all of <a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a>’s recent tweets was suprisingly simple — all it takes is a single call to <a href="https://rtweet.info/reference/get_timeline.html"><code>get_timeline()</code></a>:</p>
 <pre class="r"><code>library(rtweet)
@@ -44,20 +44,20 @@ Upon arranging the tweets in reverse chronological order, the pattern in the <co
   arrange(desc(created_at))
 
 first_words %&gt;% 
-  select(created_at, status_id, text, first_word) </code></pre>
-<pre><code>## # A tibble: 376 x 4
-##    created_at          status_id           text                 first_word
-##    &lt;dttm&gt;              &lt;chr&gt;               &lt;chr&gt;                &lt;chr&gt;     
-##  1 2018-08-23 18:43:27 1032699857117605888 &quot;IS IT JUST ME, OR … IS        
-##  2 2018-08-23 18:42:49 1032699700519034880 This is the moment … This      
-##  3 2018-08-23 17:53:19 1032687243729756160 The best state fair… The       
-##  4 2018-08-23 17:46:29 1032685522915926018 Real talk: idk what… Real      
-##  5 2018-08-23 04:35:54 1032486565724008448 Life was so much ea… Life      
-##  6 2018-08-23 01:43:50 1032443265218486273 IS THERE A MORE ACC… IS        
-##  7 2018-08-23 00:36:12 1032426244716093441 This is the 9th tim… This      
-##  8 2018-08-22 17:22:21 1032317059395465216 Just told an 11 yea… Just      
-##  9 2018-08-22 13:56:58 1032265375864508416 Fantasy football:    Fantasy   
-## 10 2018-08-22 13:53:41 1032264548403830784 Caught me https://t… Caught    
+  select(created_at, text, first_word) </code></pre>
+<pre><code>## # A tibble: 376 x 3
+##    created_at          text                                     first_word
+##    &lt;dttm&gt;              &lt;chr&gt;                                    &lt;chr&gt;     
+##  1 2018-08-23 18:43:27 &quot;IS IT JUST ME, OR DID I JUST PULL OFF … IS        
+##  2 2018-08-23 18:42:49 This is the moment I’ve been waiting fo… This      
+##  3 2018-08-23 17:53:19 The best state fair food is corn on the… The       
+##  4 2018-08-23 17:46:29 Real talk: idk what I’m going to do whe… Real      
+##  5 2018-08-23 04:35:54 Life was so much easier when my school … Life      
+##  6 2018-08-23 01:43:50 IS THERE A MORE ACCURATE REPRESENTATION… IS        
+##  7 2018-08-23 00:36:12 This is the 9th time I’ve heard Africa … This      
+##  8 2018-08-22 17:22:21 Just told an 11 year old boy what’s up … Just      
+##  9 2018-08-22 13:56:58 Fantasy football:                        Fantasy   
+## 10 2018-08-22 13:53:41 Caught me https://t.co/SvUL450t3D        Caught    
 ## # ... with 366 more rows</code></pre>
 <div id="final-result" class="section level2">
 <h2>Queen of the First Word Tweets</h2>
@@ -226,7 +226,12 @@ HAVE THE BEST SUMMER EVER" style="color: #606060;" href="https://twitter.com/Cos
 <p>When did <a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a> do most of their Queen-related tweeting?
 To get an idea of how often they tweeted, I created a calendar heatmap (or GitHub-style square tile plot) of their daily tweeting activities.</p>
 <p><img src="/blog/2018/2018-08-24-costcoricebag_files/figure-html/tileplot-1.png" width="1152" /></p>
-<p>What’s really impressive is that, except for a few <a href="https://twitter.com/CostcoRiceBag/status/1006312148497305601">Bismillah</a> and <a href="https://twitter.com/CostcoRiceBag/status/1017228225779511297">Scaramouche</a> tweets, most of the tweets are really just normal everyday tweeting.
+<p>What’s really impressive is that, except for a few <a href="https://twitter.com/CostcoRiceBag/status/1006312148497305601">Bismillah</a> and <a href="https://twitter.com/CostcoRiceBag/status/1017228225779511297">Scaramouche</a> tweets, most of the tweets are really just
+<a href="https://twitter.com/CostcoRiceBag/status/1011437034035122178">normal</a>
+<a href="https://twitter.com/CostcoRiceBag/status/996618711535640577">everyday</a>
+<a href="https://twitter.com/CostcoRiceBag/status/1023396608426303489">tweeting</a>.
 I’d love to get into a textual analysis, but it’s late so I’ll leave you with this:</p>
 {{% tweet "997437696476934144" %}}
+<p>Rock on! 🤘</p>
+<p><img src="https://media.giphy.com/media/3o6ZtjUZAD5Lf0QFLW/giphy.gif" /></p>
 </div>

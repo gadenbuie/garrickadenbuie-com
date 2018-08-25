@@ -32,7 +32,7 @@ What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?
 
 I wanted to know.
 But I didn't want to scroll through endless tweets.
-[Jump head to the answer](#final-result) if you're in a hurry yourself.
+[Jump ahead to the answer](#final-result) if you're in a hurry yourself.
 
 To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: [rtweet].
 Getting all of [&commat;CostcoRiceBag](https://twitter.com/CostcoRiceBag)'s recent tweets was suprisingly simple — all it takes is a single call to [`get_timeline()`](https://rtweet.info/reference/get_timeline.html):
@@ -62,7 +62,7 @@ first_words <- crb_tweets %>%
   arrange(desc(created_at))
 
 first_words %>% 
-  select(created_at, status_id, text, first_word) 
+  select(created_at, text, first_word) 
 ```
 
 ## Queen of the First Word Tweets {#final-result}
@@ -130,7 +130,14 @@ first_words %>%
   }
 ```
 
-What's really impressive is that, except for a few [Bismillah](https://twitter.com/CostcoRiceBag/status/1006312148497305601) and [Scaramouche](https://twitter.com/CostcoRiceBag/status/1017228225779511297) tweets, most of the tweets are really just normal everyday tweeting.
+What's really impressive is that, except for a few [Bismillah](https://twitter.com/CostcoRiceBag/status/1006312148497305601) and [Scaramouche](https://twitter.com/CostcoRiceBag/status/1017228225779511297) tweets, most of the tweets are really just 
+[normal](https://twitter.com/CostcoRiceBag/status/1011437034035122178) 
+[everyday](https://twitter.com/CostcoRiceBag/status/996618711535640577) 
+[tweeting](https://twitter.com/CostcoRiceBag/status/1023396608426303489).
 I'd love to get into a textual analysis, but it's late so I'll leave you with this:
 
 `r blogdown::shortcode("tweet", "997437696476934144")`
+
+Rock on! &#x1F918;
+
+![](https://media.giphy.com/media/3o6ZtjUZAD5Lf0QFLW/giphy.gif)
