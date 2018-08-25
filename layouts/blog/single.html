@@ -16,6 +16,7 @@
 					{{ .Content }}
 				</main>
 				<footer class="footer">
+				  {{ if (or .Params.categories .Params.tags) }}<hr>{{ end }}
 					{{ if .Params.categories }}
 					<span>
 						Category:
