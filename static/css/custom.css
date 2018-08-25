@@ -154,3 +154,12 @@ code {
     padding-left: 3em;
   }
 }
+
+.post-source a {
+  color: #de8381 !important;
+  font-weight: normal;
+}
+.post-source {
+  margin-top: -16px;
+  margin-bottom: 16px;
+}
