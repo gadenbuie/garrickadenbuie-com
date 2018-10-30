@@ -53,7 +53,7 @@
             <tr>
               <td>Slides Link</td>
               <td>
-                <a href={{ .Params.talk_slides_url | relURL }}>{{ .Params.talk_slides_url | relURL }}</a>
+                <a href={{ .Params.talk_slides_url | relURL }}>{{ .Params.talk_slides_url | absURL }}</a>
               </td>
             </tr>
             {{ end }}
