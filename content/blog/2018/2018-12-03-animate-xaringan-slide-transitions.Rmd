@@ -14,10 +14,10 @@ tags:
 
 [xaringan]: https://github.com/yihui/xaringan
 [remark.js]: https://github.com/gnab/remark
-[animate.css]: http://daneden.github.io/animate.css
+[animate.css]: https://daneden.github.io/animate.css
 
 > [xaringan] is an excellent package for creating slideshows with [remark.js] using R Markdown.
-For an example presentation showing off all of xaringan's ninja presentation skills, take a look at the [introductory presentation](http://slides.yihui.name/xaringan/).
+For an example presentation showing off all of xaringan's ninja presentation skills, take a look at the [introductory presentation](https://slides.yihui.name/xaringan/).
 
 You can easily add slide transitions and animations to your xaringan presentation using [animate.css].
 It [turns out that remark.js supports animations](https://github.com/gnab/remark/pull/69) via [animate.css], which means that xaringan does, too!
@@ -88,4 +88,4 @@ The end result will look something like this. Have fun! &#x1F60E;
 
 This topic came up in a [xaringan GitHub issue](https://github.com/yihui/xaringan/issues/184), where [pzhaonet](https://github.com/pzhaonet) shared a link to a demonstration of [all 77 available transitions](http://www.pzhao.org/zh/post/xaringan-animate-single/).
 
-If you like xaringan, you might also like my package for customizing it's colors and themes: [xaringanthemer](/project/xaringanthemer).
+If you like xaringan, you might also like my package for customizing its colors and themes: [xaringanthemer](/project/xaringanthemer).
