@@ -42,9 +42,8 @@ tags:
 <div id="download-with-r" class="section level3">
 <h3>Download with R</h3>
 <p>Use this code to download the theme file straight into the RStudio themes directory.</p>
-<pre class="r"><code># I&#39;ve only tested on Mac
-library(fs)
-rsthemes_dir &lt;- path_home(&quot;.R&quot;, &quot;rstudio&quot;, &quot;themes&quot;)
+<pre class="r"><code>library(fs)
+rsthemes_dir &lt;- path_home_r(&quot;.R&quot;, &quot;rstudio&quot;, &quot;themes&quot;)
 dir_create(rsthemes_dir)
 download.file(
   &quot;https://git.io/yule-rstudio&quot;,
