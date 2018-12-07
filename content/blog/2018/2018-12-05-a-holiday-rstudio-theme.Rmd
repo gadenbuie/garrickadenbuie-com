@@ -27,39 +27,31 @@ Bring yuletide cheer and seasons greetings to your [favorite R IDE](https://rstu
 
 ![](/images/2018/holiday-rstudio-theme/floating-rstudio.png)
 
-Featuring magical additions such as a candy cane style line highlight and a blinking Christmas-light (vim) cursor:
+Featuring magical additions such as a candy cane style line highlight and a blinking Christmas-light cursor:
 
 <p align="center"><img src="/images/2018/holiday-rstudio-theme/blinking-cursor.gif"/></p>
 
 ## Installation
 
-You'll need RStudio version 1.2. Grab the [RStudio preview version here](https://www.rstudio.com/products/rstudio/download/preview/).
+You'll need RStudio version 1.2. Grab the [preview version here](https://www.rstudio.com/products/rstudio/download/preview/).
 
-1. Download [Yule-RStudio.rstheme](https://github.com/gadenbuie/yule-rstudio/blob/master/Yule-RStudio.rstheme) and place it in `~/.R/rstudio/themes`. 
+1. Run the following code in RStudio to download and apply the theme.
 
-2. In the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
+   ```r
+   yule_theme <- fs::path_temp("Yule-RStudio", ext = "rstheme")
+   download.file("https://git.io/yule-rstudio", yule_theme)
+   rstudioapi::addTheme(yule_theme, apply = TRUE)
+   ```
 
-3. &#x2615; Make a cup of hot coco,
+1. &#x2615; Make a cup of hot coco,
 
     &#x1F4FB; turn on [SomaFM's Christmas Lounge](https://somafm.com/christmas/), 
     
     &#x1F4BB; and enjoy coding by the open fire.
 
-Check out the theme on GitHub at [gadenbuie/yule-rstudio][yule-rstudio].
+#### Manual Installation
 
-### Download with R
-
-Use this code to download the theme file straight into the RStudio themes directory.
-
-```r
-library(fs)
-rsthemes_dir <- path_home_r(".R", "rstudio", "themes")
-dir_create(rsthemes_dir)
-download.file(
-  "https://git.io/yule-rstudio",
-  path(rsthemes_dir, "Yule-RStudio.rstheme")
-)
-```
+If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
 
 ## How I Made This
 
