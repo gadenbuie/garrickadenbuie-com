@@ -89,4 +89,22 @@ I opened up a few scripts and R Markdown documents, used <strong>Insepect Elemen
     background-color: #ff0010;
   }
 }</code></pre>
+<div id="may-waste-some-cpu-cycles-in-the-spirit-of-the-holidays" class="section level3">
+<h3>⚠️ May waste some CPU cycles in the spirit of the holidays!</h3>
+<p>This animated christmas-light cursors may increase the CPU usage of RStudio.
+To disable the animations but still enjoy the theme, edit the theme file in <code>~/.R/rstudio/themes/Yule-RStudio.rstheme</code>.</p>
+<pre class="r"><code>rstudioapi::navigateToFile(
+  fs::path_home_r(&quot;.R&quot;, &quot;rstudio&quot;, &quot;themes&quot;, &quot;Yule-RStudio.rstheme&quot;)
+)</code></pre>
+<p>Find the CSS blocks for <code>.ace_cursor</code> and <code>.normal-mode .ace_cursor</code> and comment out the lines starting with <code>animation-*</code>.</p>
+<pre class="css"><code>.ace_cursor {
+  color: #ff0010;
+  /*
+  animation-name: xmas-colors;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps;
+  */
+}</code></pre>
+</div>
 </div>
