@@ -107,7 +107,7 @@ The blinking Christmas-light cursor is just a CSS animation!
 
 ### &#x26A0;&#xFE0F; May waste some CPU cycles in the spirit of the holidays!
 
-This animated christmas-light cursors may increase the CPU usage of RStudio.
+The animated christmas-light cursors may increase the CPU usage of RStudio.
 To disable the animations but still enjoy the theme, edit the theme file in `~/.R/rstudio/themes/Yule-RStudio.rstheme`.
 
 ```r
