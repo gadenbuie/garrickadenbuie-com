@@ -1,0 +1,245 @@
+---
+title: Executive Tweeting Time
+author: ~
+date: '2019-02-04'
+slug: executive-tweeting-time
+categories:
+  - Blog
+tags:
+  - R
+  - rtweet
+  - ggplot2
+  - Visualization
+  - Politics
+Description: ''
+---
+
+
+
+<pre class="r"><code>library(tidyverse)
+library(lubridate)
+library(hrbrthemes)
+library(showtext)
+library(sysfonts)</code></pre>
+<pre class="r"><code># Convert datetime to decimal hour of day
+in_hours &lt;- function(x) {
+  hour(x) + minute(x)/60 + second(x)/60^2
+}
+
+am_pm &lt;- function(x) {
+  c(
+    paste(x[x &lt; 12], &quot;am&quot;),
+    if (any(x == 12)) paste(x[x == 12], &quot;pm&quot;),
+    paste(x[x &gt; 12] - 12, &quot;pm&quot;)
+  )
+}
+
+# Reverse Time Axis
+# thanks: https://stackoverflow.com/a/43626186
+c_trans &lt;- function(a, b, breaks = b$breaks, format = b$format) {
+  library(scales)
+  a &lt;- as.trans(a)
+  b &lt;- as.trans(b)
+
+  name &lt;- paste(a$name, b$name, sep = &quot;-&quot;)
+
+  trans &lt;- function(x) a$trans(b$trans(x))
+  inv &lt;- function(x) b$inverse(a$inverse(x))
+
+  trans_new(name, trans, inverse = inv, breaks = breaks, format=format)
+
+}
+
+rev_date &lt;- c_trans(&quot;reverse&quot;, &quot;time&quot;)</code></pre>
+<pre class="r"><code># Load Data ---------------------------------------------------------------
+
+# Exec Time Downloaded from https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0
+
+exec_time &lt;-
+  read_csv(
+    here::here(
+      &quot;_data&quot;, &quot;trump-exec-time&quot;,
+      &quot;axios_trump_schedule_2018-11-07--2019-02-02.csv&quot;
+    ),
+    col_types = cols(.default = col_character())
+  ) %&gt;%
+  mutate(
+    time_start = paste(date, time_start),
+    time_end   = paste(date, time_end),
+    time_start = ymd_hm(time_start, tz = &quot;America/New_York&quot;),
+    time_end   = ymd_hm(time_end, tz = &quot;America/New_York&quot;),
+    time_end   = if_else(time_start &gt; time_end, time_end + hours(24), time_end),
+    time_inc   = map2(time_start, time_end, seq, by = &quot;5 mins&quot;),
+    top_category = recode(
+      top_category,
+      &quot;executive_time&quot; = &quot;Executive Time&quot;,
+      &quot;event&quot;   = &quot;Event&quot;,
+      &quot;lunch&quot;   = &quot;Lunch&quot;,
+      &quot;meeting&quot; = &quot;Meeting&quot;,
+      &quot;no_data&quot; = &quot;No Data&quot;,
+      &quot;travel&quot;  = &quot;Travel&quot;),
+    top_category = factor(
+      top_category,
+      levels = c(
+        &quot;Executive Time&quot;,
+        &quot;Event&quot;,
+        &quot;Meeting&quot;,
+        &quot;Lunch&quot;,
+        &quot;Travel&quot;,
+        &quot;No Data&quot;
+      ))
+  ) %&gt;%
+  select(time_start, time_end, time_inc, listed_title, top_category)</code></pre>
+<pre class="r"><code># Plot --------------------------------------------------------------------
+sysfonts::font_add_google(&quot;Fira Sans&quot;)
+sysfonts::font_add_google(&quot;Fira Sans Condensed&quot;)
+sysfonts::font_add_google(&quot;Fira Mono&quot;)
+showtext::showtext_auto()
+
+plot_date_breaks &lt;- seq(
+  from = ymd_h(&quot;2018-11-12 0&quot;, tz = &quot;America/New_York&quot;),
+  to   = max(exec_time$time_start),
+  by   = &quot;7 day&quot;)
+
+event_type_colors &lt;- c(
+  &quot;Executive Time&quot; = &quot;#445566&quot;,
+  &quot;Event&quot;   = &quot;#ddbbaa&quot;,
+  &quot;Meeting&quot; = &quot;#b7c6d6&quot;,
+  &quot;Lunch&quot;   = &quot;#a1aab2&quot;,
+  &quot;Travel&quot;  = &quot;#997788&quot;,
+  &quot;No Data&quot; = &quot;#d9dde0&quot;)
+
+exec_time %&gt;%
+  mutate(date = floor_date(time_start, &quot;day&quot;)) %&gt;%
+  mutate_at(vars(time_start, time_end), in_hours) %&gt;%
+  ggplot() +
+  geom_rect(
+    aes(ymin = time_start,
+        ymax = time_end,
+        xmin = date,
+        xmax = date + 3600 * 24,
+        fill = top_category)
+  ) +
+  scale_y_continuous(
+    breaks   = seq(8, 17, 3),
+    limits   = c(8, 17),
+    position = &quot;bottom&quot;,
+    labels   = am_pm(seq(8, 17, 3)),
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  scale_x_continuous(
+    trans  = rev_date,
+    breaks = plot_date_breaks,
+    labels = strftime(plot_date_breaks, &quot;%b %e&quot;),
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  scale_fill_manual(values = event_type_colors) +
+  coord_flip() +
+  labs(y = &quot;Hour of the Day&quot;, x = NULL, fill = NULL) +
+  ggtitle(
+    &quot;How President Trump Has Spent His Time&quot;,
+    &quot;Daily Schedule Since Midterm Election&quot;
+  ) +
+  labs(caption = paste(
+    &quot;Data: Based on White House schedules released by Axios. http://bit.ly/2UGM0fw&quot;,
+    &quot;Chart: @grrrck&quot;,
+    sep = &quot;\n&quot;
+  )) +
+  guides(fill = guide_legend(nrow = 1, label.position = &quot;top&quot;)) +
+  hrbrthemes::theme_ipsum(
+    base_family = &quot;Fira Sans&quot;,
+    axis_title_family = &quot;Fira Sans Condensed&quot;,
+    axis_title_size = 10,
+    axis_text_size = 8,
+    axis_title_just = &quot;c&quot;
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.text.y = element_text(family = &quot;Fira Mono&quot;, size = 8),
+    legend.position = &quot;bottom&quot;,
+    legend.key = element_rect(fill = &quot;white&quot;, color = &quot;white&quot;, size = 5),
+    legend.key.width = unit(2, &quot;cm&quot;),
+    plot.caption = element_text(color = &quot;#a1aab2&quot;, hjust = 0)
+  )</code></pre>
+<p><img src="/blog/2019/2019-02-04-executive-tweeting-time_files/figure-html/plot-daily-schedule-1.png" width="864" /></p>
+<pre class="r"><code># Plot 2 ------------------------------------------------------------------
+exec_time_total &lt;-
+  exec_time %&gt;%
+  filter(between(hour(time_start), 8, 17), hour(time_end) &lt; 17) %&gt;%
+  mutate(date = floor_date(time_start, &quot;day&quot;)) %&gt;%
+  mutate(n = as.numeric(difftime(time_end, time_start, units = &quot;mins&quot;))) %&gt;%
+  group_by(date, top_category) %&gt;%
+  summarize(n = sum(n)) %&gt;%
+  ungroup() %&gt;%
+  mutate(n = n / (60 * 9)) %&gt;%
+  nest(-date) %&gt;%
+  mutate(
+    total = map_dbl(data, ~ filter(., top_category != &quot;No Data&quot;) %&gt;% pull(n) %&gt;% sum()),
+    unaccounted = 1 - total,
+  ) %&gt;%
+  unnest() %&gt;%
+  spread(top_category, n, fill = 0) %&gt;%
+  mutate(`No Data` =  unaccounted) %&gt;%
+  select(-total, -unaccounted) %&gt;%
+  gather(&quot;top_category&quot;, &quot;n&quot;, -date) %&gt;%
+  mutate(top_category = factor(
+      top_category,
+      levels = rev(c(
+        &quot;Executive Time&quot;,
+        &quot;Event&quot;,
+        &quot;Meeting&quot;,
+        &quot;Lunch&quot;,
+        &quot;Travel&quot;,
+        &quot;No Data&quot;
+      )))
+  )
+
+
+ggplot(exec_time_total) +
+  aes(date + 3600*12, n, fill = top_category) +
+  geom_col(width = 3600*24) +
+  scale_fill_manual(values = event_type_colors) +
+  scale_y_continuous(
+    breaks = seq(0, 1, .25),
+    labels = scales::percent_format(accuracy = 25),
+    position = &quot;bottom&quot;,
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  scale_x_continuous(
+    trans  = rev_date,
+    breaks = plot_date_breaks,
+    labels = strftime(plot_date_breaks, &quot;%b %e&quot;),
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  coord_flip() +
+  labs(x = NULL, y = &quot;Percent of Workday Between 8am and 5pm&quot;, fill = NULL) +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE, label.position = &quot;top&quot;)) +
+  ggtitle(
+    &quot;What Does President Trump Do With His Time?&quot;
+  ) +
+  labs(caption = paste(
+    &quot;Data: Based on White House schedules released by Axios. http://bit.ly/2UGM0fw&quot;,
+    &quot;Chart: @grrrck&quot;,
+    sep = &quot;\n&quot;
+  )) +
+  hrbrthemes::theme_ipsum(
+    base_family = &quot;Fira Sans&quot;,
+    axis_title_family = &quot;Fira Sans Condensed&quot;,
+    axis_title_size = 10,
+    axis_text_size = 8,
+    axis_title_just = &quot;c&quot;
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.text.y = element_text(family = &quot;Fira Mono&quot;, size = 8),
+    legend.position = &quot;bottom&quot;,
+    legend.key = element_rect(fill = &quot;white&quot;, color = &quot;white&quot;, size = 5),
+    legend.key.width = unit(2, &quot;cm&quot;),
+    plot.caption = element_text(color = &quot;#a1aab2&quot;, hjust = 0)
+  )</code></pre>
+<p><img src="/blog/2019/2019-02-04-executive-tweeting-time_files/figure-html/plot-time-categoy-pct-1.png" width="864" /></p>
