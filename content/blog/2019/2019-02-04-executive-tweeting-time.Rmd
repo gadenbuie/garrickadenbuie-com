@@ -1,6 +1,6 @@
 ---
 title: Executive Tweeting Time
-author: ~
+author: null
 date: '2019-02-04'
 slug: executive-tweeting-time
 categories:
@@ -12,11 +12,13 @@ tags:
   - Visualization
   - Politics
 Description: ''
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE, warning = FALSE, message = FALSE,
+  echo = FALSE, warning = FALSE, message = FALSE,
   fig.width = 9, fig.height = 10
 )
 ```
@@ -62,6 +64,34 @@ c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
 rev_date <- c_trans("reverse", "time")
 ```
 
+```{r plot-theme}
+sysfonts::font_add_google("PT Sans")
+sysfonts::font_add_google("PT Sans Narrow")
+sysfonts::font_add_google("PT Mono")
+showtext::showtext_auto()
+
+theme_set(
+  hrbrthemes::theme_ipsum(
+    base_family = "PT Sans",
+    axis_title_family = "PT Sans Narrow",
+    axis_title_size = 12,
+    axis_text_size = 10,
+    axis_title_just = "c"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.text.y = element_text(family = "PT Mono", size = 10),
+    legend.position = "bottom",
+    legend.key = element_rect(fill = "white", color = "white", size = 5),
+    legend.key.width = unit(2, "cm"),
+    plot.caption = element_text(color = "#a1aab2", hjust = 0)
+  )
+)
+```
+
 ```{r load-data}
 # Load Data ---------------------------------------------------------------
 
@@ -81,6 +111,17 @@ exec_time <-
     time_start = ymd_hm(time_start, tz = "America/New_York"),
     time_end   = ymd_hm(time_end, tz = "America/New_York"),
     time_end   = if_else(time_start > time_end, time_end + hours(24), time_end),
+    # truncate day at 8am and 5pm
+    time_start = if_else(
+      in_hours(time_start) < 8 & in_hours(time_end) > 8,
+      floor_date(time_start, "day") + hours(8),
+      time_start
+    ),
+    time_end = if_else(
+      in_hours(time_start) < 17 & in_hours(time_end) > 17,
+      floor_date(time_end, "day") + hours(17),
+      time_end
+    ),
     time_inc   = map2(time_start, time_end, seq, by = "5 mins"),
     top_category = recode(
       top_category,
@@ -88,17 +129,17 @@ exec_time <-
       "event"   = "Event",
       "lunch"   = "Lunch",
       "meeting" = "Meeting",
-      "no_data" = "No Data",
+      "no_data" = "Unknown",
       "travel"  = "Travel"),
     top_category = factor(
       top_category,
       levels = c(
         "Executive Time",
-        "Event",
-        "Meeting",
-        "Lunch",
         "Travel",
-        "No Data"
+        "Lunch",
+        "Meeting",
+        "Event",
+        "Unknown"
       ))
   ) %>%
   select(time_start, time_end, time_inc, listed_title, top_category)
@@ -106,11 +147,6 @@ exec_time <-
 
 ```{r plot-daily-schedule}
 # Plot --------------------------------------------------------------------
-sysfonts::font_add_google("Fira Sans")
-sysfonts::font_add_google("Fira Sans Condensed")
-sysfonts::font_add_google("Fira Mono")
-showtext::showtext_auto()
-
 plot_date_breaks <- seq(
   from = ymd_h("2018-11-12 0", tz = "America/New_York"),
   to   = max(exec_time$time_start),
@@ -118,11 +154,11 @@ plot_date_breaks <- seq(
 
 event_type_colors <- c(
   "Executive Time" = "#445566",
-  "Event"   = "#ddbbaa",
-  "Meeting" = "#b7c6d6",
-  "Lunch"   = "#a1aab2",
   "Travel"  = "#997788",
-  "No Data" = "#d9dde0")
+  "Lunch"   = "#a1aab2",
+  "Meeting" = "#b7c6d6",
+  "Event"   = "#ddbbaa",
+  "Unknown" = "#d9dde0")
 
 exec_time %>%
   mutate(date = floor_date(time_start, "day")) %>%
@@ -160,25 +196,7 @@ exec_time %>%
     "Chart: @grrrck",
     sep = "\n"
   )) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top")) +
-  hrbrthemes::theme_ipsum(
-    base_family = "Fira Sans",
-    axis_title_family = "Fira Sans Condensed",
-    axis_title_size = 10,
-    axis_text_size = 8,
-    axis_title_just = "c"
-  ) +
-  theme(
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5),
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(),
-    axis.text.y = element_text(family = "Fira Mono", size = 8),
-    legend.position = "bottom",
-    legend.key = element_rect(fill = "white", color = "white", size = 5),
-    legend.key.width = unit(2, "cm"),
-    plot.caption = element_text(color = "#a1aab2", hjust = 0)
-  )
+  guides(fill = guide_legend(nrow = 1, label.position = "top"))
 ```
 
 
@@ -186,7 +204,7 @@ exec_time %>%
 # Plot 2 ------------------------------------------------------------------
 exec_time_total <-
   exec_time %>%
-  filter(between(hour(time_start), 8, 17), hour(time_end) < 17) %>%
+  filter(between(hour(time_start), 8, 17), hour(time_start) < 17) %>%
   mutate(date = floor_date(time_start, "day")) %>%
   mutate(n = as.numeric(difftime(time_end, time_start, units = "mins"))) %>%
   group_by(date, top_category) %>%
@@ -195,25 +213,15 @@ exec_time_total <-
   mutate(n = n / (60 * 9)) %>%
   nest(-date) %>%
   mutate(
-    total = map_dbl(data, ~ filter(., top_category != "No Data") %>% pull(n) %>% sum()),
+    total = map_dbl(data, ~ filter(., top_category != "Unknown") %>% pull(n) %>% sum()),
     unaccounted = 1 - total,
   ) %>%
   unnest() %>%
   spread(top_category, n, fill = 0) %>%
-  mutate(`No Data` =  unaccounted) %>%
+  mutate(`Unknown` =  unaccounted) %>%
   select(-total, -unaccounted) %>%
   gather("top_category", "n", -date) %>%
-  mutate(top_category = factor(
-      top_category,
-      levels = rev(c(
-        "Executive Time",
-        "Event",
-        "Meeting",
-        "Lunch",
-        "Travel",
-        "No Data"
-      )))
-  )
+  mutate(top_category = factor(top_category, rev(names(event_type_colors))))
 
 
 ggplot(exec_time_total) +
@@ -242,22 +250,120 @@ ggplot(exec_time_total) +
     "Data: Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
     "Chart: @grrrck",
     sep = "\n"
-  )) +
-  hrbrthemes::theme_ipsum(
-    base_family = "Fira Sans",
-    axis_title_family = "Fira Sans Condensed",
-    axis_title_size = 10,
-    axis_text_size = 8,
-    axis_title_just = "c"
+  ))
+```
+
+```{r, eval = FALSE}
+download.file(
+  "https://github.com/bpb27/trump_tweet_data_archive/raw/master/master_2018.json.zip",
+  here::here("_data/master_2018.json.zip")
+)
+system(paste("cd", here::here("_data"), "; unzip master_2018.json.zip"))
+
+djt <- rtweet::parse_stream(here::here("_data/master_2018.json"))
+```
+
+```{r, eval = FALSE}
+djt <- NULL
+keep_going <- TRUE
+while (keep_going) {
+  max_id <- if (!is.null(djt$status_id)) max(as.numeric(djt$status_id))
+  djt.this <- rtweet::get_timeline("realdonaldtrump", n = 3200, max_id = max_id)
+  djt <- bind_rows(djt, djt.this)
+  keep_going <- min(djt$created_at) > lubridate::ymd_h("2018-11-07 0", tz = "America/New_York")
+  cat("\nWe have", nrow(djt), "tweets...")
+  Sys.sleep(15)
+}
+```
+
+```{r djt-tweets}
+djt <- readRDS(here::here("_data", "djt-tweets-2018-09--2019-02.rds"))
+```
+
+```{r djt-tweets-simple}
+djt_simple <- 
+  djt %>% 
+  filter(!is_retweet) %>% 
+  mutate(
+    created_at = with_tz(created_at, tzone = "America/New_York"),
+    time_inc = floor_date(created_at, "5 min")
+  ) %>% 
+  select(created_at, time_inc, text)
+
+head(djt_simple)
+```
+
+```{r djt-tweets-join, fig.height=5}
+g <- 
+  exec_time %>% 
+  mutate(event_id = row_number()) %>% 
+  unnest() %>% 
+  filter(time_end != time_inc) %>% 
+  full_join(djt_simple, by = "time_inc") %>% 
+  select(event_id, time_inc, created_at, listed_title, top_category, text) %>% 
+  filter(
+    !is.na(text), 
+    !is.na(top_category)
+  ) %>% 
+  mutate(
+    hour = in_hours(created_at), 
+    date = floor_date(created_at, "day"),
+    top_category = factor(top_category, names(event_type_colors))
+  ) %>% 
+  arrange(created_at) %>% 
+  ggplot() + 
+  ungeviz::geom_vpline(
+    aes(x = hour, y = top_category, color = top_category),
+    size = 0.5
   ) +
-  theme(
-    plot.title = element_text(hjust = 0.5),
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(),
-    axis.text.y = element_text(family = "Fira Mono", size = 8),
-    legend.position = "bottom",
-    legend.key = element_rect(fill = "white", color = "white", size = 5),
-    legend.key.width = unit(2, "cm"),
-    plot.caption = element_text(color = "#a1aab2", hjust = 0)
+  scale_x_continuous(
+    breaks   = seq(8, 17, 3),
+    limits   = c(8, 17),
+    position = "bottom",
+    labels   = am_pm(seq(8, 17, 3)),
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  scale_color_manual(values = event_type_colors) +
+  labs(x = NULL, y = NULL, color = NULL) +
+  guides(color = guide_legend(nrow = 1, label.position = "top", override.aes = list(size = 2))) +
+  theme(panel.grid.major.y = element_blank()) +
+  ggtitle(
+    "When Trump Tweets, What's On His Schedule?",
+    "Each line represents a tweet, colored by the activity on his White House Schedule"
   )
+
+g
+```
+
+```{r tweets-by-exec-time, fig.height=5}
+djt_simple %>%
+  mutate(date = floor_date(created_at, "day")) %>%
+  group_by(date) %>%
+  count() %>%
+  rename(tweets = n) %>%
+  left_join(exec_time_total, ., by = "date") %>%
+  filter(top_category == "Executive Time") %>%
+  ggplot() +
+  aes(n, tweets) +
+  geom_point() +
+  scale_x_continuous(labels = scales::percent_format(10)) +
+  labs(x = "Percent of Workday Dedicated to \"Executive Time \"", y = "Number of Tweets")
+```
+
+```{r tweets-by-not-meeting-event, fig.height=5}
+djt_simple %>%
+  mutate(date = floor_date(created_at, "day")) %>%
+  group_by(date) %>%
+  count() %>%
+  rename(tweets = n) %>%
+  left_join(exec_time_total, ., by = "date") %>%
+  filter(top_category %in% c("Meeting", "Event")) %>%
+  group_by(date) %>% 
+  summarize(n = sum(n), tweets = max(tweets)) %>% 
+  ggplot() +
+  aes(n, tweets) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(labels = scales::percent_format(10)) +
+  labs(x = "Percent of Workday Dedicated to Meetings or Events", y = "Number of Tweets")
 ```
