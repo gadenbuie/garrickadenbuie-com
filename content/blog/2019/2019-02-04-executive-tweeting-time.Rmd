@@ -1,7 +1,7 @@
 ---
 title: Executive Tweeting Time
 author: null
-date: '2019-02-04'
+date: '2019-02-05'
 slug: executive-tweeting-time
 categories:
   - Blog
@@ -12,91 +12,41 @@ tags:
   - Visualization
   - Politics
 Description: ''
+rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-05-executive-tweeting-time.Rmd
 editor_options: 
   chunk_output_type: console
 ---
 
+<!-- Links -->
+[axios]: https://www.axios.com/donald-trump-private-schedules-leak-executive-time-34e67fbb-3af6-48df-aefb-52e02c334255.html
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE,
-  fig.width = 9, fig.height = 10
+  fig.width = 9, fig.height = 10, fig.show = "hide"
 )
 ```
 
 ```{r library, results="hide"}
 library(tidyverse)
 library(lubridate)
-library(hrbrthemes)
-library(showtext)
-library(sysfonts)
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  install.packages("pacman")
+}
+library(pacman)
+p_load(hrbrthemes)
+p_load(showtext)
+p_load(sysfonts)
+p_load_gh("clauswilke/ungeviz@aeae12b")
 ```
 
-```{r functions}
+```{r load-data}
 # Convert datetime to decimal hour of day
 in_hours <- function(x) {
   hour(x) + minute(x)/60 + second(x)/60^2
 }
 
-am_pm <- function(x) {
-  c(
-    paste(x[x < 12], "am"),
-    if (any(x == 12)) paste(x[x == 12], "pm"),
-    paste(x[x > 12] - 12, "pm")
-  )
-}
-
-# Reverse Time Axis
-# thanks: https://stackoverflow.com/a/43626186
-c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
-  library(scales)
-  a <- as.trans(a)
-  b <- as.trans(b)
-
-  name <- paste(a$name, b$name, sep = "-")
-
-  trans <- function(x) a$trans(b$trans(x))
-  inv <- function(x) b$inverse(a$inverse(x))
-
-  trans_new(name, trans, inverse = inv, breaks = breaks, format=format)
-
-}
-
-rev_date <- c_trans("reverse", "time")
-```
-
-```{r plot-theme}
-sysfonts::font_add_google("PT Sans")
-sysfonts::font_add_google("PT Sans Narrow")
-sysfonts::font_add_google("PT Mono")
-showtext::showtext_auto()
-
-theme_set(
-  hrbrthemes::theme_ipsum(
-    base_family = "PT Sans",
-    axis_title_family = "PT Sans Narrow",
-    axis_title_size = 12,
-    axis_text_size = 10,
-    axis_title_just = "c"
-  ) +
-  theme(
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5),
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(),
-    axis.text.y = element_text(family = "PT Mono", size = 10),
-    legend.position = "bottom",
-    legend.key = element_rect(fill = "white", color = "white", size = 5),
-    legend.key.width = unit(2, "cm"),
-    plot.caption = element_text(color = "#a1aab2", hjust = 0)
-  )
-)
-```
-
-```{r load-data}
-# Load Data ---------------------------------------------------------------
-
 # Exec Time Downloaded from https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0
-
 exec_time <-
   read_csv(
     here::here(
@@ -145,8 +95,74 @@ exec_time <-
   select(time_start, time_end, time_inc, listed_title, top_category)
 ```
 
-```{r plot-daily-schedule}
-# Plot --------------------------------------------------------------------
+```{r functions}
+am_pm <- function(x) {
+  c(
+    paste(x[x < 12], "am"),
+    if (any(x == 12)) paste(x[x == 12], "pm"),
+    paste(x[x > 12] - 12, "pm")
+  )
+}
+
+# Reverse Time Axis
+# thanks: https://stackoverflow.com/a/43626186
+c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
+  library(scales)
+  a <- as.trans(a)
+  b <- as.trans(b)
+
+  name <- paste(a$name, b$name, sep = "-")
+
+  trans <- function(x) a$trans(b$trans(x))
+  inv <- function(x) b$inverse(a$inverse(x))
+
+  trans_new(name, trans, inverse = inv, breaks = breaks, format=format)
+
+}
+
+rev_date <- c_trans("reverse", "time")
+
+lightbox_img <- function(url, alt = "", caption = "") {
+  glue::glue(
+    '<a href="{url}" data-featherlight="image">
+      <div class="figure">
+      <img src="{url}" alt="{alt}">
+      <p class="caption">{caption}</p>
+      </div>
+    </a>
+    '
+  )
+}
+```
+
+```{r plot-theme}
+sysfonts::font_add_google("PT Sans")
+sysfonts::font_add_google("PT Sans Narrow")
+sysfonts::font_add_google("PT Mono")
+showtext::showtext_auto()
+
+theme_set(
+  hrbrthemes::theme_ipsum(
+    base_family = "PT Sans",
+    base_size = 20,
+    axis_title_family = "PT Sans Narrow",
+    axis_title_size = 14,
+    axis_text_size = 12,
+    axis_title_just = "c"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    legend.position = "bottom",
+    legend.key = element_rect(fill = "white", color = "white", size = 4),
+    legend.key.width = unit(2, "cm"),
+    legend.text = element_text(size = 9),
+    plot.caption = element_text(color = "#85919b", hjust = 0, size = 12, face = "plain")
+  )
+)
+
 plot_date_breaks <- seq(
   from = ymd_h("2018-11-12 0", tz = "America/New_York"),
   to   = max(exec_time$time_start),
@@ -155,11 +171,23 @@ plot_date_breaks <- seq(
 event_type_colors <- c(
   "Executive Time" = "#445566",
   "Travel"  = "#997788",
-  "Lunch"   = "#a1aab2",
+  "Lunch"   = "#7c9393",
   "Meeting" = "#b7c6d6",
   "Event"   = "#ddbbaa",
   "Unknown" = "#d9dde0")
 
+event_type_labels <- sub(" ", "\n", names(event_type_colors))
+
+credit_caption <- function(rtweet = FALSE) {
+  paste0(
+    "\nData:   Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
+    if (rtweet) "\n           Tweets collected with {rtweet}. https://rtweet.info",
+    "\nChart: @grrrck"
+  )
+}
+```
+
+```{r plot-daily-schedule, fig.show = "hide"}
 exec_time %>%
   mutate(date = floor_date(time_start, "day")) %>%
   mutate_at(vars(time_start, time_end), in_hours) %>%
@@ -184,20 +212,19 @@ exec_time %>%
     labels = strftime(plot_date_breaks, "%b %e"),
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
-  scale_fill_manual(values = event_type_colors) +
+  scale_fill_manual(values = event_type_colors, labels = event_type_labels) +
   coord_flip() +
   labs(y = "Hour of the Day", x = NULL, fill = NULL) +
   ggtitle(
     "How President Trump Has Spent His Time",
     "Daily Schedule Since Midterm Election"
   ) +
-  labs(caption = paste(
-    "Data: Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
-    "Chart: @grrrck",
-    sep = "\n"
-  )) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top"))
+  labs(caption = credit_caption(FALSE)) +
+  guides(fill = guide_legend(nrow = 1, label.position = "bottom")) +
+  theme(axis.text.y = element_text(family = "PT Mono", size = 10))
 ```
+
+`r lightbox_img(knitr::fig_chunk("plot-daily-schedule", "png"))`
 
 
 ```{r plot-time-categoy-pct}
@@ -227,10 +254,10 @@ exec_time_total <-
 ggplot(exec_time_total) +
   aes(date + 3600*12, n, fill = top_category) +
   geom_col(width = 3600*24) +
-  scale_fill_manual(values = event_type_colors) +
+  scale_fill_manual(values = event_type_colors, labels = rev(event_type_labels)) +
   scale_y_continuous(
-    breaks = seq(0, 1, .25),
-    labels = scales::percent_format(accuracy = 25),
+    breaks   = seq(0, 1, .25),
+    labels   = scales::percent_format(accuracy = 25),
     position = "bottom",
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
@@ -238,32 +265,20 @@ ggplot(exec_time_total) +
     trans  = rev_date,
     breaks = plot_date_breaks,
     labels = strftime(plot_date_breaks, "%b %e"),
-    expand   = expand_scale(c(0.025, 0), 0)
+    expand = expand_scale(c(0.025, 0), 0)
   ) +
   coord_flip() +
   labs(x = NULL, y = "Percent of Workday Between 8am and 5pm", fill = NULL) +
-  guides(fill = guide_legend(nrow = 1, reverse = TRUE, label.position = "top")) +
+  guides(fill = guide_legend(nrow = 1, reverse = TRUE, label.position = "bottom")) +
   ggtitle(
     "What Does President Trump Do With His Time?"
   ) +
-  labs(caption = paste(
-    "Data: Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
-    "Chart: @grrrck",
-    sep = "\n"
-  ))
+  labs(caption = credit_caption(FALSE))
 ```
 
-```{r, eval = FALSE}
-download.file(
-  "https://github.com/bpb27/trump_tweet_data_archive/raw/master/master_2018.json.zip",
-  here::here("_data/master_2018.json.zip")
-)
-system(paste("cd", here::here("_data"), "; unzip master_2018.json.zip"))
+`r lightbox_img(knitr::fig_chunk("plot-time-categoy-pct", "png"))`
 
-djt <- rtweet::parse_stream(here::here("_data/master_2018.json"))
-```
-
-```{r, eval = FALSE}
+```{r get-djt-tweets, eval = FALSE}
 djt <- NULL
 keep_going <- TRUE
 while (keep_going) {
@@ -293,8 +308,8 @@ djt_simple <-
 head(djt_simple)
 ```
 
-```{r djt-tweets-join, fig.height=5}
-g <- 
+```{r djt-twetes-joined}
+djt_joined <- 
   exec_time %>% 
   mutate(event_id = row_number()) %>% 
   unnest() %>% 
@@ -310,11 +325,14 @@ g <-
     date = floor_date(created_at, "day"),
     top_category = factor(top_category, names(event_type_colors))
   ) %>% 
-  arrange(created_at) %>% 
-  ggplot() + 
+  arrange(created_at)
+```
+
+```{r djt-tweets-timeline, fig.height=6}
+ggplot(djt_joined) + 
   ungeviz::geom_vpline(
     aes(x = hour, y = top_category, color = top_category),
-    size = 0.5
+    size = 0.6
   ) +
   scale_x_continuous(
     breaks   = seq(8, 17, 3),
@@ -323,32 +341,47 @@ g <-
     labels   = am_pm(seq(8, 17, 3)),
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
-  scale_color_manual(values = event_type_colors) +
+  scale_color_manual(values = event_type_colors, labels = event_type_labels) +
   labs(x = NULL, y = NULL, color = NULL) +
-  guides(color = guide_legend(nrow = 1, label.position = "top", override.aes = list(size = 2))) +
+  guides(color = guide_legend(nrow = 1, label.position = "bottom", override.aes = list(size = 2))) +
   theme(panel.grid.major.y = element_blank()) +
   ggtitle(
-    "When Trump Tweets, What's On His Schedule?",
+    "What's On His Schedule When He's Tweeting?",
     "Each line represents a tweet, colored by the activity on his White House Schedule"
-  )
-
-g
+  ) + 
+  labs(caption = credit_caption(rtweet = TRUE))
 ```
 
+`r lightbox_img(knitr::fig_chunk("djt-tweets-timeline", "png"))`
+
 ```{r tweets-by-exec-time, fig.height=5}
-djt_simple %>%
-  mutate(date = floor_date(created_at, "day")) %>%
+djt_joined %>%
   group_by(date) %>%
   count() %>%
   rename(tweets = n) %>%
   left_join(exec_time_total, ., by = "date") %>%
-  filter(top_category == "Executive Time") %>%
+  replace_na(list(tweets = 0)) %>% 
+  filter(top_category %in% c("Executive Time", "Unknown", "Travel", "Lunch")) %>%
+  spread(top_category, n, fill = 0) %>% 
+  filter(!Unknown == 1) %>% 
+  mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %>% 
   ggplot() +
-  aes(n, tweets) +
-  geom_point() +
+  aes(pct, tweets) +
+  geom_smooth(
+    method = "lm", 
+    color = event_type_colors["Executive Time"], 
+    fill = event_type_colors["Unknown"]
+  ) +
+  geom_point(color = event_type_colors["Executive Time"]) + 
   scale_x_continuous(labels = scales::percent_format(10)) +
-  labs(x = "Percent of Workday Dedicated to \"Executive Time \"", y = "Number of Tweets")
+  labs(
+    x = "Percent of Workday Dedicated to Downtime\n(Executive Time, Travel, Unknown)", 
+    y = "Number of Tweets", 
+    title = "Does Trump Tweet More When He Has More Downtime?",
+    caption = credit_caption(rtweet = TRUE))
 ```
+
+`r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
 
 ```{r tweets-by-not-meeting-event, fig.height=5}
 djt_simple %>%
@@ -359,11 +392,61 @@ djt_simple %>%
   left_join(exec_time_total, ., by = "date") %>%
   filter(top_category %in% c("Meeting", "Event")) %>%
   group_by(date) %>% 
-  summarize(n = sum(n), tweets = max(tweets)) %>% 
+  summarize(pct = sum(n), tweets = max(tweets)) %>% 
+  filter(pct > 0) %>% 
   ggplot() +
-  aes(n, tweets) +
-  geom_point() +
-  geom_smooth(method = "lm") +
+  aes(pct, tweets) +
+  geom_smooth(
+    method = "lm", 
+    color = event_type_colors["Executive Time"], 
+    fill = event_type_colors["Unknown"]
+  ) +
+  geom_point(color = event_type_colors["Executive Time"]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
-  labs(x = "Percent of Workday Dedicated to Meetings or Events", y = "Number of Tweets")
+  labs(x = "Percent of Workday Dedicated to Meetings or Events", 
+       y = "Number of Tweets",
+       title = "Does Trump Tweet Less When He Does More \"Work\"?",
+       caption = credit_caption(rtweet = TRUE))
 ```
+
+`r lightbox_img(knitr::fig_chunk("tweets-by-not-meeting-event", "png"))`
+
+```{r tweet_sentiment, fig.height=8}
+djt_sentiment <- 
+  djt_joined %>% 
+  select(top_category, text) %>% 
+  mutate(sentiment = map(text, syuzhet::get_nrc_sentiment)) %>% 
+  unnest() %>% 
+  gather(emotion, value, -top_category, -text) %>% 
+  group_by(top_category, emotion) %>% 
+  summarize(value = mean(value)) %>% 
+  mutate(emotion = fct_reorder(emotion, value)) %>% 
+  filter(top_category != "Unknown")
+
+ggplot(djt_sentiment) +
+  geom_rect(
+    data = tibble(
+      ymin = seq(0, 9, 2) + 0.5,
+      ymax = seq(0, 9, 2) + 1.5,
+      xmin = -Inf, xmax = Inf
+    ),
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey95"
+  ) +
+  ungeviz::geom_vpline(aes(x = value, y = as.integer(emotion), color = top_category),
+                       height = 0.8, size = 1.75) +
+  # geom_point(aes(x = value, y = as.integer(emotion), color = top_category)) +
+  scale_color_manual(values = event_type_colors, labels = event_type_labels[-6]) +
+  scale_y_continuous(breaks = 1:10, labels = levels(djt_sentiment$emotion)) +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 2.5)) +
+  guides(color = guide_legend(title = NULL, label.position = "bottom")) +
+  labs(x = "Average Sentiment of Tweets", y = NULL) +
+  theme(panel.grid.major.y = element_blank()) +
+  ggtitle(
+    "Emotional Valence of Trump Tweets",
+    "As a function of what he was doing at the time"
+  ) + 
+  labs(caption = credit_caption(rtweet = TRUE))
+```
+
+`r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))`
