@@ -61,7 +61,22 @@ exec_time <-
     time_end   = paste(date, time_end),
     time_start = ymd_hm(time_start, tz = "America/New_York"),
     time_end   = ymd_hm(time_end, tz = "America/New_York"),
-    time_end   = if_else(time_start > time_end, time_end + hours(24), time_end),
+    time_end   = if_else(time_start > time_end, time_end + hours(24), time_end)
+  ) %>% 
+  mutate(
+    # Create text labels from original data
+    label_title    = glue::glue("<b>{top_category}</b>"),
+    label_subtitle = if_else(!is.na(listed_title) & 
+                               tolower(top_category) != tolower(listed_title), 
+                             glue::glue("<br><em>{listed_title}</em>"), ""),
+    label_location = if_else(!is.na(listed_location), 
+                             glue::glue("<br><em>{listed_location}</em>"), ""),
+    label_time     = glue::glue("<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ", 
+                                "to {strftime(time_end, '%H:%M')}"),
+    label_notes    = if_else(!is.na(notes), paste0("<br><br>", notes), ""),
+    label = paste0(label_title, label_subtitle, label_location, label_time, label_notes)
+  ) %>% 
+  mutate(
     # truncate day at 8am and 5pm
     time_start = if_else(
       in_hours(time_start) < 8 & in_hours(time_end) > 8,
@@ -91,17 +106,7 @@ exec_time <-
         "Meeting",
         "Event",
         "Unknown"
-      )),
-    label_title    = glue::glue("<b>{top_category}</b>"),
-    label_subtitle = if_else(!is.na(listed_title) & 
-                               tolower(top_category) != tolower(listed_title), 
-                             glue::glue("<br><em>{listed_title}</em>"), ""),
-    label_location = if_else(!is.na(listed_location), 
-                             glue::glue("<br><em>{listed_location}</em>"), ""),
-    label_time     = glue::glue("<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ", 
-                                "to {strftime(time_end, '%H:%M')}"),
-    label_notes    = if_else(!is.na(notes), paste0("<br><br>", notes), ""),
-    label = paste0(label_title, label_subtitle, label_location, label_time, label_notes)
+      ))
   ) %>%
   select(event_id, time_start, time_end, time_inc, 
          listed_title, top_category, label)
