@@ -46,6 +46,15 @@ in_hours <- function(x) {
   hour(x) + minute(x)/60 + second(x)/60^2
 }
 
+executive_categories <- c(
+  "executive_time" = "Executive Time",
+  "event"   = "Event",
+  "lunch"   = "Lunch",
+  "meeting" = "Meeting",
+  "no_data" = "Unknown",
+  "travel"  = "Travel"
+)
+
 # Exec Time Downloaded from https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0
 exec_time <-
   read_csv(
@@ -61,7 +70,9 @@ exec_time <-
     time_end   = paste(date, time_end),
     time_start = ymd_hm(time_start, tz = "America/New_York"),
     time_end   = ymd_hm(time_end, tz = "America/New_York"),
-    time_end   = if_else(time_start > time_end, time_end + hours(24), time_end)
+    time_end   = if_else(time_start > time_end, time_end + hours(24), time_end),
+    top_category = recode(top_category, !!!executive_categories),
+    top_category = factor(top_category, levels = executive_categories)
   ) %>% 
   mutate(
     # Create text labels from original data
@@ -88,25 +99,7 @@ exec_time <-
       floor_date(time_end, "day") + hours(17),
       time_end
     ),
-    time_inc   = map2(time_start, time_end, seq, by = "5 mins"),
-    top_category = recode(
-      top_category,
-      "executive_time" = "Executive Time",
-      "event"   = "Event",
-      "lunch"   = "Lunch",
-      "meeting" = "Meeting",
-      "no_data" = "Unknown",
-      "travel"  = "Travel"),
-    top_category = factor(
-      top_category,
-      levels = c(
-        "Executive Time",
-        "Travel",
-        "Lunch",
-        "Meeting",
-        "Event",
-        "Unknown"
-      ))
+    time_inc   = map2(time_start, time_end, seq, by = "5 mins")
   ) %>%
   select(event_id, time_start, time_end, time_inc, 
          listed_title, top_category, label)
