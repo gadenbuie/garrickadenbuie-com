@@ -1,7 +1,7 @@
 ---
 title: Executive Tweeting Time
 author: null
-date: '2019-02-05'
+date: '2019-02-14'
 slug: executive-tweeting-time
 categories:
   - Blog
@@ -91,9 +91,20 @@ exec_time <-
         "Meeting",
         "Event",
         "Unknown"
-      ))
+      )),
+    label_title    = glue::glue("<b>{top_category}</b>"),
+    label_subtitle = if_else(!is.na(listed_title) & 
+                               tolower(top_category) != tolower(listed_title), 
+                             glue::glue("<br><em>{listed_title}</em>"), ""),
+    label_location = if_else(!is.na(listed_location), 
+                             glue::glue("<br><em>{listed_location}</em>"), ""),
+    label_time     = glue::glue("<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ", 
+                                "to {strftime(time_end, '%H:%M')}"),
+    label_notes    = if_else(!is.na(notes), paste0("<br><br>", notes), ""),
+    label = paste0(label_title, label_subtitle, label_location, label_time, label_notes)
   ) %>%
-  select(event_id, time_start, time_end, time_inc, listed_title, top_category)
+  select(event_id, time_start, time_end, time_inc, 
+         listed_title, top_category, label)
 ```
 
 ```{r get-djt-tweets, eval = FALSE}
@@ -213,6 +224,15 @@ event_type_colors <- c(
 
 event_type_labels <- sub(" ", "\n", names(event_type_colors))
 
+filter_workday <- function(df,  start = hms::hms(0, 0, 8), end = hms::hms(0, 0, 17)) {
+  df %>% 
+    filter(
+      date(time_start) == date(time_end),
+      hms::as.hms(time_start) >= start, 
+      hms::as.hms(time_end) <= end
+    ) 
+}
+
 credit_caption <- function(rtweet = FALSE) {
   paste0(
     "\nData:   Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
@@ -222,11 +242,14 @@ credit_caption <- function(rtweet = FALSE) {
 }
 ```
 
-```{r plot-daily-schedule, fig.show = "hide"}
-exec_time %>%
+```{r plot-daily-schedule, fig.show = "show"}
+g <-
+  exec_time %>%
   mutate(date = floor_date(time_start, "day")) %>%
+  filter_workday() %>% 
   mutate_at(vars(time_start, time_end), in_hours) %>%
   ggplot() +
+  aes(text = label) +
   geom_rect(
     aes(ymin = time_start,
         ymax = time_end,
@@ -251,15 +274,19 @@ exec_time %>%
   coord_flip() +
   labs(y = "Hour of the Day", x = NULL, fill = NULL) +
   ggtitle(
-    "How President Trump Has Spent His Time",
-    "Daily Schedule Since Midterm Election"
+    "President Trump's Daily Schedule"
   ) +
   labs(caption = credit_caption(FALSE)) +
   guides(fill = guide_legend(nrow = 1, label.position = "bottom")) +
   theme(axis.text.y = element_text(family = "PT Mono", size = 10))
+
+plotly::ggplotly(g, tooltip = "label") %>% 
+  plotly::layout(xaxis = list(side = "top", title = ""))
 ```
 
-`r lightbox_img(knitr::fig_chunk("plot-daily-schedule", "png"))`
+```{r eval=FALSE}
+#lightbox_img(knitr::fig_chunk("plot-daily-schedule", "png"))`
+```
 
 ```{r plot-time-categoy-pct}
 # Plot 2 ------------------------------------------------------------------
