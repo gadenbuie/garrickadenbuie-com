@@ -40,7 +40,7 @@ p_load(sysfonts)
 p_load_gh("clauswilke/ungeviz@aeae12b")
 ```
 
-```{r load-data}
+```{r functions-constants}
 # Convert datetime to decimal hour of day
 in_hours <- function(x) {
   hour(x) + minute(x)/60 + second(x)/60^2
@@ -55,6 +55,26 @@ executive_categories <- c(
   "travel"  = "Travel"
 )
 
+filter_workday <- function(
+  df,  
+  start = hms::hms(0, 0, 8), 
+  end = hms::hms(0, 0, 17),
+  start_var = time_start,
+  end_var = time_end
+) {
+  start_var <- rlang::enquo(start_var)
+  end_var <- rlang::enquo(end_var)
+  
+  df %>% 
+    filter(
+      date(!!start_var) == date(!!end_var),
+      hms::as.hms(!!start_var) >= start, 
+      hms::as.hms(!!end_var) <= end
+    ) 
+}
+```
+
+```{r load-data}
 # Exec Time Downloaded from https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0
 exec_time <-
   read_csv(
@@ -136,7 +156,17 @@ djt_simple <-
   ) %>% 
   select(created_at, time_inc, text, status_id)
 
-# head(djt_simple)
+djt_time <-
+  djt_simple %>% 
+  distinct(status_id, .keep_all = TRUE) %>% 
+  filter(
+    created_at >= min(exec_time$time_start),
+    created_at <= max(exec_time$time_end)
+  ) %>% 
+  mutate(label = glue::glue("{text}<br>{strftime(created_at, '%F %T')}"), 
+         date = floor_date(created_at, "day")) %>%
+  filter_workday(start_var = created_at, end_var = created_at) %>% 
+  mutate_at(vars(created_at), in_hours)
 ```
 
 ```{r functions}
@@ -222,15 +252,6 @@ event_type_colors <- c(
 
 event_type_labels <- sub(" ", "\n", names(event_type_colors))
 
-filter_workday <- function(df,  start = hms::hms(0, 0, 8), end = hms::hms(0, 0, 17)) {
-  df %>% 
-    filter(
-      date(time_start) == date(time_end),
-      hms::as.hms(time_start) >= start, 
-      hms::as.hms(time_end) <= end
-    ) 
-}
-
 credit_caption <- function(rtweet = FALSE) {
   paste0(
     "\nData:   Based on White House schedules released by Axios. http://bit.ly/2UGM0fw",
@@ -276,7 +297,8 @@ g <-
   ) +
   labs(caption = credit_caption(FALSE)) +
   guides(fill = guide_legend(nrow = 1, label.position = "bottom")) +
-  theme(axis.text.y = element_text(family = "PT Mono", size = 10))
+  theme(axis.text.y = element_text(family = "PT Mono", size = 10),
+        plot.margin = margin(3, 0, 0, 0, unit = "line"))
 
 plotly::ggplotly(g, tooltip = "label") %>% 
   plotly::layout(xaxis = list(side = "top", title = ""))
@@ -530,7 +552,7 @@ ggplot(djt_sentiment_mean) +
 
 `r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))`
 
-```{r plot-emotion, fig.height=6, fig.show=TRUE}
+```{r tweet-emotion-by-event, fig.height=7}
 # djt_sentiment %>%
 #   mutate(emotion = factor(emotion, rev(c("positive", "joy", "trust", "surprise", "anticipation", "fear", "sadness", "anger", "disgust", "negative")))) %>%
 #   ggplot() +
@@ -544,9 +566,14 @@ djt_sentiment %>%
   ggplot() +
   aes(y = value, x = emotion, fill = top_category) +
   # ggridges::geom_density_ridges() +
-  geom_boxplot(alpha = 0.8, color = "grey20", outlier.shape = NA) +
+  geom_boxplot(alpha = 0.7, color = "grey20", outlier.shape = NA) +
   scale_fill_manual(values = event_type_colors) +
   guides(fill = FALSE, color = FALSE) + 
   coord_flip() +
-  facet_wrap(~top_category, scales = "free_y")
+  facet_wrap(~top_category, scales = "free_y") + 
+  labs(y = "Sentiment Score", x = NULL,
+       title = "Emotions Expressed in Trump Tweets",
+       caption = credit_caption(rtweet = TRUE))
 ```
+
+`r lightbox_img(knitr::fig_chunk("tweet-emotion-by-event", "png"))`
