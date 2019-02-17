@@ -40,7 +40,7 @@ p_load(sysfonts)
 p_load_gh("clauswilke/ungeviz@aeae12b")
 ```
 
-```{r functions-constants}
+```{r functions-processing}
 # Convert datetime to decimal hour of day
 in_hours <- function(x) {
   hour(x) + minute(x)/60 + second(x)/60^2
@@ -141,12 +141,12 @@ if (FALSE) {
 }
 ```
 
-```{r djt-tweets}
+```{r load-djt-tweets}
 djt <- readRDS(here::here("_data", "djt-tweets-2018-09--2019-02.rds")) %>% 
   distinct(status_id, .keep_all = TRUE)
 ```
 
-```{r djt-tweets-simple}
+```{r djt-tweets}
 djt_simple <- 
   djt %>% 
   filter(!is_retweet) %>% 
@@ -165,11 +165,46 @@ djt_time <-
   ) %>% 
   mutate(label = glue::glue("{text}<br>{strftime(created_at, '%F %T')}"), 
          date = floor_date(created_at, "day")) %>%
+  select(-text) %>% 
   filter_workday(start_var = created_at, end_var = created_at) %>% 
   mutate_at(vars(created_at), in_hours)
+
+djt_joined_all <- 
+  exec_time %>% 
+  unnest() %>% 
+  filter(time_end != time_inc) %>% 
+  full_join(djt_simple, by = "time_inc") %>% 
+  select(event_id, starts_with("time_"), created_at, listed_title, top_category, text) %>% 
+  filter(
+    !is.na(text)
+  ) %>% 
+  distinct(text, .keep_all = TRUE) %>% 
+  mutate(
+    hour = in_hours(created_at), 
+    date = floor_date(created_at, "day"),
+    top_category = factor(top_category, executive_categories),
+    label_sched = if_else(
+      wday(created_at, abbr = FALSE, week_start = 1) >= 6,
+      glue::glue("<br>During: <b>Weekend</b>"),
+      glue::glue(
+        "<br>During: <b>{top_category}</b>",
+        "<br>Sched: {strftime(time_start, '%I:%M')} ",
+        "to {strftime(time_end, '%I:%M %p')}")
+    ),
+    label = glue::glue("{str_wrap(text, 50)}","
+                       <br><i>@realDonaldTrump {strftime(created_at, '%a, %b %e, %I:%M %p')}</i>",
+                       "{label_sched}"
+                       )
+  ) %>%
+  select(-time_start, -time_end, -label_sched) %>% 
+  arrange(created_at)
+
+djt_joined <-
+  djt_joined_all %>% 
+  filter(!is.na(top_category))
 ```
 
-```{r functions}
+```{r functions-plot}
 am_pm <- function(x) {
   c(
     paste(x[x < 12], "am"),
@@ -196,16 +231,21 @@ c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
 
 rev_date <- c_trans("reverse", "time")
 
-lightbox_img <- function(url, alt = "", caption = "") {
-  glue::glue(
-    '<a href="{url}" data-featherlight="image">
+lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+  if (preview) {
+    glue::glue(
+      '<a href="{url}" data-featherlight="image">
       <div class="figure">
       <img src="{url}" alt="{alt}">
       <p class="caption">{caption}</p>
       </div>
     </a>
     '
-  )
+    )
+  } else {
+    if (alt == "") alt <- "static image of the plot"
+    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+  }
 }
 ```
 
@@ -268,7 +308,6 @@ g <-
   filter_workday() %>% 
   mutate_at(vars(time_start, time_end), in_hours) %>%
   ggplot() +
-  aes(text = label) +
   geom_rect(
     aes(ymin = time_start,
         ymax = time_end,
@@ -293,16 +332,63 @@ g <-
   coord_flip() +
   labs(y = "Hour of the Day", x = NULL, fill = NULL) +
   ggtitle(
-    "President Trump's Daily Schedule"
+    "President Trump's Daily Schedule",
+    "November 7, 2018 through February 2, 2019"
   ) +
   labs(caption = credit_caption(FALSE)) +
   guides(fill = guide_legend(nrow = 1, label.position = "bottom")) +
   theme(axis.text.y = element_text(family = "PT Mono", size = 10),
         plot.margin = margin(3, 0, 0, 0, unit = "line"))
 
-plotly::ggplotly(g, tooltip = "label") %>% 
+plotly::ggplotly(g + aes(text = label), tooltip = "label") %>% 
   plotly::layout(xaxis = list(side = "top", title = ""))
 ```
+
+```{r plot-daily-schedule-static}
+g
+```
+
+View `r lightbox_img(knitr::fig_chunk("plot-daily-schedule-static", "png"), preview = FALSE)`.
+
+```{r plot-tweets-over-category}
+djt_workday <-
+  djt_joined_all %>%
+  filter(date >= "2018-11-07", date <= "2019-02-02") %>% 
+  filter_workday(
+    start_var = created_at, end_var = created_at
+  ) %>% 
+  select(-text)
+
+# Modify geom_rect (only layer) to reduce transparency
+g_subdued <- g
+g_subdued$layers[[1]]$aes_params$alpha <- 0.6
+g_subdued <- 
+  g_subdued + 
+  ggtitle("President Trump's Daily Tweeting") +
+  geom_point(
+    data = djt_workday,
+    aes(y = hour, x = date + 3600 * 12, text = label),
+    color = "#2c3741",
+    size = 0.8
+  )
+
+gpltly <- 
+  plotly::ggplotly(g_subdued, tooltip = "label") %>% 
+  plotly::layout(xaxis = list(side = "top", title = ""))
+
+# remove hover labels for time category shapes
+# thanks: https://stackoverflow.com/a/45802923/2022615
+for (i in 1:6) {
+  gpltly$x$data[[i]]$hoverinfo <- "none"
+}
+gpltly
+```
+
+```{r plot-tweets-over-category-static}
+g_subdued
+```
+
+View `r lightbox_img(knitr::fig_chunk("plot-tweets-over-category-static", "png"), preview = FALSE)`.
 
 ```{r eval=FALSE}
 #lightbox_img(knitr::fig_chunk("plot-daily-schedule", "png"))`
@@ -405,26 +491,6 @@ exec_time %>%
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
-
-```{r djt-twetes-joined}
-djt_joined <- 
-  exec_time %>% 
-  # mutate(event_id = row_number()) %>% 
-  unnest() %>% 
-  filter(time_end != time_inc) %>% 
-  left_join(djt_simple, by = "time_inc") %>% 
-  select(event_id, time_inc, created_at, listed_title, top_category, text) %>% 
-  filter(
-    !is.na(text), 
-    !is.na(top_category)
-  ) %>% 
-  mutate(
-    hour = in_hours(created_at), 
-    date = floor_date(created_at, "day"),
-    top_category = factor(top_category, names(event_type_colors))
-  ) %>% 
-  arrange(created_at)
-```
 
 ```{r djt-tweets-timeline, fig.height=6}
 ggplot(djt_joined) + 
