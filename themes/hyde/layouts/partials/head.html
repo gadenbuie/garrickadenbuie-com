@@ -26,9 +26,8 @@
 		<link href="{{ .RSSLink | relURL }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
 		{{ end }}
 		{{ partial "head_highlightjs" . }}
-		{{ partial "head_custom" . }}
 
-		<link rel="stylesheet" href="{{ "font-awesome/css/font-awesome.min.css" | absURL }}" type="text/css">
+		<link rel="stylesheet" href='{{ "font-awesome/css/font-awesome.min.css" | absURL }}' type="text/css">
 		<link rel="stylesheet" href="/css/poole.css">
 		<link rel="stylesheet" href="/css/syntax.css">
 		<link rel="stylesheet" href="/css/hyde.css">
@@ -36,6 +35,7 @@
 		{{ range .Site.Params.customCSS }}
 		<link rel="stylesheet" href="{{ . | relURL }}">
 		{{ end }}
+		{{ partial "head_custom" . }}
 		<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}">
 		<link href="{{ if .IsPage }}{{ .Permalink | replaceRE "/$" "" }}{{ else }}{{ .Permalink }}{{ end }}" rel="canonical">
 	</head>

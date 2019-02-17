@@ -13,17 +13,14 @@ tags:
   - Politics
 Description: ''
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-05-executive-tweeting-time.Rmd
+head_custom: |
+  <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
 editor_options: 
   chunk_output_type: console
 ---
 
 <!-- Links -->
 [axios]: https://www.axios.com/donald-trump-private-schedules-leak-executive-time-34e67fbb-3af6-48df-aefb-52e02c334255.html
-
-```{r load-pt-mono, echo=FALSE}
-htmltools::tags$link(href = "ttps://fonts.googleapis.com/css?family=PT+Mono",
-                     ref = "stylesheet")
-```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
