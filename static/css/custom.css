@@ -214,14 +214,20 @@ code {
   font-family: inherit;
 }
 .expandmore__symbol::before {
-  content: '\f0da';
-  font-family: FontAwesome;
+  content: " ";
+  background-image: url(/images/caret-right-solid.svg);
   display: inline-block;
-  width: 1em;
+  width: 10pt;
+  height: 1rem;
+  background-repeat: no-repeat;
+  margin-bottom: -0.1rem;
 }
 .expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
-  content: '\f0d7';
-  font-family: FontAwesome; 
+  content: " ";
+  background-image: url(/images/caret-down-solid.svg);
   display: inline-block;
-  width: 1em;
+  width: 10pt;
+  height: 1rem;
+  background-repeat: no-repeat;
+  margin-bottom: -0.1rem;
 }
