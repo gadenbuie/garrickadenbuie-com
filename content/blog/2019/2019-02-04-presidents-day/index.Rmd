@@ -45,14 +45,14 @@ knitr::opts_chunk$set(
 ```{r library, results="hide"}
 library(tidyverse)
 library(lubridate)
+library(hrbrthemes)
+library(showtext)
+library(sysfonts)
+library(glue)
 if (!requireNamespace("pacman", quietly = TRUE)) {
   install.packages("pacman")
 }
-library(pacman)
-p_load(hrbrthemes)
-p_load(showtext)
-p_load(sysfonts)
-p_load_gh("clauswilke/ungeviz@aeae12b")
+pacman::p_load_gh("clauswilke/ungeviz@aeae12b")
 ```
 
 ```{r function-in_hours}
@@ -105,32 +105,34 @@ exec_time <-
   ) %>%
   mutate(
     # Convert time start/end to datetime
-    event_id     = row_number(),
-    time_start   = paste(date, time_start),
-    time_end     = paste(date, time_end),
-    time_start   = ymd_hm(time_start, tz = "America/New_York"),
-    time_end     = ymd_hm(time_end, tz = "America/New_York"),
-    time_end     = if_else(time_start > time_end, 
-                           time_end + hours(24), time_end),
+    event_id   = row_number(),
+    time_start = paste(date, time_start),
+    time_end   = paste(date, time_end),
+    time_start = ymd_hm(time_start, tz = "America/New_York"),
+    time_end   = ymd_hm(time_end, tz = "America/New_York"),
+    time_end   = if_else(time_start > time_end, 
+                         time_end + hours(24), time_end),
     # Recode the activity category with nicer labels
-    top_category = recode(top_category, !!!executive_categories),
-    top_category = factor(top_category, levels = executive_categories)
+    top_category = factor(top_category, 
+                          levels = names(executive_categories),
+                          labels = executive_categories)
   ) %>% 
   mutate(
-    # Create text labels for plotly hover text
-    label_title    = glue::glue("<b>{top_category}</b>"),
+    # Create label pieces for plotly hover text
+    label_title    = glue("<b>{top_category}</b>"),
     has_uniq_title = tolower(top_category) != tolower(listed_title),
     has_subtitle   = has_uniq_title & !is.na(listed_title),
     label_subtitle = if_else(has_subtitle, 
-                             glue::glue("<br><em>{listed_title}</em>"), ""),
+                             glue("<br><em>{listed_title}</em>"), ""),
     has_location   = !is.na(listed_location),
     label_location = if_else(has_location, 
-                             glue::glue("<br><em>{listed_location}</em>"), ""),
-    label_time     = glue::glue(
+                             glue("<br><em>{listed_location}</em>"), ""),
+    label_time     = glue(
       "<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ", 
       "to {strftime(time_end, '%H:%M')}"),
     has_notes      = !is.na(notes),
     label_notes    = if_else(has_notes, paste0("<br><br>", notes), ""),
+    # Compose final tooltip text
     label = paste0(label_title, label_subtitle, label_location, 
                    label_time, label_notes)
   ) %>% 
@@ -203,16 +205,16 @@ djt_joined_all <-
     top_category = factor(top_category, executive_categories),
     label_sched = if_else(
       wday(created_at, abbr = FALSE, week_start = 1) >= 6,
-      glue::glue("<br>During: <b>Weekend</b>"),
-      glue::glue(
+      glue("<br>During: <b>Weekend</b>"),
+      glue(
         "<br>During: <b>{top_category}</b>",
         "<br>Sched: {strftime(time_start, '%I:%M')} ",
         "to {strftime(time_end, '%I:%M %p')}")
     ),
-    label = glue::glue("{str_wrap(text, 50)}","
-                       <br><i>@realDonaldTrump ", 
-                       "{strftime(created_at, '%a, %b %e, %I:%M %p')}</i>",
-                       "{label_sched}")
+    label = glue("{str_wrap(text, 50)}",
+                 "<br><i>@realDonaldTrump ", 
+                 "{strftime(created_at, '%a, %b %e, %I:%M %p')}</i>",
+                 "{label_sched}")
   ) %>%
   select(-time_start, -time_end, -label_sched) %>% 
   arrange(created_at)
@@ -262,8 +264,8 @@ lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
       <img src="{url}" alt="{alt}">
       <p class="caption">{caption}</p>
       </div>
-    </a>
-    '
+      </a>
+      '
     )
   } else {
     if (alt == "") alt <- "static image of the plot"
@@ -381,7 +383,10 @@ g <-
     labels = strftime(plot_date_breaks, "%b %e"),
     expand = expand_scale(c(0.025, 0), 0)
   ) +
-  scale_fill_manual(values = event_type_colors, labels = event_type_labels) +
+  scale_fill_manual(
+    values = event_type_colors, 
+    labels = event_type_labels
+  ) +
   labs(x = "Hour of the Day", y = NULL, fill = NULL) +
   ggtitle(
     "President Trump's Daily Schedule",
@@ -389,8 +394,10 @@ g <-
   ) +
   labs(caption = credit_caption(FALSE)) +
   guides(fill = guide_legend(nrow = 1, label.position = "bottom")) +
-  theme(axis.text.y = element_text(family = "PT Mono", size = 10),
-        plot.margin = margin(3, 0, 0, 0, unit = "line"))
+  theme(
+    axis.text.y = element_text(family = "PT Mono", size = 10),
+    plot.margin = margin(3, 0, 0, 0, unit = "line")
+  )
 
 plotly::ggplotly(g + aes(text = label), tooltip = "label") %>% 
   plotly::layout(xaxis = list(side = "top", title = ""))
@@ -404,8 +411,10 @@ g +
 View `r lightbox_img(knitr::fig_chunk("plot-daily-schedule-static", "png"), preview = FALSE)`.
 Expand the section below for a behind-the-scenes look at this visualization.
 
-<details><summary style="font-size: 133%;">How This Was Made...</summary>
 
+<h3 class="js-expandmore section" id="how-this-was-made-1">How This Was Made...</h3>
+
+<div class="js-to_expand">
 The pipeline for building this visualization is a fairly standard loading and transformation of the source data with `readr` and `dplyr`, followed by building the visualization in `ggplot2` and passing off to `plotly` for the interactive parts.
 On the other hand, I created a number of helper functions and constants that I reused throughout this post, so there's quite a bit of code and pre-amble to get to the actual plot making.
 
@@ -413,12 +422,13 @@ On the other hand, I created a number of helper functions and constants that I r
 library(tidyverse)
 library(plotly)
 library(lubridate)
+library(glue)
 library(hrbrthemes)
 library(showtext)
 library(sysfonts)
 ```
 
-### Load the Axios Data
+#### Load the Axios Data
 
 ```{r view-load-axios, eval=FALSE, echo=TRUE}
 <<function-in_hours>>
@@ -434,11 +444,12 @@ exec_time
 exec_time
 ```
 
-### Prepare to Make a Plot
+#### Prepare to Make a Plot
 
-To build the plot, I first created several helper functions, set the global plot theme, and created a few constants.
+To build the plot, I first create several helper functions, set the global plot theme, and create a few constants.
 
-<details><summary style="font-weight: bold;">Helper Functions</summary>
+<h5 class="js-expandmore" id="helper-functions">Helper Functions</h5>
+<div class="js-to_expand">
 
 The first helper adds `"am"` or `"pm"` to an integer hour for easy-to-read labels on the x-axis _time of day_.
 
@@ -464,9 +475,10 @@ Finally, another helper function creates the plot caption credits.
 <<plot-credit-caption>>
 ```
 
-</details>
+</div>
 
-<details><summary style="font-weight: bold;">Plot Theme</summary>
+<h5 class="js-expandmore" id="plot-theme">Plot Theme</h5>
+<div class="js-to_expand">
 
 I used `showtext` and `sysfonts` to match the fonts in the plot to the font used on this blog (PT Mono).
 
@@ -480,9 +492,10 @@ And I used [hrbrthemes'][hrbrthemes] excellent `theme_ipsum()` as my theme's sta
 <<plot-theme>>
 ```
 
-</details>
+</div>
 
-<details><summary style="font-weight: bold;">Plot Constants</summary>
+<h5 class="js-expandmore" id="plot-constants">Plot Constants</h5>
+<div class="js-to_expand">
 
 I created a few constants for later reference: one stores date breaks for the time period covered by the Axios schedule, with labels on each Monday; and the other two store the color palette and labels for the executive activity categories.
 The colors were hand-selected from a picture of the Donald (I was expecting there to be more orange).
@@ -499,9 +512,9 @@ scales::show_col(event_type_colors)
 <img src="`r knitr::fig_chunk("view-plot-colors", "png")`" style="max-width: 300px; margin: auto;" />
 </div>
 
-</details>
+</div>
 
-### Build the Actual Plot Already!
+#### Build the Actual Plot Already!
 
 Finally, I pulled the schedule data and all of the above pieces together to build the interactive plot.
 
@@ -509,7 +522,7 @@ Finally, I pulled the schedule data and all of the above pieces together to buil
 <<plot-daily-schedule>>
 ```
 
-</details>
+</div>
 
 ## The President's Daily Tweeting Schedule
 
@@ -615,10 +628,11 @@ g_subdued +
 
 View `r lightbox_img(knitr::fig_chunk("plot-tweets-over-category-static", "png"), preview = FALSE)`.
 
-<details><summary style="font-size: 133%;">How This Was Made...</summary>
+<h3 class="js-expandmore" id="how-this-was-made-2">How This Was Made...</h3>
+<div class="js-to_expand">
 
-This visualization required downloading the President's tweets via [rtweet].
-Then, I modified the previous plot to soften the coloring of the presidential activities and added the tweets.
+This visualization required the President's tweets, which I downloaded using the excellent [rtweet] package.
+After matching the tweets with their corresponding activity, I modified the previous plot to soften the coloring of the presidential activities and added the tweets to the chart.
 
 ### Download the President's Tweets
 
@@ -661,10 +675,25 @@ djt_simple %>%
   filter(created_at >= "2018-11-07")
 ```
 
-And `djt_workday` contains these tweets joined with the presidential schedule, within the period covered by the Axios schedules, and during workday hours.
+The `djt_joined_all` variable holds the complete set of all tweets joined with the full schedule, meaning that there will be missing values where no tweets occurred in a 5 minute window or where the schedule data doesn't cover a tweet.
+
+```{r view-djt-joined-all}
+set.seed(4242)
+top_10 <- sample(1:nrow(djt_joined_all), 10)
+header_rows <- c(
+  sort(top_10),
+  setdiff(1:nrow(djt_joined_all), top_10)
+)
+djt_joined_all %>% 
+  slice(header_rows) %>% 
+  select(time_inc, top_category, text, everything())
+```
+
+And `djt_workday` contains the tweets within the period covered by the Axios schedules and during workday hours.
 
 ```{r view-djt-workday}
-djt_workday
+djt_workday %>% 
+  select(time_inc, top_category, label, everything())
 ```
 
 ### Add Tweets to the Schedule Plot
@@ -675,7 +704,7 @@ To build the second plot, I had to manually tweak the first plot to adjust the t
 `r paste(knitr:::knit_code$get("plot-tweets-over-category")[1:14], collapse = "\n")`
 ```
 
-At the point, the plot is almost ready to go, except for the fact that the tooltip text will appear for the underlying activity layers.
+At this point, the plot is almost ready to go, except for the fact that the tooltip text will appear for the underlying activity layers.
 Fortunately, once again [StackOverflow][so-plotly] comes to the rescue.
 To disable the tooltip, I have to save the plotly object and change the `$hoverinfo` value to `"none"` for each of the data layers of the activity categories.
 
@@ -683,27 +712,35 @@ To disable the tooltip, I have to save the plotly object and change the `$hoveri
 `r paste(knitr:::knit_code$get("plot-tweets-over-category")[16:25], collapse = "\n")`
 ```
 
-</details>
+<div>
 
 ```{r plot-time-categoy-pct}
 # Plot 2 ------------------------------------------------------------------
 exec_time_total <-
   exec_time %>%
   filter(between(hour(time_start), 8, 17), hour(time_start) < 17) %>%
-  mutate(date = floor_date(time_start, "day")) %>%
-  mutate(n = as.numeric(difftime(time_end, time_start, units = "mins"))) %>%
+  mutate(
+    date = floor_date(time_start, "day"),
+    n = difftime(time_end, time_start, units = "mins"),
+    n = as.numeric(n)
+  ) %>%
   group_by(date, top_category) %>%
   summarize(n = sum(n)) %>%
   ungroup() %>%
   mutate(n = n / (60 * 9)) %>%
+  # Get unaccounted time for each date (unknown or unlabelled)
   nest(-date) %>%
   mutate(
-    total = map_dbl(data, ~ filter(., top_category != "Unknown") %>% pull(n) %>% sum()),
+    total = map_dbl(data, ~ {
+      filter(., top_category != "Unknown") %>% 
+        pull(n) %>% 
+        sum()
+    }),
     unaccounted = 1 - total,
   ) %>%
   unnest() %>%
   spread(top_category, n, fill = 0) %>%
-  mutate(`Unknown` =  unaccounted) %>%
+  mutate(`Unknown` = unaccounted) %>%
   select(-total, -unaccounted) %>%
   gather("top_category", "n", -date) %>%
   mutate(top_category = factor(top_category, rev(names(event_type_colors))))

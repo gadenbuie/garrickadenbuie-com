@@ -190,3 +190,38 @@ code {
   margin-top: -16px;
   margin-bottom: 16px;
 }
+
+/* 
+  van11y-accessible-hide-show-aria 
+  https://van11y.net/accessible-hide-show/ 
+   
+  <h2 class="js-expandmore">Lorem dolor si amet</h2>
+  <div class="js-to_expand">
+    here the hidden content
+  </div>
+*/
+.js-to_expand[aria-hidden=true],
+.js-to_expand[data-hidden=true] {
+  display: none;
+}
+.expandmore__button {
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  padding: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+}
+.expandmore__symbol::before {
+  content: '\f0da';
+  font-family: FontAwesome;
+  display: inline-block;
+  width: 1em;
+}
+.expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
+  content: '\f0d7';
+  font-family: FontAwesome; 
+  display: inline-block;
+  width: 1em;
+}
