@@ -15,8 +15,9 @@ Description: ''
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-05-presidents-day/index.Rmd
 head_custom: |
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
-editor_options: 
-  chunk_output_type: console
+output:
+  blogdown::html_page:
+    section_divs: false
 ---
 
 <!-- links -->
@@ -40,6 +41,7 @@ knitr::opts_chunk$set(
   cache = TRUE,
   fig.width = 9, fig.height = 10, fig.show = "hide"
 )
+options(htmltools.dir.version = TRUE)
 ```
 
 ```{r library, results="hide"}
@@ -94,7 +96,7 @@ filter_workday <- function(
 ```
 
 ```{r load-exec-time}
-# Exec Time Downloaded from https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0
+# Exec Time Downloaded from http://bit.ly/2Sk9Vj7
 exec_time <-
   read_csv(
     here::here(
@@ -356,7 +358,7 @@ Here, I recreate the same visualization, with each activity colored according to
 Hover over any time slot to view more details about the activity at that time.
 You can also toggle activity categories --- try removing everything except **Meeting**s, **Lunch**es, and **Event**s, it's unbelievable.
 
-```{r plot-daily-schedule, fig.show = "show", out.width="125%"}
+```{r plot-daily-schedule, fig.show = "show", out.width="115%"}
 g <-
   exec_time %>%
   mutate(date = floor_date(time_start, "day")) %>%
@@ -412,7 +414,7 @@ View `r lightbox_img(knitr::fig_chunk("plot-daily-schedule-static", "png"), prev
 Expand the section below for a behind-the-scenes look at this visualization.
 
 
-<h3 class="js-expandmore section" id="how-this-was-made-1">How This Was Made...</h3>
+### How This Was Made... {.js-expandmore}
 
 <div class="js-to_expand">
 The pipeline for building this visualization is a fairly standard loading and transformation of the source data with `readr` and `dplyr`, followed by building the visualization in `ggplot2` and passing off to `plotly` for the interactive parts.
@@ -437,18 +439,20 @@ library(sysfonts)
   
 <<load-exec-time>>
   
-exec_time
+glimpse(exec_time)
 ```
 
 ```{r view-exec-time}
-exec_time
+glimpse(exec_time)
 ```
 
 #### Prepare to Make a Plot
 
-To build the plot, I first create several helper functions, set the global plot theme, and create a few constants.
+To build the plot, I first created several helper functions for the plot labels, scales, and data filtering.
+I also set the global plot theme, and created a few constants that I used across several plots in this post.
 
-<h5 class="js-expandmore" id="helper-functions">Helper Functions</h5>
+##### Helper Functions {.js-expandmore}
+
 <div class="js-to_expand">
 
 The first helper adds `"am"` or `"pm"` to an integer hour for easy-to-read labels on the x-axis _time of day_.
@@ -477,7 +481,8 @@ Finally, another helper function creates the plot caption credits.
 
 </div>
 
-<h5 class="js-expandmore" id="plot-theme">Plot Theme</h5>
+##### Plot Themes {.js-expandmore}
+
 <div class="js-to_expand">
 
 I used `showtext` and `sysfonts` to match the fonts in the plot to the font used on this blog (PT Mono).
@@ -494,7 +499,8 @@ And I used [hrbrthemes'][hrbrthemes] excellent `theme_ipsum()` as my theme's sta
 
 </div>
 
-<h5 class="js-expandmore" id="plot-constants">Plot Constants</h5>
+##### Plot Constants {.js-expandmore}
+
 <div class="js-to_expand">
 
 I created a few constants for later reference: one stores date breaks for the time period covered by the Axios schedule, with labels on each Monday; and the other two store the color palette and labels for the executive activity categories.
@@ -521,6 +527,9 @@ Finally, I pulled the schedule data and all of the above pieces together to buil
 ```{r view-plot-daily-schedule, eval=FALSE, echo=TRUE}
 <<plot-daily-schedule>>
 ```
+
+And that's it!
+[Jump back up](#the-presidents-daily-8am-to-5pm-schedule) to see the final product.
 
 </div>
 
@@ -593,7 +602,7 @@ tweets on weekends.
 Below, each tweet sent by the President is shown as a dot over his private schedule.
 Hover over a tweet's dot to read the text of the tweet.
 
-```{r plot-tweets-over-category, fig.show = "show", out.width="125%"}
+```{r plot-tweets-over-category, fig.show = "show", out.width="115%"}
 # Modify geom_rect (only layer) to reduce transparency
 g_subdued <- g
 g_subdued$layers[[1]]$aes_params$alpha <- 0.6
@@ -618,6 +627,8 @@ gpltly <-
 for (i in 1:6) {
   gpltly$x$data[[i]]$hoverinfo <- "none"
 }
+
+# Final Plot!
 gpltly
 ```
 
@@ -627,14 +638,16 @@ g_subdued +
 ```
 
 View `r lightbox_img(knitr::fig_chunk("plot-tweets-over-category-static", "png"), preview = FALSE)`.
+Expand the section below to learn more about how I gathered tweets from &commat;realDonaldTrump, merged his tweets with the Axios schedules, and added them to the first plot.
 
-<h3 class="js-expandmore" id="how-this-was-made-2">How This Was Made...</h3>
+### How This Was Made... {.js-expandmore}
+
 <div class="js-to_expand">
 
 This visualization required the President's tweets, which I downloaded using the excellent [rtweet] package.
 After matching the tweets with their corresponding activity, I modified the previous plot to soften the coloring of the presidential activities and added the tweets to the chart.
 
-### Download the President's Tweets
+#### Download the President's Tweets
 
 Using the [rtweet] package makes downloading the tweets relatively straightforward.
 I only needed to add a loop to gather tweets beyond Twitter's timeline API limits and ensure that I have all the tweets from the time period described in the leaked schedules.
@@ -644,7 +657,7 @@ I only needed to add a loop to gather tweets beyond Twitter's timeline API limit
 <<get-djt-tweets>>
 ```
 
-### Join Tweets with the President's Schedule
+#### Join Tweets with the President's Schedule
 
 To align the tweets with the President's schedule, I rounded (actually, floored) the timestamp of each tweet down to the nearest 5 minute interval.
 Then, I joined the tweets to the schedule using the 5 minute intervals I created while importing the schedule (see above).
@@ -696,9 +709,9 @@ djt_workday %>%
   select(time_inc, top_category, label, everything())
 ```
 
-### Add Tweets to the Schedule Plot
+#### Add Tweets to the Schedule Plot
 
-To build the second plot, I had to manually tweak the first plot to adjust the transparency of the `geom_rect` layer and add the tweets
+To build the second plot, I had to manually tweak the first plot to adjust the transparency of the `geom_rect` layer and then overlay the tweets as points.
 
 ```r
 `r paste(knitr:::knit_code$get("plot-tweets-over-category")[1:14], collapse = "\n")`
@@ -712,9 +725,16 @@ To disable the tooltip, I have to save the plotly object and change the `$hoveri
 `r paste(knitr:::knit_code$get("plot-tweets-over-category")[16:25], collapse = "\n")`
 ```
 
-<div>
+Head [back to the visualization](#the-presidents-daily-tweeting-schedule) to view the final product and explore Trump's ~~delusional ranting~~ tweets.
 
-```{r plot-time-categoy-pct}
+</div>
+
+## How much time is spent in Executive Time?
+
+Looking at the above plots, it's really striking how much time is unstructured _Executive Time_ in Trump's schedule.
+But how much of the day is spent in each activity group?
+
+```{r exec-time-total-pct}
 # Plot 2 ------------------------------------------------------------------
 exec_time_total <-
   exec_time %>%
@@ -725,29 +745,126 @@ exec_time_total <-
     n = as.numeric(n)
   ) %>%
   group_by(date, top_category) %>%
-  summarize(n = sum(n)) %>%
+  summarize(pct = sum(n) / (60 * 9)) %>%
   ungroup() %>%
-  mutate(n = n / (60 * 9)) %>%
   # Get unaccounted time for each date (unknown or unlabelled)
   nest(-date) %>%
   mutate(
     total = map_dbl(data, ~ {
       filter(., top_category != "Unknown") %>% 
-        pull(n) %>% 
+        pull(pct) %>% 
         sum()
     }),
     unaccounted = 1 - total,
   ) %>%
   unnest() %>%
-  spread(top_category, n, fill = 0) %>%
+  spread(top_category, pct, fill = 0) %>%
   mutate(`Unknown` = unaccounted) %>%
   select(-total, -unaccounted) %>%
-  gather("top_category", "n", -date) %>%
+  gather("top_category", "pct", -date) %>%
   mutate(top_category = factor(top_category, rev(names(event_type_colors))))
+```
 
+```{r exec-time-total-hours}
+exec_time_hours <- 
+  exec_time_total %>% 
+  filter(!(pct == 1 & top_category == "Unknown")) %>% 
+  group_by(top_category) %>% 
+  summarize(hours = sum(pct * 60 * 90)) %>% 
+  arrange(desc(top_category)) %>% 
+  mutate(
+    pct = hours / sum(hours),
+    pct_upto = cumsum(pct),
+    label = glue("{top_category}\n{scales::percent(pct, accuracy = 1)}"),
+    label = if_else(top_category == "Unknown", "", paste(label))
+  )
+```
 
+```{r plot-time-category-total-pct, fig.height=4}
+ggplot(exec_time_hours) +
+  aes(x = 1, 
+      y = pct,
+      fill = top_category) +
+  geom_col() +
+  geom_text(
+    aes(x = 0.35, y = pct_upto - pct/2, label = label),
+    color = "grey30",
+    family = "PT Sans"
+  ) +
+  scale_fill_manual(
+    values = event_type_colors,
+    labels = rev(event_type_labels),
+    guide = FALSE
+  ) +
+  scale_x_continuous(
+    expand = expand_scale(0, c(0.2, 0))
+  ) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 10),
+    expand = expand_scale(0, 0),
+    position = "bottom"
+  ) +
+  coord_flip() +
+  labs(x = NULL, y = "Percent of Workday Between 8am and 5pm", fill = NULL) +
+  ggtitle(
+    "What Does President Trump Do With His Time?"
+  ) +
+  labs(caption = credit_caption(FALSE)) +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major = element_blank()
+  )
+```
+
+`r lightbox_img(knitr::fig_chunk("plot-time-category-total-pct", "png"))`
+
+```{r exec-time-summary}
+untracked_days <-
+  exec_time_total %>% 
+  filter(
+    top_category == "Unknown",
+    pct ==1
+  ) %>% 
+  pull(date)
+
+exec_time_summary <- 
+  exec_time_total %>% 
+  complete(
+    date = seq(min(.$date), max(.$date), by = "DSTday"),
+    top_category
+  ) %>% 
+  filter(
+    top_category == "Executive Time",
+    !date %in% untracked_days
+  ) %>%
+  replace_na(list(pct = 0)) %>% 
+  mutate(weekday = wday(date, abbr = FALSE, week_start = 1) < 6)
+
+exec_time_n_weekdays <-
+  exec_time_summary %>% 
+  filter(weekday) %>% 
+  nrow()
+
+exec_time_gt_half <- 
+  exec_time_summary %>% 
+  filter(weekday, pct >= 0.5) %>% 
+  nrow()
+```
+
+For
+**`r exec_time_gt_half`**
+of the
+**`r exec_time_n_weekdays`**
+workdays 
+(that's **`r scales::percent(exec_time_gt_half/exec_time_n_weekdays)`**)
+covered by the Axios schedules and for which there is schedule information,
+Trump spent 50% _or more_ of his day in executive time.
+
+When the above time-use summary is expanded into his daily schedule, it's clear how unusual it is for Trump to spend a significant portion of his day in structured events.
+
+```{r plot-time-category-pct}
 ggplot(exec_time_total) +
-  aes(date + 3600*12, n, fill = top_category) +
+  aes(date + 3600*12, pct, fill = top_category) +
   geom_col(width = 3600*24) +
   scale_fill_manual(values = event_type_colors, labels = rev(event_type_labels)) +
   scale_y_continuous(
@@ -771,7 +888,76 @@ ggplot(exec_time_total) +
   labs(caption = credit_caption(FALSE))
 ```
 
-`r lightbox_img(knitr::fig_chunk("plot-time-categoy-pct", "png"))`
+`r lightbox_img(knitr::fig_chunk("plot-time-category-pct", "png"))`
+
+In fact, the largest non-executive time block for the
+`r exec_time_n_weekdays - exec_time_gt_half`
+days where executive time isn't more than half of the workday are almost entirely travel related.
+
+```{r table-not-full-on-exec-time-day, results="asis"}
+exec_time_summary %>%
+  filter(pct < 0.5, weekday) %>%
+  select(date) %>%
+  left_join(exec_time %>% mutate(date = floor_date(time_start, "day"))) %>%
+  mutate(duration = difftime(time_end, time_start, unit = "hours")) %>%
+  select(date, duration, listed_title) %>%
+  arrange(date, desc(duration)) %>%
+  filter(listed_title != "Executive time") %>%
+  group_by(date) %>%
+  slice(1) %>% 
+  mutate(duration = round(duration, 2)) %>% 
+  knitr::kable(col.names = c(
+    "Date", "Duration", "Longest Non-Executive-Time Activity"
+  ), format = "html") %>% 
+  kableExtra::column_spec(1:2, width = "6.5em") 
+```
+
+Travel seems to be the only activity capable of substantially affecting the amount of time the president spends on his executive time.
+My guess is that this is in part due to travel being the only activity with a long-enough duration to displace executive time, and also (speculatively) in part that travel probably most resembles executive time.
+
+```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.75}
+exec_time_total %>%
+  filter(top_category != "Unknown") %>%
+  spread(top_category, pct) %>%
+  gather(other_activity, pct, -date, -`Executive Time`) %>%
+  filter(pct + `Executive Time` > 0) %>% 
+  ggplot() + 
+  aes(`Executive Time`, pct, color = other_activity) + 
+  geom_point() + 
+  geom_line(
+    stat = "smooth",
+    method = "loess", span = 0.9, se = FALSE,
+    alpha = 0.5
+  ) +
+  facet_wrap(~ other_activity, nrow = 1) +
+  scale_x_continuous(
+    breaks = c(0, 0.5, 1),
+    labels = scales::percent_format(accuracy = 25),
+    limits = c(0, 1)
+  ) +
+  scale_y_continuous(
+    breaks = c(0, 0.5, 1),
+    labels = scales::percent_format(accuracy = 25),
+    limits = c(0, 1)
+  ) +
+  scale_color_manual(
+    values = event_type_colors, 
+    labels = rev(event_type_labels),
+    guide  = FALSE
+  ) +
+  coord_equal() +
+  labs(
+    x = "Percent of Workday Spent in Executive Time",
+    y = "Percent of Workday",
+    caption = credit_caption()
+  ) +
+  theme(
+    axis.title.x = element_text(margin = margin(10)),
+    axis.title.y = element_text(margin = margin(r = 20)),
+  )
+```
+
+`r lightbox_img(knitr::fig_chunk("plot-exec-time-vs-others", "png"))`
 
 ```{r plot-tweet-counts-by-activity, fig.height = 5}
 exec_time_boundaries <- 
@@ -817,9 +1003,11 @@ exec_time %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
+## How do the President's Tweets Relate to His Schedule?
+
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
-```{r djt-tweets-timeline}
+```{r djt-tweets-timeline, fig.height=6}
 ggplot(djt_joined) + 
   ungeviz::geom_vpline(
     aes(x = hour, y = top_category, color = top_category),
@@ -834,7 +1022,7 @@ ggplot(djt_joined) +
   ) +
   scale_color_manual(values = event_type_colors, labels = event_type_labels) +
   labs(x = NULL, y = NULL, color = NULL) +
-  guides(color = guide_legend(nrow = 1, label.position = "bottom", override.aes = list(size = 2))) +
+  guides(color = FALSE) +
   theme(panel.grid.major.y = element_blank()) +
   ggtitle(
     "What's On His Schedule When He's Tweeting?",
@@ -853,7 +1041,7 @@ djt_joined %>%
   left_join(exec_time_total, ., by = "date") %>%
   replace_na(list(tweets = 0)) %>% 
   filter(top_category %in% c("Executive Time", "Unknown", "Travel", "Lunch")) %>%
-  spread(top_category, n, fill = 0) %>% 
+  spread(top_category, pct, fill = 0) %>% 
   filter(!Unknown == 1) %>% 
   mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %>% 
   ggplot() +
@@ -883,7 +1071,7 @@ djt_simple %>%
   left_join(exec_time_total, ., by = "date") %>%
   filter(top_category %in% c("Meeting", "Event")) %>%
   group_by(date) %>% 
-  summarize(pct = sum(n), tweets = max(tweets)) %>% 
+  summarize(pct = sum(pct), tweets = max(tweets)) %>% 
   filter(pct > 0) %>% 
   ggplot() +
   aes(pct, tweets) +
@@ -902,7 +1090,7 @@ djt_simple %>%
 
 `r lightbox_img(knitr::fig_chunk("tweets-by-not-meeting-event", "png"))`
 
-```{r tweet_sentiment, fig.height=8}
+```{r djt-tweet-sentiment}
 djt_sentiment <- 
   djt_joined %>% 
   select(top_category, text) %>% 
@@ -916,7 +1104,10 @@ djt_sentiment_mean <-
   summarize(value = mean(value)) %>% 
   mutate(emotion = fct_reorder(emotion, value)) %>% 
   filter(top_category != "Unknown")
+```
 
+
+```{r tweet_sentiment, eval = FALSE, fig.height=8}
 ggplot(djt_sentiment_mean) +
   geom_rect(
     data = tibble(
@@ -943,19 +1134,16 @@ ggplot(djt_sentiment_mean) +
   labs(caption = credit_caption(rtweet = TRUE))
 ```
 
-`r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))`
+<!-- `r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))` -->
 
 ```{r tweet-emotion-by-event, fig.height=7}
-# djt_sentiment %>%
-#   mutate(emotion = factor(emotion, rev(c("positive", "joy", "trust", "surprise", "anticipation", "fear", "sadness", "anger", "disgust", "negative")))) %>%
-#   ggplot() +
-#   aes(value, emotion, fill = top_category) +
-#   ggridges::geom_density_ridges() +
-#   scale_fill_manual(values = event_type_colors) +
-#   facet_wrap(~top_category)
+emotions <- c(
+  "positive", "joy", "trust", "surprise", "anticipation", 
+  "fear", "sadness", "anger", "disgust", "negative"
+)
 
 djt_sentiment %>%
-  mutate(emotion = factor(emotion, rev(c("positive", "joy", "trust", "surprise", "anticipation", "fear", "sadness", "anger", "disgust", "negative")))) %>%
+  mutate(emotion = factor(emotion, rev(emotions))) %>%
   ggplot() +
   aes(y = value, x = emotion, fill = top_category) +
   # ggridges::geom_density_ridges() +
