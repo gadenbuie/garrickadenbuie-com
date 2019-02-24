@@ -231,3 +231,22 @@ code {
   background-repeat: no-repeat;
   margin-bottom: -0.1rem;
 }
+.expand-for-code {
+  color: #808080;
+  text-align: right;
+  width: 100%;
+  padding-bottom: 0.25em;
+  margin: 0;
+}
+.expand-for-code > * > .expandmore__symbol::before {
+  background: none;
+  content: "+ Show ";
+  width: auto;
+  margin-right: 0.25em;
+}
+.expand-for-code > .expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
+  background: none;
+  content: "- Hide ";
+  width: auto;
+  margin-right: 0.25em;
+}

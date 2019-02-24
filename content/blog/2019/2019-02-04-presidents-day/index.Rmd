@@ -731,8 +731,16 @@ Head [back to the visualization](#the-presidents-daily-tweeting-schedule) to vie
 Looking at the above plots, it's really striking how much time is unstructured _Executive Time_ in Trump's schedule.
 But how much of the day is spent in each activity group?
 
-```{r exec-time-total-pct}
-# Plot 2 ------------------------------------------------------------------
+##### R code... {#code-time-summary .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+The first step is to calculate the total time as a percentage of the 8am to 5pm workday spent in each time category.
+This data frame will be used for several plots.
+
+One tricky point is that there are piece of the schedule that are explicitly marked as "Unknown" (or "no data") in the Axios data, so I calculate the total percent of time spent in other categories and subtract this value from 1 to recover the complete unaccounted-for time.
+
+```{r exec-time-total-pct, echo = TRUE}
 exec_time_total <-
   exec_time %>%
   filter(between(hour(time_start), 8, 17), hour(time_start) < 17) %>%
@@ -760,11 +768,18 @@ exec_time_total <-
   select(-total, -unaccounted) %>%
   gather("top_category", "pct", -date) %>%
   mutate(top_category = factor(top_category, rev(names(event_type_colors))))
+
+exec_time_total %>% 
+  arrange(date, desc(pct))
 ```
 
-```{r exec-time-total-hours}
+The above tibble contains a summary of time use by day, but the first plot requires a full summary of all days in the schedule.
+The following code chunk caculates total hours spent in each group and creates a text label that is used to label the regions of the stacked bar in the plot.
+
+```{r exec-time-total-hours, echo=TRUE}
 exec_time_hours <- 
   exec_time_total %>% 
+  # Only the days covered by the schedule
   filter(!(pct == 1 & top_category == "Unknown")) %>% 
   group_by(top_category) %>% 
   summarize(hours = sum(pct * 60 * 90)) %>% 
@@ -772,12 +787,18 @@ exec_time_hours <-
   mutate(
     pct = hours / sum(hours),
     pct_upto = cumsum(pct),
-    label = glue("{top_category}\n{scales::percent(pct, accuracy = 1)}"),
+    label = glue("{top_category}\n",
+                 "{scales::percent(pct, accuracy = 1)}"),
     label = if_else(top_category == "Unknown", "", paste(label))
   )
+
+exec_time_hours
 ```
 
-```{r plot-time-category-total-pct, fig.height=4}
+Finally, I create the plot using `geom_col()` to create a stacked bar chart, that I then rotate to be horizontal with `coord_flip()`.
+The bar labels are added as a text annotation, and I do a little adjustment to make sure the annotations fit in the plot and to hide the axis that aren't relevant.
+
+```{r plot-time-category-total-pct, fig.height=4, echo = TRUE}
 ggplot(exec_time_hours) +
   aes(x = 1, 
       y = pct,
@@ -802,15 +823,23 @@ ggplot(exec_time_hours) +
     position = "bottom"
   ) +
   coord_flip() +
-  labs(x = NULL, y = "Percent of Workday Between 8am and 5pm", fill = NULL) +
+  labs(
+    x = NULL, 
+    y = "Percent of Workday Between 8am and 5pm", 
+    fill = NULL
+  ) +
   ggtitle(
     "What Does President Trump Do With His Time?"
   ) +
   labs(caption = credit_caption(FALSE)) +
   theme(
-    axis.text.y = element_blank()
+    axis.text.y = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.ticks.x.top = element_line(color = "grey20")
   )
 ```
+
+</div>
 
 `r lightbox_img(knitr::fig_chunk("plot-time-category-total-pct", "png"))`
 
@@ -856,13 +885,27 @@ workdays
 covered by the Axios schedules and for which there is schedule information,
 Trump spent 50% _or more_ of his day in executive time.
 
+
+In other words, there were only
+**`r exec_time_n_weekdays - exec_time_gt_half`**
+days in about
+**`r round(exec_time_n_weekdays/5, 0)`**
+work weeks where executive time was not the dominant activity.
+
 When the above time-use summary is expanded into his daily schedule, it's clear how unusual it is for Trump to spend a significant portion of his day in structured events.
 
-```{r plot-time-category-pct}
+##### R code... {#code-time-category-pct-daily .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r plot-time-category-pct-daily, echo=TRUE}
 ggplot(exec_time_total) +
   aes(date + 3600*12, pct, fill = top_category) +
   geom_col(width = 3600*24) +
-  scale_fill_manual(values = event_type_colors, labels = rev(event_type_labels)) +
+  scale_fill_manual(
+    values = event_type_colors, 
+    labels = rev(event_type_labels)
+  ) +
   scale_y_continuous(
     breaks   = seq(0, 1, .25),
     labels   = scales::percent_format(accuracy = 25),
@@ -876,21 +919,35 @@ ggplot(exec_time_total) +
     expand = expand_scale(c(0.025, 0), 0)
   ) +
   coord_flip() +
-  labs(x = NULL, y = "Percent of Workday Between 8am and 5pm", fill = NULL) +
-  guides(fill = guide_legend(nrow = 1, reverse = TRUE, label.position = "bottom")) +
+  labs(
+    x = NULL, 
+    y = "Percent of Workday Between 8am and 5pm", 
+    fill = NULL
+  ) +
+  guides(
+    fill = guide_legend(nrow = 1, 
+                        reverse = TRUE, 
+                        label.position = "bottom")
+  ) +
   ggtitle(
     "What Does President Trump Do With His Time?"
   ) +
   labs(caption = credit_caption(FALSE))
 ```
 
-`r lightbox_img(knitr::fig_chunk("plot-time-category-pct", "png"))`
+</div>
+
+`r lightbox_img(knitr::fig_chunk("plot-time-category-pct-daily", "png"))`
 
 In fact, the largest non-executive time block for the
 `r exec_time_n_weekdays - exec_time_gt_half`
-days where executive time isn't more than half of the workday are almost entirely travel related.
+days where executive time isn't more than half of Trump's workday are almost entirely travel related.
 
-```{r table-not-full-on-exec-time-day, results="asis"}
+##### R code... {#code-table-not-full-on-exec-time-day .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r table-not-full-on-exec-time-day, results="asis", echo=TRUE, eval=FALSE}
 exec_time_summary %>%
   filter(pct < 0.5, weekday) %>%
   select(date) %>%
@@ -908,15 +965,30 @@ exec_time_summary %>%
   kableExtra::column_spec(1:2, width = "6.5em") 
 ```
 
-Travel seems to be the only activity capable of substantially affecting the amount of time the president spends on his executive time.
-My guess is that this is in part due to travel being the only activity with a long-enough duration to displace executive time, and also (speculatively) in part that travel probably most resembles executive time.
+</div>
 
-```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.5}
+```{r table-not-full-on-exec-time-day-out, results="asis"}
+<<table-not-full-on-exec-time-day>>
+```
+
+Travel seems to be the only activity capable of substantially affecting the amount of time the president spends on his executive time.
+My (completely speculative) guess is that this is in part due to travel being the only activity with a duration long enough to displace executive time, and also in part that travel probably most resembles executive time.
+
+##### R code... {#code-plot-exec-time-vs-others .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.5, echo=TRUE}
 exec_time_total %>%
+  # Drop "Unkown" time category, not that important
   filter(top_category != "Unknown") %>%
+  # Spread top_category... 
   spread(top_category, pct) %>%
+  # ...and gather to leave Executive Time in own column
   gather(other_activity, pct, -date, -`Executive Time`) %>%
+  # Ignore points where both groups are 0% (not informative)
   filter(pct + `Executive Time` > 0) %>% 
+  # Pipe into ggplot
   ggplot() + 
   aes(`Executive Time`, pct, color = other_activity) + 
   geom_point() + 
@@ -948,11 +1020,23 @@ exec_time_total %>%
   )
 ```
 
+</div>
+
 `r lightbox_img(knitr::fig_chunk("plot-exec-time-vs-others", "png"))`
 
 ## How do the President's Tweets Relate to His Schedule?
 
-```{r plot-tweet-counts-by-activity, fig.height = 5}
+At the point, I was very interested in exploring how Trump's tweeting relates to his work schedule.
+The first question to answer is _When does he send most of his tweets?_
+And the answer is: primarily on the weekends, during executive time, or before or after work hours.
+
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r plot-tweet-counts-by-activity, fig.height = 5, echo=TRUE}
+# Start and end dates of Axios-pubslished schedules
+# which I called `exec_time` for some reason and am sticking with
 exec_time_boundaries <- 
   exec_time %>% 
   summarize(min = min(time_start), max = max(time_end))
@@ -963,15 +1047,17 @@ exec_time %>%
   filter(time_end != time_inc) %>%
   full_join(djt_simple, by = "time_inc") %>%
   select(event_id, time_inc, created_at, listed_title, top_category, text) %>%
-  filter(!is.na(text)) %>%
-  filter(between(time_inc, exec_time_boundaries$min, exec_time_boundaries$max)) %>%
+  filter(
+    !is.na(text),
+    between(time_inc, exec_time_boundaries$min, exec_time_boundaries$max)
+  ) %>%
   mutate(
     wday = wday(created_at, abbr = FALSE, week_start = 1), 
     top_category = case_when(
       !is.na(top_category) ~ paste(top_category),
       wday > 5 ~ "Weekend", 
-      between(wday, 1, 5) & hour(created_at) < 6 ~ "Early Morning (before 6am)",
-      between(wday, 1, 5) & hour(created_at) < 8 ~ "Morning (6-8 am)",
+      between(wday, 1, 5) & hour(created_at) <  6 ~ "Early Morning (before 6am)",
+      between(wday, 1, 5) & hour(created_at) <  8 ~ "Morning (6-8 am)",
       between(wday, 1, 5) & hour(created_at) > 17 ~ "Evening (after 5pm)",
       is.na(top_category) ~ "Unknown",
       TRUE ~ paste(top_category))
@@ -996,6 +1082,7 @@ exec_time %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
+</div>
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
