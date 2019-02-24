@@ -217,19 +217,17 @@ code {
   content: " ";
   background-image: url(/images/caret-right-solid.svg);
   display: inline-block;
-  width: 12px;
+  width: 14px;
   height: 1rem;
   background-repeat: no-repeat;
   margin-bottom: -0.1rem;
-  margin-left: -12px;
 }
 .expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
   content: " ";
   background-image: url(/images/caret-down-solid.svg);
   display: inline-block;
-  width: 13px;
+  width: 14px;
   height: 1rem;
   background-repeat: no-repeat;
   margin-bottom: -0.1rem;
-  margin-left: -13px;
 }
