@@ -51,10 +51,6 @@ library(hrbrthemes)
 library(showtext)
 library(sysfonts)
 library(glue)
-if (!requireNamespace("pacman", quietly = TRUE)) {
-  install.packages("pacman")
-}
-pacman::p_load_gh("clauswilke/ungeviz@aeae12b")
 ```
 
 ```{r function-in_hours}
@@ -229,11 +225,12 @@ djt_joined <-
 ```{r functions-am-pm}
 am_pm <- function(x) {
   x <- floor(x)
-  c(
-    if (any(x  < 12)) paste(x[x < 12], "am"),
-    if (any(x == 12)) paste(x[x == 12], "pm"),
-    if (any(x  > 12)) paste(x[x > 12] - 12, "pm")
-  )
+  y <- paste(x)
+  y[x < 1] <- "12 am"
+  y[x > 1 & x < 12] <- paste(y[x > 1 & x < 12], "am")
+  y[x == 12] <- "12 pm"
+  y[x > 12] <- paste(x[x > 12] - 12, "pm")
+  y
 }
 ```
 
@@ -418,7 +415,7 @@ Expand the section below for a behind-the-scenes look at this visualization.
 
 <div class="js-to_expand">
 The pipeline for building this visualization is a fairly standard loading and transformation of the source data with `readr` and `dplyr`, followed by building the visualization in `ggplot2` and passing off to `plotly` for the interactive parts.
-On the other hand, I created a number of helper functions and constants that I reused throughout this post, so there's quite a bit of code and pre-amble to get to the actual plot making.
+On the other hand, I created a number of helper functions and constants that I reused throughout this post, so there's quite a bit of code and preamble to get to the actual plot making.
 
 ```r
 library(tidyverse)
@@ -583,7 +580,7 @@ tweets per working day within working hours.
 Why does this number feel so low? 
 Then again, this represents 
 `r djt_per_workday$weekday$tweets` 
-tweets pubslished over 
+tweets published over 
 `r djt_per_workday$weekday$n` 
 workdays and 
 `r djt_per_workday$weekend$tweets` 
@@ -659,7 +656,7 @@ I only needed to add a loop to gather tweets beyond Twitter's timeline API limit
 
 #### Join Tweets with the President's Schedule
 
-To align the tweets with the President's schedule, I rounded (actually, floored) the timestamp of each tweet down to the nearest 5 minute interval.
+To align the tweets with the President's schedule, I rounded (actually, floored) the time stamp of each tweet down to the nearest 5 minute interval.
 Then, I joined the tweets to the schedule using the 5 minute intervals I created while importing the schedule (see above).
 This gives me the category and scheduled activity of each tweet.
 
@@ -811,8 +808,7 @@ ggplot(exec_time_hours) +
   ) +
   labs(caption = credit_caption(FALSE)) +
   theme(
-    axis.text.y = element_blank(),
-    panel.grid.major = element_blank()
+    axis.text.y = element_blank()
   )
 ```
 
@@ -915,7 +911,7 @@ exec_time_summary %>%
 Travel seems to be the only activity capable of substantially affecting the amount of time the president spends on his executive time.
 My guess is that this is in part due to travel being the only activity with a long-enough duration to displace executive time, and also (speculatively) in part that travel probably most resembles executive time.
 
-```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.75}
+```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.5}
 exec_time_total %>%
   filter(top_category != "Unknown") %>%
   spread(top_category, pct) %>%
@@ -924,11 +920,6 @@ exec_time_total %>%
   ggplot() + 
   aes(`Executive Time`, pct, color = other_activity) + 
   geom_point() + 
-  geom_line(
-    stat = "smooth",
-    method = "loess", span = 0.9, se = FALSE,
-    alpha = 0.5
-  ) +
   facet_wrap(~ other_activity, nrow = 1) +
   scale_x_continuous(
     breaks = c(0, 0.5, 1),
@@ -945,10 +936,10 @@ exec_time_total %>%
     labels = rev(event_type_labels),
     guide  = FALSE
   ) +
-  coord_equal() +
+  coord_flip() +
   labs(
-    x = "Percent of Workday Spent in Executive Time",
-    y = "Percent of Workday",
+    x = "Percent of Workday\nIn Executive Time",
+    y = "Percent of Workday Spent in Activity",
     caption = credit_caption()
   ) +
   theme(
@@ -958,6 +949,8 @@ exec_time_total %>%
 ```
 
 `r lightbox_img(knitr::fig_chunk("plot-exec-time-vs-others", "png"))`
+
+## How do the President's Tweets Relate to His Schedule?
 
 ```{r plot-tweet-counts-by-activity, fig.height = 5}
 exec_time_boundaries <- 
@@ -1003,27 +996,59 @@ exec_time %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
-## How do the President's Tweets Relate to His Schedule?
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
+```{r djt-tweets-with-non-work}
+event_type_colors_extra <- c(event_type_colors, "Non-Work Hours" = "#828486")
+
+djt_joined_work_non_work <- 
+  djt_joined_all %>% 
+  mutate_at(vars(top_category),  as.character) %>% 
+  mutate(weekend = wday(created_at, abbr = FALSE, week_start = 1) > 5) %>%
+  filter(
+    !weekend,
+    between(created_at, exec_time_boundaries$min, exec_time_boundaries$max)
+  ) %>% 
+  mutate(top_category = if_else(
+    between(in_hours(created_at), 8, 17) & is.na(top_category),
+    "Unknown",
+    top_category
+  )) %>% 
+  replace_na(list(top_category = "Non-Work Hours")) %>% 
+  mutate(
+    top_category = fct_infreq(top_category)
+  )
+```
+
 ```{r djt-tweets-timeline, fig.height=6}
-ggplot(djt_joined) + 
-  ungeviz::geom_vpline(
-    aes(x = hour, y = top_category, color = top_category),
-    size = 0.6
-  ) +
+ggplot(djt_joined_work_non_work) + 
+  aes(x = hour, y = 1, color = top_category) +
+  geom_segment(aes(xend = hour, yend = 0), alpha = 0.6, size = 0.5) +
+  facet_wrap(~ top_category, ncol = 1, strip.position = "left") +
   scale_x_continuous(
-    breaks   = seq(8, 17, 3),
-    limits   = c(8, 17),
     position = "bottom",
-    labels   = am_pm(seq(8, 17, 3)),
+    breaks   = seq(0, 24, 4),
+    limits   = c(0, 24),
+    labels   = am_pm(seq(0, 24, 4)),
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
-  scale_color_manual(values = event_type_colors, labels = event_type_labels) +
+  scale_color_manual(
+    values = event_type_colors_extra, 
+    labels = names(event_type_colors_extra)
+  ) +
+  scale_fill_manual(
+    values = event_type_colors_extra, 
+    labels = names(event_type_colors_extra)
+  ) +
   labs(x = NULL, y = NULL, color = NULL) +
-  guides(color = FALSE) +
-  theme(panel.grid.major.y = element_blank()) +
+  guides(color = FALSE, fill = FALSE) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    strip.text.y = element_text(angle = 180, margin = margin(r = 25), hjust = 1),
+    panel.spacing.y = unit(0, "pt")
+  ) +
   ggtitle(
     "What's On His Schedule When He's Tweeting?",
     "Each line represents a tweet, colored by the activity on his White House Schedule"
@@ -1032,6 +1057,50 @@ ggplot(djt_joined) +
 ```
 
 `r lightbox_img(knitr::fig_chunk("djt-tweets-timeline", "png"))`
+
+What's striking is that it's nearly impossible to tell the difference between early morning tweeting and the start of President Trump's official workday at 8am.
+
+```{r plot-tweets-work-non-work-same-timeline, fig.height=7}
+# g_work_non_work_tweet_timeline <- 
+  djt_joined_work_non_work %>% 
+  filter(top_category %in% c("Non-Work Hours", "Executive Time")) %>% 
+  mutate(week = floor_date(created_at, "week"),
+         week = strftime(week, "%F")) %>% 
+  # filter(week %in% unique(week)[1:15]) %>% 
+  ggplot() + 
+  aes(x = hour, y = 1, color = top_category) +
+  geom_segment(aes(xend = hour, yend = 0)) +
+  facet_wrap(~ week, ncol = 1, strip.position = "left") +
+  scale_x_continuous(
+    position = "bottom",
+    breaks   = seq(0, 24, 2),
+    limits   = c(4, 12),
+    labels   = am_pm(seq(0, 24, 2)),
+    expand   = expand_scale(c(0.025, 0), 0)
+  ) +
+  scale_color_manual(
+    values = event_type_colors_extra, 
+    labels = names(event_type_colors_extra)
+  ) +
+  scale_fill_manual(
+    values = event_type_colors_extra, 
+    labels = names(event_type_colors_extra)
+  ) +
+  labs(x = NULL, y = NULL, color = NULL, caption = credit_caption(TRUE)) +
+  guides(color = FALSE, fill = FALSE) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    strip.text.y = element_text(angle = 180, margin = margin(r = 25)),
+    panel.spacing.y = unit(0, "pt")
+  ) +
+  ggtitle(
+    "When Do Official Work Hours Start?",
+    "Morning tweets published over one week periods.\nAccording to the White House Schedule, \"Executive Time\" starts at 8am in the Oval Office."
+  )
+```
+
+`r lightbox_img(knitr::fig_chunk("plot-tweets-work-non-work-same-timeline", "png"))`
 
 ```{r tweets-by-exec-time, fig.height=5}
 djt_joined %>%
