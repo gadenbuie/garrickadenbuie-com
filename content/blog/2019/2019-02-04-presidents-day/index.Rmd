@@ -1087,10 +1087,10 @@ exec_time %>%
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
-We can get a sense of the timing of Trump's tweeting activities by looking at the time of day of each tweet and the schdeled activity that's going on at the time.
+We can get a sense of the timing of Trump's tweeting activities by looking at the time of day of each tweet and the scheduled activity that's going on at the time.
 The following plot shows each tweet as a vertical line and considers only workday tweeting and only for days covered by the Axios schedules.
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+##### R code... {#code-djt-tweets-timeline .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
 
@@ -1160,7 +1160,7 @@ ggplot(djt_joined_work_non_work) +
 
 Most of Trump's tweeting happens betewen 7 and 9 am, but what's striking is that it's nearly impossible to tell the difference between early morning tweeting and the start of President Trump's official workday at 8am.
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+##### R code... {#code-plot-tweets-work-non-work-same-timeline .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
 
@@ -1212,11 +1212,11 @@ tweets per working day within working hours.
 Naturally, I wondered if he tends to tweet more or less during the day when he has more executive or travel time available.
 Similarly does he tweet less when he has more strucured time, i.e. metings, events, or lunches?
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+##### R code... {#code-tweets-by-exec-time .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
 
-```{r tweets-by-exec-time, fig.height=5, echo=FALSE}
+```{r tweets-by-exec-time, fig.height=5, echo=TRUE}
 djt_joined %>%
   group_by(date) %>%
   count() %>%
@@ -1248,11 +1248,11 @@ djt_joined %>%
 Somewhat unsurprisingly, the number of tweets sent during the workday in only very slightly correlated with the amount of unstructured time on Trump's calendar.
 This makes sense: there is very little variation in the amount of the day spent in structured events -- it's never more than half the day.
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+`r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
+
+##### R code... {#code-tweets-by-not-meeting-event .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
-
-`r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
 
 ```{r tweets-by-not-meeting-event, fig.height=5}
 djt_simple %>%
@@ -1291,7 +1291,7 @@ Are his event-related tweets more positive?
 To this end, I ran Trump's tweet text through the NRC sentiment dictionary using `get_nrc_sentiment()` from the `syuzhet` package.
 This function returns an integer score from 0 to 10 for a range of positive and negative emotions.
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+##### R code... {#code-tweet-emotion-by-event .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
 
@@ -1314,35 +1314,6 @@ djt_sentiment_mean <-
 
 djt_sentiment_mean
 ```
-
-```{r tweet_sentiment, eval = FALSE, fig.height=8}
-ggplot(djt_sentiment_mean) +
-  geom_rect(
-    data = tibble(
-      ymin = seq(0, 9, 2) + 0.5,
-      ymax = seq(0, 9, 2) + 1.5,
-      xmin = -Inf, xmax = Inf
-    ),
-    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-    fill = "grey95"
-  ) +
-  ungeviz::geom_vpline(aes(x = value, y = as.integer(emotion), color = top_category),
-                       height = 0.8, size = 1.75) +
-  # geom_point(aes(x = value, y = as.integer(emotion), color = top_category)) +
-  scale_color_manual(values = event_type_colors, labels = event_type_labels[-6]) +
-  scale_y_continuous(breaks = 1:10, labels = levels(djt_sentiment$emotion)) +
-  scale_x_continuous(expand = c(0, 0), limits = c(0, 2.5)) +
-  guides(color = guide_legend(title = NULL, label.position = "bottom")) +
-  labs(x = "Average Sentiment of Tweets", y = NULL) +
-  theme(panel.grid.major.y = element_blank()) +
-  ggtitle(
-    "Emotional Valence of Trump Tweets",
-    "As a function of what he was doing at the time"
-  ) + 
-  labs(caption = credit_caption(rtweet = TRUE))
-```
-
-<!-- `r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))` -->
 
 ```{r tweet-emotion-by-event, echo=TRUE, fig.height=7}
 emotions <- c(

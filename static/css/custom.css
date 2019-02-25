@@ -64,6 +64,9 @@ code {
  pre code {
    white-space: pre;
  }
+ pre {
+   overflow-x: auto;
+ }
 
 @media (min-width: 48em) {
   html {
