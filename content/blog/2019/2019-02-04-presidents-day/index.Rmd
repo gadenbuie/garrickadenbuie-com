@@ -293,6 +293,7 @@ theme_set(
   theme(
     plot.title       = element_text(hjust = 0.5),
     plot.subtitle    = element_text(hjust = 0.5),
+    plot.margin      = margin(15, 15, 15, 15),
     panel.grid.minor = element_blank(),
     panel.background = element_blank(),
     legend.position  = "bottom",
@@ -978,7 +979,7 @@ My (completely speculative) guess is that this is in part due to travel being th
 
 <div class="js-to_expand">
 
-```{r plot-exec-time-vs-others, fig.width=8, fig.height=3.5, echo=TRUE}
+```{r plot-exec-time-vs-others, fig.width=8, fig.height=3, echo=TRUE}
 exec_time_total %>%
   # Drop "Unkown" time category, not that important
   filter(top_category != "Unknown") %>%
@@ -1024,7 +1025,7 @@ exec_time_total %>%
 
 `r lightbox_img(knitr::fig_chunk("plot-exec-time-vs-others", "png"))`
 
-## How do the President's Tweets Relate to His Schedule?
+## Tweeter In Chief
 
 At the point, I was very interested in exploring how Trump's tweeting relates to his work schedule.
 The first question to answer is _When does he send most of his tweets?_
@@ -1086,7 +1087,14 @@ exec_time %>%
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
-```{r djt-tweets-with-non-work}
+We can get a sense of the timing of Trump's tweeting activities by looking at the time of day of each tweet and the schdeled activity that's going on at the time.
+The following plot shows each tweet as a vertical line and considers only workday tweeting and only for days covered by the Axios schedules.
+
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r djt-tweets-with-non-work, echo=TRUE}
 event_type_colors_extra <- c(event_type_colors, "Non-Work Hours" = "#828486")
 
 djt_joined_work_non_work <- 
@@ -1108,7 +1116,7 @@ djt_joined_work_non_work <-
   )
 ```
 
-```{r djt-tweets-timeline, fig.height=6}
+```{r djt-tweets-timeline, fig.height=6, echo=TRUE}
 ggplot(djt_joined_work_non_work) + 
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0), alpha = 0.6, size = 0.5) +
@@ -1128,12 +1136,15 @@ ggplot(djt_joined_work_non_work) +
     values = event_type_colors_extra, 
     labels = names(event_type_colors_extra)
   ) +
+  coord_cartesian(clip = "off") +
   labs(x = NULL, y = NULL, color = NULL) +
   guides(color = FALSE, fill = FALSE) +
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    strip.text.y = element_text(angle = 180, margin = margin(r = 25), hjust = 1),
+    strip.text.y = element_text(angle = 180, 
+                                margin = margin(r = 5, l = 25), 
+                                hjust = 1),
     panel.spacing.y = unit(0, "pt")
   ) +
   ggtitle(
@@ -1143,17 +1154,21 @@ ggplot(djt_joined_work_non_work) +
   labs(caption = credit_caption(rtweet = TRUE))
 ```
 
+</div>
+
 `r lightbox_img(knitr::fig_chunk("djt-tweets-timeline", "png"))`
 
-What's striking is that it's nearly impossible to tell the difference between early morning tweeting and the start of President Trump's official workday at 8am.
+Most of Trump's tweeting happens betewen 7 and 9 am, but what's striking is that it's nearly impossible to tell the difference between early morning tweeting and the start of President Trump's official workday at 8am.
 
-```{r plot-tweets-work-non-work-same-timeline, fig.height=7}
-# g_work_non_work_tweet_timeline <- 
-  djt_joined_work_non_work %>% 
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r plot-tweets-work-non-work-same-timeline, fig.height=7, echo=TRUE}
+djt_joined_work_non_work %>% 
   filter(top_category %in% c("Non-Work Hours", "Executive Time")) %>% 
   mutate(week = floor_date(created_at, "week"),
          week = strftime(week, "%F")) %>% 
-  # filter(week %in% unique(week)[1:15]) %>% 
   ggplot() + 
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0)) +
@@ -1187,9 +1202,21 @@ What's striking is that it's nearly impossible to tell the difference between ea
   )
 ```
 
+</div>
+
 `r lightbox_img(knitr::fig_chunk("plot-tweets-work-non-work-same-timeline", "png"))`
 
-```{r tweets-by-exec-time, fig.height=5}
+As we learned above, Trump sends about
+`r round(djt_per_workday$weekday$mean, 1)`
+tweets per working day within working hours.
+Naturally, I wondered if he tends to tweet more or less during the day when he has more executive or travel time available.
+Similarly does he tweet less when he has more strucured time, i.e. metings, events, or lunches?
+
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r tweets-by-exec-time, fig.height=5, echo=FALSE}
 djt_joined %>%
   group_by(date) %>%
   count() %>%
@@ -1216,6 +1243,15 @@ djt_joined %>%
     caption = credit_caption(rtweet = TRUE))
 ```
 
+</div>
+
+Somewhat unsurprisingly, the number of tweets sent during the workday in only very slightly correlated with the amount of unstructured time on Trump's calendar.
+This makes sense: there is very little variation in the amount of the day spent in structured events -- it's never more than half the day.
+
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
 `r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
 
 ```{r tweets-by-not-meeting-event, fig.height=5}
@@ -1225,7 +1261,7 @@ djt_simple %>%
   count() %>%
   rename(tweets = n) %>%
   left_join(exec_time_total, ., by = "date") %>%
-  filter(top_category %in% c("Meeting", "Event")) %>%
+  filter(top_category %in% c("Meeting", "Event", "Lunch")) %>%
   group_by(date) %>% 
   summarize(pct = sum(pct), tweets = max(tweets)) %>% 
   filter(pct > 0) %>% 
@@ -1244,9 +1280,22 @@ djt_simple %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
+</div>
+
 `r lightbox_img(knitr::fig_chunk("tweets-by-not-meeting-event", "png"))`
 
-```{r djt-tweet-sentiment}
+Finally, I wanted to explore the emotional valence of Trump's day-time tweeting.
+Are his morning tweets angrier or more rant-driven?
+Are his event-related tweets more positive?
+
+To this end, I ran Trump's tweet text through the NRC sentiment dictionary using `get_nrc_sentiment()` from the `syuzhet` package.
+This function returns an integer score from 0 to 10 for a range of positive and negative emotions.
+
+##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
+
+<div class="js-to_expand">
+
+```{r djt-tweet-sentiment, echo=TRUE}
 djt_sentiment <- 
   djt_joined %>% 
   select(top_category, text) %>% 
@@ -1254,14 +1303,17 @@ djt_sentiment <-
   unnest() %>% 
   gather(emotion, value, -top_category, -text)
 
+djt_sentiment
+
 djt_sentiment_mean <- 
   djt_sentiment %>% 
   group_by(top_category, emotion) %>% 
   summarize(value = mean(value)) %>% 
   mutate(emotion = fct_reorder(emotion, value)) %>% 
   filter(top_category != "Unknown")
-```
 
+djt_sentiment_mean
+```
 
 ```{r tweet_sentiment, eval = FALSE, fig.height=8}
 ggplot(djt_sentiment_mean) +
@@ -1292,10 +1344,10 @@ ggplot(djt_sentiment_mean) +
 
 <!-- `r lightbox_img(knitr::fig_chunk("tweet_sentiment", "png"))` -->
 
-```{r tweet-emotion-by-event, fig.height=7}
+```{r tweet-emotion-by-event, echo=TRUE, fig.height=7}
 emotions <- c(
   "positive", "joy", "trust", "surprise", "anticipation", 
-  "fear", "sadness", "anger", "disgust", "negative"
+  "sadness", "anger", "fear", "disgust", "negative"
 )
 
 djt_sentiment %>%
@@ -1313,4 +1365,16 @@ djt_sentiment %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
+</div>
+
 `r lightbox_img(knitr::fig_chunk("tweet-emotion-by-event", "png"))`
+
+
+The result provides something of a profile of Trump's tweeting habits, but more analysis is needed to make sense of these sentiment values.
+I wanted to look further into how these tweets were categorized by the sentiment dictionary, but by this point this post is already far too long and has consumed too much of my evenings and weekends, so I'll save it for another day.
+
+***
+
+Thanks for reading!
+I'd love to hear your thoughts or feedback.
+I'm [&commat;grrrck](https://twitter.com/grrrck) on Twitter.
