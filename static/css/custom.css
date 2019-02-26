@@ -66,6 +66,7 @@ code {
  }
  pre {
    overflow-x: auto;
+   width: 100%;
  }
 
 @media (min-width: 48em) {

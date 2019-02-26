@@ -1071,7 +1071,9 @@ exec_time %>%
   ggplot() + 
   aes(top_category, n) + 
   geom_col(fill = "#445566") + 
+  scale_y_continuous(expand = c(0, 0, 0, 5)) +
   coord_flip() +
+  theme(panel.grid.major.y = element_blank()) +
   labs(x = "Activity or Time of Day", 
        y = paste(
          "Total Tweets Sent Between",
