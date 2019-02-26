@@ -72,6 +72,11 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
     show_talks_front = true
     n_talks_front = 5
     
+    # Twitter Card info
+    twitterAuthor = "@grrrck"
+    twitterSite = "https://www.garrickadenbuie.com"
+    twitterImage = "/apple-touch-icon-152x152.png"
+    
     # hyde
     themeColor = "base16-solarized-garrick"
     customCss = ["css/hamburgers.css", "css/custom.css"]
