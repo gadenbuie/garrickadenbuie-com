@@ -63,6 +63,8 @@ code {
 }
  pre code {
    white-space: pre;
+   word-break: unset;
+   word-wrap: unset;
  }
  pre {
    overflow-x: auto;
