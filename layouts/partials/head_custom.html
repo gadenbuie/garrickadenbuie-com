@@ -22,3 +22,9 @@
 <link href="/css/featherlight.min.css" type="text/css" rel="stylesheet" />
 <!-- https://buttons.github.io/ -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- van11y-accessible-hide-show-aria -->
+<script defer src="/js/van11y-accessible-hide-show-aria.min.js"></script>
+<!-- Post-Custom Head Stuff-->
+{{ if .Params.head_custom }}
+{{ .Params.head_custom | safeHTML }}
+{{ end }}

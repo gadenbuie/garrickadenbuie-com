@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:700|PT+Sans:400,400i,700,700i|Source+Code+Pro:400,700');
+
+html {
+  font-family: "PT Sans", "Ubuntu Sans", "Liberation Sans", "Lucida Grande", "Helvetica Neue", Arial, sans-serif;
+}
+@media (min-width: 48em) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 65em) {
+  html {
+    font-size: 20px;
+  }
+}
+
+code,pre {
+    font-family: "Source Code Pro", "Lucida Console", "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.site-title {
+  font-family: Merriweather, Georgia, sans-serif;
+}
+
 p.caption {
     font-size: 0.95em;
     color: grey;
@@ -37,8 +61,12 @@ code {
   color: #002b36;
   background-color: #f9f9f9;
 }
- pre code {
-   white-space: pre;
+ pre code, pre, code {
+   white-space: pre !important;
+   word-break: keep-all !important;
+   word-wrap: unset !important;
+   width: 100%;
+   overflow-x: auto !important;
  }
 
 @media (min-width: 48em) {
@@ -165,4 +193,64 @@ code {
 .post-source {
   margin-top: -16px;
   margin-bottom: 16px;
+}
+
+/* 
+  van11y-accessible-hide-show-aria 
+  https://van11y.net/accessible-hide-show/ 
+   
+  <h2 class="js-expandmore">Lorem dolor si amet</h2>
+  <div class="js-to_expand">
+    here the hidden content
+  </div>
+*/
+.js-to_expand[aria-hidden=true],
+.js-to_expand[data-hidden=true] {
+  display: none;
+}
+.expandmore__button {
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  padding: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+}
+.expandmore__symbol::before {
+  content: " ";
+  background-image: url(/images/caret-right-solid.svg);
+  display: inline-block;
+  width: 14px;
+  height: 1rem;
+  background-repeat: no-repeat;
+  margin-bottom: -0.1rem;
+}
+.expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
+  content: " ";
+  background-image: url(/images/caret-down-solid.svg);
+  display: inline-block;
+  width: 14px;
+  height: 1rem;
+  background-repeat: no-repeat;
+  margin-bottom: -0.1rem;
+}
+.expand-for-code {
+  color: #808080;
+  text-align: right;
+  width: 100%;
+  padding-bottom: 0.25em;
+  margin: 0;
+}
+.expand-for-code > * > .expandmore__symbol::before {
+  background: none;
+  content: "+ Show ";
+  width: auto;
+  margin-right: 0.25em;
+}
+.expand-for-code > .expandmore__button[aria-expanded=true] > .expandmore__symbol::before {
+  background: none;
+  content: "- Hide ";
+  width: auto;
+  margin-right: 0.25em;
 }

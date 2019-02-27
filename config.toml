@@ -58,8 +58,8 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
     weight = 100
     url = "https://garrickadenbuie.bandcamp.com"
     
-[author]
-    image = "images/garrick.png"
+#[author]
+#    image = "images/garrick.png
 
     
 [params]
@@ -71,6 +71,11 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
     n_projects_front = 5
     show_talks_front = true
     n_talks_front = 5
+    
+    # Twitter Card info
+    twitterAuthor = "@grrrck"
+    twitterSite = "https://www.garrickadenbuie.com"
+    twitterImage = "/apple-touch-icon-152x152.png"
     
     # hyde
     themeColor = "base16-solarized-garrick"
