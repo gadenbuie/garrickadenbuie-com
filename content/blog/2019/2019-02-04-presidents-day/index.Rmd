@@ -1,7 +1,7 @@
 ---
 title: "President's Day (As In: What Does the President Do With His Day?)"
 author: Garrick Aden-Buie
-date: '2019-02-26'
+date: '2019-02-27'
 slug: presidents-day
 categories:
   - Blog
@@ -30,6 +30,7 @@ output:
 [vox-exec-time]:      https://www.vox.com/policy-and-politics/2019/2/4/18210345/trump-executive-time-axios-private-schedule-leak
 [politico-exec-time]: https://www.politico.com/story/2018/10/29/trump-daily-schedule-executive-time-944996
 [maelle-rectangle]:   https://masalmon.eu/2019/02/11/trump-schedule/
+[yonicd-app]:         https://potus-private-schedule.herokuapp.com/
 [plot.ly]:            https://plot.ly
 [tidyverse]:          https://tidyverse.org
 [so-rev-date]:        https://stackoverflow.com/a/43626186
@@ -41,7 +42,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE,
-  cache = TRUE,
   fig.width = 9, fig.height = 10, fig.show = "hide"
 )
 options(htmltools.dir.version = TRUE)
@@ -641,6 +641,8 @@ g_subdued +
 View `r lightbox_img(knitr::fig_chunk("plot-tweets-over-category-static", "png"), preview = FALSE)`.
 Expand the section below to learn more about how I gathered tweets from &commat;realDonaldTrump, merged his tweets with the Axios schedules, and added them to the first plot.
 
+Also, if you're interested in exploring the timeline of tweets rendered as they appear on Twitter, Jonathan Sidi created an awesome Shiny app for [exploring Trump's tweets by category][yonicd-app].
+
 ### How This Was Made... {.js-expandmore}
 
 <div class="js-to_expand">
@@ -1066,9 +1068,7 @@ exec_time %>%
       is.na(top_category) ~ "Unknown",
       TRUE ~ paste(top_category))
   ) %>%
-  group_by(top_category) %>%
-  count() %>% 
-  ungroup() %>% 
+  count(top_category) %>% 
   arrange(n) %>% 
   mutate(top_category = fct_inorder(top_category)) %>% 
   ggplot() + 
@@ -1212,10 +1212,14 @@ djt_joined_work_non_work %>%
 `r lightbox_img(knitr::fig_chunk("plot-tweets-work-non-work-same-timeline", "png"))`
 
 As we learned above, Trump sends about
-`r round(djt_per_workday$weekday$mean, 1)`
+`r round(djt_per_workday$weekday$mean, 0)`
 tweets per working day within working hours.
 Naturally, I wondered if he tends to tweet more or less during the day when he has more executive or travel time available.
 Similarly does he tweet less when he has more strucured time, i.e. metings, events, or lunches?
+
+Somewhat unsurprisingly, the number of tweets sent during the workday in only very slightly correlated with the amount of unstructured time on Trump's calendar.
+This makes sense: there is very little variation in the amount of the day spent in structured events -- it's never more than half the day.
+
 
 ##### R code... {#code-tweets-by-exec-time .js-expandmore .expand-for-code}
 
@@ -1250,16 +1254,13 @@ djt_joined %>%
 
 </div>
 
-Somewhat unsurprisingly, the number of tweets sent during the workday in only very slightly correlated with the amount of unstructured time on Trump's calendar.
-This makes sense: there is very little variation in the amount of the day spent in structured events -- it's never more than half the day.
-
 `r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
 
 ##### R code... {#code-tweets-by-not-meeting-event .js-expandmore .expand-for-code}
 
 <div class="js-to_expand">
 
-```{r tweets-by-not-meeting-event, fig.height=5}
+```{r tweets-by-not-meeting-event, fig.height=5, echo=TRUE}
 djt_simple %>%
   mutate(date = floor_date(created_at, "day")) %>%
   group_by(date) %>%
@@ -1279,7 +1280,7 @@ djt_simple %>%
   ) +
   geom_point(color = event_type_colors["Executive Time"]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
-  labs(x = "Percent of Workday Dedicated to Meetings or Events", 
+  labs(x = "Percent of Workday Dedicated to Meetings, Lunches, or Events", 
        y = "Number of Tweets",
        title = "Does Trump Tweet Less When He Does More \"Work\"?",
        caption = credit_caption(rtweet = TRUE))
