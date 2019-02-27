@@ -16,7 +16,7 @@ Keywords: ["rstats", "rtweet", "ggplot2", "tidyverse", "data cleaning", "data vi
 Description: |
   As in: What does Presdient Trump do with his day? (Spoiler: A whole lot of "executive time".)
 twitterImage: "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-05-presidents-day/index.Rmd
+rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-27_presidents-day.Rmd
 head_custom: |
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
 output:
