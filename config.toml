@@ -58,8 +58,8 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
     weight = 100
     url = "https://garrickadenbuie.bandcamp.com"
     
-[author]
-    image = "images/garrick.png"
+#[author]
+#    image = "images/garrick.png
 
     
 [params]
