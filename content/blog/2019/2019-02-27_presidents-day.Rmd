@@ -1,5 +1,6 @@
 ---
-title: "President's Day (As In: What Does the President Do With His Day?)"
+title: "President's Day (As In: What Does President Trump Do With His Day?)"
+twitterTitle: "President's Day"
 author: Garrick Aden-Buie
 date: '2019-02-27'
 slug: presidents-day
@@ -13,7 +14,7 @@ tags:
   - Politics
 Keywords: ["rstats", "rtweet", "ggplot2", "tidyverse", "data cleaning", "data visualization", "politics", "trump", "tweets"]
 Description: |
-  An exploration of the President's tweeting in relation to his "official" White House Schedules
+  As in: What does Presdient Trump do with his day? (Spoiler: A whole lot of "executive time".)
 twitterImage: "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-02-05-presidents-day/index.Rmd
 head_custom: |
