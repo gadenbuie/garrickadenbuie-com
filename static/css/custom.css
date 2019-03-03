@@ -53,7 +53,7 @@ a.u-url:hover, .sidebar a:hover {
 }
 
 a:hover {
-  text-decoration: underline dashed;
+  text-decoration: none;
 }
 
 code {
@@ -131,6 +131,14 @@ code {
 .base16-solarized-garrick .content .recent h2 > a:hover {
   color: rgba(0, 43, 54, 0.75);
   text-decoration: none;
+}
+.base16-solarized-garrick .post-content a:hover {
+  text-decoration: underline dashed;
+  text-decoration: none;
+  background: #fbeaea;
+  padding: 2px;
+  margin-left: -2px;
+  margin-right: -2px;
 }
 
 /* Sidebar collapse */
