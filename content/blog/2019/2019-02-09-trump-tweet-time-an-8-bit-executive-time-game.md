@@ -1,9 +1,11 @@
 ---
 title: 'Trump Tweet Time: An 8-bit "Executive Time" Game'
+description: "A silly game to guess the activity on Trump's schedule while he was tweeting."
 author: Garrick Aden-Buie
 date: '2019-02-09'
 slug: trump-tweet-time
 aliases: /blog/2019/02/09/trump-tweet-time
+twitterImage: /images/2019/trump-tweet-time-01.png
 categories:
   - Blog
 tags:
