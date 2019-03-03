@@ -2,6 +2,7 @@
 title: Visualizing PhysioNet Challenge Patient Data with R
 date: "2013-04-11T23:04:29+00:00"
 slug: visualize-physionet-data-with-r
+aliases: /blog/2013/04/11/visualize-physionet-data-with-r
 categories: [Blog]
 tags:
 - Data Analysis
@@ -41,7 +42,7 @@ Extract [plotByID.zip](https://dl.dropboxusercontent.com/u/1877578/plotByID.zip)
 
 ![](/images/2013/RStudio-Blank1.png)
 
-You've got the Console on the left, Workspace and Files on the right. This code uses Hadley Wickham's excellent plotting package [ggplot2](http://ggplot2.org/), which isn't installed by default. To install it, click on **Install packages** under the **Tools **menu, type ggplot2 in the text box and hit enter. Everything should install fine.
+You've got the Console on the left, Workspace and Files on the right. This code uses Hadley Wickham's excellent plotting package [ggplot2](https://ggplot2.tidyverse.org/), which isn't installed by default. To install it, click on **Install packages** under the **Tools **menu, type ggplot2 in the text box and hit enter. Everything should install fine.
 
 To load the code, click on the **...** in the Files pane and open the folder where you extracted the data set. To make sure everything runs within this directory, click "_Set working directory_" under the _More_ button. Open **plotByID.R**. Now you should see this:
 

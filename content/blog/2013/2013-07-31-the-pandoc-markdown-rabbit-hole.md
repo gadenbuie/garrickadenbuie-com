@@ -1,6 +1,7 @@
 ---
 date: 2013-07-31T17:45:36+00:00
 slug: the-pandoc-markdown-rabbit-hole
+aliases: /blog/2013/07/31/the-pandoc-markdown-rabbit-hole
 title: The Pandoc Markdown rabbit hole
 categories:
 - Blog
@@ -12,7 +13,7 @@ tags:
 - Writing
 ---
 
-I've recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages. I currently have about 90 tabs open, each a winding, twisting trail leading through the world of [Markdown](http://daringfireball.net/projects/markdown/), [Multimarkdown](fletcherpenney.net/multimarkdown/‎), [Pandoc](johnmacfarlane.net/pandoc/‎), [LaTeX](http://latex-project.org), [MathML](http://w3.org/Math), [MathJax](http://mathjax.org), and the other 500 slightly tweaked variants thereof.
+I've recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages. I currently have about 90 tabs open, each a winding, twisting trail leading through the world of [Markdown](http://daringfireball.net/projects/markdown/), [Multimarkdown](https://fletcherpenney.net/multimarkdown/), [Pandoc](https://pandoc.org), [LaTeX](http://latex-project.org), [MathML](http://w3.org/Math), [MathJax](http://mathjax.org), and the other 500 slightly tweaked variants thereof.
 
 This post is more of a way for me to plot the easiest path to get to where I am now --- a reference for the next time I have to do this. Maybe you'll find it useful. The world of markup languages, apps, helpers, commandline tools and viewers is littered with github pages, scripts left in github gists and fixes mentioned deep in the comments of support threads.
 

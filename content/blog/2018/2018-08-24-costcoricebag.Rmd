@@ -3,6 +3,7 @@ title: The Greatest Twitter Scheme of All Time?
 author: Garrick Aden-Buie
 date: '2018-08-24'
 slug: greatest-twitter-scheme
+aliases: /blog/2018/08/24/greatest-twitter-scheme
 categories:
   - Blog
 tags:

@@ -1,6 +1,7 @@
 ---
 title: ":books: MC Test Analysis"
 description: "Apps and reports for multiple-choice test analysis in R with Shiny"
+twitterImage: /project/2017-07-06-mc-test-analysis_files/explore-03-irt.png
 date: "2017-07-06"
 slug: "mc-test-analysis"
 tags: ["R", "R Package"]
@@ -32,7 +33,7 @@ For the complete features, you can install the package and use the interface loc
 
 ## Installation
 
-For more detailed installation requirements and usage instructions, see [Get Started](articles/MCTestAnalysis.html).
+For more detailed installation requirements and usage instructions, see [Get Started](https://gadenbuie.github.io/mctestanalysis/articles/MCTestAnalysis.html).
 
 In general, the package can be installed using [devtools] via
 
@@ -171,7 +172,7 @@ Here are the test responses for the first 5 students to the above example answer
 
 ## Built on These Great Packages {#built-with}
 
-MCTestAnalysis was built by [Garrick Aden-Buie](https://garrickadenbuie.com) and lead by [Dr. Autar Kaw](http://usf.edu/~kaw).
+MCTestAnalysis was built by [Garrick Aden-Buie](https://garrickadenbuie.com) and lead by [Dr. Autar Kaw](http://autarkaw.com/).
 The package was built to be used with [R] and [RStudio], using [Shiny] for the interactive apps, [R Markdown](https://rmarkdown.rstudio.com/) for the custom reports, and [ggplot2](http://ggplot2.tidyverse.org) for plots.
 Many test analysis functions used in this package were made available by other packages and R developers, including the following packages:
 <a href="http://personality-project.org/r/psych">psych</a>,

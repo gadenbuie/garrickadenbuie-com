@@ -1,6 +1,7 @@
 ---
 date: 2013-06-08T02:04:35+00:00
 slug: success-to-the-successful
+aliases: /blog/2013/06/08/success-to-the-successful
 title: Success to the successful
 categories:
 - Blog
