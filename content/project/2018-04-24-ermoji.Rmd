@@ -4,6 +4,7 @@ description: "RStudio Addin to Search and Copy Emoji"
 author: Garrick Aden-Buie
 date: '2018-04-24'
 slug: ermoji
+twitterImage: /images/project/ermoji/example-global-search.png
 type: page
 categories: ["Project"]
 tags:

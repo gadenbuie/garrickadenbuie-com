@@ -4,6 +4,8 @@ description: Add animations to xaringan slide transitions with animate.css
 author: Garrick Aden-Buie
 date: '2018-12-03'
 slug: animate-xaringan-slide-transitions
+aliases: /blog/2018/12/03/animate-xaringan-slide-transitions
+twitterImage: /images/2018/animated-xaringan-slides/xaringan-animated.gif
 categories:
   - Blog
 tags:

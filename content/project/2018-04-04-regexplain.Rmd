@@ -2,6 +2,7 @@
 title: ":male_detective:   RegExplain"
 slug: "regexplain"
 description: "An RStudio addin slash utility belt for regular expressions"
+twitterImage: /images/project/regexplain/regexplain-gadget-tabs.png
 date: 2018-04-04T00:00:00+00:00
 type: page
 categories: 
