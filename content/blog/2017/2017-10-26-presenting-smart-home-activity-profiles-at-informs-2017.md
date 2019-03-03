@@ -3,6 +3,7 @@ title: Presenting Smart Home Activity Profiles at INFORMS 2017
 author: 'Garrick Aden-Buie'
 date: '2017-10-26'
 slug: presenting-smart-home-activity-profiles-at-informs-2017
+aliases: /blog/2017/10/26/presenting-smart-home-activity-profiles-at-informs-2017
 categories:
   - Blog
 tags:

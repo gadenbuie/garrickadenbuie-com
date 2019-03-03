@@ -3,6 +3,7 @@ title: 'Trump Tweet Time: An 8-bit "Executive Time" Game'
 author: Garrick Aden-Buie
 date: '2019-02-09'
 slug: trump-tweet-time
+aliases: /blog/2019/02/09/trump-tweet-time
 categories:
   - Blog
 tags:

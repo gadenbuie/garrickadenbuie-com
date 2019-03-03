@@ -9,8 +9,8 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
 
 
 [permalinks]
-    post = "blog/:year/:month/:day/:slug/"
-    blog = "blog/:year/:month/:day/:slug/"
+    post = "blog/:slug/"
+    blog = "blog/:slug/"
     
 [[menu.main]]
     name = "Blog"

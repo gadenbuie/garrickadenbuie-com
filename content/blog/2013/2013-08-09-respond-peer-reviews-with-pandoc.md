@@ -1,6 +1,7 @@
 ---
 date: 2013-08-09T16:08:39+00:00
 slug: respond-peer-reviews-with-pandoc
+aliases: /blog/2013/08/09/respond-peer-reviews-with-pandoc
 title: Responding to peer reviewers with Pandoc
 categories:
 - Blog
