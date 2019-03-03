@@ -40,7 +40,7 @@ Unlike other packages that build SQL queries using an object-oriented style, `sq
 The result is that the code to produce the SQL statement reads much like the SQL statement iteself.
 On the other hand, `sqrrl` doesn't know anything about your database and can't help you out with completions, etc.
 
-Where this package is most useful is with [Shiny web apps](shiny) that interact with a MySQL backend.
+Where this package is most useful is with [Shiny web apps][shiny] that interact with a MySQL backend.
 The utilities are all built so that queries can be built using column names and values stored inside ordinary R data structures.
 
 The following is a quick demonstration of how the package works using the `nyclights13` dataset.

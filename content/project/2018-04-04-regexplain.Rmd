@@ -149,7 +149,7 @@ Hub](https://projects.lukehaas.me/regexhub), with several additional
 patterns.
 
 The full library is stored as a JSON file in
-[inst/extdata/patterns.json](/inst/extdata/patterns.json), feel free to
+[inst/extdata/patterns.json](https://github.com/gadenbuie/regexplain/blob/master/inst/extdata/patterns.json), feel free to
 contribute patterns you find useful or use regularly via pull
 request.
 

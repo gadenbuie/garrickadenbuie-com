@@ -7,7 +7,7 @@ categories: [Blog]
 tags: [Scripts, Tricks, pandoc, Markdown]
 ---
 
-I write everything in [markdown][] and use [pandoc][] nearly daily.
+I write everything in [markdown] and use [pandoc] nearly daily.
 It's fast, easy, powerful and highly customizable.
 It handles math like a pro, and the recent addition of YAML headers makes it easier than ever to write and compile well-formatted documents that I can easily send to the web, print, or email to collaborators still stuck in Word.
 
@@ -72,6 +72,6 @@ name=`echo $1 | cut -f1 -d'.'`
 pandoc $1 -o $name.$2 --bibliography=/path/to/library.bib --csl /path/to/citation_style.csl
 ```
 
-[markdown]: http://daringfireball.net/projects/markdown/‎
-[pandoc]: http://johnmacfarlane.net/pandoc
-[git]: http://git-scm.com/‎
+[markdown]: https://daringfireball.net/projects/markdown/
+[pandoc]: https://pandoc.org
+[git]: https://git-scm.com/

@@ -54,7 +54,7 @@ You'll need RStudio version 1.2. Grab the [preview version here](https://www.rst
 
 #### Manual Installation
 
-If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
+If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](https://github.com/gadenbuie/yule-rstudio/blob/master/Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
 
 ## How I Made This
 
