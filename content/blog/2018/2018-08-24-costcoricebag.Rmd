@@ -39,11 +39,18 @@ But I didn't want to scroll through endless tweets.
 To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: [rtweet].
 Getting all of [&commat;CostcoRiceBag](https://twitter.com/CostcoRiceBag)'s recent tweets was suprisingly simple — all it takes is a single call to [`get_timeline()`](https://rtweet.info/reference/get_timeline.html):
 
-```{r get-timeline}
+```{r get-timeline, eval=FALSE}
 library(rtweet)
 library(dplyr)
 
 crb_tweets <- get_timeline("costcoricebag", n = 3200)
+```
+
+```{r get-timeline-cache, include=FALSE}
+library(rtweet)
+library(dplyr)
+
+crb_tweet <- readRDS(here::here("_data/tweets_costcoricebag.rds"))
 ```
 
 From here, I simply filtered out replies and straight-up retweets (but not quote tweets), and then extracted the first word in the tweet text using a little [regex](/project/regexplain/).
