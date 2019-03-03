@@ -19,6 +19,7 @@ library(ggplot2)
 library(ggridges)
 library(dplyr)
 # also: purrr and reshape2
+set.seed(4242)
 
 theme_color &lt;- &quot;#002b36&quot;
 
@@ -60,7 +61,8 @@ readPNG(image_file) %&gt;%
 <div id="accidental-art" class="section level3">
 <h3>Accidental Art</h3>
 <p>While hacking on the above, I ran into this <a href="https://twitter.com/accidental__aRt">@accidental_aRt</a>:</p>
-<pre class="r"><code>readPNG(image_file) %&gt;% 
+<pre class="r"><code>set.seed(4242)
+readPNG(image_file) %&gt;% 
   .[, , 4] %&gt;% 
   reshape2::melt() %&gt;% 
   mutate(value = value + rnorm(length(value), sd = 0.25)) %&gt;% 
@@ -68,6 +70,6 @@ readPNG(image_file) %&gt;%
   mutate(Var2 = floor(Var2/20)*20) %&gt;%
   ggplot(aes(Var2, -Var1, height = value, group = Var1)) + 
   geom_ridgeline_gradient(scale = 40, fill = &quot;#394e5a&quot;) +
-  ggnetwork::theme_blank()</code></pre>
+  theme_void()</code></pre>
 <p><img src="/blog/2018/2018-03-30-my-ggridges-twitter-header_files/figure-html/unnamed-chunk-2-1.png" width="1440" /></p>
 </div>

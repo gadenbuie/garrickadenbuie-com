@@ -3,6 +3,7 @@ title: My ggridges Twitter Header
 author: ''
 date: '2018-03-30'
 slug: my-ggridges-twitter-header
+aliases: /blog/2018/03/30/my-ggridges-twitter-header
 categories: ["Blog"]
 tags: ["R", "ggplot2", "Visualization", "Scripts", "Note to Self"]
 ---
@@ -24,6 +25,7 @@ library(ggplot2)
 library(ggridges)
 library(dplyr)
 # also: purrr and reshape2
+set.seed(4242)
 
 theme_color <- "#002b36"
 
@@ -72,6 +74,7 @@ ggsave("new-twitter-header.png",
 While hacking on the above, I ran into this [&commat;accidental_aRt](https://twitter.com/accidental__aRt):
 
 ```{r fig.width=15, fig.height=5}
+set.seed(4242)
 readPNG(image_file) %>% 
   .[, , 4] %>% 
   reshape2::melt() %>% 
@@ -80,5 +83,5 @@ readPNG(image_file) %>%
   mutate(Var2 = floor(Var2/20)*20) %>%
   ggplot(aes(Var2, -Var1, height = value, group = Var1)) + 
   geom_ridgeline_gradient(scale = 40, fill = "#394e5a") +
-  ggnetwork::theme_blank()
+  theme_void()
 ```
