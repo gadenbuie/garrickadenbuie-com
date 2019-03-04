@@ -6,6 +6,7 @@ theme = "hyde"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "_data/.*"]
+rssLimit = 10
 
 
 [permalinks]
