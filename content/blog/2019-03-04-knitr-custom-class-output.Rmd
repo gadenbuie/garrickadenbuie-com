@@ -1,0 +1,54 @@
+---
+title: Style knitr Code Output Appearance in HTML with Custom CSS Classes
+description: | 
+  Apply custom CSS classes to code chunk outputs to differentiate between 
+  regular outputs and messages, warnings, and errors.
+author: Garrick Aden-Buie
+date: '2019-03-04'
+slug: knitr-custom-class-output
+categories:
+  - Blog
+tags:
+  - R
+  - knitr
+  - R Markdown
+  - Tips
+  - Tricks
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<!-- Links -->
+[knitr-og-issue]: https://github.com/yihui/knitr/pull/1335
+[knitr-issue]: https://github.com/yihui/knitr/issues/1676
+[stackoverflow-question]: https://stackoverflow.com/questions/48538373/chunk-option-class-output-is-not-working-on-error-message
+[knitr-example]: https://github.com/yihui/knitr-examples/blob/master/116-html-class.Rmd
+[knitr-gh]: https://github.com/yihui/knitr
+[knitr-cran]: https://cran.r-project.org/package=knitr
+
+I was working on customizing CSS classes of output chunks to try to achieve the look of code chunks in Brodie Gaslam's blog -- I really like how input and output are visually connected.
+Learned about applying custom css classes to code chunks [from Ian Lyttle's pull request][knitr-og-issue] adding support for `class.output`.
+But I quickly discovered that this class is only applied to standard code output, and not the "side effect" chunk outputs, such as messages, warnings and errors.
+
+So I opened [an issue in knitr][knitr-issue] and three days later my wishes were granted.
+You can now uset the chunk options `class.message`, `class.warning`, and `class.error` to customize the CSS class of outputs of each type.
+
+The new feature will be available in version 1.22 when it makes it to [CRAN][knitr-cran], or now from [GitHub][knitr-gh]
+
+```{r render, include=FALSE}
+callr::r(
+  function() {
+    devtools::dev_mode()
+    devtools::install_github("yihui/knitr@cd7435a", dependencies = FALSE)
+    rmarkdown::render(here::here("static/blog/2019/knitr-custom-class-output/demo.Rmd"))
+    devtools::dev_mode(FALSE)
+  }
+)
+```
+
+<div style="height: 50vh;">
+<iframe src="../2019/knitr-custom-class-output/demo.html" width="100%" height="100%">
+</iframe>
+</div>
