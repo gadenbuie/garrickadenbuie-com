@@ -1,0 +1,41 @@
+---
+title: "Custom CSS Classes"
+subtitle: "For output, messages, warnings, errors"
+output: html_document
+---
+
+Note that because this demonstration uses `rmarkdown::html_document()`, we can use [Bootstrap classes](https://getbootstrap.com/docs/3.3/css/#helper-classes-backgrounds) to customize the chunk outputs.
+
+```{r setup}
+# setup
+knitr::opts_chunk$set(
+  class.output  = "bg-success",
+  class.message = "bg-info text-info",
+  class.warning = "bg-warning text-warning",
+  class.error   = "bg-danger text-danger"
+)
+```
+
+#### Normal
+
+```{r}
+paste("Normal", "R chunk", "output!!")
+```
+
+#### Message
+
+```{r}
+message("This is a message")
+```
+
+#### Warning
+
+```{r, results="asis"}
+warning("This is a warning")
+```
+
+#### Error
+
+```{r, error = TRUE}
+stop("An error occurred in this chunk.", call. = FALSE)
+```

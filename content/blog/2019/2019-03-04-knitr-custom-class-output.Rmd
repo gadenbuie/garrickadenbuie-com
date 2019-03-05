@@ -1,0 +1,77 @@
+---
+title: Style knitr Code Output Appearance in HTML with Custom CSS Classes
+description: | 
+  Apply custom CSS classes to code chunk outputs to differentiate between 
+  regular outputs and messages, warnings, and errors.
+twitterImage: "/blog/2019/knitr-custom-class-output/knitr-custom-chunk.png"
+author: Garrick Aden-Buie
+date: '2019-03-05'
+slug: knitr-custom-class-output
+categories:
+  - Blog
+tags:
+  - R
+  - knitr
+  - R Markdown
+  - Tips
+  - Tricks
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<!-- Links -->
+[knitr-og-issue]: https://github.com/yihui/knitr/pull/1335
+[knitr-issue]: https://github.com/yihui/knitr/issues/1676
+[stackoverflow-question]: https://stackoverflow.com/questions/48538373/chunk-option-class-output-is-not-working-on-error-message
+[knitr-class-output]: https://yihui.name/knitr/options/#text-results
+[knitr-class-source]: https://yihui.name/knitr/options/#code-decoration
+[knitr-example]: https://github.com/yihui/knitr-examples/blob/master/116-html-class.Rmd
+[knitr-gh]: https://github.com/yihui/knitr
+[knitr-cran]: https://cran.r-project.org/package=knitr
+[brodieg-code]: https://www.brodieg.com/2019/02/09/favicons-from-the-comfort-of-your-r-session/#fn2
+
+![Create awesome-looking, content-dependent output styles in HTML with `knitr`'s new `class.*` chunk options.](/blog/2019/knitr-custom-class-output/knitr-custom-chunk.png)
+
+Last week, I learned that you can apply a custom CSS class to code chunk outputs using [knitr]{.pkg}'s [`class.output`][knitr-class-output], thanks to a two-year-old [pull request from Ian Lyttle][knitr-og-issue].
+
+At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impeccable styling of [Brodie Gaslam's blog][brodieg-code].
+What I like most are the subtle visual clues that link code inputs and outputs by keeping both source and output inside the same box.
+I have a plan to do something similar on this blog using custom source and output classes via the [`class.output`][knitr-class-output] and [`class.source`][knitr-class-source] chunk options.
+
+But I quickly discovered that the `class.output` class is only applied to standard code output, and not the "side effect" chunk outputs, such as messages, warnings and errors.
+
+I opened [an issue in knitr][knitr-issue] and, amazingly, three days later my wishes were granted:
+You can now use the chunk options `class.message`, `class.warning`, and `class.error` to customize the CSS class of outputs of each type.
+
+The new feature will be available in version 1.22 when it makes it to [CRAN][knitr-cran], or now from [GitHub][knitr-gh].
+
+Using this feature, you can get nicely formatted chunk outputs.
+Here's [a minimal example](../2019/knitr-custom-class-output/demo.html) generated from this
+[rmarkdown source](../2019/knitr-custom-class-output/demo.Rmd).
+
+```{r render, include=FALSE}
+ex_rmd <- here::here("static/blog/2019/knitr-custom-class-output/demo.Rmd")
+ex_html <- here::here("static/blog/2019/knitr-custom-class-output/demo.html")
+
+rerender_example <- if (file.exists(ex_rmd)) {
+  file.info(ex_rmd)$mtime > file.info(ex_html)$mtime
+} else TRUE
+
+if (rerender_example) {
+  callr::r(
+    function() {
+      devtools::dev_mode()
+      devtools::install_github("yihui/knitr@cd7435a", dependencies = FALSE)
+      rmarkdown::render()
+      devtools::dev_mode(FALSE)
+    }
+  )
+}
+```
+
+<div class="iframe-container" style="height: 50vh;">
+<iframe src="../2019/knitr-custom-class-output/demo.html" width="100%" height="98%">
+</iframe>
+</div>
