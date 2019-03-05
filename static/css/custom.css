@@ -48,6 +48,17 @@ p.caption {
   max-width: 45rem;
 }
 
+.iframe-container {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: #ddd 2px solid;
+  box-shadow: #888 0px 5px 8px;
+  margin-bottom: 1em;
+}
+.iframe-container > iframe {
+  border: none;
+}
+
 a.u-url:hover, .sidebar a:hover {
   text-decoration: none;
 }

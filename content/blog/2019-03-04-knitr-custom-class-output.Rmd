@@ -35,7 +35,7 @@ But I quickly discovered that this class is only applied to standard code output
 So I opened [an issue in knitr][knitr-issue] and three days later my wishes were granted.
 You can now uset the chunk options `class.message`, `class.warning`, and `class.error` to customize the CSS class of outputs of each type.
 
-The new feature will be available in version 1.22 when it makes it to [CRAN][knitr-cran], or now from [GitHub][knitr-gh]
+The new feature will be available in version 1.22 when it makes it to [CRAN][knitr-cran], or now from [GitHub][knitr-gh].
 
 ```{r render, include=FALSE}
 callr::r(
@@ -48,7 +48,7 @@ callr::r(
 )
 ```
 
-<div style="height: 50vh;">
+<div class="iframe-container" style="height: 50vh;">
 <iframe src="../2019/knitr-custom-class-output/demo.html" width="100%" height="100%">
 </iframe>
 </div>
