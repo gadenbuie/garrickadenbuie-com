@@ -50,7 +50,7 @@ crb_tweets <- get_timeline("costcoricebag", n = 3200)
 library(rtweet)
 library(dplyr)
 
-crb_tweet <- readRDS(here::here("_data/tweets_costcoricebag.rds"))
+crb_tweets <- readRDS(here::here("_data/tweets_costcoricebag.rds"))
 ```
 
 From here, I simply filtered out replies and straight-up retweets (but not quote tweets), and then extracted the first word in the tweet text using a little [regex](/project/regexplain/).
