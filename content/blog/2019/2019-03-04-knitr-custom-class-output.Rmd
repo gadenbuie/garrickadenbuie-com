@@ -36,14 +36,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Last week, I learned that you can apply a custom CSS class to code chunk outputs using [knitr]{.pkg}'s [`class.output`][knitr-class-output], thanks to a two-year-old [pull request from Ian Lyttle][knitr-og-issue].
 
-At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impecable styling of [Brodie Gaslam's blog][brodieg-code].
+At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impeccable styling of [Brodie Gaslam's blog][brodieg-code].
 What I like most are the subtle visual clues that link code inputs and outputs by keeping both source and output inside the same box.
 I have a plan to do something similar on this blog using custom source and output classes via the [`class.output`][knitr-class-output] and [`class.source`][knitr-class-source] chunk options.
 
 But I quickly discovered that the `class.output` class is only applied to standard code output, and not the "side effect" chunk outputs, such as messages, warnings and errors.
 
 I opened [an issue in knitr][knitr-issue] and, amazingly, three days later my wishes were granted:
-You can now uset the chunk options `class.message`, `class.warning`, and `class.error` to customize the CSS class of outputs of each type.
+You can now use the chunk options `class.message`, `class.warning`, and `class.error` to customize the CSS class of outputs of each type.
 
 The new feature will be available in version 1.22 when it makes it to [CRAN][knitr-cran], or now from [GitHub][knitr-gh].
 

@@ -25,12 +25,12 @@ tags:
 <p class="caption">Create awesome-looking, content-dependent output styles in HTML with <code>knitr</code>’s new <code>class.*</code> chunk options.</p>
 </div>
 <p>Last week, I learned that you can apply a custom CSS class to code chunk outputs using <span class="pkg">knitr</span>’s <a href="https://yihui.name/knitr/options/#text-results"><code>class.output</code></a>, thanks to a two-year-old <a href="https://github.com/yihui/knitr/pull/1335">pull request from Ian Lyttle</a>.</p>
-<p>At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impecable styling of <a href="https://www.brodieg.com/2019/02/09/favicons-from-the-comfort-of-your-r-session/#fn2">Brodie Gaslam’s blog</a>.
+<p>At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impeccable styling of <a href="https://www.brodieg.com/2019/02/09/favicons-from-the-comfort-of-your-r-session/#fn2">Brodie Gaslam’s blog</a>.
 What I like most are the subtle visual clues that link code inputs and outputs by keeping both source and output inside the same box.
 I have a plan to do something similar on this blog using custom source and output classes via the <a href="https://yihui.name/knitr/options/#text-results"><code>class.output</code></a> and <a href="https://yihui.name/knitr/options/#code-decoration"><code>class.source</code></a> chunk options.</p>
 <p>But I quickly discovered that the <code>class.output</code> class is only applied to standard code output, and not the “side effect” chunk outputs, such as messages, warnings and errors.</p>
 <p>I opened <a href="https://github.com/yihui/knitr/issues/1676">an issue in knitr</a> and, amazingly, three days later my wishes were granted:
-You can now uset the chunk options <code>class.message</code>, <code>class.warning</code>, and <code>class.error</code> to customize the CSS class of outputs of each type.</p>
+You can now use the chunk options <code>class.message</code>, <code>class.warning</code>, and <code>class.error</code> to customize the CSS class of outputs of each type.</p>
 <p>The new feature will be available in version 1.22 when it makes it to <a href="https://cran.r-project.org/package=knitr">CRAN</a>, or now from <a href="https://github.com/yihui/knitr">GitHub</a>.</p>
 <p>Using this feature, you can get nicely formatted chunk outputs.
 Here’s <a href="../2019/knitr-custom-class-output/demo.html">a minimal example</a> generated from this
