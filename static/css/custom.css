@@ -213,6 +213,12 @@ code {
   margin-top: -16px;
   margin-bottom: 16px;
 }
+.posts li {
+  line-height: 1.2rem;
+}
+.posts .post-date {
+  margin-top: 0;
+}
 
 /* 
   van11y-accessible-hide-show-aria 
