@@ -1,0 +1,75 @@
+---
+title: A Blogdown New Post Workflow with Github and Netlify
+author: Garrick Aden-Buie
+date: '2019-03-18'
+slug: blogdown-netlify-new-post-workflow
+categories:
+  - Blog
+tags:
+  - blogdown
+  - R
+  - netlify
+  - hugo
+Categories:
+  - Development
+  - GoLang
+Description: ''
+Tags:
+  - Development
+  - golang
+menu: main
+---
+
+<!-- Links -->
+[netlify-hugo-future-previews]: https://www.jerriepelser.com/blog/netlify-hugo-future-previews
+
+Idea: create a new post, with "scheduled" publication date. Create a pull request with your draft, preview via netlify, merge when ready (after `date`!)
+
+## Pre-reqs
+
+1. Have blogdown, track changes on github, set up Netlify
+
+   (links)
+
+1. Note that `baseurl` is set in `config.toml`
+
+   ```
+   baseurl = "https://www.garrickadenbuie.com"
+   ```
+   
+1. Set up `netlify.toml`. Need to enable two features:
+
+    1. want all urls on deploy to point to the deploy (if template passes anything to `absUrl`)
+    
+    1. want to preview posts before their "publish date"
+   
+ 
+```toml
+[context.deploy-preview]
+command = "hugo -b $DEPLOY_PRIME_URL --buildFuture"
+
+[context.branch-deploy]
+command = "hugo -b $DEPLOY_PRIME_URL --buildFuture"
+```
+
+## Workflow
+
+### Start in a new branch
+
+Create a new branch for your post. It can be good to name your branch with your post slug, such as `post-new-post-workflow`.
+
+![Create a New Branch with the an informative name, like `post-<slug>`.](new-branch.png){.center}
+
+### Create a new post
+
+![Opening the <strong>New Post</strong> RStudio addin.](new-post_dropdown_crop.png){.center}
+
+![Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)](new-post_choose-future-date_crop.png){.center width=66%}
+
+![Fill out the rest of your post information.](new-post_addin-ready_crop.png){.center width=66%}
+
+Write your post draft, previewing as you write with `blogdown::serve_site()`.
+
+### Commit and Push
+
+Commit your draft and push to GitHub. Create a Pull Request from the branch you created.

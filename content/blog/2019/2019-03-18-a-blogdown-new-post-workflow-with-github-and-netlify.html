@@ -1,0 +1,76 @@
+---
+title: A Blogdown New Post Workflow with Github and Netlify
+author: Garrick Aden-Buie
+date: '2019-03-18'
+slug: blogdown-netlify-new-post-workflow
+categories:
+  - Blog
+tags:
+  - blogdown
+  - R
+  - netlify
+  - hugo
+Categories:
+  - Development
+  - GoLang
+Description: ''
+Tags:
+  - Development
+  - golang
+menu: main
+---
+
+
+
+<!-- Links -->
+<p>Idea: create a new post, with “scheduled” publication date. Create a pull request with your draft, preview via netlify, merge when ready (after <code>date</code>!)</p>
+<div id="pre-reqs" class="section level2">
+<h2>Pre-reqs</h2>
+<ol style="list-style-type: decimal">
+<li><p>Have blogdown, track changes on github, set up Netlify</p>
+<p>(links)</p></li>
+<li><p>Note that <code>baseurl</code> is set in <code>config.toml</code></p>
+<pre><code>baseurl = &quot;https://www.garrickadenbuie.com&quot;</code></pre></li>
+<li><p>Set up <code>netlify.toml</code>. Need to enable two features:</p>
+<ol style="list-style-type: decimal">
+<li><p>want all urls on deploy to point to the deploy (if template passes anything to <code>absUrl</code>)</p></li>
+<li><p>want to preview posts before their “publish date”</p></li>
+</ol></li>
+</ol>
+<pre class="toml"><code>[context.deploy-preview]
+command = &quot;hugo -b $DEPLOY_PRIME_URL --buildFuture&quot;
+
+[context.branch-deploy]
+command = &quot;hugo -b $DEPLOY_PRIME_URL --buildFuture&quot;</code></pre>
+</div>
+<div id="workflow" class="section level2">
+<h2>Workflow</h2>
+<div id="start-in-a-new-branch" class="section level3">
+<h3>Start in a new branch</h3>
+<p>Create a new branch for your post. It can be good to name your branch with your post slug, such as <code>post-new-post-workflow</code>.</p>
+<div class="figure">
+<img src="new-branch.png" alt="Create a New Branch with the an informative name, like post-&lt;slug&gt;." class="center" />
+<p class="caption">Create a New Branch with the an informative name, like <code>post-&lt;slug&gt;</code>.</p>
+</div>
+</div>
+<div id="create-a-new-post" class="section level3">
+<h3>Create a new post</h3>
+<div class="figure">
+<img src="new-post_dropdown_crop.png" alt="Opening the New Post RStudio addin." class="center" />
+<p class="caption">Opening the <strong>New Post</strong> RStudio addin.</p>
+</div>
+<div class="figure">
+<img src="new-post_choose-future-date_crop.png" alt="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)" class="center" style="width:66.0%" />
+<p class="caption">Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)</p>
+</div>
+<div class="figure">
+<img src="new-post_addin-ready_crop.png" alt="Fill out the rest of your post information." class="center" style="width:66.0%" />
+<p class="caption">Fill out the rest of your post information.</p>
+</div>
+<p>Write your post draft, previewing as you write with <code>blogdown::serve_site()</code>.</p>
+</div>
+<div id="commit-and-push" class="section level3">
+<h3>Commit and Push</h3>
+<p>Commit your draft and push to GitHub. Create a Pull Request from the branch you created.</p>
+</div>
+</div>
