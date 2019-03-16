@@ -34,7 +34,9 @@ p.caption {
     text-align: right;
     margin-top: -0.8rem;
 }
-
+.figure img.center {
+  margin: auto;
+}
 .figure.thumbnail {
   width: 200px;
   float: left;
