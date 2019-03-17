@@ -32,7 +32,7 @@ p.caption {
     color: grey;
     font-style: italic;
     text-align: right;
-    margin-top: -0.8rem;
+    margin-top: 0;
 }
 .figure img.center {
   margin: auto;
