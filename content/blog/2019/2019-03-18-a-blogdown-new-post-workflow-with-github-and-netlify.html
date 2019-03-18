@@ -1,0 +1,223 @@
+---
+title: A Blogdown New Post Workflow with Github and Netlify
+description: 'A workflow for writing new posts built around GitHub pull requests and Netlify deploy previews.'
+author: Garrick Aden-Buie
+date: '2019-03-18'
+slug: blogdown-netlify-new-post-workflow
+categories:
+  - Blog
+tags:
+  - blogdown
+  - R
+  - netlify
+  - hugo
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+<!-- Links -->
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This post presents my workflow for writing new posts for a <span class="pkg"><a href="https://bookdown.org/yihui/blogdown">blogdown</a></span> website hosted on <a href="https://github.com">GitHub</a> and served through <a href="https://netlify.com">Netlify</a>.</p>
+<p>Here’s a quick overview of the workflow:</p>
+<ol style="list-style-type: decimal">
+<li>Draft the post in a new git branch, using <code>blogdown::serve_site()</code> to preview locally.</li>
+<li>Push the branch to GitHub and create a pull request.</li>
+<li>Preview and test the draft post using Netlify’s “deploy preview” feature.</li>
+<li>Push additional updates to the post branch as needed and review the updated preview.</li>
+<li>Publish the final draft by merging the pull request to the master branch.</li>
+</ol>
+<p>The rest of this post describes this workflow in more detail, including how to configure <a href="#netlify-toml">critical settings for Netlify</a> that make the process easier.</p>
+</div>
+<div id="pre-reqs-workflow-setup" class="section level2">
+<h2>Pre-reqs: Workflow Setup</h2>
+<div id="bgn" class="section level3">
+<h3>Blogdown, GitHub, and Netlify, oh my!</h3>
+<p>To get started you need three things:</p>
+<ol style="list-style-type: decimal">
+<li>a <span class="pkg"><a href="https://bookdown.org/yihui/blogdown">blogdown</a></span> website</li>
+<li>hosted on <a href="https://github.com">GitHub</a> and</li>
+<li>published via <a href="https://netlify.com">Netlify</a>.</li>
+</ol>
+<p>There are a lot of great resources for setting up and connecting these components if you haven’t already, but the best place to start is the <a href="https://bookdown.org/yihui/blogdown">blogdown book</a>.
+The process for setting up Netlify to serve your GitHub-hosted <span class="pkg">blogdown</span> site is described in detail in the <a href="https://bookdown.org/yihui/blogdown/netlify.html"><em>Netlify</em> section</a> of the <a href="https://bookdown.org/yihui/blogdown/deployment.html"><em>Deployment</em> chapter</a> of the blogdown book.
+Alison Presmanes Hill’s <a href="https://alison.rbind.io/post/up-and-running-with-blogdown/">Up and running with blogdown</a> is another excellent guide for getting started down this path.</p>
+<p>I’m a huge fan of GitHub (or really open sharing of code) and I highly recommend using Netlify for a number of reasons.
+The main benefit of this combination is that Netlify’s continuous deployment builds your website for you whenever you update your source files.
+Netlify also makes it easy to set up your website for <a href="https://www.netlify.com/docs/ssl/">https with free, managed certificates</a>, and their integration with GitHub makes <span class="pkg">blogdown</span>, GitHub, and Netlify excellent partners.</p>
+<p>Note part of setup should include configuring the <code>baseurl</code> option in your <code>config.toml</code> file.
+This is the base of URLs used in your website wherever an absolute URL (i.e. the full URL rather than a relative or partial URL) is created.
+This is somewhat template-dependent, but this URL is used wherever a link is parsed with hugo’s <a href="https://gohugo.io/functions/absurl/"><code>absURL</code> command</a>.</p>
+<p>In my case, <code>baseurl</code> is configured <a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/master/config.toml">like this</a>:</p>
+<pre class="toml"><code>baseurl = &quot;https://www.garrickadenbuie.com&quot;</code></pre>
+</div>
+<div id="enable-deploy-previews" class="section level3">
+<h3>Enable Deploy Previews</h3>
+<p>Netlify provides a feature called <a href="https://www.netlify.com/docs/continuous-deployment/#deploy-contexts">deploy contexts</a> that allows you to build multiple versions of your site.
+For example, Netlify can automatically build a <em>deploy preview</em> of your website for all pull requests.
+When enabled, a preview version of your website is automatically built when a pull request is created in the site’s GitHub repo.
+The preview is also updated whenever additional commits are added to the pull request.</p>
+<p>To turn on this feature, select your website from <a href="https://app.netlify.com/account/sites">your list of sites</a> hosted with Netlify.
+Then click on <strong>Site settings</strong> and find <strong>Build &amp; deploy</strong> on the left menu bar.
+Under this settings group, click the <em>Edit settings</em> button and select <strong>Automatically build deploy previews for all pull requests</strong> next to <em>Deploy previews</em>.</p>
+<div class="figure">
+<img src="netlify-deploy-context.png" alt="Enable automatic deploy previews for pull requests in your site’s settings." class="center" />
+<p class="caption">Enable automatic deploy previews for pull requests in your site’s settings.</p>
+</div>
+</div>
+<div id="netlify-toml" class="section level3">
+<h3>Set up <code>netlify.toml</code></h3>
+<p>Finally, you need to create a file called <code>netlify.toml</code> in your website’s root directory.
+This file allows you to very specifically customize your Netlify settings in addition to, or in place of, the settings available through the Netlify web app.</p>
+<p>Two modifications from the default <code>hugo</code> command used to build the deploy preview improve the workflow:</p>
+<ol style="list-style-type: decimal">
+<li><p>Adding <code>-b $DEPLOY_PRIME_URL</code> ensures that URLs generated by hugo on the deploy preview point to the deploy preview.
+Without this, absolute URLs created by your hugo template (or theme) will point to your <code>baseurl</code> (your primary site) rather than the deploy preview, meaning that it will occasionally be impossible or difficult to test that your links work as expected in the preview version.</p></li>
+<li><p>Adding <code>--buildFuture</code> ensures that posts scheduled in the future are also rendered regardless of publication date.
+Without this, posts scheduled for future publication dates won’t be displayed in the preview.
+You may also wish to enable <code>--buildDrafts</code> as well (but see the <a href="#side-note-drafts">side note on drafts</a> below).</p></li>
+</ol>
+<p>We can apply these settings in the context of deploy previews using the <code>context.deploy-preview</code> header, and if you’ve enabled <em>branch deploys</em> in <a href="#enable-deploy-previews">the step above</a>, you can also enable these features under <code>context.branch-deploy</code>.</p>
+<p>Altogether, my <code>netlify.toml</code> file looks like this.</p>
+<pre class="toml"><code># netlify.toml
+[context.deploy-preview]
+command = &quot;hugo -b $DEPLOY_PRIME_URL --buildFuture&quot;
+
+[context.branch-deploy]
+command = &quot;hugo -b $DEPLOY_PRIME_URL --buildFuture&quot;</code></pre>
+<div id="side-note-drafts" class="section level4">
+<h4>Side note: Drafts</h4>
+<p>You can mark a post as a draft by setting <code>draft: true</code> in the post’s YAML.
+This might even be the default when you create a new post (depending on your theme and settings).</p>
+<p>But I don’t recommend using this flag for two reasons.</p>
+<p>First, it’s likely that you’ll forget to remove it before publishing.
+The local live preview will show your post, so it’s easy to push your post only to discover that you forgot to set <code>draft: false</code> when your post doesn’t appear on your site
+(not that I’ve ever
+<a href="https://github.com/gadenbuie/garrickadenbuie-com/commit/7481fa7c1eff9b3c8a259271b7d188f0eaa3cd40">done</a>
+<a href="https://github.com/gadenbuie/garrickadenbuie-com/commit/a6416000d7e1a8185c2e6fc3293fef28a4641a66">that</a>
+<a href="https://github.com/gadenbuie/garrickadenbuie-com/commit/8d10d086ae3b287b7ea16ba1b781f2a374f8cf84">before</a>.)</p>
+<p>Second, you can achieve the same results by writing and preparing your post in a post-specific branch and pull request.
+This keeps your source code, writing, and image in a self-contained branch in your repository (so you can get back to it later if it takes some time to finish it) and it allows you to take advantage of Netlify’s deploy preview feature.</p>
+<p>If you do want to use hugo’s draft posts, you can add <code>--buildDrafts</code> to the hugo command in your <a href="#netlify-toml">netlify.toml</a> so that Netlify renders draft posts on deploy previews.
+Read more in the <a href="https://bookdown.org/yihui/blogdown/local-preview.html">Building a website for local preview</a> section of the blogdown book.</p>
+</div>
+</div>
+</div>
+<div id="workflow" class="section level2">
+<h2>Workflow</h2>
+<p>Okay, now that everything is set up, we’re ready to dive into the workflow.</p>
+<div id="start-in-a-new-branch" class="section level3">
+<h3>Start in a new branch</h3>
+<p>Create a new branch for your post.
+Give your branch a meaningful name — consider using the slug (short title) for the post.
+I wrote this post in a branch called <code>post-new-post-workflow</code>.</p>
+<div class="figure">
+<img src="new-branch.png" alt="Create a New Branch with an informative name, like post-&lt;slug&gt;." class="center" />
+<p class="caption">Create a New Branch with an informative name, like <code>post-&lt;slug&gt;</code>.</p>
+</div>
+</div>
+<div id="create-a-new-post" class="section level3">
+<h3>Create a new post</h3>
+<p>Create a new post in your blog using <span class="pkg">blogdown</span>’s <strong>New Post</strong> addin.
+This is generally the easiest way to get started with a post, although you can also manually call <code>blogdown::new_post()</code> from the R command prompt.</p>
+<div class="figure">
+<img src="new-post_dropdown_crop.png" alt="Opening the New Post RStudio addin." class="center" />
+<p class="caption">Opening the <strong>New Post</strong> RStudio addin.</p>
+</div>
+<p>At this step, the default date of the post is set to the current date.
+If you’d like to “schedule” your post for a day in the future, you set the date now.
+(Remind yourself it’s an aspirational goal and not a hard deadline.)
+(And <a href="#publish">see below</a> for the reason for the scare quotes around <em>schedule</em>.
+Spoiler: it’s not automatic.)</p>
+<div class="figure">
+<img src="new-post_choose-future-date_crop.png" alt="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)" class="center" style="width:66.0%" />
+<p class="caption">Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)</p>
+</div>
+<p>Note that you can also use <code>publishDate</code> or separately set both <code>publishDate</code> and <code>date</code>.
+If you use <code>publishDate</code>, the post will not be rendered until on or after the <code>publishDate</code>, but once published the post will appear to have been written on <code>date</code> (although this depends on the settings of your hugo theme).
+This configuration parameter needs to be set in your post’s YAML header.</p>
+<p>If you’re writing your posts in R Markdown with the <code>.Rmd</code> extension, another option is to set <code>date</code> in the post YAML header to</p>
+<pre class="yaml"><code>date: &#39;`r Sys.Date()`&#39;</code></pre>
+<p>to make the post’s date reflect the day your <code>.Rmd</code> was rendered to hugo’s HTML.
+While I like this idea in theory, you may later need to re-render your post due to changes on your site.
+If you use your post’s date in your site’s permalinks<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> — for example, with URLs like <code>/2019/03/18/blogdown-netlify-new-post-workflow</code> — then this change may inadvertently change your site’s URLs and invalidate links you’ve previously shared.</p>
+<div class="figure">
+<img src="new-post_addin-ready_crop.png" alt="Fill out the rest of your post information." class="center" style="width:66.0%" />
+<p class="caption">Fill out the rest of your post information.</p>
+</div>
+<p>Your blank page is ready!
+Run <code>blogdown::serve_site()</code> and write your post draft, previewing locally as you write.</p>
+<div class="figure">
+<img src="blogdown-serve-site.png" alt="Writing this post in RStudio with the Source and Viewer panes maximized for “live preview” feel." class="center" />
+<p class="caption">Writing this post in RStudio with the <em>Source</em> and <em>Viewer</em> panes maximized for “live preview” feel.</p>
+</div>
+</div>
+<div id="commit-and-push" class="section level3">
+<h3>Commit and Push</h3>
+<p>Commit your post when it’s complete or after you’ve written a section or a draft version (commits are cheap!).
+When you have at least one commit in your post branch, say your draft post, push those commits to GitHub.
+Navigate to the GitHub page for your website repo and <a href="https://help.github.com/en/articles/creating-a-pull-request">open a pull request</a> from your post branch.</p>
+<p>When you do you’ll see a yellow dot next to the most recent commit.
+When it turns into a green check mark, your preview is ready.</p>
+<div class="figure">
+<img src="netlify-pr-preview-complete.png" alt="Your deploy preview is ready on Netlify!" class="center" />
+<p class="caption">Your deploy preview is ready on Netlify!</p>
+</div>
+<p>Click on the check mark and then click on <em>Details</em>.
+This will take you to a preview of your website at a URL like</p>
+<pre><code>https://deploy-preview-&lt;pr#&gt;--&lt;website-name&gt;.netlify.com/</code></pre>
+<p>This site works exactly like it will when fully deployed, except for the two details that we changed above in <a href="#netlify-toml"><code>netlify.toml</code></a>:</p>
+<ul>
+<li><p>Internal links produced by Hugo will point to <code>deploy-preview-NN...netlify.com</code> rather than your <code>baseurl</code> address.</p></li>
+<li><p>Future posts (and draft posts, if enabled) will be rendered as well.</p></li>
+</ul>
+</div>
+<div id="final-checks" class="section level3">
+<h3>Final Checks</h3>
+<p>I usually (read: when I remember) try to pause here and run a few quick tests and checks on the post, either in RStudio or using the deploy preview link to the post.</p>
+<ul>
+<li>Run <strong>Check Spelling…</strong> in RStudio (under <em>Edit</em> menu)</li>
+<li>Run <code>xfun::optipng()</code> on the directory where the post’s images are stored (including plots output by R) for lossless reduction of the size of <code>.png</code> images</li>
+<li>Run the <a href="http://validator.w3.org/checklink">W3C Link Checker</a> on the post preview to make sure all links are valid.</li>
+<li>Check YAML metadata is filled out, including <code>title</code>, <code>description</code>, <code>categories</code>, <code>tags</code>, etc.</li>
+<li>Check that all images have alt text. A <a href="https://www.w3.org/WAI/ER/tools/">web accessibility evaluation tool</a> can be helpful here.</li>
+</ul>
+</div>
+<div id="publish" class="section level3">
+<h3>Publish</h3>
+<p>The final step is to publish your post — merge your pull request to master and Netlify will deploy your site!</p>
+<p>Of course, if you’ve scheduled your post for a future release date, it’s slightly more complicated.
+Hugo sites — and by extension <span class="pkg">blogdown</span> sites — are <em>static</em>.
+The entire site is compiled and rendered once instead of every time a visitor access a page (like WordPress).</p>
+<p>As far as I know, there’s no built-in mechanism to schedule the re-rendering of your site at a future date, so you’ll need to manually trigger the rendering.
+In my workflow, this means choosing from the following two options:</p>
+<ol style="list-style-type: decimal">
+<li><p>Wait until on or after the date of your post to merge the pull request to master.
+Netlify will build and deploy your website immediately.</p></li>
+<li><p>Merge your pull request, but then later use the Netlify settings page for your site to trigger a rebuild.
+This seems more complicated to me, so I recommend using the first option.</p></li>
+</ol>
+<p>But if you’re determined to fully automate this process, Netlify does integrate with <a href="https://www.netlify.com/blog/2018/11/07/automate-your-netlify-sites-with-zapier/">Zapier</a>, an online tool for automating tasks.</p>
+<p>That’s it!
+Once you’ve merged your post branch to the master branch, your post is out there in the world, just as soon as Netlify finishes building your site.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Side note: Permalinks</p>
+<p>Another quick side note to say that I highly recommend setting your permalinks to simply refer to your post’s slugs.
+For some reason, I used the full year, month, <em>and day!</em> of my post in my permalinks.
+Oh, the optimism!</p>
+<p>I certainly do not post often enough that I would ever end up with a name clash that could only be resolved by the full date of the post.
+There is an incredibly small (and only <em>slightly</em> non-zero) chance I’ll use the same slug for two posts.
+In my view, it’s a worthwhile risk and much nicer to</p>
+<ol style="list-style-type: lower-alpha">
+<li>not need to worry too much about the date in the post’s metadata and</li>
+<li>be able to share links like <a href="https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/" class="uri">https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/</a> than <a href="https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/">https://garrickadenbuie.com/blog/2019/03/18/blogdown-netlify-new-post-workflow/</a>.</li>
+</ol>
+<a href="#fnref1" class="footnote-back">↩</a></li>
+</ol>
+</div>

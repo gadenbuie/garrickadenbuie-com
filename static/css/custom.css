@@ -19,7 +19,7 @@ html {
   }
 }
 
-code,pre {
+code, pre, .pkg {
     font-family: "Source Code Pro", "Lucida Console", "Liberation Mono", Menlo, Courier, monospace;
 }
 
@@ -32,9 +32,11 @@ p.caption {
     color: grey;
     font-style: italic;
     text-align: right;
-    margin-top: -0.8rem;
+    margin-top: 0;
 }
-
+.figure img.center {
+  margin: auto;
+}
 .figure.thumbnail {
   width: 200px;
   float: left;
@@ -272,4 +274,19 @@ code {
   content: "- Hide ";
   width: auto;
   margin-right: 0.25em;
+}
+
+.pkg {
+  color: #4a5858;
+  padding: 0 3px;
+  margin: 0 2px;
+  border: 1px solid #7c9393;
+  -webkit-box-shadow: 2px 2px 0px 0px rgba(124,147,147,1);
+  -moz-box-shadow: 2px 2px 0px 0px rgba(124,147,147,1);
+  box-shadow: 2px 2px 0px 0px rgba(124,147,147,1);
+}
+
+.pkg a:hover, .pkg a:focus {
+  border: none;
+  padding: 0 2px !important;
 }
