@@ -130,7 +130,7 @@ Second, you can achieve the same results by writing and preparing your post in a
 This keeps your source code, writing, and image in a self-contained branch in your repository (so you can get back to it later if it takes some time to finish it) and it allows you to take advantage of Netlify's deploy preview feature.
 
 If you do want to use hugo's draft posts, you can add `--buildDrafts` to the hugo command in your [netlify.toml](#netlify-toml) so that Netlify renders draft posts on deploy previews.
-Read more in the "[Building a website for local preview][blogdown-local-preview]" section of the blogdown book.
+Read more in the [Building a website for local preview][blogdown-local-preview] section of the blogdown book.
 
 ## Workflow
 
@@ -166,7 +166,7 @@ This configuration parameter needs to be set in your post's YAML header.
 If you're writing your posts in R Markdown with the `.Rmd` extension, another option is to set `date` in the post YAML header to
 
 ```yaml
-date: '`r Sys.Date()`'
+date: '``r 'r'` Sys.Date()`'
 ```
 
 to make the post's date reflect the day your `.Rmd` was rendered to hugo's HTML.
@@ -218,6 +218,16 @@ This site works exactly like it will when fully deployed, except for the two det
 * Internal links produced by Hugo will point to `deploy-preview-NN...netlify.com` rather than your `baseurl` address.
 
 * Future posts (and draft posts, if enabled) will be rendered as well.
+
+### Final Checks
+
+I usually (read: when I remember) try to pause here and run a few quick tests and checks on the post, either in RStudio or using the deploy preview link to the post.
+
+* Run **Check Spelling...** in RStudio (under _Edit_ menu)
+* Run `xfun::optipng()` on the directory where the post's images are stored (including plots output by R) for lossless reduction of the size of `.png` images
+* Run the [W3C Link Checker](http://validator.w3.org/checklink) on the post preview to make sure all links are valid.
+* Check YAML metadata is filled out, including `title`, `description`, `categories`, `tags`, etc.
+* Check that all images have alt text. A [web accessibility evaluation tool](https://www.w3.org/WAI/ER/tools/) can be helpful here.
 
 ### Publish
 

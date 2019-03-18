@@ -101,7 +101,7 @@ The local live preview will show your post, so it’s easy to push your post onl
 <p>Second, you can achieve the same results by writing and preparing your post in a post-specific branch and pull request.
 This keeps your source code, writing, and image in a self-contained branch in your repository (so you can get back to it later if it takes some time to finish it) and it allows you to take advantage of Netlify’s deploy preview feature.</p>
 <p>If you do want to use hugo’s draft posts, you can add <code>--buildDrafts</code> to the hugo command in your <a href="#netlify-toml">netlify.toml</a> so that Netlify renders draft posts on deploy previews.
-Read more in the “<a href="https://bookdown.org/yihui/blogdown/local-preview.html">Building a website for local preview</a>” section of the blogdown book.</p>
+Read more in the <a href="https://bookdown.org/yihui/blogdown/local-preview.html">Building a website for local preview</a> section of the blogdown book.</p>
 </div>
 </div>
 </div>
@@ -139,7 +139,7 @@ Spoiler: it’s not automatic.)</p>
 If you use <code>publishDate</code>, the post will not be rendered until on or after the <code>publishDate</code>, but once published the post will appear to have been written on <code>date</code> (although this depends on the settings of your hugo theme).
 This configuration parameter needs to be set in your post’s YAML header.</p>
 <p>If you’re writing your posts in R Markdown with the <code>.Rmd</code> extension, another option is to set <code>date</code> in the post YAML header to</p>
-<pre class="yaml"><code>date: &#39;2019-03-17&#39;</code></pre>
+<pre class="yaml"><code>date: &#39;`r Sys.Date()`&#39;</code></pre>
 <p>to make the post’s date reflect the day your <code>.Rmd</code> was rendered to hugo’s HTML.
 While I like this idea in theory, you may later need to re-render your post due to changes on your site.
 If you use your post’s date in your site’s permalinks<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> — for example, with URLs like <code>/2019/03/18/blogdown-netlify-new-post-workflow</code> — then this change may inadvertently change your site’s URLs and invalidate links you’ve previously shared.</p>
@@ -172,6 +172,17 @@ This will take you to a preview of your website at a URL like</p>
 <ul>
 <li><p>Internal links produced by Hugo will point to <code>deploy-preview-NN...netlify.com</code> rather than your <code>baseurl</code> address.</p></li>
 <li><p>Future posts (and draft posts, if enabled) will be rendered as well.</p></li>
+</ul>
+</div>
+<div id="final-checks" class="section level3">
+<h3>Final Checks</h3>
+<p>I usually (read: when I remember) try to pause here and run a few quick tests and checks on the post, either in RStudio or using the deploy preview link to the post.</p>
+<ul>
+<li>Run <strong>Check Spelling…</strong> in RStudio (under <em>Edit</em> menu)</li>
+<li>Run <code>xfun::optipng()</code> on the directory where the post’s images are stored (including plots output by R) for lossless reduction of the size of <code>.png</code> images</li>
+<li>Run the <a href="http://validator.w3.org/checklink">W3C Link Checker</a> on the post preview to make sure all links are valid.</li>
+<li>Check YAML metadata is filled out, including <code>title</code>, <code>description</code>, <code>categories</code>, <code>tags</code>, etc.</li>
+<li>Check that all images have alt text. A <a href="https://www.w3.org/WAI/ER/tools/">web accessibility evaluation tool</a> can be helpful here.</li>
 </ul>
 </div>
 <div id="publish" class="section level3">
