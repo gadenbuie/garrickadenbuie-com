@@ -80,7 +80,7 @@ Without this, posts scheduled for future publication dates won’t be displayed 
 You may also wish to enable <code>--buildDrafts</code> as well (but see the <a href="#side-note-drafts">side note on drafts</a> below).</p></li>
 </ol>
 <p>We can apply these settings in the context of deploy previews using the <code>context.deploy-preview</code> header, and if you’ve enabled <em>branch deploys</em> in <a href="#enable-deploy-previews">the step above</a>, you can also enable these features under <code>context.branch-deploy</code>.</p>
-<p>All together, my <code>netlify.toml</code> file looks like this.</p>
+<p>Altogether, my <code>netlify.toml</code> file looks like this.</p>
 <pre class="toml"><code># netlify.toml
 [context.deploy-preview]
 command = &quot;hugo -b $DEPLOY_PRIME_URL --buildFuture&quot;
@@ -114,8 +114,8 @@ Read more in the “<a href="https://bookdown.org/yihui/blogdown/local-preview.h
 Give your branch a meaningful name — consider using the slug (short title) for the post.
 I wrote this post in a branch called <code>post-new-post-workflow</code>.</p>
 <div class="figure">
-<img src="new-branch.png" alt="Create a New Branch with the an informative name, like post-&lt;slug&gt;." class="center" />
-<p class="caption">Create a New Branch with the an informative name, like <code>post-&lt;slug&gt;</code>.</p>
+<img src="new-branch.png" alt="Create a New Branch with an informative name, like post-&lt;slug&gt;." class="center" />
+<p class="caption">Create a New Branch with an informative name, like <code>post-&lt;slug&gt;</code>.</p>
 </div>
 </div>
 <div id="create-a-new-post" class="section level3">
@@ -128,7 +128,7 @@ This is generally the easiest way to get started with a post, although you can a
 </div>
 <p>At this step, the default date of the post is set to the current date.
 If you’d like to “schedule” your post for a day in the future, you set the date now.
-(Remind yourself it’s an aspirational goal and not a hard-deadline.)
+(Remind yourself it’s an aspirational goal and not a hard deadline.)
 (And <a href="#publish">see below</a> for the reason for the scare quotes around <em>schedule</em>.
 Spoiler: it’s not automatic.)</p>
 <div class="figure">
@@ -181,7 +181,7 @@ This will take you to a preview of your website at a URL like</p>
 Hugo sites — and by extension <span class="pkg">blogdown</span> sites — are <em>static</em>.
 The entire site is compiled and rendered once instead of every time a visitor access a page (like WordPress).</p>
 <p>As far as I know, there’s no built-in mechanism to schedule the re-rendering of your site at a future date, so you’ll need to manually trigger the rendering.
-In my workflow, this means waiting to choosing from the following two options:</p>
+In my workflow, this means choosing from the following two options:</p>
 <ol style="list-style-type: decimal">
 <li><p>Wait until on or after the date of your post to merge the pull request to master.
 Netlify will build and deploy your website immediately.</p></li>
@@ -198,7 +198,7 @@ Once you’ve merged your post branch to the master branch, your post is out the
 <ol>
 <li id="fn1"><p>Side note: Permalinks</p>
 <p>Another quick side note to say that I highly recommend setting your permalinks to simply refer to your post’s slugs.
-For some reason I used the full year, month, <em>and day!</em> of my post in my permalinks.
+For some reason, I used the full year, month, <em>and day!</em> of my post in my permalinks.
 Oh, the optimism!</p>
 <p>I certainly do not post often enough that I would ever end up with a name clash that could only be resolved by the full date of the post.
 There is an incredibly small (and only <em>slightly</em> non-zero) chance I’ll use the same slug for two posts.

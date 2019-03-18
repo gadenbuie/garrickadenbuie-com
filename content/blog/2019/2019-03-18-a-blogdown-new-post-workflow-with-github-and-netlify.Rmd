@@ -100,7 +100,7 @@ Two modifications from the default `hugo` command used to build the deploy previ
  
 We can apply these settings in the context of deploy previews using the `context.deploy-preview` header, and if you've enabled _branch deploys_ in [the step above](#enable-deploy-previews), you can also enable these features under `context.branch-deploy`.
 
-All together, my `netlify.toml` file looks like this.
+Altogether, my `netlify.toml` file looks like this.
  
 ```toml
 # netlify.toml
@@ -142,7 +142,7 @@ Create a new branch for your post.
 Give your branch a meaningful name --- consider using the slug (short title) for the post.
 I wrote this post in a branch called `post-new-post-workflow`.
 
-![Create a New Branch with the an informative name, like `post-<slug>`.](new-branch.png){.center}
+![Create a New Branch with an informative name, like `post-<slug>`.](new-branch.png){.center}
 
 ### Create a new post
 
@@ -153,7 +153,7 @@ This is generally the easiest way to get started with a post, although you can a
 
 At this step, the default date of the post is set to the current date.
 If you'd like to "schedule" your post for a day in the future, you set the date now.
-(Remind yourself it's an aspirational goal and not a hard-deadline.)
+(Remind yourself it's an aspirational goal and not a hard deadline.)
 (And [see below](#publish) for the reason for the scare quotes around _schedule_. 
 Spoiler: it's not automatic.)
 
@@ -176,7 +176,7 @@ If you use your post's date in your site's permalinks[^permalinks] --- for examp
 [^permalinks]: Side note: Permalinks
 
     Another quick side note to say that I highly recommend setting your permalinks to simply refer to your post's slugs.
-    For some reason I used the full year, month, _and day!_ of my post in my permalinks.
+    For some reason, I used the full year, month, _and day!_ of my post in my permalinks.
     Oh, the optimism!
     
     I certainly do not post often enough that I would ever end up with a name clash that could only be resolved by the full date of the post.
@@ -229,7 +229,7 @@ Hugo sites --- and by extension [blogdown]{.pkg} sites --- are _static_.
 The entire site is compiled and rendered once instead of every time a visitor access a page (like WordPress).
 
 As far as I know, there's no built-in mechanism to schedule the re-rendering of your site at a future date, so you'll need to manually trigger the rendering.
-In my workflow, this means waiting to choosing from the following two options:
+In my workflow, this means choosing from the following two options:
 
 1. Wait until on or after the date of your post to merge the pull request to master.
    Netlify will build and deploy your website immediately.
