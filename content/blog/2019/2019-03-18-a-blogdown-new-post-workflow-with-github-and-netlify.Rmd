@@ -41,7 +41,7 @@ Here's a quick overview of the workflow:
 1. Push additional updates to the post branch as needed and review the updated preview.
 1. Publish the final draft by merging the pull request to the master branch.
 
-The rest of this post describes this workflow in more detail, including how to configure [critical settings for Netlify](#netlify-toml) that make the process easier.
+The rest of this post describes [this workflow](#workflow) in more detail, including how to configure [critical settings for Netlify](#netlify-toml) that make the process easier.
 
 ## Pre-reqs: Workflow Setup
 
