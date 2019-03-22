@@ -10,9 +10,10 @@ tags:
   - ggplot2
   - xaringan
   - Tutorials
+  - Education
   
 talk_author: [Garrick Aden-Buie]
-talk_type: Tutorial
+talk_type: Education
 talk_image: "/images/2018/trug-ggplot2/trug-ggplot2-first-slide.png"
 talk_event: "Tampa R Users Meetup"
 talk_event_url: https://www.meetup.com/Tampa-R-Users-Group/events/246724206/

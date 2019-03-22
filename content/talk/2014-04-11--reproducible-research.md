@@ -10,9 +10,10 @@ tags:
   - Research
   - R Markdown
   - Tutorials
+  - Education
 
 talk_author: [Garrick Aden-Buie]
-talk_type: "Tutorial"
+talk_type: "Education"
 talk_event: "INFORMS@USF Code & Data Boot Camp"
 talk_event_url: http://bit.ly/USFCodeCamp2014 
 talk_venue: University of South Florida
