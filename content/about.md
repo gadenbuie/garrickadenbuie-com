@@ -13,8 +13,9 @@ type: page
 [garrick-projects]: /project/
 [garrick-talks]: /tags/education/
 
-<img src="/images/garrick-profile_150.png" 
-     class="center" 
+<img src="/images/garrick-profile_300.png" 
+     class="center"
+     width="150px"
      alt="Profile picture of Garrick Aden-Buie on a white background"
      style="float:left;margin:0 2em 0.5em 0;"
 />
