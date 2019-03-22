@@ -5,22 +5,33 @@ date: 2014-01-11T19:25:00+00:00
 type: page
 ---
 
-<!-- ![](/images/garrick.png) -->
+[moffitt]: https://moffitt.org
+[gerkelab]: https://www.gerkelab.com
+[usf]: https://usf.edu
+[usf-imse]: https://imse.eng.usf.edu/
+[garrick-apps]: https://apps.garrickadenbuie.com
+[garrick-projects]: /project/
+[garrick-talks]: /tags/education/
+
+<img src="/images/garrick-profile_150.png" 
+     class="center" 
+     alt="Profile picture of Garrick Aden-Buie on a white background"
+     style="float:left;margin:0 2em 0.5em 0;"
+/>
 
 Hello, my name is Garrick Aden-Buie.
-I’m a Ph.D. Candidate at the [University of South Florida](http://usf.edu/) in Tampa, FL in the [Department of Industrial and Management Sciences Engineering](http://imse.eng.usf.edu/).
+I'm a data scientist at the [Moffitt Cancer Center][moffitt] where I work with [Dr. Travis Gerke][gerkelab] using R and the tools of data science to accelerate research in integrative molecular cancer epidemiology.
+Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](http://news.usf.edu/article/templates/?a=7974&z=220).
 
-I build web apps using [Shiny](https://shiny.rstudio.com/), tools and packages for [R](http://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
-Browse my [list of projects](/project/) for examples of my work, or review my [full curriculum vitae (resume)](https://www.garrickadenbuie.com/resume/).
+I'm a passionate R user and educator.
+I build [web apps][garrick-apps] using [Shiny](https://shiny.rstudio.com/), [tools and packages][garrick-projects] for [R](http://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
+Browse my [list of projects][garrick-projects] for examples of my work, a [selection of educational presentations][garrick-talks], or review my [full curriculum vitae (resume)](https://www.garrickadenbuie.com/resume/).
 
-My research interests include
+### Let's do something awesome together!
 
-- Data analytics and visualization
-- Gerontechnology (aging + technology)
-- Healthcare
-- Data-driven decision making
-- Sustainability
-- Urban studies
+If you're interested in working with me, please drop me a line at [garrick@adenbuie.com](mailto:garrick@adenbuie.com)!
+
+### A little bit more about me... 
 
 As an undergrad, I studied at [Lehigh University](http://lehigh.edu/),
 in [Bethlehem, PA](http://en.wikipedia.org/wiki/Allentown_(song)), only
@@ -31,9 +42,13 @@ which helped me earn a B.A. in Spanish at Lehigh.
 I am a [Returned Peace Corps Volunteer](http://peacecorps.gov/).
 I lived in small town outside of Cuenca, Ecuador where I taught Math, English and life and parenting skills.
 
-I also [write songs and play acoustic guitar](http://garrickadebuie.bandcamp.com/), sometimes [in public](http://www.songkick.com/artists/6913204-garrick-adenbuie).
+I also [write songs and play acoustic guitar](http://garrickadebuie.bandcamp.com/), sometimes [in public](http://www.songkick.com/artists/6913204-garrick-adenbuie) (though not as much as I would like to).
 
 ## Research
+
+- **The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring**.<br>Garrick Aden-Buie. _Utilizing Technology for Data Collection and Intervention_, Moffitt Cancer Center. 2018
+
+- **Unsupervised behavior change detection using passive sensor systems in the homes of older adults**.<br>Garrick Aden-Buie, A. Yalcin, C. VandeWeerd. _11th World Conference of Gerontechnology_. 2018
 
 - **Occupant Activity Profiles from Smart Home Sensor Event Streams**.<br>Garrick Aden-Buie, A. Yalcin, C. VandeWeerd. _INFORMS Annual Meeting_. 2017
 
