@@ -19,7 +19,7 @@ tags:
 talk_author: [Garrick Aden-Buie]
 talk_type: Education
 talk_image: "/images/2018/gentle-ggplot2/gentle-ggplot2-usf-asu.png"
-talk_event: "Workshop on Data Analysis Using R hosted by the University of South Florida Chapter of the American Statistical Association"
+talk_event: "Workshop on Data Analysis Using R (ASA at USF)"
 talk_event_url: https://r2018workshop.wixsite.com/r2018
 talk_location: "Tampa, FL"
 talk_code_url: https://github.com/gadenbuie/gentle-ggplot2/
