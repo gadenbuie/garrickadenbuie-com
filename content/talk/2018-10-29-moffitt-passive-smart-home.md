@@ -1,7 +1,8 @@
 ---
 title: "The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring"
-author: ~ 
+author: Garrick Aden-Buie
 date: '2018-10-29'
+description: Presented at the "Utilizing Technology for Data Collection and Intervention" mini-conference at Moffitt Cancer Center
 slug: moffitt-passive-smart-home
 categories: []
 tags: 
