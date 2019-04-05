@@ -1,8 +1,12 @@
 ---
 title: "A Gentle Guide to the Grammar of Graphics with ggplot2"
-author: ~ 
+author: Garrick Aden-Buie
 date: '2018-01-23'
+description: | 
+  An introduction to data visualization using ggplot2 presented at the Tampa
+  R Users Group on 2018-01-23.
 slug: trug-ggplot2
+twitterImage: /images/2018/trug-ggplot2/trug-ggplot2-first-slide.png
 categories: []
 tags: 
   - R

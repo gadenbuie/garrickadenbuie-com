@@ -1,7 +1,8 @@
 ---
 title: "Unsupervised behavior change detection using passive sensor systems in the homes of older adults"
-author: ~ 
+author: Garrick Aden-Buie
 date: '2018-05-07'
+description: Presented at the 11th World Conference of Gerontechnology in St. Petersburg, FL.
 slug: isg-2018
 categories: []
 tags: 

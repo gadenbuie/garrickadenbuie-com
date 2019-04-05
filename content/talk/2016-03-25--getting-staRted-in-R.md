@@ -1,6 +1,6 @@
 ---
 title: "getting staRted in R"
-author: ~ 
+author: Garrick Aden-Buie
 date: '2016-03-25'
 slug: getting-started-in-r
 categories: []
