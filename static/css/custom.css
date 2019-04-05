@@ -140,12 +140,8 @@ code {
   text-decoration: none;
 }
 .base16-solarized-garrick .post-content a:hover {
-  text-decoration: underline dashed;
   text-decoration: none;
   background: #fbeaea;
-  padding: 2px;
-  margin-left: -2px;
-  margin-right: -2px;
 }
 
 /* Sidebar collapse */
