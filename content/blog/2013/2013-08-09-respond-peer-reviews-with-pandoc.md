@@ -46,7 +46,13 @@ After far too many hours digging through LaTeX and pandoc discussion forums and 
 ```latex 
 \let\quoteOld\quote
 \let\endquoteOld\endquote
-\renewenvironment{quote}{\quoteOld\itshape}{\endquoteOld}</code>
+\renewenvironment{quote}{\quoteOld\itshape}{\endquoteOld}
+```
+
+You can save the above lines in a file called `preamble.tex` that you can then include in the LaTeX header with the pandoc `--include-in-header` argument.
+
+```bash
+pandoc --include-in-header preamble.tex response.txt -o response.pdf
 ```
 
 Rather than remember to include this code every time you want italicized block quotes, you can download the pandoc [default.latex](https://github.com/jgm/pandoc-templates/blob/master/default.latex) template file, rename it something memorable – like `italicquotes.tex` – and add the above code somewhere near the top. (Somewhere after the first string of `\usepackage` commands is probably best.)
