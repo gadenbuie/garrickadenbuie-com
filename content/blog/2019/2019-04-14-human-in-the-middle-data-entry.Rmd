@@ -1,0 +1,90 @@
+---
+title: Human-in-the-Middle Data Entry
+author: Garrick Aden-Buie
+date: '2019-04-14'
+slug: human-in-the-middle-data-entry
+description: "post description"
+twitterImage: "/path/to/image.png"
+categories:
+  - Blog
+tags:
+  - r
+  - Scripts
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r, eval=FALSE}
+speak <- function(x) {
+  if (inherits(x, "data.frame")) {
+    for (name in names(x)) {
+      x[[name]] <- paste0(name, ": ", x[[name]])
+    }
+    x <- apply(x, 1, paste, collapse = ". ")
+  }
+  for (thing in x) {
+    system2("say", paste0("'", thing, "'"))
+    if (length(x) > 1) Sys.sleep(0.5)
+  }
+}
+
+walk_rows <- function(
+  df,
+  copy = NULL,
+  speak_quick = NULL,
+  speak_full = NULL,
+  start_at = 1L,
+  pause_short = 1L,
+  pause_long = 2L,
+  break_at = 20L
+) {
+  touch_columns <- c(copy, speak_quick, speak_full)
+  if (identical(names(df), setdiff(names(df), touch_columns))) {
+    warning("No columns in `copy`, `speak_quick`, `speak_full` match the columns in `df`")
+    return(df)
+  }
+
+  if (nrow(df) == 0 || start_at > nrow(df)) {
+    stop("All done!", call. = FALSE)
+  }
+
+  if (start_at %% break_at == 0) {
+    speak("Take a break or save your progress")
+    is_ready <- FALSE
+    while(!is_ready) {
+      if (!is_ready) {
+        cat("\n...waiting...")
+        Sys.sleep(pause_long)
+      }
+      is_ready <- rstudioapi::showQuestion("Ready?", "Ready to continue?")
+    }
+  }
+
+  cat(start_at, "...", sep = "")
+  for (col in names(df)) {
+    delay <- ifelse(
+      which(col == names(df)) == length(ncol(df)),
+      pause_long, pause_short
+    )
+
+    if (col %in% copy) {
+      the_value <- df[[col]][start_at]
+      if (!is.numeric(the_value) || abs(the_value) >= 0.01) {
+        clipr::write_clip(the_value)
+        speak(col)
+        Sys.sleep(delay)
+      }
+    } else if (col %in% speak_full) {
+      speak(df[start_at, col])
+      Sys.sleep(delay)
+    } else if (col %in% speak_quick) {
+      the_value <- df[[col]][start_at]
+      speak(the_value)
+      Sys.sleep(delay)
+    }
+  }
+
+  walk_rows(df, copy, speak_quick, speak_full, start_at + 1L, pause_short, pause_long)
+}
+```
