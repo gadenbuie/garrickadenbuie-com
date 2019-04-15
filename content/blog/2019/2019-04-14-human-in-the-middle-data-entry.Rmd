@@ -14,17 +14,21 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 ```{r, eval=FALSE}
-speak <- function(x) {
+speak <- function(x, speak_command = "say", args = NULL) {
   if (inherits(x, "data.frame")) {
+    # read a data.frame row-wise like "column name: value. ..."
     for (name in names(x)) {
       x[[name]] <- paste0(name, ": ", x[[name]])
     }
     x <- apply(x, 1, paste, collapse = ". ")
   }
   for (thing in x) {
-    system2("say", paste0("'", thing, "'"))
+    if (!is.null(args)) {
+      # additional arguments passed to the speak command
+      args <- paste0(" ", paste(args, collapse = " "))
+    }
+    system2(speak_command, paste0("'", thing, "'", args))
     if (length(x) > 1) Sys.sleep(0.5)
   }
 }
@@ -85,6 +89,7 @@ walk_rows <- function(
     }
   }
 
+  # recurse to next row
   walk_rows(df, copy, speak_quick, speak_full, start_at + 1L, pause_short, pause_long)
 }
 ```

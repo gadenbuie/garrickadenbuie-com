@@ -16,15 +16,20 @@ editor_options:
 
 
 
-<pre class="r"><code>speak &lt;- function(x) {
+<pre class="r"><code>speak &lt;- function(x, speak_command = &quot;say&quot;, args = NULL) {
   if (inherits(x, &quot;data.frame&quot;)) {
+    # read a data.frame row-wise like &quot;column name: value. ...&quot;
     for (name in names(x)) {
       x[[name]] &lt;- paste0(name, &quot;: &quot;, x[[name]])
     }
     x &lt;- apply(x, 1, paste, collapse = &quot;. &quot;)
   }
   for (thing in x) {
-    system2(&quot;say&quot;, paste0(&quot;&#39;&quot;, thing, &quot;&#39;&quot;))
+    if (!is.null(args)) {
+      # additional arguments passed to the speak command
+      args &lt;- paste0(&quot; &quot;, paste(args, collapse = &quot; &quot;))
+    }
+    system2(speak_command, paste0(&quot;&#39;&quot;, thing, &quot;&#39;&quot;, args))
     if (length(x) &gt; 1) Sys.sleep(0.5)
   }
 }
@@ -85,5 +90,6 @@ walk_rows &lt;- function(
     }
   }
 
+  # recurse to next row
   walk_rows(df, copy, speak_quick, speak_full, start_at + 1L, pause_short, pause_long)
 }</code></pre>
