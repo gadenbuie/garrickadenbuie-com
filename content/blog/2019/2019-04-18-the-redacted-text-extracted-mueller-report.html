@@ -19,9 +19,9 @@ tags:
 <p>Earlier today, the redacted Mueller report was <a href="https://www.npr.org/2019/04/18/708850903/read-the-full-mueller-report-with-redactions">released to the public</a>.
 Only about <a href="https://www.wsj.com/livecoverage/mueller-report-release-latest-news/card/1555613011">12% of the report is redacted</a>, but 100% of it is inside what’s essentially a scanned PDF.</p>
 <p>There are many people interested in <a href="https://twitter.com/AOC/status/1118989661555372033">taking a deeper look at the report</a>, whether within the U.S. government, as citizens, or as data scientists.</p>
-<p>Rather than disect the report and its political implications, I’m going to use open-source tools to extract the text from the report.
-I’m also going to take advantage of the opportunity to use a new R package I’ve been wanting to try, <span class="pkg">ggpage</span> by <a href="https://emilhvitfeldt.github.io/ggpage/">Emil Hvitfeldt</a>.</p>
-<div id="extracting-the-report-text-with-pdftools" class="section level2">
+<p>Rather than disect the report and its political implications, I’m going to use open-source tools to <a href="#pdftools">extract the text from the report</a>.
+I’m also going to take advantage of the opportunity to use a new R package I’ve been wanting to try, <span class="pkg">ggpage</span> by <a href="https://emilhvitfeldt.github.io/ggpage/">Emil Hvitfeldt</a> to <a href="#ggpage">visualize the report’s pages</a> and highlight the most-often referenced people in the report.</p>
+<div id="pdftools" class="section level2">
 <h2>Extracting the report text with pdftools</h2>
 <p>I used the <span class="pkg"><a href="https://github.com/ropensci/pdftools">pdftools</a></span> package by <a href="https://ropensci.org/">ROpenSci</a> to extract the text from the document, using the report posted by <a href="https://twitter.com/dataeditor">@dataeditor</a> of the Washington Post, <a href="https://www.documentcloud.org/documents/5955210-Redacted-Mueller-Report.html">available here</a>.
 Extracting the text was as simple as downloading the PDF and running <code>pdftools::pdf_text()</code>.
@@ -45,8 +45,8 @@ mueller_report &lt;- tibble(
 write_csv(mueller_report, &quot;mueller_report.csv&quot;)</code></pre>
 <p>Grab the code and resulting data from <a href="https://github.com/gadenbuie/mueller-report">gadenbuie/mueller-report</a> on GitHub.</p>
 </div>
-<div id="visualizing-the-report-pages-with-ggpages" class="section level2">
-<h2>Visualizing the report pages with ggpages</h2>
+<div id="ggpage" class="section level2">
+<h2>Visualizing the report pages with ggpage</h2>
 <p>The LA Times published an widely-shared piece visualizing <a href="https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage">each of the pages of the Mueller report</a>, and Nathan Yau of <a href="https://flowingdata.com">Flowing Data</a> shows <a href="https://flowingdata.com/2019/04/18/redacted/">how to create this image</a> using <code>pdftools::pdf_convert()</code>.</p>
 <a href="wsj-redacted-mueller-report.jpg" data-featherlight="image">
 <div class="figure">

@@ -53,10 +53,10 @@ Only about [12% of the report is redacted][wsj-12pct-redacted], but 100% of it i
 
 There are many people interested in [taking a deeper look at the report](https://twitter.com/AOC/status/1118989661555372033), whether within the U.S. government, as citizens, or as data scientists.
 
-Rather than disect the report and its political implications, I'm going to use open-source tools to extract the text from the report.
-I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage].
+Rather than disect the report and its political implications, I'm going to use open-source tools to [extract the text from the report](#pdftools).
+I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage] to [visualize the report's pages](#ggpage) and highlight the most-often referenced people in the report.
 
-## Extracting the report text with pdftools
+## Extracting the report text with pdftools {#pdftools}
 
 I used the [[pdftools]]{.pkg} package by [ROpenSci] to extract the text from the document, using the report posted by [&commat;dataeditor][dataeditor] of the Washington Post, [available here][pdf-source].
 Extracting the text was as simple as downloading the PDF and running `pdftools::pdf_text()`.
@@ -84,7 +84,7 @@ write_csv(mueller_report, "mueller_report.csv")
 
 Grab the code and resulting data from [gadenbuie/mueller-report][github-mueller-report] on GitHub.
 
-## Visualizing the report pages with ggpages
+## Visualizing the report pages with ggpage {#ggpage}
 
 The LA Times published an widely-shared piece visualizing [each of the pages of the Mueller report][latimes-all-pages], and Nathan Yau of [Flowing Data](https://flowingdata.com) shows [how to create this image](https://flowingdata.com/2019/04/18/redacted/) using `pdftools::pdf_convert()`.
 
