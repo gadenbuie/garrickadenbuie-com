@@ -1,0 +1,192 @@
+---
+title: The Redacted, Text-Extracted Mueller Report
+author: Garrick Aden-Buie
+description: Visualizing extracted text from the Redacted Mueller Report using ggpage.
+twitterImage: "/blog/2019/2019-04-18-the-redacted-text-extracted-mueller-report_files/figure-html/mueller-ggpage-1.png"
+date: '2019-04-18'
+slug: redacted-text-extracted-mueller-report
+categories:
+  - Blog
+tags:
+  - R
+  - pdftools
+  - ggpage
+  - Visualization
+---
+
+[latimes-all-pages]: https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage
+[report-released]: https://www.npr.org/2019/04/18/708850903/read-the-full-mueller-report-with-redactions
+[github-mueller-report]: https://github.com/gadenbuie/mueller-report
+[pdftools]: https://github.com/ropensci/pdftools
+[ropensci]: https://ropensci.org/
+[pdf-source]: https://www.documentcloud.org/documents/5955210-Redacted-Mueller-Report.html
+[dataeditor]: https://twitter.com/dataeditor
+[wsj-12pct-redacted]: https://www.wsj.com/livecoverage/mueller-report-release-latest-news/card/1555613011
+[ggpage]: https://emilhvitfeldt.github.io/ggpage/
+[ggplot2]: https://ggplot2.tidyverse.org
+[ggthemes]: https://jrnold.github.io/ggthemes/index.html
+[stupid-watergate]: https://www.youtube.com/watch?v=FVFdsl29s_Q
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, cache = TRUE)
+
+lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+  if (preview) {
+    glue::glue(
+      '<a href="{url}" data-featherlight="image">
+      <div class="figure">
+      <img src="{url}" alt="{alt}">
+      <p class="caption">{caption}</p>
+      </div>
+      </a>
+      '
+    )
+  } else {
+    if (alt == "") alt <- "static image of the plot"
+    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+  }
+}
+```
+
+Earlier today, the redacted Mueller report was [released to the public][report-released].
+Only about [12% of the report is redacted][wsj-12pct-redacted], but 100% of it is inside what's essentially a scanned PDF.
+
+There are many people interested in [taking a deeper look at the report](https://twitter.com/AOC/status/1118989661555372033), whether within the U.S. government, as citizens, or as data scientists.
+
+Rather than disect the report and its political implications, I'm going to use open-source tools to extract the text from the report.
+I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage].
+
+## Extracting the report text with pdftools
+
+I used the [[pdftools]]{.pkg} package by [ROpenSci] to extract the text from the document, using the report posted by [&commat;dataeditor][dataeditor] of the Washington Post, [available here][pdf-source].
+Extracting the text was as simple as downloading the PDF and running `pdftools::pdf_text()`.
+I added page and line numbers to the extracted text and stored the result as a CSV that you can download from the [GitHub repository][github-mueller-report].
+
+```r
+library(tidyverse)
+library(pdftools)
+
+# Download report from link above
+mueller_report_txt <- pdf_text("Redacted-Mueller-Report.pdf")
+
+mueller_report <- tibble(
+  page = 1:length(mueller_report_txt),
+  text = mueller_report_txt
+) %>% 
+  separate_rows(text, sep = "\n") %>% 
+  group_by(page) %>% 
+  mutate(line = row_number()) %>% 
+  ungroup() %>% 
+  select(page, line, text)
+
+write_csv(mueller_report, "mueller_report.csv")
+```
+
+Grab the code and resulting data from [gadenbuie/mueller-report][github-mueller-report] on GitHub.
+
+## Visualizing the report pages with ggpages
+
+The LA Times published an widely-shared piece visualizing [each of the pages of the Mueller report][latimes-all-pages], and Nathan Yau of [Flowing Data](https://flowingdata.com) shows [how to create this image](https://flowingdata.com/2019/04/18/redacted/) using `pdftools::pdf_convert()`.
+
+`r lightbox_img("wsj-redacted-mueller-report.jpg", caption = "Source: <a href='https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage'>LA Times</a>")`
+
+Recently, Emil Hvitfeldt released [[ggpage]]{.pkg}, a package that lets you create a page-layout visualization using [[ggplot2]]{.pkg}.
+While the package uses the text content of the document only --- so the visualized text layout doesn't completely match the layout of the original document --- it does allow you to highlight text elements, like mentions of any of the recurring cast of characters in [Stupid Watergate][stupid-watergate].
+
+The first step is to load the text version of the Mueller report.
+You can see from the first few lines of the data that the OCR really struggled with the header that appears at the top of each page and has been crossed out with a single line.
+(The redacted text is less confusing to the OCR because it's rendered in solid black and generally results in blank space.)
+
+```{r load, warning=FALSE}
+library(tidyverse)
+library(ggpage)
+
+mueller_report_csv <- "https://raw.githubusercontent.com/gadenbuie/mueller-report/ab74012b0532ffa34f3a45196d2b28004e11b9c2/mueller_report.csv"
+
+mueller_report <- read_csv(mueller_report_csv)
+
+mueller_report
+```
+
+The core of the next step is to pass the `mueller_report` to `ggpage::ggpage_build()`.
+Before doing that, though, I pad each page to make sure they have the same number of lines.
+The `ggpage_build()` function tokenizes the text into individual `word`s, so I then use `str_detect()` to find mentions of the key players.
+
+```{r ggpage_build}
+mueller_pages <- 
+  mueller_report %>% 
+  # pad pages with fewer lines than expected
+  complete(
+    page, 
+    line = 1:max(mueller_report$line),
+    fill = list(text = "")
+  ) %>% 
+  # Pre-process for {ggpage}
+  ggpage_build(
+    ncol = 30, 
+    bycol = FALSE, 
+    page.col = "page", 
+    wtl = FALSE, 
+    x_space_pages = 10,
+    y_space_pages = 100
+  ) %>% 
+  mutate(
+    color = case_when(
+      str_detect(word, "trump|president") ~ "Trump",
+      str_detect(word, "russia")     ~ "Russia",
+      str_detect(word, "cohen")      ~ "Cohen",
+      str_detect(word, "co(m|rn)ey") ~ "Comey",
+      str_detect(word, "flynn")      ~ "Flynn",
+      str_detect(word, "manafort")   ~ "Manafort",
+      str_detect(word, "sessions")   ~ "Sessions",
+      str_detect(word, "mcgahn")     ~ "McGahn",
+      TRUE ~ "normal"
+    ),
+    color = factor(color, c(
+      "Trump", "Russia", "Cohen", "Comey",
+      "Flynn", "Manafort", "Sessions", "McGahn", "normal"
+    ))
+  )
+
+mueller_pages
+```
+
+The following bit of code sets up the color palette, which is derived from the Libre Office Calc theme provided by [[ggthemes]]{.pkg}.
+
+```{r plot-colors}
+# manually assigned colors from ggthemes::pal_calc()
+colors <- rep("", length(levels(mueller_pages$color)))
+names(colors) <- levels(mueller_pages$color)
+colors["Trump"]    <- "#FF4023"
+colors["Russia"]   <- "#004983"
+colors["Cohen"]    <- "#FF922E"
+colors["Comey"]    <- "#559B30"
+colors["Flynn"]    <- "#4D276D"
+colors["Manafort"] <- "#7BCAFD"
+colors["Sessions"] <- "#7F1327"
+colors["McGahn"]   <- "#FFD040"
+colors["normal"]   <- "#d0d0d0"
+```
+
+Finally, `ggpage_plot()` from [ggpage]{.pkg} creates the [ggplot2]{.pkg} page layout, and adding the fill aesthetic using the manual color scale defined above adds color highlights for mentions of Trump, Russia, and others.
+
+```{r mueller-ggpage, fig.show = "hide", fig.width=18, fig.height=11, dependson="ggpage_build"}
+ggpage_plot(mueller_pages) +
+  aes(fill = color) +
+  scale_fill_manual(
+    values = colors, 
+    breaks = setdiff(names(colors), "normal")
+  ) +
+  labs(fill = NULL, caption = "@grrrck") +
+  guides(fill = guide_legend(nrow = 1)) +
+  theme(legend.position = "bottom")
+```
+
+
+`r lightbox_img(knitr::fig_chunk("mueller-ggpage", "png"))`
+
+_Click the image to expand._
+
+***
+
+If you use the data for an interesting visualization or analysis, please [let me know on Twitter](https://twitter.com/grrrck)!
