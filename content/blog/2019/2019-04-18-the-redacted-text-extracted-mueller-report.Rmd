@@ -54,7 +54,7 @@ Only about [12% of the report is redacted][wsj-12pct-redacted], but 100% of it i
 There are many people interested in [taking a deeper look at the report](https://twitter.com/AOC/status/1118989661555372033), whether within the U.S. government, as citizens, or as data scientists.
 
 Rather than disect the report and its political implications, I'm going to use open-source tools to [extract the text from the report](#pdftools).
-I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage] to [visualize the report's pages](#ggpage) and highlight the most-often referenced people in the report.
+I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage] to [visualize the report's pages](#ggpage-plot) and highlight the most-often referenced people in the report.
 
 ## Extracting the report text with pdftools {#pdftools}
 
@@ -182,6 +182,7 @@ ggpage_plot(mueller_pages) +
   theme(legend.position = "bottom")
 ```
 
+<a name="ggpage-plot"></a>
 
 `r lightbox_img(knitr::fig_chunk("mueller-ggpage", "png"))`
 
