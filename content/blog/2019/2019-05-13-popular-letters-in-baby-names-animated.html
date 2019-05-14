@@ -1,0 +1,417 @@
+---
+title: Popular Letters in Baby Names, Animated
+author: Garrick Aden-Buie
+date: '2019-05-17'
+slug: popular-letters-in-babynames
+categories:
+  - Blog
+tags:
+  - R
+  - gganimate
+  - ggplot2
+  - Visualization
+  - Baby Names
+description: "An animation of letter popularity in baby names"
+twitterImage: "/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-animated-popular-letter-names-1.gif"
+rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmd
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+<!-- Links -->
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<p>Earlier this week, a tweet from Kieran Healy caught my attention with a neat <a href="https://twitter.com/kjhealy/status/1127951257392623616">animation of the popularity of the final letters</a> of baby names.</p>
+{{% twitter "1127951257392623616" %}}
+<p>I’m also a big fan of <span class="pkg"><a href="https://gganimate.com/">gganimate</a></span> - check out my first project with <span class="pkg">gganimate</span>, a collection of <a href="https://github.com/gadenbuie/tidyexplain">join animations called <em>tidyexplain</em></a>.
+And the <span class="pkg"><a href="https://github.com/hadley/babynames">babynames</a></span> package by <a href="https://hadley.nz/">Hadley Wickham</a> makes it pleasantly easy to work with the baby names data reported by the U.S. Social Security Administration.</p>
+<p>Kieran’s animations inspired several questions that I hope to answer (or at least visualize) in this post:</p>
+<ol style="list-style-type: decimal">
+<li><p>What about <em>any</em> letter within a baby’s name? I understand why first and last letters would be interesting, but how has the popularity of any letter used in a baby’s name changed over time?</p></li>
+<li><p>Can we visualize both <em>male</em> and <em>female</em> names in the same animation without overloading the animation?</p></li>
+<li><p>While I love <span class="pkg">gganimate</span> and animated plots, are static plots more effective at displaying the same information?</p></li>
+</ol>
+<p>Rather than answer these questions definitively or scientifically, I’ve stuck with the fun parts and made a few visualizations.
+I’ll let you decide how effective they are.
+(And feel free to let me know on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a>.)</p>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<p>To get started, I load the following packages, all installed from CRAN with <code>install.packages()</code>.</p>
+<pre class="r"><code>library(tidyverse)
+library(gganimate)
+library(babynames)</code></pre>
+<p>Next, I set up a base <span class="pkg">ggplot2</span> theme that I’ll use throughout.
+Note that you can also set the <code>ggplot2</code> theme globally with <code>theme_set()</code>, but I’m not here for complicated reasons related to my use of <a href="https://yihui.name/knitr/demo/cache/">knitr caching</a> to speed up intermediate rendering.</p>
+<p>I also used the <span class="pkg"><a href="https://cran.r-project.org/web/packages/showtext/">showtext</a></span> and <span class="pkg"><a href="https://cran.r-project.org/web/packages/sysfonts/">sysfonts</a></span> packages.
+These two sister packages are my go-to packages for reliably being able to use <a href="https://fonts.google.com/">Google Fonts</a> with <span class="pkg">ggplot2</span> on any system.</p>
+<pre class="r"><code>showtext::showtext_auto()
+sysfonts::font_add_google(&quot;PT Sans&quot;)
+sysfonts::font_add_google(&quot;PT Sans Narrow&quot;)
+base_theme &lt;- 
+  theme_minimal(base_size = 16, base_family = &quot;PT Sans&quot;) +
+  theme(
+    legend.position      = c(0.5, 0.9),
+    legend.text          = element_text(margin = margin(r = 10)),
+    legend.background    = element_rect(fill = &quot;white&quot;, color = &quot;white&quot;),
+    legend.direction     = &quot;horizontal&quot;,
+    legend.justification = &quot;center&quot;,
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    axis.text     = element_text(family = &quot;PT Sans Narrow&quot;),
+    axis.text.x   = element_text(vjust = 0.9, face = &quot;bold&quot;),
+    axis.title.y  = element_text(margin = margin(r = 5)),
+    plot.subtitle = element_text(
+      size = rel(1.5), hjust = 0.5, margin = margin(t = 10)
+    ),
+    plot.caption  = element_text(color = &quot;grey40&quot;, lineheight = 1.1)
+  ) 
+
+sex_colors &lt;- c(&quot;Male&quot; = &quot;#00589A&quot;, &quot;Female&quot; = &quot;#EB1455&quot;)
+caption_text &lt;- paste(
+  &quot;Source: babynames, U.S. Social Security Administration&quot;,
+  &quot;@grrrck&quot;, &quot;garrickadenbuie.com&quot;,
+  sep = &quot; | &quot;
+)</code></pre>
+</div>
+<div id="how-popular-are-letters-used-anywhere-in-baby-names" class="section level2">
+<h2>How Popular are Letters Used Anywhere in Baby Names</h2>
+<div id="letters-in-baby-names" class="section level3">
+<h3>Letters in Baby Names</h3>
+<p>To answer the first question, I need to first establish what letters are used in a name, regardless of the letter’s position in the name, and not counting duplicates.
+Rather than repeatedly calculate this information for every year, sex, and name pair in <code>babynames</code>, I used <code>distinct()</code> from <span class="pkg">dplyr</span> to obtain the list of unique names.</p>
+<pre class="r"><code>babynames_and_letters &lt;- 
+  babynames %&gt;% 
+  distinct(name) %&gt;% 
+  mutate(letter = strsplit(tolower(name), character())) %&gt;% 
+  # strsplit() returns a list for each name,
+  # so &#39;letter&#39; is a list-column that can be converted to a
+  # normal column with unnest()
+  unnest(letter) %&gt;% 
+  # count each letter once
+  distinct()
+
+babynames_and_letters %&gt;% 
+  filter(name == &quot;Garrick&quot;)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   name    letter
+##   &lt;chr&gt;   &lt;chr&gt; 
+## 1 Garrick g     
+## 2 Garrick a     
+## 3 Garrick r     
+## 4 Garrick i     
+## 5 Garrick c     
+## 6 Garrick k</code></pre>
+<p>Then I joined <code>babynames</code> with the <code>babynames_and_letters</code> table to get the sum of the proportions of the population (by year and sex) that have each letter in their name.</p>
+<pre class="r"><code>babynames_containing &lt;-
+  left_join(babynames, babynames_and_letters, by = &quot;name&quot;) %&gt;% 
+  group_by(letter, year, sex) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;% 
+  ungroup() %&gt;% 
+  filter(year &gt;= 1900) %&gt;%
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) 
+
+babynames_containing %&gt;% 
+  filter(letter == &quot;g&quot;) %&gt;% 
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   letter  year sex      prop
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1 g       1900 Female 0.0800
+## 2 g       1900 Male   0.0632
+## 3 g       1901 Female 0.0827
+## 4 g       1901 Male   0.0615
+## 5 g       1902 Female 0.0831
+## 6 g       1902 Male   0.0618</code></pre>
+</div>
+<div id="plot-and-animate" class="section level3">
+<h3>Plot and Animate</h3>
+<p>At this point, my typical <span class="pkg">gganimate</span> workflow is to first create a static <span class="pkg">ggplot2</span> plot as a sanity check for the animation.
+If the static plot works with <code>facet_wrap(~ state_column)</code>, then using <code>transition_state(state_column)</code> is likely to work well (although you may need to filter the data to preview only a few states).
+In this case, I’m using <code>year</code> as the state column.</p>
+<p>I generally try to structure my <span class="pkg">ggplot2</span> code in a consistent way (future blog post?) so I prefer having the <span class="pkg">gganimate</span> specific parts at the end.
+I also directly called <code>gganimate::animate()</code> so that I could control specific parameters of the output, namely the number of frames and the size of the image.
+The default number of frames is 100 but I’m visualizing 117 years and <span class="pkg">gganimate</span> will complain (i.e. throw an error) if there aren’t enough frames to cover the number of states.</p>
+<pre class="r"><code>ga_pop_letter &lt;- 
+  ggplot(babynames_containing) +
+  aes(letter, prop, fill = sex) +
+  geom_col(position = &quot;identity&quot;, alpha = 0.6) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 10), 
+    expand = c(0, 0)
+  ) +
+  scale_fill_manual(values = sex_colors) +
+  labs(
+    x        = NULL,
+    y        = &quot;Percent of Population&quot;,
+    fill     = NULL,
+    title    = &quot;How many babies have the letter ____ in their name?&quot;,
+    subtitle = &quot;{closest_state}&quot;,
+    caption  = caption_text
+  ) +
+  base_theme +
+  ease_aes(&quot;linear&quot;) +
+  transition_states(
+    year, transition_length = 1, state_length = 0, wrap = FALSE
+  )
+
+ga_pop_letter_animated &lt;- animate(
+  ga_pop_letter, 
+  nframes = 117*2+10, 
+  end_pause = 10,
+  width = 1024, 
+  height = 512
+)</code></pre>
+<p>The resulting animation, below, shows the proportion of babies given a name containing (at least one of) each letter of the alphabet since 1900.</p>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+</div>
+</div>
+<div id="first-and-last-letters-of-baby-names" class="section level2">
+<h2>First and Last Letters of Baby Names</h2>
+<p>To extract the first and last letter of each name, I wrote two small functions, <code>first_letter()</code> and <code>last_letter()</code> that use <code>substring()</code> to pull out the first and last letter of a string.
+These are reasonably fast when applied to all of the names using <code>map_chr()</code> from <span class="pkg">purrr</span> within <code>mutate()</code> to add new columns <code>first_letter</code> and <code>last_letter</code>.</p>
+<pre class="r"><code>first_letter &lt;- function(x) substring(x, 1, 1)
+last_letter  &lt;- function(x) substring(x, nchar(x), nchar(x))
+
+babynames_first_last &lt;- 
+  babynames %&gt;% 
+  mutate(
+    first_letter = map_chr(name, first_letter),
+    last_letter  = map_chr(name, last_letter),
+  ) %&gt;% 
+  mutate_at(vars(contains(&quot;letter&quot;)), tolower)
+
+set.seed(42)
+babynames_first_last %&gt;% sample_n(6)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##    year sex   name          n       prop first_letter last_letter
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      
+## 1  2013 F     Emmie       230 0.000120   e            e          
+## 2  2014 F     Milany       10 0.00000512 m            y          
+## 3  1958 F     Lore         48 0.0000232  l            e          
+## 4  2008 F     Brayley      11 0.00000529 b            y          
+## 5  1996 F     Deshawnna     6 0.00000313 d            a          
+## 6  1986 M     Ziyad         9 0.00000469 z            d</code></pre>
+<div id="animated" class="section level3">
+<h3>Animated</h3>
+<p>First, let’s look at the animated version of my remix of Kieran’s plots.
+You can still see the change in the use of <strong>N</strong> as a final letter in the names given to baby boys, as he described, but you also see the changes in female names as well.</p>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-animation-1.gif" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-animation-1.gif" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<pre class="r"><code>gb_last &lt;-
+  babynames_first_last %&gt;% 
+  filter(year &gt;= 1900) %&gt;% 
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
+  group_by(year, sex, last_letter) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;%
+  ggplot() +
+  aes(last_letter, prop, fill = sex) +
+  geom_col(position = &quot;identity&quot;, alpha = 0.6) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 10), 
+    expand = c(0, 0)
+  ) +
+  scale_fill_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = &quot;Percent of Population&quot;,
+    fill = NULL,
+    title = &quot;How many baby names end with the letter ____?&quot;,
+    subtitle = &quot;{closest_state}&quot;,
+    caption = caption_text
+  ) +
+  base_theme +
+  theme(legend.position = c(0.8, 0.9)) +
+  ease_aes(&quot;linear&quot;) +
+  transition_states(
+    year, 
+    transition_length = 1, 
+    state_length = 0, wrap = FALSE
+  )
+
+gb_last_animated &lt;- animate(
+  gb_last, 
+  nframes = 117*2+10, 
+  end_pause = 10,
+  width = 1024, height = 512 
+)</code></pre>
+<p>Then I also created a similar visualization for the starting letters of baby’s names.</p>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-animation-1.gif" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-animation-1.gif" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<pre class="r"><code>gb_first &lt;-
+  babynames_first_last %&gt;% 
+  filter(year &gt;= 1900) %&gt;% 
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
+  group_by(year, sex, first_letter) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;%
+  ggplot() +
+  aes(first_letter, prop, fill = sex) +
+  geom_col(position = &quot;identity&quot;, alpha = 0.6) +
+  scale_y_continuous(
+    labels = scales::percent_format(accuracy = 10), 
+    expand = c(0, 0)
+  ) +
+  scale_fill_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = &quot;Percent of Population&quot;,
+    fill = NULL,
+    title = &quot;How many baby names start with the letter ____?&quot;,
+    subtitle = &quot;{closest_state}&quot;,
+    caption = caption_text
+  ) +
+  base_theme +
+  theme(legend.position = c(0.8, 0.9)) +
+  ease_aes(&quot;linear&quot;) +
+  transition_states(
+    year, 
+    transition_length = 1, 
+    state_length = 0, 
+    wrap = FALSE
+  )
+
+gb_first_animated &lt;- animate(
+  gb_first, 
+  nframes = 117*2+10, 
+  end_pause = 10,
+  width = 1024, height = 512
+)</code></pre>
+</div>
+<div id="static" class="section level3">
+<h3>Static</h3>
+<p>I’ll admit, I think the animated plots are cool,
+but they’re also make it hard to reason about overall trends.
+You have to watch the animation loop over and over, trying to watch one letter or one sex specifically.
+I feel like I’m seeing the movement but missing the picture.</p>
+<p>I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped <span class="pkg">gganimate</span>’s <code>transition_state(year)</code> for <span class="pkg">ggplot2</span>’s <code>facet_wrap(~ letter)</code>.</p>
+<p>I somewhat like these plots more than their animated versions.
+I get the sense that I’m seeing a fuller picture (or more easily compared picture) of the overall trends in starting and ending letters of baby names.</p>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<pre class="r"><code>babynames_first_last %&gt;% 
+  filter(year &gt;= 1900) %&gt;% 
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
+  group_by(year, sex, first_letter) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;%
+  ungroup() %&gt;% 
+  mutate(first_letter = toupper(first_letter)) %&gt;% 
+  ggplot() +
+  aes(year, prop) +
+  geom_text(
+    data = tibble(
+      first_letter = LETTERS, 
+      x = 1900+117/2, 
+      prop = 0
+    ),
+    aes(label = first_letter, x = x),
+    size = rel(15),
+    vjust = -0.2,
+    color = &quot;grey75&quot;,
+    family = &quot;PT Sans&quot;
+  ) +
+  geom_line(aes(color = sex)) +
+  facet_wrap(~ first_letter) +
+  scale_y_continuous(
+    labels = scales::percent_format(5), 
+    breaks = c(0, 0.2)
+  ) +
+  scale_x_continuous(breaks = c(1900, 2000)) +
+  scale_color_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = &quot;Proportion of Population&quot;,
+    title = &quot;How many babies have names starting with the letter ____?&quot;,
+    caption = caption_text,
+    color = NULL
+  ) +
+  base_theme +
+  theme(
+    strip.text = element_blank(),
+    axis.text.x = element_text(face = &quot;plain&quot;),
+    legend.position = c(0.7, 0.025),
+    panel.grid.minor.y = element_blank()
+  )</code></pre>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<pre class="r"><code>babynames_first_last %&gt;% 
+  filter(year &gt;= 1900) %&gt;% 
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
+  group_by(year, sex, last_letter) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;%
+  ungroup() %&gt;% 
+  mutate(last_letter = toupper(last_letter)) %&gt;% 
+  ggplot() +
+  aes(year, prop) +
+  geom_text(
+    data = tibble(
+      last_letter = LETTERS, 
+      x = 1900+117/2, 
+      prop = 0
+    ),
+    aes(label = last_letter, x = x),
+    size = rel(15),
+    vjust = -0.12,
+    color = &quot;grey75&quot;,
+    family = &quot;PT Sans&quot;
+  ) +
+  geom_line(aes(color = sex)) +
+  facet_wrap(~ last_letter) +
+  scale_y_continuous(
+    labels = scales::percent_format(5), 
+    breaks = c(0, 0.3)
+  ) +
+  scale_x_continuous(breaks = c(1900, 2000)) +
+  scale_color_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = &quot;Proportion of Population&quot;,
+    title = &quot;How many babies have names ending with the letter ____?&quot;,
+    caption = caption_text,
+    color = NULL
+  ) +
+  base_theme +
+  theme(
+    strip.text = element_blank(),
+    axis.text.x = element_text(face = &quot;plain&quot;),
+    legend.position = c(0.7, 0.025),
+    panel.grid.minor.y = element_blank()
+  )</code></pre>
+<hr />
+<p>If you made it this far, thanks for reading!
+I’d love to hear your opinion on these plots, or see your own versions – animated or not!
+Just drop me a line on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a>.</p>
+</div>
+</div>
