@@ -65,6 +65,7 @@ rssLimit = 10
     
 [params]
     description = "Data Scientist. #rstats. Musician. Always learning something new."
+    author = "Garrick Aden-Buie"
     EnableEmoji = true
     contactHeader = "Links"
     n_posts_front = 5

@@ -28,7 +28,7 @@
 			<meta property="description" content="{{ .Description }}">
 			<meta property="og:description" content="{{ .Description }}">
 			{{ else }}
-			{{ $defaultDescription := printf "Post by %s on %s" .Params.author (.Date.Format "Monday, January 2nd, 2006")}}
+			{{ $defaultDescription := printf "Post by %s on %s" (.Params.author | default .Site.Params.author) (.Date.Format "Monday, January 2, 2006")}} 
 			<meta property="description" content="{{ $defaultDescription }}">
 			<meta property="og:description" content="{{ $defaultDescription }}">
 			{{ end }}
