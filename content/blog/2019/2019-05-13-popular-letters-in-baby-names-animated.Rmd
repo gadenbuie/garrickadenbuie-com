@@ -279,6 +279,8 @@ You can still see the change in the use of **N** as a final letter in the names 
 
 `r lightbox_img(knitr::fig_chunk("babynames-last-animation", "gif"))`
 
+Here's the code I used to produce the plot above.
+
 ```{r echo=TRUE}
 gb_last <-
   babynames_first_last %>% 
@@ -327,6 +329,8 @@ gb_last_animated
 Then I also created a similar visualization for the starting letters of baby's names.
 
 `r lightbox_img(knitr::fig_chunk("babynames-first-animation", "gif"))`
+
+And here's the code to create the above animation.
 
 ```{r echo=TRUE}
 gb_first <-
@@ -386,8 +390,59 @@ I thought it would be interesting to compare the animated plots with line charts
 I somewhat like these plots more than their animated versions.
 I get the sense that I'm seeing a fuller picture (or more easily compared picture) of the overall trends in starting and ending letters of baby names.
 
+`r lightbox_img(knitr::fig_chunk("babynames-last-static", "png"))`
+
 `r lightbox_img(knitr::fig_chunk("babynames-first-static", "png"))`
 
+Here's the code to produce the static image of the trends in the last letter of baby names.
+
+```{r babynames-last-static, echo=TRUE, fig.width=10, fig.height=5, dependson="theme", fig.show="hide"}
+babynames_first_last %>% 
+  filter(year >= 1900) %>% 
+  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
+  group_by(year, sex, last_letter) %>% 
+  summarize(prop = sum(prop)) %>%
+  ungroup() %>% 
+  mutate(last_letter = toupper(last_letter)) %>% 
+  ggplot() +
+  aes(year, prop) +
+  geom_text(
+    data = tibble(
+      last_letter = LETTERS, 
+      x = 1900+117/2, 
+      prop = 0
+    ),
+    aes(label = last_letter, x = x),
+    size = rel(15),
+    vjust = -0.12,
+    color = "grey75",
+    family = "PT Sans"
+  ) +
+  geom_line(aes(color = sex)) +
+  facet_wrap(~ last_letter) +
+  scale_y_continuous(
+    labels = scales::percent_format(5), 
+    breaks = c(0, 0.3)
+  ) +
+  scale_x_continuous(breaks = c(1900, 2000)) +
+  scale_color_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = "Proportion of Population",
+    title = "How many babies have names ending with the letter ____?",
+    caption = caption_text,
+    color = NULL
+  ) +
+  base_theme +
+  theme(
+    strip.text = element_blank(),
+    axis.text.x = element_text(face = "plain"),
+    legend.position = c(0.7, 0.025),
+    panel.grid.minor.y = element_blank()
+  )
+```
+
+And here is the code to produce the plot of trends in the first letter of baby names.
 
 ```{r babynames-first-static, echo=TRUE, fig.width=10, fig.height=5, dependson="theme", fig.show="hide"}
 babynames_first_last %>% 
@@ -435,55 +490,6 @@ babynames_first_last %>%
   )
 ```
 
-
-`r lightbox_img(knitr::fig_chunk("babynames-last-static", "png"))`
-
-
-```{r babynames-last-static, echo=TRUE, fig.width=10, fig.height=5, dependson="theme", fig.show="hide"}
-babynames_first_last %>% 
-  filter(year >= 1900) %>% 
-  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
-  group_by(year, sex, last_letter) %>% 
-  summarize(prop = sum(prop)) %>%
-  ungroup() %>% 
-  mutate(last_letter = toupper(last_letter)) %>% 
-  ggplot() +
-  aes(year, prop) +
-  geom_text(
-    data = tibble(
-      last_letter = LETTERS, 
-      x = 1900+117/2, 
-      prop = 0
-    ),
-    aes(label = last_letter, x = x),
-    size = rel(15),
-    vjust = -0.12,
-    color = "grey75",
-    family = "PT Sans"
-  ) +
-  geom_line(aes(color = sex)) +
-  facet_wrap(~ last_letter) +
-  scale_y_continuous(
-    labels = scales::percent_format(5), 
-    breaks = c(0, 0.3)
-  ) +
-  scale_x_continuous(breaks = c(1900, 2000)) +
-  scale_color_manual(values = sex_colors) +
-  labs(
-    x = NULL,
-    y = "Proportion of Population",
-    title = "How many babies have names ending with the letter ____?",
-    caption = caption_text,
-    color = NULL
-  ) +
-  base_theme +
-  theme(
-    strip.text = element_blank(),
-    axis.text.x = element_text(face = "plain"),
-    legend.position = c(0.7, 0.025),
-    panel.grid.minor.y = element_blank()
-  )
-```
 
 ***
 
