@@ -216,6 +216,7 @@ You can still see the change in the use of <strong>N</strong> as a final letter 
 </p>
 </div>
 <p></a></p>
+<p>Here’s the code I used to produce the plot above.</p>
 <pre class="r"><code>gb_last &lt;-
   babynames_first_last %&gt;% 
   filter(year &gt;= 1900) %&gt;% 
@@ -261,6 +262,7 @@ gb_last_animated &lt;- animate(
 </p>
 </div>
 <p></a></p>
+<p>And here’s the code to create the above animation.</p>
 <pre class="r"><code>gb_first &lt;-
   babynames_first_last %&gt;% 
   filter(year &gt;= 1900) %&gt;% 
@@ -309,56 +311,6 @@ I feel like I’m seeing the movement but missing the picture.</p>
 <p>I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped <span class="pkg">gganimate</span>’s <code>transition_state(year)</code> for <span class="pkg">ggplot2</span>’s <code>facet_wrap(~ letter)</code>.</p>
 <p>I somewhat like these plots more than their animated versions.
 I get the sense that I’m seeing a fuller picture (or more easily compared picture) of the overall trends in starting and ending letters of baby names.</p>
-<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" data-featherlight="image">
-<div class="figure">
-<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" alt="">
-<p class="caption">
-</p>
-</div>
-<p></a></p>
-<pre class="r"><code>babynames_first_last %&gt;% 
-  filter(year &gt;= 1900) %&gt;% 
-  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
-  group_by(year, sex, first_letter) %&gt;% 
-  summarize(prop = sum(prop)) %&gt;%
-  ungroup() %&gt;% 
-  mutate(first_letter = toupper(first_letter)) %&gt;% 
-  ggplot() +
-  aes(year, prop) +
-  geom_text(
-    data = tibble(
-      first_letter = LETTERS, 
-      x = 1900+117/2, 
-      prop = 0
-    ),
-    aes(label = first_letter, x = x),
-    size = rel(15),
-    vjust = -0.2,
-    color = &quot;grey75&quot;,
-    family = &quot;PT Sans&quot;
-  ) +
-  geom_line(aes(color = sex)) +
-  facet_wrap(~ first_letter) +
-  scale_y_continuous(
-    labels = scales::percent_format(5), 
-    breaks = c(0, 0.2)
-  ) +
-  scale_x_continuous(breaks = c(1900, 2000)) +
-  scale_color_manual(values = sex_colors) +
-  labs(
-    x = NULL,
-    y = &quot;Proportion of Population&quot;,
-    title = &quot;How many babies have names starting with the letter ____?&quot;,
-    caption = caption_text,
-    color = NULL
-  ) +
-  base_theme +
-  theme(
-    strip.text = element_blank(),
-    axis.text.x = element_text(face = &quot;plain&quot;),
-    legend.position = c(0.7, 0.025),
-    panel.grid.minor.y = element_blank()
-  )</code></pre>
 <a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" alt="">
@@ -366,6 +318,14 @@ I get the sense that I’m seeing a fuller picture (or more easily compared pict
 </p>
 </div>
 <p></a></p>
+<a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-first-static-1.png" alt="">
+<p class="caption">
+</p>
+</div>
+<p></a></p>
+<p>Here’s the code to produce the static image of the trends in the last letter of baby names.</p>
 <pre class="r"><code>babynames_first_last %&gt;% 
   filter(year &gt;= 1900) %&gt;% 
   mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
@@ -399,6 +359,50 @@ I get the sense that I’m seeing a fuller picture (or more easily compared pict
     x = NULL,
     y = &quot;Proportion of Population&quot;,
     title = &quot;How many babies have names ending with the letter ____?&quot;,
+    caption = caption_text,
+    color = NULL
+  ) +
+  base_theme +
+  theme(
+    strip.text = element_blank(),
+    axis.text.x = element_text(face = &quot;plain&quot;),
+    legend.position = c(0.7, 0.025),
+    panel.grid.minor.y = element_blank()
+  )</code></pre>
+<p>And here is the code to produce the plot of trends in the first letter of baby names.</p>
+<pre class="r"><code>babynames_first_last %&gt;% 
+  filter(year &gt;= 1900) %&gt;% 
+  mutate(sex = recode(sex, M = &quot;Male&quot;, F = &quot;Female&quot;)) %&gt;% 
+  group_by(year, sex, first_letter) %&gt;% 
+  summarize(prop = sum(prop)) %&gt;%
+  ungroup() %&gt;% 
+  mutate(first_letter = toupper(first_letter)) %&gt;% 
+  ggplot() +
+  aes(year, prop) +
+  geom_text(
+    data = tibble(
+      first_letter = LETTERS, 
+      x = 1900+117/2, 
+      prop = 0
+    ),
+    aes(label = first_letter, x = x),
+    size = rel(15),
+    vjust = -0.2,
+    color = &quot;grey75&quot;,
+    family = &quot;PT Sans&quot;
+  ) +
+  geom_line(aes(color = sex)) +
+  facet_wrap(~ first_letter) +
+  scale_y_continuous(
+    labels = scales::percent_format(5), 
+    breaks = c(0, 0.2)
+  ) +
+  scale_x_continuous(breaks = c(1900, 2000)) +
+  scale_color_manual(values = sex_colors) +
+  labs(
+    x = NULL,
+    y = &quot;Proportion of Population&quot;,
+    title = &quot;How many babies have names starting with the letter ____?&quot;,
     caption = caption_text,
     color = NULL
   ) +
