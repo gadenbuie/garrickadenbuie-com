@@ -44,12 +44,12 @@ I’ll let you decide how effective they are.
 (And feel free to let me know on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a>.)</p>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
-<p>To get started, I load the following packages, all installed from CRAN with <code>install.packages()</code>.</p>
+<p>To get started, I loaded the following packages, all installed from CRAN with <code>install.packages()</code>.</p>
 <pre class="r"><code>library(tidyverse)
 library(gganimate)
 library(babynames)</code></pre>
 <p>Next, I set up a base <span class="pkg">ggplot2</span> theme that I’ll use throughout.
-Note that you can also set the <code>ggplot2</code> theme globally with <code>theme_set()</code>, but I’m not here for complicated reasons related to my use of <a href="https://yihui.name/knitr/demo/cache/">knitr caching</a> to speed up intermediate rendering.</p>
+Note that you can also set the <code>ggplot2</code> theme globally with <code>theme_set()</code>, but I’m not doing that here for complicated reasons related to my use of <a href="https://yihui.name/knitr/demo/cache/">knitr caching</a> for faster rendering between post drafts.</p>
 <p>I also used the <span class="pkg"><a href="https://cran.r-project.org/web/packages/showtext/">showtext</a></span> and <span class="pkg"><a href="https://cran.r-project.org/web/packages/sysfonts/">sysfonts</a></span> packages.
 These two sister packages are my go-to packages for reliably being able to use <a href="https://fonts.google.com/">Google Fonts</a> with <span class="pkg">ggplot2</span> on any system.</p>
 <pre class="r"><code>showtext::showtext_auto()
@@ -85,7 +85,7 @@ caption_text &lt;- paste(
 <h2>How Popular are Letters Used Anywhere in Baby Names</h2>
 <div id="letters-in-baby-names" class="section level3">
 <h3>Letters in Baby Names</h3>
-<p>To answer the first question, I need to first establish what letters are used in a name, regardless of the letter’s position in the name, and not counting duplicates.
+<p>To answer the first question, I needed to first establish what letters are used in a name, regardless of the letter’s position in the name, and not counting duplicates.
 Rather than repeatedly calculate this information for every year, sex, and name pair in <code>babynames</code>, I used <code>distinct()</code> from <span class="pkg">dplyr</span> to obtain the list of unique names.</p>
 <pre class="r"><code>babynames_and_letters &lt;- 
   babynames %&gt;% 
@@ -135,7 +135,7 @@ babynames_containing %&gt;%
 <h3>Plot and Animate</h3>
 <p>At this point, my typical <span class="pkg">gganimate</span> workflow is to first create a static <span class="pkg">ggplot2</span> plot as a sanity check for the animation.
 If the static plot works with <code>facet_wrap(~ state_column)</code>, then using <code>transition_state(state_column)</code> is likely to work well (although you may need to filter the data to preview only a few states).
-In this case, I’m using <code>year</code> as the state column.</p>
+In this case, I used <code>year</code> as the state column.</p>
 <p>I generally try to structure my <span class="pkg">ggplot2</span> code in a consistent way (future blog post?) so I prefer having the <span class="pkg">gganimate</span> specific parts at the end.
 I also directly called <code>gganimate::animate()</code> so that I could control specific parameters of the output, namely the number of frames and the size of the image.
 The default number of frames is 100 but I’m visualizing 117 years and <span class="pkg">gganimate</span> will complain (i.e. throw an error) if there aren’t enough frames to cover the number of states.</p>
@@ -227,7 +227,7 @@ You can still see the change in the use of <strong>N</strong> as a final letter 
   aes(last_letter, prop, fill = sex) +
   geom_col(position = &quot;identity&quot;, alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 10), 
+    labels = scales::percent_format(accuracy = 5), 
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -273,7 +273,7 @@ gb_last_animated &lt;- animate(
   aes(first_letter, prop, fill = sex) +
   geom_col(position = &quot;identity&quot;, alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 10), 
+    labels = scales::percent_format(accuracy = 5), 
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -305,12 +305,12 @@ gb_first_animated &lt;- animate(
 <div id="static" class="section level3">
 <h3>Static</h3>
 <p>I’ll admit, I think the animated plots are cool,
-but they’re also make it hard to reason about overall trends.
+but they also make it hard to reason about overall trends.
 You have to watch the animation loop over and over, trying to watch one letter or one sex specifically.
 I feel like I’m seeing the movement but missing the picture.</p>
 <p>I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped <span class="pkg">gganimate</span>’s <code>transition_state(year)</code> for <span class="pkg">ggplot2</span>’s <code>facet_wrap(~ letter)</code>.</p>
 <p>I somewhat like these plots more than their animated versions.
-I get the sense that I’m seeing a fuller picture (or more easily compared picture) of the overall trends in starting and ending letters of baby names.</p>
+I get the sense that I’m seeing a fuller picture (or more easy-to-compare picture) of the overall trends in starting and ending letters of baby names.</p>
 <a href="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-last-static-1.png" alt="">

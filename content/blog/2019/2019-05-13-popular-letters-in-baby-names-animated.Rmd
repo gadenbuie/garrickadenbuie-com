@@ -83,7 +83,7 @@ I'll let you decide how effective they are.
 
 ## Getting Started
 
-To get started, I load the following packages, all installed from CRAN with `install.packages()`.
+To get started, I loaded the following packages, all installed from CRAN with `install.packages()`.
 
 ```{r echo=TRUE}
 library(tidyverse)
@@ -92,7 +92,7 @@ library(babynames)
 ```
 
 Next, I set up a base [ggplot2]{.pkg} theme that I'll use throughout.
-Note that you can also set the `ggplot2` theme globally with `theme_set()`, but I'm not here for complicated reasons related to my use of [knitr caching](https://yihui.name/knitr/demo/cache/) to speed up intermediate rendering.
+Note that you can also set the `ggplot2` theme globally with `theme_set()`, but I'm not doing that here for complicated reasons related to my use of [knitr caching](https://yihui.name/knitr/demo/cache/) for faster rendering between post drafts.
 
 I also used the [[showtext]]{.pkg} and [[sysfonts]]{.pkg} packages.
 These two sister packages are my go-to packages for reliably being able to use [Google Fonts][google-fonts] with [ggplot2]{.pkg} on any system.
@@ -132,7 +132,7 @@ caption_text <- paste(
 
 ### Letters in Baby Names
 
-To answer the first question, I need to first establish what letters are used in a name, regardless of the letter's position in the name, and not counting duplicates.
+To answer the first question, I needed to first establish what letters are used in a name, regardless of the letter's position in the name, and not counting duplicates.
 Rather than repeatedly calculate this information for every year, sex, and name pair in `babynames`, I used `distinct()` from [dplyr]{.pkg} to obtain the list of unique names.
 
 ```{r babynames-and-letters, echo = TRUE}
@@ -171,7 +171,7 @@ babynames_containing %>%
 
 At this point, my typical [gganimate]{.pkg} workflow is to first create a static [ggplot2]{.pkg} plot as a sanity check for the animation.
 If the static plot works with `facet_wrap(~ state_column)`, then using `transition_state(state_column)` is likely to work well (although you may need to filter the data to preview only a few states).
-In this case, I'm using `year` as the state column.
+In this case, I used `year` as the state column.
 
 I generally try to structure my [ggplot2]{.pkg} code in a consistent way (future blog post?) so I prefer having the [gganimate]{.pkg} specific parts at the end.
 I also directly called `gganimate::animate()` so that I could control specific parameters of the output, namely the number of frames and the size of the image.
@@ -292,7 +292,7 @@ gb_last <-
   aes(last_letter, prop, fill = sex) +
   geom_col(position = "identity", alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 10), 
+    labels = scales::percent_format(accuracy = 5), 
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -343,7 +343,7 @@ gb_first <-
   aes(first_letter, prop, fill = sex) +
   geom_col(position = "identity", alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 10), 
+    labels = scales::percent_format(accuracy = 5), 
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -381,14 +381,14 @@ gb_first_animated
 ### Static
 
 I'll admit, I think the animated plots are cool,
-but they're also make it hard to reason about overall trends.
+but they also make it hard to reason about overall trends.
 You have to watch the animation loop over and over, trying to watch one letter or one sex specifically.
 I feel like I'm seeing the movement but missing the picture.
 
 I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped [gganimate]{.pkg}'s `transition_state(year)` for [ggplot2]{.pkg}'s `facet_wrap(~ letter)`.
 
 I somewhat like these plots more than their animated versions.
-I get the sense that I'm seeing a fuller picture (or more easily compared picture) of the overall trends in starting and ending letters of baby names.
+I get the sense that I'm seeing a fuller picture (or more easy-to-compare picture) of the overall trends in starting and ending letters of baby names.
 
 `r lightbox_img(knitr::fig_chunk("babynames-last-static", "png"))`
 
