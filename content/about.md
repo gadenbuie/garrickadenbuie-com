@@ -47,6 +47,18 @@ I also [write songs and play acoustic guitar](http://garrickadebuie.bandcamp.com
 
 ## Research
 
+- **epiTAD: a web application for visualizing chromosome conformation capture data in the context of genetic epidemiology.**  
+  Creed J, Aden-Buie G, Monteiro A, Gerke TA. In: Bioinformatics: 2019 May. [10.1093/bioinformatics/btz387](https://doi.org/10.1093/bioinformatics/btz387)
+
+- **Prostate-specific antigen (PSA) levels in men 60 to 70 years of age predict aggressive prostate cancer in the PLCO cancer screening trial: Implications for risk-stratified screening.**  
+  Berger A, Aden-Buie G, Kibel AS, Mucci LA, Penney K, Wilson K, Gerke TA, Preston M.  In: European Association of Urology Congress: 2019 Mar 15--19; Barcelona, Spain.
+
+- **Identifying genetic interactions that drive aggressive prostate cancer using an ensemble of penalized Cox regression models.**  
+  Laajala TD, Aden-Buie G, Gerke T, Creed J, Berglund A, Stopsack K, Cramer SD, Tyekucheva S, Aittokallio T, Costello JC.  In: AACR Convergence: Artificial Intelligence, Big Data, and Prediction in Cancer: 2018 Oct 14-17; Newport, RI.
+
+- **Accessible pipeline for translational research using TCGA: Tristetraprolin as an example relating gene mechanism to a disease specific outcomes.**  
+  Berglund A, Putney R, Creed J, Aden-Buie G, Gerke T, Rounbehler R. In: TCGA Legacy: Multi-Omic Studies in Cancer: 2018 Sep 27-29; Washington, DC
+
 - **The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring**.<br>Garrick Aden-Buie. _Utilizing Technology for Data Collection and Intervention_, Moffitt Cancer Center. 2018
 
 - **Unsupervised behavior change detection using passive sensor systems in the homes of older adults**.<br>Garrick Aden-Buie, A. Yalcin, C. VandeWeerd. _11th World Conference of Gerontechnology_. 2018
