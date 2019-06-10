@@ -300,3 +300,34 @@ pre.r {
   border: none;
   padding: 0 2px !important;
 }
+
+/* Post Tags and Categories */
+.octicon {
+  vertical-align: middle;
+}
+.post-tags a.p-tag {
+  padding: 3px 10px;
+  margin-left: 10px;
+  text-decoration: none;
+  border: solid 1px #dc322f;
+  border-radius: 4px;
+}
+
+.post-tags a.p-tag:hover, .post-tags a.p-tag:active, .post-tags a.p-tag:focus {
+  background: #dc322f;
+  color: #FFF;
+}
+
+.post-tags a.p-category {
+  padding: 3px 10px;
+  margin-left: 10px;
+  text-decoration: none;
+  border: solid 1px #002B36;
+  border-radius: 4px;
+  color: #002B36;
+}
+
+.post-tags a.p-category:hover, .post-tags a.category:active, .post-tags a.p-category:focus {
+  background: #002B36;
+  color: #FFF;
+}

@@ -12,19 +12,7 @@
 					{{ .Content }}
 				</main>
 				<footer class="footer">
-					{{ if .Params.categories }}
-					<span>
-						Category:
-						{{ range $index, $cat := .Params.categories }}{{ if gt $index 0}}, {{ end }}<a class="p-category" href="/categories/{{ $cat | lower | urlize }}/">{{ $cat }}</a>{{ end }}
-					</span>
-					{{ end }}
-					{{ if .Params.tags }}
-					<p>
-						Tags:
-						{{ range $index, $tag := .Params.tags }}{{ if gt $index 0}}, {{ end }}<a class="p-category" href="/tags/{{ $tag | urlize }}/">{{ $tag }}</a>{{ end }}
-
-					</p>
-					{{ end }}
+					{{ partial "tags.html" . }}
 				</footer>
 			</article>
 		</main>
