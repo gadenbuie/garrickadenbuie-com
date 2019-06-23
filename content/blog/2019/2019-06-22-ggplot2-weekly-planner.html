@@ -24,7 +24,7 @@ editor_options:
 <!-- Post -->
 <p>I was working on prioritizing some long term projects today and decided that <em>the one thing</em> that would help me gain some clarity would be a weekly planner.
 Rather than waste hours of productive time fighting popups and banner adds on the million and a half SEO-fueled malware-laden “free printable calendar” websites, I decided to waste not quite as many hours of productive time creating the exact calendar I wanted using <span class="pkg">ggplot2</span>.</p>
-<p>Here’s the end result: a simpled calendar where each week is a row.
+<p>Here’s the end result: a simple calendar where each week is a row.
 Weeks start on Mondays because that’s when a new week starts.
 Important dates can be highlighted, for holidays or other days releveant to your projects.</p>
 <p>I doubt it’s bullet journal certified, but it worked for me and maybe it will for you too.</p>
@@ -38,15 +38,14 @@ Important dates can be highlighted, for holidays or other days releveant to your
 <h2>The Making of a Calendar</h2>
 <div id="load-the-tidyverse" class="section level3">
 <h3>Load the tidyverse</h3>
-<p>First, we need to load the usual suspects from the <a href="https://tidyverse.org">tidyverse</a>, plus the <span class="pkg">lubridate</span> package (because dates) and <span class="pkg">glue</span> (because I just love the syntax).</p>
+<p>First, we need to load the usual suspects from the <a href="https://tidyverse.org">tidyverse</a>, plus the <span class="pkg">lubridate</span> package (because dates).</p>
 <pre class="r"><code># library(tidyverse)
 library(dplyr)
 library(purrr)
 library(tidyr)
 library(forcats)
 library(ggplot2)
-library(lubridate)
-library(glue)</code></pre>
+library(lubridate)</code></pre>
 <p>Let’s also save ourselves some extra typing and tell <span class="pkg">lubridate</span> to always start weeks with Monday.</p>
 <pre class="r"><code>options(&quot;lubridate.week.start&quot; = 1)</code></pre>
 </div>
@@ -69,7 +68,7 @@ seq_days[1:5]</code></pre>
     isoweek   = isoweek(day),
     month     = month(day, label = TRUE, abbr = FALSE),
     isoyear   = isoyear(day),
-    week_year = fct_rev(glue(&quot;{isoyear} - {isoweek}&quot;))
+    week_year = fct_rev(sprintf(&quot;%s - %s&quot;, isoyear, isoweek))
   )
 
 dates</code></pre>
@@ -96,8 +95,7 @@ Because calendars are typically read top to bottom, I used <code>fct_rev()</code
 <pre class="r"><code># shows the _last 6_ week_year factor levels
 dates %&gt;% pull(week_year) %&gt;% levels() %&gt;% tail()</code></pre>
 <pre><code>## [1] &quot;2019 - 31&quot; &quot;2019 - 30&quot; &quot;2019 - 29&quot; &quot;2019 - 28&quot; &quot;2019 - 27&quot; &quot;2019 - 26&quot;</code></pre>
-<p>For a bit of convienence later, I’m then pull out the rows of <code>dates</code> representing the first day of the month.
-I’ll need these to add the colored boxes and text labels marking the start of a new month.</p>
+<p>For a bit of convienence later, I then pull out the rows of <code>dates</code> representing the first day of the month, to use later when adding the colored boxes and text labels marking the start of a new month.</p>
 <pre class="r"><code>day_one &lt;- dates %&gt;% 
   filter(day(day) == 1)
 
@@ -166,33 +164,40 @@ I also used <code>geom_text()</code> to add annotations to the special days, whi
   ) %&gt;% 
   ggplot() +
   aes(wday_name, week_year) +
+  # the calendar grid
   geom_tile(aes(fill = weekend), color = &quot;#aaaaaa&quot;) +
+  # highlight first day of each month
   geom_tile(
     data = day_one,
     fill = &quot;#f78154&quot;,
     alpha = 0.25
   ) +
+  # add name of month to the first day
   geom_text(
     data = day_one, 
     aes(label = month),
     family = &quot;PT Sans Narrow&quot;,
     color = &quot;#f78154&quot;,
     size = 4,
+    # push text to the top left corner
     hjust = 0,
     nudge_x = -0.45,
     vjust = 1,
     nudge_y = 0.45
   ) +
+  # highlight project-specific days
   geom_tile(
     data = dates %&gt;% inner_join(highlight_days, by = &quot;day&quot;),
     aes(fill = fill, color = color),
     alpha = 0.25
   ) +
+  # add the label from the highlighted days
   geom_text(
     data = dates %&gt;% inner_join(highlight_days, by = &quot;day&quot;),
     aes(label = label, color = color),
     family = &quot;PT Sans Narrow&quot;,
     size = 2,
+    # push to bottom left corner
     hjust = 0,
     nudge_x = -0.45,
     vjust = 0,
@@ -328,7 +333,7 @@ ggweek_planner &lt;- function(
       isoweek   = lubridate::isoweek(day),
       month     = lubridate::month(day, label = TRUE, abbr = FALSE),
       isoyear   = lubridate::isoyear(day),
-      week_year = forcats::fct_rev(glue::glue(&quot;{isoyear} - {isoweek}&quot;))
+      week_year = forcats::fct_rev(sprintf(&quot;%s - %s&quot;, isoyear, isoweek))
     )
   
   day_one &lt;- dates %&gt;% 

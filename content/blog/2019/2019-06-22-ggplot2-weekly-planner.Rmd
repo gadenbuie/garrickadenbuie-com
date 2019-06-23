@@ -53,7 +53,7 @@ lightbox_img <- function(url, alt = "", caption = "", img_extra = "", preview = 
 I was working on prioritizing some long term projects today and decided that _the one thing_ that would help me gain some clarity would be a weekly planner.
 Rather than waste hours of productive time fighting popups and banner adds on the million and a half SEO-fueled malware-laden "free printable calendar" websites, I decided to waste not quite as many hours of productive time creating the exact calendar I wanted using [ggplot2]{.pkg}.
 
-Here's the end result: a simpled calendar where each week is a row.
+Here's the end result: a simple calendar where each week is a row.
 Weeks start on Mondays because that's when a new week starts.
 Important dates can be highlighted, for holidays or other days releveant to your projects.
 
@@ -71,7 +71,7 @@ I'll break down the pieces that went into the calendar, but if you just want to 
 
 ### Load the tidyverse
 
-First, we need to load the usual suspects from the [tidyverse], plus the [lubridate]{.pkg} package (because dates) and [glue]{.pkg} (because I just love the syntax).
+First, we need to load the usual suspects from the [tidyverse], plus the [lubridate]{.pkg} package (because dates).
 
 ```{r library}
 # library(tidyverse)
@@ -81,7 +81,6 @@ library(tidyr)
 library(forcats)
 library(ggplot2)
 library(lubridate)
-library(glue)
 ```
 
 Let's also save ourselves some extra typing and tell [lubridate]{.pkg} to always start weeks with Monday.
@@ -114,7 +113,7 @@ dates <-
     isoweek   = isoweek(day),
     month     = month(day, label = TRUE, abbr = FALSE),
     isoyear   = isoyear(day),
-    week_year = fct_rev(glue("{isoyear} - {isoweek}"))
+    week_year = fct_rev(sprintf("%s - %s", isoyear, isoweek))
   )
 
 dates
@@ -133,8 +132,7 @@ Because calendars are typically read top to bottom, I used `fct_rev()` here to b
 dates %>% pull(week_year) %>% levels() %>% tail()
 ```
 
-For a bit of convienence later, I'm then pull out the rows of `dates` representing the first day of the month.
-I'll need these to add the colored boxes and text labels marking the start of a new month.
+For a bit of convienence later, I then pull out the rows of `dates` representing the first day of the month, to use later when adding the colored boxes and text labels marking the start of a new month.
 
 ```{r day_one}
 day_one <- dates %>% 
@@ -216,33 +214,40 @@ gcal <-
   ) %>% 
   ggplot() +
   aes(wday_name, week_year) +
+  # the calendar grid
   geom_tile(aes(fill = weekend), color = "#aaaaaa") +
+  # highlight first day of each month
   geom_tile(
     data = day_one,
     fill = "#f78154",
     alpha = 0.25
   ) +
+  # add name of month to the first day
   geom_text(
     data = day_one, 
     aes(label = month),
     family = "PT Sans Narrow",
     color = "#f78154",
     size = 4,
+    # push text to the top left corner
     hjust = 0,
     nudge_x = -0.45,
     vjust = 1,
     nudge_y = 0.45
   ) +
+  # highlight project-specific days
   geom_tile(
     data = dates %>% inner_join(highlight_days, by = "day"),
     aes(fill = fill, color = color),
     alpha = 0.25
   ) +
+  # add the label from the highlighted days
   geom_text(
     data = dates %>% inner_join(highlight_days, by = "day"),
     aes(label = label, color = color),
     family = "PT Sans Narrow",
     size = 2,
+    # push to bottom left corner
     hjust = 0,
     nudge_x = -0.45,
     vjust = 0,

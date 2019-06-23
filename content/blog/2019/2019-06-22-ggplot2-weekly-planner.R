@@ -33,7 +33,7 @@ ggweek_planner <- function(
       isoweek   = lubridate::isoweek(day),
       month     = lubridate::month(day, label = TRUE, abbr = FALSE),
       isoyear   = lubridate::isoyear(day),
-      week_year = forcats::fct_rev(glue::glue("{isoyear} - {isoweek}"))
+      week_year = forcats::fct_rev(sprintf("%s - %s", isoyear, isoweek))
     )
   
   day_one <- dates %>% 
