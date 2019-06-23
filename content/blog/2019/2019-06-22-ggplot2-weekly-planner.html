@@ -1,0 +1,446 @@
+---
+title: A Printable Custom Weekly Planner with ggplot2
+author: Garrick Aden-Buie
+date: '2019-06-22'
+slug: ggplot2-weekly-planner
+categories:
+  - Blog
+tags:
+  - R
+  - ggplot2
+  - Productivity
+  - Scripts
+description: post description
+twitterImage: /path/to/image.png
+rmd_source: ''
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+<!-- Links -->
+<!-- Post -->
+<p>I was working on prioritizing some long term projects today and decided that <em>the one thing</em> that would help me gain some clarity would be a weekly planner.
+Rather than waste hours of productive time fighting popups and banner adds on the million and a half SEO-fueled malware-laden “free printable calendar” websites, I decided to waste not quite as many hours of productive time creating the exact calendar I wanted using <span class="pkg">ggplot2</span>.</p>
+<p>Here’s the end result: a simpled calendar where each week is a row.
+Weeks start on Mondays because that’s when a new week starts.
+Important dates can be highlighted, for holidays or other days releveant to your projects.</p>
+<p>I doubt it’s bullet journal certified, but it worked for me and maybe it will for you too.</p>
+<center>
+<a href="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png">
+<img src="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png" style="max-width: 400px">
+</a>
+</center>
+<p>I’ll break down the pieces that went into the calendar, but if you just want to make your own you can jump to <a href="#ggweek_planner">the end</a> to grab the function and get straight to calendar printing and project planning.</p>
+<div id="the-making-of-a-calendar" class="section level2">
+<h2>The Making of a Calendar</h2>
+<div id="load-the-tidyverse" class="section level3">
+<h3>Load the tidyverse</h3>
+<p>First, we need to load the usual suspects from the <a href="https://tidyverse.org">tidyverse</a>, plus the <span class="pkg">lubridate</span> package (because dates) and <span class="pkg">glue</span> (because I just love the syntax).</p>
+<pre class="r"><code># library(tidyverse)
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(lubridate)
+library(glue)</code></pre>
+<p>Let’s also save ourselves some extra typing and tell <span class="pkg">lubridate</span> to always start weeks with Monday.</p>
+<pre class="r"><code>options(&quot;lubridate.week.start&quot; = 1)</code></pre>
+</div>
+<div id="create-a-tibble-of-dates" class="section level3">
+<h3>Create a tibble of dates</h3>
+<p>Next, I set up a tibble of dates and associated information (day of the week, month, year, etc.) that I’ll need for the calendar grid.
+I start by finding the nearest previous Monday to the starting date and creating a sequence of dates.</p>
+<pre class="r"><code>start_day &lt;- floor_date(ymd(&quot;2019-06-24&quot;), &quot;week&quot;)
+end_day   &lt;- ymd(&quot;2019-09-13&quot;)
+seq_days  &lt;- seq(start_day, end_day, by = &quot;day&quot;)
+
+seq_days[1:5]</code></pre>
+<pre><code>## [1] &quot;2019-06-24&quot; &quot;2019-06-25&quot; &quot;2019-06-26&quot; &quot;2019-06-27&quot; &quot;2019-06-28&quot;</code></pre>
+<p>I’m also taking advantage of the fact that <code>tibble()</code> is similar to <code>mutate()</code> in that it allows you to create new columns that reference previous columns inside the <code>tibble</code> definition, rather than having a separate call to <code>mutate()</code>.</p>
+<pre class="r"><code>dates &lt;-
+  tibble(
+    day       = seq_days,
+    wday_name = wday(day, label = TRUE, abbr = TRUE),
+    weekend   = wday(day) &gt; 5,
+    isoweek   = isoweek(day),
+    month     = month(day, label = TRUE, abbr = FALSE),
+    isoyear   = isoyear(day),
+    week_year = fct_rev(glue(&quot;{isoyear} - {isoweek}&quot;))
+  )
+
+dates</code></pre>
+<pre><code>## # A tibble: 82 x 7
+##    day        wday_name weekend isoweek month isoyear week_year
+##    &lt;date&gt;     &lt;ord&gt;     &lt;lgl&gt;     &lt;dbl&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;fct&gt;    
+##  1 2019-06-24 Mon       FALSE        26 June     2019 2019 - 26
+##  2 2019-06-25 Tue       FALSE        26 June     2019 2019 - 26
+##  3 2019-06-26 Wed       FALSE        26 June     2019 2019 - 26
+##  4 2019-06-27 Thu       FALSE        26 June     2019 2019 - 26
+##  5 2019-06-28 Fri       FALSE        26 June     2019 2019 - 26
+##  6 2019-06-29 Sat       TRUE         26 June     2019 2019 - 26
+##  7 2019-06-30 Sun       TRUE         26 June     2019 2019 - 26
+##  8 2019-07-01 Mon       FALSE        27 July     2019 2019 - 27
+##  9 2019-07-02 Tue       FALSE        27 July     2019 2019 - 27
+## 10 2019-07-03 Wed       FALSE        27 July     2019 2019 - 27
+## # … with 72 more rows</code></pre>
+<p>Note that I’ve used <code>isoweek()</code> and <code>isoyear()</code>, which also follow the convention of starting the week on Monday.
+This way, I now have the week number to which each day in the sequence belongs, but because we may be interested in creating calendars that span multiple years, the addition of <code>isoyear()</code> protects against repeated week numbers.</p>
+<p>This week year combination is destined for the <em>y</em> axis as it marks the row to which each day belongs.
+The <em>y</em> axis is typically increasing, with the smallest value at the bottom.
+This means that, if left as strings, the week of <code>"2019 - 25"</code> would be <em>below</em> the week <code>"2019 - 26"</code>.
+Because calendars are typically read top to bottom, I used <code>fct_rev()</code> here to both convert <code>{isoyear} - {isoweek}</code> into a factor and then reverse the factor order so that <code>2019 - 25</code> is the last factor.</p>
+<pre class="r"><code># shows the _last 6_ week_year factor levels
+dates %&gt;% pull(week_year) %&gt;% levels() %&gt;% tail()</code></pre>
+<pre><code>## [1] &quot;2019 - 31&quot; &quot;2019 - 30&quot; &quot;2019 - 29&quot; &quot;2019 - 28&quot; &quot;2019 - 27&quot; &quot;2019 - 26&quot;</code></pre>
+<p>For a bit of convienence later, I’m then pull out the rows of <code>dates</code> representing the first day of the month.
+I’ll need these to add the colored boxes and text labels marking the start of a new month.</p>
+<pre class="r"><code>day_one &lt;- dates %&gt;% 
+  filter(day(day) == 1)
+
+day_one</code></pre>
+<pre><code>## # A tibble: 3 x 7
+##   day        wday_name weekend isoweek month     isoyear week_year
+##   &lt;date&gt;     &lt;ord&gt;     &lt;lgl&gt;     &lt;dbl&gt; &lt;ord&gt;       &lt;dbl&gt; &lt;fct&gt;    
+## 1 2019-07-01 Mon       FALSE        27 July         2019 2019 - 27
+## 2 2019-08-01 Thu       FALSE        31 August       2019 2019 - 31
+## 3 2019-09-01 Sun       TRUE         35 September    2019 2019 - 35</code></pre>
+</div>
+<div id="better-week-labels" class="section level3">
+<h3>Better week labels</h3>
+<p>Quick, what’s the starting date of week 31 in 2019?</p>
+<p>Ok, fine, that was too hard.
+What month of 2019 does week 31 belong to?</p>
+<p>Trick question: that week starts on July 29, 2019 but ends on August 4th.</p>
+<p>So… we need better axis labels than <strong>2019 - 31</strong>.
+A reasonable replacement would be to use the day of the month of the week’s starting day.</p>
+<p>The following code filters <code>dates</code> to include the first day of each week (hint: it’s Monday).
+Then, I use <code>month(day, label = TRUE)</code> to get the abbreviated month name (<code>abbr = TRUE</code> is the default) that I’ll append to the day of the month of each day.</p>
+<p>But when a given week is preceded by a week from the same month, it would be visually distracting to see <strong>Jul</strong> repeated with each date — <strong>Jul 1</strong>, <strong>Jul 8</strong>, <strong>Jul 15</strong>, and so on — in the axis labels.
+For easy scanning, I only included the month in the label if the month changed from the month before.
+In other words, when <code>month == lag(month)</code>, I just need the day of the month the given week.</p>
+<pre class="r"><code>week_start_labels &lt;- dates %&gt;%
+  filter(wday_name == &quot;Mon&quot;) %&gt;% 
+  arrange(day) %&gt;%
+  mutate(
+    month = month(day, label = TRUE), 
+    label = case_when(
+      month == lag(month) ~ paste(day(day)),
+      TRUE ~ sprintf(&quot;%s %4i&quot;, month, day(day))
+    )
+  ) %&gt;% 
+  select(label, week_year) %&gt;% 
+  reduce(setNames)</code></pre>
+<p>The last two lines there are a neat trick to take a two column <code>tibble</code> (or a two-element <code>list</code>) and convert it into a named vector using <code>purrr::reduce()</code>.
+The first argument becomes the vector values and second argument becomes the vector names:</p>
+<pre class="r"><code>list(1:5, letters[1:5]) %&gt;% purrr::reduce(setNames)</code></pre>
+<pre><code>## a b c d e 
+## 1 2 3 4 5</code></pre>
+</div>
+<div id="a-special-tibble-for-special-days" class="section level3">
+<h3>A special tibble for special days</h3>
+<p>I used yet another tibble to store holidays and other important dates related to the project.
+Each day can have a <code>label</code>, <code>color</code>, and/or <code>fill</code>.</p>
+<pre class="r"><code>highlight_days &lt;- tribble(
+         ~ day,       ~ label,   ~ color,    ~ fill,
+  &quot;2019-07-04&quot;,    &quot;July 4th&quot;, &quot;#b4436c&quot;, &quot;#b4436c&quot;,
+  &quot;2019-08-16&quot;, &quot;First Draft&quot;, &quot;#002B36&quot;, &quot;#002B36&quot;,
+  &quot;2019-09-02&quot;,   &quot;Labor Day&quot;, &quot;#b4436c&quot;, &quot;#b4436c&quot;,
+  &quot;2019-09-13&quot;, &quot;Project Due&quot;, &quot;#002B36&quot;, &quot;#002B36&quot;,
+) %&gt;% 
+  mutate_at(vars(day), ymd)</code></pre>
+</div>
+<div id="finally-ggplot-the-calendar" class="section level3">
+<h3>Finally, ggplot the calendar</h3>
+<p>Finally, we arrive at the main event, the actual creation of the calendar with <span class="pkg">ggplot2</span>.</p>
+<p>Here I use <code>geom_tile()</code> for each day, and then overlay tiles for the start-of-the-month days and the highlighted holiday and project-specific days.
+I also used <code>geom_text()</code> to add annotations to the special days, which I pushed to the top or bottom left corner of the day box.</p>
+<pre class="r"><code>gcal &lt;-
+  dates %&gt;% 
+  mutate(
+    # Softly fill in the weekend days
+    weekend = case_when(weekend ~ &quot;#f8f8f8&quot;, TRUE ~ &quot;#FFFFFF&quot;)
+  ) %&gt;% 
+  ggplot() +
+  aes(wday_name, week_year) +
+  geom_tile(aes(fill = weekend), color = &quot;#aaaaaa&quot;) +
+  geom_tile(
+    data = day_one,
+    fill = &quot;#f78154&quot;,
+    alpha = 0.25
+  ) +
+  geom_text(
+    data = day_one, 
+    aes(label = month),
+    family = &quot;PT Sans Narrow&quot;,
+    color = &quot;#f78154&quot;,
+    size = 4,
+    hjust = 0,
+    nudge_x = -0.45,
+    vjust = 1,
+    nudge_y = 0.45
+  ) +
+  geom_tile(
+    data = dates %&gt;% inner_join(highlight_days, by = &quot;day&quot;),
+    aes(fill = fill, color = color),
+    alpha = 0.25
+  ) +
+  geom_text(
+    data = dates %&gt;% inner_join(highlight_days, by = &quot;day&quot;),
+    aes(label = label, color = color),
+    family = &quot;PT Sans Narrow&quot;,
+    size = 2,
+    hjust = 0,
+    nudge_x = -0.45,
+    vjust = 0,
+    nudge_y = -0.40
+  ) +
+  scale_x_discrete(position = &quot;top&quot;) +
+  scale_y_discrete(labels = week_start_labels) +
+  scale_fill_identity() +
+  scale_color_identity() +
+  guides(fill = FALSE) +
+  theme_minimal(base_family = &quot;PT Sans&quot;) +
+  theme(
+    axis.text = element_text(&quot;PT Sans Narrow&quot;),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    axis.text.x.top = element_text(face = &quot;bold&quot;),
+    axis.title.x.top = element_blank(),
+  )
+
+gcal</code></pre>
+<center>
+<a href="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-1.png" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-1.png" alt="" height="400px">
+<p class="caption">
+</p>
+</div>
+</a>
+</center>
+</div>
+<div id="calculate-month-boundaries" class="section level3">
+<h3>Calculate month boundaries</h3>
+<p>For a final touch, I wanted stronger differentiation between months.
+In the following code, I convert <code>wday_name</code> and <code>week_year</code> into integers that indicate the center point of each box.</p>
+<p>Then, using the fact that the top and bottom (and right and left) sides of the box are +/- 0.5 units from the center, I create three line segments.
+The first extends from the bottom left corner of the day starting the week with the month change (left side of the plot) until the <em>left</em> edge of the box representing the start of the next month.
+The second segment line travels up the left edge of that box.
+And the third and final segment travels from the top left corner of the month-changing day to the right edge of the plot.</p>
+<pre class="r"><code>month_boundaries &lt;- day_one %&gt;%
+  select(day, month, wday_name, week_year) %&gt;%
+  mutate_at(vars(wday_name, week_year), as.integer) %&gt;%
+  mutate(
+    left = map2(wday_name, week_year, ~ {
+      # n/a if month changes on first day
+      if (.x == 1) return(tibble(.missing = NA)) 
+      tibble(
+        x = 0.5,      xend = .x - 0.5, 
+        y = .y - 0.5, yend = y
+      )
+    }),
+    up = map2(wday_name, week_year, ~ {
+      # n/a if month changes on first day
+      if (.x == 1) return(tibble(.missing = NA)) 
+      tibble(
+        x = .x - 0.5, xend = x, 
+        y = .y - 0.5, yend = .y + 0.5
+      )
+    }),
+    right = map2(wday_name, week_year, ~ {
+      tibble(
+        x = .x - 0.5, xend = 7.5, 
+        y = .y + 0.5, yend = y
+      )
+    })
+  )
+
+
+month_boundaries</code></pre>
+<pre><code>## # A tibble: 3 x 7
+##   day        month    wday_name week_year left        up         right     
+##   &lt;date&gt;     &lt;ord&gt;        &lt;int&gt;     &lt;int&gt; &lt;list&gt;      &lt;list&gt;     &lt;list&gt;    
+## 1 2019-07-01 July             1        11 &lt;tibble [1… &lt;tibble [… &lt;tibble […
+## 2 2019-08-01 August           4         7 &lt;tibble [1… &lt;tibble [… &lt;tibble […
+## 3 2019-09-01 Septemb…         7         3 &lt;tibble [1… &lt;tibble [… &lt;tibble […</code></pre>
+<p>Then, I use a quick for loop to add each of these segments to the calendar plot.</p>
+<pre class="r"><code>for (boundary in c(&quot;left&quot;, &quot;up&quot;, &quot;right&quot;)) {
+  gcal &lt;- gcal + 
+    geom_segment(
+      data = month_boundaries %&gt;% unnest(!!rlang::sym(boundary)),
+      aes(x = x, y = y, xend = xend, yend = yend),
+      color = &quot;#999999&quot;,
+      linetype = 2
+    )
+}
+
+gcal</code></pre>
+<center>
+<a href="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png" data-featherlight="image">
+<div class="figure">
+<img src="/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png" alt="" height="400px">
+<p class="caption">
+</p>
+</div>
+</a>
+</center>
+</div>
+</div>
+<div id="ggweek_planner" class="section level2">
+<h2>A Weekly Planner Function</h2>
+<p>Here’s the whole weekly planner wrapped up into a single function.
+You just need to provide the start and end dates and a tibble containing days for highlighting and the function takes care of the rest.</p>
+<p><em>Note: I would normally break this function up into smaller components but I left it as a single monolithic function to make copy and pasting easier.</em></p>
+<pre class="r"><code>highlight_days &lt;- dplyr::tribble(
+        ~ day,       ~ label,   ~ color,    ~ fill,
+  &quot;2019-07-04&quot;,    &quot;July 4th&quot;, &quot;#b4436c&quot;, &quot;#b4436c&quot;,
+  &quot;2019-08-16&quot;, &quot;First Draft&quot;, &quot;#002B36&quot;, &quot;#002B36&quot;,
+  &quot;2019-09-02&quot;,   &quot;Labor Day&quot;, &quot;#b4436c&quot;, &quot;#b4436c&quot;,
+  &quot;2019-09-13&quot;, &quot;Project Due&quot;, &quot;#002B36&quot;, &quot;#002B36&quot;,
+) %&gt;% 
+  dplyr::mutate_at(dplyr::vars(day), lubridate::ymd)
+
+ggweek_planner &lt;- function(
+  start_day = lubridate::today(),
+  end_day = start_day + lubridate::weeks(8),
+  highlight_days = NULL,
+  show_month_boundaries = TRUE,
+  highlight_text_size = 2,
+  month_text_size = 4,
+  month_color = &quot;#f78154&quot;
+) {
+  old_opts &lt;- options(&quot;lubridate.week.start&quot; = 1)
+  on.exit(options(old_opts))
+  
+  force(end_day)
+  start_day &lt;- floor_date(start_day, &quot;week&quot;)
+  seq_days  &lt;- seq(start_day, end_day, by = &quot;day&quot;)
+  
+  dates &lt;-
+    dplyr::tibble(
+      day       = seq_days,
+      wday_name = lubridate::wday(day, label = TRUE, abbr = TRUE),
+      weekend   = lubridate::wday(day) &gt; 5,
+      isoweek   = lubridate::isoweek(day),
+      month     = lubridate::month(day, label = TRUE, abbr = FALSE),
+      isoyear   = lubridate::isoyear(day),
+      week_year = forcats::fct_rev(glue::glue(&quot;{isoyear} - {isoweek}&quot;))
+    )
+  
+  day_one &lt;- dates %&gt;% 
+    dplyr::filter(lubridate::day(day) == 1)
+  
+  week_start_labels &lt;- dates %&gt;%
+    dplyr::filter(wday_name == &quot;Mon&quot;) %&gt;% 
+    dplyr::arrange(day) %&gt;%
+    dplyr::mutate(
+      month = lubridate::month(day, label = TRUE), 
+      label = dplyr::case_when(
+        month == dplyr::lag(month) ~ paste(lubridate::day(day)),
+        TRUE ~ sprintf(&quot;%s %4i&quot;, month, lubridate::day(day))
+      )
+    ) %&gt;% 
+    dplyr::select(label, week_year) %&gt;% 
+    purrr::reduce(purrr::set_names)
+  
+  gcal &lt;-
+    dates %&gt;% 
+    dplyr::mutate(
+      # Softly fill in the weekend days
+      weekend = dplyr::case_when(weekend ~ &quot;#f8f8f8&quot;, TRUE ~ &quot;#FFFFFF&quot;)
+    ) %&gt;% 
+    ggplot2::ggplot() +
+    ggplot2::aes(wday_name, week_year) +
+    ggplot2::geom_tile(ggplot2::aes(fill = weekend), color = &quot;#aaaaaa&quot;) +
+    ggplot2::geom_tile(
+      data = day_one,
+      fill = month_color,
+      alpha = 0.25
+    ) +
+    ggplot2::geom_text(
+      data = day_one, 
+      ggplot2::aes(label = month),
+      family = &quot;PT Sans Narrow&quot;,
+      color = month_color,
+      size = month_text_size,
+      hjust = 0,
+      nudge_x = -0.45,
+      vjust = 1,
+      nudge_y = 0.45
+    ) +
+    ggplot2::geom_tile(
+      data = dates %&gt;% dplyr::inner_join(highlight_days, by = &quot;day&quot;),
+      ggplot2::aes(fill = fill, color = color),
+      alpha = 0.25
+    ) +
+    ggplot2::geom_text(
+      data = dates %&gt;% dplyr::inner_join(highlight_days, by = &quot;day&quot;),
+      ggplot2::aes(label = label, color = color),
+      family = &quot;PT Sans Narrow&quot;,
+      size = highlight_text_size,
+      hjust = 0,
+      nudge_x = -0.45,
+      vjust = 0,
+      nudge_y = -0.40
+    ) +
+    ggplot2::scale_x_discrete(position = &quot;top&quot;) +
+    ggplot2::scale_y_discrete(labels = week_start_labels) +
+    ggplot2::scale_fill_identity() +
+    ggplot2::scale_color_identity() +
+    ggplot2::guides(fill = FALSE) +
+    ggplot2::theme_minimal(base_family = &quot;PT Sans&quot;) +
+    ggplot2::theme(
+      axis.text = ggplot2::element_text(&quot;PT Sans Narrow&quot;),
+      axis.title = ggplot2::element_blank(),
+      panel.grid = ggplot2::element_blank(),
+      axis.text.x.top = ggplot2::element_text(face = &quot;bold&quot;),
+      axis.title.x.top = ggplot2::element_blank(),
+    )
+  
+  if (show_month_boundaries) {
+    month_boundaries &lt;- day_one %&gt;%
+      dplyr::select(day, month, wday_name, week_year) %&gt;%
+      dplyr::mutate_at(dplyr::vars(wday_name, week_year), as.integer) %&gt;%
+      dplyr::mutate(
+        left = purrr::map2(wday_name, week_year, ~ {
+          # n/a if month changes on first day
+          if (.x == 1) return(dplyr::tibble(.missing = NA)) 
+          dplyr::tibble(
+            x = 0.5,      xend = .x - 0.5, 
+            y = .y - 0.5, yend = y
+          )
+        }),
+        up = purrr::map2(wday_name, week_year, ~ {
+          # n/a if month changes on first day
+          if (.x == 1) return(dplyr::tibble(.missing = NA)) 
+          dplyr::tibble(
+            x = .x - 0.5, xend = x, 
+            y = .y - 0.5, yend = .y + 0.5
+          )
+        }),
+        right = purrr::map2(wday_name, week_year, ~ {
+          dplyr::tibble(
+            x = .x - 0.5, xend = 7.5, 
+            y = .y + 0.5, yend = y
+          )
+        })
+      )
+    
+    for (boundary in c(&quot;left&quot;, &quot;up&quot;, &quot;right&quot;)) {
+      gcal &lt;- gcal + 
+        ggplot2::geom_segment(
+          data = month_boundaries %&gt;% tidyr::unnest(!!rlang::sym(boundary)),
+          ggplot2::aes(x = x, y = y, xend = xend, yend = yend),
+          color = &quot;#999999&quot;,
+          linetype = 2
+        )
+    }
+  }
+  
+  gcal
+}</code></pre>
+</div>
