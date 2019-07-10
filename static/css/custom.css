@@ -306,11 +306,15 @@ pre.r {
   vertical-align: middle;
 }
 .post-tags a.p-tag {
+  display: inline-block;
   padding: 3px 10px;
   margin-left: 10px;
+  margin-bottom: 5px;
   text-decoration: none;
   border: solid 1px #dc322f;
   border-radius: 4px;
+  break-inside: avoid;
+  white-space: nowrap;
 }
 
 .post-tags a.p-tag:hover, .post-tags a.p-tag:active, .post-tags a.p-tag:focus {
