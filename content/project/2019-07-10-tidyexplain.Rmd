@@ -1,0 +1,39 @@
+---
+title: ":ferris_wheel: tidyexplain"
+date: '2018-08-27'
+description: Animations of tidyverse verbs using R, the tidyverse, and gganimate
+twitterImage: /project/tidyexplain/images/static/png/original-dfs.png
+slug: tidyexplain
+type: page
+categories: ["Project"]
+tags:
+  - Data Analysis
+  - Visualization
+  - SQL
+  - dplyr
+  - tidyr
+  - R
+--- 
+
+## Tidy Animated Verbs
+
+<!-- https://buttons.github.io/ -->
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/tidyexplain" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/tidyexplain on GitHub">Star</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/tidyexplain/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/tidyexplain on GitHub">Fork</a>
+
+
+```{r echo=FALSE, results="asis"}
+library(glue)
+gh_base <- "https://github.com/gadenbuie/tidyexplain/blob/master"
+
+x <- readLines("https://raw.githubusercontent.com/gadenbuie/tidyexplain/master/README.md")
+
+x <- x[-(1:grep("<!-- README START -->", x))]
+x <- sub("[svg](images/static/svg/)", glue("[svg]({gh_base}/images/static/svg/)"), x, fixed = TRUE)
+x <- sub("[png](images/static/png/)", glue("[png]({gh_base}/images/static/png/)"), x, fixed = TRUE)
+x <- sub("(images/)", glue("({gh_base}/images/)"), x, fixed = TRUE)
+x <- sub("(R/)", glue("({gh_base}/R/)"), x, fixed = TRUE)
+
+cat(x, sep = "\n")
+```
