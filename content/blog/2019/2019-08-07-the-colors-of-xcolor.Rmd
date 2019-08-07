@@ -111,6 +111,15 @@ fs::dir_create(post_static_dir)
 readr::write_csv(xcolor, fs::path(post_static_dir, "xcolors", ext = "csv"))
 ```
 
+## A Shiny fixed-color picker
+
+I haven't finished incorporating this into the app yet, 
+but this is what the how the color selector will look when I do.
+
+<center>
+<img src="xcolors-selector.gif" style="max-width: 300px">
+</center>
+
 ## All of the `xcolor` colors
 
 Here are all of the 
