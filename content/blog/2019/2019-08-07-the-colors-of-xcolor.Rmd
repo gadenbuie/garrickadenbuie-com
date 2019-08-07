@@ -191,3 +191,8 @@ htmltools::tagList(
   }
 }
 ```
+
+<script>
+  /* https://stackoverflow.com/a/18655059 */
+  document.body.addEventListener('touchstart',function(){},false);
+</script>
