@@ -61,7 +61,7 @@ the DAG is rendered using TikZ and LaTeX
 and the app allows the user to tweak the appearance of the DAG 
 without having to learn TikZ.
 
-One of the appearance changes that the user can do is to 
+One of the appearance changes that the user can make is to 
 change the color of graph's edges or nodes,
 using the colors defined in the [xcolor] LaTeX package.
 Rather than provide an open-ended text box,
