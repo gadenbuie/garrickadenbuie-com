@@ -176,7 +176,8 @@ htmltools::tagList(
   background: white;
   padding: 10px;
 }
-.xcolor-color:hover .xcolor-text {
+.xcolor-color:hover .xcolor-text, 
+.xcolor-color:active .xcolor-text {
   display: block;
 }
 
