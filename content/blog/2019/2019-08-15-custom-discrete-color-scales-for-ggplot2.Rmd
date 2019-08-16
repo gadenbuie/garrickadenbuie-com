@@ -255,7 +255,7 @@ using the Texas housing sales data that ships with [ggplot2]{.pkg}
 to showcase monthly total home sales in Austin 
 with Dallas sale volume shown for reference.
 
-```{r echo=FALSE}
+```{r tx-housing-example, echo=FALSE}
 library(dplyr)
 txh <- ggplot2::txhousing
 
