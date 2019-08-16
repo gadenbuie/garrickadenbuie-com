@@ -348,7 +348,7 @@ gbg <- cowplot::plot_grid(
   g2 + aes(color = gear) + scale_color_branded()
 )
 
-img_bg <- magick::image_graph(1200, 675, bg = "transparent")
+img_bg <- magick::image_graph(1200, 675, bg = "white")
 print(gbg)
 dev.off()
 
