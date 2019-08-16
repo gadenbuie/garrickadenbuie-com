@@ -1,0 +1,352 @@
+---
+title: Custom R Code Styles with styler
+author: Garrick Aden-Buie
+date: '2019-08-03'
+slug: custom-styler-styles
+categories:
+  - Blog
+tags:
+  - R
+  - Tips
+  - Tricks
+  - styler
+description: post description
+twitterImage: /path/to/image.png
+rmd_source: ''
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+
+
+<!-- Links -->
+<style type="text/css">
+.container-flex {
+  display: flex
+}
+.w-48 {
+  width: 48%;
+}
+.mr-04 {
+  margin-right: 4%;
+}
+</style>
+<p>For all the precision that code brings to a data analysis,
+there is still a huge range of possibilities as to how the code is written.
+Whether you actively enfore a code style or not,
+you are likely to have developed a number of habits and patterns
+when you write code.</p>
+<p>How you lay out your code can seem tangential to the task at hand —
+the code runs, or doesn’t it? —
+but it can have a large impact on how easy or difficult it is to maintain over time.
+Among teams or collaborators,
+writing in a consistent style makes it easier for others to approach and understand your code,
+even if you’re only consistent to yourself.</p>
+<div id="my-code-style-has-evolved" class="section level2">
+<h2>My code style has evolved</h2>
+<p>Personally, I’ve always followed some internal guidelines
+without ever completely formalizing my coding tics.
+Early on when I was learning R,
+I read through the <a href="https://google.github.io/styleguide/Rguide.xml">Google R style guide</a>
+and then wrote code that “felt” similar.
+My coding style has evolved significantly over the years
+through reading the code of others —
+some of it good and some of it not so stylish —
+and also by reading dedicated style guides,
+like the <a href="https://style.tidyverse.org/">tidyverse style guide</a>.</p>
+<p>There are certainly things that I do now
+that I thought were utterly bizzare when I first encountered them.
+For example, the tidyverse styles used to recommend variable name and assignment on separate lines (left)
+and discourage assignment on the same line (right).
+I was very much <em>team same line</em> at the time.</p>
+<div class="container-flex">
+<div class="w-48 mr-04">
+<pre class="r"><code>mtcars_4 &lt;- 
+  mtcars %&gt;% 
+  filter(cyl == 4) %&gt;% 
+  select(mpg, cyl, wt)</code></pre>
+</div>
+<div class="w-48">
+<pre class="r"><code>mtcars_4 &lt;-  mtcars %&gt;% 
+  filter(cyl == 4) %&gt;% 
+  select(mpg, cyl, wt)</code></pre>
+</div>
+</div>
+<p>The tidyverse style guides
+<a href="https://style.tidyverse.org/pipes.html#assignment-1">now recommend either approach</a>,
+but I’ve converted to be a huge fan of the seperate line between
+the variable name and the rest of the pipe for multi-line pipes.
+Why?
+Because it’s easier to toggle “interactive mode” by commenting out the assignment line.
+When I’m working on the code in the pipe and want to see the output,
+I use <kbd>Command</kbd>/<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd>
+to comment out the first line,
+and when I’m ready to move on I delete the comment to save the pipe output.
+(I also decided I find it easier to read after living with it for a bit.)</p>
+<p><img src="tidyverse-style-assignment-demo.gif" /></p>
+</div>
+<div id="learning-to-live-with-a-code-style" class="section level2">
+<h2>Learning to live with a code style</h2>
+<p>I tell this ancedote because choosing a code style will always involve some friction.
+A collaborator may not like a the code style you love or use.
+You may not like the code style the group chooses.</p>
+<p>But someone who has gone to the length of writing up guidelines for writing code
+has probably also put some thought into their choices and recommendations.
+And it may well be worth your time to give it shot and see how you feel.</p>
+<p>On the other hand, if you’d rather just write your code and let someone else deal with styling it,
+there’s a package for that!
+The <span class="pkg"><a href="https://styler.r-lib.org">styler</a></span> package, by
+<a href="http://lorenzwalthert.netlify.com/">Lorenz Walthert</a> and
+<a href="http://krlmlr.info/">Kirill Müller</a>,
+provides a few functions for automatically styling R code.
+It ships with a set of rules that enforce (or nearly enforce)
+the tidyverse style guide,
+and you can easily style your current selection, file, or package code with
+<a href="http://styler.r-lib.org/reference/styler_addins.html">RStudio addins</a>.</p>
+</div>
+<div id="my-personal-code-style" class="section level2">
+<h2>My personal code style</h2>
+<p>As you probably know by now,
+I really like the tidyverse style guide.
+But I also have <em>opinions</em>.
+I have one medium-sized quibble with
+the tidyverse style guide recommendations for function definitions.
+I also prefer more strictly consistent usage of line breaks in function calls.
+Overall, my quibbles boil down to wanting strictly consistent line breaks and indents.</p>
+<div id="function-definitions" class="section level3">
+<h3>Function definitions</h3>
+<p>I really like being able to scan the code and quickly understand the structure and flow of the program.
+It’s common practice among R programmers to
+start specifying the arguments to a function on one line and
+then to continue the arguments on the next line,
+but with the arguments indented in line with the end of the function name.</p>
+<p>For example, the tidyverse style guide <a href="https://style.tidyverse.org/functions.html#long-lines-1">recommends the following style for long function names or definitions</a>.</p>
+<p>😝</p>
+<pre class="r"><code>long_function_name &lt;- function(a = &quot;a long argument&quot;,
+                               b = &quot;another argument&quot;,
+                               c = &quot;another long argument&quot;) {
+  # As usual code is indented by two spaces.
+}</code></pre>
+<p>I don’t like when how the code is crammed to the right of the screen,
+or how the indentation of the arguments is a function of how many characters are in the function name
+rather than their position within the code’s syntax tree.</p>
+<p>In terms of reading flow, when scanning a script containing this style of code,
+I need to jump to the right to see what kind of arguments <code>long_function_name()</code> takes.
+It’s also common for me to tinker with the ordering of inputs while working out the API for a function,
+and it’s much easier to reorder arguments by pressing
+<kbd>Alt</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd>
+in RStudio to move single lines up or down.</p>
+<p>🤗</p>
+<pre class="r"><code>long_function_name &lt;- function(
+  a = &quot;a long argument&quot;,
+  b = &quot;another argument&quot;,
+  c = &quot;another long argument&quot;
+) {
+  # As usual code is indented by two spaces.
+}</code></pre>
+</div>
+<div id="line-breaks-inside-function-calls" class="section level3">
+<h3>Line breaks inside function calls</h3>
+<p>Similarly, for function calls that don’t fit on a single line,
+each argument should have it’s own line.
+This is how it’s described in tidyverse style (and I fully agree)</p>
+<blockquote>
+<p>If the arguments to a function don’t all fit on one line, put each argument on its own line and indent.</p>
+<p><cite><a href="https://style.tidyverse.org/pipes.html#long-lines-2" class="uri">https://style.tidyverse.org/pipes.html#long-lines-2</a></cite></p>
+</blockquote>
+<pre class="r"><code>iris %&gt;%
+  group_by(Species) %&gt;%
+  summarise(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width = mean(Sepal.Width),
+    Species = n_distinct(Species)
+  )</code></pre>
+<p>But <span class="pkg">styler</span>’s <code>styler::tidyverse_style()</code> will allow multiple arguments to exist on the same line.</p>
+<pre class="r"><code>iris %&gt;%
+  group_by(Species) %&gt;%
+  summarise(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width = mean(Sepal.Width), Species = n_distinct(Species)
+  )</code></pre>
+<p>In my preferred syle, if there are <strong>any</strong> line breaks inside a function call, then all arguments should get line breaks.</p>
+</div>
+</div>
+<div id="creating-custom-style-rules-for-styler" class="section level2">
+<h2>Creating custom style rules for styler</h2>
+<p>Start from <code>styler:tidyverse_style()</code></p>
+<pre class="r"><code>tidy_style &lt;- styler::tidyverse_style()</code></pre>
+<p>pick style “area” where your new rule will fit in,
+or where the rule that you want to overwrite exists</p>
+<pre class="r"><code>names(tidy_style)</code></pre>
+<pre><code>## [1] &quot;initialize&quot;        &quot;line_break&quot;        &quot;space&quot;            
+## [4] &quot;token&quot;             &quot;indention&quot;         &quot;use_raw_indention&quot;
+## [7] &quot;reindention&quot;</code></pre>
+<p>for example, the rule about indention of function arguments lives in <code>indention</code>.</p>
+<pre class="r"><code>names(tidy_style$indention)</code></pre>
+<pre><code>## [1] &quot;update_indention_ref_fun_dec&quot;</code></pre>
+<pre class="r"><code>tidy_style$indention$update_indention_ref_fun_dec</code></pre>
+<pre><code>## function (pd_nested) 
+## {
+##     if (pd_nested$token[1] == &quot;FUNCTION&quot;) {
+##         seq &lt;- seq2(3, nrow(pd_nested) - 2)
+##         pd_nested$indention_ref_pos_id[seq] &lt;- pd_nested$pos_id[2]
+##     }
+##     pd_nested
+## }
+## &lt;bytecode: 0x5562e1d59aa8&gt;
+## &lt;environment: namespace:styler&gt;</code></pre>
+<p>My initial reaction: huh?
+But I can gather that this function applies a style rule when it
+gets an expression that starts with the <code>FUNCTION</code> token.
+So I inserted a browser statement just inside the if statement</p>
+<pre class="r"><code>tidy_style$indention$update_indention_ref_fun_dec &lt;- function (pd_nested) {
+  if (pd_nested$token[1] == &quot;FUNCTION&quot;) {
+    # I would call browser() here...
+    # but for the blog I&#39;ll grab pd_nested so we can see it
+    assign(&quot;pd_nested_in&quot;, pd_nested, .GlobalEnv)
+    seq &lt;- rlang::seq2(3, nrow(pd_nested) - 2)
+    pd_nested$indention_ref_pos_id[seq] &lt;- pd_nested$pos_id[2]
+    assign(&quot;pd_nested_out&quot;, pd_nested, .GlobalEnv)
+    stop(&quot;break for blog&quot;)
+  }
+  pd_nested
+}</code></pre>
+<pre class="r"><code>styler::style_text(
+  text = &#39;
+  long_function_name &lt;- function(a = &quot;a long argument&quot;,
+                               b = &quot;another argument&quot;) {
+    # function code...
+  }&#39;,
+  transformers = tidy_style
+)</code></pre>
+<pre><code>## Error in fun(x): break for blog</code></pre>
+<pre class="r"><code>pd_cols &lt;- c(&quot;pos_id&quot;, &quot;token&quot;, &quot;text&quot;, &quot;indent&quot;, &quot;indention_ref_pos_id&quot;)
+
+pd_nested_in[,  pd_cols]</code></pre>
+<pre><code>## # A tibble: 11 x 5
+##    pos_id token          text     indent indention_ref_pos_id
+##     &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;               
+##  1      6 FUNCTION       function      0 NA                  
+##  2      7 &#39;(&#39;            (             0 NA                  
+##  3      8 SYMBOL_FORMALS a             0 NA                  
+##  4      9 EQ_FORMALS     =             0 NA                  
+##  5     11 expr           &quot;&quot;            0 NA                  
+##  6     12 &#39;,&#39;            ,             0 NA                  
+##  7     13 SYMBOL_FORMALS b             0 NA                  
+##  8     14 EQ_FORMALS     =             0 NA                  
+##  9     16 expr           &quot;&quot;            0 NA                  
+## 10     17 &#39;)&#39;            )             0 NA                  
+## 11     18 expr           &quot;&quot;            0 NA</code></pre>
+<pre class="r"><code>pd_nested_out[, pd_cols]</code></pre>
+<pre><code>## # A tibble: 11 x 5
+##    pos_id token          text     indent indention_ref_pos_id
+##     &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt;                &lt;int&gt;
+##  1      6 FUNCTION       function      0                   NA
+##  2      7 &#39;(&#39;            (             0                   NA
+##  3      8 SYMBOL_FORMALS a             0                    7
+##  4      9 EQ_FORMALS     =             0                    7
+##  5     11 expr           &quot;&quot;            0                    7
+##  6     12 &#39;,&#39;            ,             0                    7
+##  7     13 SYMBOL_FORMALS b             0                    7
+##  8     14 EQ_FORMALS     =             0                    7
+##  9     16 expr           &quot;&quot;            0                    7
+## 10     17 &#39;)&#39;            )             0                   NA
+## 11     18 expr           &quot;&quot;            0                   NA</code></pre>
+<p>By comparing <code>pd_nested_in</code> and <code>pd_nested_out</code>
+(and by looking at the source code, obvs),
+I worked out that <code>indention_ref_pos_id</code> and <code>indent</code> were
+the two variables I needed to tweak.
+Ultimately, I figured out that <code>indention_ref_pos_id</code> is,
+in essence,
+<em>indent relative to the item with <code>pos_id == indention_ref_pos_id</code></em>
+and <code>indent</code> is the amount of indenting.</p>
+<p>What I realized I wanted here was to simply indent newlines inside the <code>function()</code> call
+by the usual 2 spaces that I use for indenting
+and let the rule about arguments in functions take care of line breaks.</p>
+<p>Here’s the <code>update_indention_ref_fun_dec()</code> rule that I settled on.</p>
+<pre class="r"><code>tidy_style$indention$update_indention_ref_fun_dec &lt;- function(pd_nested) {
+  if (pd_nested$token[1] == &quot;FUNCTION&quot;) {
+    seq &lt;- rlang::seq2(3, nrow(pd_nested) - 2)
+    pd_nested$indention_ref_pos_id[seq] &lt;- 0
+    pd_nested$indent[seq] &lt;- 2
+    assign(&quot;pd_nested_mine&quot;, pd_nested, .GlobalEnv)
+  }
+  pd_nested
+}
+
+styler::style_text(
+  text = &#39;
+  long_function_name &lt;- function(a = &quot;a long argument&quot;,
+                               b = &quot;another argument&quot;) {
+    # function code...
+  }&#39;,
+  transformers = tidy_style
+)</code></pre>
+<pre><code>## 
+## long_function_name &lt;- function(a = &quot;a long argument&quot;,
+##   b = &quot;another argument&quot;) {
+##   # function code...
+## }</code></pre>
+<pre class="r"><code>pd_nested_mine[, pd_cols]</code></pre>
+<pre><code>## # A tibble: 11 x 5
+##    pos_id token          text     indent indention_ref_pos_id
+##     &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;dbl&gt;                &lt;dbl&gt;
+##  1      6 FUNCTION       function      0                   NA
+##  2      7 &#39;(&#39;            (             0                   NA
+##  3      8 SYMBOL_FORMALS a             2                    0
+##  4      9 EQ_FORMALS     =             2                    0
+##  5     11 expr           &quot;&quot;            2                    0
+##  6     12 &#39;,&#39;            ,             2                    0
+##  7     13 SYMBOL_FORMALS b             2                    0
+##  8     14 EQ_FORMALS     =             2                    0
+##  9     16 expr           &quot;&quot;            2                    0
+## 10     17 &#39;)&#39;            )             0                   NA
+## 11     18 expr           &quot;&quot;            0                   NA</code></pre>
+<div id="line-breaks" class="section level3">
+<h3>Line Breaks</h3>
+<pre class="r"><code>tidy_style$line_break$set_linebreak_each_argument_if_multi_line &lt;- function(pd) {
+    if (!(any(pd$token == &quot;&#39;,&#39;&quot;))) {
+      return(pd)
+    }
+    # does this expression contain expressions with linebreaks?
+    has_children &lt;- purrr::some(pd$child, purrr::negate(is.null))
+    has_internal_linebreak &lt;- FALSE
+    is_function_definition &lt;- pd$token[1] == &quot;FUNCTION&quot;
+    if (has_children &amp;&amp; !is_function_definition) {
+      children &lt;- pd$child
+
+      # don&#39;t count anything inside {} as internal linebreaks
+      idx_pre_open_brace &lt;- which(pd$token_after == &quot;&#39;{&#39;&quot;)
+      if (length(idx_pre_open_brace)) {
+        children[idx_pre_open_brace + 1] &lt;- NULL
+      }
+
+      has_internal_linebreak &lt;- children %&gt;%
+        purrr::discard(is.null) %&gt;%
+        purrr::map_int(~ sum(.$newlines, .$lag_newlines)) %&gt;%
+        any(. &gt; 0)
+    }
+
+    has_no_linebreaks &lt;- sum(pd$newlines, pd$lag_newlines) &lt; 1
+    if (!has_internal_linebreak &amp;&amp; has_no_linebreaks) {
+      return(pd)
+    }
+
+    idx_comma &lt;- which(pd$token == &quot;&#39;,&#39;&quot;)
+    idx_open_paren &lt;- grep(&quot;&#39;[[(]&#39;&quot;, pd$token)
+    idx_close_paren &lt;- grep(&quot;&#39;(]|\\))&#39;&quot;, pd$token)
+    pd[idx_comma + 1L, &quot;lag_newlines&quot;] &lt;- 1L
+    if (length(idx_open_paren)) {
+      # Add linebreak after open parens
+      # ...I don&#39;t know why but this has to be `lag_newlines`
+      pd[idx_open_paren[1] + 1L, &quot;lag_newlines&quot;] &lt;- 1L
+    }
+    if (length(idx_close_paren)) {
+      # Add linebreak before close parens
+      pd[idx_close_paren[length(idx_close_paren)], &quot;lag_newlines&quot;] &lt;- 1L
+    }
+    pd
+  }</code></pre>
+</div>
+</div>
