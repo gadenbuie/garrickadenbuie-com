@@ -13,7 +13,7 @@ tags:
 description: > 
   Building discrete color scales for ggplot2 
   with some cool features for binary categorical variables.
-twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/demo2-1.png
+twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/title-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
 keywords: rstats
 editor_options:
@@ -46,8 +46,8 @@ choosing automatically from a branded color palette.
 ## A color palette for our "brand"
 
 Suppose we have color palette for our brand or organization.
-I just grabbed a color palette from [coolors.co](https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c)
-(but I think it actually looks pretty decent!).
+I just grabbed a random color palette from [coolors.co](https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c)
+(but I think it actually looks okay!).
 We'll store this in a list called `branded_colors`,
 that you would ideally export from the package containing your brand's [ggplot2]{.pkg} themes.
 
@@ -82,16 +82,16 @@ ggplot(bc_df) +
 
 ## Create a palette function
 
-Next we creates the palette function. 
+Next we create the palette function. 
 Ultimately, what we need from a palette function is 
 a function that takes a single argument `n` and returns `n` colors.
 
 But in our case, we want to give the user some control over which colors are used,
-so our palette fucntion needs to have some additional parameters.
+so our palette function needs to have some additional parameters.
 To balance both needs, we'll use a *closure*, 
 which is fancy word for a function that returns another function.
 The outer function sets up the color choices 
-and the inner function returns the function of `n` that gives [ggplot2]{.pkg}
+and the inner function returns a simple function of `n` that gives [ggplot2]{.pkg}
 our brand's colors.
 
 What's great is that we can do whatever we want inside these functions.
@@ -304,3 +304,60 @@ You can create those using the same `branded_palette()` functions
 you used for `scale_color_branded()`, 
 with the small tweak of replacing `"color"` with `"fill"` 
 as the first argument to `ggplot2::discrete_scale()`
+
+### What about three colors?
+
+[Emily Riederer](https://emilyriederer.netlify.com/)
+has a neat function in her [Rtistic](https://github.com/emilyriederer/rtistic) package template 
+that I highly recommend you check out if you're making a package of branded [ggplot2]{.pkg} and [rmarkdown]{.pkg} themes.
+
+She calls it `scale_color_opinionated()` 
+and it works similarly to the functions I've laid out,
+except that it provides a color scale specifically for categorical variables with three levels: `"good"`, `"neutral"`, and `"bad"`.
+
+If this sounds like something you do frequently, consider adding an opinionated function to your package!
+
+### Thanks
+
+Thanks for reading!
+Find me on Twitter [&commat;grrrck](https://twitter.com/grrrck)
+to let me know if this post was helpful.
+
+And thanks to 
+[Benjamin Wolfe](https://twitter.com/BenjaminWolfe)
+for inspiring this post!
+
+`r blogdown::shortcode("twitter", "1161844769624137728")`
+
+```{r title-card, fig.show="hide", include=FALSE, fig.width=8, fig.height=4.5}
+library(magick)
+
+g2 <- g + 
+  theme_void() +
+  guides(color = FALSE) +
+  theme(
+    plot.margin = margin(1, 1, 1, 1, "line")
+  )
+
+g2$layers[[1]]$aes_params$size <- 5
+
+gbg <- cowplot::plot_grid(
+  g2 + scale_color_branded(),
+  g2 + scale_color_branded(direction = -1),
+  g2 + scale_color_branded(other = "yellow", direction = -1),
+  g2 + aes(color = gear) + scale_color_branded()
+)
+
+img_bg <- magick::image_graph(1200, 675, bg = "transparent")
+print(gbg)
+dev.off()
+
+magick::image_annotate(
+  img_bg,
+  "scale_color_branded()",
+  font = "Merriweather",
+  size = 85,
+  gravity = "Center"
+) 
+```
+

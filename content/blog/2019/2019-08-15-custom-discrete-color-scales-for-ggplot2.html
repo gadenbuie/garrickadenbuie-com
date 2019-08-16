@@ -13,7 +13,7 @@ tags:
 description: > 
   Building discrete color scales for ggplot2 
   with some cool features for binary categorical variables.
-twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/demo2-1.png
+twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/title-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
 keywords: rstats
 editor_options:
@@ -36,8 +36,8 @@ choosing automatically from a branded color palette.</p>
 <div id="a-color-palette-for-our-brand" class="section level2">
 <h2>A color palette for our “brand”</h2>
 <p>Suppose we have color palette for our brand or organization.
-I just grabbed a color palette from <a href="https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c">coolors.co</a>
-(but I think it actually looks pretty decent!).
+I just grabbed a random color palette from <a href="https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c">coolors.co</a>
+(but I think it actually looks okay!).
 We’ll store this in a list called <code>branded_colors</code>,
 that you would ideally export from the package containing your brand’s <span class="pkg">ggplot2</span> themes.</p>
 <pre class="r"><code>branded_colors &lt;- list(
@@ -52,15 +52,15 @@ that you would ideally export from the package containing your brand’s <span c
 </div>
 <div id="create-a-palette-function" class="section level2">
 <h2>Create a palette function</h2>
-<p>Next we creates the palette function.
+<p>Next we create the palette function.
 Ultimately, what we need from a palette function is
 a function that takes a single argument <code>n</code> and returns <code>n</code> colors.</p>
 <p>But in our case, we want to give the user some control over which colors are used,
-so our palette fucntion needs to have some additional parameters.
+so our palette function needs to have some additional parameters.
 To balance both needs, we’ll use a <em>closure</em>,
 which is fancy word for a function that returns another function.
 The outer function sets up the color choices
-and the inner function returns the function of <code>n</code> that gives <span class="pkg">ggplot2</span>
+and the inner function returns a simple function of <code>n</code> that gives <span class="pkg">ggplot2</span>
 our brand’s colors.</p>
 <p>What’s great is that we can do whatever we want inside these functions.
 You can use this opportunity to re-order the colors for specific values of <code>n</code>, for example.</p>
@@ -205,5 +205,25 @@ You can create those using the same <code>branded_palette()</code> functions
 you used for <code>scale_color_branded()</code>,
 with the small tweak of replacing <code>"color"</code> with <code>"fill"</code>
 as the first argument to <code>ggplot2::discrete_scale()</code></p>
+</div>
+<div id="what-about-three-colors" class="section level3">
+<h3>What about three colors?</h3>
+<p><a href="https://emilyriederer.netlify.com/">Emily Riederer</a>
+has a neat function in her <a href="https://github.com/emilyriederer/rtistic">Rtistic</a> package template
+that I highly recommend you check out if you’re making a package of branded <span class="pkg">ggplot2</span> and <span class="pkg">rmarkdown</span> themes.</p>
+<p>She calls it <code>scale_color_opinionated()</code>
+and it works similarly to the functions I’ve laid out,
+except that it provides a color scale specifically for categorical variables with three levels: <code>"good"</code>, <code>"neutral"</code>, and <code>"bad"</code>.</p>
+<p>If this sounds like something you do frequently, consider adding an opinionated function to your package!</p>
+</div>
+<div id="thanks" class="section level3">
+<h3>Thanks</h3>
+<p>Thanks for reading!
+Find me on Twitter <a href="https://twitter.com/grrrck">@grrrck</a>
+to let me know if this post was helpful.</p>
+<p>And thanks to
+<a href="https://twitter.com/BenjaminWolfe">Benjamin Wolfe</a>
+for inspiring this post!</p>
+{{% twitter "1161844769624137728" %}}
 </div>
 </div>
