@@ -339,7 +339,7 @@ g2 <- g +
     plot.margin = margin(1, 1, 1, 1, "line")
   )
 
-g2$layers[[1]]$aes_params$size <- 5
+g2$layers[[1]]$aes_params$size <- 6
 
 gbg <- cowplot::plot_grid(
   g2 + scale_color_branded(),
@@ -357,7 +357,8 @@ magick::image_annotate(
   "scale_color_branded()",
   font = "Merriweather",
   size = 85,
-  gravity = "Center"
+  gravity = "Center",
+  location = "+0+26"
 ) 
 ```
 
