@@ -23,6 +23,10 @@ rssLimit = 10
     weight = -1
     url = "/about/"
 [[menu.main]]
+    name = "Training"
+    weight = 1.5
+    url = "/training/"
+[[menu.main]]
     name = "Projects"
     weight = 2
     url = "/project/"
@@ -64,7 +68,7 @@ rssLimit = 10
 
     
 [params]
-    description = "Data Scientist. #rstats. Musician. Always learning something new."
+    description = "Data Scientist. #rstats. Musician. Educator. Always learning something new."
     author = "Garrick Aden-Buie"
     EnableEmoji = true
     contactHeader = "Links"
