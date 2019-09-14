@@ -12,6 +12,7 @@ type: page
 [garrick-apps]: https://apps.garrickadenbuie.com
 [garrick-projects]: /project/
 [garrick-talks]: /tags/education/
+[moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
 
 <img src="/images/garrick-profile_300.png" 
      class="center"
@@ -21,8 +22,8 @@ type: page
 />
 
 Hello, my name is Garrick Aden-Buie.
-I'm a data scientist at the [Moffitt Cancer Center][moffitt] where I work with [Dr. Travis Gerke][gerkelab] using R and the tools of data science to accelerate research in integrative molecular cancer epidemiology.
-Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](http://news.usf.edu/article/templates/?a=7974&z=220).
+I'm a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc] using R, Shiny, and the tools of data science to accelerate research towards the prevention and cure of cancer.
+Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](http://news.usf.edu/article/templates/?a=7974&z=220).
 
 I'm a passionate R user and educator.
 I build [web apps][garrick-apps] using [Shiny](https://shiny.rstudio.com/), [tools and packages][garrick-projects] for [R](http://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
@@ -31,6 +32,8 @@ Browse my [list of projects][garrick-projects] for examples of my work, a [selec
 ### Let's do something awesome together!
 
 If you're interested in working with me, please drop me a line at [garrick@adenbuie.com](mailto:garrick@adenbuie.com)!
+
+I'm also available for [custom, personalized training and workshops](/training/).
 
 ### A little bit more about me... 
 

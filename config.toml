@@ -20,15 +20,15 @@ rssLimit = 10
     url = "/blog/"
 [[menu.main]]
     name = "About"
-    weight = -1
+    weight = 6
     url = "/about/"
 [[menu.main]]
     name = "Training"
-    weight = 1.5
+    weight = 2
     url = "/training/"
 [[menu.main]]
     name = "Projects"
-    weight = 2
+    weight = 3
     url = "/project/"
 [[menu.main]]
     name = "Shiny Apps"
