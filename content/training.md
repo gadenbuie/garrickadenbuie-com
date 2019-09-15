@@ -33,7 +33,7 @@ type: page
 </div>
 
 <p>
-I love teaching a range of data science and programming topics, including the topics listed above, and I'm happy to develop custom materials that address your or your team's specifc needs.
+I love teaching a range of data science and programming topics, including those listed above, and I'm happy to develop custom materials that address your or your team's specifc needs.
 </p>
 
 <div class="email-divider">
