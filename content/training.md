@@ -1,15 +1,19 @@
 ---
 title: "Personalized Trainings and Workshops"
 slug: training
+twitterImage: /training/training-social-card.png
+description: Personalized R Trainings and Workshops by an RStudio Certified Education Training Partner.
 date: 2019-09-13T00:00:00+00:00
 type: page
 ---
 
-<img src="training.svg" />
+<object data="training.svg" type="image/svg+xml" class="training-header">
+  <img src="training.png" />
+</object>
 
 <p>
   I am an
-  <a href="https://rstudio-trainers.netlify.com"><em>RStudio Education</em> Certified Trainer</a> and I am passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, aproachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
+  <a href="https://rstudio-trainers.netlify.com"><em>RStudio Education</em> Certified Trainer</a> and I'm passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, aproachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
 </p>
 
 <div class="topic-lists">
@@ -48,6 +52,9 @@ I love teaching a range of data science and programming topics, including the to
 <form action="https://formstatic.dev" method="post" class="stack-large contact-form" onsubmit="return validateForm()">
     <input type="hidden" name="$processor" value="email">
     <input type="hidden" name="$to" value="garrick@adenbuie.com">
+    <input type="hidden" name="$reply_to" value="garrick@adenbuie.com">
+    <input type="hidden" name="$subject" value="Training Inquiry">
+    <input type="hidden" name="$redirect_to" value="https://www.garrickadenbuie.com/training/?thanks=true">
     
     <div class="stack-small name-email">
     <label for="name">Your Name</label>
@@ -66,10 +73,16 @@ I love teaching a range of data science and programming topics, including the to
       Send
     </button>
     <div id="contact-form-feedback"></div>
+    <div id="thanks">
+      <p>Thank you for your message, I'll be in touch with you soon!</p>
+    </div>
     </div>
 </form>
 
 <style>
+object[type*="svg"] {
+  width: 100%;
+}
 .topic-lists {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -159,6 +172,9 @@ I love teaching a range of data science and programming topics, including the to
 #contact-form-feedback.invalid {
   opacity: 1;
 }
+#thanks {
+  opacity: 0;
+}
 @media screen and (min-width: 480px) and (max-width: 767px) {
   .contact-form .name-email {
     width: 47.5%;
@@ -239,6 +255,24 @@ function validateForm() {
 
 email.addEventListener('keyup', e => {
   const eml = e.target.value
-  email.classList.toggle('invalid', !validateEmail(eml))
+  const isValid = validateEmail(eml)
+  email.classList.toggle('invalid', !isValid)
+  const reply = document.querySelector('input[name="$reply_to"]')
+  if (eml !== '' && isValid) {
+    // update reply_to field in form
+    reply.value = eml
+  } else {
+    reply.value = 'garrick@adenbuie.com'
+  }
 })
+
+// show thank you message
+if (new RegExp(/#thanks/).test(window.location)) {
+  document.getElementById("thanks").style.opacity = 1
+}
+// set correct redirect url
+const this_url = new URL(window.location)
+const redirect_url = this_url.origin + "/training/#thanks"
+const redirect = document.querySelector('input[name="$redirect_to"]')
+redirect.value = redirect_url
 </script>
