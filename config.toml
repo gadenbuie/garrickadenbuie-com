@@ -23,20 +23,24 @@ rssLimit = 10
     weight = -1
     url = "/about/"
 [[menu.main]]
-    name = "Projects"
+    name = "Training"
     weight = 2
+    url = "/training/"
+[[menu.main]]
+    name = "Projects"
+    weight = 3
     url = "/project/"
 [[menu.main]]
     name = "Shiny Apps"
-    weight = 3
+    weight = 4
     url = "https://apps.garrickadenbuie.com"
 [[menu.main]]
     name = "Talks"
-    weight = 4
+    weight = 5
     url = "/talk/"
 [[menu.main]]
     name = "Music"
-    weight = 5
+    weight = 6
     url = "/categories/music/"
 #[[menu.main]]
 #    name = "Photos"
@@ -64,7 +68,7 @@ rssLimit = 10
 
     
 [params]
-    description = "Data Scientist. #rstats. Musician. Always learning something new."
+    description = "Data Scientist. #rstats. Musician. Educator. Always learning something new."
     author = "Garrick Aden-Buie"
     EnableEmoji = true
     contactHeader = "Links"

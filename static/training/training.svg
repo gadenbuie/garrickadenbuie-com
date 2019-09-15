@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg
+    PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    preserveAspectRatio="xMidYMid meet" viewBox="0 0 1066.667 800"
+    width="1066.67" height="800">
+    <defs>
+        <path
+            d="M327.39 15C232.7 66.29 180.1 94.78 169.58 100.48C180.71 119.66 174.2 144.23 155.02 155.36C135.85 166.5 111.28 159.98 100.14 140.81C99.74 140.12 99.36 139.42 99 138.71C95.42 140.65 77.48 150.37 45.19 167.85L184.58 425.19L466.78 272.33L327.39 15Z"
+            id="g3vk8pQnao"></path>
+        <path
+            d="M135.06 87.23C117.07 87.23 102.48 101.82 102.48 119.81C102.48 137.81 117.07 152.39 135.06 152.39C153.05 152.39 167.64 137.81 167.64 119.81C167.64 101.82 153.05 87.23 135.06 87.23Z"
+            id="b4M6AzUQ5"></path>
+        <path
+            d="M723.67 703.91C826.05 670.51 882.93 651.96 894.31 648.25C886.81 627.38 897.64 604.39 918.5 596.89C939.37 589.38 962.37 600.22 969.87 621.08C970.14 621.83 970.38 622.59 970.61 623.36C974.49 622.09 993.88 615.77 1028.79 604.38L938.03 326.15L632.92 425.67L723.67 703.91Z"
+            id="gb6zDERmDm"></path>
+        <path
+            d="M932.77 602.52C914.77 602.52 900.19 617.11 900.19 635.1C900.19 653.09 914.77 667.68 932.77 667.68C950.76 667.68 965.35 653.09 965.35 635.1C965.35 617.11 950.76 602.52 932.77 602.52Z"
+            id="c579sNvUo"></path>
+        <path
+            d="M847.19 75.51C839.04 75.51 832.44 82.12 832.44 90.26C832.44 98.41 839.04 105.01 847.19 105.01C855.34 105.01 861.94 98.41 861.94 90.26C861.94 82.12 855.34 75.51 847.19 75.51Z"
+            id="apK0FnrCH"></path>
+        <path
+            d="M940.46 168.48C940.46 168.48 940.46 168.48 940.46 168.48C940.46 383.23 940.46 502.54 940.46 526.4C940.46 526.4 940.46 526.4 940.46 526.4C467.77 526.4 205.16 526.4 152.64 526.4C152.64 526.4 152.64 526.4 152.64 526.4C152.64 311.65 152.64 192.34 152.64 168.48C152.64 168.48 152.64 168.48 152.64 168.48C625.33 168.48 887.94 168.48 940.46 168.48Z"
+            id="a20WDcppdq"></path>
+        <path
+            d="M771.3 509.23C771.3 509.23 771.3 509.23 771.3 509.23C771.3 513.43 771.3 515.76 771.3 516.23C771.3 516.23 771.3 516.23 771.3 516.23C738.91 516.23 720.92 516.23 717.32 516.23C717.32 516.23 717.32 516.23 717.32 516.23C717.32 512.03 717.32 509.69 717.32 509.23C717.32 509.23 717.32 509.23 717.32 509.23C749.71 509.23 767.71 509.23 771.3 509.23Z"
+            id="a4b2NBCOig"></path>
+        <path
+            d="M924.7 193.77C924.7 193.77 924.7 193.77 924.7 193.77C924.7 381.86 924.7 486.36 924.7 507.26C924.7 507.26 924.7 507.26 924.7 507.26C470.76 507.26 218.58 507.26 168.14 507.26C168.14 507.26 168.14 507.26 168.14 507.26C168.14 319.16 168.14 214.67 168.14 193.77C168.14 193.77 168.14 193.77 168.14 193.77C622.08 193.77 874.26 193.77 924.7 193.77Z"
+            id="bbX3Qpb00"></path>
+        <path
+            d="M849.98 490.22C849.98 490.22 849.98 490.22 849.98 490.22C849.98 505.22 849.98 513.55 849.98 515.22C849.98 515.22 849.98 515.22 849.98 515.22C805.59 515.22 780.93 515.22 776 515.22C776 515.22 776 515.22 776 515.22C776 500.22 776 491.89 776 490.22C776 490.22 776 490.22 776 490.22C820.39 490.22 845.05 490.22 849.98 490.22Z"
+            id="a3OARTz63n"></path>
+        <path
+            d="M906.18 204.96C906.18 204.96 906.18 204.96 906.18 204.96C906.18 385.7 906.18 486.11 906.18 506.19C906.18 506.19 906.18 506.19 906.18 506.19C528.39 506.19 318.52 506.19 276.54 506.19C276.54 506.19 276.54 506.19 276.54 506.19C276.54 325.46 276.54 225.05 276.54 204.96C276.54 204.96 276.54 204.96 276.54 204.96C654.32 204.96 864.2 204.96 906.18 204.96Z"
+            id="b3Va9XJgBe"></path>
+        <path d="M317.76 440.9L910.19 440.9" id="c1XbZwx1wT"></path>
+        <path d="M317.76 377.38L910.19 377.38" id="e2CLqyQq9b"></path>
+        <path d="M317.76 313.86L910.19 313.86" id="a3o2mbuk6T"></path>
+        <path d="M317.76 250.34L910.19 250.34" id="aEDr1VQy"></path>
+        <path d="M890.71 485.63L890.71 212.37" id="bslf50gQv"></path>
+        <path d="M776.11 485.63L776.11 212.37" id="caiaCAGY"></path>
+        <path d="M661.53 485.63L661.53 212.37" id="a7rknPDFr"></path>
+        <path d="M546.94 485.63L546.94 212.37" id="b11eaV11wi"></path>
+        <path d="M432.35 485.63L432.35 212.37" id="aanitonYI"></path>
+        <path d="M317.76 485.63L317.76 212.37" id="b3l3cBmLX"></path>
+        <path
+            d="M640.33 397.71C637.46 397.71 635.14 400.03 635.14 402.9C635.14 405.76 637.46 408.09 640.33 408.09C643.19 408.09 645.52 405.76 645.52 402.9C645.52 400.03 643.19 397.71 640.33 397.71Z"
+            id="d9UowuSj"></path>
+        <path
+            d="M640.33 381.52C637.46 381.52 635.14 383.84 635.14 386.71C635.14 389.57 637.46 391.9 640.33 391.9C643.19 391.9 645.52 389.57 645.52 386.71C645.52 383.84 643.19 381.52 640.33 381.52Z"
+            id="b2hvAGLYe"></path>
+        <path
+            d="M599.07 416.77C596.21 416.77 593.88 419.1 593.88 421.96C593.88 424.83 596.21 427.15 599.07 427.15C601.94 427.15 604.26 424.83 604.26 421.96C604.26 419.1 601.94 416.77 599.07 416.77Z"
+            id="c1lVyzoCGZ"></path>
+        <path
+            d="M562.41 361.5C559.54 361.5 557.22 363.83 557.22 366.69C557.22 369.56 559.54 371.88 562.41 371.88C565.28 371.88 567.6 369.56 567.6 366.69C567.6 363.83 565.28 361.5 562.41 361.5Z"
+            id="aB7DBJgQH"></path>
+        <path
+            d="M599.07 364.04C596.21 364.04 593.88 366.36 593.88 369.23C593.88 372.09 596.21 374.42 599.07 374.42C601.94 374.42 604.26 372.09 604.26 369.23C604.26 366.36 601.94 364.04 599.07 364.04Z"
+            id="b78lpEhENO"></path>
+        <path
+            d="M681.58 345.62C678.72 345.62 676.39 347.94 676.39 350.81C676.39 353.68 678.72 356 681.58 356C684.45 356 686.77 353.68 686.77 350.81C686.77 347.94 684.45 345.62 681.58 345.62Z"
+            id="ddBFL5W5m"></path>
+        <path
+            d="M713.66 345.62C710.8 345.62 708.48 347.94 708.48 350.81C708.48 353.68 710.8 356 713.66 356C716.53 356 718.85 353.68 718.85 350.81C718.85 347.94 716.53 345.62 713.66 345.62Z"
+            id="czIP7lLh9"></path>
+        <path
+            d="M379.07 424.39C376.21 424.39 373.88 426.71 373.88 429.58C373.88 432.45 376.21 434.77 379.07 434.77C381.94 434.77 384.26 432.45 384.26 429.58C384.26 426.71 381.94 424.39 379.07 424.39Z"
+            id="fcfI8w2wz"></path>
+        <path
+            d="M344.69 447.58C341.83 447.58 339.5 449.9 339.5 452.76C339.5 455.63 341.83 457.95 344.69 457.95C347.56 457.95 349.88 455.63 349.88 452.76C349.88 449.9 347.56 447.58 344.69 447.58Z"
+            id="b3yosC1lsv"></path>
+        <path
+            d="M631.17 387.55C628.3 387.55 625.98 389.88 625.98 392.74C625.98 395.61 628.3 397.93 631.17 397.93C634.03 397.93 636.36 395.61 636.36 392.74C636.36 389.88 634.03 387.55 631.17 387.55Z"
+            id="bGJkV5lfL"></path>
+        <path
+            d="M495.95 441.23C493.08 441.23 490.76 443.55 490.76 446.41C490.76 449.28 493.08 451.6 495.95 451.6C498.81 451.6 501.14 449.28 501.14 446.41C501.14 443.55 498.81 441.23 495.95 441.23Z"
+            id="g3uYt1gz9c"></path>
+        <path
+            d="M631.17 359.92C628.3 359.92 625.98 362.24 625.98 365.11C625.98 367.97 628.3 370.3 631.17 370.3C634.03 370.3 636.36 367.97 636.36 365.11C636.36 362.24 634.03 359.92 631.17 359.92Z"
+            id="c1MBHwhnZj"></path>
+        <path
+            d="M693.04 345.62C690.17 345.62 687.85 347.94 687.85 350.81C687.85 353.68 690.17 356 693.04 356C695.9 356 698.23 353.68 698.23 350.81C698.23 347.94 695.9 345.62 693.04 345.62Z"
+            id="glCPQ1fSW"></path>
+        <path
+            d="M793.88 337.37C791.01 337.37 788.69 339.69 788.69 342.56C788.69 345.42 791.01 347.75 793.88 347.75C796.74 347.75 799.07 345.42 799.07 342.56C799.07 339.69 796.74 337.37 793.88 337.37Z"
+            id="ghgtlHXTo"></path>
+        <path
+            d="M745.75 305.6C742.88 305.6 740.56 307.92 740.56 310.79C740.56 313.66 742.88 315.98 745.75 315.98C748.61 315.98 750.94 313.66 750.94 310.79C750.94 307.92 748.61 305.6 745.75 305.6Z"
+            id="cavu59m8hv"></path>
+        <path
+            d="M725.12 327.2C722.25 327.2 719.93 329.52 719.93 332.39C719.93 335.26 722.25 337.58 725.12 337.58C727.99 337.58 730.31 335.26 730.31 332.39C730.31 329.52 727.99 327.2 725.12 327.2Z"
+            id="a6FDgRzFO"></path>
+        <path
+            d="M773.25 324.03C770.38 324.03 768.06 326.35 768.06 329.22C768.06 332.09 770.38 334.41 773.25 334.41C776.12 334.41 778.44 332.09 778.44 329.22C778.44 326.35 776.12 324.03 773.25 324.03Z"
+            id="a4JkKrTlYy"></path>
+        <path
+            d="M883.26 230.65C880.4 230.65 878.07 232.97 878.07 235.84C878.07 238.7 880.4 241.02 883.26 241.02C886.13 241.02 888.45 238.7 888.45 235.84C888.45 232.97 886.13 230.65 883.26 230.65Z"
+            id="b1qf3mT8Rj"></path>
+        <path
+            d="M784.71 224.61C781.84 224.61 779.52 226.94 779.52 229.8C779.52 232.67 781.84 234.99 784.71 234.99C787.57 234.99 789.9 232.67 789.9 229.8C789.9 226.94 787.57 224.61 784.71 224.61Z"
+            id="hwnlfkvS"></path>
+        <path
+            d="M628.87 407.56C626.01 407.56 623.68 409.88 623.68 412.75C623.68 415.61 626.01 417.93 628.87 417.93C631.74 417.93 634.06 415.61 634.06 412.75C634.06 409.88 631.74 407.56 628.87 407.56Z"
+            id="m3ePVFsCYe"></path>
+        <path
+            d="M766.37 340.54C763.51 340.54 761.19 342.86 761.19 345.73C761.19 348.59 763.51 350.92 766.37 350.92C769.24 350.92 771.56 348.59 771.56 345.73C771.56 342.86 769.24 340.54 766.37 340.54Z"
+            id="abgGZk5dm"></path>
+        <path
+            d="M816.8 320.22C813.93 320.22 811.61 322.54 811.61 325.41C811.61 328.27 813.93 330.59 816.8 330.59C819.67 330.59 821.99 328.27 821.99 325.41C821.99 322.54 819.67 320.22 816.8 320.22Z"
+            id="a5ESg2X3bV"></path>
+        <path
+            d="M681.58 319.9C678.72 319.9 676.39 322.22 676.39 325.09C676.39 327.95 678.72 330.28 681.58 330.28C684.45 330.28 686.77 327.95 686.77 325.09C686.77 322.22 684.45 319.9 681.58 319.9Z"
+            id="bwHRUEbnP"></path>
+        <path
+            d="M525.74 428.21C522.87 428.21 520.55 430.53 520.55 433.39C520.55 436.26 522.87 438.58 525.74 438.58C528.6 438.58 530.92 436.26 530.92 433.39C530.92 430.53 528.6 428.21 525.74 428.21Z"
+            id="b2mdj0XQrj"></path>
+        <path
+            d="M425.91 468.03C423.04 468.03 420.72 470.35 420.72 473.22C420.72 476.08 423.04 478.41 425.91 478.41C428.77 478.41 431.1 476.08 431.1 473.22C431.1 470.35 428.77 468.03 425.91 468.03Z"
+            id="a11Kr8fFY0"></path>
+        <path
+            d="M759.5 362.77C756.63 362.77 754.31 365.09 754.31 367.96C754.31 370.83 756.63 373.15 759.5 373.15C762.36 373.15 764.69 370.83 764.69 367.96C764.69 365.09 762.36 362.77 759.5 362.77Z"
+            id="gLewM8yVQ"></path>
+        <path
+            d="M670.13 388.19C667.26 388.19 664.94 390.51 664.94 393.38C664.94 396.24 667.26 398.56 670.13 398.56C672.99 398.56 675.31 396.24 675.31 393.38C675.31 390.51 672.99 388.19 670.13 388.19Z"
+            id="byMqN9oQA"></path>
+        <path
+            d="M777.83 337.37C774.97 337.37 772.64 339.69 772.64 342.56C772.64 345.42 774.97 347.75 777.83 347.75C780.7 347.75 783.02 345.42 783.02 342.56C783.02 339.69 780.7 337.37 777.83 337.37Z"
+            id="a25uaf3FGx"></path>
+        <path
+            d="M208.2 276.66C208.2 276.66 226.47 301.09 226.47 301.09C228.17 299.51 241.81 286.8 243.52 285.21C243.52 285.21 242.3 261.99 245.95 257.1C249.61 252.22 211.85 249.77 211.85 249.77C211.12 255.15 209.42 275.43 208.2 276.66Z"
+            id="fduT7BjIj"></path>
+        <path
+            d="M169.22 461.86L191.15 456.99L175.31 438.72L160.7 448.47L160.7 448.47L169.22 461.86Z"
+            id="b3PjyAPk0X"></path>
+        <path
+            d="M341.6 757.01C341.6 772.47 273.56 785 189.64 785C105.71 785 37.67 772.47 37.67 757.01C37.67 741.55 105.71 729.01 189.64 729.01C273.56 729.01 341.6 741.55 341.6 757.01Z"
+            id="af11cl9gW"></path>
+        <path
+            d="M166.79 737.66L158.26 738.87L146.08 735.22L149.74 712.08L166.79 715.73L166.79 715.73L166.79 737.66Z"
+            id="e1lnczcYnO"></path>
+        <path
+            d="M154.81 726.69C154.81 726.69 151.16 716.95 145.07 718.17C145.07 718.17 137.76 726.69 137.76 726.69C137.76 726.69 132.89 744.96 125.58 751.05C125.58 751.05 110.96 772.98 125.58 775.41C125.58 775.41 152.37 771.76 152.37 770.54C152.37 770.54 156.03 762.01 162.12 760.8C162.12 760.8 173.08 758.36 173.08 753.49C173.08 753.49 169.43 743.75 169.43 743.75C169.43 743.75 168.21 720.64 165.77 723.67C164.09 726.06 162.85 728.73 162.12 731.57C160.66 730.59 156.27 727.67 154.81 726.69Z"
+            id="asZqex6fe"></path>
+        <path
+            d="M214.29 723.04L226.47 725.48L232.56 719.39L233.77 703.55L219.16 704.77L219.16 704.77L214.29 723.04Z"
+            id="aYdBd80mp"></path>
+        <path
+            d="M225.86 714.21C226.22 714.21 229.15 714.21 229.51 714.21C229.51 714.21 229.51 705.68 235.6 705.68C235.6 705.68 240.47 711.77 240.47 711.77C240.47 711.77 253.87 732.48 257.52 736.13C257.52 736.13 280.67 750.75 264.83 755.62C264.83 755.62 238.04 760.49 230.73 751.97C230.73 751.97 223.42 748.31 218.55 748.31C213.68 748.31 207.59 745.88 207.59 742.22C207.59 738.57 211.24 731.26 211.24 731.26C211.24 731.26 213.68 709.34 214.9 711.77C216.11 714.21 218.55 717.86 218.55 717.86C220.01 717.13 223.42 714.21 225.86 714.21Z"
+            id="dbVq9NXBC"></path>
+        <path
+            d="M165.57 424.64C165.57 448.76 165.57 462.15 165.57 464.83C165.57 464.83 152.17 542.78 152.17 568.36C152.17 568.36 131.47 715.73 141.21 718.17C141.21 718.17 174.09 724.26 175.31 720.6C175.31 720.6 185.06 601.24 186.27 600.03C186.27 600.03 213.07 502.59 213.07 502.59C213.39 502.67 215.02 503.08 217.94 503.81C219.4 569.58 220.21 606.12 220.38 613.42C220.38 613.42 208.2 712.08 214.29 712.08C214.29 712.08 245.95 710.86 245.95 703.55C245.95 703.55 259.35 561.05 259.35 561.05C259.35 561.05 275.18 453.87 269.09 442.91C269.09 442.91 263.01 425.86 263.01 425.86C250.01 425.7 217.53 425.29 165.57 424.64Z"
+            id="aiBblHaV4"></path>
+        <path
+            d="M231.63 221.86C218.17 221.86 207.27 232.76 207.27 246.22C207.27 259.67 218.17 270.57 231.63 270.57C245.08 270.57 255.99 259.67 255.99 246.22C255.99 232.76 245.08 221.86 231.63 221.86Z"
+            id="aKJD9JFUZ"></path>
+        <path
+            d="M221.03 233.49C222.91 233.18 224.59 231.79 226.48 231.96C227.38 232.13 228.26 232.41 229.08 232.8C229.92 233.2 230.88 233.23 231.74 232.9C232.5 232.55 232.83 231.65 232.47 230.89C232.43 230.8 232.38 230.71 232.32 230.63C233.92 230.49 235.44 229.84 236.65 228.77C236.89 228.52 237.16 228.31 237.47 228.15C238.19 227.96 238.96 228.08 239.59 228.48C239.87 228.61 242.1 229.63 242.38 229.76C243.01 229.98 243.56 230.38 243.97 230.9C244.3 231.42 244.37 232.11 244.84 232.51C245.44 233.01 246.33 232.77 247.11 232.82C248.58 232.96 249.71 234.18 249.74 235.66C249.73 236.47 249.44 237.48 250.08 237.98C250.46 238.27 250.99 238.22 251.43 238.4C252.57 238.86 252.57 240.45 252.41 241.67C252.24 242.88 252.32 244.49 253.49 244.87C254.32 245.13 255.16 244.57 256.01 244.44C257.31 244.25 258.5 245.06 259.65 245.68C260.8 246.3 262.33 246.71 263.33 245.87C264.26 245.09 264.2 243.65 263.94 242.46C263.58 240.76 262.97 239.11 262.15 237.58C261.85 237.12 261.67 236.6 261.64 236.06C261.78 235.28 262.24 234.61 262.91 234.2C264.32 233.08 265.94 231.96 266.4 230.22C266.74 228.95 266.36 227.6 266.39 226.28C266.42 224.68 267.06 223.08 266.76 221.51C266.22 218.65 263.04 217.27 260.99 215.21C258.17 212.38 257.25 207.85 253.92 205.64C251.26 203.87 247.77 204.08 244.74 203.07C241.41 201.96 238.73 199.41 235.44 198.17C231.81 196.83 227.77 197.18 224.43 199.13C223.44 199.86 222.35 200.42 221.19 200.79C220.21 200.9 219.22 200.89 218.24 200.75C216.3 200.65 214.36 201.05 212.62 201.91C211.95 202.18 211.39 202.67 211.04 203.29C210.45 204.6 211.31 206.64 210.02 207.27C209.42 207.56 208.71 207.28 208.04 207.3C206.74 207.32 205.74 208.46 205.12 209.6C204.64 210.81 203.95 211.92 203.08 212.89C201.49 214.28 198.61 214.51 198.19 216.58C198.18 217.45 198.23 218.33 198.34 219.2C198.22 221.03 196.26 222.43 196.36 224.26C196.48 226.38 199.17 227.41 199.89 229.41C200.43 230.93 199.71 232.57 199.22 234.1C198.72 235.64 198.57 237.61 199.85 238.59C200.35 238.98 201 239.14 201.51 239.51C202.84 240.47 202.82 242.42 202.67 244.05C202.5 244.74 202.68 245.46 203.15 245.99C203.6 246.26 204.13 246.32 204.63 246.17C206.23 245.78 207.61 244.74 208.43 243.31C208.86 242.6 208.94 241.98 209.72 241.61C210.24 241.35 210.88 241.58 211.42 241.25C213.96 239.68 213.09 235.21 216.21 233.88C217.7 233.25 219.43 233.76 221.03 233.49Z"
+            id="b5Y4wAW9IM"></path>
+        <path
+            d="M226.47 285.79C226.47 285.79 211.24 273.01 210.02 268.13C210.02 268.13 202.11 276.05 202.11 277.27C202.11 278.49 168 282.14 159.48 291.88C150.95 301.63 143.65 322.33 143.65 322.33C145.72 326.23 162.28 357.41 164.35 361.31C164.35 361.31 165.57 383.23 165.57 385.67C165.57 385.67 159.48 427.08 161.91 428.3C161.91 428.3 188.71 441.69 209.42 439.26C209.42 439.26 250.83 433.17 256.92 433.17C256.92 433.17 267.88 435.6 267.88 433.17C267.88 433.17 264.22 425.86 264.22 423.42C264.22 423.42 263.01 414.9 263.01 411.24C263.01 411.24 260.57 401.5 260.57 396.63C260.57 396.63 287.36 325.99 287.36 325.99C287.36 325.99 286.15 305.28 266.66 295.54C266.66 295.54 244.74 282.14 244.74 282.14C244.74 282.14 244.36 274.83 243.33 274.83C243.33 274.83 238.65 285.79 228.9 287.01C228.42 286.77 226.95 286.04 226.47 285.79Z"
+            id="apQB2A6Kj"></path>
+        <path
+            d="M289.8 483.79C289.07 488.17 288.66 490.61 288.58 491.09C288.58 491.09 290.41 541.64 277.01 525.81C277.01 525.81 272.75 488.66 272.75 488.66C272.99 488.25 274.21 486.22 276.4 482.57L289.8 483.79Z"
+            id="b4Qj0Oeqqh"></path>
+        <path
+            d="M280.06 315.28C284.44 321.12 286.88 324.37 287.36 325.02C287.36 325.02 301.98 395.66 299.54 421.24C299.54 421.24 294.67 466.3 294.67 466.3C294.67 466.3 299.54 484.57 295.89 484.57C295.89 484.57 270.31 485.79 270.31 482.14C270.31 478.48 272.75 455.34 272.75 455.34C272.34 451.77 270.31 433.91 266.66 401.75L253.26 383.48L280.06 315.28Z"
+            id="l6PC9BLSAQ"></path>
+        <path
+            d="M147.3 316.93C145.11 319.12 143.89 320.34 143.65 320.58C143.65 320.58 121.72 386.35 129.03 400.97C136.34 415.58 150.95 452.12 155.83 450.9C160.7 449.68 177.75 438.72 177.75 437.5C177.75 436.29 157.04 402.18 157.04 402.18C157.04 402.18 154.61 394.88 155.83 393.66C157.04 392.44 157.04 393.66 155.83 391.22C154.61 388.79 154.61 391.22 157.04 388.79C159.48 386.35 159.48 386.35 159.48 385.13C159.48 383.91 166.79 353.47 166.79 353.47C164.19 348.59 157.69 336.41 147.3 316.93Z"
+            id="b1VDoqIqYG"></path>
+    </defs>
+    <g>
+        <g>
+            <g id="training-background">
+                <g>
+                    <use xlink:href="#g3vk8pQnao" opacity="1" fill="#e4e9e9"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#g3vk8pQnao" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b4M6AzUQ5" opacity="1" fill="#dc322f"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b4M6AzUQ5" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#gb6zDERmDm" opacity="1" fill="#e4e9e9"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#gb6zDERmDm" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#c579sNvUo" opacity="1" fill="#dc322f"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#c579sNvUo" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#apK0FnrCH" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#apK0FnrCH" opacity="1"
+                            fill-opacity="0" stroke="#edae49" stroke-width="2"
+                            stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-chalkboard">
+                <g>
+                    <use xlink:href="#a20WDcppdq" opacity="1" fill="#001920"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a20WDcppdq" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a4b2NBCOig" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a4b2NBCOig" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#bbX3Qpb00" opacity="1" fill="#ffffff"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#bbX3Qpb00" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a3OARTz63n" opacity="1" fill="#006883"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a3OARTz63n" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b3Va9XJgBe" opacity="1" fill="#ffffff"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b3Va9XJgBe" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-grid-y">
+                <g>
+                    <use xlink:href="#c1XbZwx1wT" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#c1XbZwx1wT" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#e2CLqyQq9b" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#e2CLqyQq9b" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a3o2mbuk6T" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#a3o2mbuk6T" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aEDr1VQy" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#aEDr1VQy" opacity="1" fill-opacity="0"
+                            stroke="#ebebeb" stroke-width="1.07"
+                            stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-grid-x">
+                <g>
+                    <use xlink:href="#bslf50gQv" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#bslf50gQv" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#caiaCAGY" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#caiaCAGY" opacity="1" fill-opacity="0"
+                            stroke="#ebebeb" stroke-width="1.07"
+                            stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a7rknPDFr" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#a7rknPDFr" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b11eaV11wi" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#b11eaV11wi" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aanitonYI" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#aanitonYI" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b3l3cBmLX" opacity="1" fill="#000000"
+                        fill-opacity="0"></use>
+                    <g>
+                        <use xlink:href="#b3l3cBmLX" opacity="1"
+                            fill-opacity="0" stroke="#ebebeb"
+                            stroke-width="1.07" stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-plot-red">
+                <g>
+                    <use xlink:href="#d9UowuSj" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#d9UowuSj" opacity="1" fill-opacity="0"
+                            stroke="#d1495b" stroke-width="0.71"
+                            stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b2hvAGLYe" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b2hvAGLYe" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#c1lVyzoCGZ" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#c1lVyzoCGZ" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aB7DBJgQH" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#aB7DBJgQH" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b78lpEhENO" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b78lpEhENO" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#ddBFL5W5m" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#ddBFL5W5m" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#czIP7lLh9" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#czIP7lLh9" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#fcfI8w2wz" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#fcfI8w2wz" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b3yosC1lsv" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b3yosC1lsv" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#bGJkV5lfL" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#bGJkV5lfL" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#g3uYt1gz9c" opacity="1" fill="#d1495b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#g3uYt1gz9c" opacity="1"
+                            fill-opacity="0" stroke="#d1495b"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-plot-yellow">
+                <g>
+                    <use xlink:href="#c1MBHwhnZj" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#c1MBHwhnZj" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#glCPQ1fSW" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#glCPQ1fSW" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#ghgtlHXTo" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#ghgtlHXTo" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#cavu59m8hv" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#cavu59m8hv" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a6FDgRzFO" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a6FDgRzFO" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a4JkKrTlYy" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a4JkKrTlYy" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b1qf3mT8Rj" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b1qf3mT8Rj" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#hwnlfkvS" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#hwnlfkvS" opacity="1" fill-opacity="0"
+                            stroke="#edae49" stroke-width="0.71"
+                            stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#m3ePVFsCYe" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#m3ePVFsCYe" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#abgGZk5dm" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#abgGZk5dm" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a5ESg2X3bV" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a5ESg2X3bV" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#bwHRUEbnP" opacity="1" fill="#edae49"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#bwHRUEbnP" opacity="1"
+                            fill-opacity="0" stroke="#edae49"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-plot-blue">
+                <g>
+                    <use xlink:href="#b2mdj0XQrj" opacity="1" fill="#00798c"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b2mdj0XQrj" opacity="1"
+                            fill-opacity="0" stroke="#00798c"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a11Kr8fFY0" opacity="1" fill="#00798c"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a11Kr8fFY0" opacity="1"
+                            fill-opacity="0" stroke="#00798c"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#gLewM8yVQ" opacity="1" fill="#00798c"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#gLewM8yVQ" opacity="1"
+                            fill-opacity="0" stroke="#00798c"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#byMqN9oQA" opacity="1" fill="#00798c"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#byMqN9oQA" opacity="1"
+                            fill-opacity="0" stroke="#00798c"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#a25uaf3FGx" opacity="1" fill="#00798c"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#a25uaf3FGx" opacity="1"
+                            fill-opacity="0" stroke="#00798c"
+                            stroke-width="0.71" stroke-opacity="1"></use>
+                    </g>
+                </g>
+            </g>
+            <g id="training-plot-dude">
+                <g>
+                    <use xlink:href="#fduT7BjIj" opacity="1" fill="#f9d8cc"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#fduT7BjIj" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b3PjyAPk0X" opacity="1" fill="#fbbebe"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b3PjyAPk0X" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#af11cl9gW" opacity="1" fill="#e4e9e9"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#af11cl9gW" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#e1lnczcYnO" opacity="1" fill="#001e25"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#e1lnczcYnO" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#asZqex6fe" opacity="1" fill="#001e25"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#asZqex6fe" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aYdBd80mp" opacity="1" fill="#001e25"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#aYdBd80mp" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#dbVq9NXBC" opacity="1" fill="#001e25"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#dbVq9NXBC" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aiBblHaV4" opacity="1" fill="#001e25"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#aiBblHaV4" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#aKJD9JFUZ" opacity="1" fill="#ffdfd3"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#aKJD9JFUZ" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b5Y4wAW9IM" opacity="1" fill="#c27e5b"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b5Y4wAW9IM" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#apQB2A6Kj" opacity="1" fill="#cbcecf"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#apQB2A6Kj" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b4Qj0Oeqqh" opacity="1" fill="#ffdfd3"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b4Qj0Oeqqh" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#l6PC9BLSAQ" opacity="1" fill="#cbcecf"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#l6PC9BLSAQ" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+                <g>
+                    <use xlink:href="#b1VDoqIqYG" opacity="1" fill="#cbcecf"
+                        fill-opacity="1"></use>
+                    <g>
+                        <use xlink:href="#b1VDoqIqYG" opacity="1"
+                            fill-opacity="0" stroke="#000000" stroke-width="1"
+                            stroke-opacity="0"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
