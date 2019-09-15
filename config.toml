@@ -68,7 +68,7 @@ rssLimit = 10
 
     
 [params]
-    description = "Data Scientist. #rstats. Musician. Educator. Always learning something new."
+    description = "Data Scientist. #rstats. Educator. Musician. Always learning something new."
     author = "Garrick Aden-Buie"
     EnableEmoji = true
     contactHeader = "Links"
