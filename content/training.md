@@ -1,8 +1,8 @@
 ---
-title: "Personalized Trainings and Workshops"
+title: "Personalized Training and Workshops"
 slug: training
 twitterImage: /training/training-social-card.png
-description: Personalized R Trainings and Workshops by an RStudio Certified Education Training Partner.
+description: Personalized R Training and Workshops by an RStudio Certified Education Training Partner.
 date: 2019-09-13T00:00:00+00:00
 type: page
 ---
@@ -13,7 +13,7 @@ type: page
 
 <p>
   I am an
-  <a href="https://rstudio-trainers.netlify.com"><em>RStudio Education</em> Certified Trainer</a> and I'm passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, aproachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
+  <a href="https://rstudio-trainers.netlify.com"><em>RStudio Education</em> Certified Trainer</a> and I'm passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, approachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
 </p>
 
 <div class="topic-lists">
@@ -33,7 +33,7 @@ type: page
 </div>
 
 <p>
-I love teaching a range of data science and programming topics, including those listed above, and I'm happy to develop custom materials that address your or your team's specifc needs.
+I love teaching a range of data science and programming topics, including those listed above, and I'm happy to develop custom materials that address your or your team's specific needs.
 </p>
 
 <div class="email-divider">
