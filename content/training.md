@@ -55,21 +55,21 @@ I love teaching a range of data science and programming topics, including those 
     <input type="hidden" name="$reply_to" value="garrick@adenbuie.com">
     <input type="hidden" name="$subject" value="Training Inquiry">
     <input type="hidden" name="$redirect_to" value="https://www.garrickadenbuie.com/training/?thanks=true">
-    
+
     <div class="stack-small name-email">
     <label for="name">Your Name</label>
     <input type="text" name="name" placeholder="Your Name">
     </div>
-    
+
     <div class="stack-small name-email">
     <label for="email">Your Email</label>
-    <input type="text" name="email" placeholder="Your Email">
+    <input type="email" name="email" placeholder="Your Email">
     </div>
-    
+
     <textarea name="message" placeholder="How can I help you?"></textarea>
     <div class="button-row stack-small">
     <button type="submit">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send" id="send-icon"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> 
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send" id="send-icon"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
       Send
     </button>
     <div id="contact-form-feedback"></div>
