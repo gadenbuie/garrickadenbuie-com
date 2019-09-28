@@ -349,3 +349,8 @@ pre.r {
 .contact-list a:hover {
   opacity: 1;
 }
+@media screen and (max-width: 767px) {
+  .contact-list {
+    justify-content: center;
+  }
+}
