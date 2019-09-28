@@ -12,7 +12,7 @@ rssLimit = 10
 [permalinks]
     post = "blog/:slug/"
     blog = "blog/:slug/"
-    
+
 [[menu.main]]
     name = "Blog"
     weight = 1
@@ -62,31 +62,31 @@ rssLimit = 10
     name = "Bandcamp"
     weight = 100
     url = "https://garrickadenbuie.bandcamp.com"
-    
+
 #[author]
 #    image = "images/garrick.png
 
-    
+
 [params]
     description = "Data Scientist. #rstats. Educator. Musician. Always learning something new."
     author = "Garrick Aden-Buie"
     EnableEmoji = true
-    contactHeader = "Links"
+    #contactHeader = "Links"
     n_posts_front = 5
     show_projects_front = true
     n_projects_front = 5
     show_talks_front = true
     n_talks_front = 5
-    
+
     # Twitter Card info
     twitterAuthor = "@grrrck"
     twitterSite = "https://www.garrickadenbuie.com"
     twitterImage = "/apple-touch-icon-152x152.png"
-    
+
     # hyde
     themeColor = "base16-solarized-garrick"
     customCss = ["css/hamburgers.css", "css/custom.css"]
-    
+
     # options for highlight.js (version, additional languages, and theme)
     # import minified languages to /js/highlight.js/{version}/languages
     highlightjsVersion = "9.11.0"

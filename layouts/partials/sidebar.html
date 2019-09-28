@@ -2,7 +2,7 @@
       <span class="hamburger-box">
         <span class="hamburger-inner"></span>
       </span>
-    </button> 
+    </button>
 		<aside class="sidebar">
 			<div class="container sidebar-sticky">
 				<header class="sidebar-about h-card vcard p-author">
@@ -38,26 +38,26 @@
 						<aside class="contact">
 						  {{ if .Site.Params.contactHeader }}
 							  <h3 class="contact-head">{{ .Site.Params.contactHeader }}</h3>
-						  {{ else }}
-							  <hr />
 							{{end}}
 							<ul class="contact-list">
 								{{ range .Site.Menus.contact }}
 								<li>
 									{{ if hasPrefix .URL "mailto:" }}
+		  							<a href="{{ .URL }}" class="u-email email" rel="me" title="{{ .Name }}">
 		  							<i class='fa fa-envelope fa-fw'></i>
-		  							<a href="{{ .URL }}" class="u-email email" rel="me">
-		  							  {{ .Name }}
+		  							  <!-- {{ .Name }} -->
 		  							</a>
 									{{ else }}
 									  {{ if .Pre }}
+									    <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Pre }}">
+									    <i class='fas fa-link fa-fw'></i>
+									    </a>
 									    {{ .Pre }}
 									  {{ else }}
+		  							  <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Name }}">
 		  						    <i class='fab fa-{{lower .Name }} fa-fw'></i>
+		  							  </a>
 		  						  {{ end }}
-		  							<a href="{{ .URL }}" class="u-url url" rel="me">
-		  							  {{ .Name }}
-		  							</a>
 								{{ end }}
 								</li>
 								{{ end }}
