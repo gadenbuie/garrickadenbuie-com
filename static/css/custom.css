@@ -226,10 +226,10 @@ pre.r {
   margin-top: 0;
 }
 
-/* 
-  van11y-accessible-hide-show-aria 
-  https://van11y.net/accessible-hide-show/ 
-   
+/*
+  van11y-accessible-hide-show-aria
+  https://van11y.net/accessible-hide-show/
+
   <h2 class="js-expandmore">Lorem dolor si amet</h2>
   <div class="js-to_expand">
     here the hidden content
@@ -334,4 +334,18 @@ pre.r {
 .post-tags a.p-category:hover, .post-tags a.category:active, .post-tags a.p-category:focus {
   background: #002B36;
   color: #FFF;
+}
+.contact-list {
+  display: flex;
+  justify-content: flex-start;
+}
+.contact-list li {
+  margin-right: 1em;
+}
+.contact-list a {
+  opacity: 0.6;
+  transition: opacity 0.25s linear;
+}
+.contact-list a:hover {
+  opacity: 1;
 }
