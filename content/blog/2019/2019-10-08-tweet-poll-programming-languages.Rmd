@@ -106,8 +106,8 @@ process_answer <- function(answer, common_langs) {
     gsub(".net ", ".net,", ., fixed = TRUE) %>%
     gsub("c# ", "c#,", ., fixed = TRUE) %>%
     gsub("c++ ", "c++,", ., fixed = TRUE) %>%
-    # No trailing commas
-    str_remove(",$")
+    # No trailing punctuation
+    str_remove("[.,!?/=<>;:]+$")
 }
 ```
 
@@ -427,6 +427,11 @@ tweets <- rtweet::search_tweets(
   include_rts = FALSE
 )
 ```
+
+You can download [a CSV with the processed tweets](tweets-first-lang.csv).
+The `.csv` doesn't include the full tweet data,
+but it does include `status_id` so that you can recover the tweet data
+with `rtweet::lookup_statuses()`.
 
 ## Whose Tweets Were The Most Popular?
 
@@ -789,3 +794,8 @@ feedback, thoughts, or questions with me on Twitter at
 }
 ```
 
+```{r}
+tweets_lang_poll %>%
+  select(status_id, created_at, text, category, category2, answer) %>%
+  write_csv(here::here("static/blog/tweet-poll-programming-languages/tweets-first-lang.csv"))
+```
