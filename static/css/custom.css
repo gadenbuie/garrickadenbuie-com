@@ -22,7 +22,10 @@ html {
 code, pre, .pkg {
     font-family: "Source Code Pro", "Lucida Console", "Liberation Mono", Menlo, Courier, monospace;
 }
-
+.center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
 .site-title {
   font-family: Merriweather, Georgia, sans-serif;
 }
