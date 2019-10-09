@@ -411,7 +411,7 @@ to do a similar analysis using R,
 initially thinking I could compare the R and Python versions.
 
 What I should have done is to have used *both* R and Python
-(because they're friends and language wars as silly),
+(because they're friends and language wars are silly),
 but instead I ended up going down the endless rabbit hole 
 of regular expressions and free-form informal survey results.
 
@@ -431,9 +431,9 @@ tweets <- rtweet::search_tweets(
 ## Whose Tweets Were The Most Popular?
 
 `r tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nrow() %>% format(big.mark = ',')`
-people replied to or quoted a tweet,
-thus contributing the popularity of the poll.
-Here are the top 10 recipients of a reply or quote tweet.
+people replied to or quoted a tweet to answer the poll.
+Here are the top contributors to the popularity of the tweet, 
+in the form of the top 10 recipients of a reply or quote tweet.
 
 ```{r starter-tweets-plot}
 tagList(
@@ -514,10 +514,10 @@ plot_media_div <- function(fig_name) {
 
 ### First Language vs. Recommended First Language
 
-Which languages were learned first
-compared with the languages that one would recommend 
-to others to learn first? 
-Here many people started with older languages
+How do the first languages learned by programmers
+compare to the languages _they_ would recommend to _others_
+to learn first?
+Many people started with older languages
 like Basic, C, Pascal, C++ and Java
 but would recommend new programmers start with Python, JavaScript, Ruby and also C or Java. 
 
@@ -541,7 +541,7 @@ JavaScript is eating the world,
 and plenty of people are using workhorse languages like Python, Java and C#/C++.
 (And a quite a few are using PHP presumably because they have to.)
 Still, JavaScript's love/hate relationship continues 
-as many people indicated that it caused them difficulties.
+as many people indicated that it caused them problems.
 I'm not surprised to see C++, C, and Java on the _had difficulties_ list.
 Interestingly, Haskell shows up in the _loved_ list but seems to also be tricky to learn.
 
@@ -571,7 +571,7 @@ tweets_r_counted <-
 
 How do developers feel about my favorite language?
 R isn't a typical first language,
-but it is among the top 20 recommended to be a first language.
+but it is among the top 20 recommended to new programmers to learn first.
 It's also the
 `r tweets_r_counted %>% filter(Category == "most used") %>% pull(Rank)`th
 most used language.
@@ -765,7 +765,10 @@ feedback, thoughts, or questions with me on Twitter at
     max-width: 100%;
   }
   #tweet {
-    min-height: 500px;
+    min-height: 200px;
+  }
+  .tweet-placeholder {
+    height: 175px;
   }
 }
 @media screen and (max-width: 65em) and (min-width: 48em) {
