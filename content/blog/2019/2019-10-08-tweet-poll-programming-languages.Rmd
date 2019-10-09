@@ -361,6 +361,7 @@ plt_starter_tweets <-
   plotly::layout(showlegend = FALSE, hovermode = "closest", dragmode = FALSE)
 
 plt_starter_tweets$sizingPolicy$defaultHeight <- NULL
+plt_starter_tweets$sizingPolicy$defaultWidth <- "100%"
 ```
 
 <!----------- POST START ----------->
@@ -555,15 +556,17 @@ tweets_r_counted <-
   mutate(Rank = row_number(), total = n()) %>%
   ungroup() %>%
   filter(answer == "r") %>%
-  mutate(Rank = if_else(total < 10, "", paste0(Rank))) %>%
-  mutate(group = if_else(n == 1 & Rank == "", "single", category2)) %>% 
-  select(-total) %>% 
-  nest(data = category2) %>% 
   mutate(
-    category = map_chr(data, ~ paste(.x$category2, collapse = ", "))
-  ) %>% 
-  arrange(desc(n), desc(Rank)) %>% 
-  select(Category = category, Rank, Total = n)
+      Rank = if_else(total < 10, "", paste0(Rank)),
+      group = if_else(Rank == "", "single", category2),
+      total = if_else(total < 10, "", paste0(total)),
+  ) %>%
+  nest(category2) %>%
+  mutate(
+      category = map_chr(data, ~ paste(.x$category2, collapse = ", "))
+  ) %>%
+  arrange(desc(n), desc(Rank)) %>%
+  select(Category = category, Rank, Total = total)
 ```
 
 How do developers feel about my favorite language?
@@ -765,7 +768,7 @@ feedback, thoughts, or questions with me on Twitter at
     min-height: 500px;
   }
 }
-@media screen and (max-width: 65em) {
+@media screen and (max-width: 65em) and (min-width: 48em) {
   #starter-tweet-container {
     grid-template-columns: 1fr;
     grid-template-rows: 540px 1fr;
