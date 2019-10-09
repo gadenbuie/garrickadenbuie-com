@@ -435,9 +435,20 @@ with `rtweet::lookup_statuses()`.
 
 ## Whose Tweets Were The Most Popular?
 
-`r tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nrow() %>% format(big.mark = ',')`
-people replied to or quoted a tweet to answer the poll.
-Here are the top contributors to the popularity of the tweet, 
+```{r}
+n_tweets <- nrow(tweets)
+n_are_replies <- tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nrow() 
+```
+
+There were
+`r format(n_tweets, big.mark = ',')`
+reponses to the poll and
+`r format(n_are_replies/n_tweets * 100, digits = 0)`%
+or
+`r format(n_are_replies, big.mark = ',')`
+of them are 
+replies to or quotes of another tweet.
+Here are the top contributors to the popularity of the poll, 
 in the form of the top 10 recipients of a reply or quote tweet.
 
 ```{r starter-tweets-plot}
