@@ -12,9 +12,7 @@ tags:
   - Visualization
   - Programming
   - Poll
-description: >
-  A deep dive into an informal, free-form survey about 
-  experiences with programming languages.
+description: A deep dive into an informal, free-form survey about experiences with programming languages.
 twitterImage: /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2019/2019-10-08-tweet-poll-programming-languages.Rmd'
 keywords:
@@ -577,7 +575,7 @@ tweets_r_counted <-
       group = if_else(Rank == "", "single", category2),
       total = if_else(total < 10, "", paste0(total)),
   ) %>%
-  nest(category2) %>%
+  nest(data = category2) %>%
   mutate(
       category = map_chr(data, ~ paste(.x$category2, collapse = ", "))
   ) %>%

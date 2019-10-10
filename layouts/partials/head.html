@@ -18,7 +18,7 @@
 		<meta property="og:type" content="article">
 		{{ end }}
 
-		{{ if eq .URL "/" }}
+		{{ if eq .RelPermalink "/" }}
 		<meta property="description" content="{{ .Site.Params.description }}">
 		<meta property="og:description" content="{{ .Site.Params.description }}">
 		<meta property="twitter:card" content="summary">
@@ -48,8 +48,8 @@
 		<meta name="twitter:creator" content="{{ .Site.Params.twitterAuthor }}">
 		<meta name="twitter:site" content="{{ .Site.Params.twitterSite }}">
 		
-		{{ if .RSSLink }}
-		<link href="{{ .RSSLink | relURL }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+		{{ with .OutputFormats.Get "RSS" }}
+		<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
 		{{ end }}
 		{{ partial "head_highlightjs" . }}
 
@@ -62,6 +62,5 @@
 		<link rel="stylesheet" href="{{ . | relURL }}">
 		{{ end }}
 		{{ partial "head_custom" . }}
-		<link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}">
 		<link href="{{ if .IsPage }}{{ .Permalink | replaceRE "/$" "" }}{{ else }}{{ .Permalink }}{{ end }}" rel="canonical">
 	</head>
