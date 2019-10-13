@@ -62,6 +62,8 @@ if (
 }
 ```
 
+## RStudio `shiny.launch.browser` Options
+
 ### Run in Viewer
 
 ```
