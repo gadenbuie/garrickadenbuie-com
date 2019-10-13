@@ -35,7 +35,7 @@
 					</nav>
 
 					{{ if .Site.Menus.contact }}
-						<aside class="contact">
+						<div class="contact">
 						  {{ if .Site.Params.contactHeader }}
 							  <h3 class="contact-head">{{ .Site.Params.contactHeader }}</h3>
 							{{end}}
@@ -43,18 +43,18 @@
 								{{ range .Site.Menus.contact }}
 								<li>
 									{{ if hasPrefix .URL "mailto:" }}
-		  							<a href="{{ .URL }}" class="u-email email" rel="me" title="{{ .Name }}">
+		  							<a href="{{ .URL }}" class="u-email email" rel="me" title="{{ .Name }}" aria-label="{{ .Name }}">
 		  							<i class='fa fa-envelope fa-fw'></i>
 		  							  <!-- {{ .Name }} -->
 		  							</a>
 									{{ else }}
 									  {{ if .Pre }}
-									    <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Pre }}">
+									    <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Pre }}" aria-label="{{ .Name }}">
 									    <i class='fas fa-link fa-fw'></i>
 									    </a>
 									    {{ .Pre }}
 									  {{ else }}
-		  							  <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Name }}">
+		  							  <a href="{{ .URL }}" class="u-url url" rel="me" title="{{ .Name }}" aria-label="{{ .Name }}">
 		  						    <i class='fab fa-{{lower .Name }} fa-fw'></i>
 		  							  </a>
 		  						  {{ end }}
@@ -62,7 +62,7 @@
 								</li>
 								{{ end }}
 							</ul>
-						</aside>
+						</div>
 					{{ end }}
 				</header>
 
