@@ -99,12 +99,12 @@ To set everything up manually takes just a few steps.
       after_body: insert-logo.html
   ```
 
-1. Edit the `.logo` class in the CSS in `insert-logo.html` to use your logo image,
+4. Edit the `.logo` class in the CSS in `insert-logo.html` to use your logo image,
    and adjust the `width`, `height` 
    and position (`top`, `bottom`, `left`, and/or `right`) 
    as needed.
    
-1. Use `class: hide-logo` to hide your logo on individual slides.
+5. Use `class: hide-logo` to hide your logo on individual slides.
    (The title slide is automatically excluded.)
    
    ```
@@ -120,7 +120,7 @@ To set everything up manually takes just a few steps.
    And it's an inverse slide, too.
    ```
    
-1. Have fun looking &#x1F60E; during your presentation!
+6. Have fun looking &#x1F60E; during your presentation!
 
 ## Inside insert-logo.html
 
