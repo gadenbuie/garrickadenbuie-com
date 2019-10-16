@@ -11,7 +11,7 @@ tags:
   - xaringan
   - xaringan Tip
 description: Add a logo to all of your xaringan slides without using a background image.
-twitterImage: xaringan-logo-all-slides_twitter.png
+twitterImage: /blog/xaringan-tip-logo-all-slides/xaringan-logo-all-slides_twitter.png
 keywords: [rstats, xaringan, logo, slides, 'logo all slides']
 editor_options:
   chunk_output_type: console
