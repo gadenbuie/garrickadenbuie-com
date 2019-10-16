@@ -107,6 +107,19 @@ To set everything up manually takes just a few steps.
 1. Use `class: hide-logo` to hide your logo on individual slides.
    (The title slide is automatically excluded.)
    
+   ```
+   ---
+   
+   # This slide has a logo
+   
+   ---
+   class: inverse, hide-logo
+   
+   # This slide doesn't have a logo!
+   
+   And it's an inverse slide, too.
+   ```
+   
 1. Have fun looking &#x1F60E; during your presentation!
 
 ## Inside insert-logo.html
