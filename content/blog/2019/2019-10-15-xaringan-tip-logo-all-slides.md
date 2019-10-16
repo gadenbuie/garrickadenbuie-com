@@ -28,7 +28,7 @@ The slightly problematic and somewhat annoying way to solve this problem
 is to add a logo to a series of slides using 
 remarkjs'
 [background-image](https://github.com/gnab/remark/wiki/Markdown#background-image)
-with the 
+and 
 [layout syntax](https://github.com/gnab/remark/wiki/Markdown#layout).
 
 ```
