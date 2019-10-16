@@ -81,16 +81,16 @@ that you can use to bootstrap your next set of
 
 To set everything up manually takes just a few steps.
 
-1. Download your logo and save it in your slides directory. 
+- Download your logo and save it in your slides directory. 
    I've used the <span class="pkg">xaringan</span> hex logo:
    [xaringan.png](https://github.com/rstudio/hex-stickers/blob/master/PNG/xaringan.png).
 
-1. Download 
+- Download 
    [insert-logo.html](https://github.com/gadenbuie/xaringan-logo/blob/master/insert-logo.html) 
    into your slide directory, or [copy the html described below](#inside-insert-logo-html)
    into `insert-logo.html`.
 
-1. Add `insert-logo.html` to your `after_body` includes in your slides' `.Rmd` file.
+- Add `insert-logo.html` to your `after_body` includes in your slides' `.Rmd` file.
 
   ```yaml
   output:
@@ -99,12 +99,12 @@ To set everything up manually takes just a few steps.
       after_body: insert-logo.html
   ```
 
-4. Edit the `.logo` class in the CSS in `insert-logo.html` to use your logo image,
+- Edit the `.logo` class in the CSS in `insert-logo.html` to use your logo image,
    and adjust the `width`, `height` 
    and position (`top`, `bottom`, `left`, and/or `right`) 
    as needed.
    
-5. Use `class: hide-logo` to hide your logo on individual slides.
+- Use `class: hide-logo` to hide your logo on individual slides.
    (The title slide is automatically excluded.)
    
    ```
@@ -120,7 +120,7 @@ To set everything up manually takes just a few steps.
    And it's an inverse slide, too.
    ```
    
-6. Have fun looking &#x1F60E; during your presentation!
+- Have fun looking &#x1F60E; during your presentation!
 
 ## Inside insert-logo.html
 
