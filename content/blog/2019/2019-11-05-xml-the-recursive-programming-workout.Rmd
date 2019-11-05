@@ -66,7 +66,7 @@ xml_text <- '
 
 ## From XML to a `list()`
 
-With the [[xml2]]{.pkg} and two tiny lines of R code
+With the [[xml2]]{.pkg} package and two tiny lines of R code
 we have the XML file as a list in R.
 
 ```{r read-xml}
@@ -78,8 +78,9 @@ str(list_xml, max.level = 2)
 
 But as you can see from the preview above,
 when converted to a list, 
-[xml2]{.pkg} stores the attributes at each node 
-in the list items attributes.
+[xml2]{.pkg} stores attributes at each node,
+like `company="MacroSoft"`,
+as R `attributes()` associated with the corresponding list item.
 
 ```{r xml-list-attr-example}
 str(list_xml[[1]][[1]][1])

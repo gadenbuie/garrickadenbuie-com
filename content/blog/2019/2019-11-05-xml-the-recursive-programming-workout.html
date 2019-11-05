@@ -56,7 +56,7 @@ similar to the data below that I modified from an example on
 </div>
 <div id="from-xml-to-a-list" class="section level2">
 <h2>From XML to a <code>list()</code></h2>
-<p>With the <span class="pkg"><a href="https://xml2.r-lib.org">xml2</a></span> and two tiny lines of R code
+<p>With the <span class="pkg"><a href="https://xml2.r-lib.org">xml2</a></span> package and two tiny lines of R code
 we have the XML file as a list in R.</p>
 <pre class="r"><code>raw_xml &lt;- xml2::read_xml(xml_text)
 list_xml &lt;- xml2::as_list(raw_xml)
@@ -72,8 +72,9 @@ str(list_xml, max.level = 2)</code></pre>
 ##   .. ..- attr(*, &quot;division&quot;)= chr &quot;Research&quot;</code></pre>
 <p>But as you can see from the preview above,
 when converted to a list,
-<span class="pkg">xml2</span> stores the attributes at each node
-in the list items attributes.</p>
+<span class="pkg">xml2</span> stores attributes at each node,
+like <code>company="MacroSoft"</code>,
+as R <code>attributes()</code> associated with the corresponding list item.</p>
 <pre class="r"><code>str(list_xml[[1]][[1]][1])</code></pre>
 <pre><code>## List of 1
 ##  $ employee: list()
