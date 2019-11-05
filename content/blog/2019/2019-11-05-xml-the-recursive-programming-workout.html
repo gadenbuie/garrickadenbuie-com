@@ -94,6 +94,8 @@ when we have or can get the answer that we’re looking for —
 and the recursion case —
 or when we need to move further down the tree by calling
 the function again on a smaller unit.</p>
+<div id="base-case" class="section level3">
+<h3>Base case</h3>
 <p>The base case of the recursive function
 is when we have an empty list that has attributes.
 In that case, we just return the attributes.
@@ -111,6 +113,9 @@ is the <code>list_xml[[1]][[1]][[1]]</code> we see above.</p>
 ## 
 ## $hiredate
 ## [1] &quot;17-DEC-1980&quot;</code></pre>
+</div>
+<div id="recursive-case" class="section level3">
+<h3>Recursive case</h3>
 <p>If,
 on the other hand,
 we find that we have a list that contains both items <em>and</em> attributes
@@ -171,6 +176,7 @@ str(lower_level)</code></pre>
 ##  $ employee:List of 4
 ##  $ employee:List of 4
 ##  $ employee:List of 4</code></pre>
+</div>
 </div>
 <div id="a-recursive-attribute-promotor-function" class="section level2">
 <h2>A recursive attribute-promotor function</h2>

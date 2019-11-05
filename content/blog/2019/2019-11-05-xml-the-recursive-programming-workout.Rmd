@@ -98,6 +98,8 @@ and the recursion case —
 or when we need to move further down the tree by calling
 the function again on a smaller unit.
 
+### Base case
+
 The base case of the recursive function 
 is when we have an empty list that has attributes.
 In that case, we just return the attributes.
@@ -107,6 +109,8 @@ is the `list_xml[[1]][[1]][[1]]` we see above.
 ```{r recursion-base-case}
 attributes(list_xml[[1]][[1]][[1]])
 ```
+
+### Recursive case
 
 If, 
 on the other hand, 
