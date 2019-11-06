@@ -198,8 +198,10 @@ promote_attr <- function(ll) {
   this_attr <- attributes(ll)
   this_attr <- remove_reserved(this_attr)
   if (length(ll)) {
+    # recursive case
     c(this_attr, purrr::map(ll, promote_attr))
   } else {
+    # base case (no sub-items)
     this_attr
   }
 }

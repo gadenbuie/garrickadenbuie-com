@@ -222,8 +222,10 @@ I’ll call <code>promote_attr()</code>.</p>
   this_attr &lt;- attributes(ll)
   this_attr &lt;- remove_reserved(this_attr)
   if (length(ll)) {
+    # recursive case
     c(this_attr, purrr::map(ll, promote_attr))
   } else {
+    # base case (no sub-items)
     this_attr
   }
 }</code></pre>
