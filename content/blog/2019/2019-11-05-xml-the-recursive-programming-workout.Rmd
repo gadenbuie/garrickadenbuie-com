@@ -11,14 +11,14 @@ tags:
   - Tips
   - XML
   - xml2
-  - purr
+  - purrr
   - recursive programming
 keywords: 
   - rstats
   - R
   - XML
   - xml2
-  - purr
+  - purrr
   - recursive programming
 editor_options: 
   chunk_output_type: console
@@ -154,7 +154,7 @@ str(c(this_attr, lower_level), max.level = 1)
 
 ## A recursive attribute-promotor function
 
-The final step is to putting this all together inside a function
+The final step is to put this all together inside a function
 that handles the base case or recurses to iterate over list items further down the tree.
 
 But first...
@@ -168,7 +168,7 @@ We have also included the names of the sub-list items in our new list!
 This is because R uses named attributes 
 to keep track of things like `"names"`, `"class"`, `"dimnames"` etc.
 If the XML node has an attribute called `names="foo"`, 
-[xml2]{.pkg}} will store that attribute value pair as `.names`. 
+[xml2]{.pkg} will store that attribute-value pair as `.names`. 
 I don't mind having `.names` entries in my lists
 (I can take care of that downstream),
 but I don't want to keep attributes named` names` or `class` etc., 
@@ -205,6 +205,16 @@ promote_attr <- function(ll) {
 }
 ```
 
+Quick aside: 
+this function makes very strong assumptions 
+that every item in the list we're recursing over
+is also a list, all the way down.
+In this example processing a list derived from an XML document,
+it's a reasonable assumption,
+but one that we should check.
+For other lists of mixed types,
+a whole lot more type checking will be required.
+
 ## The end result (for now)
 
 In the end, 
@@ -220,6 +230,7 @@ listviewer::jsonedit(tidy_xml)
 
 ```{r tidy-xml-listviewer, echo=FALSE}
 tidy_xml <- purrr::map(list_xml, promote_attr)
+set.seed(20191105)
 widgetframe::frameWidget(listviewer::jsonedit(tidy_xml, height=375), height=425)
 ```
 

@@ -11,14 +11,14 @@ tags:
   - Tips
   - XML
   - xml2
-  - purr
+  - purrr
   - recursive programming
 keywords: 
   - rstats
   - R
   - XML
   - xml2
-  - purr
+  - purrr
   - recursive programming
 editor_options: 
   chunk_output_type: console
@@ -189,7 +189,7 @@ str(lower_level)</code></pre>
 </div>
 <div id="a-recursive-attribute-promotor-function" class="section level2">
 <h2>A recursive attribute-promotor function</h2>
-<p>The final step is to putting this all together inside a function
+<p>The final step is to put this all together inside a function
 that handles the base case or recurses to iterate over list items further down the tree.</p>
 <p>But first…
 did you notice this line above?</p>
@@ -199,7 +199,7 @@ did you notice this line above?</p>
 This is because R uses named attributes
 to keep track of things like <code>"names"</code>, <code>"class"</code>, <code>"dimnames"</code> etc.
 If the XML node has an attribute called <code>names="foo"</code>,
-<span class="pkg">xml2</span>} will store that attribute value pair as <code>.names</code>.
+<span class="pkg">xml2</span> will store that attribute-value pair as <code>.names</code>.
 I don’t mind having <code>.names</code> entries in my lists
 (I can take care of that downstream),
 but I don’t want to keep attributes named<code>names</code> or <code>class</code> etc.,
@@ -227,6 +227,15 @@ I’ll call <code>promote_attr()</code>.</p>
     this_attr
   }
 }</code></pre>
+<p>Quick aside:
+this function makes very strong assumptions
+that every item in the list we’re recursing over
+is also a list, all the way down.
+In this example processing a list derived from an XML document,
+it’s a reasonable assumption,
+but one that we should check.
+For other lists of mixed types,
+a whole lot more type checking will be required.</p>
 </div>
 <div id="the-end-result-for-now" class="section level2">
 <h2>The end result (for now)</h2>
