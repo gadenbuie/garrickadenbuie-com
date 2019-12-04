@@ -580,11 +580,12 @@ here the hidden content
   }
 }
 
+/* WARNING: The following work for .restyled-garrick and may need to be revisted */
 @media (min-width: 48em) and (max-width: 64em) {
-  .restyled-garrick .content {
+  .content {
     margin-left: 16rem;
   }
-  .restyled-garrick .sidebar {
+  .sidebar {
     max-width: 16rem;
   }
 }
