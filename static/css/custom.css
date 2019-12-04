@@ -580,6 +580,15 @@ here the hidden content
   }
 }
 
+@media (min-width: 48em) and (max-width: 64em) {
+  .restyled-garrick .content {
+    margin-left: 16rem;
+  }
+  .restyled-garrick .sidebar {
+    max-width: 16rem;
+  }
+}
+
 .restyled-garrick .archive-item {
   position: relative;
   text-indent: -1em;
