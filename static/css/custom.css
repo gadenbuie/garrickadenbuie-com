@@ -506,7 +506,7 @@ body.restyled-garrick {
 }
 
 .restyled-garrick .pkg {
-  background-color: white;
+  background-color: var(--background);
   color: var(--accent-dark);
   border: 1px solid var(--accent-dark);
   border-radius: 3px;
