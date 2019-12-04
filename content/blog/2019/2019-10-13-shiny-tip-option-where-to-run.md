@@ -1,7 +1,7 @@
 ---
-title: 'Shiny Tip: Choose Where to Run App with an Option'
+title: "Shiny Tip: Choose Where to Run App with an Option"
 author: Garrick Aden-Buie
-date: '2019-10-13'
+date: "2019-10-13"
 slug: shiny-tip-option-where-to-run
 categories:
   - Blog
@@ -18,32 +18,33 @@ editor_options:
 ---
 
 <!-- Links -->
+
 [shiny]: https://shiny.rstudio.com
 [rstudio]: https://rstudio.com
 [golem]: https://thinkr-open.github.io/golem/
 [so-answer]: https://stackoverflow.com/a/36238021
 [shiny-run-app]: https://shiny.rstudio.com/reference/shiny/1.4.0/runApp.html
 
-When you're running a [Shiny] app from a source file, 
-like `app.R` in [RStudio], 
-you can choose to run the app in the _Viewer Pane_, 
-a new _Window_, 
+When you're running a [Shiny] app from a source file,
+like `app.R` in [RStudio],
+you can choose to run the app in the _Viewer Pane_,
+a new _Window_,
 or in an _External_ browser window.
 
-<div class="center"><img 
-  src="shiny-rstudio-run-in.png" 
+<div class="center"><img
+  src="shiny-rstudio-run-in.png"
   alt="RStudio 'Run App' drop down menu available for Shiny apps, for example in source files named 'app.R'"
 /></div>
 
 This works well for typical Shiny apps in `app.R` or `{global,ui,server}.R`,
 but if you're building a Shiny app inside an R package ---
-and if you are, then definitely check out ThinkR's [[golem]]{.pkg} package ---
+and if you are, then definitely check out ThinkR's <span class="pkg">[golem]</span> package ---
 then that little **Run App** button won't be available to choose where to run your Shiny apps.
 
-The Shiny 
-[runApp() help documentation][shiny-run-app] 
-mentions the global option `shiny.launch.browser` but 
-[this helpful StackOverflow answer][so-answer] 
+The Shiny
+[runApp() help documentation][shiny-run-app]
+mentions the global option `shiny.launch.browser` but
+[this helpful StackOverflow answer][so-answer]
 provided a helpful hint as to how to actually pick the Viewer, Window or External location for newly launched Shiny apps.
 
 The following options only work in RStudio,
