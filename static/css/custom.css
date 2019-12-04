@@ -404,7 +404,6 @@ here the hidden content
 }
 .restyled-garrick .content .recent a {
   color: var(--accent-dark);
-  font-weight: 600;
 }
 .restyled-garrick .post-content a:hover,
 .restyled-garrick .content .archive a:hover {
