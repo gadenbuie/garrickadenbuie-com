@@ -621,6 +621,16 @@ body.restyled-garrick {
   background-color: var(--text-lightest)
 }
 
+.restyled-garrick .talk-table td, 
+.restyled-garrick .talk-table th {
+  border: none;
+}
+
+.restyled-garrick .talk-table tbody tr:nth-child(2n+1) td, 
+.restyled-garrick .talk-table tbody tr:nth-child(2n+1) th {
+  background: var(--background);
+}
+
 /* ---- DARK MODE !!!! ---- */
 @media (prefers-color-scheme: dark) {
   :root {
