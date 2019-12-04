@@ -1,5 +1,5 @@
 ---
-title: 'Reuse Rmd chunks in package vignettes, README, blog posts and more'
+title: 'Reuse Rmd fragments in package vignettes, README, blog posts and more'
 author: Garrick Aden-Buie
 description: >
   Use knitr's "child chunks" to reuse bits of documentation.
@@ -23,6 +23,51 @@ tags:
 [knitr]: https://yihui.name/knitr
 [dry]: https://en.wikipedia.org/wiki/Don't_repeat_yourself
 [blogdown]: https://bookdown.org/yihui/blogdown
+[maelle]: https://twitter.com/ma_salmon
+
+#### Update: December 4, 2019
+
+[Maëlle Salmon][maelle] helpfully
+[pointed out](https://twitter.com/ma_salmon/status/1199655588457799680)
+and then
+[tracked down the solution](https://twitter.com/ma_salmon/status/1199979670026014720)
+to an issue that may pop up
+with the method I originally proposed in this post.
+
+Rather than storing your R Markdown fragments in a subfolder in `vignettes/`, such as `vignettes/fragments`, they should instead be stored in `man/fragments`.
+
+```
+vignettes/
+├── alike.Rmd
+├── styles.css
+└── vetr.Rmd
+man/
+└── fragments/
+    ├── declarative-checks.Rmd
+    ├── microbenchmark.Rmd
+    ├── related-packages.Rmd
+    ├── trust-but-verify.Rmd
+    ├── valaddin.Rmd
+    └── vetting-expressions.Rmd
+```
+
+Within your vignettes,
+you can reference the fragments as child documents
+using relative paths.
+
+````markdown
+```{r child="../man/fragments/related-packages.Rmd"} `r ''`
+```
+````
+
+If the fragments are stored in a sub-folder of `vignettes/`,
+R CMD check may try to render them and
+[can throw an error when they fail to render](https://stackoverflow.com/questions/50078849/package-build-fails-because-vignette-does-not-find-child-rmd-files)
+because they aren't complete documents.
+
+I've updated the post below to match this advice.
+
+***
 
 Jonathan Carroll ([&commat;carroll_jono](https://twitter.com/carroll_jono)) posted a twitter poll that turned out to be quite interesting this weekend:
 
@@ -52,34 +97,37 @@ And considering that a good package also has vignettes, a README, a related ([[b
 
 In the spirit of Don't Repeat Yourself and maximizing the potential of [[knitr]]{.pkg} and [R Markdown][r-markdown] -- and the fact that you can use R Markdown for all of the above pieces -- I remembered recently reading about child documents in knitr.
 
-I posted my idea to [Jonathan's thread](https://twitter.com/carroll_jono/status/969442252610191361) and shortly afterwards [&commat;BrodieGaslam](https://twitter.com/BrodieGaslam) wrote back with an idea that [really makes the best of child documents](https://twitter.com/BrodieGaslam/status/969682597214343168). 
+I posted my idea to [Jonathan's thread](https://twitter.com/carroll_jono/status/969442252610191361) and shortly afterwards [&commat;BrodieGaslam](https://twitter.com/BrodieGaslam) wrote back with an idea that [really makes the best of child documents](https://twitter.com/BrodieGaslam/status/969682597214343168).
 Here's the full idea:
 
 ### Write repeatable sections in short .Rmd files.
 
-Using Brodie's [[vetr][gh-vetr]]{.pkg} package as an example, these files are stored in `vignettes/rmdhunks`:
+Adapting from Brodie's
+[[vetr][gh-vetr]]{.pkg}
+package as an example,
+these files are stored in `man/fragments`:
 
 ```
 vignettes/
 ├── alike.Rmd
-├── rmdhunks
-│   ├── declarative-checks.Rmd
-│   ├── microbenchmark.Rmd
-│   ├── related-packages.Rmd
-│   ├── trust-but-verify.Rmd
-│   ├── valaddin.Rmd
-│   └── vetting-expressions.Rmd
 ├── styles.css
 └── vetr.Rmd
+man/
+└── fragments/
+    ├── declarative-checks.Rmd
+    ├── microbenchmark.Rmd
+    ├── related-packages.Rmd
+    ├── trust-but-verify.Rmd
+    ├── valaddin.Rmd
+    └── vetting-expressions.Rmd
 ```
 
-Notice `related-packages.Rmd`.
+Notice `man/fragments/related-packages.Rmd`.
 It's a short R Markdown file with a list of (not surprisingly) related packages -- the kind of section that might be included in both the package overview vignette and the README.
 
-#### vignettes/rmdhunks/related-packages.Rmd >
+#### man/fragments/related-packages.Rmd >
 
 ```markdown
-* `stopifnot` by R Core
 * [`vetr`](https://github.com/brodieG/vetr) by Yours Truly
 * [`asserthat`](https://github.com/hadley/assertthat) by Hadley Wickham
 * [`assertive`](https://www.r-pkg.org/pkg/assertive) by Richie Cotton
@@ -101,8 +149,8 @@ Again, the following are from the [vetr package documentation files][gh-vetr].
 
 There are many alternatives available to `vetr`.  We do a survey of the
 following in our [parameter validation functions][4] review:
- 
-```{r child='./rmdhunks/related-packages.Rmd'} `r ''`
+
+```{r child="../man/fragments/related-packages.Rmd"} `r ''`
 ```
 ````
 
@@ -116,7 +164,7 @@ This R Markdown "chunk" can be used anywhere else you need it, such as in the pa
 There are many alternatives available to `vetr`.  We do a survey of the
 following in our [parameter validation functions][5] review:
 
-```{r child='vignettes/rmdhunks/related-packages.Rmd'} `r ''`
+```{r child="man/fragments/related-packages.Rmd"} `r ''`
 ```
 ````
 
@@ -124,8 +172,10 @@ The major advantage here is to be able to update the documentation in one place 
 It's also useful to be able to arrange or choose the content shown in certain places.
 For example, READMEs typically include installation instructions, but these would be redundant if included in the package vignettes.
 
-The above examples can be extended for use in [pkgdown]{.pkg} articles (which are essentially an extension of vignettes) or for blogdown posts if you develope your package and blog source on the same machine.
+The above examples can be extended for use in [pkgdown]{.pkg} articles (which are essentially an extension of vignettes) or for blogdown posts if you develop your package and blog source on the same machine.
 
 ***
 
 Thanks [&commat;BrodieGaslam](https://twitter.com/BrodieGaslam) for the tip and [&commat;carroll_jono](https://twitter.com/carroll_jono) for kicking off this thread!
+
+And thanks to [Maëlle Salmon][maelle] for the helpful advice that satisfies R CMD Check!
