@@ -460,7 +460,7 @@ body.restyled-garrick {
 }
 
 .restyled-garrick .archive-item .post-date {
-	margin-top: 0em;
+  margin-top: 0em;
 }
 
 .restyled-garrick .post-source a {
@@ -487,7 +487,7 @@ body.restyled-garrick {
 .restyled-garrick .post-tags a.category:active,
 .restyled-garrick .post-tags a.p-category:focus {
   background: var(--primary-dark);
-  color: #fff;
+  color: var(--background);
 }
 
 .restyled-garrick .post-tags a.p-tag {
@@ -498,7 +498,7 @@ body.restyled-garrick {
 .restyled-garrick .post-tags a.p-tag:active,
 .restyled-garrick .post-tags a.p-tag:focus {
   background: var(--orange);
-  color: #fff;
+  color: var(--background);
 }
 
 .restyled-garrick .pkg {
