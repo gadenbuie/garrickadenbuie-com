@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Merriweather:700|PT+Sans:400,400i,700,700i|Source+Code+Pro:400,700");
 
 :root {
+  --background: #ffffff;
   --primary-dark: #002b36;
   --primary-light: #345865;
   --primary-accent: #00a6e1;
@@ -395,9 +396,39 @@ here the hidden content
   }
 }
 
-.restyled-garrick .sidebar {
-  background-color: var(--primary-dark);
+body.restyled-garrick {
+  background: var(--background);
 }
+
+.restyled-garrick .sidebar {
+  background: var(--background);
+  color: var(--primary-light);
+  font-size: 14px;
+}
+
+.restyled-garrick .sidebar a {
+  color: var(--accent-dark);
+}
+
+.restyled-garrick .sidebar .contact-list a {
+  color: var(--accent-dark);
+}
+
+.restyled-garrick .sidebar .site-title .u-url {
+  color: var(--primary-dark);
+}
+
+.restyled-garrick .sidebar .site-title {
+  font-size: 2em;
+  word-break: keep-all;
+  color: var(--primary-dark);
+}
+
+.restyled-garrick .sidebar .lead {
+  font-size: 1.25em;
+  color: var(--primary-darkish);
+}
+
 .restyled-garrick .post-content a,
 .restyled-garrick .content .archive a {
   color: var(--accent-dark);
@@ -430,35 +461,6 @@ here the hidden content
 
 .restyled-garrick .archive-item .post-date {
 	margin-top: 0em;
-}
-
-.restyled-garrick .sidebar {
-  background: white;
-  color: var(--primary-light);
-  font-size: 14px;
-}
-
-.restyled-garrick .sidebar a {
-  color: var(--accent-dark);
-}
-
-.restyled-garrick .sidebar .contact-list a {
-  color: var(--accent-dark);
-}
-
-.restyled-garrick .sidebar .site-title .u-url {
-  color: var(--primary-dark);
-}
-
-.restyled-garrick .sidebar .site-title {
-  font-size: 2em;
-  word-break: keep-all;
-  color: var(--primary-dark);
-}
-
-.restyled-garrick .sidebar .lead {
-  font-size: 1.25em;
-  color: var(--primary-darkish);
 }
 
 .restyled-garrick .post-source a {
