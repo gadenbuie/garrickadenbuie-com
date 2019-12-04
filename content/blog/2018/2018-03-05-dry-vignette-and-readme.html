@@ -18,41 +18,11 @@ tags:
 
 
 
-<div id="update-december-4-2019" class="section level4">
-<h4>Update: December 4, 2019</h4>
-<p><a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> helpfully
-<a href="https://twitter.com/ma_salmon/status/1199655588457799680">pointed out</a>
-and then
-<a href="https://twitter.com/ma_salmon/status/1199979670026014720">tracked down the solution</a>
-to an issue that may pop up
-with the method I originally proposed in this post.</p>
-<p>Rather than storing your R Markdown fragments in a subfolder in <code>vignettes/</code>, such as <code>vignettes/fragments</code>, they should instead be stored in <code>man/fragments</code>.</p>
-<pre><code>vignettes/
-├── alike.Rmd
-├── styles.css
-└── vetr.Rmd
-man/
-└── fragments/
-    ├── declarative-checks.Rmd
-    ├── microbenchmark.Rmd
-    ├── related-packages.Rmd
-    ├── trust-but-verify.Rmd
-    ├── valaddin.Rmd
-    └── vetting-expressions.Rmd</code></pre>
-<p>Within your vignettes,
-you can reference the fragments as child documents
-using relative paths.</p>
-<pre class="markdown"><code>```{r child=&quot;../man/fragments/related-packages.Rmd&quot;} 
-```</code></pre>
-<p>If the fragments are stored in a sub-folder of <code>vignettes/</code>,
-R CMD check may try to render them and
-<a href="https://stackoverflow.com/questions/50078849/package-build-fails-because-vignette-does-not-find-child-rmd-files">can throw an error when they fail to render</a>
-because they aren’t complete documents.</p>
-<p>I’ve updated the post below to match this advice.</p>
+<p><strong>Updated on December 4, 2019</strong> with <a href="#update">new advice</a>
+that will most likely satisfy R CMD check.</p>
 <hr />
 <p>Jonathan Carroll (<a href="https://twitter.com/carroll_jono">@carroll_jono</a>) posted a twitter poll that turned out to be quite interesting this weekend:</p>
 {{% tweet "969442252610191361" %}}
-</div>
 <div id="what-i-love-to-see-in-a-readme" class="section level2">
 <h2>What I love to see in a README</h2>
 <p>Personally, I usually find out about a package while browsing GitHub or a blog post that leads me to check out the package on GitHub.
@@ -102,6 +72,11 @@ It’s a short R Markdown file with a list of (not surprisingly) related package
 * [`checkmate`](https://github.com/mllg/checkmate) by Michel Lang
 
 The following packages also perform related tasks ...</code></pre>
+<p><strong>Caution</strong>:
+If the fragments are stored in a sub-folder of <code>vignettes/</code>,
+R CMD check may try to render them and
+<a href="https://stackoverflow.com/questions/50078849/package-build-fails-because-vignette-does-not-find-child-rmd-files">can throw an error when they fail to render</a>
+because they aren’t complete documents.</p>
 </div>
 </div>
 <div id="reference-the-repeatable-sections-using-the-child-chunk-option." class="section level3">
@@ -130,12 +105,24 @@ following in our [parameter validation functions][5] review:
 ```{r child=&quot;man/fragments/related-packages.Rmd&quot;} 
 ```</code></pre>
 <p>The major advantage here is to be able to update the documentation in one place and have those changes propagate to “parent” documents.
-It’s also useful to be able to arrange or choose the content shown in certain places.
+It’s also useful to be able to arrange or choose the content shown in certain places differently depending on the location
+(or even during editing!).
 For example, READMEs typically include installation instructions, but these would be redundant if included in the package vignettes.</p>
 <p>The above examples can be extended for use in <span class="pkg">pkgdown</span> articles (which are essentially an extension of vignettes) or for blogdown posts if you develop your package and blog source on the same machine.</p>
+</div>
+<div id="update" class="section level4">
+<h4>Update: December 4, 2019</h4>
+<p><a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> helpfully
+<a href="https://twitter.com/ma_salmon/status/1199655588457799680">pointed out</a>
+and then
+<a href="https://twitter.com/ma_salmon/status/1199979670026014720">tracked down the solution</a>
+to an issue that may pop up
+with the method I originally proposed in this post.</p>
+<p>Rather than storing your R Markdown fragments in a subfolder in <code>vignettes/</code>, such as <code>vignettes/fragments</code>, they should instead be stored in <code>man/fragments</code>.</p>
+<p>I updated the post above to match Maëlle’s advice.
+Thanks to <a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> for the helpful advice that satisfies R CMD Check!</p>
 <hr />
 <p>Thanks <a href="https://twitter.com/BrodieGaslam">@BrodieGaslam</a> for the tip and <a href="https://twitter.com/carroll_jono">@carroll_jono</a> for kicking off this thread!</p>
-<p>And thanks to <a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> for the helpful advice that satisfies R CMD Check!</p>
 </div>
 </div>
 </div>
