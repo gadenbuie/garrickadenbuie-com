@@ -428,6 +428,10 @@ here the hidden content
   color: var(--text-mild);
 }
 
+.restyled-garrick .archive-item .post-date {
+	margin-top: 0em;
+}
+
 .restyled-garrick .sidebar {
   background: white;
   color: var(--primary-light);
