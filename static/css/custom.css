@@ -479,6 +479,10 @@ body.restyled-garrick {
   color: var(--text-dark);
 }
 
+.restyled-garrick strong {
+	color: var(--text-darkish);
+}
+
 .restyled-garrick .post-tags a.p-category {
   color: var(--primary-dark);
   border-color: var(--primary-dark);
