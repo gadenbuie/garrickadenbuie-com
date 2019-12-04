@@ -13,7 +13,7 @@
   --orange: #f79334;
   --red: #dc322f;
   --text-dark: #202020;
-  --text-darkish: #333333;
+  --text-darkish: #4242424;
   --text-mild: #606060;
   --text-light: #9a9a9a;
   --text-lightest: #eaeaea;
@@ -574,4 +574,20 @@ here the hidden content
   .restyled-garrick .sidebar .sidebar-nav > * {
     margin-bottom: 0;
   }
+}
+
+.restyled-garrick .archive-item {
+  position: relative;
+  text-indent: -1em;
+  margin-left: 1em;
+  margin-bottom: 0.66em;
+  padding-right: 4em;
+  line-height: 1.25;
+}
+
+.restyled-garrick .archive-item time {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--text-darkish);
 }
