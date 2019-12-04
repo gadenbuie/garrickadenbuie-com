@@ -84,7 +84,8 @@ rssLimit = 10
     twitterImage = "/apple-touch-icon-152x152.png"
 
     # hyde
-    themeColor = "base16-solarized-garrick"
+    # themeColor = "base16-solarized-garrick"
+    themeColor = "restyled-garrick"
     customCss = ["css/hamburgers.css", "css/custom.css"]
 
     # options for highlight.js (version, additional languages, and theme)
