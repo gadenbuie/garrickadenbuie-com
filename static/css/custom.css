@@ -611,3 +611,43 @@ body.restyled-garrick {
   right: 0;
   color: var(--text-darkish);
 }
+
+.restyled-garrick td, .restyled-garrick th {
+  border-color: var(--text-lightest)
+}
+
+.restyled-garrick tbody tr:nth-child(2n+1) td, 
+.restyled-garrick tbody tr:nth-child(2n+1) th {
+  background-color: var(--text-lightest)
+}
+
+/* ---- DARK MODE !!!! ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #202020;
+    --primary-dark: #eaeaea;
+    --primary-light: #887ba3;
+    --text-dark: #9a9a9a;
+    --text-light: #424242;
+    --text-lightest: #303030;
+    --text-darkish: #bbb;
+  }
+  
+  pre code, pre, code {
+    background: var(--text-light);
+  }
+  
+  pre.r {
+    border-color: #646464;
+  }
+  
+  pre.r + pre,
+  pre.r + pre > code {
+    background: var(--text-light);
+  }
+  
+  .hljs {
+    color: var(--text-dark);
+    background: var(--text-light);
+  }
+}
