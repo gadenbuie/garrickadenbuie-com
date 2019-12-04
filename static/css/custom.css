@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Merriweather:700|PT+Sans:400,400i,700,700i|Source+Code+Pro:400,700");
 
 :root {
+  --background: #ffffff;
   --primary-dark: #002b36;
   --primary-light: #345865;
   --primary-accent: #00a6e1;
@@ -13,7 +14,7 @@
   --orange: #f79334;
   --red: #dc322f;
   --text-dark: #202020;
-  --text-darkish: #333333;
+  --text-darkish: #4242424;
   --text-mild: #606060;
   --text-light: #9a9a9a;
   --text-lightest: #eaeaea;
@@ -395,9 +396,39 @@ here the hidden content
   }
 }
 
-.restyled-garrick .sidebar {
-  background-color: var(--primary-dark);
+body.restyled-garrick {
+  background: var(--background);
 }
+
+.restyled-garrick .sidebar {
+  background: var(--background);
+  color: var(--primary-light);
+  font-size: 14px;
+}
+
+.restyled-garrick .sidebar a {
+  color: var(--accent-dark);
+}
+
+.restyled-garrick .sidebar .contact-list a {
+  color: var(--accent-dark);
+}
+
+.restyled-garrick .sidebar .site-title .u-url {
+  color: var(--primary-dark);
+}
+
+.restyled-garrick .sidebar .site-title {
+  font-size: 2em;
+  word-break: keep-all;
+  color: var(--primary-dark);
+}
+
+.restyled-garrick .sidebar .lead {
+  font-size: 1.25em;
+  color: var(--primary-darkish);
+}
+
 .restyled-garrick .post-content a,
 .restyled-garrick .content .archive a {
   color: var(--accent-dark);
@@ -428,33 +459,8 @@ here the hidden content
   color: var(--text-mild);
 }
 
-.restyled-garrick .sidebar {
-  background: white;
-  color: var(--primary-light);
-  font-size: 14px;
-}
-
-.restyled-garrick .sidebar a {
-  color: var(--accent-dark);
-}
-
-.restyled-garrick .sidebar .contact-list a {
-  color: var(--accent-dark);
-}
-
-.restyled-garrick .sidebar .site-title .u-url {
-  color: var(--primary-dark);
-}
-
-.restyled-garrick .sidebar .site-title {
-  font-size: 2em;
-  word-break: keep-all;
-  color: var(--primary-dark);
-}
-
-.restyled-garrick .sidebar .lead {
-  font-size: 1.25em;
-  color: var(--primary-darkish);
+.restyled-garrick .archive-item .post-date {
+  margin-top: 0em;
 }
 
 .restyled-garrick .post-source a {
@@ -473,6 +479,10 @@ here the hidden content
   color: var(--text-dark);
 }
 
+.restyled-garrick strong {
+	color: var(--text-darkish);
+}
+
 .restyled-garrick .post-tags a.p-category {
   color: var(--primary-dark);
   border-color: var(--primary-dark);
@@ -481,7 +491,7 @@ here the hidden content
 .restyled-garrick .post-tags a.category:active,
 .restyled-garrick .post-tags a.p-category:focus {
   background: var(--primary-dark);
-  color: #fff;
+  color: var(--background);
 }
 
 .restyled-garrick .post-tags a.p-tag {
@@ -492,11 +502,11 @@ here the hidden content
 .restyled-garrick .post-tags a.p-tag:active,
 .restyled-garrick .post-tags a.p-tag:focus {
   background: var(--orange);
-  color: #fff;
+  color: var(--background);
 }
 
 .restyled-garrick .pkg {
-  background-color: white;
+  background-color: var(--background);
   color: var(--accent-dark);
   border: 1px solid var(--accent-dark);
   border-radius: 3px;
@@ -573,5 +583,90 @@ here the hidden content
 @media screen and (max-width: 767px) {
   .restyled-garrick .sidebar .sidebar-nav > * {
     margin-bottom: 0;
+  }
+}
+
+/* WARNING: The following work for .restyled-garrick and may need to be revisted */
+@media (min-width: 48em) and (max-width: 64em) {
+  .content {
+    margin-left: 16rem;
+  }
+  .sidebar {
+    max-width: 16rem;
+  }
+}
+
+.restyled-garrick .archive-item {
+  position: relative;
+  text-indent: -1em;
+  margin-left: 1em;
+  margin-bottom: 0.66em;
+  padding-right: 4em;
+  line-height: 1.25;
+}
+
+.restyled-garrick .archive-item time {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--text-darkish);
+}
+
+.restyled-garrick td, .restyled-garrick th {
+  border-color: var(--text-lightest)
+}
+
+.restyled-garrick tbody tr:nth-child(2n+1) td, 
+.restyled-garrick tbody tr:nth-child(2n+1) th {
+  background-color: var(--text-lightest)
+}
+
+.restyled-garrick .talk-table td, 
+.restyled-garrick .talk-table th {
+  border: none;
+}
+
+.restyled-garrick .talk-table tbody tr:nth-child(2n+1) td, 
+.restyled-garrick .talk-table tbody tr:nth-child(2n+1) th {
+  background: var(--background);
+}
+
+/* ---- DARK MODE !!!! ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #202020;
+    --primary-dark: #eaeaea;
+    --primary-light: #887ba3;
+    --text-dark: #9a9a9a;
+    --text-light: #424242;
+    --text-lightest: #303030;
+    --text-darkish: #bbb;
+  }
+  
+  pre code, pre, code {
+    background: var(--text-light);
+  }
+  
+  pre.r {
+    border-color: #646464;
+  }
+  
+  pre.r + pre,
+  pre.r + pre > code {
+    background: var(--text-light);
+  }
+  
+  .hljs {
+    color: var(--text-dark);
+    background: var(--text-light);
+  }
+ 
+  /* Dim Images Except on Hover */
+  img {
+    opacity: .5;
+    transition: opacity .5s ease-in-out;
+  }
+  img:hover {
+    opacity: 1;
   }
 }
