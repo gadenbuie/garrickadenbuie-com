@@ -479,6 +479,10 @@ body.restyled-garrick {
   color: var(--text-dark);
 }
 
+.restyled-garrick .octicon {
+  fill: var(--text-dark);
+}
+
 .restyled-garrick strong {
 	color: var(--text-darkish);
 }
