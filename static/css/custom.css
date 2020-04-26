@@ -646,9 +646,12 @@ body.restyled-garrick {
     --text-lightest: #303030;
     --text-darkish: #bbb;
   }
-  
+  .restyled-garrick p code, .restyled-garrick li code {
+    color: var(--orange);
+  }
+    
   pre code, pre, code {
-    background: var(--text-light);
+    background: var(--text-lightest);
   }
   
   pre.r {
@@ -657,12 +660,20 @@ body.restyled-garrick {
   
   pre.r + pre,
   pre.r + pre > code {
-    background: var(--text-light);
+    background: var(--text-lightest);
   }
   
   .hljs {
     color: var(--text-dark);
-    background: var(--text-light);
+    background: var(--text-lightest);
+  }
+  
+  .hljs-keyword, .hljs-selector-tag, .hljs-subst {
+    color: var(--text-darkish);
+  }
+  
+  .hljs-string, .hljs-doctag {
+    color: var(--primary-light);
   }
  
   /* Dim Images Except on Hover */
