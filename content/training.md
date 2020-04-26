@@ -13,7 +13,7 @@ type: page
 
 <p>
   I am an
-  <a href="https://rstudio-trainers.netlify.com"><em>RStudio Education</em> Certified Trainer</a> and I'm passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, approachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
+  <a href="https://education.rstudio.com/trainers/"><em>RStudio Education</em> Certified Trainer</a> and I'm passionate about enabling data scientists to use and master the powerful tools provided by <strong>R</strong>. I strive for engaging, approachable, project-oriented educational experiences in settings ranging from one-on-one mentorship to multi-day workshops.
 </p>
 
 <div class="topic-lists">
