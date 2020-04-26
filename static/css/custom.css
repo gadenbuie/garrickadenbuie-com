@@ -676,6 +676,15 @@ body.restyled-garrick {
     color: var(--primary-light);
   }
  
+  hr {
+    border-color: var(--text-mild);
+  }
+  
+  blockquote {
+    border-left-color: var(--text-mild);
+    color: var(--text-dark);
+  }
+  
   /* Dim Images Except on Hover */
   img {
     opacity: .5;
