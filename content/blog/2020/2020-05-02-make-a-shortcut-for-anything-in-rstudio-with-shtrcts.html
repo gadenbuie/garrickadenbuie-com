@@ -11,9 +11,8 @@ tags:
   - R Package
   - Addin
   - Shortcuts
-description: post description
-twitterImage: /path/to/image.png
-rmd_source: ''
+description: Quickly turn any R function or code into an RStudio addin with {shrtcts}
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmd'
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -31,8 +30,8 @@ take some time to learn but can save tons of typing in the long run.
 <a href="https://rstudio.github.io/rstudioaddins/">RStudio addins</a>
 extend RStudio’s interface with small apps and actions,
 and you can
-<a href="https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts">customize your keyboard shortcuts</a>
-to assign a keyboard shortcut to any addin you have installed.</p>
+<a href="https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts">assign customized keyboard shortcuts</a>
+to trigger any addin you have installed quickly from the keyboard.</p>
 <p>Installing an addin isn’t hard —
 and if you’re looking for new addins,
 Dean Attali’s <a href="https://github.com/daattali/addinslist">addinslist</a> is the place to go.
@@ -85,26 +84,66 @@ and whenever it is triggered it calls
 <code>praise()</code> from the
 <span class="pkg"><a href="https://github.com/rladies/praise">praise</a></span> package.</p>
 <p>To <strong>install your shortcut</strong>,
-you need to run <code>add_rstudio_addin()</code>
+run <code>add_rstudio_addin()</code> from <span class="pkg">shrtcts</span>
 and restart your R session.</p>
-<pre class="r"><code>shrtcts::add_rstudio_shortcuts()</code></pre>
-<p>You can <strong>restart your R session</strong> by clicking —
-<em>Session</em> &gt; <em>Restart R</em> —
-or typing —
-<code>rstudioapi::restartSession()</code>.
+<pre class="r"><code>shrtcts::add_rstudio_shortcuts()
+rstudioapi::restartSession()</code></pre>
+<p>You can restart your R session by clicking <em>Session</em> &gt; <em>Restart R</em>.
 Now you should now be able to find
-the <strong>Say Something Nice</strong> addin in your addins list!</p>
-<p><img alt="Our first RStudio shortcut!" 
+the <em>Say Something Nice</em> addin in your addins list!</p>
+<p><img alt="Our first RStudio shortcut!"
+     title="Our first RStudio shortcut!"
      src="shrtcts-addin-nice.png"
-     style="max-width: 400px; margin-left: auto; margin-right: auto;" /></p>
+     width="330px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" /></p>
 </div>
 <div id="shortcut-meet-keyboard" class="section level3">
 <h3>Shortcut, meet keyboard</h3>
-<ul>
-<li><p>How to assign custom keyboard shortuts to the shortcut addins</p></li>
-<li><p>How to set the shortcut <code>id</code> because reordering</p></li>
-<li><p>Reinstalling <code>shrtcts</code> removes current shortcuts</p></li>
-</ul>
+<div id="assigning-keyboard-shortcuts-to-your-addin-shortcuts" class="section level4">
+<h4>Assigning keyboard shortcuts to your addin shortcuts</h4>
+<p>Once you’ve installed your shortcut addins,
+you can then assign a keyboard shortcut to run your addin.
+Select <em>Modify Keyboard Shortcuts…</em>
+from the <em>Tools</em> menu</p>
+<p><img alt="RStudio 'Modify Keyboard Shortcuts' item in the 'Tools' menu"
+     title="RStudio 'Modify Keyboard Shortcuts' item in the 'Tools' menu"
+     src="rstudio-menu-modify-shortcuts.png"
+     width="360px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" /></p>
+<p>and then search for your shortcut.
+Click on the blank space in the <em>Shortcut</em> column
+and press the keys that will be the your new shortcut.
+Here, I’m assigning the <em>Say Something Nice</em> addin to
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>.</p>
+<p><img alt="Setting the keyboard shortcut for the 'Say Something Nice' addin"
+     title="Setting the keyboard shortcut for the 'Say Something Nice' addin"
+     src="rstudio-keyboard-shortcut-menu.png"
+     width="800px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" /></p>
+<p>After setting the shortcut,
+I usually check to make sure my new keyboard shortcut
+doesn’t collide with a previously installed shortcut
+by clearing the search and sorting by the shortcut column.</p>
+</div>
+<div id="a-few-details-to-keep-in-mind-about-keyboard-shortcuts" class="section level4">
+<h4>A few details to keep in mind about keyboard shortcuts</h4>
+<p>There are a two things to keep in mind about using keyboard shortcuts
+with your <span class="pkg">shrtcts</span> shortcuts.</p>
+<p>First, re-installing <span class="pkg">shrtcts</span> will break
+your currently existing keyboard shortcuts.
+The next time you run <code>add_rstudio_addins()</code>
+your shortcuts will return,
+but the keyboard shortcuts may not survive the transition.</p>
+<p>Second, the order of your shortcuts in your <code>.shrtcts.yaml</code> file matters,
+unless you explicitly set the <code>id</code> entry to a number between 1 and 100.
+This means that it’s a good idea to set the <code>id</code>
+of shortcuts that you’re going to use with keyboard shortcuts.</p>
+<pre class="yaml"><code>- Name: Say Something Nice
+  Description: A demo of cool things
+  Binding: praise::praise
+  id: 1
+  Interactive: true</code></pre>
+</div>
 </div>
 <div id="adding-more-shortcuts" class="section level3">
 <h3>Adding more shortcuts</h3>
@@ -116,10 +155,14 @@ you can add the following line in your <code>~/.Rprofile</code><a href="#fn2" cl
 <pre class="r"><code>if (interactive() &amp; requireNamespace(&quot;shrtcts&quot;, quietly = TRUE)) {
   shrtcts::add_rstudio_shortcuts()
 }</code></pre>
+<p><span class="pkg">shrtcts</span> comes with a demonstration <code>.shrtcts.yaml</code> file
+that you can use for inspiration.
+Print out the example YAML file contents with:</p>
+<pre class="r"><code>shrtcts::example_shortcuts_yaml()</code></pre>
 </div>
 <div id="shortcuts-can-be-arbitrary-r-code" class="section level3">
 <h3>Shortcuts can be arbitrary R code</h3>
-<p>Your shortcut doesn’t need to call a function in a packge.
+<p>Your shortcut doesn’t need to call a function in a package.
 In fact,
 you can create shortcuts that run R code
 simply by putting the code you want to run in the <code>Binding</code> entry.</p>
@@ -128,10 +171,10 @@ simply by putting the code you want to run in the <code>Binding</code> entry.</p
 <pre class="yaml"><code>- Name: I&#39;m thinking of a number...
   Binding: sample(0:100, 1)</code></pre>
 <p>Notice the binding is just R code
-(I was thinking of 45, by the way),
+(I was thinking of 3, by the way),
 and the only fields you <em>need</em> to include
 are the <code>Name</code> and the <code>Binding</code>.</p>
-<p>Your shorcuts don’t need to fit on a single line either.
+<p>Your shortcuts don’t need to fit on a single line either.
 You can use
 <a href="https://yaml-multiline.info/">multi-line literal-style YAML blocks</a>
 for your R code.
@@ -152,8 +195,34 @@ and have the file be thrown away when I exit my R session.</p>
     rstudioapi::navigateToFile(tmp)
   Interactive: false</code></pre>
 </div>
-<div id="share-your-shortcuts" class="section level3">
-<h3>Share your shortcuts</h3>
+</div>
+<div id="behind-the-scenes" class="section level2">
+<h2>Behind the Scenes</h2>
+<p>How does this all work?
+<span class="pkg">shrtcts</span> comes with a minimal addins registry
+with one addin that browses to the help page <code>?add_rstudio_addins</code>.</p>
+<p>When you run <code>add_rstudio_addins()</code>,
+<span class="pkg">shrtcts</span> rewrites it’s own addins registry
+using your shortcut title and description.
+It also assigns each shortcut in <code>.shrtcts.yaml</code>
+to an id from 1 to 100,
+which correspond to 100 shortcut functions
+in the <span class="pkg">shrtcts</span> package.
+Each addin is wired to one of these functions,
+so when you run the associated addin
+<span class="pkg">shrtcts</span> looks up the correct shortcut in your
+<code>.shrtcts.yaml</code> file and runs that shortcut.</p>
+<p>This why you need to run <code>add_rstudio_addins()</code>
+whenever you add or modify <em>the order</em> of your shortcuts.
+Whenever this happens, <span class="pkg">shrtcts</span> has to re-wire
+the addins registry to make sure everything is connect.</p>
+<p>This is also why you need to restart your R session
+for the addins to be seen by RStudio.
+RStudio only checks for package addins when R starts up,
+so the R session restart triggers RStudio to refresh the addin registry.</p>
+</div>
+<div id="share-your-shortcuts" class="section level2">
+<h2>Share Your Shortcuts</h2>
 <p>Because <span class="pkg">shrtcts</span>
 stores your shortcuts in stand-alone(-ish) YAML files,
 you can share your shortcuts file with others (or yourself)
@@ -165,7 +234,6 @@ so that I didn’t have to think of another package name.</p>
 <p>I hope <span class="pkg"><a href="https://github.com/gadenbuie/shrtcts">shrtcts</a></span> is helpful to you!
 Find me on <a href="https://twitter.com/grrrck">@grrrck</a>
 and let me know if it is.</p>
-</div>
 </div>
 <div class="footnotes">
 <hr />

@@ -11,9 +11,8 @@ tags:
   - R Package
   - Addin
   - Shortcuts
-description: post description
-twitterImage: /path/to/image.png
-rmd_source: ''
+description: Quickly turn any R function or code into an RStudio addin with {shrtcts}
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/master/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmd'
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -45,8 +44,8 @@ take some time to learn but can save tons of typing in the long run.
 [RStudio addins][rstudio-addins]
 extend RStudio's interface with small apps and actions,
 and you can 
-[customize your keyboard shortcuts][rstudio-customize-shortcuts]
-to assign a keyboard shortcut to any addin you have installed.
+[assign customized keyboard shortcuts][rstudio-customize-shortcuts]
+to trigger any addin you have installed quickly from the keyboard.
 
 Installing an addin isn't hard ---
 and if you're looking for new addins,
@@ -118,31 +117,80 @@ and whenever it is triggered it calls
 [[praise](https://github.com/rladies/praise)]{.pkg} package.
 
 To **install your shortcut**,
-you need to run `add_rstudio_addin()` 
+run `add_rstudio_addin()` from [shrtcts]{.pkg}
 and restart your R session.
 
 ```{r eval=FALSE}
 shrtcts::add_rstudio_shortcuts()
+rstudioapi::restartSession()
 ```
 
-You can **restart your R session** by clicking ---
-_Session_ > _Restart R_ ---
-or typing ---
-`rstudioapi::restartSession()`.
+You can restart your R session by clicking _Session_ > _Restart R_.
 Now you should now be able to find 
-the **Say Something Nice** addin in your addins list!
+the _Say Something Nice_ addin in your addins list!
 
-<img alt="Our first RStudio shortcut!" 
+<img alt="Our first RStudio shortcut!"
+     title="Our first RStudio shortcut!"
      src="shrtcts-addin-nice.png"
-     style="max-width: 400px; margin-left: auto; margin-right: auto;" />
+     width="330px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" />
 
 ### Shortcut, meet keyboard
 
-- How to assign custom keyboard shortuts to the shortcut addins
+#### Assigning keyboard shortcuts to your addin shortcuts
 
-- How to set the shortcut `id` because reordering
+Once you've installed your shortcut addins,
+you can then assign a keyboard shortcut to run your addin.
+Select _Modify Keyboard Shortcuts..._
+from the _Tools_ menu
 
-- Reinstalling `shrtcts` removes current shortcuts
+<img alt="RStudio 'Modify Keyboard Shortcuts' item in the 'Tools' menu"
+     title="RStudio 'Modify Keyboard Shortcuts' item in the 'Tools' menu"
+     src="rstudio-menu-modify-shortcuts.png"
+     width="360px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" />
+     
+and then search for your shortcut.
+Click on the blank space in the _Shortcut_ column
+and press the keys that will be the your new shortcut.
+Here, I'm assigning the _Say Something Nice_ addin to
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>.
+
+<img alt="Setting the keyboard shortcut for the 'Say Something Nice' addin"
+     title="Setting the keyboard shortcut for the 'Say Something Nice' addin"
+     src="rstudio-keyboard-shortcut-menu.png"
+     width="800px"
+     style="max-width: 100%; margin-left: auto; margin-right: auto;" />
+
+After setting the shortcut,
+I usually check to make sure my new keyboard shortcut
+doesn't collide with a previously installed shortcut
+by clearing the search and sorting by the shortcut column.
+
+#### A few details to keep in mind about keyboard shortcuts
+
+There are a two things to keep in mind about using keyboard shortcuts
+with your [shrtcts]{.pkg} shortcuts.
+
+First, re-installing [shrtcts]{.pkg} will break
+your currently existing keyboard shortcuts.
+The next time you run `add_rstudio_addins()`
+your shortcuts will return,
+but the keyboard shortcuts may not survive the transition.
+
+Second, the order of your shortcuts in your `.shrtcts.yaml` file matters,
+unless you explicitly set the `id` entry to a number between 1 and 100.
+This means that it's a good idea to set the `id` 
+of shortcuts that you're going to use with keyboard shortcuts.
+
+
+```yaml
+- Name: Say Something Nice
+  Description: A demo of cool things
+  Binding: praise::praise
+  id: 1
+  Interactive: true
+```
 
 ### Adding more shortcuts
 
@@ -160,9 +208,17 @@ if (interactive() & requireNamespace("shrtcts", quietly = TRUE)) {
 }
 ```
 
+[shrtcts]{.pkg} comes with a demonstration `.shrtcts.yaml` file
+that you can use for inspiration.
+Print out the example YAML file contents with:
+
+```{r}
+shrtcts::example_shortcuts_yaml()
+```
+
 ### Shortcuts can be arbitrary R code
 
-Your shortcut doesn't need to call a function in a packge.
+Your shortcut doesn't need to call a function in a package.
 In fact, 
 you can create shortcuts that run R code
 simply by putting the code you want to run in the `Binding` entry.
@@ -180,7 +236,7 @@ Notice the binding is just R code
 and the only fields you _need_ to include
 are the `Name` and the `Binding`.
 
-Your shorcuts don't need to fit on a single line either.
+Your shortcuts don't need to fit on a single line either.
 You can use 
 [multi-line literal-style YAML blocks](https://yaml-multiline.info/)
 for your R code.
@@ -205,7 +261,35 @@ and have the file be thrown away when I exit my R session.
   Interactive: false
 ```
 
-### Share your shortcuts
+## Behind the Scenes
+
+How does this all work?
+[shrtcts]{.pkg} comes with a minimal addins registry
+with one addin that browses to the help page `?add_rstudio_addins`.
+
+When you run `add_rstudio_addins()`,
+[shrtcts]{.pkg} rewrites it's own addins registry
+using your shortcut title and description.
+It also assigns each shortcut in `.shrtcts.yaml`
+to an id from 1 to 100,
+which correspond to 100 shortcut functions
+in the [shrtcts]{.pkg} package.
+Each addin is wired to one of these functions,
+so when you run the associated addin
+[shrtcts]{.pkg} looks up the correct shortcut in your
+`.shrtcts.yaml` file and runs that shortcut.
+
+This why you need to run `add_rstudio_addins()`
+whenever you add or modify _the order_ of your shortcuts.
+Whenever this happens, [shrtcts]{.pkg} has to re-wire
+the addins registry to make sure everything is connect.
+
+This is also why you need to restart your R session
+for the addins to be seen by RStudio.
+RStudio only checks for package addins when R starts up,
+so the R session restart triggers RStudio to refresh the addin registry.
+
+## Share Your Shortcuts
 
 Because [shrtcts]{.pkg} 
 stores your shortcuts in stand-alone(-ish) YAML files,
