@@ -519,9 +519,12 @@ body.restyled-garrick {
 
 .restyled-garrick .pkg a {
   color: var(--accent-dark);
-  padding: 0 !important;
+  padding: 0 3px !important;
   height: 100%;
   width: 100%;
+  background: rgba(44, 132, 117, 0.15);
+  margin-left: -3px;
+  margin-right: -3px;
 }
 
 .restyled-garrick .pkg a:hover,
