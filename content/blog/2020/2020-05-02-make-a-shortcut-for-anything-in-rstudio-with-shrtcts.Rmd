@@ -304,7 +304,7 @@ these three custom addins appear as
 **lla1**, **lla2**, and **lla3**.
 The upside of [rsam]{.pkg} 
 is that you don't have to write code in YAML (huge plus!),
-but the downside is that the names of the addins is fixed.
+but the downside is that the names of the addins are fixed.
 
 [shrtcts]{.pkg}, 
 on the other hand, 
