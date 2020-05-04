@@ -1,5 +1,5 @@
 ---
-title: Make A Shortcut for Anything in RStudio with shtrcts
+title: Make A Shortcut for Anything in RStudio with shrtcts
 author: Garrick Aden-Buie
 date: '2020-05-02'
 slug: shrtcts
@@ -33,6 +33,7 @@ options(htmltools.dir.version = TRUE)
 [rstudio-customize-shortcuts]: https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts
 [rstudio-addins]: https://rstudio.github.io/rstudioaddins/
 [addinslist]: https://github.com/daattali/addinslist
+[rsam]: https://github.com/yonicd/rsam
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
@@ -172,11 +173,10 @@ by clearing the search and sorting by the shortcut column.
 There are a two things to keep in mind about using keyboard shortcuts
 with your [shrtcts]{.pkg} shortcuts.
 
-First, re-installing [shrtcts]{.pkg} will break
-your currently existing keyboard shortcuts.
-The next time you run `add_rstudio_addins()`
-your shortcuts will return,
-but the keyboard shortcuts may not survive the transition.
+First, if you re-install or update [shrtcts]{.pkg},
+your currently existing keyboard shortcuts should survive the transition.
+Make sure that you run `add_rstudio_addins()` again after updating,
+and make sure that you re-start your R session.
 
 Second, the order of your shortcuts in your `.shrtcts.yaml` file matters,
 unless you explicitly set the `id` entry to a number between 1 and 100.
@@ -288,6 +288,31 @@ This is also why you need to restart your R session
 for the addins to be seen by RStudio.
 RStudio only checks for package addins when R starts up,
 so the R session restart triggers RStudio to refresh the addin registry.
+
+### Inspiration
+
+[shrtcts]{.pkg} was inspired by [[rsam]]{.pkg},
+the _RStudio Addins Manager_ by [&commat;yonicd](https://github.com/yonicd).
+There's a lot that [rsam]{.pkg} can do ---
+including helping you manage your keyboard shortcuts ---
+and [shrtcts]{.pkg} is essentially an extension of [rsam]{.pkg}'s
+[limited liability addins](https://github.com/yonicd/rsam#limited-liability-addins).
+[rsam]{.pkg} provides three slots for custom addins
+that in turn look for specially-named functions defined in the global environment.
+In the addins menu,
+these three custom addins appear as
+**lla1**, **lla2**, and **lla3**.
+The upside of [rsam]{.pkg} 
+is that you don't have to write code in YAML (huge plus!),
+but the downside is that the names of the addins is fixed.
+
+[shrtcts]{.pkg}, 
+on the other hand, 
+rewrites its own addin registry so that you can have customized addin names and descriptions.
+In both packages,
+the number of custom addins is limited:
+[rsam]{.pkg} provides 3 slots,
+while [shrtcts]{.pkg} gives you 100.
 
 ## Share Your Shortcuts
 

@@ -129,11 +129,10 @@ by clearing the search and sorting by the shortcut column.</p>
 <h4>A few details to keep in mind about keyboard shortcuts</h4>
 <p>There are a two things to keep in mind about using keyboard shortcuts
 with your <span class="pkg">shrtcts</span> shortcuts.</p>
-<p>First, re-installing <span class="pkg">shrtcts</span> will break
-your currently existing keyboard shortcuts.
-The next time you run <code>add_rstudio_addins()</code>
-your shortcuts will return,
-but the keyboard shortcuts may not survive the transition.</p>
+<p>First, if you re-install or update <span class="pkg">shrtcts</span>,
+your currently existing keyboard shortcuts should survive the transition.
+Make sure that you run <code>add_rstudio_addins()</code> again after updating,
+and make sure that you re-start your R session.</p>
 <p>Second, the order of your shortcuts in your <code>.shrtcts.yaml</code> file matters,
 unless you explicitly set the <code>id</code> entry to a number between 1 and 100.
 This means that it’s a good idea to set the <code>id</code>
@@ -171,7 +170,7 @@ simply by putting the code you want to run in the <code>Binding</code> entry.</p
 <pre class="yaml"><code>- Name: I&#39;m thinking of a number...
   Binding: sample(0:100, 1)</code></pre>
 <p>Notice the binding is just R code
-(I was thinking of 3, by the way),
+(I was thinking of 53, by the way),
 and the only fields you <em>need</em> to include
 are the <code>Name</code> and the <code>Binding</code>.</p>
 <p>Your shortcuts don’t need to fit on a single line either.
@@ -220,6 +219,30 @@ the addins registry to make sure everything is connect.</p>
 for the addins to be seen by RStudio.
 RStudio only checks for package addins when R starts up,
 so the R session restart triggers RStudio to refresh the addin registry.</p>
+<div id="inspiration" class="section level3">
+<h3>Inspiration</h3>
+<p><span class="pkg">shrtcts</span> was inspired by <span class="pkg"><a href="https://github.com/yonicd/rsam">rsam</a></span>,
+the <em>RStudio Addins Manager</em> by <a href="https://github.com/yonicd">@yonicd</a>.
+There’s a lot that <span class="pkg">rsam</span> can do —
+including helping you manage your keyboard shortcuts —
+and <span class="pkg">shrtcts</span> is essentially an extension of <span class="pkg">rsam</span>’s
+<a href="https://github.com/yonicd/rsam#limited-liability-addins">limited liability addins</a>.
+<span class="pkg">rsam</span> provides three slots for custom addins
+that in turn look for specially-named functions defined in the global environment.
+In the addins menu,
+these three custom addins appear as
+<strong>lla1</strong>, <strong>lla2</strong>, and <strong>lla3</strong>.
+The upside of <span class="pkg">rsam</span>
+is that you don’t have to write code in YAML (huge plus!),
+but the downside is that the names of the addins is fixed.</p>
+<p><span class="pkg">shrtcts</span>,
+on the other hand,
+rewrites its own addin registry so that you can have customized addin names and descriptions.
+In both packages,
+the number of custom addins is limited:
+<span class="pkg">rsam</span> provides 3 slots,
+while <span class="pkg">shrtcts</span> gives you 100.</p>
+</div>
 </div>
 <div id="share-your-shortcuts" class="section level2">
 <h2>Share Your Shortcuts</h2>
