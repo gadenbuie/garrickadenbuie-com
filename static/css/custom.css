@@ -529,7 +529,7 @@ body.restyled-garrick {
 
 .restyled-garrick .pkg a:hover,
 .restyled-garrick .pkg a:focus {
-  color: var(--accent);
+  color: var(--red);
 }
 
 .restyled-garrick p code,
@@ -649,6 +649,11 @@ body.restyled-garrick {
     --text-lightest: #303030;
     --text-darkish: #bbb;
   }
+  
+  .restyled-garrick .caption {
+    color: var(--text-mild);
+  }
+  
   .restyled-garrick p code, .restyled-garrick li code {
     color: var(--orange);
   }
@@ -695,5 +700,14 @@ body.restyled-garrick {
   }
   img:hover {
     opacity: 1;
+  }
+  
+  .featherlight.featherlight .featherlight-content {
+    background: var(--background);
+  }
+  
+  .featherlight.featherlight .featherlight-close-icon {
+    background: var(--background);
+    color: var(--text-dark);
   }
 }
