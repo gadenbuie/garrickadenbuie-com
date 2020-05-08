@@ -24,7 +24,7 @@ output:
 <!-- Links -->
 [xt]: https://pkg.garrickadenbuie.com/xaringanthemer
 [xt-gh]: https://github.com/gadenbuie/xaringanthemer
-[xaringan]: https://slides.yuhui.name/xaringan
+[xaringan]: https://slides.yihui.name/xaringan
 [xaringan-gh]: https://github.com/yihui/xaringan
 [remarkjs]: https://github.com/gnab/remark/
 [xaringan-themes]: https://github.com/yihui/xaringan/wiki/Themes
