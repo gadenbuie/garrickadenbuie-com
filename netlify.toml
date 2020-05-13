@@ -11,3 +11,19 @@ HUGO_VERSION = "0.54.0"
 [context.branch-deploy]
 command = "hugo -b $DEPLOY_PRIME_URL --buildFuture"
 HUGO_VERSION = "0.54.0"
+
+[[redirects]]
+  from = "/project/xaringanthemer"
+  to = "https://pkg.garrickadenbuie.com/xaringanthemer"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/project/metathis"
+  to = "https://pkg.garrickadenbuie.com/metathis"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/project/countdown"
+  to = "https://pkg.garrickadenbuie.com/countdown"
+  status = 301
+  force = true
