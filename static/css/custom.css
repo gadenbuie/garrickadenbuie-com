@@ -638,6 +638,28 @@ body.restyled-garrick {
   background: var(--background);
 }
 
+.restyled-garrick .hljs-keyword, .restyled-garrick .hljs-selector-tag, .restyled-garrick .hljs-subst {
+  color: var(--text-darkish);
+}
+
+.restyled-garrick .hljs-string, .restyled-garrick .hljs-doctag {
+  color: var(--primary-light);
+}
+
+.restyled-garrick .hljs-title, .restyled-garrick .hljs-section, .restyled-garrick .hljs-selector-id {
+  color: var(--red);
+  font-weight: bold;
+}
+
+.restyled-garrick .hljs-symbol, .restyled-garrick .hljs-bullet {
+  color: var(--purple);
+}
+
+.restyled-garrick .hljs-tag, .restyled-garrick .hljs-name, .restyled-garrick .hljs-attribute {
+  color: var(--primary-accent);
+  font-weight: normal;
+}
+
 /* ---- DARK MODE !!!! ---- */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -676,14 +698,6 @@ body.restyled-garrick {
     background: var(--text-lightest);
   }
   
-  .hljs-keyword, .hljs-selector-tag, .hljs-subst {
-    color: var(--text-darkish);
-  }
-  
-  .hljs-string, .hljs-doctag {
-    color: var(--primary-light);
-  }
- 
   hr {
     border-color: var(--text-mild);
   }
