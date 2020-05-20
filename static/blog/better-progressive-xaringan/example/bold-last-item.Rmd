@@ -1,0 +1,60 @@
+---
+title: "Better Progressive Xaringan"
+subtitle: "Bold Last Item Example"
+author: "Garrick Aden-Buie"
+institute: "garrickadenbuie.com"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [xaringan-themer.css, example.css]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanthemer::style_xaringan(header_color = "#27414B", code_inline_color = "#DC322F")
+```
+
+class: bold-last-item
+
+# Best Brownies, Steps
+
+1. Preheat oven to 350 degrees F. Line a metal 9x9 pan with parchment paper.
+--
+
+1. Pour melted butter into a large mixing bowl. 
+    1. Whisk in sugar by hand until smooth, 30 seconds.
+--
+1. Add in eggs and vanilla extract. Whisk 1 minute.
+--
+
+1. Whisk in melted chocolate until combined and smooth.
+--
+
+1. Use a rubber spatula to stir in flour, cocoa powder, and salt until just combined. Stir in whole chocolate chips.
+--
+
+1. Pour into prepared pan and smooth out.
+--
+
+1. Bake in the preheated oven for 30 minutes. Let cool in pan 30 minutes before slicing.
+
+---
+
+# bold-last-item
+
+Use this CSS chunk with the slide `class: bold-last-item`.
+
+````
+```{css echo=FALSE}`r ''`
+.bold-last-item > ul > li:last-of-type,
+.bold-last-item > ol > li:last-of-type {
+  font-weight: bold;
+}
+```
+````
