@@ -1,0 +1,21 @@
+.bold-last-item > ul > li:last-of-type,
+.bold-last-item > ol > li:last-of-type{
+  font-weight: bold;
+}
+.highlight-last-item > ul > li,
+.highlight-last-item > ol > li {
+  opacity: 0.5;
+}
+.highlight-last-item > ul > li:last-of-type,
+.highlight-last-item > ol > li:last-of-type{
+  opacity: 1;
+}
+.show-only-last-code-result pre + pre:not(:last-of-type) code[class="remark-code"] {
+	display: none;
+}
+.remark-slide-scaler {
+  box-shadow: none;
+}
+.remark-slide-container {
+  background: white;
+}
