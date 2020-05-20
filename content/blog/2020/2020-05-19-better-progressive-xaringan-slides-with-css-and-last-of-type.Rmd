@@ -77,6 +77,9 @@ all alone on their own line,
 to indicate a pause in the current slide.
 
 ```markdown
+---
+class: highlight-last-item
+
 # Best Brownies, Ingredients
 
 - 1 cup milk chocolate chips
@@ -102,7 +105,7 @@ three slides are created
 and the final slide contains the following HTML.
 
 ```html
-<div class="remark-slide-content hljs-github">
+<div class="remark-slide-content highlight-last-item">
   <h1 id="best-brownies-ingredients">Best Brownies, Ingredients</h1>
   <ul>
     <li><p>1 cup milk chocolate chips</p></li>
