@@ -38,6 +38,17 @@ options(htmltools.dir.version = TRUE)
 _It's time for `iris` to go. Use [de_iris_my_repos()][gh] to help find references to `iris` in your public GitHub code so you can replace it with something better._
 :::
 
+It only takes two lines to get started.
+First, check the source code on <https://git.io/de-iris-my-repos>.
+Then run these two lines in your R console:
+
+```{r eval=FALSE}
+source("https://git.io/de-iris-my-repos")
+iris_issues <- de_iris_my_repos()
+```
+
+<!--more-->
+
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/de-iris-my-repos" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/de-iris-my-repos on GitHub">Star <code>de-iris-my-repos</code></a>&nbsp;
