@@ -107,7 +107,7 @@ source("https://git.io/de-iris-my-repos")
 iris_issues <- de_iris_my_repos()
 ```
 
-When you run `de_iris_my_repos()` it searches your public code for mentions of `iris`,
+When you run `de_iris_my_repos()` it searches your public code for mentions of `iris`
 and asks you if you want to open an issue in each repo.
 If you do, 
 it opens an issue using the template in the screen shot below
