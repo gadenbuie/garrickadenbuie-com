@@ -100,7 +100,7 @@ The code is available on GitHub at [gadenbuie/de-iris-my-repos][gh],
 and it only takes two lines in your console to find any references to `iris`
 in your repositories and open an issue in each repo reminding you to kick `iris` out.
 
-_`de_iris_my_repos()` won't do anything without your express consent, but you should still probably check the R script before your source it._
+_`de_iris_my_repos()` won't do anything without your explicit consent, but you should still probably check the R script before your source it._
 
 ```{r eval=FALSE}
 source("https://git.io/de-iris-my-repos")
