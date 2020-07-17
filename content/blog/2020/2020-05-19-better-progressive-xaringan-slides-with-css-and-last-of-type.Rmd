@@ -30,7 +30,20 @@ knitr::opts_chunk$set(
   fig.width = 9, fig.height = 10
 )
 options(htmltools.dir.version = TRUE)
+```
+
+```{r panelset, echo=FALSE}
 xaringanExtra::use_panelset()
+xaringanExtra::style_panelset(
+  panel_tab_color = "var(--text-mild)",
+  panel_tab_color_active = "var(--text-dark)",
+  panel_tab_background_color_active = "var(--text-lightest)",
+  panel_tab_background_color_hover = "#fafafa",
+  panel_tab_inactive_opacity = 1,
+  panel_tabs_border_bottom = "var(--text-lightest)",
+  panel_tab_border_color_hover = "var(--text-lightest)",
+  panel_tab_border_color_active = "var(--purple)"
+)
 ```
 
 ```{css echo=FALSE}
