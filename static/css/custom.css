@@ -595,7 +595,7 @@ body.restyled-garrick {
 
 /* WARNING: The following work for .restyled-garrick and may need to be revisted */
 @media screen and (min-width: 48em) and (max-width: 64em) {
-  .restyled-garrick .content {
+  .restyled-garrick .content:not(.expanded) {
     margin-left: 16rem;
   }
   .restyled-garrick .sidebar {
