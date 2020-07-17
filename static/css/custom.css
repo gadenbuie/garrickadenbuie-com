@@ -14,7 +14,7 @@
   --orange: #f79334;
   --red: #dc322f;
   --text-dark: #202020;
-  --text-darkish: #4242424;
+  --text-darkish: #424242;
   --text-mild: #606060;
   --text-light: #9a9a9a;
   --text-lightest: #eaeaea;
@@ -34,7 +34,7 @@ html {
     font-size: 16px;
   }
 }
-@media (min-width: 65em) {
+@media (min-width: 64em) {
   html {
     font-size: 18px;
   }
@@ -230,7 +230,7 @@ pre.r {
   }
 }
 
-@media screen and (min-width: 65em) {
+@media screen and (min-width: 64em) {
   .hamburger.is-active {
     display: none !important;
   }
@@ -594,11 +594,11 @@ body.restyled-garrick {
 }
 
 /* WARNING: The following work for .restyled-garrick and may need to be revisted */
-@media (min-width: 48em) and (max-width: 64em) {
-  .content {
+@media screen and (min-width: 48em) and (max-width: 64em) {
+  .restyled-garrick .content {
     margin-left: 16rem;
   }
-  .sidebar {
+  .restyled-garrick .sidebar {
     max-width: 16rem;
   }
 }
