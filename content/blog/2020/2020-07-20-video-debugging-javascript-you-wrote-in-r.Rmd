@@ -1,0 +1,66 @@
+---
+title: 'Video: Debugging JavaScript You Wrote in R'
+author: Garrick Aden-Buie
+date: '2020-07-20'
+slug: video-debug-js-from-r
+categories:
+  - Blog
+tags:
+  - R
+  - RStudio
+  - JavaScript
+  - Debugging
+  - Web Development
+  - reactable
+  - htmlwidgets
+  - Video
+description: A pseudo-live-streamed walkthrough as I debug some buggy JavaScript written in R for a {reactable} htmlwidget.
+twitterImage: /blog/video-debug-js-from-r/debug-js-from-r.png
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+[htmlwidgets]: https://www.htmlwidgets.org/
+[reactable]: https://glin.github.io/reactable
+[thomas-mock]: https://twitter.com/thomas_mock
+[rsthemes]: https://github.com/gadenbuie/rsthemes/
+[js4shiny]: https://pkg.js4shiny.com
+
+::: {.lead}
+[[htmlwidgets]]{.pkg} makes it easy to create awesome web things from R and R Markdown, but sometimes you have to write your own JavaScript code... in strings... in R. What do you do if it doesn't work? How can you write JavaScript interactively? 
+:::
+
+<p>
+`r blogdown::shortcode("youtube", "aNxT4IOZPtc")`
+</p>
+
+I "live streamed" my process 
+as I worked through debugging 
+some buggy JavaScript that [Tom Mock][thomas-mock]
+[shared on twitter](https://twitter.com/thomas_mock/status/1284932187352072192), 
+touching on the tools used 
+to debug JavaScript and 
+some features from the [[js4shiny]]{.pkg} package
+that help R users with web development.
+
+The example uses the awesome [[reactable]]{.pkg} package,
+which helps you make some incredible HTML interactive HTML tables.
+
+If you want to try this at home,
+I've uploaded the
+[code that doesn't work](https://gist.github.com/gadenbuie/9ce3a58a7f6109c23cdd68711a2623ae)
+and the
+[code that does work](https://gist.github.com/gadenbuie/7d8bb61476dcfa4459fb6e8b7a219022)
+as GitHub gists.
+
+Oh and by the way, 
+I'm using the RStudio theme "Flat White" from [[rsthemes]]{.pkg}.
+
+---
+
+This is the first time I've made a video like this.
+If you liked it and want to see more,
+let me know on Twitter
+[&commat;grrrck](https://twitter.com/grrrck).
