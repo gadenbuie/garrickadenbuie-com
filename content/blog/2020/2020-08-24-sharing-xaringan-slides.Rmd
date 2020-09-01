@@ -82,7 +82,19 @@ tweetrmd::tweet_screenshot(
 
 In this post,
 I'll share some tips and strategies for publishing your [[xaringan]]{.pkg} slides online.
-Here's a linked checklist with the steps I'll cover here.
+Use the linked checklist below to get started or for review when prepping your next presentation.
+
+This post covers some new features just released in my package [[xaringanExtra]]{.pkg}.
+If you haven't used it before,
+it provides a _playground of enhancements for_ [xaringan]{.pkg}.
+It's not available on CRAN,
+so you'll need to install it from GitHub:
+
+```{r eval=FALSE, echo=TRUE}
+# install.packages("remotes")
+remotes::install_github("gadenbuie/xaringanExtra")
+```
+
 
 ## Checklist
 
