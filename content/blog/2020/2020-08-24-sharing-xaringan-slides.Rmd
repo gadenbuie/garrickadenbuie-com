@@ -554,7 +554,7 @@ and don't forget to tweet out your awesome slides when you're done
 ***
 
 ```{r}
-applause::button(color = "var(--highlight)", style = "float: left;margin-right: 1em;")
+applause::button(color = "var(--accent)", style = "float: left;margin-right: 1em;")
 ```
 Thanks for reading!
 Feel free to share your presentation-sharing tips with me on Twitter
