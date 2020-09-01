@@ -57,6 +57,14 @@
               </td>
             </tr>
             {{ end }}
+             {{ if .Params.talk_recording_url }}
+            <tr>
+              <td>Recording</td>
+              <td>
+                <a href={{ .Params.talk_recording_url | relURL }}>{{ .Params.talk_recording_url | absURL }}</a>
+              </td>
+            </tr>
+            {{ end }}
           </table>
           {{ if .Params.talk_abstract }}
           <h3>Abstract</h3>
