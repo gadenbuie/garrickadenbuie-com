@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather:700|PT+Sans:400,400i,700,700i|Source+Code+Pro:400,700");
+@import url("https://fonts.googleapis.com/css?family=Merriweather:700|Source+Code+Pro:400,700");
 
 :root {
   --background: #ffffff;
@@ -21,8 +21,7 @@
 }
 
 html {
-  font-family: "PT Sans", "Ubuntu Sans", "Liberation Sans", "Lucida Grande",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif; 
 }
 @media (min-width: 38em) {
   html {
@@ -38,6 +37,10 @@ html {
   html {
     font-size: 18px;
   }
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Merriweather, Georgia, sans-serif;
 }
 
 code,
