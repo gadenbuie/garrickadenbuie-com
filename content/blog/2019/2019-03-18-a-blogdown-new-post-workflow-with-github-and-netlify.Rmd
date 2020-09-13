@@ -65,7 +65,7 @@ Note part of setup should include configuring the `baseurl` option in your `conf
 This is the base of URLs used in your website wherever an absolute URL (i.e. the full URL rather than a relative or partial URL) is created.
 This is somewhat template-dependent, but this URL is used wherever a link is parsed with hugo's [`absURL` command][hugo-absurl].
 
-In my case, `baseurl` is configured [like this](https://github.com/gadenbuie/garrickadenbuie-com/blob/master/config.toml):
+In my case, `baseurl` is configured [like this](https://github.com/gadenbuie/garrickadenbuie-com/blob/main/config.toml):
 
 ```toml
 baseurl = "https://www.garrickadenbuie.com"
