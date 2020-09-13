@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Merriweather:700|Source+Code+Pro:400,700");
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700|Roboto+Slab&display=swap");
 
 :root {
   --background: #ffffff;
@@ -39,8 +39,8 @@ html {
   }
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-family: Merriweather, Georgia, sans-serif;
+h1,h2,h3,h4,h5,h6,.site-title {
+  font-family: 'Roboto Slab', Merriweather, Georgia, sans-serif;
 }
 
 code,
@@ -53,10 +53,6 @@ pre,
   margin-left: auto;
   margin-right: auto;
 }
-.site-title {
-  font-family: Merriweather, Georgia, sans-serif;
-}
-
 p.caption {
   font-size: 0.95em;
   color: grey;
