@@ -1,0 +1,273 @@
+---
+title: R Colors in CSS for R Markdown HTML Documents
+author: Garrick Aden-Buie
+date: '2020-09-14'
+slug: r-colors-css
+categories:
+  - Blog
+tags:
+  - xaringan
+  - xaringan Tip
+  - CSS
+  - R Markdown
+  - R
+  - Web Development
+  - Shiny
+  - color
+description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
+twitterImage: https://pkg.garrickadenbuie.com/r-colors-css/social-card.png
+rmd_source: ''
+keywords: rstats
+head_custom: |
+  <link href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css" rel="stylesheet">
+  <link href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css" rel="stylesheet">
+editor_options:
+  chunk_output_type: console
+---
+
+<script src="/rmarkdown-libs/header-attrs-2.3/header-attrs.js"></script>
+<link href="/rmarkdown-libs/panelset-0.2.3/panelset.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/panelset-0.2.3/panelset.js"></script>
+
+
+<!-- Links -->
+<div class="lead">
+<p>A modular collection of CSS stylesheets
+that lets you use any of <a href="https://rdrr.io/r/grDevices/colors.html">R’s named colors</a>
+in your
+<a href="https://slides.yihui.org/xaringan">xaringan</a> slides,
+<a href="https://bookdown.org/yihui/blogdown">blogdown</a> pages,
+<a href="https://shiny.rstudio.com">Shiny</a> apps…
+in short in any R Markdown HTML documents.</p>
+<p><a href="https://pkg.garrickadenbuie.com/r-colors-css"><i class="fab fa-r-project"></i> pkg.garrickadenbuie.com/r-colors-css</a></p>
+</div>
+<div id="rs-named-colors" class="section level2">
+<h2>R’s Named Colors</h2>
+<style type="text/css">
+.tu-dotted:not(:hover) { 
+  text-decoration: underline;
+  text-decoration-style: dotted; 
+}
+</style>
+<p>R ships with a list of colors with wonderful names,
+like <span class="tu-dotted bg-lightgoldenrod3-hover white-hover">lightgoldenrod3</span>
+and <span class="tu-dotted bg-firebrick2-hover white-hover">firebrick2</span>.
+I don’t know all of the names
+and used to turn to an <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour">online list of colors</a>
+so often
+that I put it on
+<a href="r-colors-mug.jpg" data-featherlight="image">a mug</a>.</p>
+<p>In R,
+you can reference the color by name
+in nearly any function that applies to colors.
+They’re particularly easy to use in visualizations,
+like those made with <span class="pkg">ggplot2</span>,
+because there are
+657 colors
+and many have 4 variations on the same color hue,
+indexed by suffixes <code>1</code> to <code>4</code>.
+For example, there are 4 variations of
+<span class="tu-dotted bg-palevioletred-hover white-hover">palevioletred</span>
+that I’m using in the following plot
+for each of 4 years of Austin housing sales data.</p>
+<pre class="r"><code>g_austin_housing + 
+  ## A basic ggplot of home sale prices in Austin
+  ## over 4 years, using the ggplot2::txhousing data
+  scale_color_manual(
+    values = c(
+      &quot;palevioletred1&quot;,
+      &quot;palevioletred2&quot;,
+      &quot;palevioletred3&quot;,
+      &quot;palevioletred4&quot;,
+    )
+  )</code></pre>
+<style type="text/css">
+.darkmode-opacity-1 img {
+  opacity: 1;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+</style>
+<div class="darkmode-opacity-1">
+<p><img src="/blog/2020/2020-09-12-r-colors-css_files/figure-html/demo-plot-with-colors-1.svg" width="672" /></p>
+</div>
+</div>
+<div id="utility-css" class="section level2">
+<h2>Utility CSS</h2>
+<p>If you’re used to working with R’s color names,
+they unfortunately don’t align with HTML’s
+<a href="https://html-color-codes.info/color-names/">named colors</a>,
+which means that you can’t do something like</p>
+<pre class="css"><code>h3.plot-title {
+  color: palevioletred1;
+}</code></pre>
+<p>because <code>palevioletred1</code> isn’t a valid HTML color.
+This causes problems if you
+<a href="https://stackoverflow.com/a/63819561">use an R color name in a function that write CSS files</a>.</p>
+<p>I’ve also been very interested in utility CSS frameworks,
+like <a href="https://tailwindcss.com/">Tailwinds CSS</a>
+and <a href="http://tachyons.io/">Tachyons</a>.
+Tailwinds looks amazing,
+but it requires a moderately complicated build setup,
+so I’ve been <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons">using tachyons</a>
+a lot lately.</p>
+<p>Tacyhons integrates nicely with <a href="https://slides.yihui.org/xaringan">xaringan</a>
+and other R Markdown outputs where a complete CSS framework is in use
+(like <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+with <a href="https://getbootstrap.com">bootstrap</a>).
+For that reason,
+I’ve included it in <span class="pkg"><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></span>,
+and you can add Tachyons to any R Markdown document with
+<code>xaringanExtra::use_tachyons()</code>.</p>
+<p>What’s awesome about Tachyons is that
+it uses small, single-purpose CSS classes —
+called <strong>utility classes</strong> —
+that you can apply as you choose to your HTML elements.</p>
+<p>If I want to create a simple box with…</p>
+<ul>
+<li>a border
+<ul>
+<li>on all sides (<code>.ba</code>)</li>
+<li>that’s gray (<code>.b--gray</code>)</li>
+<li>with a medium line width (<code>.bw2</code>),</li>
+</ul></li>
+<li>medium exterior margin (<code>.ma2</code>),</li>
+<li>large interior padding (<code>.pa4</code>),</li>
+<li>and a box shadow (<code>.shadow-1</code>)</li>
+</ul>
+<p>…I can use those classes on the same element.
+Here are four syntax variations that use those classes.</p>
+<style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: #fafafa;--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-mild);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style>
+<div class="panelset">
+<div id="xaringan" class="section level3 panel">
+<h3>xaringan</h3>
+<pre class="markdown"><code>.b--gray.ba.bw2.ma2.pa4.shadow-1[
+Talent is a pursued interest. 
+Anything that you&#39;re willing to practice, you can do.
+
+—Bob Ross
+]</code></pre>
+</div>
+<div id="r-markdown" class="section level3 panel">
+<h3>R Markdown</h3>
+<pre class="markdown"><code>::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
+Talent is a pursued interest. 
+Anything that you&#39;re willing to practice, you can do.
+
+—Bob Ross
+:::</code></pre>
+</div>
+<div id="html" class="section level3 panel">
+<h3>HTML</h3>
+<pre class="html"><code>&lt;div class=&quot;b--gray ba bw2 ma2 pa4 shadow-1&quot;&gt;
+&lt;p&gt;Talent is a pursued interest. 
+Anything that you&#39;re willing to practice, you can do.
+&lt;/p&gt;
+&lt;p&gt;—Bob Ross&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<div id="htmltools-r" class="section level3 panel">
+<h3>htmltools (R)</h3>
+<pre class="r"><code>htmltools::div(
+  class = &quot;b--gray ba bw2 ma2 pa4 shadow-1&quot;,
+  htmltools::p(
+    &quot;Talent is a pursued interest.&quot;,
+    &quot;Anything that you&#39;re willing to practice, you can do.&quot;,
+  ),
+  htmltools::p(&quot;—Bob Ross&quot;)
+)</code></pre>
+</div>
+<div id="css" class="section level3 panel">
+<h3>CSS</h3>
+<p><em>Note: this isn’t the exact CSS from Tachyons, but it’s very similar.</em></p>
+<pre class="css"><code>.b--gray { 
+  border-color: #888888;
+}
+.ba {
+  border-style: solid;
+}
+.bw2 {
+  border-width: .25em;
+}
+.ma2 {
+  margin: 1.5em;
+}
+.pa4 {
+  padding: 2em;
+}
+.shadow-1 {
+  box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
+}</code></pre>
+<style type="text/css">
+.b--gray { 
+  border-color: #888888;
+}
+.ba {
+  border-style: solid;
+}
+.bw2 {
+  border-width: .25em;
+}
+.ma2 {
+  margin: 1.5em;
+}
+.pa4 {
+  padding: 2em;
+}
+.shadow-1 {
+  box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
+}
+</style>
+</div>
+</div>
+<div class="b--gray ba bw2 ma2 pa4 shadow-1">
+<p>Talent is a pursued interest.
+Anything that you’re willing to practice, you can do.</p>
+<p>—Bob Ross</p>
+</div>
+</div>
+<div id="r-colors-in-css" class="section level2">
+<h2>R Colors in CSS</h2>
+<p>Wouldn’t it be great to have utility CSS classes
+that you could use in <a href="https://slides.yihui.org/xaringan">xaringan</a> slides
+and other R Markdown outputs?</p>
+<blockquote>
+<p><a href="https://twitter.com/grrrck">@grrrck</a> First of
+all, I 😻 `xaringanExtra`!<br />
+<br />
+I am looking at the tachyons colors and can't help but think that the
+palette is rather limited. <a href="https://t.co/0BUPGnkrb4" class="uri">https://t.co/0BUPGnkrb4</a><br />
+<br />
+Is there a way to intercept a tachyon with a named R color and
+generate a proper css with the correct hex code?</p>
+<p>— Deemah 🇺🇦 🇳🇴 🇸🇪 (@dmi3k) <a href="https://twitter.com/dmi3k/status/1303993734003077120">September 10,
+2020</a></p>
+</blockquote>
+<p>I thought this was a great idea,
+so I put together a set of stylesheets
+with all of R’s named colors as CSS classes.
+You can choose any or all of the three stylesheets,
+depending on your needs,
+they each work independently.</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css">r-colors.css</a> — Classes for setting <strong>foreground</strong> and <strong>background</strong> colors
+<ul>
+<li><code>.palevioletred1</code> sets the foreground color</li>
+<li><code>.bg-palevioletred1</code> sets the background color</li>
+</ul></li>
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css">r-colors.hover.css</a> — Classes for setting foreground and background colors <strong>on hover</strong>
+<ul>
+<li><code>.palevioletred1-hover</code> sets the foreground color on hover</li>
+<li><code>.bg-palevioletred1-hover</code> sets the background color on hover</li>
+</ul></li>
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css">r-colors.vars.css</a> — <a href="">CSS variables</a> for each color name
+<ul>
+<li><code>var(--palevioletred1)</code> for use in other CSS properties</li>
+</ul></li>
+</ol>
+<p>For more on how to use the stylesheets,
+including a searchable table with all of the colors
+and an interactive color preview,
+<a href="https://pkg.garrickadenbuie.com/r-colors-css">check out the documentation page</a>.</p>
+</div>
