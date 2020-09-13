@@ -42,6 +42,10 @@ html {
 h1,h2,h3,h4,h5,h6,.site-title {
   font-family: 'Roboto Slab', Merriweather, Georgia, sans-serif;
 }
+h1,h2,h3,h4,h5,h6 {
+  margin-top: 1.66em;
+  margin-bottom: 0.66em;
+}
 
 code,
 pre,
