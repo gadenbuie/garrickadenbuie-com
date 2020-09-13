@@ -98,21 +98,30 @@ p:last-child {
 <p>If you’re used to working with R’s color names,
 they unfortunately don’t align with HTML’s
 <a href="https://html-color-codes.info/color-names/">named colors</a>,
-which means that you can’t do something like</p>
+which means that you can’t write a CSS rule like</p>
 <pre class="css"><code>h3.plot-title {
   color: palevioletred1;
 }</code></pre>
 <p>because <code>palevioletred1</code> isn’t a valid HTML color.
 This causes problems if you
 <a href="https://stackoverflow.com/a/63819561">use an R color name in a function that write CSS files</a>.</p>
-<p>I’ve also been very interested in utility CSS frameworks,
+<p>I’ve also been interested lately in utility CSS frameworks,
 like <a href="https://tailwindcss.com/">Tailwinds CSS</a>
 and <a href="http://tachyons.io/">Tachyons</a>.
-Tailwinds looks amazing,
+What’s awesome about these frameworks is that
+they use small, single-purpose CSS classes —
+called <strong>utility classes</strong> —
+that can be flexibly applied to your HTML elements.
+I do most, if not all,
+of my writing in some variant of markdown,
+and utility classes let me build small components
+or slightly adjust appearances
+without having to write a whole lot of CSS.</p>
+<p>Tailwinds looks amazing,
 but it requires a moderately complicated build setup,
-so I’ve been <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons">using tachyons</a>
-a lot lately.</p>
-<p>Tacyhons integrates nicely with <a href="https://slides.yihui.org/xaringan">xaringan</a>
+so I’ve settled on <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons">using Tachyons</a>.
+In particular,
+it integrates nicely with <a href="https://slides.yihui.org/xaringan">xaringan</a>
 and other R Markdown outputs where a complete CSS framework is in use
 (like <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 with <a href="https://getbootstrap.com">bootstrap</a>).
@@ -120,11 +129,8 @@ For that reason,
 I’ve included it in <span class="pkg"><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></span>,
 and you can add Tachyons to any R Markdown document with
 <code>xaringanExtra::use_tachyons()</code>.</p>
-<p>What’s awesome about Tachyons is that
-it uses small, single-purpose CSS classes —
-called <strong>utility classes</strong> —
-that you can apply as you choose to your HTML elements.</p>
-<p>If I want to create a simple box with…</p>
+<p>Here’s an example of what you can do with utility CSS.
+If I want to create a simple box with…</p>
 <ul>
 <li>a border
 <ul>
@@ -137,7 +143,7 @@ that you can apply as you choose to your HTML elements.</p>
 <li>and a box shadow (<code>.shadow-1</code>)</li>
 </ul>
 <p>…I can use those classes on the same element.
-Here are four syntax variations that use those classes.</p>
+Here are four markdown syntax variations that use those classes.</p>
 <style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: #fafafa;--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-lightest);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style>
 <div class="panelset">
 <div id="xaringan" class="section level3 panel">
@@ -251,17 +257,20 @@ You can choose any or all of the three stylesheets,
 depending on your needs,
 they each work independently.</p>
 <ol style="list-style-type: decimal">
-<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css">r-colors.css</a> — Classes for setting <strong>foreground</strong> and <strong>background</strong> colors
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css">r-colors.css</a><br />
+Classes for setting <strong>foreground</strong> and <strong>background</strong> colors
 <ul>
 <li><code>.palevioletred1</code> sets the foreground color</li>
 <li><code>.bg-palevioletred1</code> sets the background color</li>
 </ul></li>
-<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css">r-colors.hover.css</a> — Classes for setting foreground and background colors <strong>on hover</strong>
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css">r-colors.hover.css</a><br />
+Classes for setting foreground and background colors <strong>on hover</strong>
 <ul>
 <li><code>.palevioletred1-hover</code> sets the foreground color on hover</li>
 <li><code>.bg-palevioletred1-hover</code> sets the background color on hover</li>
 </ul></li>
-<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css">r-colors.vars.css</a> — <a href="">CSS variables</a> for each color name
+<li><a href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css">r-colors.vars.css</a><br />
+<a href="">CSS variables</a> for each color name
 <ul>
 <li><code>var(--palevioletred1)</code> for use in other CSS properties</li>
 </ul></li>

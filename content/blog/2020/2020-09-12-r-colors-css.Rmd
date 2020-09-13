@@ -163,7 +163,7 @@ txhousing %>%
 If you're used to working with R's color names,
 they unfortunately don't align with HTML's 
 [named colors](https://html-color-codes.info/color-names/),
-which means that you can't do something like
+which means that you can't write a CSS rule like
 
 ```{css eval=FALSE, echo=TRUE}
 h3.plot-title {
@@ -175,15 +175,24 @@ because `palevioletred1` isn't a valid HTML color.
 This causes problems if you
 [use an R color name in a function that write CSS files](https://stackoverflow.com/a/63819561).
 
-I've also been very interested in utility CSS frameworks,
+I've also been interested lately in utility CSS frameworks,
 like [Tailwinds CSS](https://tailwindcss.com/) 
 and [Tachyons](http://tachyons.io/).
+What's awesome about these frameworks is that
+they use small, single-purpose CSS classes —
+called **utility classes** —
+that can be flexibly applied to your HTML elements.
+I do most, if not all, 
+of my writing in some variant of markdown,
+and utility classes let me build small components
+or slightly adjust appearances
+without having to write a whole lot of CSS.
+
 Tailwinds looks amazing,
 but it requires a moderately complicated build setup,
-so I've been [using tachyons](https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons)
-a lot lately.
-
-Tacyhons integrates nicely with [xaringan]
+so I've settled on [using Tachyons](https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons).
+In particular,
+it integrates nicely with [xaringan]
 and other R Markdown outputs where a complete CSS framework is in use
 (like [R Markdown](https://rmarkdown.rstudio.com)
 with [bootstrap](https://getbootstrap.com)).
@@ -192,11 +201,7 @@ I've included it in [[xaringanExtra]]{.pkg},
 and you can add Tachyons to any R Markdown document with
 `xaringanExtra::use_tachyons()`.
 
-What's awesome about Tachyons is that
-it uses small, single-purpose CSS classes —
-called **utility classes** —
-that you can apply as you choose to your HTML elements.
-
+Here's an example of what you can do with utility CSS.
 If I want to create a simple box with...
 
 - a border
@@ -208,7 +213,7 @@ If I want to create a simple box with...
 - and a box shadow (`.shadow-1`)
 
 ...I can use those classes on the same element.
-Here are four syntax variations that use those classes.
+Here are four markdown syntax variations that use those classes.
 
 ```{r echo=FALSE}
 xaringanExtra::use_panelset()
@@ -323,15 +328,18 @@ You can choose any or all of the three stylesheets,
 depending on your needs,
 they each work independently.
 
-1. [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css) — Classes for setting **foreground** and **background** colors
+1. [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css)  
+   Classes for setting **foreground** and **background** colors
     - `.palevioletred1` sets the foreground color
     - `.bg-palevioletred1` sets the background color
 
-1. [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css) — Classes for setting foreground and background colors **on hover**
+1. [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css)  
+   Classes for setting foreground and background colors **on hover**
     - `.palevioletred1-hover` sets the foreground color on hover
     - `.bg-palevioletred1-hover` sets the background color on hover
     
-1. [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css) — [CSS variables]() for each color name
+1. [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css)  
+   [CSS variables]() for each color name
     - `var(--palevioletred1)` for use in other CSS properties
   
 
