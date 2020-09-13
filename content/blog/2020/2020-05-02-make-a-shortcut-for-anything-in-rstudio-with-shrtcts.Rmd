@@ -76,6 +76,15 @@ than to create an R package.
 (_Have I convinced you that you also have the same problem I do,
 or am I the only one?_)
 
+## Update September 14, 2020
+
+[shrtcts]{.pkg} now has [a dedicated site](https://pkg.garrickadenbuie.com/shrtcts),
+and a slightly different syntax than the first version presented below.
+You can now write your [shortcut functions in R files](https://pkg.garrickadenbuie.com/shrtcts/articles/shrtcts.html#quick-intro)
+and use [roxygen2]{.pkg} documentation strings to [configure your shortcuts](https://pkg.garrickadenbuie.com/shrtcts/articles/shrtcts.html#shrtcts-r-format).
+You can also [set keyboard shortcuts](https://pkg.garrickadenbuie.com/shrtcts/articles/shrtcts.html#declare-keyboard-shortcuts-in--shrtcts-r)
+for your [shrtcts]{.pkg} shortcuts directly in the configuration R script.
+
 ## Introducing shrtcts
 
 [[shrtcts]]{.pkg} is a small package I've put together
