@@ -202,7 +202,7 @@ If I want to create a simple box with...
 - a border
   - on all sides (`.ba`)
   - that's gray (`.b--gray`)
-  - with a medium line width (`.bw2`),
+  - with a small line width (`.bw1`),
 - medium exterior margin (`.ma2`),
 - large interior padding (`.pa4`),
 - and a box shadow (`.shadow-1`)
@@ -220,7 +220,7 @@ xaringanExtra::style_panelset_tabs(
   hover_background =  "#fafafa",
   hover_border_color = "var(--text-lightest)",
   inactive_opacity = 1,
-  tabs_border_bottom = "var(--text-mild)",
+  tabs_border_bottom = "var(--text-lightest)",
   font_family = 'unset'
 )
 ```
@@ -230,7 +230,7 @@ xaringanExtra::style_panelset_tabs(
 ### xaringan {.panel}
 
 ```markdown
-.b--gray.ba.bw2.ma2.pa4.shadow-1[
+.b--gray.ba.bw1.ma2.pa4.shadow-1[
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 
@@ -241,7 +241,7 @@ Anything that you're willing to practice, you can do.
 ### R Markdown {.panel}
 
 ```markdown
-::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
+::: {.b--gray .ba .bw1 .ma2 .pa4 .shadow-1}
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 
@@ -252,7 +252,7 @@ Anything that you're willing to practice, you can do.
 ### HTML {.panel}
 
 ```html
-<div class="b--gray ba bw2 ma2 pa4 shadow-1">
+<div class="b--gray ba bw1 ma2 pa4 shadow-1">
 <p>Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 </p>
@@ -264,7 +264,7 @@ Anything that you're willing to practice, you can do.
 
 ```r
 htmltools::div(
-  class = "b--gray ba bw2 ma2 pa4 shadow-1",
+  class = "b--gray ba bw1 ma2 pa4 shadow-1",
   htmltools::p(
     "Talent is a pursued interest.",
     "Anything that you're willing to practice, you can do.",
@@ -284,8 +284,8 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 .ba {
   border-style: solid;
 }
-.bw2 {
-  border-width: .25em;
+.bw1 {
+  border-width: .1em;
 }
 .ma2 {
   margin: 1.5em;
@@ -300,7 +300,7 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 
 ::::
 
-::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
+::: {.b--gray .ba .bw1 .ma2 .pa4 .shadow-1}
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 

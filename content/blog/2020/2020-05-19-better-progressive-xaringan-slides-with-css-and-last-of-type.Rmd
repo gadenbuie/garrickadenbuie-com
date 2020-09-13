@@ -42,7 +42,7 @@ xaringanExtra::style_panelset_tabs(
   hover_background =  "#fafafa",
   hover_border_color = "var(--text-lightest)",
   inactive_opacity = 1,
-  tabs_border_bottom = "var(--text-mild)",
+  tabs_border_bottom = "var(--text-lightest)",
   font_family = 'unset'
 )
 ```
