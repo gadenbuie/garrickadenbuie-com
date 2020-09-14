@@ -207,7 +207,7 @@ If I want to create a simple box with...
 - a border
   - on all sides (`.ba`)
   - that's gray (`.b--gray`)
-  - with a small line width (`.bw1`),
+  - with a medium line width (`.bw2`),
 - medium exterior margin (`.ma2`),
 - large interior padding (`.pa4`),
 - and a box shadow (`.shadow-1`)
@@ -235,7 +235,7 @@ xaringanExtra::style_panelset_tabs(
 ### xaringan {.panel}
 
 ```markdown
-.b--gray.ba.bw1.ma2.pa4.shadow-1[
+.b--gray.ba.bw2.ma2.pa4.shadow-1[
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 
@@ -246,7 +246,7 @@ Anything that you're willing to practice, you can do.
 ### R Markdown {.panel}
 
 ```markdown
-::: {.b--gray .ba .bw1 .ma2 .pa4 .shadow-1}
+::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 
@@ -257,7 +257,7 @@ Anything that you're willing to practice, you can do.
 ### HTML {.panel}
 
 ```html
-<div class="b--gray ba bw1 ma2 pa4 shadow-1">
+<div class="b--gray ba bw2 ma2 pa4 shadow-1">
 <p>Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 </p>
@@ -269,7 +269,7 @@ Anything that you're willing to practice, you can do.
 
 ```r
 htmltools::div(
-  class = "b--gray ba bw1 ma2 pa4 shadow-1",
+  class = "b--gray ba bw2 ma2 pa4 shadow-1",
   htmltools::p(
     "Talent is a pursued interest.",
     "Anything that you're willing to practice, you can do.",
@@ -289,8 +289,8 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 .ba {
   border-style: solid;
 }
-.bw1 {
-  border-width: .1em;
+.bw2 {
+  border-width: .25em;
 }
 .ma2 {
   margin: 1.5em;
@@ -305,7 +305,7 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 
 ::::
 
-::: {.b--gray .ba .bw1 .ma2 .pa4 .shadow-1}
+::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
 Talent is a pursued interest. 
 Anything that you're willing to practice, you can do.
 
@@ -347,3 +347,95 @@ For more on how to use the stylesheets,
 including a searchable table with all of the colors
 and an interactive color preview,
 [check out the documentation page][r-colors-css].
+
+As an example,
+let's update the box example above with some color from R.
+I used the [color picker table in the documentation][r-colors-css]
+to pick out an interesting color combination.
+
+:::: {.panelset}
+
+### CSS {.panel}
+
+I used the CSS variables stylesheet to add a new CSS rule
+in addition to the CSS in the example above.
+This class sets the border color for the box to
+[paleturquoise4]{.bg-paleturquoise4-hover .white-hover .tu-dotted}.
+
+```{css echo=FALSE}
+:root {
+  /* to avoid clashes with other classes, just using this variable */
+  --paleturquoise4: rgb(102,139,139);
+}
+```
+
+```{css echo=TRUE}
+.b--paleturquoise4 {
+  border-color: var(--paleturquoise4);
+}
+```
+
+The other colors used are 
+[steelblue4]{.bg-steelblue4-hover .white-hover .tu-dotted} (text), 
+[mintcream]{.bg-mintcream-hover .tu-dotted} (background),
+and 
+[mediumvioletred]{.bg-mediumvioletred-hover .white-hover .tu-dotted}
+(text on hover, from the hover classes stylesheet).
+
+### xaringan {.panel}
+
+```markdown
+.b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
+Talent is a pursued interest. 
+Anything that you're willing to practice, you can do.
+
+—Bob Ross
+]
+```
+
+### R Markdown {.panel}
+
+```markdown
+::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
+Talent is a pursued interest. 
+Anything that you're willing to practice, you can do.
+
+—Bob Ross
+:::
+```
+
+### HTML {.panel}
+
+```html
+<div class="b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4">
+<p>Talent is a pursued interest. 
+Anything that you're willing to practice, you can do.
+</p>
+<p>—Bob Ross</p>
+</div>
+```
+
+### htmltools (R) {.panel}
+
+```r
+htmltools::div(
+  class = paste(
+    "b--gray ba bw2 ma2 pa4 shadow-1 steelblue4", 
+    "bg-mintcream mediumvioletred-hover b--paleturquoise4"
+  ),
+  htmltools::p(
+    "Talent is a pursued interest.",
+    "Anything that you're willing to practice, you can do.",
+  ),
+  htmltools::p("—Bob Ross")
+)
+```
+
+::::
+
+::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
+Talent is a pursued interest. 
+Anything that you're willing to practice, you can do.
+
+—Bob Ross
+:::
