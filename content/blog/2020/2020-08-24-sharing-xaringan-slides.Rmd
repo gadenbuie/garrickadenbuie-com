@@ -78,7 +78,7 @@ tweetrmd::tweet_screenshot(
 )
 ```
 
-<center><a href="https://twitter.com/grrrck/status/1159087961931169795"><img src="tweet-slidecraft.png" style="max-width:400px;" /></a></center>
+<center><a href="https://twitter.com/grrrck/status/1159087961931169795"><img src="tweet-slidecraft.png" style="width:100%;max-width:400px;" /></a></center>
 
 In this post,
 I'll share some tips and strategies for publishing your [[xaringan]]{.pkg} slides online.
@@ -501,9 +501,10 @@ I'll defer to the excellent presentation,
 [Sharing on Short Notice](https://rstudio-education.github.io/sharing-short-notice/),
 by Alison Hill and Desirée De Leon.
 
-```{r sharing-on-short-notice}
-xaringanExtra::embed_xaringan("https://rstudio-education.github.io/sharing-short-notice/")
-```
+<div class="figure">
+<a href="https://rstudio-education.github.io/sharing-short-notice"><img src="rstudio-sharing.jpg" alt=""></a>
+<p class="caption"><a href="https://rstudio-education.github.io/sharing-short-notice">Sharing on Short Notice</a> by Alison Hill and Desirée De Leon</p>
+</div>
 
 Those slides are also available at the short link [rstd.io/sharing](https://rstd.io/sharing).
 
