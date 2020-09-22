@@ -65,7 +65,7 @@ tweetrmd::tweet_screenshot(
 
 <center><a href="https://twitter.com/coolbutuseless/status/1308163906674790402"><img src="coolbutuseless-tweet.png" style="width:100%;max-width:400px;" /></a></center>
 
-This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622;.
+This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622; &#x1F937;&#x200D;.
 
 So I used [[lubridate]]{.pkg} and [[crayon](https://github.com/r-lib/crayon)]{.pkg}
 to recreate `cal` with an R function `cal()`.
