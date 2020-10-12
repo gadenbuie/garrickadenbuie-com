@@ -50,6 +50,11 @@ I also [write songs and play acoustic guitar](http://garrickadebuie.bandcamp.com
 
 ## Research
 
+- **HomeSense: Design of an ambient home health and wellness monitoring platform for older adults**  
+  VandeWeerd C, Yalcin A, Aden-Buie G, Wang Y, Roberts M, Mahser N, Fnu C, Fabiano D,
+  In: Health and Technology: 2020 July.
+  [10.1007/s12553-019-00404-6](https://link.springer.com/article/10.1007/s12553-019-00404-6)
+
 - **epiTAD: a web application for visualizing chromosome conformation capture data in the context of genetic epidemiology.**  
   Creed J, Aden-Buie G, Monteiro A, Gerke TA. In: Bioinformatics: 2019 May. [10.1093/bioinformatics/btz387](https://doi.org/10.1093/bioinformatics/btz387)
 
