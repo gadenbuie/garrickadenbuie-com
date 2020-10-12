@@ -23,10 +23,10 @@ type: page
 
 Hello, my name is Garrick Aden-Buie.
 I'm an [RStudio Education Certified Trainer](/training/) and a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc] using R, Shiny, and the tools of data science to accelerate research towards the prevention and cure of cancer.
-Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](http://news.usf.edu/article/templates/?a=7974&z=220).
+Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](https://usfweb.usf.edu/usf-news-archive/News/article/7974).
 
 I'm a passionate R user and educator.
-I build [web apps][garrick-apps] using [Shiny](https://shiny.rstudio.com/), [tools and packages][garrick-projects] for [R](http://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
+I build [web apps][garrick-apps] using [Shiny](https://shiny.rstudio.com/), [tools and packages][garrick-projects] for [R](https://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
 Browse my [list of projects][garrick-projects] for examples of my work, a [selection of educational presentations][garrick-talks], or review my [full curriculum vitae (resume)](https://www.garrickadenbuie.com/resume/).
 
 ### Let's do something awesome together!
@@ -37,16 +37,16 @@ I'm also available for [custom, personalized training and workshops](/training/)
 
 ### A little bit more about me... 
 
-As an undergrad, I studied at [Lehigh University](http://lehigh.edu/),
-in [Bethlehem, PA](http://en.wikipedia.org/wiki/Allentown_(song)), only
+As an undergrad, I studied at [Lehigh University](https://lehigh.edu/),
+in [Bethlehem, PA](https://en.wikipedia.org/wiki/Allentown_(song)), only
 twenty minutes from where I grew up. There, I received a B.S in Applied
 Mathematics. I also spent a year living and studying in Madrid, Spain,
 which helped me earn a B.A. in Spanish at Lehigh.  
 
-I am a [Returned Peace Corps Volunteer](http://peacecorps.gov/).
+I am a [Returned Peace Corps Volunteer](https://peacecorps.gov/).
 I lived in small town outside of Cuenca, Ecuador where I taught Math, English and life and parenting skills.
 
-I also [write songs and play acoustic guitar](http://garrickadebuie.bandcamp.com/), sometimes [in public](http://www.songkick.com/artists/6913204-garrick-adenbuie) (though not as much as I would like to).
+I also [write songs and play acoustic guitar](https://garrickadebuie.bandcamp.com/), sometimes [in public](http://www.songkick.com/artists/6913204-garrick-adenbuie) (though not as much as I would like to).
 
 ## Research
 
