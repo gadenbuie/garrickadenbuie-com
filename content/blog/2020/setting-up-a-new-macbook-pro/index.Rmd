@@ -223,7 +223,7 @@ xaringanExtra::use_clipboard()
 
 I had to set up my new work computer today and rather than just slog away at it, I thought I would live tweet the process.
 Honestly, there's still a lot of config left to do, but the [tweet thread](https://twitter.com/grrrck/status/1333804309272621060) does a good job organizing the apps and software I use daily.
-Another good summary are [my install notes](https://gist.github.com/gadenbuie/a14cab3d075901d8b25cbaf9e1f1fa7d).
+[My install notes](https://gist.github.com/gadenbuie/a14cab3d075901d8b25cbaf9e1f1fa7d) are another good summary.
 
 I used [rtweet](https://rtweet.info) and [tweetrmd](https://github.com/gadenbuie/tweetrmd) to unroll the twitter thread.
 
