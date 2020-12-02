@@ -214,8 +214,9 @@ xaringanExtra::use_clipboard()
 .tweet-timestamp a:hover .tweet-timestamp__text {
   color: var(--text-mild);
 }
-.tweet-timestamp .tweet-link {
-  padding-right: 0.6em;
+.tweet-timestamp .tweet-link > i {
+	display: inline-block;
+	padding-right: 1.5em;
 }
 ```
 
