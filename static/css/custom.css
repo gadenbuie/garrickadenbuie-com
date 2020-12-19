@@ -666,13 +666,14 @@ body.restyled-garrick {
 /* ---- DARK MODE !!!! ---- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #202020;
+    --background: #111;
     --primary-dark: #eaeaea;
     --primary-light: #887ba3;
-    --text-dark: #9a9a9a;
-    --text-light: #424242;
-    --text-lightest: #303030;
+    --text-dark: #ccc;
+    --text-light: #828282;
+    --text-lightest: #626262;
     --text-darkish: #bbb;
+    --code-background: #202020;
   }
   
   .restyled-garrick .caption {
@@ -684,21 +685,21 @@ body.restyled-garrick {
   }
     
   pre code, pre, code {
-    background: var(--text-lightest);
+    background: var(--code-background);
   }
   
   pre.r {
-    border-color: #646464;
+    border-color: #424242;
   }
   
   pre.r + pre,
   pre.r + pre > code {
-    background: var(--text-lightest);
+    background: var(--code-background);
   }
   
   .hljs {
     color: var(--text-dark);
-    background: var(--text-lightest);
+    background: var(--code-background);
   }
   
   hr {
