@@ -22,7 +22,9 @@ type: page
 />
 
 Hello, my name is Garrick Aden-Buie.
-I'm an [RStudio Education Certified Trainer](/training/) and a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc] using R, Shiny, and the tools of data science to accelerate research towards the prevention and cure of cancer.
+I'm a [Data Science Educator](/training/) and R developer for [RStudio](https://rstudio.com).
+I use R, R Markdown, Shiny, and the tools of data science to make it easier to teach and learn data science with R.
+Prior to working at RStudio, I was a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc]. 
 Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](https://usfweb.usf.edu/usf-news-archive/News/article/7974).
 
 I'm a passionate R user and educator.
@@ -32,8 +34,6 @@ Browse my [list of projects][garrick-projects] for examples of my work, a [selec
 ### Let's do something awesome together!
 
 If you're interested in working with me, please drop me a line at [garrick@adenbuie.com](mailto:garrick@adenbuie.com)!
-
-I'm also available for [custom, personalized training and workshops](/training/).
 
 ### A little bit more about me... 
 
