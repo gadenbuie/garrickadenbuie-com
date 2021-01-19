@@ -24,6 +24,9 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- van11y-accessible-hide-show-aria -->
 <script defer src="/js/van11y-accessible-hide-show-aria.min.js"></script>
+{{ if ne .Section "talk" }}
+<script defer src="/js/toc.js"></script>
+{{ end }}
 <!-- Post-Custom Head Stuff-->
 {{ if .Params.head_custom }}
 {{ .Params.head_custom | safeHTML }}

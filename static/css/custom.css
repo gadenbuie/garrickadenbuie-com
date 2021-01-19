@@ -729,3 +729,35 @@ body.restyled-garrick {
     color: var(--text-dark);
   }
 }
+
+/* -------- Table of Contents -------- */
+.table-of-contents {
+  position: sticky;
+  top: 2em;
+  margin-right: -300px;
+  width: 290px;
+  font-size: 0.85em;
+  float: right;
+}
+.table-of-contents ul {
+  list-style: none;
+  line-height: 2;
+  padding-left: 15px;
+}
+.table-of-contents ul ul {
+  margin-bottom: 0;
+}
+.table-of-contents ul li ul {
+  line-height: 1.66;
+}
+.table-of-contents a {
+  color: var(--text-light);
+}
+.table-of-contents a:hover {
+  color: var(--text-darkish);
+}
+@media screen and (max-width: 1449px) {
+  .table-of-contents {
+    display: none;
+  }
+}
