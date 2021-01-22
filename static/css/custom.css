@@ -18,6 +18,8 @@
   --text-mild: #606060;
   --text-light: #9a9a9a;
   --text-lightest: #eaeaea;
+  --monospace: "Source Code Pro", "Lucida Console", "Liberation Mono", Menlo,
+    Courier, monospace;
 }
 
 html {
@@ -50,8 +52,7 @@ h1,h2,h3,h4,h5,h6 {
 code,
 pre,
 .pkg {
-  font-family: "Source Code Pro", "Lucida Console", "Liberation Mono", Menlo,
-    Courier, monospace;
+  font-family: var(--monospace);
 }
 .center > * {
   margin-left: auto;
