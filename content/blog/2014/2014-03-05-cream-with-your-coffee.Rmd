@@ -3,6 +3,7 @@ title: "Cream with your coffee?"
 date: 2014-03-05T01:45:00+00:00
 slug: cream-with-your-coffee
 aliases: /blog/2014/03/05/cream-with-your-coffee
+enable_mathjax: true
 categories: [Blog]
 tags:  
   - Dynamic Systems

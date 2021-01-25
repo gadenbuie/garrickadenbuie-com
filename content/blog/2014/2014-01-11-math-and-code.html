@@ -5,6 +5,7 @@ slug: math-and-code
 aliases: /blog/2014/01/11/math-and-code
 categories: [Blog]
 tags: [Math, R, Data Analysis, Test Theory]
+enable_mathjax: true
 references:
   - id: Cronbach1951
     title: Coefficient alpha and the internal structure of tests
@@ -19,6 +20,7 @@ references:
       month: 9
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="reliability" class="section level2">
@@ -27,7 +29,7 @@ references:
 <p><em>Everything written in this article could be witten directly in an <code>.Rmd</code> file, interactively written and then compiled in <a href="http://rstudio.org">R Studio</a> and published (nearly) straight to the web. This post includes code snippets, citations, tables and math. And it looks beautiful!</em></p>
 <p><em>p.s. This is just a demo and isn’t intended to actually make sense ;-)</em></p>
 <p>The term <em>reliability</em> refers to the ability of a test to consistently assess or measure the same underlying ability or concept, insofar as in a fully reliable test the only source of measurement error is random error.
-Cronbach’s coefficient alpha <span class="citation">(Cronbach 1951)</span> is the most popular metric for evaluating reliability, and is considered a measurement of internal consistency, or the level of inter-item correlation within a test administered to a single group.</p>
+Cronbach’s coefficient alpha <span class="citation">(<a href="#ref-Cronbach1951" role="doc-biblioref">Cronbach 1951</a>)</span> is the most popular metric for evaluating reliability, and is considered a measurement of internal consistency, or the level of inter-item correlation within a test administered to a single group.</p>
 <p>In this study I compared the reliability of three final exam formats using the <code>CTT</code> package in R:</p>
 <pre class="r"><code>require(&#39;CTT&#39;)
 
@@ -111,15 +113,15 @@ For both the CR and MC+PC examination formats, alpha is near 0.74, while the dic
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
-<div id="refs" class="references">
-<div id="ref-Cronbach1951">
-<p>Cronbach, Lee. 1951. “Coefficient Alpha and the Internal Structure of Tests.” <em>Psychometrika</em>, no. 3 (September).</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Cronbach1951" class="csl-entry">
+Cronbach, Lee. 1951. <span>“Coefficient Alpha and the Internal Structure of Tests.”</span> <em>Psychometrika</em>, no. 3 (September).
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>From <a href="http://en.wikipedia.org/wiki/Cronbach&#39;s_alpha" class="uri">http://en.wikipedia.org/wiki/Cronbach's_alpha</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>From <a href="http://en.wikipedia.org/wiki/Cronbach&#39;s_alpha" class="uri">http://en.wikipedia.org/wiki/Cronbach's_alpha</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
