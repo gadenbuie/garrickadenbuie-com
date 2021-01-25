@@ -742,14 +742,20 @@ body.restyled-garrick {
 }
 .table-of-contents ul {
   list-style: none;
-  line-height: 2;
+  line-height: 1;
   padding-left: 15px;
 }
-.table-of-contents ul ul {
-  margin-bottom: 0;
+.table-of-contents ul li {
+  margin-bottom: 8px;
+  text-indent: -8px;
+  padding-left: 8px;
 }
-.table-of-contents ul li ul {
-  line-height: 1.66;
+.table-of-contents ul ul {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.table-of-contents ul > li > ul > li {
+  margin-bottom: 5px;
 }
 .table-of-contents a {
   color: var(--text-light);
