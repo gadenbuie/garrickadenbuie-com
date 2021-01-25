@@ -5,6 +5,7 @@ slug: math-and-code
 aliases: /blog/2014/01/11/math-and-code
 categories: [Blog]
 tags: [Math, R, Data Analysis, Test Theory]
+enable_mathjax: true
 references:
   - id: Cronbach1951
     title: Coefficient alpha and the internal structure of tests
