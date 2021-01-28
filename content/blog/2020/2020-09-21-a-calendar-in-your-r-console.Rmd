@@ -138,7 +138,7 @@ Check out the whole function below for the complete details.
 I used package prefixes (and `cur_group_id()` from [dplyr]{.pkg} 1.0.0),
 and I inlined the code from `make_month_dates()` above to facilitate copy-pasting-calendaring.
 
-<h4 id="code-cal" class="js-expandmore expand-for-code">R code...</h4>
+<h4 id="code-cal" class="js-expandmore expand-for-code">R code</h4>
 
 <div class="js-to_expand is-opened">
 
