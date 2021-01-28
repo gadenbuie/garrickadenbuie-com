@@ -31,7 +31,6 @@ options(htmltools.dir.version = TRUE)
 xaringanExtra::use_clipboard()
 ```
 
-
 Today I was [nerd sniped](https://xkcd.com/356/) 
 by [Mike FC](https://coolbutuseless.com)
 who goes by [&commat;coolbutuseless](https://twitter.com/coolbutuseless)
@@ -151,14 +150,6 @@ cal <- function(
 ) {
   `%>%` <- dplyr::`%>%`
   
-  if (identical(week_start, 7)) {
-    get_week <- lubridate::epiweek
-    get_year <- lubridate::epiyear
-  } else if (identical(week_start, 1)) {
-    get_week <- lubridate::isoweek
-    get_year <- lubridate::isoyear
-  }
-  
   if (!inherits(start_date, "Date")) {
     start_date <- lubridate::ymd(start_date, truncated = 1)
   }
@@ -174,10 +165,10 @@ cal <- function(
     day       = lubridate::day(date),
     wday      = lubridate::wday(.data$date, label = FALSE, abbr = TRUE, week_start = week_start),
     weekend   = lubridate::wday(.data$date, label = FALSE, week_start = 1) %in% 6:7,
-    week      = get_week(.data$date),
+    week      = as.integer(lubridate::floor_date(.data$date, unit = "week", week_start = week_start)),
     month     = lubridate::month(.data$date, label = TRUE, abbr = FALSE),
     month_int = lubridate::month(.data$date, label = FALSE),
-    year      = get_year(.data$date)
+    year      = lubridate::year(lubridate::floor_date(.data$date, unit = "year", week_start = week_start))
   ) %>% 
     dplyr::group_by(month, year) %>%
     dplyr::mutate(week = week - min(week) + 1) %>%
@@ -239,3 +230,8 @@ cal("2020-09", "2020-12")
 options(opts)
 ```
 
+***
+
+Edited on 2021-01-28 to fix a bug that caused days whose ISO weeks occur in an earlier year —
+e.g. 2021-01-01 is assigned to week `r lubridate::isoweek(lubridate::ymd("2021-01-01"))` of 2020 —
+to appear in an incorrect year. Thanks [&commat;Darkyben](https://twitter.com/Darkyben/status/1354740287877378048)!
