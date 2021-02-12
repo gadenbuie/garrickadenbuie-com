@@ -1,5 +1,5 @@
 ---
-title: " xaringan Playground: Using xaringan to learn web development"
+title: "xaringan Playground: Using xaringan to learn web development"
 author: Garrick Aden-Buie
 date: '2021-01-21'
 slug: xaringan-playground
