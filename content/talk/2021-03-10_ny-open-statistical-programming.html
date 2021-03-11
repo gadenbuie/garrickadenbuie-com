@@ -1,0 +1,62 @@
+---
+title: "Making Extra Great Slides"
+subtitle: With xaringan, xaringanthemer, and xaringanExtra
+author:
+  - Garrick Aden-Buie
+description: |
+  A brief introduction to the {xaringan} package and how you can make your
+  slides look great with {xaringanthemer} and stand out with {xaringanExtra}.
+twitterImage: "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
+date: '2021-03-10'
+slug: extra-great-slides-nyhackr
+tags:
+  - R
+  - xaringan
+  - xaringanthemer
+  - xaringanExtra
+  - Slides
+  - Presentations
+talk_author: [Garrick Aden-Buie]
+talk_type: Talk
+talk_event: "New York Open Statistical Programming Meetup"
+talk_event_url: https://www.meetup.com/nyhackr/events/276573540
+talk_location: Virtual Presentation
+talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
+talk_slides_url: https://slides.garrickadenbuie.com/extra-great-slides/intro/
+#talk_recording_url: TODO
+---
+
+<script src="/rmarkdown-libs/header-attrs-2.7.2/header-attrs.js"></script>
+<script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>
+
+
+<div class="shareagain" style="min-width:300px;margin:1em auto;">
+<iframe src="https://slides.garrickadenbuie.com/extra-great-slides/intro/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+<div id="abstract" class="section level2">
+<h2>Abstract</h2>
+<p>The <a href="https://slides.yihui.org/xaringan/">xaringan</a> package by YiHui Xie lets R users and R Markdown authors easily blend data, text, plots and <a href="http://www.htmlwidgets.org/">htmlwidgets</a> into beautiful HTML presentations that look great on the web, in print, and on screens.</p>
+<p>In addition to demonstrating how to go from R Markdown to web-based slides with xaringan, in this talk I’ll show you how to completely customize the appearance of your slides with <a href="https://pkg.garrickadenbuie.com/xaringanthemer">xaringanthemer</a>, a package that lets you quickly create a complete slide theme from only a few color choices.</p>
+<p>Then we’ll go beyond appearances with a variety of addins and extensions from the <a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a> package, including: a tiled slide overview, editable slides, embedded webcam videos, tabbed panels, extra styles, shareable and embeddable slides, animations, and real time slide broadcasting.</p>
+</div>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<ul>
+<li><a href="https://slides.yihui.org/xaringan/">xaringan</a></li>
+<li><a href="https://pkg.garrickadenbuie.com/xaringanthemer">xaringanthemer</a></li>
+<li><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></li>
+<li><a href="https://github.com/jhelvy/xaringanBuilder">xaringanBuilder</a></li>
+<li><a href="https://pkg.garrickadenbuie.com/metathis">metathis</a></li>
+</ul>
+<pre class="r"><code># On CRAN
+install.packages(&quot;xaringan&quot;)
+install.packages(&quot;xaringanthemer&quot;)
+install.packages(&quot;metathis&quot;)
+
+# From GitHub
+# install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;gadenbuie/xaringanExtra&quot;)
+remotes::install_github(&quot;jhelvy/xaringanBuilder&quot;)
+remotes::install_github(&quot;gadenbuie/countdown&quot;)</code></pre>
+</div>
