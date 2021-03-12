@@ -1,0 +1,157 @@
+---
+title: Little Inline Color Boxes
+author: Garrick Aden-Buie
+date: '2021-03-12'
+categories:
+  - Blog
+tags:
+  - R
+  - Tips
+  - color
+  - Web Development
+description: Little cirlces with color previews, with R.
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/little-inline-color-boxes'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+
+# If using lightbox for plots, set `fig.show = FALSE`
+# Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
+lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+  if (preview) {
+    glue::glue(
+      '<a href="{url}" data-featherlight="image">
+      <div class="figure">
+      <img src="{url}" alt="{alt}">
+      <p class="caption">{caption}</p>
+      </div>
+      </a>
+      '
+    )
+  } else {
+    if (alt == "") alt <- "static image of the plot"
+    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+  }
+}
+
+xaringanExtra::use_clipboard()
+```
+
+`r tweetrmd::tweet_embed("https://twitter.com/sharlagelfand/status/1370426706952126465")`
+
+## Color Boxes with R
+
+```{r color-preview, echo=TRUE}
+color_preview <- function(color) {
+  htmltools::tagList(
+    htmltools::span(
+      class = "color-preview",
+      style = paste("background-color:", color),
+      .noWS = "outside"
+    ),
+    htmltools::code(color, .noWS = "outside"),
+    color_preview_dep()
+  )
+}
+```
+
+<h4 id="code-cal" class="js-expandmore expand-for-code">CSS Dependency</h4>
+
+<div class="js-to_expand">
+
+Copy this function too, it's not super clean and just kinds gets in the way.
+
+```{r color_preview_dep}
+color_preview_dep <- function() {
+  htmltools::htmlDependency(
+    name = "color_preview",
+    version = "0.0.1",
+    src = ".",
+    all_files = FALSE,
+    head = "
+<style>.color-preview {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin: 0 0.33em;
+  vertical-align: middle;
+  transition: transform 100ms ease-in-out;
+}
+
+.color-preview:hover {
+  cursor: pointer;
+  transform: scale(2);
+  transform-origin: 50% 50%;
+}</style>"
+  )
+}
+```
+
+</div>
+
+```{css, echo=FALSE, eval=FALSE}
+.color-preview {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin: 0 0.33em;
+  vertical-align: middle;
+  transition: transform 100ms ease-in-out;
+}
+
+.color-preview:hover {
+  cursor: pointer;
+  transform: scale(2);
+  transform-origin: 50% 50%;
+}
+```
+
+There are lots of ways to find new colors to use.
+One of my favorite ways is to use [coolors.co](https://coolors.co).
+It gives you random colors, like `r color_preview("#414073")` or `r color_preview("#70a37F")`.
+
+Here's another one:
+
+```{r}
+color_preview("rgb(114, 9, 183)")
+```
+
+You can even find [color palettes](https://coolors.co/palettes/trending),
+like [this one](https://coolors.co/ef476f-ffd166-06d6a0-118ab2-073b4c).
+
+<h4 id="code-cal" class="js-expandmore expand-for-code">R code...</h4>
+
+<div class="js-to_expand">
+
+```{r colors-palette, eval=FALSE}
+# https://coolors.co/ef476f-ffd166-06d6a0-118ab2-073b4c
+colors <- c(
+  "#ef476f",
+  "#ffd166",
+  "#06d6a0",
+  "#118ab2",
+  "#073b4c"
+)
+
+items <- lapply(colors, function(color) {
+  htmltools::tags$li(color_preview(color))
+})
+htmltools::tags$ul(items)
+```
+
+</div>
+
+```{r ref.label="colors-palette", echo=FALSE}
+```
