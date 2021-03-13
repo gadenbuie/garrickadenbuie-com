@@ -60,7 +60,10 @@ editor_options:
 CSS Dependency
 </h4>
 <div class="js-to_expand">
-<p>Copy this function too, it’s not super clean and just kinds gets in the way.</p>
+<p>You’ll need to copy this function too,
+and feel free to tweak it if you want.
+For example, remove the <code>border-radius</code> line to get squares instead of circles.
+Or remove the <code>.color-preview:hover</code> rule to have static previews.</p>
 <pre class="r"><code>color_preview_dep &lt;- function() {
   htmltools::htmlDependency(
     name = &quot;color_preview&quot;,
@@ -86,10 +89,13 @@ CSS Dependency
   )
 }</code></pre>
 </div>
-<p>There are lots of ways to find new colors to use.
-One of my favorite ways is to use <a href="https://coolors.co">coolors.co</a>.
-It gives you random colors, like <span class="color-preview" style="background-color: #414073"></span><code>#414073</code> or <span class="color-preview" style="background-color: #70a37F"></span><code>#70a37F</code>.</p>
-<p>Here’s another one:</p>
+<p>One of my favorite color resources <a href="https://coolors.co">coolors.co</a>.
+It gives you a palette of random colors,
+like <span class="color-preview" style="background-color: #414073"></span><code>#414073</code> or <span class="color-preview" style="background-color: #70a37F"></span><code>#70a37F</code>.
+Press the space bar to get new colors,
+or you can lock in colors you like to find new ones that work
+with colors you’ve already picked out.</p>
+<p>Here’s another color coolors picked for me:</p>
 <pre class="r"><code>color_preview(&quot;rgb(114, 9, 183)&quot;)</code></pre>
 <p><span class="color-preview" style="background-color: rgb(114, 9, 183)"></span><code>rgb(114, 9, 183)</code></p>
 <p>You can even find <a href="https://coolors.co/palettes/trending">color palettes</a>,

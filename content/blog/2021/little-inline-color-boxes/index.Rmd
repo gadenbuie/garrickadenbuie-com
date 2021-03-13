@@ -69,7 +69,10 @@ color_preview <- function(color) {
 
 <div class="js-to_expand">
 
-Copy this function too, it's not super clean and just kinds gets in the way.
+You'll need to copy this function too, 
+and feel free to tweak it if you want.
+For example, remove the `border-radius` line to get squares instead of circles.
+Or remove the `.color-preview:hover` rule to have static previews.
 
 ```{r color_preview_dep}
 color_preview_dep <- function() {
@@ -118,11 +121,14 @@ color_preview_dep <- function() {
 }
 ```
 
-There are lots of ways to find new colors to use.
-One of my favorite ways is to use [coolors.co](https://coolors.co).
-It gives you random colors, like `r color_preview("#414073")` or `r color_preview("#70a37F")`.
+One of my favorite color resources [coolors.co](https://coolors.co).
+It gives you a palette of random colors, 
+like `r color_preview("#414073")` or `r color_preview("#70a37F")`.
+Press the space bar to get new colors,
+or you can lock in colors you like to find new ones that work
+with colors you've already picked out.
 
-Here's another one:
+Here's another color coolors picked for me:
 
 ```{r}
 color_preview("rgb(114, 9, 183)")
