@@ -30,7 +30,7 @@ Turns out they are fascinating videos
 where experienced programmers talk and fumble
 their way through their coding.
 
-As they talked through their thought process,
+As they talked through their thought processes,
 I thought about the questions we ask
 when our code goes wrong
 and the answers we get when we reprex.
@@ -53,7 +53,7 @@ Both Kyle and Kevin talk through their process
 and the video switches between the two of them
 as they build up their solutions.
 
-## Writing code is tesing your theory of the solution
+## Writing code is testing your theory of the solution
 
 This is the part I loved:
 beyond confirming that writing CSS involves a lot of
@@ -64,9 +64,9 @@ is about having a vague idea of the structure of a final solution
 and working toward that goal with many iterations with tiny, confirmatory tests.
 
 <img src="https://cssbattle.dev/targets/34@2x.png" alt="CSS Battle Christmas tree challenge: three stacked triangles" width="33%" align="right" style="padding-left: 1em" />
-In the first challenge they made a cute little CSS Christmas tree.
+In the first challenge, they made a cute little CSS Christmas tree.
 There are some tricks in here that you just need to know —
-for example, you can [make triangles with CSS](https://css-tricks.com/snippets/css/css-triangle/), 
+for example, you can [make triangles with CSS](https://css-tricks.com/snippets/css/css-triangle/)
 using a trick with borders —
 but neither Kyle nor Kevin start out knowing the exact final answer.
 Kevin narrates:
@@ -115,7 +115,7 @@ much more code than I actually write.
 
 As a side note,
 I find that the flow is easier to find when I'm [pair programming](https://martinfowler.com/articles/on-pair-programming.html).
-It seems parodixical,
+It seems paradoxical,
 but having another set of eyes and all the extra cycles of the other person watching,
 always helps me stay on track whenever I would normally get lost in the frustration of a diversion.
 
