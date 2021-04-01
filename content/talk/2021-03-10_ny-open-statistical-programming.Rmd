@@ -23,7 +23,7 @@ talk_event_url: https://www.meetup.com/nyhackr/events/276573540
 talk_location: Virtual Presentation
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
 talk_slides_url: https://slides.garrickadenbuie.com/extra-great-slides/intro/
-#talk_recording_url: TODO
+talk_recording_url: https://youtu.be/FHy6NseH8yk
 ---
 
 ```{r echo=FALSE}
