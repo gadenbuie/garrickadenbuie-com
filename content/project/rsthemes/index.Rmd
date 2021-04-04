@@ -37,8 +37,6 @@ fragments <- paste0(
 for (frag_url in fragments) {
   download.file(frag_url, paste0("_", basename(frag_url)))
 }
-
-download.file("https://github.com/gadenbuie/rsthemes/raw/assets/rsthemes.json", "rsthemes.json")
 ```
 
 ```{css echo=FALSE}
@@ -180,7 +178,7 @@ function filterRsthemesList() {
   })
 }
 
-const rsthemes = fetch("rsthemes.json")
+const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.json")
   .then(response => response.json())
   .then(json => {
     json = json.map(t => {

@@ -13,7 +13,7 @@ tags:
   - RStudio
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <p><strong>Project Links:</strong> <a href="#installation">installation</a>, <a href="#usage">usage</a>, <a href="https://github.com/gadenbuie/rsthemes">source</a></p>
@@ -171,7 +171,7 @@ function filterRsthemesList() {
   })
 }
 
-const rsthemes = fetch("rsthemes.json")
+const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.json")
   .then(response => response.json())
   .then(json => {
     json = json.map(t => {
