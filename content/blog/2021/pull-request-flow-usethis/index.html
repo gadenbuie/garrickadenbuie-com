@@ -1,0 +1,267 @@
+---
+title: Pull Request Flow with usethis
+author: Garrick Aden-Buie
+date: '2021-06-15'
+slug: pull-request-flow-usethis
+categories:
+  - Blog
+tags:
+  - R
+  - usethis
+  - Pull Requests
+  - Workflow
+description: Get in the usethis pull request flow with this flow chart.
+twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-small.jpg
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs-2.8/header-attrs.js"></script>
+
+
+<div class="figure">
+<a href="usethis-pr-flow.svg" data-featherlight="image">
+<img src="usethis-pr-flow.svg" alt="A flow chart for the pull request functions in the usethis R package.">
+</a>
+<p class="caption">
+A <code>usethis</code> pull request helper function flow. <a href="#download">Download the image</a>.
+</p>
+</div>
+<div id="choose-your-own-pull-request-adventure" class="section level2">
+<h2>Choose your own pull request adventure</h2>
+<p>Welcome to this choose-your-own-adventure blog post.
+You don’t need to read this one from top to bottom.
+Instead, jumping around is encouraged!
+Just look for the <i class="fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> icon.</p>
+<div id="start" class="section level3">
+<h3>Start here</h3>
+<p>You open your project in RStudio (or the editor of your choice).
+You make a note to yourself to come up with a better name for your package —
+for now you’re calling it <span class="pkg">acme</span>
+because it’s mostly a collection of random functions you’ve written.</p>
+<p>Anyway, you’re thankful that you closed all of your open files the last time you were working,
+but now the empty console beckons.
+You’re ready to do some work.</p>
+<p>Where do you begin? With <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> of course.</p>
+<pre class="r"><code>library(usethis)</code></pre>
+<div id="start-here">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a harder decision: what do you actually do next?</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="#start-new-work">Start new work</a></p></li>
+<li><p><a href="#resume-my-work">Pick up something you were working on</a></p></li>
+<li><p><a href="#review-others-work">Review someone else’s work</a></p></li>
+</ol>
+</div>
+</div>
+<div id="start-new-work" class="section level3">
+<h3>Start new work</h3>
+<p>Time to start something new.
+You scan your project board, issues list, JIRA tickets, slack messages, emails, and post-it notes
+and finally settle on something to work on.
+Your task: add an example to the documentation for a function you’ve been working on.</p>
+<div id="pr-init">
+<p>You want to start your work in a new branch,
+so you call <code>pr_init()</code>,
+giving it the name of your new branch.</p>
+<pre class="r"><code>pr_init(&quot;add-example&quot;)</code></pre>
+<pre><code>✓ Setting active project to &#39;/Users/garrick/work/acme&#39;
+ℹ Pulling changes from &#39;upstream/main&#39;
+✓ Creating and switching to local branch &#39;add-example&#39;
+● Use `pr_push()` to create PR.</code></pre>
+</div>
+<p>The console output reminds you that <span class="pkg">usethis</span> updated your local repo
+and created and switched to a new branch for you.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> You’re ready to <a href="#do-work">do some work</a>.</p>
+</div>
+<div id="resume-my-work" class="section level3">
+<h3>Pick up something you were working on</h3>
+<p>resume your local work</p>
+</div>
+<div id="review-others-work" class="section level3">
+<h3>Review someone else’s work</h3>
+<p>review others works</p>
+</div>
+</div>
+<div id="do-work" class="section level2">
+<h2>Do some work</h2>
+<p>You take a sip of your coffee (or the beverage of your choice),
+turn up your favorite <a href="https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6">music to write code to</a> playlist on Spotify,
+and line up 25 minutes in your <a href="https://pomofocus.io/">Pomodoro app</a>.</p>
+<p>You’re ready to get something done!
+Go write some code.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> When you feel good about your work,
+come back here and we’ll <a href="#git-commit">take a snapshot of your updates</a>.</p>
+<div id="git-commit" class="section level3">
+<h3>Take a snapshot of your work</h3>
+<p>Feeling okay about your code?
+Take a snapshot of it!</p>
+<p>There are two parts to this step.
+First, you’ll pick the files that you want to add to the snapshot (or commit).
+You can do this in the R console using <code>git_add()</code> from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package.
+Give the function a vector with the paths to the files you changed.</p>
+<pre class="r"><code>gert::git_add(c(&quot;R/atom_arranger.R&quot;, &quot;man/atom_arranger.Rd&quot;))</code></pre>
+<p>Running this command is like asking a friend to step into the picture.
+We haven’t officially taken a snapshot of your changes yet,
+but we now we have the changes in frame.
+In git-speak,
+<code>git_add()</code> adds the changes in the listed files to a staging area.</p>
+<p>Then, once all the files you want to commit have been added,
+you <em>commit</em> the changes.
+In our picture-taking metaphor,
+committing is a lot like taking a snapshot of your friends.</p>
+<p>Along with the changes in the staged files,
+the commit includes a message,
+which you give as a parameter to <code>git_commit()</code>
+(also from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package).
+Think of this message like the subject of an email to your future self.</p>
+<pre class="r"><code>gert::git_commit(&quot;Add an example to ?atom_arranger()&quot;)</code></pre>
+<p><em>P.S. You can do this adding-and-committing dance in the <a href="https://happygitwithr.com/rstudio-git-github.html">Git pane in RStudio</a>, too.</em></p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Are you ready to share your work?</p>
+<ul>
+<li><p>If <strong>yes</strong>, then you’re ready to <a href="#share-your-work">push your changes out into the world</a>.</p></li>
+<li><p>If <strong>not</strong>, no worries. Just <a href="#do-work">keep on working</a>.</p></li>
+</ul>
+</div>
+<div id="fix-something" class="section level3">
+<h3>Fix something</h3>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Need to fix something? Let’s do a quick check.
+This thing that needs to be fixed — what branch is it in?</p>
+<ul>
+<li><p>The one I’m in right now<br/>
+⇒ <em>keep reading</em></p></li>
+<li><p>A local branch, but not the one I’m in now<br/>
+⇒ <em>go <a href="#pr-resume">resume working in that branch</a>
+and then come right back here.</em></p></li>
+<li><p>A pull request branch I was looking at on GitHub<br/>
+⇒ <em>go <a href="#pr-fetch">fetch the pull request</a>
+and then come right back here</em>.</p></li>
+</ul>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, you’re all set to make that fix.
+Once you’re happy with your changes,
+<a href="#git-commit">take a snapshot of the fix</a>.</p>
+</div>
+</div>
+<div id="share-your-work" class="section level2">
+<h2>Share your work</h2>
+<p>Fantastic!
+Your work is awesome and everyone is going to be happy to try it out,
+but first you have to get it off of your computer and out into the world.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Is this <a href="#pr-push-new">new work</a> you’re sharing,
+or are you <a href="#pr-push">updating an existing pull request</a> with either your own or someone else’s work?</p>
+<div id="pr-push-new" class="section level3">
+<h3>Create a new pull request</h3>
+<p>To create a new pull request, you call <code>pr_push()</code>.</p>
+<pre class="r"><code>pr_push()</code></pre>
+<pre><code>✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
+✔ Setting upstream tracking branch for &#39;add-example&#39; to &#39;origin/formidable&#39;
+✔ Create PR at link given below
+✔ Opening URL &#39;https://github.com/gadenbuie/acme/compare/add-example&#39;</code></pre>
+</div>
+<p><code>pr_push()</code> sends the local changes in your new branch to GitHub,
+and opens a browser window where you can review your changes once more.
+If everything looks good,
+go ahead click the <em>Create Pull Request</em> button.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Good job! How are you feeling now?</p>
+<ul>
+<li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Oh shoot, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
+</ul>
+</div>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap Up</h2>
+<div id="pr-pause" class="section level3">
+<h3>Pause your work</h3>
+<p>If you landed here,
+you’re not completely done with the thing you were working on,
+but you do want to put it aside for now.
+That’s alright, that work will be waiting patiently for you in a local branch.</p>
+<p>Call <code>pr_pause()</code> to switch from the current branch back to the default branch,
+and to make sure you’ve got the latest changes in the default branch.</p>
+<pre class="r"><code>pr_pause()</code></pre>
+<pre><code>✓ Switching back to default branch (&#39;main&#39;)
+✓ Pulling changes from &#39;origin/main&#39;</code></pre>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+<div id="pr-finish" class="section level3">
+<h3>Finish your work</h3>
+<p>Congrats! Your pull request was merged or your review of someone else’s work is complete!
+That’s awesome.
+Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
+<pre class="r"><code>pr_finish()</code></pre>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+</div>
+<div id="download" class="section level2">
+<h2>Download the image</h2>
+<ul>
+<li><a href="usethis-pr-flow.png">Small PNG Image (94 KB)</a></li>
+<li><a href="usethis-pr-flow-medium.png">Medium PNG Image (600 KB)</a></li>
+<li><a href="usethis-pr-flow-large.png">Large PNG Image (820 KB)</a></li>
+<li><a href="usethis-pr-flow.svg">SVG (36 KB)</a></li>
+<li><a href="usethis-pr-flow.drawio">Source File <code>.drawio</code> (3.4 KB)</a></li>
+</ul>
+<div class="cc-box">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+  <img alt="Creative Commons License" style="border-width:0;margin-right:1em;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" align="left" />
+</a>
+<em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
+  Pull Request Flow with usethis
+</em>
+by 
+<a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
+Garrick Aden-Buie
+</a> is licensed under a 
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+</div>
+<style type="text/css">
+.cc-box {
+  padding: 1em 1em;
+  border: 2px solid #514961;
+  border-radius: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  .cc-box {
+    color: #dbd7e3;
+  }
+}
+.cc-box :first-child {
+  margin-top: 0;
+}
+.cc-box :last-child {
+  margin-bottom: 0;
+}
+.fas.fa-map-signs {
+    color: var(--accent-dark);
+}
+
+@media screen and (min-width: 48em) {
+  .way-point {
+    position: absolute;
+    left: -1.5em;
+    line-height: 1.25;
+    font-size: 1.25em;
+    z-index: 1000;
+  }
+  
+  .page, .post {
+    position: relative;
+  }
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+</style>
+</div>
