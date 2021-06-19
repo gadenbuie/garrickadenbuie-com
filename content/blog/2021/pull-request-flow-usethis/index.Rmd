@@ -1,0 +1,357 @@
+---
+title: Pull Request Flow with usethis
+author: Garrick Aden-Buie
+date: '2021-06-15'
+slug: pull-request-flow-usethis
+categories:
+  - Blog
+tags:
+  - R
+  - usethis
+  - Pull Requests
+  - Workflow
+description: Get in the usethis pull request flow with this flow chart.
+twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-small.jpg
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+[usethis]: https://usethis.r-lib.org
+[gert]: https://docs.ropensci.org/gert/
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+
+options(htmltools.dir.version = TRUE)
+
+# If using lightbox for plots, set `fig.show = FALSE`
+# Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
+lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+  if (preview) {
+    glue::glue(
+      '<div class="figure">
+      <a href="{url}" data-featherlight="image">
+      <img src="{url}" alt="{alt}">
+      </a>
+      <p class="caption">{caption}</p>
+      </div>
+      '
+    )
+  } else {
+    if (alt == "") alt <- "static image of the plot"
+    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+  }
+}
+
+way_point <- function(add_class = TRUE) {
+  glue::glue(
+    '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>', 
+    '<span class="sr-only">Decision time:</span>',
+    cls = if (add_class) "way-point " else ""
+  )
+}
+```
+
+```{r pr-flow-lightbox, echo=FALSE, results = "asis"}
+lightbox_img(
+  "usethis-pr-flow.svg",
+  alt = "A flow chart for the pull request functions in the usethis R package.",
+  caption = "A `usethis` pull request helper function flow. [Download the image](#download)."
+)
+```
+
+## Choose your own pull request adventure
+
+Welcome to this choose-your-own-adventure blog post.
+You don't need to read this one from top to bottom.
+Instead, jumping around is encouraged!
+Just look for the `r way_point(FALSE)` icon.
+
+### Start here {#start}
+
+You open your project in RStudio (or the editor of your choice).
+You make a note to yourself to come up with a better name for your package —
+for now you're calling it [acme]{.pkg} 
+because it's mostly a collection of random functions you've written.
+
+Anyway, you're thankful that you closed all of your open files the last time you were working,
+but now the empty console beckons.
+You're ready to do some work.
+
+Where do you begin? With [[usethis]]{.pkg} of course.
+
+```{r eval=TRUE}
+library(usethis)
+```
+
+::: {#start-here}
+`r way_point()` Now you face a harder decision: what do you actually do next?
+
+1. [Start new work](#start-new-work)
+
+1. [Pick up something you were working on](#resume-my-work)
+
+1. [Review someone else's work](#review-others-work)
+:::
+
+### Start new work {#start-new-work}
+
+Time to start something new.
+You scan your project board, issues list, JIRA tickets, slack messages, emails, and post-it notes
+and finally settle on something to work on.
+Your task: add an example to the documentation for a function you've been working on.
+
+::: {#pr-init}
+You want to start your work in a new branch,
+so you call `pr_init()`,
+giving it the name of your new branch.
+
+```{r pr-init, eval=FALSE}
+pr_init("add-example")
+```
+```
+✓ Setting active project to '/Users/garrick/work/acme'
+ℹ Pulling changes from 'upstream/main'
+✓ Creating and switching to local branch 'add-example'
+● Use `pr_push()` to create PR.
+```
+:::
+
+The console output reminds you that [usethis]{.pkg} updated your local repo
+and created and switched to a new branch for you.
+
+`r way_point()` You're ready to [do some work](#do-work).
+
+### Pick up something you were working on {#resume-my-work}
+
+resume your local work
+
+### Review someone else's work {#review-others-work}
+
+review others works
+
+## Do some work {#do-work}
+
+You take a sip of your coffee (or the beverage of your choice),
+turn up your favorite [music to write code to](https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6) playlist on Spotify,
+and line up 25 minutes in your [Pomodoro app](https://pomofocus.io/).
+
+You're ready to get something done!
+Go write some code.
+
+`r way_point()` When you feel good about your work,
+come back here and we'll [take a snapshot of your updates](#git-commit).
+
+### Take a snapshot of your work {#git-commit}
+
+Feeling okay about your code? 
+Take a snapshot of it!
+
+There are two parts to this step.
+First, you'll pick the files that you want to add to the snapshot (or commit).
+You can do this in the R console using `git_add()` from the [[gert]]{.pkg} package.
+Give the function a vector with the paths to the files you changed.
+
+```{r eval=FALSE}
+gert::git_add(c("R/atom_arranger.R", "man/atom_arranger.Rd"))
+```
+
+Running this command is like asking a friend to step into the picture.
+We haven't officially taken a snapshot of your changes yet,
+but we now we have the changes in frame.
+In git-speak, 
+`git_add()` adds the changes in the listed files to a staging area.
+
+Then, once all the files you want to commit have been added,
+you _commit_ the changes.
+In our picture-taking metaphor,
+committing is a lot like taking a snapshot of your friends.
+
+Along with the changes in the staged files,
+the commit includes a message,
+which you give as a parameter to `git_commit()` 
+(also from the [[gert]]{.pkg} package).
+Think of this message like the subject of an email to your future self.
+
+```{r eval=FALSE}
+gert::git_commit("Add an example to ?atom_arranger()")
+```
+
+_P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](https://happygitwithr.com/rstudio-git-github.html), too._
+
+`r way_point()` Are you ready to share your work?
+
+- If **yes**, then you're ready to [push your changes out into the world](#share-your-work).
+
+- If **not**, no worries. Just [keep on working](#do-work).
+
+### Fix something {#fix-something}
+
+`r way_point()` Need to fix something? Let's do a quick check.
+This thing that needs to be fixed — what branch is it in?
+
+- The one I'm in right now<br/>
+  &rArr; _keep reading_
+
+- A local branch, but not the one I'm in now<br/>
+  &rArr; _go [resume working in that branch](#pr-resume)
+  and then come right back here._
+
+- A pull request branch I was looking at on GitHub<br/>
+  &rArr; _go [fetch the pull request](#pr-fetch)
+  and then come right back here_.
+  
+`r way_point()` Great, you're all set to make that fix.
+Once you're happy with your changes, 
+[take a snapshot of the fix](#git-commit).
+
+## Share your work {#share-your-work}
+
+Fantastic!
+Your work is awesome and everyone is going to be happy to try it out,
+but first you have to get it off of your computer and out into the world.
+
+`r way_point()` Is this [new work](#pr-push-new) you're sharing,
+or are you [updating an existing pull request](#pr-push) with either your own or someone else's work?
+
+### Create a new pull request {#pr-push-new}
+
+To create a new pull request, you call `pr_push()`.
+
+```{r pr-push, eval=FALSE}
+pr_push()
+```
+```
+✔ Pushing local 'add-example' branch to 'origin:add-example'
+✔ Setting upstream tracking branch for 'add-example' to 'origin/formidable'
+✔ Create PR at link given below
+✔ Opening URL 'https://github.com/gadenbuie/acme/compare/add-example'
+```
+</div>
+
+`pr_push()` sends the local changes in your new branch to GitHub,
+and opens a browser window where you can review your changes once more.
+If everything looks good, 
+go ahead click the _Create Pull Request_ button.
+
+`r way_point()` Good job! How are you feeling now?
+
+- I'm on a roll, let's [start the next thing](#pr-pause).
+
+- Oh shoot, [I saw something I need to fix](#fix-something).
+
+## Wrap Up
+
+### Pause your work {#pr-pause}
+
+If you landed here, 
+you're not completely done with the thing you were working on,
+but you do want to put it aside for now.
+That's alright, that work will be waiting patiently for you in a local branch.
+
+Call `pr_pause()` to switch from the current branch back to the default branch,
+and to make sure you've got the latest changes in the default branch.
+
+```{r eval=FALSE}
+pr_pause()
+```
+```
+✓ Switching back to default branch ('main')
+✓ Pulling changes from 'origin/main'
+```
+
+`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+
+### Finish your work {#pr-finish}
+
+Congrats! Your pull request was merged or your review of someone else's work is complete!
+That's awesome.
+Now it's time to wrap things up by calling `pr_finish()`.
+
+```{r pr_finish, eval=FALSE}
+pr_finish()
+```
+
+`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+
+
+## Download the image {#download}
+
+- [Small PNG Image (94 KB)](usethis-pr-flow.png)
+- [Medium PNG Image (600 KB)](usethis-pr-flow-medium.png)
+- [Large PNG Image (820 KB)](usethis-pr-flow-large.png)
+- [SVG (36 KB)](usethis-pr-flow.svg)
+- [Source File `.drawio` (3.4 KB)](usethis-pr-flow.drawio)
+
+::: cc-box
+
+```{=html}
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+  <img alt="Creative Commons License" style="border-width:0;margin-right:1em;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" align="left" />
+</a>
+<em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
+  Pull Request Flow with usethis
+</em>
+by 
+<a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
+Garrick Aden-Buie
+</a> is licensed under a 
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+```
+
+:::
+
+
+```{css echo=FALSE}
+.cc-box {
+  padding: 1em 1em;
+  border: 2px solid #514961;
+  border-radius: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  .cc-box {
+    color: #dbd7e3;
+  }
+}
+.cc-box :first-child {
+  margin-top: 0;
+}
+.cc-box :last-child {
+  margin-bottom: 0;
+}
+.fas.fa-map-signs {
+	color: var(--accent-dark);
+}
+
+@media screen and (min-width: 48em) {
+  .way-point {
+    position: absolute;
+    left: -1.5em;
+    line-height: 1.25;
+    font-size: 1.25em;
+    z-index: 1000;
+  }
+  
+  .page, .post {
+    position: relative;
+  }
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+```
