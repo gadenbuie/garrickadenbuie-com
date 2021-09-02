@@ -1,0 +1,425 @@
+---
+title: Create a GitHub issue from a reprex with shrtcts
+author: Garrick Aden-Buie
+date: '2021-08-31'
+slug: shrtcts-reprex-to-issue
+categories:
+  - Blog
+tags:
+  - R
+  - Addin
+  - Shortcuts
+  - GitHub
+  - reprex
+---
+
+[reprex]: https://reprex.tidyverse.org/
+[shrtcts]: https://pkg.garrickadenbuie.com/shrtcts
+[rstudioapi]: https://rstudio.github.io/rstudioapi/
+
+```{r setup, include=FALSE}
+xaringanExtra::use_panelset(in_xaringan = FALSE)
+xaringanExtra::use_clipboard()
+```
+
+::: lead
+
+Have you ever spent a few ~~minutes~~ hours turning a bug in your code
+into a [reprex] -- a minimumal **repr**oducible **ex**ample?
+
+Getting to a reprex is 90% of the challenge.
+Most of the time, I find my mistake in the journey to a reprex.
+But sometimes, I find a legitimate bug and in those cases,
+I want to quickly turn my reprex into a GitHub issue.
+
+Here's a quick way to get there using an RStudio addin and [[shrtcts]]{.pkg}.
+
+:::
+
+
+## `reprex` is awesome
+
+The [[reprex]]{.pkg} package is **awesome**.
+If you've never used it before,
+I highly recommend that you stop reading this blog
+and go watch [Sharla Gelfand's _make a reprex... please_](https://youtu.be/G5Nm-GpmrLw?t=60)
+(or [read the slides from the talk](https://make-a-reprex-please.netlify.app/)).
+
+Your goal when making a reprex is to come up with a short bit of code
+that demonstrates the problem you've experienced
+and that is as self-contained as possible.
+
+To disentangle your problem from your personal R environment,
+[reprex]{.pkg} takes your code,
+runs it in an isolated environment,
+and returns a rendered version of your code
+that's ready to be copy-pasted into a text box 
+on a number of common websites where R users go for help.
+
+This last feature is one of my favorites:
+the rendered format of a `reprex` 
+is the perfect way to start crafting a GitHub issue.
+Typically, I'll work out the reprex locally,
+then use the **Reprex selection** RStudio addin to render the code,
+and finally jump over to the issues tab of a GitHub repo to paste the code right there.
+
+Here's an example reprex from [Sharla's talk](https://make-a-reprex-please.netlify.app/#33).
+We start with plain [R code](/blog/shrtcts-reprex-to-issue/?panelset=r-code#panelset_r-code).
+[reprex]{.pkg} renders the R code with additional information about my session
+and [shows me a preview](/blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#panelset_reprex-preview).
+And finally it also copies [the markdown I need](/blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard)
+in order to paste the reprex into a GitHub issue or other online location.
+
+:::::: panelset
+::: panel
+[R Code]{.panel-name}
+
+```{r reprex-example, eval = FALSE}
+library(tidyverse)
+
+tibble(date = "2020-01-01") %>%
+  mutate(year = case_when(
+    date <= "2020-12-31" & date >= "2020-01-01" ~ 2020,
+    is.na(date) ~ NA
+  ))
+```
+:::
+
+::: panel
+[Reprex Preview]{.panel-name}
+
+```{r reprex-output, echo=FALSE, results="hold", message=FALSE}
+tmpfile <- tempfile("reprex", fileext = ".R")
+writeLines(knitr::knit_code$get("reprex-example"), tmpfile)
+rprx <- reprex::reprex(input = tmpfile, venue = "gh", session_info = TRUE, advertise = TRUE)
+rprx <- paste(rprx, collapse = "\n")
+```
+
+`r rprx`
+:::
+
+::: panel
+[Clipboard]{.panel-name}
+
+````markdown
+`r rprx`
+````
+:::
+
+::::::
+
+
+## But wait, there's more!
+
+When you're working on debugging something,
+going from code in your RStudio IDE to something you can share with others is **huge**.
+But [reprex]{.pkg} can do more!
+
+Because reprex uses `knitr::spin()` —
+[_knitr's best hidden gem_ according to Dean Attali](https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/) —
+to turn R code into an R Markdown document,
+you have a few more options.
+
+`knitr::spin()` has a cool feature that lets you write markdown _in an R script_.
+You can check out 
+[Dean Attali's post](https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/)
+for more details,
+but the gist is this:
+any text on a line starting with a special comment format `#'` 
+becomes markdown.
+
+This means we can add text directly to our reprex using these comments!
+Below you can see that I've added some exposition around the problematic code.
+
+
+:::::: panelset
+::: panel
+[R Code]{.panel-name}
+
+```{r reprex-example-comments, eval = FALSE}
+#' I'm using the latest version of the `tidyverse`, 
+#' freshly installed.
+library(tidyverse)
+
+#' Suppose we have a data frame with a date column. 
+#' The date is stored as a _character_ vector, and 
+#' I'd like to convert it to a _year_ with a simple
+#' comparison. The first function I thought of was 
+#' `case_when()`, but it doesn't seem to be doing 
+#' what I expect. Why am I getting this error?
+tibble(date = "2020-01-01") %>%
+  mutate(year = case_when(
+    date <= "2020-12-31" & date >= "2020-01-01" ~ 2020,
+    is.na(date) ~ NA
+  ))
+```
+:::
+
+::: panel
+[Reprex Preview]{.panel-name}
+
+```{r reprex-output-comments, echo=FALSE, results="hold", message=FALSE}
+tmpfile <- tempfile("reprex", fileext = ".R")
+writeLines(knitr::knit_code$get("reprex-example-comments"), tmpfile)
+rprx2 <- reprex::reprex(input = tmpfile, venue = "gh", session_info = TRUE, advertise = TRUE)
+rprx2 <- paste(rprx2, collapse = "\n")
+```
+
+`r rprx2`
+:::
+
+::: panel
+[Clipboard]{.panel-name}
+
+````markdown
+`r rprx2`
+````
+::::
+
+::::::
+
+
+## There should be a shortcut
+
+Kick-starting an issue report using a reprex 
+right from within my RStudio session is great,
+but there's still the part where I have to slog
+out of my IDE, 
+into a browser,
+and find my way to the repo where this issue should go.
+
+Most of the time, though, I'm already **in the repo**.
+And [usethis]{.pkg} has 
+[a helpful function](https://usethis.r-lib.org/reference/browse-this.html) 
+to get me right to the issues page:
+
+```{r eval=FALSE}
+usethis::browse_github_issues()
+```
+
+But there's too much typing.
+I want reprex to issue, _with magic_ &#x1F9D9; &#x2728;.
+
+So that's what we'll do!
+In the rest of this post,
+we'll use [reprex]{.pkg} and the [[rstudioapi]]{.pkg} package 
+to automatically go from code to GitHub issue.
+Then we'll wrap that logic into a function
+and turn it into an RStudio Addin with my package, [[shrtcts]]{.pkg}.
+
+## From reprex to issue
+
+Suppose we have some `input` code and a target `repo`.
+Maybe we have a classic missing argument error 
+and we want to send the issue to [gadenbuie/shrtcts](https://github.com/gadenbuie/shrtcts)
+(please don't!).
+
+```{r inputs}
+input <- "runif(min = 0, max = 10)\n"
+repo <- "gadenbuie/shrtcts"
+```
+
+### Prepare the issue body
+
+Our goal is to render the reprex into an issue `body`
+and then we'll put together a URL
+that takes us to GitHub's 
+[new issue page](https://github.com/gadenbuie/shrtcts/issues/new)
+for the `repo` with the issue `body` pre-filled when we get there.
+
+
+```{r url_new_issue, eval=FALSE, echo=FALSE}
+url_new_issue <- glue::glue("https://github.com/{repo}/issues/new?body={body}")
+```
+
+```{r url_new_issue_browse, eval=FALSE, echo=FALSE}
+browseURL(url_new_issue)
+```
+
+```{r url_new_issue_preview, eval=FALSE}
+body <- "... reprex body goes here ..."
+<<url_new_issue>>
+<<url_new_issue_browse>>
+```
+
+The trick here is that you can create a new issue by going to
+`github.com/{owner}/{repo}/issues/new`
+and we're sending along the initial body using
+[the query string](https://url.spec.whatwg.org/#dom-urlsearchparams-urlsearchparams)
+`?body={body}`.
+
+To put together the `body`, we first render the `input` using `reprex::reprex()`
+
+```{r body_reprex, eval=FALSE}
+body <- reprex::reprex(input = input, venue = "gh", html_preview = TRUE)
+```
+
+where we've asked for a reprex for GitHub — `venue = "gh"` — 
+and a local HTML preview — `html_preview = TRUE`.
+You can adjust the arguments to `reprex()` to fit your needs, of course.
+
+Unfortunately, `reprex::repex()` is only half the work...
+
+```{r, message = FALSE}
+<<body_reprex>>
+body
+```
+
+Notice that it returns a character vector
+with one item per line of the rendered reprex.
+We need to collapse it all into one line.
+
+```{r body_paste}
+body <- paste(body, collapse = "\n")
+```
+```{r echo=FALSE}
+body
+```
+
+But this still won't fit in a URL
+because it contains spaces, new lines, and other characters URLs don't like.
+So we need to use the base R function `URLencode()`
+to turn the `body` text into something readable only by machines.
+
+```{r body_encode}
+body <- URLencode(body, reserved = TRUE)
+```
+```{r echo=FALSE}
+body
+```
+
+Finally, we can make our new issue URL.
+
+```{r}
+<<url_new_issue>>
+url_new_issue
+```
+
+I didn't make the link clickable, 
+but if you were to follow it, 
+you'd find a brand new issue page ready for you.
+
+![A new GitHub issue page with our reprex as the issue body](reprex-new-issue.png)
+
+### Grab the input from the user
+
+Of course, 
+we don't want to have to define `input` manualy every time we run this function.
+Instead, we'd rather get the `input` code from
+
+- the current selection in RStudio
+- or the clipboard if nothing is selected
+
+To make things easy, 
+we'll ignore the fact that RStudio has a multiple cursors feature,
+and we'll just get the first selection of code.
+We'll use the `getSourceEditorContext()` to get the currently open text file,
+then we can grab the text from the first selection in that editor window.
+
+```{r get_source_editor_context, eval=FALSE}
+ctx <- rstudioapi::getSourceEditorContext()
+input <- ctx$selection[[1]]$text
+```
+
+If nothing is selected, `input` will be an empty string, `""`,
+in which case we'd prefer to leave `input` as `NULL` 
+so that `reprex()` will look in the clipboard for our input.
+We also need to make sure that `input` ends with a new line character, `"\n"`,
+so that `reprex()` knows that `input` contains the reprex code and not a path to a file.
+
+```{r input_prep, eval=FALSE}
+input <- if (nzchar(input)) {
+  paste(input, "\n")
+}
+```
+
+We'll be wrapping this up in a function where
+`input` might be provided by the user,
+so we'll only want to check for a selection if `input` is `NULL`.
+
+```{r input_not_null, eval=FALSE, style = TRUE}
+input <- NULL # default in function
+
+if (is.null(input)) {
+  <<get_source_editor_context>>
+  <<input_prep>>
+}
+```
+
+### Pick the repository
+
+Often, I'll be working in the repository where I want to create the issue.
+[usethis]{.pkg} does a great job guessing the repository
+from the information in a local copy of the repo.
+Rather than spending forever writing my own version,
+I'll just reach into [usethis]{.pkg} with `:::`.
+
+```{r repo-try-usethis, eval=FALSE}
+if (is.null(repo)) {
+  repo <- tryCatch(
+    usethis:::target_repo_spec("source", FALSE), 
+    error = function(e) NULL
+  )
+}
+```
+
+It's a good idea to confirm if we've picked the right repo.
+
+```{r repo-confirm, eval=FALSE}
+if (!is.null(repo)) {
+  use_guess <- rstudioapi::showQuestion(
+    title = "Confirm repository",
+    message = sprintf("Send issue to '%s'?", repo),
+    ok = "Yes",
+    cancel = "No, I'll enter a repo"
+  )
+  if (!use_guess) {
+    repo <- NULL
+  }
+}
+```
+
+<p class="center"><img src="ask-repo.png" alt="RStudio menu asking to confirm if the user wants to send the issue to 'gadenbuie/shrtcts' or choose another repo." style="max-width: 300px;display: block"></p>
+
+Finally, if we're not using the guess (or couldn't guess the repo),
+we'd probably want to be able to type in the repository directly in a prompt.
+
+```{r repo-ask, eval=FALSE}
+if (is.null(repo)) {
+  repo <- rstudioapi::showPrompt(
+    title = "Which repository?", 
+    message = "Where should we create the issue? (owner/repo)"
+  )
+}
+```
+
+<p class="center"><img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:400px;display: block"></p>
+
+## Shortcut
+
+```{r shortcut, eval=FALSE, style=TRUE}
+#' Create issue from reprex
+#'
+#' Creates an issue from the selected or copied reprex.
+#'
+#' @shortcut Cmd+Ctrl+Shift+R
+#' @interactive
+create_issue_from_reprex <- function(input = NULL, repo = NULL, ...) {
+  <<repo-try-usethis>>
+  
+  <<repo-confirm>>
+    
+  <<repo-ask>>
+    
+  if (is.null(input)) {
+    <<get_source_editor_context>>
+    <<input_prep>>
+  }
+  
+  <<body_reprex>>
+  <<body_paste>>
+  <<url_new_issue>>
+  <<url_new_issue_browse>>
+  invisible(url_new_issue)
+}
+```

@@ -1,0 +1,736 @@
+---
+title: Create a GitHub issue from a reprex with shrtcts
+author: Garrick Aden-Buie
+date: '2021-08-31'
+slug: shrtcts-reprex-to-issue
+categories:
+  - Blog
+tags:
+  - R
+  - Addin
+  - Shortcuts
+  - GitHub
+  - reprex
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<link href="{{< blogdown/postref >}}index_files/panelset/panelset.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/panelset/panelset.js"></script>
+<script src="{{< blogdown/postref >}}index_files/clipboard/clipboard.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+
+
+<div class="lead">
+<p>Have you ever spent a few <del>minutes</del> hours turning a bug in your code
+into a <a href="https://reprex.tidyverse.org/">reprex</a> – a minimumal <strong>repr</strong>oducible <strong>ex</strong>ample?</p>
+<p>Getting to a reprex is 90% of the challenge.
+Most of the time, I find my mistake in the journey to a reprex.
+But sometimes, I find a legitimate bug and in those cases,
+I want to quickly turn my reprex into a GitHub issue.</p>
+<p>Here’s a quick way to get there using an RStudio addin and <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span>.</p>
+</div>
+<div id="reprex-is-awesome" class="section level2">
+<h2><code>reprex</code> is awesome</h2>
+<p>The <span class="pkg"><a href="https://reprex.tidyverse.org/">reprex</a></span> package is <strong>awesome</strong>.
+If you’ve never used it before,
+I highly recommend that you stop reading this blog
+and go watch <a href="https://youtu.be/G5Nm-GpmrLw?t=60">Sharla Gelfand’s <em>make a reprex… please</em></a>
+(or <a href="https://make-a-reprex-please.netlify.app/">read the slides from the talk</a>).</p>
+<p>Your goal when making a reprex is to come up with a short bit of code
+that demonstrates the problem you’ve experienced
+and that is as self-contained as possible.</p>
+<p>To disentangle your problem from your personal R environment,
+<span class="pkg">reprex</span> takes your code,
+runs it in an isolated environment,
+and returns a rendered version of your code
+that’s ready to be copy-pasted into a text box
+on a number of common websites where R users go for help.</p>
+<p>This last feature is one of my favorites:
+the rendered format of a <code>reprex</code>
+is the perfect way to start crafting a GitHub issue.
+Typically, I’ll work out the reprex locally,
+then use the <strong>Reprex selection</strong> RStudio addin to render the code,
+and finally jump over to the issues tab of a GitHub repo to paste the code right there.</p>
+<p>Here’s an example reprex from <a href="https://make-a-reprex-please.netlify.app/#33">Sharla’s talk</a>.
+We start with plain <a href="/blog/shrtcts-reprex-to-issue/?panelset=r-code#panelset_r-code">R code</a>.
+<span class="pkg">reprex</span> renders the R code with additional information about my session
+and <a href="/blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#panelset_reprex-preview">shows me a preview</a>.
+And finally it also copies <a href="/blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard">the markdown I need</a>
+in order to paste the reprex into a GitHub issue or other online location.</p>
+<div class="panelset">
+<div class="panel">
+<p><span class="panel-name">R Code</span></p>
+<pre class="r"><code>library(tidyverse)
+
+tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))</code></pre>
+</div>
+<div class="panel">
+<p><span class="panel-name">Reprex Preview</span></p>
+<pre class="r"><code>library(tidyverse)
+
+tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))
+#&gt; Error: Problem with `mutate()` column `year`.
+#&gt; ℹ `year = case_when(...)`.
+#&gt; x must be a double vector, not a logical vector.</code></pre>
+<p><sup>Created on 2021-09-02 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
+<details style="margin-bottom:10px;">
+<summary>
+Session info
+</summary>
+<pre class="r"><code>sessioninfo::session_info()
+#&gt; ─ Session info ───────────────────────────────────────────────────────────────
+#&gt;  setting  value                       
+#&gt;  version  R version 4.1.0 (2021-05-18)
+#&gt;  os       macOS Big Sur 10.16         
+#&gt;  system   x86_64, darwin17.0          
+#&gt;  ui       X11                         
+#&gt;  language (EN)                        
+#&gt;  collate  en_US.UTF-8                 
+#&gt;  ctype    en_US.UTF-8                 
+#&gt;  tz       America/New_York            
+#&gt;  date     2021-09-02                  
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────
+#&gt;  package     * version     date       lib source                            
+#&gt;  assertthat    0.2.1       2019-03-21 [1] standard (@0.2.1)                 
+#&gt;  backports     1.2.1       2020-12-09 [1] standard (@1.2.1)                 
+#&gt;  broom         0.7.6       2021-04-05 [1] standard (@0.7.6)                 
+#&gt;  cellranger    1.1.0       2016-07-27 [1] standard (@1.1.0)                 
+#&gt;  cli           3.0.1       2021-07-17 [1] standard (@3.0.1)                 
+#&gt;  colorspace    2.0-1       2021-05-04 [1] standard (@2.0-1)                 
+#&gt;  crayon        1.4.1       2021-02-08 [1] standard (@1.4.1)                 
+#&gt;  DBI           1.1.1       2021-01-15 [1] standard (@1.1.1)                 
+#&gt;  dbplyr        2.1.1       2021-04-06 [1] standard (@2.1.1)                 
+#&gt;  digest        0.6.27      2020-10-24 [1] standard (@0.6.27)                
+#&gt;  dplyr       * 1.0.6       2021-05-05 [1] standard (@1.0.6)                 
+#&gt;  ellipsis      0.3.2       2021-04-29 [1] standard (@0.3.2)                 
+#&gt;  evaluate      0.14        2019-05-28 [1] standard (@0.14)                  
+#&gt;  fansi         0.5.0       2021-05-25 [1] standard (@0.5.0)                 
+#&gt;  forcats     * 0.5.1       2021-01-27 [1] standard (@0.5.1)                 
+#&gt;  fs            1.5.0       2020-07-31 [1] standard (@1.5.0)                 
+#&gt;  generics      0.1.0       2020-10-31 [1] standard (@0.1.0)                 
+#&gt;  ggplot2     * 3.3.4       2021-06-16 [1] standard (@3.3.4)                 
+#&gt;  glue          1.4.2       2020-08-27 [1] standard (@1.4.2)                 
+#&gt;  gtable        0.3.0       2019-03-25 [1] standard (@0.3.0)                 
+#&gt;  haven         2.4.1       2021-04-23 [1] standard (@2.4.1)                 
+#&gt;  highr         0.9         2021-04-16 [1] standard (@0.9)                   
+#&gt;  hms           1.1.0       2021-05-17 [1] standard (@1.1.0)                 
+#&gt;  htmltools     0.5.1.1     2021-01-22 [1] standard (@0.5.1.1)               
+#&gt;  httr          1.4.2       2020-07-20 [1] standard (@1.4.2)                 
+#&gt;  jsonlite      1.7.2       2020-12-09 [1] standard (@1.7.2)                 
+#&gt;  knitr         1.33        2021-04-24 [1] standard (@1.33)                  
+#&gt;  lifecycle     1.0.0       2021-02-15 [1] standard (@1.0.0)                 
+#&gt;  lubridate     1.7.10      2021-02-26 [1] standard (@1.7.10)                
+#&gt;  magrittr      2.0.1       2020-11-17 [1] standard (@2.0.1)                 
+#&gt;  modelr        0.1.8       2020-05-19 [1] standard (@0.1.8)                 
+#&gt;  munsell       0.5.0       2018-06-12 [1] standard (@0.5.0)                 
+#&gt;  pillar        1.6.1       2021-05-16 [1] standard (@1.6.1)                 
+#&gt;  pkgconfig     2.0.3       2019-09-22 [1] standard (@2.0.3)                 
+#&gt;  purrr       * 0.3.4       2020-04-17 [1] standard (@0.3.4)                 
+#&gt;  R6            2.5.0       2020-10-28 [1] standard (@2.5.0)                 
+#&gt;  Rcpp          1.0.7       2021-07-07 [1] standard (@1.0.7)                 
+#&gt;  readr       * 1.4.0       2020-10-05 [1] standard (@1.4.0)                 
+#&gt;  readxl        1.3.1       2019-03-13 [1] standard (@1.3.1)                 
+#&gt;  reprex        2.0.1       2021-08-05 [1] standard (@2.0.1)                 
+#&gt;  rlang         0.4.11.9000 2021-06-28 [1] Github (r-lib/rlang@869f00a)      
+#&gt;  rmarkdown     2.9.3       2021-07-18 [1] Github (rstudio/rmarkdown@2700baf)
+#&gt;  rstudioapi    0.13        2020-11-12 [1] standard (@0.13)                  
+#&gt;  rvest         1.0.0       2021-03-09 [1] standard (@1.0.0)                 
+#&gt;  scales        1.1.1       2020-05-11 [1] standard (@1.1.1)                 
+#&gt;  sessioninfo   1.1.1       2018-11-05 [1] standard (@1.1.1)                 
+#&gt;  stringi       1.7.3       2021-07-16 [1] standard (@1.7.3)                 
+#&gt;  stringr     * 1.4.0       2019-02-10 [1] standard (@1.4.0)                 
+#&gt;  styler        1.4.1       2021-03-30 [1] standard (@1.4.1)                 
+#&gt;  tibble      * 3.1.2       2021-05-16 [1] standard (@3.1.2)                 
+#&gt;  tidyr       * 1.1.3       2021-03-03 [1] standard (@1.1.3)                 
+#&gt;  tidyselect    1.1.1       2021-04-30 [1] standard (@1.1.1)                 
+#&gt;  tidyverse   * 1.3.1       2021-04-15 [1] standard (@1.3.1)                 
+#&gt;  utf8          1.2.1       2021-03-12 [1] standard (@1.2.1)                 
+#&gt;  vctrs         0.3.8       2021-04-29 [1] standard (@0.3.8)                 
+#&gt;  withr         2.4.2       2021-04-18 [1] standard (@2.4.2)                 
+#&gt;  xfun          0.24        2021-06-15 [1] standard (@0.24)                  
+#&gt;  xml2          1.3.2       2020-04-23 [1] standard (@1.3.2)                 
+#&gt;  yaml          2.2.1       2020-02-01 [1] standard (@2.2.1)                 
+#&gt; 
+#&gt; [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
+</details>
+</div>
+<div class="panel">
+<p><span class="panel-name">Clipboard</span></p>
+<pre class="markdown"><code>``` r
+library(tidyverse)
+
+tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))
+#&gt; Error: Problem with `mutate()` column `year`.
+#&gt; ℹ `year = case_when(...)`.
+#&gt; x must be a double vector, not a logical vector.
+```
+
+&lt;sup&gt;Created on 2021-09-02 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
+
+&lt;details style=&quot;margin-bottom:10px;&quot;&gt;
+&lt;summary&gt;
+Session info
+&lt;/summary&gt;
+
+``` r
+sessioninfo::session_info()
+#&gt; ─ Session info ───────────────────────────────────────────────────────────────
+#&gt;  setting  value                       
+#&gt;  version  R version 4.1.0 (2021-05-18)
+#&gt;  os       macOS Big Sur 10.16         
+#&gt;  system   x86_64, darwin17.0          
+#&gt;  ui       X11                         
+#&gt;  language (EN)                        
+#&gt;  collate  en_US.UTF-8                 
+#&gt;  ctype    en_US.UTF-8                 
+#&gt;  tz       America/New_York            
+#&gt;  date     2021-09-02                  
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────
+#&gt;  package     * version     date       lib source                            
+#&gt;  assertthat    0.2.1       2019-03-21 [1] standard (@0.2.1)                 
+#&gt;  backports     1.2.1       2020-12-09 [1] standard (@1.2.1)                 
+#&gt;  broom         0.7.6       2021-04-05 [1] standard (@0.7.6)                 
+#&gt;  cellranger    1.1.0       2016-07-27 [1] standard (@1.1.0)                 
+#&gt;  cli           3.0.1       2021-07-17 [1] standard (@3.0.1)                 
+#&gt;  colorspace    2.0-1       2021-05-04 [1] standard (@2.0-1)                 
+#&gt;  crayon        1.4.1       2021-02-08 [1] standard (@1.4.1)                 
+#&gt;  DBI           1.1.1       2021-01-15 [1] standard (@1.1.1)                 
+#&gt;  dbplyr        2.1.1       2021-04-06 [1] standard (@2.1.1)                 
+#&gt;  digest        0.6.27      2020-10-24 [1] standard (@0.6.27)                
+#&gt;  dplyr       * 1.0.6       2021-05-05 [1] standard (@1.0.6)                 
+#&gt;  ellipsis      0.3.2       2021-04-29 [1] standard (@0.3.2)                 
+#&gt;  evaluate      0.14        2019-05-28 [1] standard (@0.14)                  
+#&gt;  fansi         0.5.0       2021-05-25 [1] standard (@0.5.0)                 
+#&gt;  forcats     * 0.5.1       2021-01-27 [1] standard (@0.5.1)                 
+#&gt;  fs            1.5.0       2020-07-31 [1] standard (@1.5.0)                 
+#&gt;  generics      0.1.0       2020-10-31 [1] standard (@0.1.0)                 
+#&gt;  ggplot2     * 3.3.4       2021-06-16 [1] standard (@3.3.4)                 
+#&gt;  glue          1.4.2       2020-08-27 [1] standard (@1.4.2)                 
+#&gt;  gtable        0.3.0       2019-03-25 [1] standard (@0.3.0)                 
+#&gt;  haven         2.4.1       2021-04-23 [1] standard (@2.4.1)                 
+#&gt;  highr         0.9         2021-04-16 [1] standard (@0.9)                   
+#&gt;  hms           1.1.0       2021-05-17 [1] standard (@1.1.0)                 
+#&gt;  htmltools     0.5.1.1     2021-01-22 [1] standard (@0.5.1.1)               
+#&gt;  httr          1.4.2       2020-07-20 [1] standard (@1.4.2)                 
+#&gt;  jsonlite      1.7.2       2020-12-09 [1] standard (@1.7.2)                 
+#&gt;  knitr         1.33        2021-04-24 [1] standard (@1.33)                  
+#&gt;  lifecycle     1.0.0       2021-02-15 [1] standard (@1.0.0)                 
+#&gt;  lubridate     1.7.10      2021-02-26 [1] standard (@1.7.10)                
+#&gt;  magrittr      2.0.1       2020-11-17 [1] standard (@2.0.1)                 
+#&gt;  modelr        0.1.8       2020-05-19 [1] standard (@0.1.8)                 
+#&gt;  munsell       0.5.0       2018-06-12 [1] standard (@0.5.0)                 
+#&gt;  pillar        1.6.1       2021-05-16 [1] standard (@1.6.1)                 
+#&gt;  pkgconfig     2.0.3       2019-09-22 [1] standard (@2.0.3)                 
+#&gt;  purrr       * 0.3.4       2020-04-17 [1] standard (@0.3.4)                 
+#&gt;  R6            2.5.0       2020-10-28 [1] standard (@2.5.0)                 
+#&gt;  Rcpp          1.0.7       2021-07-07 [1] standard (@1.0.7)                 
+#&gt;  readr       * 1.4.0       2020-10-05 [1] standard (@1.4.0)                 
+#&gt;  readxl        1.3.1       2019-03-13 [1] standard (@1.3.1)                 
+#&gt;  reprex        2.0.1       2021-08-05 [1] standard (@2.0.1)                 
+#&gt;  rlang         0.4.11.9000 2021-06-28 [1] Github (r-lib/rlang@869f00a)      
+#&gt;  rmarkdown     2.9.3       2021-07-18 [1] Github (rstudio/rmarkdown@2700baf)
+#&gt;  rstudioapi    0.13        2020-11-12 [1] standard (@0.13)                  
+#&gt;  rvest         1.0.0       2021-03-09 [1] standard (@1.0.0)                 
+#&gt;  scales        1.1.1       2020-05-11 [1] standard (@1.1.1)                 
+#&gt;  sessioninfo   1.1.1       2018-11-05 [1] standard (@1.1.1)                 
+#&gt;  stringi       1.7.3       2021-07-16 [1] standard (@1.7.3)                 
+#&gt;  stringr     * 1.4.0       2019-02-10 [1] standard (@1.4.0)                 
+#&gt;  styler        1.4.1       2021-03-30 [1] standard (@1.4.1)                 
+#&gt;  tibble      * 3.1.2       2021-05-16 [1] standard (@3.1.2)                 
+#&gt;  tidyr       * 1.1.3       2021-03-03 [1] standard (@1.1.3)                 
+#&gt;  tidyselect    1.1.1       2021-04-30 [1] standard (@1.1.1)                 
+#&gt;  tidyverse   * 1.3.1       2021-04-15 [1] standard (@1.3.1)                 
+#&gt;  utf8          1.2.1       2021-03-12 [1] standard (@1.2.1)                 
+#&gt;  vctrs         0.3.8       2021-04-29 [1] standard (@0.3.8)                 
+#&gt;  withr         2.4.2       2021-04-18 [1] standard (@2.4.2)                 
+#&gt;  xfun          0.24        2021-06-15 [1] standard (@0.24)                  
+#&gt;  xml2          1.3.2       2020-04-23 [1] standard (@1.3.2)                 
+#&gt;  yaml          2.2.1       2020-02-01 [1] standard (@2.2.1)                 
+#&gt; 
+#&gt; [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+```
+
+&lt;/details&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="but-wait-theres-more" class="section level2">
+<h2>But wait, there’s more!</h2>
+<p>When you’re working on debugging something,
+going from code in your RStudio IDE to something you can share with others is <strong>huge</strong>.
+But <span class="pkg">reprex</span> can do more!</p>
+<p>Because reprex uses <code>knitr::spin()</code> —
+<a href="https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/"><em>knitr’s best hidden gem</em> according to Dean Attali</a> —
+to turn R code into an R Markdown document,
+you have a few more options.</p>
+<p><code>knitr::spin()</code> has a cool feature that lets you write markdown <em>in an R script</em>.
+You can check out
+<a href="https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/">Dean Attali’s post</a>
+for more details,
+but the gist is this:
+any text on a line starting with a special comment format <code>#'</code>
+becomes markdown.</p>
+<p>This means we can add text directly to our reprex using these comments!
+Below you can see that I’ve added some exposition around the problematic code.</p>
+<div class="panelset">
+<div class="panel">
+<p><span class="panel-name">R Code</span></p>
+<pre class="r"><code>#&#39; I&#39;m using the latest version of the `tidyverse`, 
+#&#39; freshly installed.
+library(tidyverse)
+
+#&#39; Suppose we have a data frame with a date column. 
+#&#39; The date is stored as a _character_ vector, and 
+#&#39; I&#39;d like to convert it to a _year_ with a simple
+#&#39; comparison. The first function I thought of was 
+#&#39; `case_when()`, but it doesn&#39;t seem to be doing 
+#&#39; what I expect. Why am I getting this error?
+tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))</code></pre>
+</div>
+<div class="panel">
+<p><span class="panel-name">Reprex Preview</span></p>
+<p>I’m using the latest version of the <code>tidyverse</code>,
+freshly installed.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>Suppose we have a data frame with a date column.
+The date is stored as a <em>character</em> vector, and
+I’d like to convert it to a <em>year</em> with a simple
+comparison. The first function I thought of was
+<code>case_when()</code>, but it doesn’t seem to be doing
+what I expect. Why am I getting this error?</p>
+<pre class="r"><code>tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))
+#&gt; Error: Problem with `mutate()` column `year`.
+#&gt; ℹ `year = case_when(...)`.
+#&gt; x must be a double vector, not a logical vector.</code></pre>
+<p><sup>Created on 2021-09-02 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
+<details style="margin-bottom:10px;">
+<summary>
+Session info
+</summary>
+<pre class="r"><code>sessioninfo::session_info()
+#&gt; ─ Session info ───────────────────────────────────────────────────────────────
+#&gt;  setting  value                       
+#&gt;  version  R version 4.1.0 (2021-05-18)
+#&gt;  os       macOS Big Sur 10.16         
+#&gt;  system   x86_64, darwin17.0          
+#&gt;  ui       X11                         
+#&gt;  language (EN)                        
+#&gt;  collate  en_US.UTF-8                 
+#&gt;  ctype    en_US.UTF-8                 
+#&gt;  tz       America/New_York            
+#&gt;  date     2021-09-02                  
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────
+#&gt;  package     * version     date       lib source                            
+#&gt;  assertthat    0.2.1       2019-03-21 [1] standard (@0.2.1)                 
+#&gt;  backports     1.2.1       2020-12-09 [1] standard (@1.2.1)                 
+#&gt;  broom         0.7.6       2021-04-05 [1] standard (@0.7.6)                 
+#&gt;  cellranger    1.1.0       2016-07-27 [1] standard (@1.1.0)                 
+#&gt;  cli           3.0.1       2021-07-17 [1] standard (@3.0.1)                 
+#&gt;  colorspace    2.0-1       2021-05-04 [1] standard (@2.0-1)                 
+#&gt;  crayon        1.4.1       2021-02-08 [1] standard (@1.4.1)                 
+#&gt;  DBI           1.1.1       2021-01-15 [1] standard (@1.1.1)                 
+#&gt;  dbplyr        2.1.1       2021-04-06 [1] standard (@2.1.1)                 
+#&gt;  digest        0.6.27      2020-10-24 [1] standard (@0.6.27)                
+#&gt;  dplyr       * 1.0.6       2021-05-05 [1] standard (@1.0.6)                 
+#&gt;  ellipsis      0.3.2       2021-04-29 [1] standard (@0.3.2)                 
+#&gt;  evaluate      0.14        2019-05-28 [1] standard (@0.14)                  
+#&gt;  fansi         0.5.0       2021-05-25 [1] standard (@0.5.0)                 
+#&gt;  forcats     * 0.5.1       2021-01-27 [1] standard (@0.5.1)                 
+#&gt;  fs            1.5.0       2020-07-31 [1] standard (@1.5.0)                 
+#&gt;  generics      0.1.0       2020-10-31 [1] standard (@0.1.0)                 
+#&gt;  ggplot2     * 3.3.4       2021-06-16 [1] standard (@3.3.4)                 
+#&gt;  glue          1.4.2       2020-08-27 [1] standard (@1.4.2)                 
+#&gt;  gtable        0.3.0       2019-03-25 [1] standard (@0.3.0)                 
+#&gt;  haven         2.4.1       2021-04-23 [1] standard (@2.4.1)                 
+#&gt;  highr         0.9         2021-04-16 [1] standard (@0.9)                   
+#&gt;  hms           1.1.0       2021-05-17 [1] standard (@1.1.0)                 
+#&gt;  htmltools     0.5.1.1     2021-01-22 [1] standard (@0.5.1.1)               
+#&gt;  httr          1.4.2       2020-07-20 [1] standard (@1.4.2)                 
+#&gt;  jsonlite      1.7.2       2020-12-09 [1] standard (@1.7.2)                 
+#&gt;  knitr         1.33        2021-04-24 [1] standard (@1.33)                  
+#&gt;  lifecycle     1.0.0       2021-02-15 [1] standard (@1.0.0)                 
+#&gt;  lubridate     1.7.10      2021-02-26 [1] standard (@1.7.10)                
+#&gt;  magrittr      2.0.1       2020-11-17 [1] standard (@2.0.1)                 
+#&gt;  modelr        0.1.8       2020-05-19 [1] standard (@0.1.8)                 
+#&gt;  munsell       0.5.0       2018-06-12 [1] standard (@0.5.0)                 
+#&gt;  pillar        1.6.1       2021-05-16 [1] standard (@1.6.1)                 
+#&gt;  pkgconfig     2.0.3       2019-09-22 [1] standard (@2.0.3)                 
+#&gt;  purrr       * 0.3.4       2020-04-17 [1] standard (@0.3.4)                 
+#&gt;  R6            2.5.0       2020-10-28 [1] standard (@2.5.0)                 
+#&gt;  Rcpp          1.0.7       2021-07-07 [1] standard (@1.0.7)                 
+#&gt;  readr       * 1.4.0       2020-10-05 [1] standard (@1.4.0)                 
+#&gt;  readxl        1.3.1       2019-03-13 [1] standard (@1.3.1)                 
+#&gt;  reprex        2.0.1       2021-08-05 [1] standard (@2.0.1)                 
+#&gt;  rlang         0.4.11.9000 2021-06-28 [1] Github (r-lib/rlang@869f00a)      
+#&gt;  rmarkdown     2.9.3       2021-07-18 [1] Github (rstudio/rmarkdown@2700baf)
+#&gt;  rstudioapi    0.13        2020-11-12 [1] standard (@0.13)                  
+#&gt;  rvest         1.0.0       2021-03-09 [1] standard (@1.0.0)                 
+#&gt;  scales        1.1.1       2020-05-11 [1] standard (@1.1.1)                 
+#&gt;  sessioninfo   1.1.1       2018-11-05 [1] standard (@1.1.1)                 
+#&gt;  stringi       1.7.3       2021-07-16 [1] standard (@1.7.3)                 
+#&gt;  stringr     * 1.4.0       2019-02-10 [1] standard (@1.4.0)                 
+#&gt;  styler        1.4.1       2021-03-30 [1] standard (@1.4.1)                 
+#&gt;  tibble      * 3.1.2       2021-05-16 [1] standard (@3.1.2)                 
+#&gt;  tidyr       * 1.1.3       2021-03-03 [1] standard (@1.1.3)                 
+#&gt;  tidyselect    1.1.1       2021-04-30 [1] standard (@1.1.1)                 
+#&gt;  tidyverse   * 1.3.1       2021-04-15 [1] standard (@1.3.1)                 
+#&gt;  utf8          1.2.1       2021-03-12 [1] standard (@1.2.1)                 
+#&gt;  vctrs         0.3.8       2021-04-29 [1] standard (@0.3.8)                 
+#&gt;  withr         2.4.2       2021-04-18 [1] standard (@2.4.2)                 
+#&gt;  xfun          0.24        2021-06-15 [1] standard (@0.24)                  
+#&gt;  xml2          1.3.2       2020-04-23 [1] standard (@1.3.2)                 
+#&gt;  yaml          2.2.1       2020-02-01 [1] standard (@2.2.1)                 
+#&gt; 
+#&gt; [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
+</details>
+</div>
+<div class="panel">
+<p><span class="panel-name">Clipboard</span></p>
+<pre class="markdown"><code>I’m using the latest version of the `tidyverse`,
+freshly installed.
+
+``` r
+library(tidyverse)
+```
+
+Suppose we have a data frame with a date column.
+The date is stored as a *character* vector, and
+I’d like to convert it to a *year* with a simple
+comparison. The first function I thought of was
+`case_when()`, but it doesn’t seem to be doing
+what I expect. Why am I getting this error?
+
+``` r
+tibble(date = &quot;2020-01-01&quot;) %&gt;%
+  mutate(year = case_when(
+    date &lt;= &quot;2020-12-31&quot; &amp; date &gt;= &quot;2020-01-01&quot; ~ 2020,
+    is.na(date) ~ NA
+  ))
+#&gt; Error: Problem with `mutate()` column `year`.
+#&gt; ℹ `year = case_when(...)`.
+#&gt; x must be a double vector, not a logical vector.
+```
+
+&lt;sup&gt;Created on 2021-09-02 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
+
+&lt;details style=&quot;margin-bottom:10px;&quot;&gt;
+&lt;summary&gt;
+Session info
+&lt;/summary&gt;
+
+``` r
+sessioninfo::session_info()
+#&gt; ─ Session info ───────────────────────────────────────────────────────────────
+#&gt;  setting  value                       
+#&gt;  version  R version 4.1.0 (2021-05-18)
+#&gt;  os       macOS Big Sur 10.16         
+#&gt;  system   x86_64, darwin17.0          
+#&gt;  ui       X11                         
+#&gt;  language (EN)                        
+#&gt;  collate  en_US.UTF-8                 
+#&gt;  ctype    en_US.UTF-8                 
+#&gt;  tz       America/New_York            
+#&gt;  date     2021-09-02                  
+#&gt; 
+#&gt; ─ Packages ───────────────────────────────────────────────────────────────────
+#&gt;  package     * version     date       lib source                            
+#&gt;  assertthat    0.2.1       2019-03-21 [1] standard (@0.2.1)                 
+#&gt;  backports     1.2.1       2020-12-09 [1] standard (@1.2.1)                 
+#&gt;  broom         0.7.6       2021-04-05 [1] standard (@0.7.6)                 
+#&gt;  cellranger    1.1.0       2016-07-27 [1] standard (@1.1.0)                 
+#&gt;  cli           3.0.1       2021-07-17 [1] standard (@3.0.1)                 
+#&gt;  colorspace    2.0-1       2021-05-04 [1] standard (@2.0-1)                 
+#&gt;  crayon        1.4.1       2021-02-08 [1] standard (@1.4.1)                 
+#&gt;  DBI           1.1.1       2021-01-15 [1] standard (@1.1.1)                 
+#&gt;  dbplyr        2.1.1       2021-04-06 [1] standard (@2.1.1)                 
+#&gt;  digest        0.6.27      2020-10-24 [1] standard (@0.6.27)                
+#&gt;  dplyr       * 1.0.6       2021-05-05 [1] standard (@1.0.6)                 
+#&gt;  ellipsis      0.3.2       2021-04-29 [1] standard (@0.3.2)                 
+#&gt;  evaluate      0.14        2019-05-28 [1] standard (@0.14)                  
+#&gt;  fansi         0.5.0       2021-05-25 [1] standard (@0.5.0)                 
+#&gt;  forcats     * 0.5.1       2021-01-27 [1] standard (@0.5.1)                 
+#&gt;  fs            1.5.0       2020-07-31 [1] standard (@1.5.0)                 
+#&gt;  generics      0.1.0       2020-10-31 [1] standard (@0.1.0)                 
+#&gt;  ggplot2     * 3.3.4       2021-06-16 [1] standard (@3.3.4)                 
+#&gt;  glue          1.4.2       2020-08-27 [1] standard (@1.4.2)                 
+#&gt;  gtable        0.3.0       2019-03-25 [1] standard (@0.3.0)                 
+#&gt;  haven         2.4.1       2021-04-23 [1] standard (@2.4.1)                 
+#&gt;  highr         0.9         2021-04-16 [1] standard (@0.9)                   
+#&gt;  hms           1.1.0       2021-05-17 [1] standard (@1.1.0)                 
+#&gt;  htmltools     0.5.1.1     2021-01-22 [1] standard (@0.5.1.1)               
+#&gt;  httr          1.4.2       2020-07-20 [1] standard (@1.4.2)                 
+#&gt;  jsonlite      1.7.2       2020-12-09 [1] standard (@1.7.2)                 
+#&gt;  knitr         1.33        2021-04-24 [1] standard (@1.33)                  
+#&gt;  lifecycle     1.0.0       2021-02-15 [1] standard (@1.0.0)                 
+#&gt;  lubridate     1.7.10      2021-02-26 [1] standard (@1.7.10)                
+#&gt;  magrittr      2.0.1       2020-11-17 [1] standard (@2.0.1)                 
+#&gt;  modelr        0.1.8       2020-05-19 [1] standard (@0.1.8)                 
+#&gt;  munsell       0.5.0       2018-06-12 [1] standard (@0.5.0)                 
+#&gt;  pillar        1.6.1       2021-05-16 [1] standard (@1.6.1)                 
+#&gt;  pkgconfig     2.0.3       2019-09-22 [1] standard (@2.0.3)                 
+#&gt;  purrr       * 0.3.4       2020-04-17 [1] standard (@0.3.4)                 
+#&gt;  R6            2.5.0       2020-10-28 [1] standard (@2.5.0)                 
+#&gt;  Rcpp          1.0.7       2021-07-07 [1] standard (@1.0.7)                 
+#&gt;  readr       * 1.4.0       2020-10-05 [1] standard (@1.4.0)                 
+#&gt;  readxl        1.3.1       2019-03-13 [1] standard (@1.3.1)                 
+#&gt;  reprex        2.0.1       2021-08-05 [1] standard (@2.0.1)                 
+#&gt;  rlang         0.4.11.9000 2021-06-28 [1] Github (r-lib/rlang@869f00a)      
+#&gt;  rmarkdown     2.9.3       2021-07-18 [1] Github (rstudio/rmarkdown@2700baf)
+#&gt;  rstudioapi    0.13        2020-11-12 [1] standard (@0.13)                  
+#&gt;  rvest         1.0.0       2021-03-09 [1] standard (@1.0.0)                 
+#&gt;  scales        1.1.1       2020-05-11 [1] standard (@1.1.1)                 
+#&gt;  sessioninfo   1.1.1       2018-11-05 [1] standard (@1.1.1)                 
+#&gt;  stringi       1.7.3       2021-07-16 [1] standard (@1.7.3)                 
+#&gt;  stringr     * 1.4.0       2019-02-10 [1] standard (@1.4.0)                 
+#&gt;  styler        1.4.1       2021-03-30 [1] standard (@1.4.1)                 
+#&gt;  tibble      * 3.1.2       2021-05-16 [1] standard (@3.1.2)                 
+#&gt;  tidyr       * 1.1.3       2021-03-03 [1] standard (@1.1.3)                 
+#&gt;  tidyselect    1.1.1       2021-04-30 [1] standard (@1.1.1)                 
+#&gt;  tidyverse   * 1.3.1       2021-04-15 [1] standard (@1.3.1)                 
+#&gt;  utf8          1.2.1       2021-03-12 [1] standard (@1.2.1)                 
+#&gt;  vctrs         0.3.8       2021-04-29 [1] standard (@0.3.8)                 
+#&gt;  withr         2.4.2       2021-04-18 [1] standard (@2.4.2)                 
+#&gt;  xfun          0.24        2021-06-15 [1] standard (@0.24)                  
+#&gt;  xml2          1.3.2       2020-04-23 [1] standard (@1.3.2)                 
+#&gt;  yaml          2.2.1       2020-02-01 [1] standard (@2.2.1)                 
+#&gt; 
+#&gt; [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+```
+
+&lt;/details&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="there-should-be-a-shortcut" class="section level2">
+<h2>There should be a shortcut</h2>
+<p>Kick-starting an issue report using a reprex
+right from within my RStudio session is great,
+but there’s still the part where I have to slog
+out of my IDE,
+into a browser,
+and find my way to the repo where this issue should go.</p>
+<p>Most of the time, though, I’m already <strong>in the repo</strong>.
+And <span class="pkg">usethis</span> has
+<a href="https://usethis.r-lib.org/reference/browse-this.html">a helpful function</a>
+to get me right to the issues page:</p>
+<pre class="r"><code>usethis::browse_github_issues()</code></pre>
+<p>But there’s too much typing.
+I want reprex to issue, <em>with magic</em> 🧙 ✨.</p>
+<p>So that’s what we’ll do!
+In the rest of this post,
+we’ll use <span class="pkg">reprex</span> and the <span class="pkg"><a href="https://rstudio.github.io/rstudioapi/">rstudioapi</a></span> package
+to automatically go from code to GitHub issue.
+Then we’ll wrap that logic into a function
+and turn it into an RStudio Addin with my package, <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span>.</p>
+</div>
+<div id="from-reprex-to-issue" class="section level2">
+<h2>From reprex to issue</h2>
+<p>Suppose we have some <code>input</code> code and a target <code>repo</code>.
+Maybe we have a classic missing argument error
+and we want to send the issue to <a href="https://github.com/gadenbuie/shrtcts">gadenbuie/shrtcts</a>
+(please don’t!).</p>
+<pre class="r"><code>input &lt;- &quot;runif(min = 0, max = 10)\n&quot;
+repo &lt;- &quot;gadenbuie/shrtcts&quot;</code></pre>
+<div id="prepare-the-issue-body" class="section level3">
+<h3>Prepare the issue body</h3>
+<p>Our goal is to render the reprex into an issue <code>body</code>
+and then we’ll put together a URL
+that takes us to GitHub’s
+<a href="https://github.com/gadenbuie/shrtcts/issues/new">new issue page</a>
+for the <code>repo</code> with the issue <code>body</code> pre-filled when we get there.</p>
+<pre class="r"><code>body &lt;- &quot;... reprex body goes here ...&quot;
+url_new_issue &lt;- glue::glue(&quot;https://github.com/{repo}/issues/new?body={body}&quot;)
+browseURL(url_new_issue)</code></pre>
+<p>The trick here is that you can create a new issue by going to
+<code>github.com/{owner}/{repo}/issues/new</code>
+and we’re sending along the initial body using
+<a href="https://url.spec.whatwg.org/#dom-urlsearchparams-urlsearchparams">the query string</a>
+<code>?body={body}</code>.</p>
+<p>To put together the <code>body</code>, we first render the <code>input</code> using <code>reprex::reprex()</code></p>
+<pre class="r"><code>body &lt;- reprex::reprex(input = input, venue = &quot;gh&quot;, html_preview = TRUE)</code></pre>
+<p>where we’ve asked for a reprex for GitHub — <code>venue = "gh"</code> —
+and a local HTML preview — <code>html_preview = TRUE</code>.
+You can adjust the arguments to <code>reprex()</code> to fit your needs, of course.</p>
+<p>Unfortunately, <code>reprex::repex()</code> is only half the work…</p>
+<pre class="r"><code>body &lt;- reprex::reprex(input = input, venue = &quot;gh&quot;, html_preview = TRUE)
+body</code></pre>
+<pre><code>## [1] &quot;``` r&quot;                                                                           
+## [2] &quot;runif(min = 0, max = 10)&quot;                                                        
+## [3] &quot;#&gt; Error in runif(min = 0, max = 10): argument \&quot;n\&quot; is missing, with no default&quot;
+## [4] &quot;```&quot;</code></pre>
+<p>Notice that it returns a character vector
+with one item per line of the rendered reprex.
+We need to collapse it all into one line.</p>
+<pre class="r"><code>body &lt;- paste(body, collapse = &quot;\n&quot;)</code></pre>
+<pre><code>## [1] &quot;``` r\nrunif(min = 0, max = 10)\n#&gt; Error in runif(min = 0, max = 10): argument \&quot;n\&quot; is missing, with no default\n```&quot;</code></pre>
+<p>But this still won’t fit in a URL
+because it contains spaces, new lines, and other characters URLs don’t like.
+So we need to use the base R function <code>URLencode()</code>
+to turn the <code>body</code> text into something readable only by machines.</p>
+<pre class="r"><code>body &lt;- URLencode(body, reserved = TRUE)</code></pre>
+<pre><code>## [1] &quot;%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60&quot;</code></pre>
+<p>Finally, we can make our new issue URL.</p>
+<pre class="r"><code>url_new_issue &lt;- glue::glue(&quot;https://github.com/{repo}/issues/new?body={body}&quot;)
+url_new_issue</code></pre>
+<pre><code>## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60</code></pre>
+<p>I didn’t make the link clickable,
+but if you were to follow it,
+you’d find a brand new issue page ready for you.</p>
+<div class="figure">
+<img src="reprex-new-issue.png" alt="" />
+<p class="caption">A new GitHub issue page with our reprex as the issue body</p>
+</div>
+</div>
+<div id="grab-the-input-from-the-user" class="section level3">
+<h3>Grab the input from the user</h3>
+<p>Of course,
+we don’t want to have to define <code>input</code> manualy every time we run this function.
+Instead, we’d rather get the <code>input</code> code from</p>
+<ul>
+<li>the current selection in RStudio</li>
+<li>or the clipboard if nothing is selected</li>
+</ul>
+<p>To make things easy,
+we’ll ignore the fact that RStudio has a multiple cursors feature,
+and we’ll just get the first selection of code.
+We’ll use the <code>getSourceEditorContext()</code> to get the currently open text file,
+then we can grab the text from the first selection in that editor window.</p>
+<pre class="r"><code>ctx &lt;- rstudioapi::getSourceEditorContext()
+input &lt;- ctx$selection[[1]]$text</code></pre>
+<p>If nothing is selected, <code>input</code> will be an empty string, <code>""</code>,
+in which case we’d prefer to leave <code>input</code> as <code>NULL</code>
+so that <code>reprex()</code> will look in the clipboard for our input.
+We also need to make sure that <code>input</code> ends with a new line character, <code>"\n"</code>,
+so that <code>reprex()</code> knows that <code>input</code> contains the reprex code and not a path to a file.</p>
+<pre class="r"><code>input &lt;- if (nzchar(input)) {
+  paste(input, &quot;\n&quot;)
+}</code></pre>
+<p>We’ll be wrapping this up in a function where
+<code>input</code> might be provided by the user,
+so we’ll only want to check for a selection if <code>input</code> is <code>NULL</code>.</p>
+<pre class="r"><code>input &lt;- NULL # default in function
+
+if (is.null(input)) {
+  ctx &lt;- rstudioapi::getSourceEditorContext()
+  input &lt;- ctx$selection[[1]]$text
+  input &lt;- if (nzchar(input)) {
+    paste(input, &quot;\n&quot;)
+  }
+}</code></pre>
+</div>
+<div id="pick-the-repository" class="section level3">
+<h3>Pick the repository</h3>
+<p>Often, I’ll be working in the repository where I want to create the issue.
+<span class="pkg">usethis</span> does a great job guessing the repository
+from the information in a local copy of the repo.
+Rather than spending forever writing my own version,
+I’ll just reach into <span class="pkg">usethis</span> with <code>:::</code>.</p>
+<pre class="r"><code>if (is.null(repo)) {
+  repo &lt;- tryCatch(
+    usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
+    error = function(e) NULL
+  )
+}</code></pre>
+<p>It’s a good idea to confirm if we’ve picked the right repo.</p>
+<pre class="r"><code>if (!is.null(repo)) {
+  use_guess &lt;- rstudioapi::showQuestion(
+    title = &quot;Confirm repository&quot;,
+    message = sprintf(&quot;Send issue to &#39;%s&#39;?&quot;, repo),
+    ok = &quot;Yes&quot;,
+    cancel = &quot;No, I&#39;ll enter a repo&quot;
+  )
+  if (!use_guess) {
+    repo &lt;- NULL
+  }
+}</code></pre>
+<p class="center">
+<img src="ask-repo.png" alt="RStudio menu asking to confirm if the user wants to send the issue to 'gadenbuie/shrtcts' or choose another repo." style="max-width: 300px;display: block">
+</p>
+<p>Finally, if we’re not using the guess (or couldn’t guess the repo),
+we’d probably want to be able to type in the repository directly in a prompt.</p>
+<pre class="r"><code>if (is.null(repo)) {
+  repo &lt;- rstudioapi::showPrompt(
+    title = &quot;Which repository?&quot;, 
+    message = &quot;Where should we create the issue? (owner/repo)&quot;
+  )
+}</code></pre>
+<p class="center">
+<img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:400px;display: block">
+</p>
+</div>
+</div>
+<div id="shortcut" class="section level2">
+<h2>Shortcut</h2>
+<pre class="r"><code>#&#39; Create issue from reprex
+#&#39;
+#&#39; Creates an issue from the selected or copied reprex.
+#&#39;
+#&#39; @shortcut Cmd+Ctrl+Shift+R
+#&#39; @interactive
+create_issue_from_reprex &lt;- function(input = NULL, repo = NULL, ...) {
+  if (is.null(repo)) {
+    repo &lt;- tryCatch(
+      usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
+      error = function(e) NULL
+    )
+  }
+  
+  if (!is.null(repo)) {
+    use_guess &lt;- rstudioapi::showQuestion(
+      title = &quot;Confirm repository&quot;,
+      message = sprintf(&quot;Send issue to &#39;%s&#39;?&quot;, repo),
+      ok = &quot;Yes&quot;,
+      cancel = &quot;No, I&#39;ll enter a repo&quot;
+    )
+    if (!use_guess) {
+      repo &lt;- NULL
+    }
+  }
+    
+  if (is.null(repo)) {
+    repo &lt;- rstudioapi::showPrompt(
+      title = &quot;Which repository?&quot;, 
+      message = &quot;Where should we create the issue? (owner/repo)&quot;
+    )
+  }
+    
+  if (is.null(input)) {
+    ctx &lt;- rstudioapi::getSourceEditorContext()
+    input &lt;- ctx$selection[[1]]$text
+    input &lt;- if (nzchar(input)) {
+      paste(input, &quot;\n&quot;)
+    }
+  }
+  
+  body &lt;- reprex::reprex(input = input, venue = &quot;gh&quot;, html_preview = TRUE)
+  body &lt;- paste(body, collapse = &quot;\n&quot;)
+  url_new_issue &lt;- glue::glue(&quot;https://github.com/{repo}/issues/new?body={body}&quot;)
+  browseURL(url_new_issue)
+  invisible(url_new_issue)
+}</code></pre>
+</div>
