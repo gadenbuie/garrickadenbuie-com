@@ -516,13 +516,17 @@ We can also use the `@shortcut` tag to set a keyboard shortcut (if you want),
 and the `@interactive` tag lets shortcuts know 
 that the addin should be run interactively rather than in the background.
 
-```{r shortcut-roxy, eval=FALSE}
+```{r shortcut-roxy, include=FALSE}
 #' Create issue from reprex
 #'
 #' Creates an issue from the selected or copied reprex.
 #'
 #' @shortcut Cmd+Ctrl+Shift+R
 #' @interactive
+```
+
+```{r shortcut-roxy-view, eval=FALSE}
+<<shortcut-roxy>>
 <<shortcut-skeleton>>
 ```
 

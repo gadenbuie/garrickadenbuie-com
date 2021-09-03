@@ -796,13 +796,6 @@ with all of the code we wrote above.</p>
 #&#39; @shortcut Cmd+Ctrl+Shift+R
 #&#39; @interactive
 create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
-  # guess or ask for repo
-  # get current selection, if available
-  # render reprex
-  # compose new issue URL
-  # go to the new issue page!
-}
-create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   if (is.null(repo)) {
     repo_guess &lt;- tryCatch(
       usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
