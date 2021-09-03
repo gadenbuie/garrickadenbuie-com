@@ -419,7 +419,7 @@ In that case,
 we'd wouldn't need to guess or ask for a repo.
 
 ```{r repo-final, eval=FALSE, style=TRUE}
-if (!is.null(repo)) {
+if (is.null(repo)) {
   <<repo-try-usethis>>
 
   <<repo-ask>>

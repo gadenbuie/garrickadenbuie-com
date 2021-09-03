@@ -694,7 +694,7 @@ The prompt is created with the <code>showPrompt()</code> function from <span cla
 that <em>might be</em> provided when we call it.
 In that case,
 we’d wouldn’t need to guess or ask for a repo.</p>
-<pre class="r"><code>if (!is.null(repo)) {
+<pre class="r"><code>if (is.null(repo)) {
   repo_guess &lt;- tryCatch(
     usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
     error = function(err) NULL
@@ -803,7 +803,7 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   # go to the new issue page!
 }
 create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
-  if (!is.null(repo)) {
+  if (is.null(repo)) {
     repo_guess &lt;- tryCatch(
       usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
       error = function(err) NULL
