@@ -17,11 +17,6 @@ tags:
 [shrtcts]: https://pkg.garrickadenbuie.com/shrtcts
 [rstudioapi]: https://rstudio.github.io/rstudioapi/
 
-```{r setup, include=FALSE}
-xaringanExtra::use_panelset(in_xaringan = FALSE)
-xaringanExtra::use_clipboard()
-```
-
 ::: lead
 
 Have you ever spent a few ~~minutes~~ hours turning a bug in your code
@@ -35,6 +30,39 @@ I want to quickly turn my reprex into a GitHub issue.
 Here's a quick way to get there using an RStudio addin and [[shrtcts]]{.pkg}.
 
 :::
+
+
+```{r setup, echo=FALSE}
+xaringanExtra::use_panelset(in_xaringan = FALSE)
+xaringanExtra::use_clipboard(selector = "pre.r")
+xaringanExtra::style_panelset_tabs(
+  foreground = "var(--text-mild)",
+  active_foreground = "var(--text-dark)",
+  active_background =  "var(--text-lightest)",
+  active_border_color = "var(--purple)",
+  hover_background =  "var(--text-lightest)",
+  hover_border_color = "var(--text-lightest)",
+  inactive_opacity = 1,
+  tabs_border_bottom = "var(--text-lightest)",
+  font_family = 'unset'
+)
+```
+
+```{css echo=FALSE}
+.panel {
+  border: var(--text-lightest) 2px solid;
+  border-top: none;
+  margin-top: -1em;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.panel > :last-child {
+  margin-bottom: 0;
+}
+```
 
 
 ## `reprex` is awesome
@@ -318,18 +346,18 @@ then we can grab the text from the first selection in that editor window.
 
 ```{r get_source_editor_context, eval=FALSE}
 ctx <- rstudioapi::getSourceEditorContext()
-input <- ctx$selection[[1]]$text
+selection <- ctx$selection[[1]]$text
 ```
 
-If nothing is selected, `input` will be an empty string, `""`,
+If nothing is selected, `selection` will be an empty string, `""`,
 in which case we'd prefer to leave `input` as `NULL` 
 so that `reprex()` will look in the clipboard for our input.
 We also need to make sure that `input` ends with a new line character, `"\n"`,
 so that `reprex()` knows that `input` contains the reprex code and not a path to a file.
 
 ```{r input_prep, eval=FALSE}
-input <- if (nzchar(input)) {
-  paste(input, "\n")
+input <- if (nzchar(selection)) {
+  paste(selection, "\n")
 }
 ```
 
@@ -352,64 +380,156 @@ Often, I'll be working in the repository where I want to create the issue.
 [usethis]{.pkg} does a great job guessing the repository
 from the information in a local copy of the repo.
 Rather than spending forever writing my own version,
-I'll just reach into [usethis]{.pkg} with `:::`.
+I'll just reach into [usethis]{.pkg} with `:::` to call `target_repo_spec()`.
+
+The function returns the current repo in the form `"owner/repo"`,
+but since it isn't designed to be user-facing
+it throws an unusual error when called from outside a git repository.
+We can soften this edge by catching the error with `tryCatch()`
+and replacing the error with a `NULL` value.
 
 ```{r repo-try-usethis, eval=FALSE}
-if (is.null(repo)) {
-  repo <- tryCatch(
-    usethis:::target_repo_spec("source", FALSE), 
-    error = function(e) NULL
-  )
-}
+repo_guess <- tryCatch(
+  usethis:::target_repo_spec("source", FALSE), 
+  error = function(e) NULL
+)
 ```
 
-It's a good idea to confirm if we've picked the right repo.
-
-```{r repo-confirm, eval=FALSE}
-if (!is.null(repo)) {
-  use_guess <- rstudioapi::showQuestion(
-    title = "Confirm repository",
-    message = sprintf("Send issue to '%s'?", repo),
-    ok = "Yes",
-    cancel = "No, I'll enter a repo"
-  )
-  if (!use_guess) {
-    repo <- NULL
-  }
-}
-```
-
-<p class="center"><img src="ask-repo.png" alt="RStudio menu asking to confirm if the user wants to send the issue to 'gadenbuie/shrtcts' or choose another repo." style="max-width: 300px;display: block"></p>
-
-Finally, if we're not using the guess (or couldn't guess the repo),
-we'd probably want to be able to type in the repository directly in a prompt.
+Of course, maybe I'll want to create a reprex
+in _another_ repository that isn't the one I'm currently working in.
+So we can follow up with a prompt asking for the repo,
+using our guess from [usethis]{.pkg}.
+The prompt is created with the `showPrompt()` function from [rstudioapi]{.pkg}.
 
 ```{r repo-ask, eval=FALSE}
-if (is.null(repo)) {
-  repo <- rstudioapi::showPrompt(
-    title = "Which repository?", 
-    message = "Where should we create the issue? (owner/repo)"
-  )
+repo <- rstudioapi::showPrompt(
+  title = "Which repository?", 
+  message = "Where should we create the issue? (owner/repo)",
+  default = repo_guess
+)
+```
+
+<p class="center"><img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:min(400px, 100%);display: block"></p>
+
+Finally, the function we're putting together will also take a `repo` argument
+that _might be_ provided when we call it.
+In that case, 
+we'd wouldn't need to guess or ask for a repo.
+
+```{r repo-final, eval=FALSE, style=TRUE}
+if (!is.null(repo)) {
+  <<repo-try-usethis>>
+
+  <<repo-ask>>
 }
 ```
 
-<p class="center"><img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:400px;display: block"></p>
+## Make it a shortcut
 
-## Shortcut
+The last step in our process is to make it easy to run this code in RStudio,
+ideally as an
+[RStudio addin](https://rstudio.github.io/rstudioaddins/)
+that we can activate from the addins menu or 
+[the command palette](https://blog.rstudio.com/2020/10/14/rstudio-v1-4-preview-command-palette/).
 
-```{r shortcut, eval=FALSE, style=TRUE}
+This is the exact goal of the [[shrtcts]]{.pkg} package:
+[shrtcts]{.pkg} lets you turn any function into an RStudio addin.
+
+### Set up `shrtcts`
+
+If you've never used [shrtcts]{.pkg} before, 
+you need to do two things to get started.
+First, install the package, 
+from [my R-universe](https://gadenbuie.r-universe.dev)
+or from [GitHub](https://github.com/gadenbuie/shrtcts).
+
+:::: panelset
+::: panel
+[R-universe]{.panel-name}
+
+```{r r-universe, eval=FALSE}
+# Add my universe to your list of repos
+options(repos = c(
+  gadenbuie = "https://gadenbuie.r-universe.dev",
+  getOption("repos")
+))
+
+install.package("shrtcts")
+```
+:::
+
+::: panel
+[GitHub]{.panel-name}
+
+```{r github, eval=FALSE}
+# install.packages("remotes")
+
+remotes::install_github("gadenbuie/shrtcts")
+```
+:::
+::::
+
+The next thing to do is to create a `.shrtcts.R` file in the right place.
+The easiest place to put this file is in your home directory.
+You can use the [fs]{.pkg} package
+to find the right place with `path_home_r()` and 
+to create the file with `file_touch()`.
+
+```{r make-shrtcts-r, eval=FALSE}
+shrtcts_file <- fs::path_home_r(".shrtcts.R")
+fs::file_touch(shrtcts_file)
+```
+
+Once you have a `.shrtcts.R` file, open it up.
+
+```{r edit-shrtcts-r, eval=FALSE}
+# open the file for editing
+file.edit(shrtcts_file)
+```
+
+### Creating a shortcut function
+
+We'll write R functions in the `.shrtcts.R` file
+and turn them into RStudio addins
+by annotating those functions with roxygen-style comments.
+
+```{r}
+create_issue_from_reprex <- function(input = NULL, repo = NULL) {
+  # reprex to issue here
+}
+```
+
+...
+
+
+```{r shortcut-roxy, include=FALSE}
 #' Create issue from reprex
 #'
 #' Creates an issue from the selected or copied reprex.
 #'
 #' @shortcut Cmd+Ctrl+Shift+R
 #' @interactive
-create_issue_from_reprex <- function(input = NULL, repo = NULL, ...) {
-  <<repo-try-usethis>>
-  
-  <<repo-confirm>>
-    
-  <<repo-ask>>
+```
+
+....
+
+```{r shortcut-skeleton, eval=FALSE}
+<<shortcut-roxy>>
+create_issue_from_reprex <- function(input = NULL, repo = NULL) {
+  # guess or ask for repo
+  # get current selection, if available
+  # render reprex
+  # compose new issue URL
+  # go to the new issue page!
+}
+```
+
+...
+
+```{r shortcut-final, eval=FALSE, style=TRUE}
+<<shortcut-roxy>>
+create_issue_from_reprex <- function(input = NULL, repo = NULL) {
+  <<repo-final>>
     
   if (is.null(input)) {
     <<get_source_editor_context>>

@@ -19,7 +19,7 @@ tags:
 <script src="{{< blogdown/postref >}}index_files/clipboard/clipboard.min.js"></script>
 <link href="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
-<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+<script>window.xaringanExtraClipboard('pre.r', {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
 
 
 <div class="lead">
@@ -31,6 +31,22 @@ But sometimes, I find a legitimate bug and in those cases,
 I want to quickly turn my reprex into a GitHub issue.</p>
 <p>Here’s a quick way to get there using an RStudio addin and <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span>.</p>
 </div>
+<p><style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: var(--text-lightest);--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-lightest);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style></p>
+<style type="text/css">
+.panel {
+  border: var(--text-lightest) 2px solid;
+  border-top: none;
+  margin-top: -1em;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.panel > :last-child {
+  margin-bottom: 0;
+}
+</style>
 <div id="reprex-is-awesome" class="section level2">
 <h2><code>reprex</code> is awesome</h2>
 <p>The <span class="pkg"><a href="https://reprex.tidyverse.org/">reprex</a></span> package is <strong>awesome</strong>.
@@ -82,7 +98,7 @@ tibble(date = &quot;2020-01-01&quot;) %&gt;%
 #&gt; Error: Problem with `mutate()` column `year`.
 #&gt; ℹ `year = case_when(...)`.
 #&gt; x must be a double vector, not a logical vector.</code></pre>
-<p><sup>Created on 2021-09-02 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
+<p><sup>Created on 2021-09-03 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
 <details style="margin-bottom:10px;">
 <summary>
 Session info
@@ -98,7 +114,7 @@ Session info
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       America/New_York            
-#&gt;  date     2021-09-02                  
+#&gt;  date     2021-09-03                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────
 #&gt;  package     * version     date       lib source                            
@@ -180,7 +196,7 @@ tibble(date = &quot;2020-01-01&quot;) %&gt;%
 #&gt; x must be a double vector, not a logical vector.
 ```
 
-&lt;sup&gt;Created on 2021-09-02 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
+&lt;sup&gt;Created on 2021-09-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
 
 &lt;details style=&quot;margin-bottom:10px;&quot;&gt;
 &lt;summary&gt;
@@ -199,7 +215,7 @@ sessioninfo::session_info()
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       America/New_York            
-#&gt;  date     2021-09-02                  
+#&gt;  date     2021-09-03                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────
 #&gt;  package     * version     date       lib source                            
@@ -326,7 +342,7 @@ what I expect. Why am I getting this error?</p>
 #&gt; Error: Problem with `mutate()` column `year`.
 #&gt; ℹ `year = case_when(...)`.
 #&gt; x must be a double vector, not a logical vector.</code></pre>
-<p><sup>Created on 2021-09-02 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
+<p><sup>Created on 2021-09-03 by the <a href="https://reprex.tidyverse.org">reprex package</a> (v2.0.1)</sup></p>
 <details style="margin-bottom:10px;">
 <summary>
 Session info
@@ -342,7 +358,7 @@ Session info
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       America/New_York            
-#&gt;  date     2021-09-02                  
+#&gt;  date     2021-09-03                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────
 #&gt;  package     * version     date       lib source                            
@@ -436,7 +452,7 @@ tibble(date = &quot;2020-01-01&quot;) %&gt;%
 #&gt; x must be a double vector, not a logical vector.
 ```
 
-&lt;sup&gt;Created on 2021-09-02 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
+&lt;sup&gt;Created on 2021-09-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)&lt;/sup&gt;
 
 &lt;details style=&quot;margin-bottom:10px;&quot;&gt;
 &lt;summary&gt;
@@ -455,7 +471,7 @@ sessioninfo::session_info()
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       America/New_York            
-#&gt;  date     2021-09-02                  
+#&gt;  date     2021-09-03                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────
 #&gt;  package     * version     date       lib source                            
@@ -621,14 +637,14 @@ and we’ll just get the first selection of code.
 We’ll use the <code>getSourceEditorContext()</code> to get the currently open text file,
 then we can grab the text from the first selection in that editor window.</p>
 <pre class="r"><code>ctx &lt;- rstudioapi::getSourceEditorContext()
-input &lt;- ctx$selection[[1]]$text</code></pre>
-<p>If nothing is selected, <code>input</code> will be an empty string, <code>""</code>,
+selection &lt;- ctx$selection[[1]]$text</code></pre>
+<p>If nothing is selected, <code>selection</code> will be an empty string, <code>""</code>,
 in which case we’d prefer to leave <code>input</code> as <code>NULL</code>
 so that <code>reprex()</code> will look in the clipboard for our input.
 We also need to make sure that <code>input</code> ends with a new line character, <code>"\n"</code>,
 so that <code>reprex()</code> knows that <code>input</code> contains the reprex code and not a path to a file.</p>
-<pre class="r"><code>input &lt;- if (nzchar(input)) {
-  paste(input, &quot;\n&quot;)
+<pre class="r"><code>input &lt;- if (nzchar(selection)) {
+  paste(selection, &quot;\n&quot;)
 }</code></pre>
 <p>We’ll be wrapping this up in a function where
 <code>input</code> might be provided by the user,
@@ -637,9 +653,9 @@ so we’ll only want to check for a selection if <code>input</code> is <code>NUL
 
 if (is.null(input)) {
   ctx &lt;- rstudioapi::getSourceEditorContext()
-  input &lt;- ctx$selection[[1]]$text
-  input &lt;- if (nzchar(input)) {
-    paste(input, &quot;\n&quot;)
+  selection &lt;- ctx$selection[[1]]$text
+  input &lt;- if (nzchar(selection)) {
+    paste(selection, &quot;\n&quot;)
   }
 }</code></pre>
 </div>
@@ -649,81 +665,141 @@ if (is.null(input)) {
 <span class="pkg">usethis</span> does a great job guessing the repository
 from the information in a local copy of the repo.
 Rather than spending forever writing my own version,
-I’ll just reach into <span class="pkg">usethis</span> with <code>:::</code>.</p>
-<pre class="r"><code>if (is.null(repo)) {
-  repo &lt;- tryCatch(
+I’ll just reach into <span class="pkg">usethis</span> with <code>:::</code> to call <code>target_repo_spec()</code>.</p>
+<p>The function returns the current repo in the form <code>"owner/repo"</code>,
+but since it isn’t designed to be user-facing
+it throws an unusual error when called from outside a git repository.
+We can soften this edge by catching the error with <code>tryCatch()</code>
+and replacing the error with a <code>NULL</code> value.</p>
+<pre class="r"><code>repo_guess &lt;- tryCatch(
+  usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
+  error = function(e) NULL
+)</code></pre>
+<p>Of course, maybe I’ll want to create a reprex
+in <em>another</em> repository that isn’t the one I’m currently working in.
+So we can follow up with a prompt asking for the repo,
+using our guess from <span class="pkg">usethis</span>.
+The prompt is created with the <code>showPrompt()</code> function from <span class="pkg">rstudioapi</span>.</p>
+<pre class="r"><code>repo &lt;- rstudioapi::showPrompt(
+  title = &quot;Which repository?&quot;, 
+  message = &quot;Where should we create the issue? (owner/repo)&quot;,
+  default = repo_guess
+)</code></pre>
+<p class="center">
+<img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:min(400px, 100%);display: block">
+</p>
+<p>Finally, the function we’re putting together will also take a <code>repo</code> argument
+that <em>might be</em> provided when we call it.
+In that case,
+we’d wouldn’t need to guess or ask for a repo.</p>
+<pre class="r"><code>if (!is.null(repo)) {
+  repo_guess &lt;- tryCatch(
     usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
     error = function(e) NULL
   )
-}</code></pre>
-<p>It’s a good idea to confirm if we’ve picked the right repo.</p>
-<pre class="r"><code>if (!is.null(repo)) {
-  use_guess &lt;- rstudioapi::showQuestion(
-    title = &quot;Confirm repository&quot;,
-    message = sprintf(&quot;Send issue to &#39;%s&#39;?&quot;, repo),
-    ok = &quot;Yes&quot;,
-    cancel = &quot;No, I&#39;ll enter a repo&quot;
-  )
-  if (!use_guess) {
-    repo &lt;- NULL
-  }
-}</code></pre>
-<p class="center">
-<img src="ask-repo.png" alt="RStudio menu asking to confirm if the user wants to send the issue to 'gadenbuie/shrtcts' or choose another repo." style="max-width: 300px;display: block">
-</p>
-<p>Finally, if we’re not using the guess (or couldn’t guess the repo),
-we’d probably want to be able to type in the repository directly in a prompt.</p>
-<pre class="r"><code>if (is.null(repo)) {
+
   repo &lt;- rstudioapi::showPrompt(
     title = &quot;Which repository?&quot;, 
-    message = &quot;Where should we create the issue? (owner/repo)&quot;
+    message = &quot;Where should we create the issue? (owner/repo)&quot;,
+    default = repo_guess
   )
 }</code></pre>
-<p class="center">
-<img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:400px;display: block">
-</p>
 </div>
 </div>
-<div id="shortcut" class="section level2">
-<h2>Shortcut</h2>
+<div id="make-it-a-shortcut" class="section level2">
+<h2>Make it a shortcut</h2>
+<p>The last step in our process is to make it easy to run this code in RStudio,
+ideally as an
+<a href="https://rstudio.github.io/rstudioaddins/">RStudio addin</a>
+that we can activate from the addins menu or
+<a href="https://blog.rstudio.com/2020/10/14/rstudio-v1-4-preview-command-palette/">the command palette</a>.</p>
+<p>This is the exact goal of the <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span> package:
+<span class="pkg">shrtcts</span> lets you turn any function into an RStudio addin.</p>
+<div id="set-up-shrtcts" class="section level3">
+<h3>Set up <code>shrtcts</code></h3>
+<p>If you’ve never used <span class="pkg">shrtcts</span> before,
+you need to do two things to get started.
+First, install the package,
+from <a href="https://gadenbuie.r-universe.dev">my R-universe</a>
+or from <a href="https://github.com/gadenbuie/shrtcts">GitHub</a>.</p>
+<div class="panelset">
+<div class="panel">
+<p><span class="panel-name">R-universe</span></p>
+<pre class="r"><code># Add my universe to your list of repos
+options(repos = c(
+  gadenbuie = &quot;https://gadenbuie.r-universe.dev&quot;,
+  getOption(&quot;repos&quot;)
+))
+
+install.package(&quot;shrtcts&quot;)</code></pre>
+</div>
+<div class="panel">
+<p><span class="panel-name">GitHub</span></p>
+<pre class="r"><code># install.packages(&quot;remotes&quot;)
+
+remotes::install_github(&quot;gadenbuie/shrtcts&quot;)</code></pre>
+</div>
+</div>
+<p>The next thing to do is to create a <code>.shrtcts.R</code> file in the right place.
+The easiest place to put this file is in your home directory.
+You can use the <span class="pkg">fs</span> package
+to find the right place with <code>path_home_r()</code> and
+to create the file with <code>file_touch()</code>.</p>
+<pre class="r"><code>shrtcts_file &lt;- fs::path_home_r(&quot;.shrtcts.R&quot;)
+fs::file_touch(shrtcts_file)</code></pre>
+<p>Once you have a <code>.shrtcts.R</code> file, open it up.</p>
+<pre class="r"><code># open the file for editing
+file.edit(shrtcts_file)</code></pre>
+</div>
+<div id="creating-a-shortcut-function" class="section level3">
+<h3>Creating a shortcut function</h3>
+<p>We’ll write R functions in the <code>.shrtcts.R</code> file
+and turn them into RStudio addins
+by annotating those functions with roxygen-style comments.</p>
+<pre class="r"><code>create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
+  # reprex to issue here
+}</code></pre>
+<p>…</p>
+<p>….</p>
 <pre class="r"><code>#&#39; Create issue from reprex
 #&#39;
 #&#39; Creates an issue from the selected or copied reprex.
 #&#39;
 #&#39; @shortcut Cmd+Ctrl+Shift+R
 #&#39; @interactive
-create_issue_from_reprex &lt;- function(input = NULL, repo = NULL, ...) {
-  if (is.null(repo)) {
-    repo &lt;- tryCatch(
+create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
+  # guess or ask for repo
+  # get current selection, if available
+  # render reprex
+  # compose new issue URL
+  # go to the new issue page!
+}</code></pre>
+<p>…</p>
+<pre class="r"><code>#&#39; Create issue from reprex
+#&#39;
+#&#39; Creates an issue from the selected or copied reprex.
+#&#39;
+#&#39; @shortcut Cmd+Ctrl+Shift+R
+#&#39; @interactive
+create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
+  if (!is.null(repo)) {
+    repo_guess &lt;- tryCatch(
       usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
       error = function(e) NULL
     )
-  }
   
-  if (!is.null(repo)) {
-    use_guess &lt;- rstudioapi::showQuestion(
-      title = &quot;Confirm repository&quot;,
-      message = sprintf(&quot;Send issue to &#39;%s&#39;?&quot;, repo),
-      ok = &quot;Yes&quot;,
-      cancel = &quot;No, I&#39;ll enter a repo&quot;
-    )
-    if (!use_guess) {
-      repo &lt;- NULL
-    }
-  }
-    
-  if (is.null(repo)) {
     repo &lt;- rstudioapi::showPrompt(
       title = &quot;Which repository?&quot;, 
-      message = &quot;Where should we create the issue? (owner/repo)&quot;
+      message = &quot;Where should we create the issue? (owner/repo)&quot;,
+      default = repo_guess
     )
   }
     
   if (is.null(input)) {
     ctx &lt;- rstudioapi::getSourceEditorContext()
-    input &lt;- ctx$selection[[1]]$text
-    input &lt;- if (nzchar(input)) {
-      paste(input, &quot;\n&quot;)
+    selection &lt;- ctx$selection[[1]]$text
+    input &lt;- if (nzchar(selection)) {
+      paste(selection, &quot;\n&quot;)
     }
   }
   
@@ -733,4 +809,5 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL, ...) {
   browseURL(url_new_issue)
   invisible(url_new_issue)
 }</code></pre>
+</div>
 </div>

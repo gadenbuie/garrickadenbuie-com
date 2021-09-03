@@ -123,7 +123,7 @@ code {
 }
 pre.r + pre {
   margin-top: -1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.25rem;
   background: #eee;
 }
 pre.r + pre > code {
@@ -131,7 +131,7 @@ pre.r + pre > code {
 }
 
 pre.r {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem;
   border: 0.25rem solid #eee;
 }
 
@@ -701,6 +701,7 @@ body.restyled-garrick {
   .hljs {
     color: var(--text-dark);
     background: var(--code-background);
+    padding: 0.25rem;
   }
   
   hr {
