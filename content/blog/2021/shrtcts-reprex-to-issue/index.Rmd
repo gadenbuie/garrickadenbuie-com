@@ -357,12 +357,12 @@ selection <- ctx$selection[[1]]$text
 If nothing is selected, `selection` will be an empty string, `""`,
 in which case we'd prefer to leave `input` as `NULL` 
 so that `reprex()` will look in the clipboard for our input.
-We also need to make sure that `input` ends with a new line character, `"\n"`,
+We also need to make sure that `input` is a character vector
 so that `reprex()` knows that `input` contains the reprex code and not a path to a file.
 
 ```{r input_prep, eval=FALSE}
 input <- if (nzchar(selection)) {
-  paste0(selection, "\n")
+  c(strsplit(selection, "\n")[[1]], "")
 }
 ```
 

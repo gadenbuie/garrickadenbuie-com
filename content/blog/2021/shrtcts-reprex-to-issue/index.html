@@ -645,10 +645,10 @@ selection &lt;- ctx$selection[[1]]$text</code></pre>
 <p>If nothing is selected, <code>selection</code> will be an empty string, <code>""</code>,
 in which case we’d prefer to leave <code>input</code> as <code>NULL</code>
 so that <code>reprex()</code> will look in the clipboard for our input.
-We also need to make sure that <code>input</code> ends with a new line character, <code>"\n"</code>,
+We also need to make sure that <code>input</code> is a character vector
 so that <code>reprex()</code> knows that <code>input</code> contains the reprex code and not a path to a file.</p>
 <pre class="r"><code>input &lt;- if (nzchar(selection)) {
-  paste0(selection, &quot;\n&quot;)
+  c(strsplit(selection, &quot;\n&quot;)[[1]], &quot;&quot;)
 }</code></pre>
 <p>We’ll be wrapping this up in a function where
 <code>input</code> might be provided by the user,
@@ -657,7 +657,7 @@ so we’ll only want to check for a selection if <code>input</code> is <code>NUL
   ctx &lt;- rstudioapi::getSourceEditorContext()
   selection &lt;- ctx$selection[[1]]$text
   input &lt;- if (nzchar(selection)) {
-    paste0(selection, &quot;\n&quot;)
+    c(strsplit(selection, &quot;\n&quot;)[[1]], &quot;&quot;)
   }
 }</code></pre>
 </div>
@@ -813,7 +813,7 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
     ctx &lt;- rstudioapi::getSourceEditorContext()
     selection &lt;- ctx$selection[[1]]$text
     input &lt;- if (nzchar(selection)) {
-      paste0(selection, &quot;\n&quot;)
+      c(strsplit(selection, &quot;\n&quot;)[[1]], &quot;&quot;)
     }
   }
   
