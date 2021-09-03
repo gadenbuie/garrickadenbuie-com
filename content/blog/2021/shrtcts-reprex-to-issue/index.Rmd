@@ -20,6 +20,7 @@ keywords: rstats
 [reprex]: https://reprex.tidyverse.org/
 [shrtcts]: https://pkg.garrickadenbuie.com/shrtcts
 [rstudioapi]: https://rstudio.github.io/rstudioapi/
+[roxygen2]: https://roxygen2.r-lib.org/
 
 ::: lead
 
