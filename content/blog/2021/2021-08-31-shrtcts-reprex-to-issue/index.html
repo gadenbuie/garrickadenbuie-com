@@ -11,6 +11,10 @@ tags:
   - Shortcuts
   - GitHub
   - reprex
+description: |
+  Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmd'
+keywords: rstats
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
@@ -601,7 +605,7 @@ body</code></pre>
 ## [4] &quot;```&quot;</code></pre>
 <p>Notice that it returns a character vector
 with one item per line of the rendered reprex.
-We need to collapse it all into one line.</p>
+We need to collapse it all into a single string.</p>
 <pre class="r"><code>body &lt;- paste(body, collapse = &quot;\n&quot;)</code></pre>
 <pre><code>## [1] &quot;``` r\nrunif(min = 0, max = 10)\n#&gt; Error in runif(min = 0, max = 10): argument \&quot;n\&quot; is missing, with no default\n```&quot;</code></pre>
 <p>But this still won’t fit in a URL
@@ -644,18 +648,16 @@ so that <code>reprex()</code> will look in the clipboard for our input.
 We also need to make sure that <code>input</code> ends with a new line character, <code>"\n"</code>,
 so that <code>reprex()</code> knows that <code>input</code> contains the reprex code and not a path to a file.</p>
 <pre class="r"><code>input &lt;- if (nzchar(selection)) {
-  paste(selection, &quot;\n&quot;)
+  paste0(selection, &quot;\n&quot;)
 }</code></pre>
 <p>We’ll be wrapping this up in a function where
 <code>input</code> might be provided by the user,
 so we’ll only want to check for a selection if <code>input</code> is <code>NULL</code>.</p>
-<pre class="r"><code>input &lt;- NULL # default in function
-
-if (is.null(input)) {
+<pre class="r"><code>if (is.null(input)) {
   ctx &lt;- rstudioapi::getSourceEditorContext()
   selection &lt;- ctx$selection[[1]]$text
   input &lt;- if (nzchar(selection)) {
-    paste(selection, &quot;\n&quot;)
+    paste0(selection, &quot;\n&quot;)
   }
 }</code></pre>
 </div>
@@ -664,8 +666,8 @@ if (is.null(input)) {
 <p>Often, I’ll be working in the repository where I want to create the issue.
 <span class="pkg">usethis</span> does a great job guessing the repository
 from the information in a local copy of the repo.
-Rather than spending forever writing my own version,
-I’ll just reach into <span class="pkg">usethis</span> with <code>:::</code> to call <code>target_repo_spec()</code>.</p>
+Rather than spending forever writing our own version,
+let’s just reach into <span class="pkg">usethis</span> with <code>:::</code> to call <code>target_repo_spec()</code>.</p>
 <p>The function returns the current repo in the form <code>"owner/repo"</code>,
 but since it isn’t designed to be user-facing
 it throws an unusual error when called from outside a git repository.
@@ -673,7 +675,7 @@ We can soften this edge by catching the error with <code>tryCatch()</code>
 and replacing the error with a <code>NULL</code> value.</p>
 <pre class="r"><code>repo_guess &lt;- tryCatch(
   usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
-  error = function(e) NULL
+  error = function(err) NULL
 )</code></pre>
 <p>Of course, maybe I’ll want to create a reprex
 in <em>another</em> repository that isn’t the one I’m currently working in.
@@ -695,7 +697,7 @@ we’d wouldn’t need to guess or ask for a repo.</p>
 <pre class="r"><code>if (!is.null(repo)) {
   repo_guess &lt;- tryCatch(
     usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
-    error = function(e) NULL
+    error = function(err) NULL
   )
 
   repo &lt;- rstudioapi::showPrompt(
@@ -740,27 +742,38 @@ install.package(&quot;shrtcts&quot;)</code></pre>
 remotes::install_github(&quot;gadenbuie/shrtcts&quot;)</code></pre>
 </div>
 </div>
-<p>The next thing to do is to create a <code>.shrtcts.R</code> file in the right place.
-The easiest place to put this file is in your home directory.
-You can use the <span class="pkg">fs</span> package
-to find the right place with <code>path_home_r()</code> and
-to create the file with <code>file_touch()</code>.</p>
-<pre class="r"><code>shrtcts_file &lt;- fs::path_home_r(&quot;.shrtcts.R&quot;)
-fs::file_touch(shrtcts_file)</code></pre>
-<p>Once you have a <code>.shrtcts.R</code> file, open it up.</p>
-<pre class="r"><code># open the file for editing
-file.edit(shrtcts_file)</code></pre>
+<p>The next thing to do is to open a <code>.shrtcts.R</code> file
+where we’ll add our new shortcut.
+This is easy to do with <code>shrtcts::edit_shortcuts()</code>,
+which will offer to create the <code>.shrtcts.R</code> file if it doesn’t exit.</p>
+<pre class="r"><code>shrtcts::edit_shortcuts()</code></pre>
+<pre><code>Would you like to create a new shrtcts file at 
+&#39;~/Library/Application Support/shrtcts/.shrtcts.R&#39; (Yes/no/cancel) yes</code></pre>
 </div>
 <div id="creating-a-shortcut-function" class="section level3">
 <h3>Creating a shortcut function</h3>
 <p>We’ll write R functions in the <code>.shrtcts.R</code> file
 and turn them into RStudio addins
 by annotating those functions with roxygen-style comments.</p>
+<p>We start with a skeleton of a function that takes two arguments:
+<code>input</code> and <code>repo</code>,
+neither of which are required.
+Inside the function, we’ll do all the steps from above,
+which we’ll fill in in a second.</p>
 <pre class="r"><code>create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
-  # reprex to issue here
+  # guess or ask for repo
+  # get current selection, if available
+  # render reprex
+  # compose new issue URL
+  # go to the new issue page!
 }</code></pre>
-<p>…</p>
-<p>….</p>
+<p>Our next step is to turn this function into a shortcut.
+Using <span class="pkg">[roxygen2]</span> documentation syntax,
+we give the function a title and description —
+these will be used as the title and description of the shortcut.
+We can also use the <code>@shortcut</code> tag to set a keyboard shortcut (if you want),
+and the <code>@interactive</code> tag lets shortcuts know
+that the addin should be run interactively rather than in the background.</p>
 <pre class="r"><code>#&#39; Create issue from reprex
 #&#39;
 #&#39; Creates an issue from the selected or copied reprex.
@@ -774,7 +787,8 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   # compose new issue URL
   # go to the new issue page!
 }</code></pre>
-<p>…</p>
+<p>Finally, we can replace our placeholder comments
+with all of the code we wrote above.</p>
 <pre class="r"><code>#&#39; Create issue from reprex
 #&#39;
 #&#39; Creates an issue from the selected or copied reprex.
@@ -782,10 +796,17 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
 #&#39; @shortcut Cmd+Ctrl+Shift+R
 #&#39; @interactive
 create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
+  # guess or ask for repo
+  # get current selection, if available
+  # render reprex
+  # compose new issue URL
+  # go to the new issue page!
+}
+create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   if (!is.null(repo)) {
     repo_guess &lt;- tryCatch(
       usethis:::target_repo_spec(&quot;source&quot;, FALSE), 
-      error = function(e) NULL
+      error = function(err) NULL
     )
   
     repo &lt;- rstudioapi::showPrompt(
@@ -799,7 +820,7 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
     ctx &lt;- rstudioapi::getSourceEditorContext()
     selection &lt;- ctx$selection[[1]]$text
     input &lt;- if (nzchar(selection)) {
-      paste(selection, &quot;\n&quot;)
+      paste0(selection, &quot;\n&quot;)
     }
   }
   
@@ -809,5 +830,8 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   browseURL(url_new_issue)
   invisible(url_new_issue)
 }</code></pre>
+<p>Load your shortcuts and restart your R session to activate the addin
+and you’ll be ready to jump from reprex to GitHub issue in no time!</p>
+<pre class="r"><code>shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)</code></pre>
 </div>
 </div>

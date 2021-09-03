@@ -11,6 +11,10 @@ tags:
   - Shortcuts
   - GitHub
   - reprex
+description: |
+  Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmd'
+keywords: rstats
 ---
 
 [reprex]: https://reprex.tidyverse.org/
@@ -295,7 +299,7 @@ body
 
 Notice that it returns a character vector
 with one item per line of the rendered reprex.
-We need to collapse it all into one line.
+We need to collapse it all into a single string.
 
 ```{r body_paste}
 body <- paste(body, collapse = "\n")
@@ -357,7 +361,7 @@ so that `reprex()` knows that `input` contains the reprex code and not a path to
 
 ```{r input_prep, eval=FALSE}
 input <- if (nzchar(selection)) {
-  paste(selection, "\n")
+  paste0(selection, "\n")
 }
 ```
 
@@ -366,8 +370,6 @@ We'll be wrapping this up in a function where
 so we'll only want to check for a selection if `input` is `NULL`.
 
 ```{r input_not_null, eval=FALSE, style = TRUE}
-input <- NULL # default in function
-
 if (is.null(input)) {
   <<get_source_editor_context>>
   <<input_prep>>
@@ -379,8 +381,8 @@ if (is.null(input)) {
 Often, I'll be working in the repository where I want to create the issue.
 [usethis]{.pkg} does a great job guessing the repository
 from the information in a local copy of the repo.
-Rather than spending forever writing my own version,
-I'll just reach into [usethis]{.pkg} with `:::` to call `target_repo_spec()`.
+Rather than spending forever writing our own version,
+let's just reach into [usethis]{.pkg} with `:::` to call `target_repo_spec()`.
 
 The function returns the current repo in the form `"owner/repo"`,
 but since it isn't designed to be user-facing
@@ -391,7 +393,7 @@ and replacing the error with a `NULL` value.
 ```{r repo-try-usethis, eval=FALSE}
 repo_guess <- tryCatch(
   usethis:::target_repo_spec("source", FALSE), 
-  error = function(e) NULL
+  error = function(err) NULL
 )
 ```
 
@@ -469,22 +471,18 @@ remotes::install_github("gadenbuie/shrtcts")
 :::
 ::::
 
-The next thing to do is to create a `.shrtcts.R` file in the right place.
-The easiest place to put this file is in your home directory.
-You can use the [fs]{.pkg} package
-to find the right place with `path_home_r()` and 
-to create the file with `file_touch()`.
+The next thing to do is to open a `.shrtcts.R` file 
+where we'll add our new shortcut.
+This is easy to do with `shrtcts::edit_shortcuts()`,
+which will offer to create the `.shrtcts.R` file if it doesn't exit.
 
 ```{r make-shrtcts-r, eval=FALSE}
-shrtcts_file <- fs::path_home_r(".shrtcts.R")
-fs::file_touch(shrtcts_file)
+shrtcts::edit_shortcuts()
 ```
 
-Once you have a `.shrtcts.R` file, open it up.
-
-```{r edit-shrtcts-r, eval=FALSE}
-# open the file for editing
-file.edit(shrtcts_file)
+```
+Would you like to create a new shrtcts file at 
+'~/Library/Application Support/shrtcts/.shrtcts.R' (Yes/no/cancel) yes
 ```
 
 ### Creating a shortcut function
@@ -493,28 +491,13 @@ We'll write R functions in the `.shrtcts.R` file
 and turn them into RStudio addins
 by annotating those functions with roxygen-style comments.
 
-```{r}
-create_issue_from_reprex <- function(input = NULL, repo = NULL) {
-  # reprex to issue here
-}
-```
+We start with a skeleton of a function that takes two arguments: 
+`input` and `repo`,
+neither of which are required.
+Inside the function, we'll do all the steps from above,
+which we'll fill in in a second.
 
-...
-
-
-```{r shortcut-roxy, include=FALSE}
-#' Create issue from reprex
-#'
-#' Creates an issue from the selected or copied reprex.
-#'
-#' @shortcut Cmd+Ctrl+Shift+R
-#' @interactive
-```
-
-....
-
-```{r shortcut-skeleton, eval=FALSE}
-<<shortcut-roxy>>
+```{r shortcut-skeleton}
 create_issue_from_reprex <- function(input = NULL, repo = NULL) {
   # guess or ask for repo
   # get current selection, if available
@@ -524,7 +507,26 @@ create_issue_from_reprex <- function(input = NULL, repo = NULL) {
 }
 ```
 
-...
+Our next step is to turn this function into a shortcut.
+Using [[roxygen2]]{.pkg} documentation syntax,
+we give the function a title and description —
+these will be used as the title and description of the shortcut.
+We can also use the `@shortcut` tag to set a keyboard shortcut (if you want),
+and the `@interactive` tag lets shortcuts know 
+that the addin should be run interactively rather than in the background.
+
+```{r shortcut-roxy, eval=FALSE}
+#' Create issue from reprex
+#'
+#' Creates an issue from the selected or copied reprex.
+#'
+#' @shortcut Cmd+Ctrl+Shift+R
+#' @interactive
+<<shortcut-skeleton>>
+```
+
+Finally, we can replace our placeholder comments
+with all of the code we wrote above.
 
 ```{r shortcut-final, eval=FALSE, style=TRUE}
 <<shortcut-roxy>>
@@ -542,4 +544,11 @@ create_issue_from_reprex <- function(input = NULL, repo = NULL) {
   <<url_new_issue_browse>>
   invisible(url_new_issue)
 }
+```
+
+Load your shortcuts and restart your R session to activate the addin
+and you'll be ready to jump from reprex to GitHub issue in no time!
+
+```{r eval=FALSE}
+shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)
 ```
