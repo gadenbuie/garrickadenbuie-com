@@ -819,6 +819,7 @@ create_issue_from_reprex &lt;- function(input = NULL, repo = NULL) {
   
   body &lt;- reprex::reprex(input = input, venue = &quot;gh&quot;, html_preview = TRUE)
   body &lt;- paste(body, collapse = &quot;\n&quot;)
+  body &lt;- URLencode(body, reserved = TRUE)
   url_new_issue &lt;- glue::glue(&quot;https://github.com/{repo}/issues/new?body={body}&quot;)
   browseURL(url_new_issue)
   invisible(url_new_issue)

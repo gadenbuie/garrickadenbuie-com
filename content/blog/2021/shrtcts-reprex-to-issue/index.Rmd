@@ -545,6 +545,7 @@ create_issue_from_reprex <- function(input = NULL, repo = NULL) {
   
   <<body_reprex>>
   <<body_paste>>
+  <<body_encode>>
   <<url_new_issue>>
   <<url_new_issue_browse>>
   invisible(url_new_issue)
