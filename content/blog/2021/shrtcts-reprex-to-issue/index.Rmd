@@ -558,3 +558,8 @@ and you'll be ready to jump from reprex to GitHub issue in no time!
 ```{r eval=FALSE}
 shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)
 ```
+
+<div class="figure">
+<img src="shrtcts-reprex.gif" alt="A demonstration of the reprex shortcut: highlight code in RStudio editor, run the 'reprex to issue' shortcut, and create a new github issue" >
+<p class="caption">The reprex to GitHub issue shortcut in action.</p>
+</div>
