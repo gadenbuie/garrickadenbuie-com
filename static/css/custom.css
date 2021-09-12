@@ -65,8 +65,11 @@ p.caption {
   text-align: right;
   margin-top: 0;
 }
+.center > .figure > img,
 .figure img.center {
-  margin: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .figure.thumbnail {
   width: 200px;
