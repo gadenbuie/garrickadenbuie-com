@@ -1,0 +1,130 @@
+---
+title: 'Signed and verified: signed git commits with Keybase and RStudio'
+author: Garrick Aden-Buie
+date: '2021-09-12'
+slug: signed-verified-git-commits-keybase-rstudio
+categories:
+  - Blog
+tags:
+  - R
+  - git
+  - GitHub
+  - RStudio
+  - Tutorials
+description: "Setting up signed git commits with a Keybase GPG key that work with RStudio."
+twitterImage: "/blog/2021/signed-verified-git-commits-keybase-rstudio/social.png"
+rmd_source: ""
+keywords: "rstats"
+---
+
+<!-- Links -->
+[github-signed-commits]: https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification/signing-commits
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+```
+
+
+::: lead
+
+Use Keybase to create a GPG to cryptographically sign all of your commits,
+proving to GitHub and the world that you are the real person who wrote your code,
+and getting that neat **Verified** badge next to all of your commits.
+
+Along the way, we'll also make sure everything is set up in a way that plays nicely with RStudio.
+
+::: center
+![A verified commit on GitHub with the green _Verified_ badge.](verified.png)
+:::
+
+:::
+
+## Overview
+
+Did you know it's incredibly easy to 
+[spoof commit authors with git](https://blog.gruntwork.io/how-to-spoof-any-user-on-github-and-what-to-do-to-prevent-it-e237e95b8deb)?
+Basically you only need to tell `git` you're a different person.
+
+```bash
+git config --global user.email "hadley@..."
+git config --glboal user.name "Hadley Wickham"
+
+# pretend to commit as Hadley
+git commit -m "Fix recode() arguments to new = old"
+```
+
+`git` doesn't do anything to verify the commit author,
+and while GitHub will try a little harder than `git`,
+it's surprisingly easy to pretend to be somewhere else in a git repo.
+
+This can obviously lead to problems 
+(that are admittedly mostly theoretical in my daily life)
+and there's a relatively easy solution: signed commits.
+With signed commits,
+you cryptographically sign each commit with your private key that only you own,
+and GitHub (and others) will verify your signature with the public key pair.
+When GitHub knows that the real you made the commit, 
+it adds the green 
+<img src="verified-small.png" alt="verified" style="display:inline;margin:0;vertical-align:middle" height="24">
+badge.
+
+In this short post,
+I'll show you how to [use Keybase to create your own GPG key](#setup-keybase).
+Then we'll [setup `git`](#setup-git) to use this key to sign your commits,
+and along the way we'll [configure `git`](#config-git) to work with RStudio, too.
+I'm using a Mac, but the process is very similar for Linux/Unix 
+machines[^Windows users, I'm sorry! I don't own anything that runs Windows. &#x1F612;].
+
+## Setup Keybase
+
+https://stephenreescarter.net/signing-git-commits-with-a-keybase-gpg-key/
+
+## Setup git
+
+1. Set your `git` global config to sign commits using your default key
+
+   ```bash
+   git config --global user.signingkey <Key ID>
+   git config --global commit.gpgsign true
+   ```
+
+## Configure git to work with RStudio {#config-git}
+
+1. Configure `gpg` to use an agent for providing your password to unlock your key (I also set the default key here to make life easier)
+
+   ```bash
+   # ~/.gnupg/gpg.conf
+   use-agent
+   default-key <Key ID>
+   ```
+
+1. Configure `gpg-agent` to remember your key's password for the day (8 hours or 28,800 seconds)
+
+   ```bash
+   # ~/.gnupg/gpg-agent.conf
+   default-cache-ttl 28800
+   max-cache-ttl 28800
+   ```
+
+   You may need to restart `gpg-agent` at this point.
+
+   ```bash
+   gpg-agent --daemon
+
+   # if it prints a message that gpg-agent is already running...
+   kill-all gpg-agent
+   gpg-agent --daemon
+   ```
+
+1. At this point, any `git commit` will automatically be signed using your default key. The first commit of the day will require you to enter your password, which does mean that the RStudio Git UI won't be able to sign the first commit unless you've asked `gpg` to sign something for you.
+
+   To get around this, you can unlock your gpg key by signing _anything_ at the start of your work day or whenever the 8 hour time limit runs out.
+
+   ```bash
+   echo "open sesame" | gpg -s > /dev/null
+   # prompt for password 
+   ```
