@@ -437,6 +437,7 @@ body.restyled-garrick {
 }
 
 .restyled-garrick .post-content a,
+.restyled-garrick .post-content a code,
 .restyled-garrick .content .archive a {
   color: var(--accent-dark);
 }
@@ -444,9 +445,13 @@ body.restyled-garrick {
   color: var(--accent-dark);
 }
 .restyled-garrick .post-content a:hover,
+.restyled-garrick .post-content a:hover code,
 .restyled-garrick .content .archive a:hover {
   text-decoration: none;
   color: var(--accent);
+}
+.restyled-garrick .post-content a code {
+  text-decoration: none;
 }
 .restyled-garrick .recent li {
   list-style: none;
