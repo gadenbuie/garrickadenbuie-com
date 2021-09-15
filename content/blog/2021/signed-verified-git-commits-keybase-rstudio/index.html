@@ -21,7 +21,7 @@ keywords: "rstats"
 <script src="{{< blogdown/postref >}}index_files/clipboard-2.0.6/clipboard.min.js"></script>
 <link href="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
-<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+<script>window.xaringanExtraClipboard('pre[class]', {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
 
 
 <!-- Links -->
@@ -93,26 +93,33 @@ One advantage of Keybase is that its app and command line tool
 make it relatively easy to generate and store GPG keys.
 It’s also a great way to share that key between your own computers.</p>
 </div>
-<div id="create-a-pgp-key-with-keybase" class="section level3">
-<h3>Create a PGP key with Keybase</h3>
+<div id="create-a-gpg-key-with-keybase" class="section level3">
+<h3>Create a GPG key with Keybase</h3>
 <p>If you don’t have a Keybase account,
 open the Keybase app that we installed with <code>brew</code>.
 Their app will guide you through the process of creating an account.</p>
 <p>Once you have a Keybase account,
-head back to the command line to create a new GPG key.</p>
-<pre class="bash"><code>keybase pgp gen --multi
-# Enter your real name, which will be publicly visible in your new key: Garrick Aden-Buie
-# Enter a public email address for your key: garrick@adenbuie.com
-# Enter another email address (or &lt;enter&gt; when done): 
-# Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y 
-# When exporting to the GnuPG keychain, encrypt private keys with a passphrase? [Y/n] Y
-# ▶ INFO PGP User ID: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt; [primary]
-# ▶ INFO Generating primary key (4096 bits)
-# ▶ INFO Generating encryption subkey (4096 bits)
-# ▶ INFO Generated new PGP key:
-# ▶ INFO   user: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
-# ▶ INFO   4096-bit RSA key, ID B606B038A1A5CE20, created 2021-09-12
-# ▶ INFO Exported new key to the local GPG keychain</code></pre>
+head back to the command line<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>
+to create a new GPG key.
+Note that the <code>keybase</code> cli uses the <code>pgp</code> command,
+but we’ve been talking about <em>GPG</em> keys.
+To most people, the terms GPG and PGP are functionally interchangeable:
+GPG is the <a href="https://gnupg.org/">GNU Privacy Guard</a>
+which is an open-source version of
+PGP (<a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">Pretty Good Privacy</a>).</p>
+<pre class="bash"><code>keybase pgp gen --multi</code></pre>
+<pre><code>Enter your real name, which will be publicly visible in your new key: Garrick Aden-Buie
+Enter a public email address for your key: garrick@adenbuie.com
+Enter another email address (or &lt;enter&gt; when done): 
+Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y 
+When exporting to the GnuPG keychain, encrypt private keys with a passphrase? [Y/n] Y
+▶ INFO PGP User ID: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt; [primary]
+▶ INFO Generating primary key (4096 bits)
+▶ INFO Generating encryption subkey (4096 bits)
+▶ INFO Generated new PGP key:
+▶ INFO   user: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+▶ INFO  4096-bit RSA key, ID B606B038A1A5CE20, created 2021-09-12
+▶ INFO Exported new key to the local GPG keychain</code></pre>
 <p>To recap the process:</p>
 <ul>
 <li><p><code>keybase</code> will first ask you for your real name and email address.
@@ -127,13 +134,13 @@ and then prompts you to enter a passphrase for your GPG key.</p></li>
 in my case, <code>B606B038A1A5CE20</code>.
 You should also be able to find your key on your Keybase profile,
 or list your local keys that <code>gpg</code> knows about with</p>
-<pre class="bash"><code>gpg --list-secret-keys --keyid-format LONG
-# /Users/garrick/.gnupg/pubring.kbx
-# ---------------------------------
-# sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
-#       87888BBEBC09E6093A8310F9B606B038A1A5CE20
-# uid                 [ unknown] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
-# ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
+<pre class="bash"><code>gpg --list-secret-keys --keyid-format LONG</code></pre>
+<pre><code>/Users/garrick/.gnupg/pubring.kbx
+---------------------------------
+sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
+      87888BBEBC09E6093A8310F9B606B038A1A5CE20
+uid                 [ unknown] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
 <p>Notice that we again see our key id,
 <code>B606B038A1A5CE20</code>, in the third line of the output.
 There’s also the <code>[ unknown]</code> on line 5 next to our name.
@@ -144,8 +151,8 @@ and we need to tell <code>gpg</code> that it can be trusted.</p>
 <h3>Trust your own key, ultimately</h3>
 <p>Open the <code>gpg</code> interactive prompt to edit your key, then run <code>trust</code>,
 choose <code>I trust ultimately</code> and finally run <code>save</code>.</p>
-<pre class="bash"><code>gpg --edit-key B606B038A1A5CE20
-gpg&gt; trust
+<pre class="bash"><code>gpg --edit-key B606B038A1A5CE20</code></pre>
+<pre><code>gpg&gt; trust
 # Please decide how far you trust this user to correctly verify other users&#39; keys
 # (by looking at passports, checking fingerprints from different sources, etc.)
 # 
@@ -163,13 +170,13 @@ gpg&gt; save
 # Key not changed so no update needed.</code></pre>
 <p>Now if you run <code>gpg --list-secret-keys</code> again,
 you’ll see <code>[ultimate]</code> next to your name.</p>
-<pre class="bash"><code>gpg --list-secret-keys --keyid-format LONG
-# /Users/garrick/.gnupg/pubring.kbx
-# ---------------------------------
-# sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
-#       87888BBEBC09E6093A8310F9B606B038A1A5CE20
-# uid                 [ultimate] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
-# ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
+<pre class="bash"><code>gpg --list-secret-keys --keyid-format LONG</code></pre>
+<pre><code>/Users/garrick/.gnupg/pubring.kbx
+---------------------------------
+sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
+      87888BBEBC09E6093A8310F9B606B038A1A5CE20
+uid                 [ultimate] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
 </div>
 <div id="configure-git-to-always-sign-your-commits" class="section level3">
 <h3>Configure git to always sign your commits</h3>
@@ -205,13 +212,13 @@ git commit -m &quot;test signed commits&quot;
 <p>This error message isn’t entirely helpful,
 but you can try to sign some random text with <code>gpg</code>
 to expose the underlying error.</p>
-<pre class="bash"><code>echo &quot;test&quot; | gpg --clear-sign
-# -----BEGIN PGP SIGNED MESSAGE-----
-# Hash: SHA256
-# 
-# test
-# gpg: signing failed: Inappropriate ioctl for device
-# gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device</code></pre>
+<pre class="bash"><code>echo &quot;test&quot; | gpg --clear-sign</code></pre>
+<pre><code>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+test
+gpg: signing failed: Inappropriate ioctl for device
+gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device</code></pre>
 <p>The problem in my case is that I have an “Inappropriate ioctl for device”.
 Take that error to your <a href="https://duckduckgo.com">favorite web search engine</a>
 and you’ll find a resolution.
@@ -258,20 +265,20 @@ YLPCcwzEVSwFrLRRXt5Crcpc/32ZqrfvcLe0G+ACWQYAhktwJnQ=
 =S1iU
 -----END PGP SIGNATURE-----</code></pre>
 <p>And if you try to <code>git commit</code> again, it should work!</p>
-<pre class="bash"><code>git commit -m &quot;test signed commits&quot;
-# [main (root-commit) 4c4573f] test signed commits
-#  1 file changed, 0 insertions(+), 0 deletions(-)
-#  create mode 100644 test.txt</code></pre>
+<pre class="bash"><code>git commit -m &quot;test signed commits&quot;</code></pre>
+<pre><code>[main (root-commit) 4c4573f] test signed commits
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt</code></pre>
 <p>Note that you can be extra sure by looking at the <code>git</code> log with signatures.</p>
-<pre class="bash"><code>git log --show-signature
-# commit 4c4573f2fbed44eab6c0f4a08a38a9f8292580cf (HEAD -&gt; main)
-# gpg: Signature made Mon Sep 13 09:34:59 2021 EDT
-# gpg:                using RSA key 87888BBEBC09E6093A8310F9B606B038A1A5CE20
-# gpg: Good signature from &quot;Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;&quot; [ultimate]
-# Author: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
-# Date:   Mon Sep 13 09:34:59 2021 -0400
-# 
-#     test signed commits</code></pre>
+<pre class="bash"><code>git log --show-signature</code></pre>
+<pre><code>commit 4c4573f2fbed44eab6c0f4a08a38a9f8292580cf (HEAD -&gt; main)
+gpg: Signature made Mon Sep 13 09:34:59 2021 EDT
+gpg:                using RSA key 87888BBEBC09E6093A8310F9B606B038A1A5CE20
+gpg: Good signature from &quot;Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;&quot; [ultimate]
+Author: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+Date:   Mon Sep 13 09:34:59 2021 -0400
+
+    test signed commits</code></pre>
 </div>
 <div id="install-pinentry-mac" class="section level3">
 <h3>Install <code>pinentry-mac</code></h3>
@@ -339,5 +346,6 @@ but if not then maybe the posts below will help you out:</p>
 <li id="fn1"><p>Windows users, I’m sorry! I don’t own anything that runs Windows. 😒<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>You’ll need <code>git</code> version 2.0 or later. Check with <code>git --version</code> or upgrade git to the latest version with <code>brew install git</code>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p><a href="https://en.wikipedia.org/wiki/Keybase" class="uri">https://en.wikipedia.org/wiki/Keybase</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>You can create a GPG/PGP key in the app too in the identities section of your profile, but I’m using the command line so it’s easier to copy-paste.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
