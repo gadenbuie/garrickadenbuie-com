@@ -138,7 +138,7 @@ GPG is the [GNU Privacy Guard][gpg]
 which is an open-source version of 
 PGP ([Pretty Good Privacy](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)).
 
-[^or-keybase-app]: You can create a GPG/PGP key in the app too in the identities section of your profile, but I'm using the command line so it's easier to copy-paste.
+[^or-keybase-app]: You could also create a GPG/PGP key in the Keybase app in the identities section of your profile, but I'm using the command line so it's easier to copy-paste.
 
 ```bash
 keybase pgp gen --multi
@@ -379,9 +379,9 @@ Date:   Mon Sep 13 09:34:59 2021 -0400
     test signed commits
 ```
 
-### Install `pinentry-mac`
+### Install a pinentry app
 
-Remember that console dialog that appeared when we commited our test commit above?
+Remember that console dialog that appeared when we committed our test commit above?
 Yes, it's fun and retro,
 but it isn't going to work inside RStudio
 when the IDE runs `git` commands for you to commit your files.
@@ -390,6 +390,13 @@ In this step, we'll install `pinentry-mac`,
 a modern method for providing a passphrase for your key,
 that also integrates with MacOS's Keychain
 so you don't have to enter the passphrase with every commit.
+
+If you're using Windows, you might want to check out the [Gpg4win app](https://www.gpg4win.org/).
+On Linux, 
+you may want to use [pinentry-gnome3](http://manpages.ubuntu.com/manpages/bionic/man1/pinentry-gnome3.1.html).
+Finally,
+you could also [configure `gpg-agent` to cache your passphrase](#gpg-agent-cache-passphrase)
+if none of the above options work for you.
 
 Installing `pinentry-mac` is easy with `brew`:
 
@@ -463,3 +470,49 @@ but if not then maybe the posts below will help you out:
 - [gnupg2: gpg: public key decryption failed: Inappropriate ioctl for device · Issue #14737 · Homebrew/homebrew-core](https://github.com/Homebrew/homebrew-core/issues/14737)
 
 - [Support signing of git commits · Issue #1865 · rstudio/rstudio](https://github.com/rstudio/rstudio/issues/1865)
+
+## Appendix
+
+### Use `gpg-agent` to cache your passphrase without a pinentry GUI {#gpg-agent-cache-passphrase}
+
+If you don't want to or can't [install a pinentry app](#install-a-pinentry-app),
+you can get `gpg-agent` to cache your passphrase for a fixed period of time,
+say 8 hours.
+
+When you start your day — 
+or when the cache expires —
+you'll need to sign something or commit once from the command line
+to re-enter your passphrase.
+
+The first step is to configure `gpg-agent` 
+to remember your key's password for the day (8 hours or 28,800 seconds).
+
+ ```bash
+ # ~/.gnupg/gpg-agent.conf
+ default-cache-ttl 28800
+ max-cache-ttl 28800
+ ```
+
+ You'll need to restart `gpg-agent` so that it picks up the new configuration.
+
+ ```bash
+ gpgconf --kill gpg-agent
+ ```
+ 
+ At this point, 
+ any `git commit` will automatically be signed using your default key. 
+ The first commit of the day
+ will require you to enter your password,
+ which does mean that
+ the RStudio Git UI won't be able to sign the first commit
+ until you've asked `gpg` to sign something for you.
+
+ To get around this,
+ you can unlock your gpg key by signing _anything_
+ at the start of your work day
+ or whenever the 8 hour time limit runs out.
+
+ ```bash
+ echo "open sesame" | gpg -s > /dev/null
+ # prompt for password 
+ ```

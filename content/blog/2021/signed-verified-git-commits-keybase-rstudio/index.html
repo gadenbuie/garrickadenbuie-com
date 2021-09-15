@@ -280,9 +280,9 @@ Date:   Mon Sep 13 09:34:59 2021 -0400
 
     test signed commits</code></pre>
 </div>
-<div id="install-pinentry-mac" class="section level3">
-<h3>Install <code>pinentry-mac</code></h3>
-<p>Remember that console dialog that appeared when we commited our test commit above?
+<div id="install-a-pinentry-app" class="section level3">
+<h3>Install a pinentry app</h3>
+<p>Remember that console dialog that appeared when we committed our test commit above?
 Yes, it’s fun and retro,
 but it isn’t going to work inside RStudio
 when the IDE runs <code>git</code> commands for you to commit your files.</p>
@@ -290,6 +290,12 @@ when the IDE runs <code>git</code> commands for you to commit your files.</p>
 a modern method for providing a passphrase for your key,
 that also integrates with MacOS’s Keychain
 so you don’t have to enter the passphrase with every commit.</p>
+<p>If you’re using Windows, you might want to check out the <a href="https://www.gpg4win.org/">Gpg4win app</a>.
+On Linux,
+you may want to use <a href="http://manpages.ubuntu.com/manpages/bionic/man1/pinentry-gnome3.1.html">pinentry-gnome3</a>.
+Finally,
+you could also <a href="#gpg-agent-cache-passphrase">configure <code>gpg-agent</code> to cache your passphrase</a>
+if none of the above options work for you.</p>
 <p>Installing <code>pinentry-mac</code> is easy with <code>brew</code>:</p>
 <pre class="bash"><code>brew install pinentry-mac</code></pre>
 <p>Then we need to configure <code>gpg</code> to use <code>pinentry-mac</code> for its passphrase needs.
@@ -340,12 +346,45 @@ but if not then maybe the posts below will help you out:</p>
 <li><p><a href="https://github.com/rstudio/rstudio/issues/1865">Support signing of git commits · Issue #1865 · rstudio/rstudio</a></p></li>
 </ul>
 </div>
+<div id="appendix" class="section level2">
+<h2>Appendix</h2>
+<div id="gpg-agent-cache-passphrase" class="section level3">
+<h3>Use <code>gpg-agent</code> to cache your passphrase without a pinentry GUI</h3>
+<p>If you don’t want to or can’t <a href="#install-a-pinentry-app">install a pinentry app</a>,
+you can get <code>gpg-agent</code> to cache your passphrase for a fixed period of time,
+say 8 hours.</p>
+<p>When you start your day —
+or when the cache expires —
+you’ll need to sign something or commit once from the command line
+to re-enter your passphrase.</p>
+<p>The first step is to configure <code>gpg-agent</code>
+to remember your key’s password for the day (8 hours or 28,800 seconds).</p>
+<pre class="bash"><code># ~/.gnupg/gpg-agent.conf
+default-cache-ttl 28800
+max-cache-ttl 28800</code></pre>
+<p>You’ll need to restart <code>gpg-agent</code> so that it picks up the new configuration.</p>
+<pre class="bash"><code>gpgconf --kill gpg-agent</code></pre>
+<p>At this point,
+any <code>git commit</code> will automatically be signed using your default key.
+The first commit of the day
+will require you to enter your password,
+which does mean that
+the RStudio Git UI won’t be able to sign the first commit
+until you’ve asked <code>gpg</code> to sign something for you.</p>
+<p>To get around this,
+you can unlock your gpg key by signing <em>anything</em>
+at the start of your work day
+or whenever the 8 hour time limit runs out.</p>
+<pre class="bash"><code>echo &quot;open sesame&quot; | gpg -s &gt; /dev/null
+# prompt for password </code></pre>
+</div>
+</div>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Windows users, I’m sorry! I don’t own anything that runs Windows. 😒<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>You’ll need <code>git</code> version 2.0 or later. Check with <code>git --version</code> or upgrade git to the latest version with <code>brew install git</code>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p><a href="https://en.wikipedia.org/wiki/Keybase" class="uri">https://en.wikipedia.org/wiki/Keybase</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>You can create a GPG/PGP key in the app too in the identities section of your profile, but I’m using the command line so it’s easier to copy-paste.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>You could also create a GPG/PGP key in the Keybase app in the identities section of your profile, but I’m using the command line so it’s easier to copy-paste.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
