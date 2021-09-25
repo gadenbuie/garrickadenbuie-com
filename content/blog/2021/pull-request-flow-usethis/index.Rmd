@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-06-15'
+date: '2021-10-01'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -55,11 +55,18 @@ way_point <- function(add_class = TRUE) {
     cls = if (add_class) "way-point " else ""
   )
 }
+
+back_button <- function() {
+  glue::glue(
+    '<i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i>', 
+    '<span class="sr-only">back</span>'
+  )
+}
 ```
 
 ```{r pr-flow-lightbox, echo=FALSE, results = "asis"}
 lightbox_img(
-  "usethis-pr-flow.svg",
+  "usethis-pr-flow-medium.jpg",
   alt = "A flow chart for the pull request functions in the usethis R package.",
   caption = "A `usethis` pull request helper function flow. [Download the image](#download)."
 )
@@ -70,7 +77,15 @@ lightbox_img(
 Welcome to this choose-your-own-adventure blog post.
 You don't need to read this one from top to bottom.
 Instead, jumping around is encouraged!
-Just look for the `r way_point(FALSE)` icon.
+
+Look for the `r way_point(FALSE)` icon.
+It tells you that it's time for you make a choice.
+Remember, there's no wrong choice:
+if you take a wrong turn
+you can always use your browser's `r back_button()` button
+to retrace your steps.
+
+`r way_point()` Ready to [get started](#start)?
 
 ### Start here {#start}
 
@@ -127,13 +142,40 @@ and created and switched to a new branch for you.
 
 `r way_point()` You're ready to [do some work](#do-work).
 
-### Pick up something you were working on {#resume-my-work}
+### Pick up something you were working on {#pr-resume}
 
-resume your local work
+TK: resume your local work with `pr_resume()`
 
-### Review someone else's work {#review-others-work}
+### Review someone else's work {#pr-fetch}
 
-review others works
+TK: review work from others with `pr_fetch()`
+
+## Update your local copy {#do-update}
+
+TK: [get to the right branch](#do-choose-branch) and then choose `pr_pull()` or `pr_merge_main()`
+
+### Update your local copy with someone else's changes {#pr-pull}
+
+TK: `pr_pull()`
+
+### Bring your work up to date with the main branch {#pr-merge-main}
+
+TK: `pr_merge_main()`
+
+
+### Get to the right place {#do-choose-branch}
+
+- The one I'm in right now<br/>
+  &rArr; _you're all set, go [get some work done](#do-work)_!
+
+- A local branch, but not the one I'm in now<br/>
+  &rArr; _go [resume working in that branch](#pr-resume)
+  and then come right back here._
+
+- A pull request branch I was looking at on GitHub<br/>
+  &rArr; _go [fetch the pull request](#pr-fetch)
+  and then come right back here_.
+  
 
 ## Do some work {#do-work}
 
@@ -153,6 +195,10 @@ Feeling okay about your code?
 Take a snapshot of it!
 
 There are two parts to this step.
+And really, 
+it's less like taking a picture and more like sending yourself an email
+with a copy of your files.
+
 First, you'll pick the files that you want to add to the snapshot (or commit).
 You can do this in the R console using `git_add()` from the [[gert]]{.pkg} package.
 Give the function a vector with the paths to the files you changed.
@@ -161,21 +207,29 @@ Give the function a vector with the paths to the files you changed.
 gert::git_add(c("R/atom_arranger.R", "man/atom_arranger.Rd"))
 ```
 
-Running this command is like asking a friend to step into the picture.
-We haven't officially taken a snapshot of your changes yet,
-but we now we have the changes in frame.
 In git-speak, 
 `git_add()` adds the changes in the listed files to a staging area.
+Running this command is like dragging a file into the email you're writing.
+We haven't officially sent that email yet,
+but we have a copy ready to go.
+By the way,
+you can still make more changes to the file
+knowing that there's a temporary copy in that email draft
+in case anything goes wrong.
 
 Then, once all the files you want to commit have been added,
 you _commit_ the changes.
-In our picture-taking metaphor,
-committing is a lot like taking a snapshot of your friends.
+In our email metaphor,
+committing is a lot like pressing send on the email.
 
-Along with the changes in the staged files,
-the commit includes a message,
-which you give as a parameter to `git_commit()` 
-(also from the [[gert]]{.pkg} package).
+And just like an email, 
+the commit includes a message
+where you can describe the updates you made to the files in the email (commit).
+
+For this step you can use
+`git_commit()` 
+(also from the [[gert]]{.pkg} package)
+which takes the commit message as a parameter.
 Think of this message like the subject of an email to your future self.
 
 ```{r eval=FALSE}
@@ -190,25 +244,20 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 
 - If **not**, no worries. Just [keep on working](#do-work).
 
+
+  
 ### Fix something {#fix-something}
 
-`r way_point()` Need to fix something? Let's do a quick check.
-This thing that needs to be fixed — what branch is it in?
+Oh no, you need to fix something!
+I hope it's just a typo and not a big scary error.
+But first...
 
-- The one I'm in right now<br/>
-  &rArr; _keep reading_
+`r way_point()` 
+Quick question: 
+this thing that needs to be fixed — what branch is it in?
 
-- A local branch, but not the one I'm in now<br/>
-  &rArr; _go [resume working in that branch](#pr-resume)
-  and then come right back here._
-
-- A pull request branch I was looking at on GitHub<br/>
-  &rArr; _go [fetch the pull request](#pr-fetch)
-  and then come right back here_.
-  
-`r way_point()` Great, you're all set to make that fix.
-Once you're happy with your changes, 
-[take a snapshot of the fix](#git-commit).
+- The one that I'm in now, I'm ready to [get some work done and fix this thing](#do-work)
+- Not this one, [I need to change branches](#do-choose-branch)
 
 ## Share your work {#share-your-work}
 
@@ -223,16 +272,15 @@ or are you [updating an existing pull request](#pr-push) with either your own or
 
 To create a new pull request, you call `pr_push()`.
 
-```{r pr-push, eval=FALSE}
+```{r pr-push-new, eval=FALSE}
 pr_push()
 ```
 ```
 ✔ Pushing local 'add-example' branch to 'origin:add-example'
-✔ Setting upstream tracking branch for 'add-example' to 'origin/formidable'
+✔ Setting upstream tracking branch for 'add-example' to 'origin/add-example'
 ✔ Create PR at link given below
 ✔ Opening URL 'https://github.com/gadenbuie/acme/compare/add-example'
 ```
-</div>
 
 `pr_push()` sends the local changes in your new branch to GitHub,
 and opens a browser window where you can review your changes once more.
@@ -244,6 +292,54 @@ go ahead click the _Create Pull Request_ button.
 - I'm on a roll, let's [start the next thing](#pr-pause).
 
 - Oh shoot, [I saw something I need to fix](#fix-something).
+
+- Great, that pull request was just merged and [I'm done with this work](#pr-finish).
+
+- Someone else made changes in the PR [and now I need to update my local copy](#pr-pull).
+
+- Actually, the pull request was closed and [I can forget about this work](#pr-forget).
+
+### Update an existing pull request {#pr-push}
+
+You just made [and committed](#git-commit) some changes to an existing pull request,
+and now you'd like to update the PR on GitHub.
+`pr_push()` also does this for you!
+Helpfully, before it pushes it checks to make sure your local branch is up-to-date.
+
+```{r pr-push, eval=FALSE}
+pr_push()
+```
+```
+✔ Checking that local branch 'add-example' has the changes in 'origin/add-example'
+✔ Pushing local 'add-example' branch to 'origin:add-example'
+✔ View PR at 'https://github.com/gadenbuie/acme/pull/11' or call `pr_view()`
+```
+
+If the PR is a change that someone else is suggesting for your package,
+`pr_push()` will send the changes to the correct repository.
+Here's the output you'll see after you make a few changes
+to the pull request submitted by `@wileycoyote` in the `toone-model` branch.
+
+```{r pr-push-external, eval=FALSE}
+pr_push()
+```
+```
+✔ Checking that local branch 'wileycoyote-toone-model' has the changes in 'wileycoyote/toone-model'
+✔ Pushing local 'wileycoyote-toone-model' branch to 'wilecoyote:toone-model'
+✔ View PR at 'https://github.com/gadenbuie/acme/pull/14' or call `pr_view()`
+```
+
+`r way_point()` Phenomenal! What do you want to do next?
+
+- Beep, beep! I'm moving on to [start the next thing](#pr-pause).
+
+- Hang on, [I saw something I need to fix](#fix-something).
+
+- That's all I wanted to do, I can [forget about this PR now](#pr-forget).
+
+- Someone else made changes in the PR [and now I need to update my local copy](#pr-pull).
+
+- I just merged this pull request and [I'm all done with this work](#pr-finish).
 
 ## Wrap Up
 
@@ -278,6 +374,10 @@ pr_finish()
 ```
 
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+
+### Forget about it {#pr-forget}
+
+TK: Forget about this PR!
 
 
 ## Download the image {#download}
@@ -324,7 +424,8 @@ Garrick Aden-Buie
 .cc-box :last-child {
   margin-bottom: 0;
 }
-.fas.fa-map-signs {
+.fas.fa-map-signs,
+.fas.fa-arrow-alt-circle-left {
 	color: var(--accent-dark);
 }
 

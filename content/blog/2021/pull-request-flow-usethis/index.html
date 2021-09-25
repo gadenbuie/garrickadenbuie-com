@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-06-15'
+date: '2021-10-01'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -18,12 +18,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs-2.8/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/header-attrs-2.10/header-attrs.js"></script>
 
 
 <div class="figure">
-<a href="usethis-pr-flow.svg" data-featherlight="image">
-<img src="usethis-pr-flow.svg" alt="A flow chart for the pull request functions in the usethis R package.">
+<a href="usethis-pr-flow-medium.jpg" data-featherlight="image">
+<img src="usethis-pr-flow-medium.jpg" alt="A flow chart for the pull request functions in the usethis R package.">
 </a>
 <p class="caption">
 A <code>usethis</code> pull request helper function flow. <a href="#download">Download the image</a>.
@@ -33,8 +33,14 @@ A <code>usethis</code> pull request helper function flow. <a href="#download">Do
 <h2>Choose your own pull request adventure</h2>
 <p>Welcome to this choose-your-own-adventure blog post.
 You don’t need to read this one from top to bottom.
-Instead, jumping around is encouraged!
-Just look for the <i class="fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> icon.</p>
+Instead, jumping around is encouraged!</p>
+<p>Look for the <i class="fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> icon.
+It tells you that it’s time for you make a choice.
+Remember, there’s no wrong choice:
+if you take a wrong turn
+you can always use your browser’s <i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i><span class="sr-only">back</span> button
+to retrace your steps.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to <a href="#start">get started</a>?</p>
 <div id="start" class="section level3">
 <h3>Start here</h3>
 <p>You open your project in RStudio (or the editor of your choice).
@@ -75,13 +81,38 @@ giving it the name of your new branch.</p>
 and created and switched to a new branch for you.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> You’re ready to <a href="#do-work">do some work</a>.</p>
 </div>
-<div id="resume-my-work" class="section level3">
+<div id="pr-resume" class="section level3">
 <h3>Pick up something you were working on</h3>
-<p>resume your local work</p>
+<p>TK: resume your local work with <code>pr_resume()</code></p>
 </div>
-<div id="review-others-work" class="section level3">
+<div id="pr-fetch" class="section level3">
 <h3>Review someone else’s work</h3>
-<p>review others works</p>
+<p>TK: review work from others with <code>pr_fetch()</code></p>
+</div>
+</div>
+<div id="do-update" class="section level2">
+<h2>Update your local copy</h2>
+<p>TK: <a href="#do-choose-branch">get to the right branch</a> and then choose <code>pr_pull()</code> or <code>pr_merge_main()</code></p>
+<div id="pr-pull" class="section level3">
+<h3>Update your local copy with someone else’s changes</h3>
+<p>TK: <code>pr_pull()</code></p>
+</div>
+<div id="pr-merge-main" class="section level3">
+<h3>Bring your work up to date with the main branch</h3>
+<p>TK: <code>pr_merge_main()</code></p>
+</div>
+<div id="do-choose-branch" class="section level3">
+<h3>Get to the right place</h3>
+<ul>
+<li><p>The one I’m in right now<br/>
+⇒ <em>you’re all set, go <a href="#do-work">get some work done</a></em>!</p></li>
+<li><p>A local branch, but not the one I’m in now<br/>
+⇒ <em>go <a href="#pr-resume">resume working in that branch</a>
+and then come right back here.</em></p></li>
+<li><p>A pull request branch I was looking at on GitHub<br/>
+⇒ <em>go <a href="#pr-fetch">fetch the pull request</a>
+and then come right back here</em>.</p></li>
+</ul>
 </div>
 </div>
 <div id="do-work" class="section level2">
@@ -98,23 +129,33 @@ come back here and we’ll <a href="#git-commit">take a snapshot of your updates
 <p>Feeling okay about your code?
 Take a snapshot of it!</p>
 <p>There are two parts to this step.
-First, you’ll pick the files that you want to add to the snapshot (or commit).
+And really,
+it’s less like taking a picture and more like sending yourself an email
+with a copy of your files.</p>
+<p>First, you’ll pick the files that you want to add to the snapshot (or commit).
 You can do this in the R console using <code>git_add()</code> from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package.
 Give the function a vector with the paths to the files you changed.</p>
 <pre class="r"><code>gert::git_add(c(&quot;R/atom_arranger.R&quot;, &quot;man/atom_arranger.Rd&quot;))</code></pre>
-<p>Running this command is like asking a friend to step into the picture.
-We haven’t officially taken a snapshot of your changes yet,
-but we now we have the changes in frame.
-In git-speak,
-<code>git_add()</code> adds the changes in the listed files to a staging area.</p>
+<p>In git-speak,
+<code>git_add()</code> adds the changes in the listed files to a staging area.
+Running this command is like dragging a file into the email you’re writing.
+We haven’t officially sent that email yet,
+but we have a copy ready to go.
+By the way,
+you can still make more changes to the file
+knowing that there’s a temporary copy in that email draft
+in case anything goes wrong.</p>
 <p>Then, once all the files you want to commit have been added,
 you <em>commit</em> the changes.
-In our picture-taking metaphor,
-committing is a lot like taking a snapshot of your friends.</p>
-<p>Along with the changes in the staged files,
-the commit includes a message,
-which you give as a parameter to <code>git_commit()</code>
-(also from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package).
+In our email metaphor,
+committing is a lot like pressing send on the email.</p>
+<p>And just like an email,
+the commit includes a message
+where you can describe the updates you made to the files in the email (commit).</p>
+<p>For this step you can use
+<code>git_commit()</code>
+(also from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package)
+which takes the commit message as a parameter.
 Think of this message like the subject of an email to your future self.</p>
 <pre class="r"><code>gert::git_commit(&quot;Add an example to ?atom_arranger()&quot;)</code></pre>
 <p><em>P.S. You can do this adding-and-committing dance in the <a href="https://happygitwithr.com/rstudio-git-github.html">Git pane in RStudio</a>, too.</em></p>
@@ -126,21 +167,16 @@ Think of this message like the subject of an email to your future self.</p>
 </div>
 <div id="fix-something" class="section level3">
 <h3>Fix something</h3>
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Need to fix something? Let’s do a quick check.
-This thing that needs to be fixed — what branch is it in?</p>
+<p>Oh no, you need to fix something!
+I hope it’s just a typo and not a big scary error.
+But first…</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span>
+Quick question:
+this thing that needs to be fixed — what branch is it in?</p>
 <ul>
-<li><p>The one I’m in right now<br/>
-⇒ <em>keep reading</em></p></li>
-<li><p>A local branch, but not the one I’m in now<br/>
-⇒ <em>go <a href="#pr-resume">resume working in that branch</a>
-and then come right back here.</em></p></li>
-<li><p>A pull request branch I was looking at on GitHub<br/>
-⇒ <em>go <a href="#pr-fetch">fetch the pull request</a>
-and then come right back here</em>.</p></li>
+<li>The one that I’m in now, I’m ready to <a href="#do-work">get some work done and fix this thing</a></li>
+<li>Not this one, <a href="#do-choose-branch">I need to change branches</a></li>
 </ul>
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, you’re all set to make that fix.
-Once you’re happy with your changes,
-<a href="#git-commit">take a snapshot of the fix</a>.</p>
 </div>
 </div>
 <div id="share-your-work" class="section level2">
@@ -155,10 +191,9 @@ or are you <a href="#pr-push">updating an existing pull request</a> with either 
 <p>To create a new pull request, you call <code>pr_push()</code>.</p>
 <pre class="r"><code>pr_push()</code></pre>
 <pre><code>✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
-✔ Setting upstream tracking branch for &#39;add-example&#39; to &#39;origin/formidable&#39;
+✔ Setting upstream tracking branch for &#39;add-example&#39; to &#39;origin/add-example&#39;
 ✔ Create PR at link given below
 ✔ Opening URL &#39;https://github.com/gadenbuie/acme/compare/add-example&#39;</code></pre>
-</div>
 <p><code>pr_push()</code> sends the local changes in your new branch to GitHub,
 and opens a browser window where you can review your changes once more.
 If everything looks good,
@@ -167,6 +202,36 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 <ul>
 <li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Oh shoot, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
+<li><p>Great, that pull request was just merged and <a href="#pr-finish">I’m done with this work</a>.</p></li>
+<li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>Actually, the pull request was closed and <a href="#pr-forget">I can forget about this work</a>.</p></li>
+</ul>
+</div>
+<div id="pr-push" class="section level3">
+<h3>Update an existing pull request</h3>
+<p>You just made <a href="#git-commit">and committed</a> some changes to an existing pull request,
+and now you’d like to update the PR on GitHub.
+<code>pr_push()</code> also does this for you!
+Helpfully, before it pushes it checks to make sure your local branch is up-to-date.</p>
+<pre class="r"><code>pr_push()</code></pre>
+<pre><code>✔ Checking that local branch &#39;add-example&#39; has the changes in &#39;origin/add-example&#39;
+✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
+✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/11&#39; or call `pr_view()`</code></pre>
+<p>If the PR is a change that someone else is suggesting for your package,
+<code>pr_push()</code> will send the changes to the correct repository.
+Here’s the output you’ll see after you make a few changes
+to the pull request submitted by <code>@wileycoyote</code> in the <code>toone-model</code> branch.</p>
+<pre class="r"><code>pr_push()</code></pre>
+<pre><code>✔ Checking that local branch &#39;wileycoyote-toone-model&#39; has the changes in &#39;wileycoyote/toone-model&#39;
+✔ Pushing local &#39;wileycoyote-toone-model&#39; branch to &#39;wilecoyote:toone-model&#39;
+✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/14&#39; or call `pr_view()`</code></pre>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
+<ul>
+<li><p>Beep, beep! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Hang on, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
+<li><p>That’s all I wanted to do, I can <a href="#pr-forget">forget about this PR now</a>.</p></li>
+<li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>I just merged this pull request and <a href="#pr-finish">I’m all done with this work</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -192,6 +257,10 @@ That’s awesome.
 Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 <pre class="r"><code>pr_finish()</code></pre>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+<div id="pr-forget" class="section level3">
+<h3>Forget about it</h3>
+<p>TK: Forget about this PR!</p>
 </div>
 </div>
 <div id="download" class="section level2">
@@ -233,7 +302,8 @@ Garrick Aden-Buie
 .cc-box :last-child {
   margin-bottom: 0;
 }
-.fas.fa-map-signs {
+.fas.fa-map-signs,
+.fas.fa-arrow-alt-circle-left {
     color: var(--accent-dark);
 }
 
