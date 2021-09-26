@@ -56,8 +56,8 @@ You’re ready to do some work.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a harder decision: what do you actually do next?</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="#start-new-work">Start new work</a></p></li>
-<li><p><a href="#resume-my-work">Pick up something you were working on</a></p></li>
-<li><p><a href="#review-others-work">Review someone else’s work</a></p></li>
+<li><p><a href="#pr-resume">Pick up something you were working on</a></p></li>
+<li><p><a href="#pr-fetch">Review someone else’s work</a></p></li>
 </ol>
 </div>
 </div>
@@ -174,18 +174,21 @@ But first…</p>
 Quick question:
 this thing that needs to be fixed — what branch is it in?</p>
 <ul>
-<li>The one that I’m in now, I’m ready to <a href="#do-work">get some work done and fix this thing</a></li>
-<li>Not this one, <a href="#do-choose-branch">I need to change branches</a></li>
+<li><p>The one that I’m in now, I’m ready to <a href="#do-work">get some work done and fix this thing</a>.</p></li>
+<li><p>Not this one, <a href="#do-choose-branch">I need to change branches</a>.</p></li>
 </ul>
 </div>
 </div>
 <div id="share-your-work" class="section level2">
 <h2>Share your work</h2>
 <p>Fantastic!
-Your work is awesome and everyone is going to be happy to try it out,
-but first you have to get it off of your computer and out into the world.</p>
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Is this <a href="#pr-push-new">new work</a> you’re sharing,
-or are you <a href="#pr-push">updating an existing pull request</a> with either your own or someone else’s work?</p>
+Your work is awesome and everyone is going to be happy to try it out.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Let’s get your work off of your computer and out into the world.</p>
+<ul>
+<li><p>This <a href="#pr-push-new">new work you’re sharing</a> for the first time.</p></li>
+<li><p>I’m <a href="#pr-push-yours">updating a pull request that I created</a>.</p></li>
+<li><p>I’m <a href="#pr-push-theirs">updating a pull request from someone else</a>.</p></li>
+</ul>
 <div id="pr-push-new" class="section level3">
 <h3>Create a new pull request</h3>
 <p>To create a new pull request, you call <code>pr_push()</code>.</p>
@@ -202,13 +205,13 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 <ul>
 <li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Oh shoot, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
-<li><p>Great, that pull request was just merged and <a href="#pr-finish">I’m done with this work</a>.</p></li>
+<li><p>Great, that pull request was just merged and <a href="#pr-finish-yours">I’m done with this work</a>.</p></li>
 <li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
-<li><p>Actually, the pull request was closed and <a href="#pr-forget">I can forget about this work</a>.</p></li>
+<li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
 </ul>
 </div>
-<div id="pr-push" class="section level3">
-<h3>Update an existing pull request</h3>
+<div id="pr-push-yours" class="section level3">
+<h3>Update your existing pull request</h3>
 <p>You just made <a href="#git-commit">and committed</a> some changes to an existing pull request,
 and now you’d like to update the PR on GitHub.
 <code>pr_push()</code> also does this for you!
@@ -217,8 +220,20 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 <pre><code>✔ Checking that local branch &#39;add-example&#39; has the changes in &#39;origin/add-example&#39;
 ✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
 ✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/11&#39; or call `pr_view()`</code></pre>
-<p>If the PR is a change that someone else is suggesting for your package,
-<code>pr_push()</code> will send the changes to the correct repository.
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
+<ul>
+<li><p>Rock on! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Wait a second, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
+<li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>I just merged this PR and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
+<li><p>Never mind, my <a href="#pr-forget-yours">PR was closed and I’d like to forget about this work</a>.</p></li>
+</ul>
+</div>
+<div id="pr-push-theirs" class="section level3">
+<h3>Update someone else’s pull request</h3>
+<p>You just made a change in a branch for a PR
+with work that someone else is suggesting for your package.
+<code>pr_push()</code> is very smart and knows how to send the changes to the correct repository.
 Here’s the output you’ll see after you make a few changes
 to the pull request submitted by <code>@wileycoyote</code> in the <code>toone-model</code> branch.</p>
 <pre class="r"><code>pr_push()</code></pre>
@@ -229,9 +244,9 @@ to the pull request submitted by <code>@wileycoyote</code> in the <code>toone-mo
 <ul>
 <li><p>Beep, beep! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Hang on, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
-<li><p>That’s all I wanted to do, I can <a href="#pr-forget">forget about this PR now</a>.</p></li>
+<li><p>That’s all I wanted to do, I can <a href="#pr-forget-theirs">forget about this PR now</a>.</p></li>
 <li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
-<li><p>I just merged this pull request and <a href="#pr-finish">I’m all done with this work</a>.</p></li>
+<li><p>I just merged this pull request and <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -250,17 +265,56 @@ and to make sure you’ve got the latest changes in the default branch.</p>
 ✓ Pulling changes from &#39;origin/main&#39;</code></pre>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
-<div id="pr-finish" class="section level3">
+<div id="pr-finish-yours" class="section level3">
 <h3>Finish your work</h3>
-<p>Congrats! Your pull request was merged or your review of someone else’s work is complete!
+<p>Congrats! Your pull request was merged!
 That’s awesome.
 Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 <pre class="r"><code>pr_finish()</code></pre>
+<pre><code>✓ Checking that remote branch &#39;origin/add-example&#39; has the changes in &#39;add-example&#39;
+✓ Switching back to default branch (&#39;main&#39;)
+ℹ Pulling changes from &#39;origin/main&#39;
+✓ Deleting local &#39;add-example&#39; branch</code></pre>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
-<div id="pr-forget" class="section level3">
-<h3>Forget about it</h3>
-<p>TK: Forget about this PR!</p>
+<div id="pr-finish-theirs" class="section level3">
+<h3>Finish your work</h3>
+<p>Well done, your review of someone else’s work is complete and their PR is merged!
+That’s awesome.
+Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
+<pre class="r"><code>pr_finish()</code></pre>
+<pre><code>✔ Checking that remote branch &#39;wileycoyote/toone-model&#39; has the changes in &#39;local/wileycoyote-toone-model&#39;
+✔ Switching back to &#39;main&#39; branch
+✔ Pulling changes from GitHub source repo &#39;origin/main&#39;
+✔ Deleting local &#39;wileycoyote-toone-model&#39; branch
+✔ Removing remote &#39;wileycoyote&#39;</code></pre>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+<div id="pr-forget-yours" class="section level3">
+<h3>Forget about your work</h3>
+<p>Well that was fun.
+But now you’re done with this branch
+and you call <code>pr_forget()</code> to delete it from your local copy.</p>
+<pre class="r"><code>pr_forget()</code></pre>
+<pre><code>Local branch &#39;feature-exploration&#39; has no associated remote branch.
+If we delete &#39;feature-exploration&#39;, any work that exists only on this branch work may be hard for you to recover.
+Proceed anyway?
+
+1: No way
+2: Not now
+3: Yes
+
+Selection: 3
+✓ Switching back to default branch (&#39;main&#39;)
+✓ Pulling changes from &#39;origin/main&#39;
+✓ Deleting local &#39;feature-exploration&#39; branch</code></pre>
+<p>Notice that <code>pr_forget()</code> warns you about any work you might lose
+and gives you a chance to rethink it.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+<div id="pr-forget-theirs" class="section level3">
+<h3>Forget about their work</h3>
+<p>TK: <code>pr_forget()</code> for theirs</p>
 </div>
 </div>
 <div id="download" class="section level2">

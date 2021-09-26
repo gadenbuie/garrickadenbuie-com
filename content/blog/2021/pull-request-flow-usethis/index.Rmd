@@ -109,9 +109,9 @@ library(usethis)
 
 1. [Start new work](#start-new-work)
 
-1. [Pick up something you were working on](#resume-my-work)
+1. [Pick up something you were working on](#pr-resume)
 
-1. [Review someone else's work](#review-others-work)
+1. [Review someone else's work](#pr-fetch)
 :::
 
 ### Start new work {#start-new-work}
@@ -256,17 +256,22 @@ But first...
 Quick question: 
 this thing that needs to be fixed — what branch is it in?
 
-- The one that I'm in now, I'm ready to [get some work done and fix this thing](#do-work)
-- Not this one, [I need to change branches](#do-choose-branch)
+- The one that I'm in now, I'm ready to [get some work done and fix this thing](#do-work).
+
+- Not this one, [I need to change branches](#do-choose-branch).
 
 ## Share your work {#share-your-work}
 
 Fantastic!
-Your work is awesome and everyone is going to be happy to try it out,
-but first you have to get it off of your computer and out into the world.
+Your work is awesome and everyone is going to be happy to try it out.
 
-`r way_point()` Is this [new work](#pr-push-new) you're sharing,
-or are you [updating an existing pull request](#pr-push) with either your own or someone else's work?
+`r way_point()` Let's get your work off of your computer and out into the world.
+
+- This [new work you're sharing](#pr-push-new) for the first time.
+
+- I'm [updating a pull request that I created](#pr-push-yours).
+
+- I'm [updating a pull request from someone else](#pr-push-theirs).
 
 ### Create a new pull request {#pr-push-new}
 
@@ -293,13 +298,13 @@ go ahead click the _Create Pull Request_ button.
 
 - Oh shoot, [I saw something I need to fix](#fix-something).
 
-- Great, that pull request was just merged and [I'm done with this work](#pr-finish).
+- Great, that pull request was just merged and [I'm done with this work](#pr-finish-yours).
 
 - Someone else made changes in the PR [and now I need to update my local copy](#pr-pull).
 
-- Actually, the pull request was closed and [I can forget about this work](#pr-forget).
+- Actually, the pull request was closed and [I can forget about this work](#pr-forget-yours).
 
-### Update an existing pull request {#pr-push}
+### Update your existing pull request {#pr-push-yours}
 
 You just made [and committed](#git-commit) some changes to an existing pull request,
 and now you'd like to update the PR on GitHub.
@@ -315,12 +320,27 @@ pr_push()
 ✔ View PR at 'https://github.com/gadenbuie/acme/pull/11' or call `pr_view()`
 ```
 
-If the PR is a change that someone else is suggesting for your package,
-`pr_push()` will send the changes to the correct repository.
+`r way_point()` Phenomenal! What do you want to do next?
+
+- Rock on! I'm moving on to [start the next thing](#pr-pause).
+
+- Wait a second, [I saw something I need to fix](#fix-something).
+
+- Someone else made changes in the PR [and now I need to update my local copy](#pr-pull).
+
+- I just merged this PR and [I'm all done with this work](#pr-finish-yours).
+
+- Never mind, my [PR was closed and I'd like to forget about this work](#pr-forget-yours).
+
+### Update someone else's pull request {#pr-push-theirs}
+
+You just made a change in a branch for a PR
+with work that someone else is suggesting for your package.
+`pr_push()` is very smart and knows how to send the changes to the correct repository.
 Here's the output you'll see after you make a few changes
 to the pull request submitted by `@wileycoyote` in the `toone-model` branch.
 
-```{r pr-push-external, eval=FALSE}
+```{r pr-push-theirs, eval=FALSE}
 pr_push()
 ```
 ```
@@ -335,11 +355,11 @@ pr_push()
 
 - Hang on, [I saw something I need to fix](#fix-something).
 
-- That's all I wanted to do, I can [forget about this PR now](#pr-forget).
+- That's all I wanted to do, I can [forget about this PR now](#pr-forget-theirs).
 
 - Someone else made changes in the PR [and now I need to update my local copy](#pr-pull).
 
-- I just merged this pull request and [I'm all done with this work](#pr-finish).
+- I just merged this pull request and [I'm all done with this work](#pr-finish-theirs).
 
 ## Wrap Up
 
@@ -353,7 +373,7 @@ That's alright, that work will be waiting patiently for you in a local branch.
 Call `pr_pause()` to switch from the current branch back to the default branch,
 and to make sure you've got the latest changes in the default branch.
 
-```{r eval=FALSE}
+```{r pr_pause, eval=FALSE}
 pr_pause()
 ```
 ```
@@ -363,21 +383,75 @@ pr_pause()
 
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 
-### Finish your work {#pr-finish}
+### Finish your work {#pr-finish-yours}
 
-Congrats! Your pull request was merged or your review of someone else's work is complete!
+Congrats! Your pull request was merged!
 That's awesome.
 Now it's time to wrap things up by calling `pr_finish()`.
 
-```{r pr_finish, eval=FALSE}
+```{r pr_finish-yours, eval=FALSE}
 pr_finish()
+```
+```
+✓ Checking that remote branch 'origin/add-example' has the changes in 'add-example'
+✓ Switching back to default branch ('main')
+ℹ Pulling changes from 'origin/main'
+✓ Deleting local 'add-example' branch
 ```
 
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 
-### Forget about it {#pr-forget}
+### Finish your work {#pr-finish-theirs}
 
-TK: Forget about this PR!
+Well done, your review of someone else's work is complete and their PR is merged!
+That's awesome.
+Now it's time to wrap things up by calling `pr_finish()`.
+
+```{r pr_finish-theirs, eval=FALSE}
+pr_finish()
+```
+```
+✔ Checking that remote branch 'wileycoyote/toone-model' has the changes in 'local/wileycoyote-toone-model'
+✔ Switching back to 'main' branch
+✔ Pulling changes from GitHub source repo 'origin/main'
+✔ Deleting local 'wileycoyote-toone-model' branch
+✔ Removing remote 'wileycoyote'
+```
+
+`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+
+### Forget about your work {#pr-forget-yours}
+
+Well that was fun.
+But now you're done with this branch
+and you call `pr_forget()` to delete it from your local copy.
+
+```{r pr-forget, eval=FALSE}
+pr_forget()
+```
+```
+Local branch 'feature-exploration' has no associated remote branch.
+If we delete 'feature-exploration', any work that exists only on this branch work may be hard for you to recover.
+Proceed anyway?
+
+1: No way
+2: Not now
+3: Yes
+
+Selection: 3
+✓ Switching back to default branch ('main')
+✓ Pulling changes from 'origin/main'
+✓ Deleting local 'feature-exploration' branch
+```
+
+Notice that `pr_forget()` warns you about any work you might lose
+and gives you a chance to rethink it.
+
+`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+
+### Forget about their work {#pr-forget-theirs}
+
+TK: `pr_forget()` for theirs
 
 
 ## Download the image {#download}
