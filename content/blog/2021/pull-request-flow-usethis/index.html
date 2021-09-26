@@ -40,7 +40,9 @@ Remember, there’s no wrong choice:
 if you take a wrong turn
 you can always use your browser’s <i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i><span class="sr-only">back</span> button
 to retrace your steps.</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to <a href="#start">get started</a>?</p>
+</div>
 <div id="start" class="section level3">
 <h3>Start here</h3>
 <p>You open your project in RStudio (or the editor of your choice).
@@ -52,7 +54,7 @@ but now the empty console beckons.
 You’re ready to do some work.</p>
 <p>Where do you begin? With <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> of course.</p>
 <pre class="r"><code>library(usethis)</code></pre>
-<div id="start-here">
+<div id="start-here" class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a harder decision: what do you actually do next?</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="#start-new-work">Start new work</a></p></li>
@@ -79,30 +81,96 @@ giving it the name of your new branch.</p>
 </div>
 <p>The console output reminds you that <span class="pkg">usethis</span> updated your local repo
 and created and switched to a new branch for you.</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> You’re ready to <a href="#do-work">do some work</a>.</p>
+</div>
 </div>
 <div id="pr-resume" class="section level3">
 <h3>Pick up something you were working on</h3>
-<p>TK: resume your local work with <code>pr_resume()</code></p>
+<p>You’re ready to get back to that thing you were working on.
+Which was what again?
+You should probably have another sip of your coffee.
+You were doing some work in a branch in your local of the project…</p>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Do you remember the name of the branch?</p>
+<ul>
+<li><p>I <a href="#pr-resume-no-branch">don’t remember, remind me</a></p></li>
+<li><p>I <a href="#pr-resume-branch">remember, it’s the <code>add-example</code> branch</a></p></li>
+</ul>
+</div>
+</div>
+<div id="pr-resume-no-branch" class="section level3">
+<h3>Choose a branch and resume working</h3>
+<pre class="r"><code>pr_resume()</code></pre>
+<pre><code>ℹ No branch specified ... looking up local branches and associated PRs
+Which branch do you want to checkout? (0 to exit)
+
+1:             add-examples --&gt; #11 (&#39;@gadenbuie&#39;): Add Examples
+2:      feature-exploration
+
+Selection: 1
+✓ Switching to branch &#39;add-examples&#39;
+✓ Pulling from &#39;origin/add-examples&#39;
+• Use `pr_push()` to create or update PR.</code></pre>
+<div class="decision">
+<p>TK: next steps</p>
+</div>
+</div>
+<div id="pr-resume-branch" class="section level3">
+<h3>Get back to the branch</h3>
+<pre class="r"><code>pr_resume(&quot;add-example&quot;)</code></pre>
+<pre><code>✓ Switching to branch &#39;add-examples&#39;
+✓ Pulling from &#39;origin/add-examples&#39;
+• Use `pr_push()` to create or update PR.</code></pre>
+<div class="decision">
+<p>TK: next steps</p>
+</div>
 </div>
 <div id="pr-fetch" class="section level3">
 <h3>Review someone else’s work</h3>
-<p>TK: review work from others with <code>pr_fetch()</code></p>
+<pre class="r"><code>pr_fetch()</code></pre>
+<pre><code>ℹ No PR specified ... looking up open PRs
+Which PR are you interested in? (0 to exit) 
+
+1: &#39;gadenbuie/acme/#11&#39; (@gadenbuie): &#39;Add an example&#39;
+2: &#39;gadenbuie/acme/#14&#39; (@wileycoyote): &#39;Model tuning features&#39;
+
+Selection: </code></pre>
+<p>Choosing selection 2 will perform the same steps as providing the PR number to <code>pr_fetch()</code>.</p>
+<pre class="r"><code>pr_fetch(14)</code></pre>
+<pre><code>✓ Checking out PR &#39;gadenbuie/acme/#94&#39; (@wileycoyote): &#39;Model tuning features&#39;
+✓ Adding remote &#39;wileycoyote&#39; as &#39;git@github.com:wileycoyote/acme.git&#39;
+✓ Creating and switching to local branch &#39;wileycoyote-toone-model&#39;
+✓ Setting &#39;wileycoyote/toone-model&#39; as remote tracking branch</code></pre>
+<div class="decision">
+<p>TK: next steps</p>
+</div>
 </div>
 </div>
 <div id="do-update" class="section level2">
 <h2>Update your local copy</h2>
 <p>TK: <a href="#do-choose-branch">get to the right branch</a> and then choose <code>pr_pull()</code> or <code>pr_merge_main()</code></p>
 <div id="pr-pull" class="section level3">
+<h3>Update your local copy with a reviewer’s changes</h3>
+<pre class="r"><code>pr_pull()</code></pre>
+<pre><code>✓ Pulling from &#39;origin/add-example&#39;</code></pre>
+</div>
+<div id="pr-pull-theirs" class="section level3">
 <h3>Update your local copy with someone else’s changes</h3>
-<p>TK: <code>pr_pull()</code></p>
+<pre class="r"><code>pr_pull()</code></pre>
+<pre><code>✓ Pulling from &#39;wileycoyote/toone-model&#39;</code></pre>
 </div>
 <div id="pr-merge-main" class="section level3">
 <h3>Bring your work up to date with the main branch</h3>
-<p>TK: <code>pr_merge_main()</code></p>
+<pre class="r"><code>pr_merge_main()</code></pre>
+<pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
+Merged origin/main into add-example</code></pre>
 </div>
 <div id="do-choose-branch" class="section level3">
 <h3>Get to the right place</h3>
+<p>Let’s make sure we’re in the right branch in your local project.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span>
+Which branch do you want to work with right now?</p>
 <ul>
 <li><p>The one I’m in right now<br/>
 ⇒ <em>you’re all set, go <a href="#do-work">get some work done</a></em>!</p></li>
@@ -121,14 +189,20 @@ and then come right back here</em>.</p></li>
 turn up your favorite <a href="https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6">music to write code to</a> playlist on Spotify,
 and line up 25 minutes in your <a href="https://pomofocus.io/">Pomodoro app</a>.</p>
 <p>You’re ready to get something done!
-Go write some code.</p>
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> When you feel good about your work,
-come back here and we’ll <a href="#git-commit">take a snapshot of your updates</a>.</p>
+Go write some code.
+⏲️
+🧑‍💻
+🎧</p>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span>
+Sweet!
+Now that feel good about your work,
+you’re ready to <a href="#git-commit">take a snapshot of your updates</a>.</p>
+</div>
 <div id="git-commit" class="section level3">
 <h3>Take a snapshot of your work</h3>
-<p>Feeling okay about your code?
-Take a snapshot of it!</p>
-<p>There are two parts to this step.
+<p><em>If you like it then you shoulda made a <code>git commit</code>.</em></p>
+<p>There are two parts to taking a snapshot of your code.
 And really,
 it’s less like taking a picture and more like sending yourself an email
 with a copy of your files.</p>
@@ -159,17 +233,20 @@ which takes the commit message as a parameter.
 Think of this message like the subject of an email to your future self.</p>
 <pre class="r"><code>gert::git_commit(&quot;Add an example to ?atom_arranger()&quot;)</code></pre>
 <p><em>P.S. You can do this adding-and-committing dance in the <a href="https://happygitwithr.com/rstudio-git-github.html">Git pane in RStudio</a>, too.</em></p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Are you ready to share your work?</p>
 <ul>
 <li><p>If <strong>yes</strong>, then you’re ready to <a href="#share-your-work">push your changes out into the world</a>.</p></li>
 <li><p>If <strong>not</strong>, no worries. Just <a href="#do-work">keep on working</a>.</p></li>
 </ul>
 </div>
+</div>
 <div id="fix-something" class="section level3">
 <h3>Fix something</h3>
 <p>Oh no, you need to fix something!
 I hope it’s just a typo and not a big scary error.
 But first…</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span>
 Quick question:
 this thing that needs to be fixed — what branch is it in?</p>
@@ -179,16 +256,19 @@ this thing that needs to be fixed — what branch is it in?</p>
 </ul>
 </div>
 </div>
+</div>
 <div id="share-your-work" class="section level2">
 <h2>Share your work</h2>
 <p>Fantastic!
 Your work is awesome and everyone is going to be happy to try it out.</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Let’s get your work off of your computer and out into the world.</p>
 <ul>
 <li><p>This <a href="#pr-push-new">new work you’re sharing</a> for the first time.</p></li>
 <li><p>I’m <a href="#pr-push-yours">updating a pull request that I created</a>.</p></li>
 <li><p>I’m <a href="#pr-push-theirs">updating a pull request from someone else</a>.</p></li>
 </ul>
+</div>
 <div id="pr-push-new" class="section level3">
 <h3>Create a new pull request</h3>
 <p>To create a new pull request, you call <code>pr_push()</code>.</p>
@@ -201,6 +281,7 @@ Your work is awesome and everyone is going to be happy to try it out.</p>
 and opens a browser window where you can review your changes once more.
 If everything looks good,
 go ahead click the <em>Create Pull Request</em> button.</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Good job! How are you feeling now?</p>
 <ul>
 <li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
@@ -209,6 +290,7 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 <li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
 <li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
 </ul>
+</div>
 </div>
 <div id="pr-push-yours" class="section level3">
 <h3>Update your existing pull request</h3>
@@ -220,6 +302,7 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 <pre><code>✔ Checking that local branch &#39;add-example&#39; has the changes in &#39;origin/add-example&#39;
 ✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
 ✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/11&#39; or call `pr_view()`</code></pre>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
 <ul>
 <li><p>Rock on! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
@@ -228,6 +311,7 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 <li><p>I just merged this PR and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
 <li><p>Never mind, my <a href="#pr-forget-yours">PR was closed and I’d like to forget about this work</a>.</p></li>
 </ul>
+</div>
 </div>
 <div id="pr-push-theirs" class="section level3">
 <h3>Update someone else’s pull request</h3>
@@ -240,14 +324,16 @@ to the pull request submitted by <code>@wileycoyote</code> in the <code>toone-mo
 <pre><code>✔ Checking that local branch &#39;wileycoyote-toone-model&#39; has the changes in &#39;wileycoyote/toone-model&#39;
 ✔ Pushing local &#39;wileycoyote-toone-model&#39; branch to &#39;wilecoyote:toone-model&#39;
 ✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/14&#39; or call `pr_view()`</code></pre>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
 <ul>
 <li><p>Beep, beep! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Hang on, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
 <li><p>That’s all I wanted to do, I can <a href="#pr-forget-theirs">forget about this PR now</a>.</p></li>
-<li><p>Someone else made changes in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>Someone else made changes in the PR <a href="#pr-pull-theirs">and now I need to update my local copy</a>.</p></li>
 <li><p>I just merged this pull request and <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
 </ul>
+</div>
 </div>
 </div>
 <div id="wrap-up" class="section level2">
@@ -263,7 +349,9 @@ and to make sure you’ve got the latest changes in the default branch.</p>
 <pre class="r"><code>pr_pause()</code></pre>
 <pre><code>✓ Switching back to default branch (&#39;main&#39;)
 ✓ Pulling changes from &#39;origin/main&#39;</code></pre>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
 </div>
 <div id="pr-finish-yours" class="section level3">
 <h3>Finish your work</h3>
@@ -275,7 +363,9 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 ✓ Switching back to default branch (&#39;main&#39;)
 ℹ Pulling changes from &#39;origin/main&#39;
 ✓ Deleting local &#39;add-example&#39; branch</code></pre>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
 </div>
 <div id="pr-finish-theirs" class="section level3">
 <h3>Finish your work</h3>
@@ -288,7 +378,9 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 ✔ Pulling changes from GitHub source repo &#39;origin/main&#39;
 ✔ Deleting local &#39;wileycoyote-toone-model&#39; branch
 ✔ Removing remote &#39;wileycoyote&#39;</code></pre>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
 </div>
 <div id="pr-forget-yours" class="section level3">
 <h3>Forget about your work</h3>
@@ -310,7 +402,9 @@ Selection: 3
 ✓ Deleting local &#39;feature-exploration&#39; branch</code></pre>
 <p>Notice that <code>pr_forget()</code> warns you about any work you might lose
 and gives you a chance to rethink it.</p>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
 </div>
 <div id="pr-forget-theirs" class="section level3">
 <h3>Forget about their work</h3>
@@ -320,11 +414,11 @@ and gives you a chance to rethink it.</p>
 <div id="download" class="section level2">
 <h2>Download the image</h2>
 <ul>
-<li><a href="usethis-pr-flow.png">Small PNG Image (94 KB)</a></li>
-<li><a href="usethis-pr-flow-medium.png">Medium PNG Image (600 KB)</a></li>
-<li><a href="usethis-pr-flow-large.png">Large PNG Image (820 KB)</a></li>
-<li><a href="usethis-pr-flow.svg">SVG (36 KB)</a></li>
-<li><a href="usethis-pr-flow.drawio">Source File <code>.drawio</code> (3.4 KB)</a></li>
+<li><a href="usethis-pr-flow.jpg">Small JPG Image (186 KB)</a></li>
+<li><a href="usethis-pr-flow-medium.jpg">Medium JPG Image (500 KB)</a></li>
+<li><a href="usethis-pr-flow-large.jpg">Large JPG Image (886 KB)</a></li>
+<li><a href="usethis-pr-flow.svg">SVG (40 KB)</a></li>
+<li><a href="usethis-pr-flow.drawio">Source File <code>.drawio</code> (3.8 KB)</a></li>
 </ul>
 <div class="cc-box">
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
