@@ -72,12 +72,12 @@ lightbox_img(
 )
 ```
 
-
 ## Choose your own pull request adventure {#intro}
 
 Welcome to this choose-your-own-adventure blog post.
-You don't need to read this one from top to bottom.
-Instead, jumping around is encouraged!
+<span id="instructions-non-interactive">You don't need to read this one from top to bottom.
+Instead, jumping around is encouraged!</span>
+<span id="instructions-interactive">It's a little bit unusual, but don't worry, I'll walk you through it.</span>
 
 Look for the `r way_point(FALSE)` icon.
 It tells you that it's time for you make a choice.
@@ -87,7 +87,11 @@ you can always use your browser's `r back_button()` button
 to retrace your steps.
 
 ::: decision
-`r way_point()` Ready to [get started](#start)?
+`r way_point()` Ready to get started?
+
+<ul id="intro-options">
+<li><p>Yes, [I'm ready to go](#start)!</p></li>
+</ul>
 :::
 
 <div id="story"></div>
@@ -355,7 +359,7 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 
 - If **yes**, then you're ready to [push your changes out into the world](#share-your-work).
 
-- If **not**, no worries. Just [keep on working](#do-work).
+- If **not**, no worries. Just <a href="#do-work" class="clear-steps">keep on working</a>.
 :::
 
 
@@ -670,10 +674,27 @@ html {
   white-space: nowrap !important;
 }
 
-#story .step,
+#instructions-non-interactive {
+  display: none;
+}
+
+.non-interactive #skip-to-non-interactive,
+.non-interactive #instructions-interactive {
+  display: none;
+}
+
+.non-interactive #instructions-non-interactive {
+  display: unset;
+}
+
 .fade-in {
-	-webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
-	        animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+	-webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+	        animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+}
+
+.fade-out-bck {
+	-webkit-animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* ----------------------------------------------
@@ -704,47 +725,111 @@ html {
     opacity: 1;
   }
 }
-
+/**
+ * ----------------------------------------
+ * animation fade-out-bck
+ * ----------------------------------------
+ */
+@-webkit-keyframes fade-out-bck {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+}
+@keyframes fade-out-bck {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+}
 
 ```
 
-```{js, echo=FALSE}
-const story = document.getElementById("story")
-const staging = document.getElementById("step-list")
-const steps = {}
-const currentStory = []
-
-Array.from(document.querySelectorAll(".step.level3"))
-  .forEach(function(step) {
-    staging.appendChild(step)
-    steps[step.id] = step
-  })
-Array.from(document.querySelectorAll(".step.level2"))
-  .forEach(function(step) {
-    staging.appendChild(step)
-    steps[step.id] = step
-  })
-
-document
-  .querySelector('main > article > .post-content')
-  .addEventListener('click', function(ev) {
-    if (ev.target.tagName != 'A') {
-      return;
-    }
-    const stepId = ev.target.getAttribute('href').replace(/^#/, '')
-    if (!currentStory.includes(stepId)) {
-      currentStory.push(stepId)
-      story.appendChild(steps[stepId].cloneNode(true))
-    }
-  })
-
-function removeTOC() {
-  const toc = document.querySelector(".table-of-contents")
-  if (toc) {
-    toc.remove()
-  } else {
-    setTimeout(removeTOC, 10)
+```{js, echo=FALSE, eval=identical(knitr::current_input(), "index.Rmd")}
+(function() {
+  // check for interactive query param
+  const urlParams = new URLSearchParams(window.location.search)
+  const introOptions = document.getElementById('intro-options')
+  
+  if (urlParams.get('interactive') == 0) {
+    document.querySelector('main > article > .post-content').classList.add('non-interactive')
+    introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
+    return;
   }
-}
-document.addEventListener('DOMContentLoaded', removeTOC)
+  
+  introOptions.innerHTML = `<li><p>Yes, <a href="#start">walk me through my adventure</a>.</p></li>
+    <li><p>Yes, but I'd prefer to <a href="index.html?interactive=0#intro">read and navigate on my own</a>.</p></li>`
+
+  const story = document.getElementById("story")
+  const staging = document.getElementById("step-list")
+  const steps = {}
+  const currentStory = []
+  
+  Array.from(document.querySelectorAll(".step.level3"))
+    .forEach(function(step) {
+      staging.appendChild(step)
+      steps[step.id] = step
+    })
+  Array.from(document.querySelectorAll(".step.level2"))
+    .forEach(function(step) {
+      staging.appendChild(step)
+      steps[step.id] = step
+    })
+  
+  document
+    .querySelector('main > article > .post-content')
+    .addEventListener('click', function(ev) {
+      if (ev.target.tagName != 'A') {
+        return;
+      }
+      const stepId = ev.target.getAttribute('href').replace(/^#/, '')
+      const stepIds = currentStory.map(el => el.id)
+      if (!steps[stepId]) {
+        console.warning(`Unknown step id #${stepId}, treating like a normal link`)
+        return;
+      }
+      if (!stepIds.includes(stepId)) {
+        ev.preventDefault()
+        const newStep = steps[stepId].cloneNode(true)
+        newStep.classList.add('fade-in')
+        currentStory.push(newStep)
+        story.appendChild(newStep)
+        newStep.scrollIntoView({behavior: 'smooth'})
+        setTimeout(() => newStep.classList.remove('fade-in'), 1100)
+      } else if (ev.target.matches('.clear-steps')) {
+        ev.preventDefault()
+        // clears steps between target and current step
+        const idxNext = stepIds.indexOf(stepId) + 1
+        currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
+        while (currentStory.length > idxNext) {
+          let lastStep = currentStory.pop()
+          lastStep.classList.add('fade-out-bck')
+          setTimeout(() => lastStep.remove(), 1100)
+        }
+      }
+    })
+  
+  // remove the toc sidebar since it doesn't make sense here
+  function removeTOC() {
+    const toc = document.querySelector(".table-of-contents")
+    if (toc) {
+      toc.remove()
+    } else {
+      setTimeout(removeTOC, 10)
+    }
+  }
+  document.addEventListener('DOMContentLoaded', removeTOC)
+})()
 ```

@@ -32,8 +32,9 @@ A <code>usethis</code> pull request helper function flow. <a href="#download">Do
 <div id="intro" class="section level2">
 <h2>Choose your own pull request adventure</h2>
 <p>Welcome to this choose-your-own-adventure blog post.
-You don’t need to read this one from top to bottom.
-Instead, jumping around is encouraged!</p>
+<span id="instructions-non-interactive">You don’t need to read this one from top to bottom.
+Instead, jumping around is encouraged!</span>
+<span id="instructions-interactive">It’s a little bit unusual, but don’t worry, I’ll walk you through it.</span></p>
 <p>Look for the <i class="fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> icon.
 It tells you that it’s time for you make a choice.
 Remember, there’s no wrong choice:
@@ -41,7 +42,14 @@ if you take a wrong turn
 you can always use your browser’s <i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i><span class="sr-only">back</span> button
 to retrace your steps.</p>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to <a href="#start">get started</a>?</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to get started?</p>
+<ul id="intro-options">
+<li>
+<p>
+Yes, <a href="#start">I’m ready to go</a>!
+</p>
+</li>
+</ul>
 </div>
 <div id="story">
 
@@ -238,7 +246,7 @@ Think of this message like the subject of an email to your future self.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Are you ready to share your work?</p>
 <ul>
 <li><p>If <strong>yes</strong>, then you’re ready to <a href="#share-your-work">push your changes out into the world</a>.</p></li>
-<li><p>If <strong>not</strong>, no worries. Just <a href="#do-work">keep on working</a>.</p></li>
+<li><p>If <strong>not</strong>, no worries. Just <a href="#do-work" class="clear-steps">keep on working</a>.</p></li>
 </ul>
 </div>
 </div>
@@ -493,10 +501,27 @@ html {
   white-space: nowrap !important;
 }
 
-#story .step,
+#instructions-non-interactive {
+  display: none;
+}
+
+.non-interactive #skip-to-non-interactive,
+.non-interactive #instructions-interactive {
+  display: none;
+}
+
+.non-interactive #instructions-non-interactive {
+  display: unset;
+}
+
 .fade-in {
-    -webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
-            animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+    -webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+            animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+}
+
+.fade-out-bck {
+    -webkit-animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* ----------------------------------------------
@@ -527,47 +552,111 @@ html {
     opacity: 1;
   }
 }
-
+/**
+ * ----------------------------------------
+ * animation fade-out-bck
+ * ----------------------------------------
+ */
+@-webkit-keyframes fade-out-bck {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+}
+@keyframes fade-out-bck {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+}
 
 </style>
 <script type="text/javascript">
-const story = document.getElementById("story")
-const staging = document.getElementById("step-list")
-const steps = {}
-const currentStory = []
-
-Array.from(document.querySelectorAll(".step.level3"))
-  .forEach(function(step) {
-    staging.appendChild(step)
-    steps[step.id] = step
-  })
-Array.from(document.querySelectorAll(".step.level2"))
-  .forEach(function(step) {
-    staging.appendChild(step)
-    steps[step.id] = step
-  })
-
-document
-  .querySelector('main > article > .post-content')
-  .addEventListener('click', function(ev) {
-    if (ev.target.tagName != 'A') {
-      return;
-    }
-    const stepId = ev.target.getAttribute('href').replace(/^#/, '')
-    if (!currentStory.includes(stepId)) {
-      currentStory.push(stepId)
-      story.appendChild(steps[stepId].cloneNode(true))
-    }
-  })
-
-function removeTOC() {
-  const toc = document.querySelector(".table-of-contents")
-  if (toc) {
-    toc.remove()
-  } else {
-    setTimeout(removeTOC, 10)
+(function() {
+  // check for interactive query param
+  const urlParams = new URLSearchParams(window.location.search)
+  const introOptions = document.getElementById('intro-options')
+  
+  if (urlParams.get('interactive') == 0) {
+    document.querySelector('main > article > .post-content').classList.add('non-interactive')
+    introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
+    return;
   }
-}
-document.addEventListener('DOMContentLoaded', removeTOC)
+  
+  introOptions.innerHTML = `<li><p>Yes, <a href="#start">walk me through my adventure</a>.</p></li>
+    <li><p>Yes, but I'd prefer to <a href="index.html?interactive=0#intro">read and navigate on my own</a>.</p></li>`
+
+  const story = document.getElementById("story")
+  const staging = document.getElementById("step-list")
+  const steps = {}
+  const currentStory = []
+  
+  Array.from(document.querySelectorAll(".step.level3"))
+    .forEach(function(step) {
+      staging.appendChild(step)
+      steps[step.id] = step
+    })
+  Array.from(document.querySelectorAll(".step.level2"))
+    .forEach(function(step) {
+      staging.appendChild(step)
+      steps[step.id] = step
+    })
+  
+  document
+    .querySelector('main > article > .post-content')
+    .addEventListener('click', function(ev) {
+      if (ev.target.tagName != 'A') {
+        return;
+      }
+      const stepId = ev.target.getAttribute('href').replace(/^#/, '')
+      const stepIds = currentStory.map(el => el.id)
+      if (!steps[stepId]) {
+        console.warning(`Unknown step id #${stepId}, treating like a normal link`)
+        return;
+      }
+      if (!stepIds.includes(stepId)) {
+        ev.preventDefault()
+        const newStep = steps[stepId].cloneNode(true)
+        newStep.classList.add('fade-in')
+        currentStory.push(newStep)
+        story.appendChild(newStep)
+        newStep.scrollIntoView({behavior: 'smooth'})
+        setTimeout(() => newStep.classList.remove('fade-in'), 1100)
+      } else if (ev.target.matches('.clear-steps')) {
+        ev.preventDefault()
+        // clears steps between target and current step
+        const idxNext = stepIds.indexOf(stepId) + 1
+        currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
+        while (currentStory.length > idxNext) {
+          let lastStep = currentStory.pop()
+          lastStep.classList.add('fade-out-bck')
+          setTimeout(() => lastStep.remove(), 1100)
+        }
+      }
+    })
+  
+  // remove the toc sidebar since it doesn't make sense here
+  function removeTOC() {
+    const toc = document.querySelector(".table-of-contents")
+    if (toc) {
+      toc.remove()
+    } else {
+      setTimeout(removeTOC, 10)
+    }
+  }
+  document.addEventListener('DOMContentLoaded', removeTOC)
+})()
 </script>
 </div>
