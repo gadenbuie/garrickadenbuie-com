@@ -29,7 +29,7 @@ editor_options:
 A <code>usethis</code> pull request helper function flow. <a href="#download">Download the image</a>.
 </p>
 </div>
-<div id="choose-your-own-pull-request-adventure" class="section level2">
+<div id="intro" class="section level2">
 <h2>Choose your own pull request adventure</h2>
 <p>Welcome to this choose-your-own-adventure blog post.
 You don’t need to read this one from top to bottom.
@@ -43,7 +43,10 @@ to retrace your steps.</p>
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to <a href="#start">get started</a>?</p>
 </div>
-<div id="start" class="section level3">
+<div id="story">
+
+</div>
+<div id="start" class="section level3 step">
 <h3>Start here</h3>
 <p>You open your project in RStudio (or the editor of your choice).
 You make a note to yourself to come up with a better name for your package —
@@ -57,19 +60,18 @@ You’re ready to do some work.</p>
 <div id="start-here" class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a harder decision: what do you actually do next?</p>
 <ol style="list-style-type: decimal">
-<li><p><a href="#start-new-work">Start new work</a></p></li>
+<li><p><a href="#pr-init">Start new work</a></p></li>
 <li><p><a href="#pr-resume">Pick up something you were working on</a></p></li>
 <li><p><a href="#pr-fetch">Review someone else’s work</a></p></li>
 </ol>
 </div>
 </div>
-<div id="start-new-work" class="section level3">
+<div id="pr-init" class="section level3 step">
 <h3>Start new work</h3>
 <p>Time to start something new.
 You scan your project board, issues list, JIRA tickets, slack messages, emails, and post-it notes
 and finally settle on something to work on.
 Your task: add an example to the documentation for a function you’ve been working on.</p>
-<div id="pr-init">
 <p>You want to start your work in a new branch,
 so you call <code>pr_init()</code>,
 giving it the name of your new branch.</p>
@@ -78,14 +80,13 @@ giving it the name of your new branch.</p>
 ℹ Pulling changes from &#39;upstream/main&#39;
 ✓ Creating and switching to local branch &#39;add-example&#39;
 ● Use `pr_push()` to create PR.</code></pre>
-</div>
 <p>The console output reminds you that <span class="pkg">usethis</span> updated your local repo
 and created and switched to a new branch for you.</p>
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> You’re ready to <a href="#do-work">do some work</a>.</p>
 </div>
 </div>
-<div id="pr-resume" class="section level3">
+<div id="pr-resume" class="section level3 step">
 <h3>Pick up something you were working on</h3>
 <p>You’re ready to get back to that thing you were working on.
 Which was what again?
@@ -99,7 +100,7 @@ You were doing some work in a branch in your local of the project…</p>
 </ul>
 </div>
 </div>
-<div id="pr-resume-no-branch" class="section level3">
+<div id="pr-resume-no-branch" class="section level3 step">
 <h3>Choose a branch and resume working</h3>
 <pre class="r"><code>pr_resume()</code></pre>
 <pre><code>ℹ No branch specified ... looking up local branches and associated PRs
@@ -116,7 +117,7 @@ Selection: 1
 <p>TK: next steps</p>
 </div>
 </div>
-<div id="pr-resume-branch" class="section level3">
+<div id="pr-resume-branch" class="section level3 step">
 <h3>Get back to the branch</h3>
 <pre class="r"><code>pr_resume(&quot;add-example&quot;)</code></pre>
 <pre><code>✓ Switching to branch &#39;add-examples&#39;
@@ -126,7 +127,7 @@ Selection: 1
 <p>TK: next steps</p>
 </div>
 </div>
-<div id="pr-fetch" class="section level3">
+<div id="pr-fetch" class="section level3 step">
 <h3>Review someone else’s work</h3>
 <pre class="r"><code>pr_fetch()</code></pre>
 <pre><code>ℹ No PR specified ... looking up open PRs
@@ -147,26 +148,26 @@ Selection: </code></pre>
 </div>
 </div>
 </div>
-<div id="do-update" class="section level2">
+<div id="do-update" class="section level2 step">
 <h2>Update your local copy</h2>
 <p>TK: <a href="#do-choose-branch">get to the right branch</a> and then choose <code>pr_pull()</code> or <code>pr_merge_main()</code></p>
-<div id="pr-pull" class="section level3">
+<div id="pr-pull" class="section level3 step">
 <h3>Update your local copy with a reviewer’s changes</h3>
 <pre class="r"><code>pr_pull()</code></pre>
 <pre><code>✓ Pulling from &#39;origin/add-example&#39;</code></pre>
 </div>
-<div id="pr-pull-theirs" class="section level3">
+<div id="pr-pull-theirs" class="section level3 step">
 <h3>Update your local copy with someone else’s changes</h3>
 <pre class="r"><code>pr_pull()</code></pre>
 <pre><code>✓ Pulling from &#39;wileycoyote/toone-model&#39;</code></pre>
 </div>
-<div id="pr-merge-main" class="section level3">
+<div id="pr-merge-main" class="section level3 step">
 <h3>Bring your work up to date with the main branch</h3>
 <pre class="r"><code>pr_merge_main()</code></pre>
 <pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
 Merged origin/main into add-example</code></pre>
 </div>
-<div id="do-choose-branch" class="section level3">
+<div id="do-choose-branch" class="section level3 step">
 <h3>Get to the right place</h3>
 <p>Let’s make sure we’re in the right branch in your local project.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span>
@@ -183,7 +184,7 @@ and then come right back here</em>.</p></li>
 </ul>
 </div>
 </div>
-<div id="do-work" class="section level2">
+<div id="do-work" class="section level2 step">
 <h2>Do some work</h2>
 <p>You take a sip of your coffee (or the beverage of your choice),
 turn up your favorite <a href="https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6">music to write code to</a> playlist on Spotify,
@@ -199,7 +200,7 @@ Sweet!
 Now that feel good about your work,
 you’re ready to <a href="#git-commit">take a snapshot of your updates</a>.</p>
 </div>
-<div id="git-commit" class="section level3">
+<div id="git-commit" class="section level3 step">
 <h3>Take a snapshot of your work</h3>
 <p><em>If you like it then you shoulda made a <code>git commit</code>.</em></p>
 <p>There are two parts to taking a snapshot of your code.
@@ -241,7 +242,7 @@ Think of this message like the subject of an email to your future self.</p>
 </ul>
 </div>
 </div>
-<div id="fix-something" class="section level3">
+<div id="fix-something" class="section level3 step">
 <h3>Fix something</h3>
 <p>Oh no, you need to fix something!
 I hope it’s just a typo and not a big scary error.
@@ -257,7 +258,7 @@ this thing that needs to be fixed — what branch is it in?</p>
 </div>
 </div>
 </div>
-<div id="share-your-work" class="section level2">
+<div id="share-your-work" class="section level2 step">
 <h2>Share your work</h2>
 <p>Fantastic!
 Your work is awesome and everyone is going to be happy to try it out.</p>
@@ -269,7 +270,7 @@ Your work is awesome and everyone is going to be happy to try it out.</p>
 <li><p>I’m <a href="#pr-push-theirs">updating a pull request from someone else</a>.</p></li>
 </ul>
 </div>
-<div id="pr-push-new" class="section level3">
+<div id="pr-push-new" class="section level3 step">
 <h3>Create a new pull request</h3>
 <p>To create a new pull request, you call <code>pr_push()</code>.</p>
 <pre class="r"><code>pr_push()</code></pre>
@@ -292,7 +293,7 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 </ul>
 </div>
 </div>
-<div id="pr-push-yours" class="section level3">
+<div id="pr-push-yours" class="section level3 step">
 <h3>Update your existing pull request</h3>
 <p>You just made <a href="#git-commit">and committed</a> some changes to an existing pull request,
 and now you’d like to update the PR on GitHub.
@@ -313,7 +314,7 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 </ul>
 </div>
 </div>
-<div id="pr-push-theirs" class="section level3">
+<div id="pr-push-theirs" class="section level3 step">
 <h3>Update someone else’s pull request</h3>
 <p>You just made a change in a branch for a PR
 with work that someone else is suggesting for your package.
@@ -336,9 +337,9 @@ to the pull request submitted by <code>@wileycoyote</code> in the <code>toone-mo
 </div>
 </div>
 </div>
-<div id="wrap-up" class="section level2">
+<div id="wrap-up" class="section level2 step">
 <h2>Wrap Up</h2>
-<div id="pr-pause" class="section level3">
+<div id="pr-pause" class="section level3 step">
 <h3>Pause your work</h3>
 <p>If you landed here,
 you’re not completely done with the thing you were working on,
@@ -353,7 +354,7 @@ and to make sure you’ve got the latest changes in the default branch.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
-<div id="pr-finish-yours" class="section level3">
+<div id="pr-finish-yours" class="section level3 step">
 <h3>Finish your work</h3>
 <p>Congrats! Your pull request was merged!
 That’s awesome.
@@ -367,7 +368,7 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
-<div id="pr-finish-theirs" class="section level3">
+<div id="pr-finish-theirs" class="section level3 step">
 <h3>Finish your work</h3>
 <p>Well done, your review of someone else’s work is complete and their PR is merged!
 That’s awesome.
@@ -382,7 +383,7 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
-<div id="pr-forget-yours" class="section level3">
+<div id="pr-forget-yours" class="section level3 step">
 <h3>Forget about your work</h3>
 <p>Well that was fun.
 But now you’re done with this branch
@@ -406,12 +407,12 @@ and gives you a chance to rethink it.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
-<div id="pr-forget-theirs" class="section level3">
+<div id="pr-forget-theirs" class="section level3 step">
 <h3>Forget about their work</h3>
 <p>TK: <code>pr_forget()</code> for theirs</p>
 </div>
 </div>
-<div id="download" class="section level2">
+<div id="download" class="section level2 step">
 <h2>Download the image</h2>
 <ul>
 <li><a href="usethis-pr-flow.jpg">Small JPG Image (186 KB)</a></li>
@@ -433,7 +434,17 @@ Garrick Aden-Buie
 </a> is licensed under a 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 </div>
+</div>
+<div id="section" class="section level2">
+<h2></h2>
+<div id="step-list" style="display:none">
+
+</div>
 <style type="text/css">
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
 .cc-box {
   padding: 1em 1em;
   border: 2px solid #514961;
@@ -481,5 +492,82 @@ Garrick Aden-Buie
   width: 1px !important;
   white-space: nowrap !important;
 }
+
+#story .step,
+.fade-in {
+    -webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+            animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2021-9-26 22:30:33
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 </style>
+<script type="text/javascript">
+const story = document.getElementById("story")
+const staging = document.getElementById("step-list")
+const steps = {}
+const currentStory = []
+
+Array.from(document.querySelectorAll(".step.level3"))
+  .forEach(function(step) {
+    staging.appendChild(step)
+    steps[step.id] = step
+  })
+Array.from(document.querySelectorAll(".step.level2"))
+  .forEach(function(step) {
+    staging.appendChild(step)
+    steps[step.id] = step
+  })
+
+document
+  .querySelector('main > article > .post-content')
+  .addEventListener('click', function(ev) {
+    if (ev.target.tagName != 'A') {
+      return;
+    }
+    const stepId = ev.target.getAttribute('href').replace(/^#/, '')
+    if (!currentStory.includes(stepId)) {
+      currentStory.push(stepId)
+      story.appendChild(steps[stepId].cloneNode(true))
+    }
+  })
+
+function removeTOC() {
+  const toc = document.querySelector(".table-of-contents")
+  if (toc) {
+    toc.remove()
+  } else {
+    setTimeout(removeTOC, 10)
+  }
+}
+document.addEventListener('DOMContentLoaded', removeTOC)
+</script>
 </div>

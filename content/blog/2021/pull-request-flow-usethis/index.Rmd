@@ -72,7 +72,8 @@ lightbox_img(
 )
 ```
 
-## Choose your own pull request adventure
+
+## Choose your own pull request adventure {#intro}
 
 Welcome to this choose-your-own-adventure blog post.
 You don't need to read this one from top to bottom.
@@ -89,8 +90,9 @@ to retrace your steps.
 `r way_point()` Ready to [get started](#start)?
 :::
 
+<div id="story"></div>
 
-### Start here {#start}
+### Start here {#start .step}
 
 You open your project in RStudio (or the editor of your choice).
 You make a note to yourself to come up with a better name for your package —
@@ -110,21 +112,20 @@ library(usethis)
 ::: {#start-here .decision}
 `r way_point()` Now you face a harder decision: what do you actually do next?
 
-1. [Start new work](#start-new-work)
+1. [Start new work](#pr-init)
 
 1. [Pick up something you were working on](#pr-resume)
 
 1. [Review someone else's work](#pr-fetch)
 :::
 
-### Start new work {#start-new-work}
+### Start new work {#pr-init .step}
 
 Time to start something new.
 You scan your project board, issues list, JIRA tickets, slack messages, emails, and post-it notes
 and finally settle on something to work on.
 Your task: add an example to the documentation for a function you've been working on.
 
-::: {#pr-init}
 You want to start your work in a new branch,
 so you call `pr_init()`,
 giving it the name of your new branch.
@@ -138,7 +139,6 @@ pr_init("add-example")
 ✓ Creating and switching to local branch 'add-example'
 ● Use `pr_push()` to create PR.
 ```
-:::
 
 The console output reminds you that [usethis]{.pkg} updated your local repo
 and created and switched to a new branch for you.
@@ -147,7 +147,7 @@ and created and switched to a new branch for you.
 `r way_point()` You're ready to [do some work](#do-work).
 :::
 
-### Pick up something you were working on {#pr-resume}
+### Pick up something you were working on {#pr-resume .step}
 
 You're ready to get back to that thing you were working on.
 Which was what again?
@@ -162,7 +162,7 @@ You were doing some work in a branch in your local of the project...
 - I [remember, it's the `add-example` branch](#pr-resume-branch)
 :::
 
-### Choose a branch and resume working {#pr-resume-no-branch}
+### Choose a branch and resume working {#pr-resume-no-branch .step}
 
 ```{r pr_resume-no-branch, eval=FALSE}
 pr_resume()
@@ -184,7 +184,7 @@ Selection: 1
 TK: next steps
 :::
 
-### Get back to the branch {#pr-resume-branch}
+### Get back to the branch {#pr-resume-branch .step}
 
 ```{r pr_resume-branch, eval=FALSE}
 pr_resume("add-example")
@@ -199,7 +199,7 @@ pr_resume("add-example")
 TK: next steps
 :::
 
-### Review someone else's work {#pr-fetch}
+### Review someone else's work {#pr-fetch .step}
 
 ```{r pr_fetch-no-branch, eval=FALSE}
 pr_fetch()
@@ -230,11 +230,11 @@ pr_fetch(14)
 TK: next steps
 :::
 
-## Update your local copy {#do-update}
+## Update your local copy {#do-update .step}
 
 TK: [get to the right branch](#do-choose-branch) and then choose `pr_pull()` or `pr_merge_main()`
 
-### Update your local copy with a reviewer's changes {#pr-pull}
+### Update your local copy with a reviewer's changes {#pr-pull .step}
 
 ```{r pr_pull, eval=FALSE}
 pr_pull()
@@ -243,7 +243,7 @@ pr_pull()
 ✓ Pulling from 'origin/add-example'
 ```
 
-### Update your local copy with someone else's changes {#pr-pull-theirs}
+### Update your local copy with someone else's changes {#pr-pull-theirs .step}
 
 ```{r pr_pull-theirs, eval=FALSE}
 pr_pull()
@@ -252,7 +252,7 @@ pr_pull()
 ✓ Pulling from 'wileycoyote/toone-model'
 ```
 
-### Bring your work up to date with the main branch {#pr-merge-main}
+### Bring your work up to date with the main branch {#pr-merge-main .step}
 
 ```{r pr_merge_main, eval=FALSE}
 pr_merge_main()
@@ -263,7 +263,7 @@ Merged origin/main into add-example
 ```
 
 
-### Get to the right place {#do-choose-branch}
+### Get to the right place {#do-choose-branch .step}
 
 Let's make sure we're in the right branch in your local project.
 
@@ -282,7 +282,7 @@ Which branch do you want to work with right now?
   and then come right back here_.
   
 
-## Do some work {#do-work}
+## Do some work {#do-work .step}
 
 You take a sip of your coffee (or the beverage of your choice),
 turn up your favorite [music to write code to](https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6) playlist on Spotify,
@@ -301,7 +301,7 @@ Now that feel good about your work,
 you're ready to [take a snapshot of your updates](#git-commit).
 :::
 
-### Take a snapshot of your work {#git-commit}
+### Take a snapshot of your work {#git-commit .step}
 
 _If you like it then you shoulda made a `git commit`._
 
@@ -360,7 +360,7 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 
 
   
-### Fix something {#fix-something}
+### Fix something {#fix-something .step}
 
 Oh no, you need to fix something!
 I hope it's just a typo and not a big scary error.
@@ -376,7 +376,7 @@ this thing that needs to be fixed — what branch is it in?
 - Not this one, [I need to change branches](#do-choose-branch).
 :::
 
-## Share your work {#share-your-work}
+## Share your work {#share-your-work .step}
 
 Fantastic!
 Your work is awesome and everyone is going to be happy to try it out.
@@ -391,7 +391,7 @@ Your work is awesome and everyone is going to be happy to try it out.
 - I'm [updating a pull request from someone else](#pr-push-theirs).
 :::
 
-### Create a new pull request {#pr-push-new}
+### Create a new pull request {#pr-push-new .step}
 
 To create a new pull request, you call `pr_push()`.
 
@@ -424,7 +424,7 @@ go ahead click the _Create Pull Request_ button.
 - Actually, the pull request was closed and [I can forget about this work](#pr-forget-yours).
 :::
 
-### Update your existing pull request {#pr-push-yours}
+### Update your existing pull request {#pr-push-yours .step}
 
 You just made [and committed](#git-commit) some changes to an existing pull request,
 and now you'd like to update the PR on GitHub.
@@ -454,7 +454,7 @@ pr_push()
 - Never mind, my [PR was closed and I'd like to forget about this work](#pr-forget-yours).
 :::
 
-### Update someone else's pull request {#pr-push-theirs}
+### Update someone else's pull request {#pr-push-theirs .step}
 
 You just made a change in a branch for a PR
 with work that someone else is suggesting for your package.
@@ -485,9 +485,9 @@ pr_push()
 - I just merged this pull request and [I'm all done with this work](#pr-finish-theirs).
 :::
 
-## Wrap Up
+## Wrap Up {.step}
 
-### Pause your work {#pr-pause}
+### Pause your work {#pr-pause .step}
 
 If you landed here, 
 you're not completely done with the thing you were working on,
@@ -509,7 +509,7 @@ pr_pause()
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 :::
 
-### Finish your work {#pr-finish-yours}
+### Finish your work {#pr-finish-yours .step}
 
 Congrats! Your pull request was merged!
 That's awesome.
@@ -529,7 +529,7 @@ pr_finish()
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 :::
 
-### Finish your work {#pr-finish-theirs}
+### Finish your work {#pr-finish-theirs .step}
 
 Well done, your review of someone else's work is complete and their PR is merged!
 That's awesome.
@@ -550,7 +550,7 @@ pr_finish()
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 :::
 
-### Forget about your work {#pr-forget-yours}
+### Forget about your work {#pr-forget-yours .step}
 
 Well that was fun.
 But now you're done with this branch
@@ -581,12 +581,12 @@ and gives you a chance to rethink it.
 `r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
 :::
 
-### Forget about their work {#pr-forget-theirs}
+### Forget about their work {#pr-forget-theirs .step}
 
 TK: `pr_forget()` for theirs
 
 
-## Download the image {#download}
+## Download the image {#download .step}
 
 - [Small JPG Image (186 KB)](usethis-pr-flow.jpg)
 - [Medium JPG Image (500 KB)](usethis-pr-flow-medium.jpg)
@@ -612,8 +612,16 @@ Garrick Aden-Buie
 
 :::
 
+##
+
+<div id="step-list" style="display:none"></div>
+
 
 ```{css echo=FALSE}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
 .cc-box {
   padding: 1em 1em;
   border: 2px solid #514961;
@@ -661,4 +669,82 @@ Garrick Aden-Buie
   width: 1px !important;
   white-space: nowrap !important;
 }
+
+#story .step,
+.fade-in {
+	-webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+	        animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 150ms both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2021-9-26 22:30:33
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+```
+
+```{js, echo=FALSE}
+const story = document.getElementById("story")
+const staging = document.getElementById("step-list")
+const steps = {}
+const currentStory = []
+
+Array.from(document.querySelectorAll(".step.level3"))
+  .forEach(function(step) {
+    staging.appendChild(step)
+    steps[step.id] = step
+  })
+Array.from(document.querySelectorAll(".step.level2"))
+  .forEach(function(step) {
+    staging.appendChild(step)
+    steps[step.id] = step
+  })
+
+document
+  .querySelector('main > article > .post-content')
+  .addEventListener('click', function(ev) {
+    if (ev.target.tagName != 'A') {
+      return;
+    }
+    const stepId = ev.target.getAttribute('href').replace(/^#/, '')
+    if (!currentStory.includes(stepId)) {
+      currentStory.push(stepId)
+      story.appendChild(steps[stepId].cloneNode(true))
+    }
+  })
+
+function removeTOC() {
+  const toc = document.querySelector(".table-of-contents")
+  if (toc) {
+    toc.remove()
+  } else {
+    setTimeout(removeTOC, 10)
+  }
+}
+document.addEventListener('DOMContentLoaded', removeTOC)
 ```
