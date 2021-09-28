@@ -51,7 +51,7 @@ Yes, <a href="#start">I’m ready to go</a>!
 </li>
 </ul>
 </div>
-<div id="story">
+<div id="story" aria-live="polite" aria-relevant="additions">
 
 </div>
 <div id="start" class="section level3 step">
@@ -587,9 +587,10 @@ html {
 (function() {
   // check for interactive query param
   const urlParams = new URLSearchParams(window.location.search)
+  const isInteractive = urlParams.get('interactive') == 1 ? true : false
   const introOptions = document.getElementById('intro-options')
   
-  if (urlParams.get('interactive') == 0) {
+  if (isInteractive) {
     document.querySelector('main > article > .post-content').classList.add('non-interactive')
     introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
     return;
@@ -613,37 +614,130 @@ html {
       staging.appendChild(step)
       steps[step.id] = step
     })
+    
+  function updateURL() {
+    const state = {
+      interactive: isInteractive ? 1 : 0,
+      steps: currentStory.map(el => el.id)
+    }
+    const params = new URLSearchParams({
+      interactive: state.interactive,
+      steps: state.steps.join(',')
+    })
+    window.history.pushState(state, '', `${location.pathname}?${params}`)
+  }
   
+  function getCurrentStoryStepIds() {
+    return currentStory.map(el => el.id)
+  }
+  
+  function getAllStepIds() {
+    return Object.keys(steps)
+  }
+  
+  function isValidStep(stepId) {
+    
+    return getAllStepIds().includes(stepId) && 
+      steps[stepId] ? true : false
+  }
+  
+  function isStepInStory(stepId) {
+    return getCurrentStoryStepIds().includes(stepId)
+  }
+  
+  function addStep(stepId) {
+    const newStep = steps[stepId].cloneNode(true)
+    newStep.classList.add('fade-in')
+    currentStory.push(newStep)
+    story.appendChild(newStep)
+    return newStep
+  }
+  
+  function walkForward(stepId, update_url) {
+    if (typeof update_url === 'undefined') {
+      update_url = true
+    }
+    const newStep = addStep(stepId)
+    newStep.scrollIntoView({behavior: 'smooth'})
+    setTimeout(() => newStep.classList.remove('fade-in'), 1100)
+    update_url ? updateURL() : null
+    return newStep
+  }
+  
+  function walkBackward(stepId, update_url) {
+    if (typeof update_url === 'undefined') {
+      update_url = true
+    }
+    // clears steps between target and current step
+    const idxNext = getCurrentStoryStepIds().indexOf(stepId) + 1
+    currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
+    while (currentStory.length > idxNext) {
+      let lastStep = currentStory.pop()
+      lastStep.classList.add('fade-out-bck')
+      setTimeout(() => lastStep.remove(), 1100)
+    }
+    update_url ? updateURL() : null
+    return currentStory[currentStory.length - 1]
+  }
+  
+  function resetStory() {
+    while (story.children) {
+      story.removeChild(story.firstChild)
+    }
+    while (currentStory.length) {
+      currentStory.pop()
+    }
+    updateURL()
+    document.getElementById('intro').scrollIntoView({behavior: 'smooth'})
+  }
+  
+  // Restore steps from URL
+  let initSteps = new URLSearchParams(window.location.search).get('steps')
+  if (initSteps) {
+    initSteps = initSteps.split(',').map(addStep)
+    setTimeout(
+      () => initSteps[initSteps.length - 1].scrollIntoView({behavior: 'smooth'}),
+      1000
+    )
+  }
+  
+  // Handle back button
+  window.addEventListener('popstate', function(ev) {
+    console.log({event: 'popstate', state: ev.state})
+    if (ev.state && ev.state.steps) {
+      if (ev.state.steps.length === 0) {
+        resetStory()
+      } else if (ev.state.steps.length < currentStory.length) {
+        // Go back to the previous last step
+        walkBackward(ev.state.steps.pop(), false)
+      } else if (ev.state.steps.length > currentStory.length) {
+        // Go forward to the previous last step
+        walkForward(ev.state.steps.pop(), false)
+      }
+    }
+  })
+
+  // let
   document
     .querySelector('main > article > .post-content')
     .addEventListener('click', function(ev) {
       if (ev.target.tagName != 'A') {
         return;
       }
+      
       const stepId = ev.target.getAttribute('href').replace(/^#/, '')
-      const stepIds = currentStory.map(el => el.id)
-      if (!steps[stepId]) {
-        console.warning(`Unknown step id #${stepId}, treating like a normal link`)
+
+      if (!isValidStep(stepId)) {
+        console.warn(`Unknown step id #${stepId}, treating like a normal link`)
         return;
       }
-      if (!stepIds.includes(stepId)) {
+      
+      if (!isStepInStory(stepId)) {
         ev.preventDefault()
-        const newStep = steps[stepId].cloneNode(true)
-        newStep.classList.add('fade-in')
-        currentStory.push(newStep)
-        story.appendChild(newStep)
-        newStep.scrollIntoView({behavior: 'smooth'})
-        setTimeout(() => newStep.classList.remove('fade-in'), 1100)
+        walkForward(stepId)
       } else if (ev.target.matches('.clear-steps')) {
         ev.preventDefault()
-        // clears steps between target and current step
-        const idxNext = stepIds.indexOf(stepId) + 1
-        currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
-        while (currentStory.length > idxNext) {
-          let lastStep = currentStory.pop()
-          lastStep.classList.add('fade-out-bck')
-          setTimeout(() => lastStep.remove(), 1100)
-        }
+        walkBackward(stepId)
       }
     })
   
