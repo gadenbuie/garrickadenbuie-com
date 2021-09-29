@@ -375,7 +375,7 @@ But first...
 Quick question: 
 this thing that needs to be fixed — what branch is it in?
 
-- The one that I'm in now, I'm ready to [get some work done and fix this thing](#do-work).
+- The one that I'm in now, I'm ready to <a class="clear-steps" href="#do-work">get some work done and fix this thing</a>.
 
 - Not this one, [I need to change branches](#do-choose-branch).
 :::
@@ -510,7 +510,7 @@ pr_pause()
 ```
 
 ::: decision
-`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+`r way_point()` <a href="#start" class="clear-steps">Go back to Start</a> to decide to decide what's next in your adventure.
 :::
 
 ### Finish your work {#pr-finish-yours .step}
@@ -530,7 +530,7 @@ pr_finish()
 ```
 
 ::: decision
-`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+`r way_point()` <a href="#start" class="clear-steps">Go back to Start</a> to decide what's next in your adventure.
 :::
 
 ### Finish your work {#pr-finish-theirs .step}
@@ -551,7 +551,7 @@ pr_finish()
 ```
 
 ::: decision
-`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+`r way_point()` <a href="#start" class="clear-steps">Go back to Start</a> to decide what's next in your adventure.
 :::
 
 ### Forget about your work {#pr-forget-yours .step}
@@ -582,7 +582,7 @@ Notice that `pr_forget()` warns you about any work you might lose
 and gives you a chance to rethink it.
 
 ::: decision
-`r way_point()` [Go back to Start](#start-here) to decide what's next in your adventure.
+`r way_point()` <a href="#start" class="clear-steps">Go back to Start</a> to decide what's next in your adventure.
 :::
 
 ### Forget about their work {#pr-forget-theirs .step}
@@ -647,6 +647,18 @@ html {
 	color: var(--accent-dark);
 }
 
+.decision.decided a {
+  color: var(--text-dark);
+}
+
+.decision.decided a.picked {
+  color: var(--purple);
+}
+
+.decision.decided .way-point.fas.fa-map-signs {
+	color: var(--purple);
+}
+
 @media screen and (min-width: 48em) {
   .way-point {
     position: absolute;
@@ -658,6 +670,10 @@ html {
   
   .page, .post {
     position: relative;
+  }
+  
+  main > article > footer {
+    height: 100vh;
   }
 }
 
@@ -761,10 +777,10 @@ html {
 (function() {
   // check for interactive query param
   const urlParams = new URLSearchParams(window.location.search)
-  const isInteractive = urlParams.get('interactive') == 1 ? true : false
+  const isInteractive = (urlParams.get('interactive') || 1) == 1 ? true : false
   const introOptions = document.getElementById('intro-options')
   
-  if (isInteractive) {
+  if (!isInteractive) {
     document.querySelector('main > article > .post-content').classList.add('non-interactive')
     introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
     return;
@@ -810,7 +826,6 @@ html {
   }
   
   function isValidStep(stepId) {
-    
     return getAllStepIds().includes(stepId) && 
       steps[stepId] ? true : false
   }
@@ -831,6 +846,14 @@ html {
     if (typeof update_url === 'undefined') {
       update_url = true
     }
+    
+    if (currentStory.length) {
+      markDecision(currentStory[currentStory.length - 1], stepId)
+    } else {
+      // assume we're at the intro
+      markDecision(document.getElementById('intro'), stepId)
+    }
+    
     const newStep = addStep(stepId)
     newStep.scrollIntoView({behavior: 'smooth'})
     setTimeout(() => newStep.classList.remove('fade-in'), 1100)
@@ -842,16 +865,19 @@ html {
     if (typeof update_url === 'undefined') {
       update_url = true
     }
+    
     // clears steps between target and current step
-    const idxNext = getCurrentStoryStepIds().indexOf(stepId) + 1
-    currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
-    while (currentStory.length > idxNext) {
+    const idxNext = getCurrentStoryStepIds().indexOf(stepId)
+    currentStory[idxNext].scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    while (currentStory.length - 1 > idxNext) {
       let lastStep = currentStory.pop()
       lastStep.classList.add('fade-out-bck')
       setTimeout(() => lastStep.remove(), 1100)
     }
     update_url ? updateURL() : null
-    return currentStory[currentStory.length - 1]
+    const newLastStep = currentStory[currentStory.length - 1]
+    unmarkDecision(newLastStep)
+    return newLastStep
   }
   
   function resetStory() {
@@ -865,10 +891,47 @@ html {
     document.getElementById('intro').scrollIntoView({behavior: 'smooth'})
   }
   
+  function markDecision(step, stepId) {
+    const link = step.querySelector(`.decision a[href="#${stepId}"]`)
+    const decisionList = step.querySelector('.decision')
+    link.classList.add('picked')
+    decisionList.classList.add('decided')
+    let choices = decisionList.querySelectorAll('a:not(.picked)')
+    choices = Array.from(choices)
+    choices.forEach(function(link) {
+      const span = document.createElement('span')
+      span.classList = 'path-untaken'
+      span.dataset.href = link.getAttribute('href')
+      span.dataset.classes = Array.from(link.classList).join(' ')
+      span.innerHTML = link.innerHTML
+      link.insertAdjacentElement('afterend', span)
+      link.parentElement.removeChild(link)
+    })
+  }
+  
+  function unmarkDecision(step) {
+    const decisionList = step.querySelector('.decision.decided')
+    decisionList.classList.remove('decided')
+    let choices = decisionList.querySelectorAll(['a.picked', 'span.path-untaken'])
+    choices = Array.from(choices)
+    choices.forEach(function(el) {
+      if (el.matches('a.picked')) {
+        el.classList.remove('picked')
+        return;
+      }
+      const link = document.createElement('a')
+      link.classList = el.dataset.classes
+      link.href = el.dataset.href
+      link.innerHTML = el.innerHTML
+      el.insertAdjacentElement('afterend', link)
+      el.parentElement.removeChild(el)
+    })
+  }
+  
   // Restore steps from URL
   let initSteps = new URLSearchParams(window.location.search).get('steps')
   if (initSteps) {
-    initSteps = initSteps.split(',').map(addStep)
+    initSteps = initSteps.split(',').map(walkForward)
     setTimeout(
       () => initSteps[initSteps.length - 1].scrollIntoView({behavior: 'smooth'}),
       1000
@@ -877,7 +940,6 @@ html {
   
   // Handle back button
   window.addEventListener('popstate', function(ev) {
-    console.log({event: 'popstate', state: ev.state})
     if (ev.state && ev.state.steps) {
       if (ev.state.steps.length === 0) {
         resetStory()
@@ -891,7 +953,6 @@ html {
     }
   })
 
-  // let
   document
     .querySelector('main > article > .post-content')
     .addEventListener('click', function(ev) {

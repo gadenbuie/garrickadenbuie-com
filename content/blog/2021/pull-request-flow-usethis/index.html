@@ -260,7 +260,7 @@ But first…</p>
 Quick question:
 this thing that needs to be fixed — what branch is it in?</p>
 <ul>
-<li><p>The one that I’m in now, I’m ready to <a href="#do-work">get some work done and fix this thing</a>.</p></li>
+<li><p>The one that I’m in now, I’m ready to <a class="clear-steps" href="#do-work">get some work done and fix this thing</a>.</p></li>
 <li><p>Not this one, <a href="#do-choose-branch">I need to change branches</a>.</p></li>
 </ul>
 </div>
@@ -359,7 +359,7 @@ and to make sure you’ve got the latest changes in the default branch.</p>
 <pre><code>✓ Switching back to default branch (&#39;main&#39;)
 ✓ Pulling changes from &#39;origin/main&#39;</code></pre>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start" class="clear-steps">Go back to Start</a> to decide to decide what’s next in your adventure.</p>
 </div>
 </div>
 <div id="pr-finish-yours" class="section level3 step">
@@ -373,7 +373,7 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 ℹ Pulling changes from &#39;origin/main&#39;
 ✓ Deleting local &#39;add-example&#39; branch</code></pre>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start" class="clear-steps">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
 <div id="pr-finish-theirs" class="section level3 step">
@@ -388,7 +388,7 @@ Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
 ✔ Deleting local &#39;wileycoyote-toone-model&#39; branch
 ✔ Removing remote &#39;wileycoyote&#39;</code></pre>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start" class="clear-steps">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
 <div id="pr-forget-yours" class="section level3 step">
@@ -412,7 +412,7 @@ Selection: 3
 <p>Notice that <code>pr_forget()</code> warns you about any work you might lose
 and gives you a chance to rethink it.</p>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start-here">Go back to Start</a> to decide what’s next in your adventure.</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start" class="clear-steps">Go back to Start</a> to decide what’s next in your adventure.</p>
 </div>
 </div>
 <div id="pr-forget-theirs" class="section level3 step">
@@ -474,6 +474,18 @@ html {
     color: var(--accent-dark);
 }
 
+.decision.decided a {
+  color: var(--text-dark);
+}
+
+.decision.decided a.picked {
+  color: var(--purple);
+}
+
+.decision.decided .way-point.fas.fa-map-signs {
+    color: var(--purple);
+}
+
 @media screen and (min-width: 48em) {
   .way-point {
     position: absolute;
@@ -485,6 +497,10 @@ html {
   
   .page, .post {
     position: relative;
+  }
+  
+  main > article > footer {
+    height: 100vh;
   }
 }
 
@@ -587,10 +603,10 @@ html {
 (function() {
   // check for interactive query param
   const urlParams = new URLSearchParams(window.location.search)
-  const isInteractive = urlParams.get('interactive') == 1 ? true : false
+  const isInteractive = (urlParams.get('interactive') || 1) == 1 ? true : false
   const introOptions = document.getElementById('intro-options')
   
-  if (isInteractive) {
+  if (!isInteractive) {
     document.querySelector('main > article > .post-content').classList.add('non-interactive')
     introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
     return;
@@ -636,7 +652,6 @@ html {
   }
   
   function isValidStep(stepId) {
-    
     return getAllStepIds().includes(stepId) && 
       steps[stepId] ? true : false
   }
@@ -657,6 +672,14 @@ html {
     if (typeof update_url === 'undefined') {
       update_url = true
     }
+    
+    if (currentStory.length) {
+      markDecision(currentStory[currentStory.length - 1], stepId)
+    } else {
+      // assume we're at the intro
+      markDecision(document.getElementById('intro'), stepId)
+    }
+    
     const newStep = addStep(stepId)
     newStep.scrollIntoView({behavior: 'smooth'})
     setTimeout(() => newStep.classList.remove('fade-in'), 1100)
@@ -668,16 +691,19 @@ html {
     if (typeof update_url === 'undefined') {
       update_url = true
     }
+    
     // clears steps between target and current step
-    const idxNext = getCurrentStoryStepIds().indexOf(stepId) + 1
-    currentStory[idxNext].scrollIntoView({behavior: 'smooth'})
-    while (currentStory.length > idxNext) {
+    const idxNext = getCurrentStoryStepIds().indexOf(stepId)
+    currentStory[idxNext].scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    while (currentStory.length - 1 > idxNext) {
       let lastStep = currentStory.pop()
       lastStep.classList.add('fade-out-bck')
       setTimeout(() => lastStep.remove(), 1100)
     }
     update_url ? updateURL() : null
-    return currentStory[currentStory.length - 1]
+    const newLastStep = currentStory[currentStory.length - 1]
+    unmarkDecision(newLastStep)
+    return newLastStep
   }
   
   function resetStory() {
@@ -691,10 +717,47 @@ html {
     document.getElementById('intro').scrollIntoView({behavior: 'smooth'})
   }
   
+  function markDecision(step, stepId) {
+    const link = step.querySelector(`.decision a[href="#${stepId}"]`)
+    const decisionList = step.querySelector('.decision')
+    link.classList.add('picked')
+    decisionList.classList.add('decided')
+    let choices = decisionList.querySelectorAll('a:not(.picked)')
+    choices = Array.from(choices)
+    choices.forEach(function(link) {
+      const span = document.createElement('span')
+      span.classList = 'path-untaken'
+      span.dataset.href = link.getAttribute('href')
+      span.dataset.classes = Array.from(link.classList).join(' ')
+      span.innerHTML = link.innerHTML
+      link.insertAdjacentElement('afterend', span)
+      link.parentElement.removeChild(link)
+    })
+  }
+  
+  function unmarkDecision(step) {
+    const decisionList = step.querySelector('.decision.decided')
+    decisionList.classList.remove('decided')
+    let choices = decisionList.querySelectorAll(['a.picked', 'span.path-untaken'])
+    choices = Array.from(choices)
+    choices.forEach(function(el) {
+      if (el.matches('a.picked')) {
+        el.classList.remove('picked')
+        return;
+      }
+      const link = document.createElement('a')
+      link.classList = el.dataset.classes
+      link.href = el.dataset.href
+      link.innerHTML = el.innerHTML
+      el.insertAdjacentElement('afterend', link)
+      el.parentElement.removeChild(el)
+    })
+  }
+  
   // Restore steps from URL
   let initSteps = new URLSearchParams(window.location.search).get('steps')
   if (initSteps) {
-    initSteps = initSteps.split(',').map(addStep)
+    initSteps = initSteps.split(',').map(walkForward)
     setTimeout(
       () => initSteps[initSteps.length - 1].scrollIntoView({behavior: 'smooth'}),
       1000
@@ -703,7 +766,6 @@ html {
   
   // Handle back button
   window.addEventListener('popstate', function(ev) {
-    console.log({event: 'popstate', state: ev.state})
     if (ev.state && ev.state.steps) {
       if (ev.state.steps.length === 0) {
         resetStory()
@@ -717,7 +779,6 @@ html {
     }
   })
 
-  // let
   document
     .querySelector('main > article > .post-content')
     .addEventListener('click', function(ev) {
