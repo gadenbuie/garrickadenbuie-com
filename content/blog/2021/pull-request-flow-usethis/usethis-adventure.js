@@ -50,6 +50,15 @@
     return loc
   }
   
+  function scrollToLast(x) {
+    if (!x && !x.length) {
+      return
+    }
+    const last = x[x.length - 1]
+    last.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    return last
+  }
+  
   function getCurrentStoryStepIds() {
     return currentStory.map(el => el.id)
   }
@@ -101,7 +110,7 @@
     
     // clears steps between target and current step
     const idxNext = getCurrentStoryStepIds().indexOf(stepId)
-    currentStory[idxNext].scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    scrollToLast([currentStory[idxNext]])
     while (currentStory.length - 1 > idxNext) {
       let lastStep = currentStory.pop()
       lastStep.classList.add('fade-out-bck')
@@ -168,7 +177,7 @@
   if (initSteps) {
     initSteps = initSteps.split(',').map(walkForward)
     setTimeout(
-      () => initSteps[initSteps.length - 1].scrollIntoView({behavior: 'smooth'}),
+      () => scrollToLast(initSteps),
       1000
     )
   }
@@ -183,8 +192,12 @@
         // Go back to the previous last step
         walkBackward(ev.state.steps.pop(), false)
       } else if (ev.state.steps.length > currentStory.length) {
-        // Go forward to the previous last step
-        walkForward(ev.state.steps.pop(), false)
+        // Moving forward might jump forward a bunch of steps
+        const newSteps = 
+          ev.state.steps
+          .slice(currentStory.length)
+          .map((stepId) => walkForward(stepId, false))
+        scrollToLast(newSteps)
       }
     }
   })
