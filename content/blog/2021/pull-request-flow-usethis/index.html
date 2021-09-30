@@ -14,6 +14,9 @@ description: Get in the usethis pull request flow with this flow chart.
 twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-small.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
+head_custom: |
+  <link href="usethis-adventure.css" rel="stylesheet">
+  <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
 editor_options:
   chunk_output_type: console
 ---
@@ -46,7 +49,7 @@ to retrace your steps.</p>
 <ul id="intro-options">
 <li>
 <p>
-Yes, <a href="#start">I’m ready to go</a>!
+Yes, <a href="#get-started">I’m ready to go</a>!
 </p>
 </li>
 </ul>
@@ -54,8 +57,8 @@ Yes, <a href="#start">I’m ready to go</a>!
 <div id="story" aria-live="polite" aria-relevant="additions">
 
 </div>
-<div id="start" class="section level3 step">
-<h3>Start here</h3>
+<div id="get-started" class="section level3 step">
+<h3>Let’s get started</h3>
 <p>You open your project in RStudio (or the editor of your choice).
 You make a note to yourself to come up with a better name for your package —
 for now you’re calling it <span class="pkg">acme</span>
@@ -65,7 +68,13 @@ but now the empty console beckons.
 You’re ready to do some work.</p>
 <p>Where do you begin? With <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> of course.</p>
 <pre class="r"><code>library(usethis)</code></pre>
-<div id="start-here" class="decision">
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> That was easy! <a href="#start">Lets do some work now.</a></p>
+</div>
+</div>
+<div id="start" class="section level3 step">
+<h3>What’s next?</h3>
+<div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a harder decision: what do you actually do next?</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="#pr-init">Start new work</a></p></li>
@@ -420,8 +429,17 @@ and gives you a chance to rethink it.</p>
 <p>TK: <code>pr_forget()</code> for theirs</p>
 </div>
 </div>
-<div id="download" class="section level2 step">
-<h2>Download the image</h2>
+<div id="section" class="section level2">
+<h2></h2>
+<div id="step-list" style="display:none">
+
+</div>
+<div id="story-reset">
+<a href="#intro" class="clear-steps"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a>
+</div>
+</div>
+<div id="download" class="section level2">
+<h2>Download the usethis <code>pr_*()</code> flow chart</h2>
 <ul>
 <li><a href="usethis-pr-flow.jpg">Small JPG Image (186 KB)</a></li>
 <li><a href="usethis-pr-flow-medium.jpg">Medium JPG Image (500 KB)</a></li>
@@ -442,376 +460,5 @@ Garrick Aden-Buie
 </a> is licensed under a 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 </div>
-</div>
-<div id="section" class="section level2">
-<h2></h2>
-<div id="step-list" style="display:none">
-
-</div>
-<style type="text/css">
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
-}
-.cc-box {
-  padding: 1em 1em;
-  border: 2px solid #514961;
-  border-radius: 3px;
-}
-@media (prefers-color-scheme: dark) {
-  .cc-box {
-    color: #dbd7e3;
-  }
-}
-.cc-box :first-child {
-  margin-top: 0;
-}
-.cc-box :last-child {
-  margin-bottom: 0;
-}
-.fas.fa-map-signs,
-.fas.fa-arrow-alt-circle-left {
-    color: var(--accent-dark);
-}
-
-.decision.decided a {
-  color: var(--text-dark);
-}
-
-.decision.decided a.picked {
-  color: var(--purple);
-}
-
-.decision.decided .way-point.fas.fa-map-signs {
-    color: var(--purple);
-}
-
-@media screen and (min-width: 48em) {
-  .way-point {
-    position: absolute;
-    left: -1.5em;
-    line-height: 1.25;
-    font-size: 1.25em;
-    z-index: 1000;
-  }
-  
-  .page, .post {
-    position: relative;
-  }
-  
-  main > article > footer {
-    height: 100vh;
-  }
-}
-
-.sr-only {
-  border: 0 !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
-  -webkit-clip-path: inset(50%) !important;
-  clip-path: inset(50%) !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-  white-space: nowrap !important;
-}
-
-#instructions-non-interactive {
-  display: none;
-}
-
-.non-interactive #skip-to-non-interactive,
-.non-interactive #instructions-interactive {
-  display: none;
-}
-
-.non-interactive #instructions-non-interactive {
-  display: unset;
-}
-
-.fade-in {
-    -webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
-            animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
-}
-
-.fade-out-bck {
-    -webkit-animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-            animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-/* ----------------------------------------------
- * Generated by Animista on 2021-9-26 22:30:33
- * Licensed under FreeBSD License.
- * See http://animista.net/license for more info. 
- * w: http://animista.net, t: @cssanimista
- * ---------------------------------------------- */
-
-/**
- * ----------------------------------------
- * animation fade-in
- * ----------------------------------------
- */
-@-webkit-keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-/**
- * ----------------------------------------
- * animation fade-out-bck
- * ----------------------------------------
- */
-@-webkit-keyframes fade-out-bck {
-  0% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
-    opacity: 0;
-  }
-}
-@keyframes fade-out-bck {
-  0% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
-    opacity: 0;
-  }
-}
-
-</style>
-<script type="text/javascript">
-(function() {
-  // check for interactive query param
-  const urlParams = new URLSearchParams(window.location.search)
-  const isInteractive = (urlParams.get('interactive') || 1) == 1 ? true : false
-  const introOptions = document.getElementById('intro-options')
-  
-  if (!isInteractive) {
-    document.querySelector('main > article > .post-content').classList.add('non-interactive')
-    introOptions.innerHTML += `<li><p>Yes, but I'd like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>`
-    return;
-  }
-  
-  introOptions.innerHTML = `<li><p>Yes, <a href="#start">walk me through my adventure</a>.</p></li>
-    <li><p>Yes, but I'd prefer to <a href="index.html?interactive=0#intro">read and navigate on my own</a>.</p></li>`
-
-  const story = document.getElementById("story")
-  const staging = document.getElementById("step-list")
-  const steps = {}
-  const currentStory = []
-  
-  Array.from(document.querySelectorAll(".step.level3"))
-    .forEach(function(step) {
-      staging.appendChild(step)
-      steps[step.id] = step
-    })
-  Array.from(document.querySelectorAll(".step.level2"))
-    .forEach(function(step) {
-      staging.appendChild(step)
-      steps[step.id] = step
-    })
-    
-  function updateURL() {
-    const state = {
-      interactive: isInteractive ? 1 : 0,
-      steps: currentStory.map(el => el.id)
-    }
-    const params = new URLSearchParams({
-      interactive: state.interactive,
-      steps: state.steps.join(',')
-    })
-    window.history.pushState(state, '', `${location.pathname}?${params}`)
-  }
-  
-  function getCurrentStoryStepIds() {
-    return currentStory.map(el => el.id)
-  }
-  
-  function getAllStepIds() {
-    return Object.keys(steps)
-  }
-  
-  function isValidStep(stepId) {
-    return getAllStepIds().includes(stepId) && 
-      steps[stepId] ? true : false
-  }
-  
-  function isStepInStory(stepId) {
-    return getCurrentStoryStepIds().includes(stepId)
-  }
-  
-  function addStep(stepId) {
-    const newStep = steps[stepId].cloneNode(true)
-    newStep.classList.add('fade-in')
-    currentStory.push(newStep)
-    story.appendChild(newStep)
-    return newStep
-  }
-  
-  function walkForward(stepId, update_url) {
-    if (typeof update_url === 'undefined') {
-      update_url = true
-    }
-    
-    if (currentStory.length) {
-      markDecision(currentStory[currentStory.length - 1], stepId)
-    } else {
-      // assume we're at the intro
-      markDecision(document.getElementById('intro'), stepId)
-    }
-    
-    const newStep = addStep(stepId)
-    newStep.scrollIntoView({behavior: 'smooth'})
-    setTimeout(() => newStep.classList.remove('fade-in'), 1100)
-    update_url ? updateURL() : null
-    return newStep
-  }
-  
-  function walkBackward(stepId, update_url) {
-    if (typeof update_url === 'undefined') {
-      update_url = true
-    }
-    
-    // clears steps between target and current step
-    const idxNext = getCurrentStoryStepIds().indexOf(stepId)
-    currentStory[idxNext].scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
-    while (currentStory.length - 1 > idxNext) {
-      let lastStep = currentStory.pop()
-      lastStep.classList.add('fade-out-bck')
-      setTimeout(() => lastStep.remove(), 1100)
-    }
-    update_url ? updateURL() : null
-    const newLastStep = currentStory[currentStory.length - 1]
-    unmarkDecision(newLastStep)
-    return newLastStep
-  }
-  
-  function resetStory() {
-    while (story.children) {
-      story.removeChild(story.firstChild)
-    }
-    while (currentStory.length) {
-      currentStory.pop()
-    }
-    updateURL()
-    document.getElementById('intro').scrollIntoView({behavior: 'smooth'})
-  }
-  
-  function markDecision(step, stepId) {
-    const link = step.querySelector(`.decision a[href="#${stepId}"]`)
-    const decisionList = step.querySelector('.decision')
-    link.classList.add('picked')
-    decisionList.classList.add('decided')
-    let choices = decisionList.querySelectorAll('a:not(.picked)')
-    choices = Array.from(choices)
-    choices.forEach(function(link) {
-      const span = document.createElement('span')
-      span.classList = 'path-untaken'
-      span.dataset.href = link.getAttribute('href')
-      span.dataset.classes = Array.from(link.classList).join(' ')
-      span.innerHTML = link.innerHTML
-      link.insertAdjacentElement('afterend', span)
-      link.parentElement.removeChild(link)
-    })
-  }
-  
-  function unmarkDecision(step) {
-    const decisionList = step.querySelector('.decision.decided')
-    decisionList.classList.remove('decided')
-    let choices = decisionList.querySelectorAll(['a.picked', 'span.path-untaken'])
-    choices = Array.from(choices)
-    choices.forEach(function(el) {
-      if (el.matches('a.picked')) {
-        el.classList.remove('picked')
-        return;
-      }
-      const link = document.createElement('a')
-      link.classList = el.dataset.classes
-      link.href = el.dataset.href
-      link.innerHTML = el.innerHTML
-      el.insertAdjacentElement('afterend', link)
-      el.parentElement.removeChild(el)
-    })
-  }
-  
-  // Restore steps from URL
-  let initSteps = new URLSearchParams(window.location.search).get('steps')
-  if (initSteps) {
-    initSteps = initSteps.split(',').map(walkForward)
-    setTimeout(
-      () => initSteps[initSteps.length - 1].scrollIntoView({behavior: 'smooth'}),
-      1000
-    )
-  }
-  
-  // Handle back button
-  window.addEventListener('popstate', function(ev) {
-    if (ev.state && ev.state.steps) {
-      if (ev.state.steps.length === 0) {
-        resetStory()
-      } else if (ev.state.steps.length < currentStory.length) {
-        // Go back to the previous last step
-        walkBackward(ev.state.steps.pop(), false)
-      } else if (ev.state.steps.length > currentStory.length) {
-        // Go forward to the previous last step
-        walkForward(ev.state.steps.pop(), false)
-      }
-    }
-  })
-
-  document
-    .querySelector('main > article > .post-content')
-    .addEventListener('click', function(ev) {
-      if (ev.target.tagName != 'A') {
-        return;
-      }
-      
-      const stepId = ev.target.getAttribute('href').replace(/^#/, '')
-
-      if (!isValidStep(stepId)) {
-        console.warn(`Unknown step id #${stepId}, treating like a normal link`)
-        return;
-      }
-      
-      if (!isStepInStory(stepId)) {
-        ev.preventDefault()
-        walkForward(stepId)
-      } else if (ev.target.matches('.clear-steps')) {
-        ev.preventDefault()
-        walkBackward(stepId)
-      }
-    })
-  
-  // remove the toc sidebar since it doesn't make sense here
-  function removeTOC() {
-    const toc = document.querySelector(".table-of-contents")
-    if (toc) {
-      toc.remove()
-    } else {
-      setTimeout(removeTOC, 10)
-    }
-  }
-  document.addEventListener('DOMContentLoaded', removeTOC)
-})()
-</script>
+<script src="usethis-adventure.js"></script>
 </div>
