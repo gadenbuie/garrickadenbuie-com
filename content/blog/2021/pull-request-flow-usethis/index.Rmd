@@ -129,7 +129,7 @@ library(usethis)
 
 1. [Pick up something you were working on](#pr-resume)
 
-1. [Review someone else's work](#pr-fetch)
+1. [Review someone else's work](#pr-fetch-review)
 :::
 
 ### Start new work {#pr-init .step}
@@ -157,7 +157,7 @@ The console output reminds you that [usethis]{.pkg} updated your local repo
 and created and switched to a new branch for you.
 
 ::: decision
-`r way_point()` You're ready to [do some work](#do-work).
+`r way_point()` You're ready to <a href="#do-work" class='clear-steps'>do some work</a>.
 :::
 
 ### Pick up something you were working on {#pr-resume .step}
@@ -170,12 +170,31 @@ You were doing some work in a branch in your local of the project...
 ::: decision
 `r way_point()` Do you remember the name of the branch?
 
-- I [don't remember, remind me](#pr-resume-no-branch)
+- [I don't remember, remind me](#pr-resume-no-branch)
 
-- I [remember, it's the `add-example` branch](#pr-resume-branch)
+- [I remember, it's the `add-example` branch](#pr-resume-branch)
+:::
+
+### Get to a local branch {#pr-resume-local .step}
+
+git branches, you've made a few.
+But which one you do you want to work in?
+
+::: decision
+`r way_point()` Do you remember the name of the branch?
+
+- [I don't remember, remind me](#pr-resume-no-branch)
+
+- [I remember, it's the `add-example` branch](#pr-resume-branch)
 :::
 
 ### Choose a branch and resume working {#pr-resume-no-branch .step}
+
+Don't worry, [usethis]{.pkg} has your back.
+Just run `pr_resume()` without any arguments
+to get a list of local branches available to you.
+`pr_resume()` helpfully sorts the branches by recency of work
+and tells you if any of the branches are related to pull requests.
 
 ```{r pr_resume-no-branch, eval=FALSE}
 pr_resume()
@@ -193,14 +212,27 @@ Selection: 1
 • Use `pr_push()` to create or update PR.
 ```
 
+We picked option `1` to keep working in our `add-examples` branch.
+Notice that, since `add-examples` is related to PR `#11`,
+`pr_resume()` also did you the extra favor of
+making sure that your local copy is up-to-date.
+
 ::: decision
-TK: next steps
+`r way_point()` Rock and roll, you're ready to <a href="#do-work" class='clear-steps'>do some work</a>.
 :::
 
 ### Get back to the branch {#pr-resume-branch .step}
 
+Look at you, smarty pants. 
+You remember your git branch names!
+I'm proud of you.
+
+Good news, 
+`pr_resume()` can swtich to `"add-examples"` branch for you
+and it also makes sure that your local copy is up-to-date!
+
 ```{r pr_resume-branch, eval=FALSE}
-pr_resume("add-example")
+pr_resume("add-examples")
 ```
 ```
 ✓ Switching to branch 'add-examples'
@@ -209,10 +241,35 @@ pr_resume("add-example")
 ```
 
 ::: decision
-TK: next steps
+`r way_point()` Sweat deal! Okay, you're ready to <a href="#do-work" class='clear-steps'>do some work</a>.
 :::
 
-### Review someone else's work {#pr-fetch .step}
+### Review someone else's work {#pr-fetch-review .step}
+
+TK: intro text about reviewing work
+
+::: decision
+`r way_point()` Do you know the pull request number?
+
+- [I don't remember, remind me](#pr-fetch-no-branch)
+
+- [I remember, it's PR `#14`](#pr-fetch-branch)
+:::
+
+### Open a remote branch, locally {#pr-fetch .step}
+
+TK: intro text about making a remote branch local to your machine.
+
+::: decision
+`r way_point()` Do you know the pull request number?
+
+- [I don't remember, remind me](#pr-fetch-no-branch)
+
+- [I remember, it's PR `#14`](#pr-fetch-branch)
+:::
+
+### Choose a PR and bring the changes onto your computer {#pr-fetch-no-branch .step}
+
 
 ```{r pr_fetch-no-branch, eval=FALSE}
 pr_fetch()
@@ -224,10 +281,20 @@ Which PR are you interested in? (0 to exit)
 1: 'gadenbuie/acme/#11' (@gadenbuie): 'Add an example'
 2: 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
 
-Selection: 
+Selection: 2
+✓ Checking out PR 'gadenbuie/acme/#94' (@wileycoyote): 'Model tuning features'
+✓ Adding remote 'wileycoyote' as 'git@github.com:wileycoyote/acme.git'
+✓ Creating and switching to local branch 'wileycoyote-toone-model'
+✓ Setting 'wileycoyote/toone-model' as remote tracking branch
 ```
 
 Choosing selection 2 will perform the same steps as providing the PR number to `pr_fetch()`.
+
+::: decision
+`r way_point()` All set! Now you're ready to <a href="#do-work" class='clear-steps'>do some work in this branch</a>.
+:::
+
+### Open a PR locally {#pr-fetch-branch .step}
 
 ```{r pr_fetch-branch, eval=FALSE}
 pr_fetch(14)
@@ -240,7 +307,7 @@ pr_fetch(14)
 ```
 
 ::: decision
-TK: next steps
+`r way_point()` All set! Now you're ready to <a href="#do-work" class='clear-steps'>do some work in this branch</a>.
 :::
 
 ## Update your local copy {#do-update .step}
@@ -280,25 +347,25 @@ Merged origin/main into add-example
 
 Let's make sure we're in the right branch in your local project.
 
+::: decision
 `r way_point()` 
 Which branch do you want to work with right now?
 
-- The one I'm in right now<br/>
-  &rArr; _you're all set, go [get some work done](#do-work)_!
+- The one I'm in right now, so
+  <a class="clear-steps" href="#do-work">I'm ready to get to work</a>!
 
-- A local branch, but not the one I'm in now<br/>
-  &rArr; _go [resume working in that branch](#pr-resume)
-  and then come right back here._
+- [A local branch, but not the one I'm in now](#pr-resume-local)
 
-- A pull request branch I was looking at on GitHub<br/>
-  &rArr; _go [fetch the pull request](#pr-fetch)
-  and then come right back here_.
+- [A pull request branch I was looking at on GitHub](#pr-fetch)
+:::
   
 
 ## Do some work {#do-work .step}
 
 You take a sip of your coffee (or the beverage of your choice),
-turn up your favorite [music to write code to](https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6) playlist on Spotify,
+turn up your favorite
+[music to write code to](https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6)
+playlist on Spotify,
 and line up 25 minutes in your [Pomodoro app](https://pomofocus.io/).
 
 You're ready to get something done!
@@ -310,7 +377,7 @@ Go write some code.
 ::: decision
 `r way_point()` 
 Sweet! 
-Now that feel good about your work,
+Now that you feel good about your work,
 you're ready to [take a snapshot of your updates](#git-commit).
 :::
 
@@ -370,23 +437,17 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 
 - If **not**, no worries. Just <a href="#do-work" class="clear-steps">keep on working</a>.
 :::
-
-
   
 ### Fix something {#fix-something .step}
 
 Oh no, you need to fix something!
-I hope it's just a typo and not a big scary error.
+I hope it's just a typo and not a big scary error!
 But first...
 
 ::: decision
 `r way_point()` 
-Quick question: 
-this thing that needs to be fixed — what branch is it in?
-
-- The one that I'm in now, I'm ready to <a class="clear-steps" href="#do-work">get some work done and fix this thing</a>.
-
-- Not this one, [I need to change branches](#do-choose-branch).
+This thing that needs to be fixed —
+[what branch is it in](#do-choose-branch)?
 :::
 
 ## Share your work {#share-your-work .step}
@@ -397,7 +458,7 @@ Your work is awesome and everyone is going to be happy to try it out.
 ::: decision
 `r way_point()` Let's get your work off of your computer and out into the world.
 
-- This [new work you're sharing](#pr-push-new) for the first time.
+- This [new work you're sharing for the first time](#pr-push-new).
 
 - I'm [updating a pull request that I created](#pr-push-yours).
 
@@ -502,10 +563,11 @@ pr_push()
 
 ### Pause your work {#pr-pause .step}
 
-If you landed here, 
-you're not completely done with the thing you were working on,
-but you do want to put it aside for now.
-That's alright, that work will be waiting patiently for you in a local branch.
+Before you move on, 
+you probably want to put aside the thing you were just working on.
+Don't worry,
+it will be waiting patiently for you in a local branch
+when you're ready to come back to it.
 
 Call `pr_pause()` to switch from the current branch back to the default branch,
 and to make sure you've got the latest changes in the default branch.
