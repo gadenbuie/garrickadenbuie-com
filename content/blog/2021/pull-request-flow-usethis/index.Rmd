@@ -11,7 +11,7 @@ tags:
   - Pull Requests
   - Workflow
 description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
-twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow.jpg
+twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |
@@ -71,7 +71,7 @@ back_button <- function() {
 lightbox_img(
   "usethis-pr-flow-medium.jpg",
   alt = "A flow chart for the pull request functions in the usethis R package.",
-  caption = "A `usethis` pull request helper function flow. [Download the image](#download)."
+  caption = "A `usethis` pull request helper function flow diagram. ([Download the image](#download). [CC BY](http://creativecommons.org/licenses/by/4.0/))"
 )
 ```
 
@@ -1024,11 +1024,12 @@ using `pr_fetch()`.
 
 ## Download the usethis `pr_*()` flow chart {#download}
 
-- [Small JPG Image (186 KB)](usethis-pr-flow.jpg)
-- [Medium JPG Image (500 KB)](usethis-pr-flow-medium.jpg)
-- [Large JPG Image (886 KB)](usethis-pr-flow-large.jpg)
+- [Small JPG Image (190 KB)](usethis-pr-flow.jpg)
+- [Medium JPG Image (511 KB)](usethis-pr-flow-medium.jpg)
+- [Large JPG Image (1.36 MB)](usethis-pr-flow-large.jpg)
 - [SVG (40 KB)](usethis-pr-flow.svg)
-- [Source File `.drawio` (3.8 KB)](usethis-pr-flow.drawio)
+- [SVG, Editable (40 KB)](usethis-pr-flow-editable.svg)
+- [Source File `.drawio` (4 KB)](usethis-pr-flow.drawio)
 
 ::: cc-box
 
