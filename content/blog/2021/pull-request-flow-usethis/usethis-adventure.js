@@ -10,6 +10,8 @@
     return;
   }
   
+  document.getElementById('instructions').innerText = `It's a little bit unusual, but don't worry, I'll walk you through it.`
+  
   introOptions.innerHTML = `<li><p>Yes, <a href="#get-started">walk me through my adventure</a>.</p></li>
     <li><p>Yes, but I'd prefer to <a href="index.html?interactive=0#intro">read and navigate on my own</a>.</p></li>`
 
@@ -55,7 +57,10 @@
       return
     }
     const last = x[x.length - 1]
-    last.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    console.log(`Scrolling to element #${last.id}`)
+    setTimeout(function() {
+      last.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
+    }, 100)
     return last
   }
   
@@ -110,13 +115,13 @@
     
     // clears steps between target and current step
     const idxNext = getCurrentStoryStepIds().indexOf(stepId)
-    scrollToLast([currentStory[idxNext]])
     while (currentStory.length - 1 > idxNext) {
       let lastStep = currentStory.pop()
       lastStep.classList.add('fade-out-bck')
       setTimeout(() => lastStep.remove(), 1100)
     }
     update_url ? updateURL() : null
+    scrollToLast(currentStory)
     const newLastStep = currentStory[currentStory.length - 1]
     unmarkDecision(newLastStep)
     return newLastStep
@@ -175,7 +180,7 @@
   // Restore steps from URL
   let initSteps = new URLSearchParams(window.location.search).get('steps')
   if (initSteps) {
-    initSteps = initSteps.split(',').map(walkForward)
+    initSteps = initSteps.split(',').filter(isValidStep).map(walkForward)
     setTimeout(
       () => scrollToLast(initSteps),
       1000
@@ -224,7 +229,7 @@
       if (!isStepInStory(stepId)) {
         ev.preventDefault()
         walkForward(stepId)
-      } else if (ev.target.matches('.clear-steps')) {
+      } else {
         ev.preventDefault()
         walkBackward(stepId)
       }
@@ -240,4 +245,10 @@
     }
   }
   document.addEventListener('DOMContentLoaded', removeTOC)
+  
+  // debugging
+  // Array.from(document.querySelectorAll('.section.step'))
+  //   .forEach(function(el) {
+  //     el.querySelector(['h2', 'h3']).innerHTML += `<br/><code style="background:none;font-size:0.66em">#${el.id}</code>`
+  //   })
 })()

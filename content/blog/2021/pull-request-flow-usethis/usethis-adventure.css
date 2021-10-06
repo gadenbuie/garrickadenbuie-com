@@ -79,17 +79,8 @@ html {
   white-space: nowrap !important;
 }
 
-#instructions-non-interactive {
-  display: none;
-}
-
 .non-interactive #skip-to-non-interactive,
-.non-interactive #instructions-interactive {
   display: none;
-}
-
-.non-interactive #instructions-non-interactive {
-  display: unset;
 }
 
 .fade-in {
