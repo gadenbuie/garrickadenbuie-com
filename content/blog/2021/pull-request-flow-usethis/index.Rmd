@@ -23,6 +23,8 @@ editor_options:
 
 [usethis]: https://usethis.r-lib.org
 [gert]: https://docs.ropensci.org/gert/
+[usethis-pr-docs]: https://usethis.r-lib.org/reference/pull-requests.html
+[usethis-pr-article]: https://usethis.r-lib.org/articles/articles/pr-functions.html
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -71,13 +73,43 @@ back_button <- function() {
 lightbox_img(
   "usethis-pr-flow-medium.jpg",
   alt = "A flow chart for the pull request functions in the usethis R package.",
-  caption = "A `usethis` pull request helper function flow diagram. ([Download the image](#download). [CC BY](http://creativecommons.org/licenses/by/4.0/))"
+  caption = "A `usethis` pull request helper function flow diagram. [Download the image](#download) or read a [text version of the flow chart](flowchart/). ([CC BY](http://creativecommons.org/licenses/by/4.0/))"
 )
 ```
 
-## Choose your own pull request adventure {#intro}
+## Introduction
 
-TK: intro about [usethis]{.pkg} and `pr_*()` helper functions.
+The [[usethis]]{.pkg} package is full of incredibly helpful functions
+that make life as an R developer easier.
+A lot of the package's functions target R package maintainers,
+but there's a small cluster of functions that are life changing
+for anyone who uses `git` or collaborates with others via GitHub[^or-others].
+
+[^or-others]: I primarily use GitHub, but I think these functions will generally work for other code-hosting platforms as well, like GitLab or others.
+
+These pull request helpers all start with the `pr_` prefix,
+but I initially found them a little confusing to use
+since they're each designed to be called in a specific context —
+for example, when you have local work that isn't associated with a PR
+or when a PR exists but you don't have the work locally on your computer.
+
+Once I wrapped my head around the functions, though,
+using them has utterly transformed my day-to-day workflow.
+I can move in and out of collaborative work seamlessly.
+The flow chart above is my personal mental model of this cluster of functions
+and I hope it helps you make sense of them, too.
+
+There are other great resources available in the [usethis]{.pkg} documentation.
+Beyond the [function documentation][usethis-pr-docs],
+there's also the great [_Pull request helpers_ article][usethis-pr-article].
+That article walks through a pull request
+from the perspective of a contributor
+and a package maintainer.
+
+In this blog post, however,
+you get to play both roles and choose your own adventure!
+
+## Choose your own pull request adventure {#intro}
 
 Welcome to this choose-your-own-adventure blog post.
 <span id="instructions">You don't need to read this one from top to bottom.

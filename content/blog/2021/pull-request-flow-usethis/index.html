@@ -29,12 +29,37 @@ editor_options:
 <img src="usethis-pr-flow-medium.jpg" alt="A flow chart for the pull request functions in the usethis R package.">
 </a>
 <p class="caption">
-A <code>usethis</code> pull request helper function flow diagram. (<a href="#download">Download the image</a>. <a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>)
+A <code>usethis</code> pull request helper function flow diagram. <a href="#download">Download the image</a> or read a <a href="flowchart/">text version of the flow chart</a>. (<a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>)
 </p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> package is full of incredibly helpful functions
+that make life as an R developer easier.
+A lot of the package’s functions target R package maintainers,
+but there’s a small cluster of functions that are life changing
+for anyone who uses <code>git</code> or collaborates with others via GitHub<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>These pull request helpers all start with the <code>pr_</code> prefix,
+but I initially found them a little confusing to use
+since they’re each designed to be called in a specific context —
+for example, when you have local work that isn’t associated with a PR
+or when a PR exists but you don’t have the work locally on your computer.</p>
+<p>Once I wrapped my head around the functions, though,
+using them has utterly transformed my day-to-day workflow.
+I can move in and out of collaborative work seamlessly.
+The flow chart above is my personal mental model of this cluster of functions
+and I hope it helps you make sense of them, too.</p>
+<p>There are other great resources available in the <span class="pkg">usethis</span> documentation.
+Beyond the <a href="https://usethis.r-lib.org/reference/pull-requests.html">function documentation</a>,
+there’s also the great <a href="https://usethis.r-lib.org/articles/articles/pr-functions.html"><em>Pull request helpers</em> article</a>.
+That article walks through a pull request
+from the perspective of a contributor
+and a package maintainer.</p>
+<p>In this blog post, however,
+you get to play both roles and choose your own adventure!</p>
 </div>
 <div id="intro" class="section level2">
 <h2>Choose your own pull request adventure</h2>
-<p>TK: intro about <span class="pkg">usethis</span> and <code>pr_*()</code> helper functions.</p>
 <p>Welcome to this choose-your-own-adventure blog post.
 <span id="instructions">You don’t need to read this one from top to bottom.
 Instead, jumping around is encouraged!</span></p>
@@ -807,4 +832,10 @@ Garrick Aden-Buie
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 </div>
 <script src="usethis-adventure.js"></script>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I primarily use GitHub, but I think these functions will generally work for other code-hosting platforms as well, like GitLab or others.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
