@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-10-01'
+date: '2021-10-06'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -10,8 +10,8 @@ tags:
   - usethis
   - Pull Requests
   - Workflow
-description: Get in the usethis pull request flow with this flow chart.
-twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-small.jpg
+description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
+twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |
@@ -168,7 +168,7 @@ making sure that your local copy is up-to-date.</p>
 You remember your git branch names!
 I’m proud of you.</p>
 <p>Good news,
-<code>pr_resume()</code> can switch to <code>"add-example"</code> branch for you
+<code>pr_resume()</code> can switch to the <code>"add-example"</code> branch for you
 and it also makes sure that your local copy is up-to-date!</p>
 <pre class="r"><code>pr_resume(&quot;add-example&quot;)</code></pre>
 <pre><code>✓ Switching to branch &#39;add-example&#39;
@@ -225,10 +225,10 @@ helpfully contributed a new function
 to your bag of tricks package, <span class="pkg">acme</span>.
 They sent you a message on Slack letting you know they submitted a PR,
 but they didn’t mention the PR number.</p>
-<p>No a big deal —
+<p>No big deal —
 you can call <code>pr_fetch()</code> from your local repository
 without any arguments
-and <span class="pkg">usethis</span> will look up any open pull requests
+and <code>pr_fetch()</code> will look up any open pull requests
 and give you the option to pick the one you want.</p>
 <pre class="r"><code>pr_fetch()</code></pre>
 <pre><code>ℹ No PR specified ... looking up open PRs
@@ -253,7 +253,7 @@ you’re free to poke around to try out the code and review it.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Okay, you’ve had a chance to look at the code, what do you want to do next?</p>
 <ul>
 <li><p><a href="#do-work-theirs">I want to make some changes to add to the PR.</a></p></li>
-<li><p>I reviewed the code and left comments for the PR authors in the pull request.</p>
+<li><p>I reviewed the code and left comments for the PR author in the pull request.</p>
 <ul>
 <li><p><a href="#pr-forget-theirs">I’m done with this branch</a>.</p></li>
 <li><p><a href="#pr-pause">I’m done for now, but I’ll probably come back to this branch later</a>.</p></li>
@@ -288,13 +288,33 @@ so you follow up with <code>pr_pull()</code> to pull the latest changes into you
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now that you have the latest PR code, what do you want to do next?</p>
 <ul>
 <li><p><a href="#do-work-theirs">I want to make some changes to add to the PR.</a></p></li>
-<li><p>I reviewed the code and left comments for the PR authors in the pull request.</p>
+<li><p>I reviewed the code and left comments for the PR author in the pull request.</p>
 <ul>
 <li><p><a href="#pr-forget-theirs">I’m done with this branch</a>.</p></li>
 <li><p><a href="#pr-pause">I’m done for now, but I’ll probably come back to this branch later</a>.</p></li>
 </ul></li>
 </ul>
 </div>
+</div>
+</div>
+<div id="pr-view-yours" class="section level2 step">
+<h2>Open your PR on GitHub</h2>
+<p>TK: <code>pr_view()</code></p>
+<pre class="r"><code>pr_view()</code></pre>
+<pre><code>ℹ Current branch (&#39;add-example&#39;) is connected to PR #11
+✓ Opening URL &#39;https://github.com/gadenbuie/acme/pull/11&#39;</code></pre>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> TK where next</p>
+</div>
+</div>
+<div id="pr-view-theirs" class="section level2 step">
+<h2>Open your PR on GitHub</h2>
+<p>TK: <code>pr_view()</code></p>
+<pre class="r"><code>pr_view()</code></pre>
+<pre><code>ℹ Current branch (&#39;wileycoyote-toone-models&#39;) is connected to PR #14
+✓ Opening URL &#39;https://github.com/gadenbuie/acme/pull/14&#39;</code></pre>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> TK where next</p>
 </div>
 </div>
 <div id="do-update" class="section level2 step">
@@ -394,8 +414,8 @@ list problem and couldn’t solve it.</p>
 </blockquote>
 <p>Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.</p>
-<p>And now you’re back with fresh eyes, more energy and a full cup of coffee.
-Things go better!
+<p>And now you’re back with fresh eyes, more energy, and a full cup of coffee.
+This time, things go better!
 You fall easily into a flow and start writing some code.
 As you go,
 you periodically pause to stage files with <code>gert::git_add()</code>
@@ -563,13 +583,14 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 </div>
 <div id="pr-push-yours" class="section level3 step">
 <h3>Update your existing pull request</h3>
-<p>You just made <a href="#git-commit">and committed</a> some changes to an existing pull request,
-and now you’d like to update the PR on GitHub.
+<p>You just made <a href="#git-commit">and committed</a>
+some changes to an existing PR you created,
+and now you’d like to update that PR on GitHub.
 <code>pr_push()</code> also does this for you!
 Helpfully, before it pushes it checks to make sure your local branch is up-to-date.</p>
 <pre class="r"><code>pr_push()</code></pre>
-<pre><code>✔ Checking that local branch &#39;feature-exploration&#39; has the changes in &#39;origin/feature-exploration&#39;
-✔ Pushing local &#39;feature-exploration&#39; branch to &#39;origin:feature-exploration&#39;
+<pre><code>✔ Checking that local branch &#39;add-example&#39; has the changes in &#39;origin/add-example&#39;
+✔ Pushing local &#39;add-example&#39; branch to &#39;origin:add-example&#39;
 ✔ View PR at &#39;https://github.com/gadenbuie/acme/pull/10&#39; or call `pr_view()`</code></pre>
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>

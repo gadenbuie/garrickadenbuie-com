@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-10-01'
+date: '2021-10-06'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -10,8 +10,8 @@ tags:
   - usethis
   - Pull Requests
   - Workflow
-description: Get in the usethis pull request flow with this flow chart.
-twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-small.jpg
+description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
+twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |
@@ -235,7 +235,7 @@ You remember your git branch names!
 I'm proud of you.
 
 Good news, 
-`pr_resume()` can switch to `"add-example"` branch for you
+`pr_resume()` can switch to the `"add-example"` branch for you
 and it also makes sure that your local copy is up-to-date!
 
 ```{r pr_resume-branch, eval=FALSE}
@@ -303,10 +303,10 @@ to your bag of tricks package, [acme]{.pkg}.
 They sent you a message on Slack letting you know they submitted a PR,
 but they didn't mention the PR number.
 
-No a big deal —
+No big deal —
 you can call `pr_fetch()` from your local repository
 without any arguments
-and [usethis]{.pkg} will look up any open pull requests
+and `pr_fetch()` will look up any open pull requests
 and give you the option to pick the one you want.
 
 ```{r pr_fetch-no-branch, eval=FALSE}
@@ -340,7 +340,7 @@ you're free to poke around to try out the code and review it.
 
 - [I want to make some changes to add to the PR.](#do-work-theirs)
 
-- I reviewed the code and left comments for the PR authors in the pull request.
+- I reviewed the code and left comments for the PR author in the pull request.
 
    - [I'm done with this branch](#pr-forget-theirs).
    
@@ -388,11 +388,43 @@ pr_pull()
 
 - [I want to make some changes to add to the PR.](#do-work-theirs)
 
-- I reviewed the code and left comments for the PR authors in the pull request.
+- I reviewed the code and left comments for the PR author in the pull request.
 
    - [I'm done with this branch](#pr-forget-theirs).
    
    - [I'm done for now, but I'll probably come back to this branch later](#pr-pause).
+:::
+
+## Open your PR on GitHub {#pr-view-yours .step}
+
+TK: `pr_view()`
+
+```{r pr_view-yours, eval=FALSE}
+pr_view()
+```
+```
+ℹ Current branch ('add-example') is connected to PR #11
+✓ Opening URL 'https://github.com/gadenbuie/acme/pull/11'
+```
+
+::: decision
+`r way_point()` TK where next
+:::
+
+## Open your PR on GitHub {#pr-view-theirs .step}
+
+TK: `pr_view()`
+
+```{r pr_view-theirs, eval=FALSE}
+pr_view()
+```
+```
+ℹ Current branch ('wileycoyote-toone-models') is connected to PR #14
+✓ Opening URL 'https://github.com/gadenbuie/acme/pull/14'
+```
+
+::: decision
+`r way_point()` TK where next
 :::
 
 ## Update your local copy {#do-update .step}
@@ -522,8 +554,8 @@ you're ready to [take a snapshot of your updates](#git-commit).
 Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.
 
-And now you're back with fresh eyes, more energy and a full cup of coffee.
-Things go better!
+And now you're back with fresh eyes, more energy, and a full cup of coffee.
+This time, things go better!
 You fall easily into a flow and start writing some code.
 As you go,
 you periodically pause to stage files with `gert::git_add()`
@@ -732,8 +764,9 @@ go ahead click the _Create Pull Request_ button.
 
 ### Update your existing pull request {#pr-push-yours .step}
 
-You just made [and committed](#git-commit) some changes to an existing pull request,
-and now you'd like to update the PR on GitHub.
+You just made [and committed](#git-commit) 
+some changes to an existing PR you created,
+and now you'd like to update that PR on GitHub.
 `pr_push()` also does this for you!
 Helpfully, before it pushes it checks to make sure your local branch is up-to-date.
 
@@ -741,8 +774,8 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 pr_push()
 ```
 ```
-✔ Checking that local branch 'feature-exploration' has the changes in 'origin/feature-exploration'
-✔ Pushing local 'feature-exploration' branch to 'origin:feature-exploration'
+✔ Checking that local branch 'add-example' has the changes in 'origin/add-example'
+✔ Pushing local 'add-example' branch to 'origin:add-example'
 ✔ View PR at 'https://github.com/gadenbuie/acme/pull/10' or call `pr_view()`
 ```
 

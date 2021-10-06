@@ -57,7 +57,7 @@
       return
     }
     const last = x[x.length - 1]
-    console.log(`Scrolling to element #${last.id}`)
+    // console.log(`Scrolling to element #${last.id}`)
     setTimeout(function() {
       last.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'})
     }, 100)
@@ -222,7 +222,7 @@
       }
 
       if (!isValidStep(stepId)) {
-        console.warn(`Unknown step id #${stepId}, treating like a normal link`)
+        // console.log(`Unknown step id #${stepId}, treating like a normal link`)
         return;
       }
       
