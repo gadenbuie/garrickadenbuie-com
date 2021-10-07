@@ -2,25 +2,35 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
 }
+
 .cc-box {
   padding: 1em 1em;
   border: 2px solid #514961;
   border-radius: 3px;
 }
+
 @media (prefers-color-scheme: dark) {
   .cc-box {
     color: #dbd7e3;
   }
 }
+
 .cc-box :first-child {
   margin-top: 0;
 }
+
 .cc-box :last-child {
   margin-bottom: 0;
 }
+
 .fas.fa-map-signs,
 .fas.fa-arrow-alt-circle-left {
-	color: var(--accent-dark);
+  color: var(--accent-dark);
+}
+
+.decision a,
+.decision a:hover {
+  text-decoration: underline !important;
 }
 
 .decision.decided a {
@@ -32,7 +42,7 @@ html {
 }
 
 .decision.decided .way-point.fas.fa-map-signs {
-	color: var(--purple);
+  color: var(--purple);
 }
 
 #story-reset {
@@ -56,11 +66,12 @@ html {
     font-size: 1.25em;
     z-index: 1000;
   }
-  
-  .page, .post {
+
+  .page,
+  .post {
     position: relative;
   }
-  
+
   main > article > footer {
     height: 100vh;
   }
@@ -79,18 +90,18 @@ html {
   white-space: nowrap !important;
 }
 
-.non-interactive #skip-to-non-interactive,
+.non-interactive #skip-to-non-interactive {
   display: none;
 }
 
 .fade-in {
-	-webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
-	        animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+  -webkit-animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
+  animation: fade-in 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) 250ms both;
 }
 
 .fade-out-bck {
-	-webkit-animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: fade-out-bck 0.66s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* ----------------------------------------------
@@ -109,14 +120,17 @@ html {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @keyframes fade-in {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -129,24 +143,27 @@ html {
 @-webkit-keyframes fade-out-bck {
   0% {
     -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
     opacity: 1;
   }
+
   100% {
     -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
+    transform: translateZ(-80px);
     opacity: 0;
   }
 }
+
 @keyframes fade-out-bck {
   0% {
     -webkit-transform: translateZ(0);
-            transform: translateZ(0);
+    transform: translateZ(0);
     opacity: 1;
   }
+
   100% {
     -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
+    transform: translateZ(-80px);
     opacity: 0;
   }
 }
