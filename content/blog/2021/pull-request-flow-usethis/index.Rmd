@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-10-06'
+date: '2021-10-07'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -488,8 +488,6 @@ Where to next?
 
 ## Update your local copy {#do-update .step}
 
-TK: [get to the right branch](#do-choose-branch) and then choose `pr_pull()` or `pr_merge_main()`
-
 ### Update your local copy with a reviewer's changes {#pr-pull .step}
 
 Maybe a reviewer [suggested changes](https://docs.github.com/en/github/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request#applying-a-suggested-change)
@@ -548,15 +546,96 @@ pr_pull()
 
 ### Bring your work up to date with the main branch {#pr-merge-main-yours .step}
 
+While you were working on adding a new example to the documentation,
+your friend `@wileycoyote` went and submitted a PR that changes
+the function you're working on.
+
+You found out when you looked at your pull request on GitHub
+and it said
+
+> <i class="fa fa-exclamation-triangle"><span class="sr-only">Caution:</span></i> This branch has conflicts that must be resolved.
+
+Usually two people can work in the same project on two different areas
+without running into each other,
+but when both you and someone else want to change the same lines of code,
+you run into this issue.
+
+Helpfully,
+`pr_merge_main()` can get the latest changes from the main branch of your project
+into your current pull request!
+
 ```{r pr_merge_main-yours, eval=FALSE}
 pr_merge_main()
 ```
 ```
 ✓ Pulling changes from 'origin/main' (default branch of source repo)
-Merged origin/main into add-example
+There are 1 conflicted files:
+* R/atom_arranger.R
+
+Are you ready to sort this out?
+If so, we will open the conflicted files for you to edit.
+
+1: Yes, I'm ready to resolve the merge conflicts.
+2: No, I want to abort this merge.
+
+Selection: 1
+Please fix each conflict, save, stage, and commit.
+To back out of this merge, run `gert::git_merge_abort()` (in R) or `git merge --abort` (in the shell).
 ```
 
+If you need to fix any merge conflicts,
+`pr_merge_main()` will alert you
+that there are conflicts that need to be addressed.
+It also opens the files for you if you want it to,
+or you can choose to abort the merge
+and find another way to resolve the conflicts.
+
+You want to resolve the conflicts,
+so you picked selection `1` to open the conflicted file
+where you start looking for blocks in the source code that look like this:
+
+```
+<<<<<<< add-example
+Code in the first section appears in
+our *current* version in the `add-example` branch
+=======
+Code in the second section appears in
+the *incoming* version, i.e. the `main` branch
+>>>>>>> main
+```
+
+To resolve the conflict, you
+
+1. Edit from `<<<<<<<` to `>>>>>>>` 
+   choosing one or the other or a blend of the two versions
+   
+1. Save the file and stage it with `gert::git_add()`
+
+1. Repeat for other files with merge conflicts
+
+1. Commit the updated files with `gert::git_commit()`
+   or `git commit` in the command line
+
+::: decision
+`r way_point()` Great, your branch is up to date with the main branch!
+
+- I'm going to [write some code in this branch](#do-work-yours).
+
+- I want to [update the pull request on GitHub with these changes](#pr-push-yours).
+:::
+
+
 ### Bring their work up to date with the main branch {#pr-merge-main-theirs .step}
+
+While you and `@wileycoyote` have been working together on this new feature,
+you've been doing some work in other areas of the package.
+Since that other work has been added to the `main` branch,
+you might want to make sure that everything is up to date
+in `@wileycoyote`'s `toone-model` branch.
+
+To do this, run `pr_merge_main()`.
+It makes sure your default branch is up to date
+and then merges any changes into the current branch.
 
 ```{r pr_merge_main-theirs, eval=FALSE}
 pr_merge_main()
@@ -566,6 +645,16 @@ pr_merge_main()
 Merged origin/main into wileycoyote-toone-model
 ```
 
+If there aren't any merge conflicts, 
+you'll get a nice, quick confirmation that the merge went well.
+
+::: decision
+`r way_point()` Great, `@wileycote`'s branch is up to date with the main branch!
+
+- I'm going to [write some code in this branch](#do-work-theirs).
+
+- I want to [update the pull request on GitHub with these changes](#pr-push-theirs).
+:::
 
 ### Get to the right place {#do-choose-branch .step}
 
@@ -723,7 +812,7 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 ::: decision
 `r way_point()` Are you ready to share your work?
 
-- Yes! I'm ready to [push your changes out into the world](#pr-push-new).
+- Yes! I'm ready to [push my changes out into the world](#pr-push-new).
 
 - Not yet, I want to [keep on working on this](#do-work).
 
@@ -1101,7 +1190,7 @@ using `pr_fetch()`.
 
 <div id="step-list" style="display:none"></div>
 
-<div id="story-reset"><a href="#intro"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a></div>
+<div id="story-reset"><a href="#start"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a></div>
 
 ## Download the usethis `pr_*()` flow chart {#download}
 

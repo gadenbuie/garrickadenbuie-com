@@ -1,7 +1,7 @@
 ---
 title: Pull Request Flow with usethis
 author: Garrick Aden-Buie
-date: '2021-10-06'
+date: '2021-10-07'
 slug: pull-request-flow-usethis
 categories:
   - Blog
@@ -363,7 +363,6 @@ Where to next?</p>
 </div>
 <div id="do-update" class="section level2 step">
 <h2>Update your local copy</h2>
-<p>TK: <a href="#do-choose-branch">get to the right branch</a> and then choose <code>pr_pull()</code> or <code>pr_merge_main()</code></p>
 <div id="pr-pull" class="section level3 step">
 <h3>Update your local copy with a reviewer’s changes</h3>
 <p>Maybe a reviewer <a href="https://docs.github.com/en/github/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request#applying-a-suggested-change">suggested changes</a>
@@ -405,15 +404,90 @@ to make sure it works as expected.</p>
 </div>
 <div id="pr-merge-main-yours" class="section level3 step">
 <h3>Bring your work up to date with the main branch</h3>
+<p>While you were working on adding a new example to the documentation,
+your friend <code>@wileycoyote</code> went and submitted a PR that changes
+the function you’re working on.</p>
+<p>You found out when you looked at your pull request on GitHub
+and it said</p>
+<blockquote>
+<p><i class="fa fa-exclamation-triangle"><span class="sr-only">Caution:</span></i> This branch has conflicts that must be resolved.</p>
+</blockquote>
+<p>Usually two people can work in the same project on two different areas
+without running into each other,
+but when both you and someone else want to change the same lines of code,
+you run into this issue.</p>
+<p>Helpfully,
+<code>pr_merge_main()</code> can get the latest changes from the main branch of your project
+into your current pull request!</p>
 <pre class="r"><code>pr_merge_main()</code></pre>
 <pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
-Merged origin/main into add-example</code></pre>
+There are 1 conflicted files:
+* R/atom_arranger.R
+
+Are you ready to sort this out?
+If so, we will open the conflicted files for you to edit.
+
+1: Yes, I&#39;m ready to resolve the merge conflicts.
+2: No, I want to abort this merge.
+
+Selection: 1
+Please fix each conflict, save, stage, and commit.
+To back out of this merge, run `gert::git_merge_abort()` (in R) or `git merge --abort` (in the shell).</code></pre>
+<p>If you need to fix any merge conflicts,
+<code>pr_merge_main()</code> will alert you
+that there are conflicts that need to be addressed.
+It also opens the files for you if you want it to,
+or you can choose to abort the merge
+and find another way to resolve the conflicts.</p>
+<p>You want to resolve the conflicts,
+so you picked selection <code>1</code> to open the conflicted file
+where you start looking for blocks in the source code that look like this:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; add-example
+Code in the first section appears in
+our *current* version in the `add-example` branch
+=======
+Code in the second section appears in
+the *incoming* version, i.e. the `main` branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</code></pre>
+<p>To resolve the conflict, you</p>
+<ol style="list-style-type: decimal">
+<li><p>Edit from <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> to <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>
+choosing one or the other or a blend of the two versions</p></li>
+<li><p>Save the file and stage it with <code>gert::git_add()</code></p></li>
+<li><p>Repeat for other files with merge conflicts</p></li>
+<li><p>Commit the updated files with <code>gert::git_commit()</code>
+or <code>git commit</code> in the command line</p></li>
+</ol>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, your branch is up to date with the main branch!</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-yours">write some code in this branch</a>.</p></li>
+<li><p>I want to <a href="#pr-push-yours">update the pull request on GitHub with these changes</a>.</p></li>
+</ul>
+</div>
 </div>
 <div id="pr-merge-main-theirs" class="section level3 step">
 <h3>Bring their work up to date with the main branch</h3>
+<p>While you and <code>@wileycoyote</code> have been working together on this new feature,
+you’ve been doing some work in other areas of the package.
+Since that other work has been added to the <code>main</code> branch,
+you might want to make sure that everything is up to date
+in <code>@wileycoyote</code>’s <code>toone-model</code> branch.</p>
+<p>To do this, run <code>pr_merge_main()</code>.
+It makes sure your default branch is up to date
+and then merges any changes into the current branch.</p>
 <pre class="r"><code>pr_merge_main()</code></pre>
 <pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
 Merged origin/main into wileycoyote-toone-model</code></pre>
+<p>If there aren’t any merge conflicts,
+you’ll get a nice, quick confirmation that the merge went well.</p>
+<div class="decision">
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, <code>@wileycote</code>’s branch is up to date with the main branch!</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-theirs">write some code in this branch</a>.</p></li>
+<li><p>I want to <a href="#pr-push-theirs">update the pull request on GitHub with these changes</a>.</p></li>
+</ul>
+</div>
 </div>
 <div id="do-choose-branch" class="section level3 step">
 <h3>Get to the right place</h3>
@@ -542,7 +616,7 @@ Think of this message like the subject of an email to your future self.</p>
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Are you ready to share your work?</p>
 <ul>
-<li><p>Yes! I’m ready to <a href="#pr-push-new">push your changes out into the world</a>.</p></li>
+<li><p>Yes! I’m ready to <a href="#pr-push-new">push my changes out into the world</a>.</p></li>
 <li><p>Not yet, I want to <a href="#do-work">keep on working on this</a>.</p></li>
 <li><p>Actually, I don’t think I’m on the right track here.
 I’d <a href="#pr-forget-yours">rather back out of this branch and forget all about it</a>.</p></li>
@@ -836,7 +910,7 @@ using <code>pr_fetch()</code>.</p>
 
 </div>
 <div id="story-reset">
-<a href="#intro"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a>
+<a href="#start"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a>
 </div>
 </div>
 <div id="download" class="section level2">
