@@ -429,7 +429,8 @@ pr_pull()
 
 ### Open your PR on GitHub {#pr-view-yours .step}
 
-TK: `pr_view()`
+You can jump straight to the GitHub pull request page
+for the branch you're in with `pr_view()`!
 
 ```{r pr_view-yours, eval=FALSE}
 pr_view()
@@ -458,7 +459,8 @@ come back here to decide where you're headed next.
 
 ### Open their PR on GitHub {#pr-view-theirs .step}
 
-TK: `pr_view()`
+You can jump straight to the GitHub pull request page
+for the branch you're in with `pr_view()`!
 
 ```{r pr_view-theirs, eval=FALSE}
 pr_view()
