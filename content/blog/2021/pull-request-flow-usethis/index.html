@@ -321,25 +321,44 @@ so you follow up with <code>pr_pull()</code> to pull the latest changes into you
 </ul>
 </div>
 </div>
-</div>
-<div id="pr-view-yours" class="section level2 step">
-<h2>Open your PR on GitHub</h2>
+<div id="pr-view-yours" class="section level3 step">
+<h3>Open your PR on GitHub</h3>
 <p>TK: <code>pr_view()</code></p>
 <pre class="r"><code>pr_view()</code></pre>
 <pre><code>ℹ Current branch (&#39;add-example&#39;) is connected to PR #11
 ✓ Opening URL &#39;https://github.com/gadenbuie/acme/pull/11&#39;</code></pre>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> TK where next</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> When you’re done with the PR on GitHub,
+come back here to decide where you’re headed next.</p>
+<ul>
+<li><p>That’s it for now, I’m <a href="#pr-pause">ready to start the next thing</a>.</p></li>
+<li><p>Hang on, <a href="#fix-something">I found something I need to fix</a>.</p></li>
+<li><p>Good news, the pull request was merged and <a href="#pr-finish-yours">I’m done with this work</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
+</ul>
 </div>
 </div>
-<div id="pr-view-theirs" class="section level2 step">
-<h2>Open your PR on GitHub</h2>
+<div id="pr-view-theirs" class="section level3 step">
+<h3>Open their PR on GitHub</h3>
 <p>TK: <code>pr_view()</code></p>
 <pre class="r"><code>pr_view()</code></pre>
 <pre><code>ℹ Current branch (&#39;wileycoyote-toone-models&#39;) is connected to PR #14
 ✓ Opening URL &#39;https://github.com/gadenbuie/acme/pull/14&#39;</code></pre>
 <div class="decision">
-<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> TK where next</p>
+<p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Welcome back to your project,
+I hope everything went well over on GitHub.
+Where to next?</p>
+<ul>
+<li><p>I’m done here for now, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Shoot, <a href="#fix-something-theirs">I saw something I need to fix</a>.</p></li>
+<li><p>Nothing more with this branch, I can <a href="#pr-forget-theirs">forget all about this PR</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull-theirs">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-theirs">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>The PR was merged so <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
+</ul>
+</div>
 </div>
 </div>
 <div id="do-update" class="section level2 step">
@@ -384,11 +403,17 @@ to make sure it works as expected.</p>
 </ul>
 </div>
 </div>
-<div id="pr-merge-main" class="section level3 step">
+<div id="pr-merge-main-yours" class="section level3 step">
 <h3>Bring your work up to date with the main branch</h3>
 <pre class="r"><code>pr_merge_main()</code></pre>
 <pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
 Merged origin/main into add-example</code></pre>
+</div>
+<div id="pr-merge-main-theirs" class="section level3 step">
+<h3>Bring their work up to date with the main branch</h3>
+<pre class="r"><code>pr_merge_main()</code></pre>
+<pre><code>✓ Pulling changes from &#39;origin/main&#39; (default branch of source repo)
+Merged origin/main into wileycoyote-toone-model</code></pre>
 </div>
 <div id="do-choose-branch" class="section level3 step">
 <h3>Get to the right place</h3>
@@ -599,9 +624,11 @@ go ahead click the <em>Create Pull Request</em> button.</p>
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Good job! How are you feeling now?</p>
 <ul>
 <li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>I’d want to <a href="#pr-view-yours">open the PR on GitHub again</a>.</p></li>
 <li><p>Oh shoot, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
 <li><p>Great, that pull request was just merged and <a href="#pr-finish-yours">I’m done with this work</a>.</p></li>
 <li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
 <li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
 </ul>
 </div>
@@ -620,10 +647,12 @@ Helpfully, before it pushes it checks to make sure your local branch is up-to-da
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
 <ul>
+<li><p>I want to <a href="#pr-view-yours">take a look at the PR on GitHub</a>.</p></li>
 <li><p>Rock on! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Wait a second, <a href="#fix-something-yours">I saw something I need to fix</a>.</p></li>
 <li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
-<li><p>I just merged this PR and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>The PR has been merged and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
 <li><p>Never mind, my <a href="#pr-forget-yours">PR was closed and I’d like to forget about this work</a>.</p></li>
 </ul>
 </div>
@@ -643,10 +672,12 @@ pushing to the <code>toone-model</code> in the <code>wileycoyote/acme</code>.</p
 <div class="decision">
 <p><i class="way-point fas fa-map-signs" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
 <ul>
+<li><p>I want to <a href="#pr-view-theirs">take a look at the PR on GitHub</a>.</p></li>
 <li><p>Beep, beep! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
 <li><p>Hang on, <a href="#fix-something-theirs">I saw something I need to fix</a>.</p></li>
 <li><p>That’s all I wanted to do, I can <a href="#pr-forget-theirs">forget about this PR now</a>.</p></li>
 <li><p>Changes were made in the PR <a href="#pr-pull-theirs">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-theirs">and now I want to bring them into my PR branch</a>.</p></li>
 <li><p>I just merged this pull request and <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
 </ul>
 </div>

@@ -427,7 +427,7 @@ pr_pull()
    - [I'm done for now, but I'll probably come back to this branch later](#pr-pause).
 :::
 
-## Open your PR on GitHub {#pr-view-yours .step}
+### Open your PR on GitHub {#pr-view-yours .step}
 
 TK: `pr_view()`
 
@@ -440,10 +440,23 @@ pr_view()
 ```
 
 ::: decision
-`r way_point()` TK where next
+`r way_point()` When you're done with the PR on GitHub,
+come back here to decide where you're headed next.
+
+- That's it for now, I'm [ready to start the next thing](#pr-pause).
+
+- Hang on, [I found something I need to fix](#fix-something).
+
+- Good news, the pull request was merged and [I'm done with this work](#pr-finish-yours).
+
+- Changes were made in the PR [and now I need to update my local copy](#pr-pull).
+
+- There were updates in the main branch [and now I want to bring them into my PR branch](#pr-merge-main-yours).
+
+- Actually, the pull request was closed and [I can forget about this work](#pr-forget-yours).
 :::
 
-## Open your PR on GitHub {#pr-view-theirs .step}
+### Open their PR on GitHub {#pr-view-theirs .step}
 
 TK: `pr_view()`
 
@@ -456,7 +469,21 @@ pr_view()
 ```
 
 ::: decision
-`r way_point()` TK where next
+`r way_point()` Welcome back to your project,
+I hope everything went well over on GitHub.
+Where to next?
+
+- I'm done here for now, let's [start the next thing](#pr-pause).
+
+- Shoot, [I saw something I need to fix](#fix-something-theirs).
+
+- Nothing more with this branch, I can [forget all about this PR](#pr-forget-theirs).
+
+- Changes were made in the PR [and now I need to update my local copy](#pr-pull-theirs).
+
+- There were updates in the main branch [and now I want to bring them into my PR branch](#pr-merge-main-theirs).
+
+- The PR was merged so [I'm all done with this work](#pr-finish-theirs).
 :::
 
 ## Update your local copy {#do-update .step}
@@ -519,14 +546,24 @@ pr_pull()
 - I just merged this pull request and [I'm all done with this work](#pr-finish-theirs).
 :::
 
-### Bring your work up to date with the main branch {#pr-merge-main .step}
+### Bring your work up to date with the main branch {#pr-merge-main-yours .step}
 
-```{r pr_merge_main, eval=FALSE}
+```{r pr_merge_main-yours, eval=FALSE}
 pr_merge_main()
 ```
 ```
 ✓ Pulling changes from 'origin/main' (default branch of source repo)
 Merged origin/main into add-example
+```
+
+### Bring their work up to date with the main branch {#pr-merge-main-theirs .step}
+
+```{r pr_merge_main-theirs, eval=FALSE}
+pr_merge_main()
+```
+```
+✓ Pulling changes from 'origin/main' (default branch of source repo)
+Merged origin/main into wileycoyote-toone-model
 ```
 
 
@@ -785,11 +822,15 @@ go ahead click the _Create Pull Request_ button.
 
 - I'm on a roll, let's [start the next thing](#pr-pause).
 
+- I'd want to [open the PR on GitHub again](#pr-view-yours).
+
 - Oh shoot, [I saw something I need to fix](#fix-something).
 
 - Great, that pull request was just merged and [I'm done with this work](#pr-finish-yours).
 
 - Changes were made in the PR [and now I need to update my local copy](#pr-pull).
+
+- There were updates in the main branch [and now I want to bring them into my PR branch](#pr-merge-main-yours).
 
 - Actually, the pull request was closed and [I can forget about this work](#pr-forget-yours).
 :::
@@ -814,13 +855,17 @@ pr_push()
 ::: decision
 `r way_point()` Phenomenal! What do you want to do next?
 
+- I want to [take a look at the PR on GitHub](#pr-view-yours).
+
 - Rock on! I'm moving on to [start the next thing](#pr-pause).
 
 - Wait a second, [I saw something I need to fix](#fix-something-yours).
 
 - Changes were made in the PR [and now I need to update my local copy](#pr-pull).
 
-- I just merged this PR and [I'm all done with this work](#pr-finish-yours).
+- There were updates in the main branch [and now I want to bring them into my PR branch](#pr-merge-main-yours).
+
+- The PR has been merged and [I'm all done with this work](#pr-finish-yours).
 
 - Never mind, my [PR was closed and I'd like to forget about this work](#pr-forget-yours).
 :::
@@ -847,6 +892,8 @@ pr_push()
 ::: decision
 `r way_point()` Phenomenal! What do you want to do next?
 
+- I want to [take a look at the PR on GitHub](#pr-view-theirs).
+
 - Beep, beep! I'm moving on to [start the next thing](#pr-pause).
 
 - Hang on, [I saw something I need to fix](#fix-something-theirs).
@@ -854,6 +901,8 @@ pr_push()
 - That's all I wanted to do, I can [forget about this PR now](#pr-forget-theirs).
 
 - Changes were made in the PR [and now I need to update my local copy](#pr-pull-theirs).
+
+- There were updates in the main branch [and now I want to bring them into my PR branch](#pr-merge-main-theirs).
 
 - I just merged this pull request and [I'm all done with this work](#pr-finish-theirs).
 :::
