@@ -2,7 +2,7 @@
 title: "Pull Request Flow with usethis"
 author: "Garrick Aden-Buie"
 date: |
-  <a href="https://garricakdenbuie.com/blog/pull-request-flow-usethis">garricakdenbuie.com/blog/pull-request-flow-usethis</a>
+  <a href="https://garrickadenbuie.com/blog/pull-request-flow-usethis">garrickadenbuie.com/blog/pull-request-flow-usethis</a>
 output: 
   cleanrmd::html_document_clean:
     self_contained: false
@@ -72,12 +72,12 @@ and the two functions from the `gert` package are documented online at the
 
 ## Download the usethis `pr_*()` flow chart {#download}
 
-- [Small JPG Image (190 KB)](usethis-pr-flow.jpg)
-- [Medium JPG Image (511 KB)](usethis-pr-flow-medium.jpg)
-- [Large JPG Image (1.36 MB)](usethis-pr-flow-large.jpg)
-- [SVG (40 KB)](usethis-pr-flow.svg)
-- [SVG, Editable (40 KB)](usethis-pr-flow-editable.svg)
-- [Source File `.drawio` (4 KB)](usethis-pr-flow.drawio)
+- [Small JPG Image (190 KB)](../usethis-pr-flow.jpg)
+- [Medium JPG Image (511 KB)](../usethis-pr-flow-medium.jpg)
+- [Large JPG Image (1.36 MB)](../usethis-pr-flow-large.jpg)
+- [SVG (40 KB)](../usethis-pr-flow.svg)
+- [SVG, Editable (40 KB)](../usethis-pr-flow-editable.svg)
+- [Source File `.drawio` (4 KB)](../usethis-pr-flow.drawio)
 
 ::: cc-box
 
