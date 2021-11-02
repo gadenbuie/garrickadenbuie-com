@@ -1,0 +1,107 @@
+---
+title: 'branchMover: A Shiny app for moving the default branch of your GitHub repos'
+author: Garrick Aden-Buie
+date: '2021-11-02'
+slug: branchmover
+categories:
+  - Blog
+tags:
+  - R
+  - usethis
+  - GitHub
+  - git
+  - Apps
+  - Shiny
+  - RStudio
+description: "post description"
+twitterImage: "/path/to/image.png"
+rmd_source: ""
+keywords: "rstats"
+editor_options: 
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs-2.10/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/clipboard-2.0.6/clipboard.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+<script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+
+
+<!-- Links -->
+<div class="figure">
+<img src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" alt="" />
+<p class="caption">branchMover</p>
+</div>
+<div class="lead">
+<p>Introducing branchMover, a <a href="https://shiny.rstudio.com">Shiny</a> app slash <a href="https://rstudio.com">RStudio</a> addin for coordinated default branch changes across your <a href="https://github.com">GitHub</a> repositories.</p>
+<p>The app show you the default branch name for all of your repos and coordinates changing the default branch, including creating an issue to communicate the change.</p>
+</div>
+<div id="moving-to-main-street" class="section level2">
+<h2>Moving to <code>main</code> street</h2>
+<p>Over the past year,
+there’s been a concerted effort among people who create and manage git repositories
+to move away from the default branch name of <code>master</code>
+to something more intentional: typically <code>main</code>.</p>
+<p><a href="https://rstudio.com">RStudio</a> and the <a href="https://tidyverse.org">tidyverse</a> team recently undertook the giant challenge
+of changing the default branch of RStudio’s approximately 350 public repositories
+(most of which are all open source!).</p>
+<p>Watching <a href="https://jennybryan.org/">Jenny Bryan</a>’s superb stewardship of the change inspired a new app <code>branchMover</code>.
+Admittedly, I didn’t spend much time thinking about the name because the app won’t be in your life for very long.</p>
+<p>The goal of branchMover is to help you coordinate a default branch change across the repos you maintain.
+The app shows you all of the repos associated with your GitHub account and their current default branch.
+Because you might want to start with your less popular repos, you can sort by number of forks and stars on each repo.</p>
+<p>There’s also a button to change the default branch.
+When you click the button, the app clones your repo and uses
+the <a href="https://usethis.r-lib.org">usethis</a> package
+and the recently added
+<a href="https://usethis.r-lib.org/reference/git-default-branch.html">usethis::git_default_branch_rename()</a>
+function to update the default branch of your repo.</p>
+<p>I followed Jenny’s lead and the app will create an issue announcing the change.
+If all goes well,
+the issue is closed a few seconds later
+with instructions for your users on how to update any local copies of your repo.
+If it doesn’t go well,
+the issue stay open as a reminder to you to finish the process.</p>
+<p>Unfortunately, branchMover <em>doesn’t</em> update the default branch in <em>your</em>
+local copies of your repos. Thankfully, this is relatively pain-free
+with the
+<a href="https://usethis.r-lib.org/reference/git-default-branch.html">usethis::git_default_branch_rediscover()</a>
+function, added in usethis version 2.1.2.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>You can install <a href="https://github.com/gadenbuie/branchMover">branchMover</a> from
+<a href="https://github.com/">GitHub</a> with:</p>
+<pre class="r"><code># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;gadenbuie/branchMover&quot;)</code></pre>
+<p>The app uses the <a href="https://usethis.r-lib.org">usethis</a> and
+<a href="https://gh.r-lib.org">gh</a> packages. You need to configure gh with a
+<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a>
+to be able to authenticate with the GitHub API:
+read more about <a href="https://gh.r-lib.org/articles/managing-personal-access-tokens.html">Managing Personal Access
+Tokens</a></p>
+<p>Then, in RStudio, run the app with:</p>
+<pre class="r"><code>branchMover::app()</code></pre>
+</div>
+<div id="why-change-branches" class="section level2">
+<h2>Why change branches?</h2>
+<p>If you want to learn more about how git’s default branch works
+and why many are opting to choose a more intentional default,
+I highly recommend Jenny’s detailed article
+<a href="https://www.tidyverse.org/blog/2021/10/renaming-default-branch/">Renaming the default branch</a>,
+which I’ll quote directly:</p>
+<blockquote>
+<p>Technically, Git has no official concept of the default branch. But in practice, most Git repos have an <em>effective default branch</em>. If there’s only one branch, this is it! It is the branch that most bug fixes and features get merged in to. It is the branch you see when you first visit a repo on a site such as GitHub. On a Git remote, it is the branch that <code>HEAD</code> points to. The default branch may not be precisely defined in Git itself, but most of us know it when we see it.</p>
+<p>Historically, <code>master</code> has been the most common name for the default branch, but <code>main</code> is an increasingly popular choice. There is coordinated change across the Git ecosystem that is making it easier for users to make this switch, for example:</p>
+<ul>
+<li><a href="https://sfconservancy.org/news/2020/jun/23/gitbranchname/">Regarding Git and Branch Naming</a>, statement from the Git project and the Software Freedom Conservancy regarding the new <code>init.defaultBranch</code> configuration option</li>
+<li><a href="https://github.com/github/renaming#readme">Renaming the default branch from<code>master</code></a>, GitHub’s roadmap for supporting the shift away from <code>master</code></li>
+<li><a href="https://about.gitlab.com/blog/2021/03/10/new-git-default-branch-name/">The new Git default branch name</a>, same, but for GitLab</li>
+</ul>
+<p><cite>Jenny Bryan, <a href="https://www.tidyverse.org/blog/2021/10/renaming-default-branch/">Renaming the default branch</a></cite></p>
+</blockquote>
+<hr />
+<p><strong>Branch Mover</strong> was built by <a href="https://www.garrickadenbuie.com">Garrick Aden-Buie</a>.
+Come say hi to me on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a>.</p>
+</div>
