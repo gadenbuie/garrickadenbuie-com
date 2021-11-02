@@ -68,8 +68,12 @@ to something more intentional: typically `main`.
 [RStudio] and the [tidyverse] team recently undertook the giant challenge
 of changing the default branch of RStudio's approximately 350 public repositories
 (most of which are all open source!).
+[Jenny Bryan](https://jennybryan.org/) wrote about 
+[the branch-changing experience](https://www.tidyverse.org/blog/2021/10/renaming-default-branch/)
+on the tidyverse blog.
 
-Watching [Jenny Bryan](https://jennybryan.org/)'s superb stewardship of the change inspired a new app `branchMover`.
+Watching Jennys's superb stewardship of the change inspired a new app `branchMover`.
+Or is it named **Branch Mover**?
 Admittedly, I didn't spend much time thinking about the name because the app won't be in your life for very long.
 
 The goal of [branchMover] is to help you coordinate a default branch change across the repos you maintain.
