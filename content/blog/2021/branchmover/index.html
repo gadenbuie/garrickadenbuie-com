@@ -13,9 +13,11 @@ tags:
   - Apps
   - Shiny
   - RStudio
-description: "post description"
-twitterImage: "/path/to/image.png"
-rmd_source: ""
+description: >
+  Introducing branchMover, a Shiny app slash RStudio addin for coordinated
+  default branch changes across your GitHub repositories.
+twitterImage: "https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
+rmd_source: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmd"
 keywords: "rstats"
 editor_options: 
   chunk_output_type: console
@@ -30,11 +32,16 @@ editor_options:
 
 <!-- Links -->
 <div class="figure">
-<img src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" alt="" />
-<p class="caption">branchMover</p>
+<img 
+  src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" 
+  alt="The 'Branch Mover' shiny app on the main 'Repos' screen, showing an interactive table of repositories associated with a GitHub user. The table shows the default branch, language of the repo, number of forks and stars, and a button that can be clicked to initiate moving the repo's default branch."
+>
+<p class="caption">
+Branch Mover
+</p>
 </div>
 <div class="lead">
-<p>Introducing branchMover, a <a href="https://shiny.rstudio.com">Shiny</a> app slash <a href="https://rstudio.com">RStudio</a> addin for coordinated default branch changes across your <a href="https://github.com">GitHub</a> repositories.</p>
+<p>Introducing <a href="https://github.com/gadenbuie/branchMover">branchMover</a>, a <a href="https://shiny.rstudio.com">Shiny</a> app slash <a href="https://rstudio.com">RStudio</a> addin for coordinated default branch changes across your <a href="https://github.com">GitHub</a> repositories.</p>
 <p>The app show you the default branch name for all of your repos and coordinates changing the default branch, including creating an issue to communicate the change.</p>
 </div>
 <div id="moving-to-main-street" class="section level2">
@@ -48,7 +55,7 @@ of changing the default branch of RStudio’s approximately 350 public repositor
 (most of which are all open source!).</p>
 <p>Watching <a href="https://jennybryan.org/">Jenny Bryan</a>’s superb stewardship of the change inspired a new app <code>branchMover</code>.
 Admittedly, I didn’t spend much time thinking about the name because the app won’t be in your life for very long.</p>
-<p>The goal of branchMover is to help you coordinate a default branch change across the repos you maintain.
+<p>The goal of <a href="https://github.com/gadenbuie/branchMover">branchMover</a> is to help you coordinate a default branch change across the repos you maintain.
 The app shows you all of the repos associated with your GitHub account and their current default branch.
 Because you might want to start with your less popular repos, you can sort by number of forks and stars on each repo.</p>
 <p>There’s also a button to change the default branch.
@@ -67,7 +74,12 @@ the issue stay open as a reminder to you to finish the process.</p>
 local copies of your repos. Thankfully, this is relatively pain-free
 with the
 <a href="https://usethis.r-lib.org/reference/git-default-branch.html">usethis::git_default_branch_rediscover()</a>
-function, added in usethis version 2.1.2.</p>
+function, added in <span class="pkg">usethis</span> version 2.1.2.</p>
+<p>The next time you find yourself in your local copy of your repo,
+run <code>git_default_branch_rediscover()</code> to reconfigure your branch situation.</p>
+<pre class="r"><code>git_default_branch_rediscover()
+#&gt; ℹ Default branch of the source repo &#39;jennybc/happy-git-with-r&#39;: &#39;main&#39;
+#&gt; ✓ Default branch of local repo has moved: &#39;master&#39; --&gt; &#39;main&#39;</code></pre>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
@@ -75,12 +87,13 @@ function, added in usethis version 2.1.2.</p>
 <a href="https://github.com/">GitHub</a> with:</p>
 <pre class="r"><code># install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;gadenbuie/branchMover&quot;)</code></pre>
-<p>The app uses the <a href="https://usethis.r-lib.org">usethis</a> and
-<a href="https://gh.r-lib.org">gh</a> packages. You need to configure gh with a
+<p>The app uses the <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> and
+<span class="pkg"><a href="https://gh.r-lib.org">gh</a></span> packages. You need to configure gh with a
 <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a>
 to be able to authenticate with the GitHub API:
 read more about <a href="https://gh.r-lib.org/articles/managing-personal-access-tokens.html">Managing Personal Access
-Tokens</a></p>
+Tokens</a>
+in the <span class="pkg">gh</span> documentation.</p>
 <p>Then, in RStudio, run the app with:</p>
 <pre class="r"><code>branchMover::app()</code></pre>
 </div>
