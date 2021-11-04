@@ -94,12 +94,27 @@ devtools::install_github(&quot;gadenbuie/branchMover&quot;)</code></pre>
 <p>The app uses the <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> and
 <span class="pkg"><a href="https://gh.r-lib.org">gh</a></span> packages. You need to configure gh with a
 <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Personal Access Token</a>
-to be able to authenticate with the GitHub API:
-read more about <a href="https://gh.r-lib.org/articles/managing-personal-access-tokens.html">Managing Personal Access
-Tokens</a>
-in the <span class="pkg">gh</span> documentation.</p>
+to be able to authenticate with the GitHub API.
+Read more about setting up a PAT in one of these places:</p>
+<ul>
+<li><a href="https://usethis.r-lib.org/articles/articles/git-credentials.html">Managing Git(Hub) Credentials</a> <em>usethis article</em></li>
+<li><a href="https://happygitwithr.com/https-pat.html">Personal access token for HTTPS</a> <em>guidance from <a href="https://happygitwithr.com">Happy Git and GitHub for the useR</a></em></li>
+<li><a href="https://gh.r-lib.org/articles/managing-personal-access-tokens.html">Managing Personal Access Tokens</a> <em>gh article</em></li>
+</ul>
 <p>Then, in RStudio, run the app with:</p>
 <pre class="r"><code>branchMover::app()</code></pre>
+<p>If you’d like to explore or reconfigure the default branch of repositories that you manage in other organizations,
+provide <code>app()</code> with the user or organization name.
+Branch Mover will tell you how many repos you have access to in the organization
+and it won’t let you update branch names for repos where you don’t have admin permissions.</p>
+<pre class="r"><code>branchMover::app(&quot;rstudio-education&quot;)
+#&gt; ℹ @rstudio-education has 57 total repositories (including forks)
+#&gt; • 57 public repos
+#&gt; • 0 private repos
+#&gt; ℹ 57 non-fork repositories have the following default branches:
+#&gt; x master: 51 repos
+#&gt; ✓ main: 6 repos
+#&gt; ℹ You have admin rights on 1 repo</code></pre>
 </div>
 <div id="why-change-branches" class="section level2">
 <h2>Why change branches?</h2>

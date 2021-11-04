@@ -122,15 +122,33 @@ devtools::install_github("gadenbuie/branchMover")
 The app uses the [[usethis](https://usethis.r-lib.org)]{.pkg} and
 [[gh](https://gh.r-lib.org)]{.pkg} packages. You need to configure gh with a
 [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-to be able to authenticate with the GitHub API:
-read more about [Managing Personal Access
-Tokens](https://gh.r-lib.org/articles/managing-personal-access-tokens.html)
-in the [gh]{.pkg} documentation.
+to be able to authenticate with the GitHub API.
+Read more about setting up a PAT in one of these places:
+
+* [Managing Git(Hub) Credentials](https://usethis.r-lib.org/articles/articles/git-credentials.html) *usethis article*
+* [Personal access token for HTTPS](https://happygitwithr.com/https-pat.html) *guidance from [Happy Git and GitHub for the useR](https://happygitwithr.com)*
+* [Managing Personal Access Tokens](https://gh.r-lib.org/articles/managing-personal-access-tokens.html) *gh article*
 
 Then, in RStudio, run the app with:
 
-``` r
+```r
 branchMover::app()
+```
+
+If you'd like to explore or reconfigure the default branch of repositories that you manage in other organizations,
+provide `app()` with the user or organization name.
+Branch Mover will tell you how many repos you have access to in the organization
+and it won't let you update branch names for repos where you don't have admin permissions.
+
+```r
+branchMover::app("rstudio-education")
+#> ℹ @rstudio-education has 57 total repositories (including forks)
+#> • 57 public repos
+#> • 0 private repos
+#> ℹ 57 non-fork repositories have the following default branches:
+#> x master: 51 repos
+#> ✓ main: 6 repos
+#> ℹ You have admin rights on 1 repo
 ```
 
 ## Why change branches?
