@@ -196,7 +196,12 @@ btns.querySelectorAll('button').forEach(function(btn) {
 </script>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>You can install rsthemes from GitHub with:</p>
+<p>You can install rsthemes from my <a href="https://gadenbuie.r-universe.dev">r-universe</a> with:</p>
+<pre class="r"><code>install.packages(
+  &quot;rsthemes&quot;,
+  repos = c(gadenbuie = &#39;https://gadenbuie.r-universe.dev&#39;, getOption(&quot;repos&quot;))
+)</code></pre>
+<p>Or you can install rsthemes from GitHub with:</p>
 <pre class="r"><code># install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;gadenbuie/rsthemes&quot;)</code></pre>
 <p>Then, install the included, hand-crafted themes with:</p>
@@ -226,6 +231,7 @@ rstudioapi::applyTheme(&quot;One Dark {rsthemes}&quot;)</code></pre>
 <li><p>🌅 <strong>Toggle Dark Mode</strong><br>Switch between two preferred dark and light themes</p></li>
 <li><p>🌃 <strong>Auto Dark Mode</strong><br>Automatically choose a dark or light theme by time of day</p></li>
 <li><p>❤️ <strong>Favorite Themes</strong><br>Switch between a few of your favorite themes</p></li>
+<li><p>🥱 <strong>Use Default RStudio Theme</strong><br>Switch back to RStudio’s default theme</p></li>
 </ul>
 <div id="choose-your-preferred-themes" class="section level4">
 <h4>Choose Your Preferred Themes</h4>
@@ -286,6 +292,11 @@ options(
   }, action = &quot;append&quot;)
 }</code></pre>
 </div>
+<div id="go-back-to-the-default" class="section level3">
+<h3>Go Back to the Default</h3>
+<p>Sometimes when you’re teaching or demonstrating RStudio features, you’d like to have your IDE match the appearance of your learners, or at least the basic theme that everyone starts out with when they install RStudio for the first time.</p>
+<p>Use the <strong>Use Default RStudio Theme</strong> to quickly switch back to RStudio’s default theme, Textmate. Or, you can use <code>rsthemes::use_default_rstudio_theme()</code> to initiate the switch, perhaps from within the <code>.Rprofile</code> file of your teaching project.</p>
+</div>
 </div>
 <div id="uninstall" class="section level2">
 <h2>Uninstall</h2>
@@ -315,6 +326,17 @@ rsthemes::remove_rsthemes(&quot;base16&quot;)</code></pre>
 <li>with huge thanks to original <a href="https://github.com/batpigandme/night-owlish">Night Owlish</a>
 implementation in RStudio by <a href="https://maraaverick.rbind.io/">Mara Averick</a></li>
 </ul></li>
+<li>Yule RStudio
+<ul>
+<li>Based on the <a href="https://tmtheme-editor.herokuapp.com/#!/editor/theme/Yule">Yule tmTheme</a></li>
+<li>Ported from <a href="https://github.com/gadenbuie/yule-rstudio">gadenbuie/yule-rstudio</a></li>
+<li>Featuring a background image by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a></li>
+</ul></li>
+<li><a href="https://material-theme.site/">Material Theme</a>
+<ul>
+<li>Contributed to rsthemes by <a href="https://www.zacdelusignan.com/">Zac de Lusignan</a></li>
+</ul></li>
+<li><a href="https://wvsc.dev/">Serendipity</a> (<a href="https://www.wickedtemplates.com/">wickedtemplates</a>)</li>
 </ul>
 </div>
 </div>
