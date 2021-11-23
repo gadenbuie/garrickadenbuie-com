@@ -25,7 +25,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
     ordered = false
   [markup.highlight]
     # one of: https://xyproto.github.io/splash/docs/
-    style = "monokai"
+    style = "pastie"
 
 [permalinks]
     post = "blog/:slug/"
