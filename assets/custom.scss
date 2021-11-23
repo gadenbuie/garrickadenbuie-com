@@ -1,4 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+code, .code {
+  font-family: 'IBM Plex Mono', Consolas,monaco,monospace;
+  font-size: 0.95em;
+}
+
+.highlight {
+  font-size: 1em;
+}
+
+pre {
+  @extend .ph3, .pv2;
+  border-left: 1px solid var(--slate-80) !important;
+}
+
+hr {
+  border-color: var(--slate-50);
+}
 
 /*
 .headroom {
@@ -25,6 +43,18 @@ a {
   text-underline-offset: 3px;
 }
 
+.site-links a::after {
+  height: 0.15em;
+}
+
+.site-links a.active::after {
+  height: 0.15em;
+}
+
+.bg-custom-nav-bg-color, .site-links a::after, .site-links a.active::after {
+  background-color: var(--red-50);
+}
+
 .summary-post-date {
   @extend .tl;
   font-variant-numeric: tabular-nums;
@@ -33,8 +63,10 @@ a {
 }
 
 .anchor-link {
-  @extend .o-40, .glow;
+  @extend .o-40, .glow, .code, .normal;
   color: inherit !important;
+  position: absolute;
+  margin-left: 10px;
 }
 
 .lead {
@@ -51,4 +83,15 @@ a {
 pre {
   @extend .ph0;
   border: none;
+}
+
+post-body ul:not(.panel-tabs),
+.post-body ol,
+.post-body dl,
+.page-body ul:not(.panel-tabs),
+.page-body ol,
+.page-body dl,
+.post-body blockquote,
+.page-body blockquote {
+  max-width: 100%;
 }
