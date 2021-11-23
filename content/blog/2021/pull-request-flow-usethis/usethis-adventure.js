@@ -5,7 +5,7 @@
   const introOptions = document.getElementById('intro-options')
 
   if (!isInteractive) {
-    document.querySelector('main > article > .post-content').classList.add('non-interactive')
+    document.querySelector('main  article .post-body').classList.add('non-interactive')
     introOptions.innerHTML += '<li><p>Yes, but I\'d like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>'
     return
   }
@@ -212,7 +212,7 @@
   })
 
   document
-    .querySelector('main > article > .post-content')
+    .querySelector('main article .post-body')
     .addEventListener('click', function (ev) {
       if (ev.target.tagName !== 'A') {
         return

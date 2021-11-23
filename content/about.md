@@ -14,15 +14,9 @@ type: page
 [garrick-talks]: /tags/education/
 [moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
 
-<img src="/images/garrick-profile_300.png" 
-     class="center"
-     width="150px"
-     alt="Profile picture of Garrick Aden-Buie on a white background"
-     style="float:left;margin:0 2em 0.5em 0;"
-/>
-
 Hello, my name is Garrick Aden-Buie.
-I'm a [Data Science Educator](/training/) and R developer for [RStudio](https://rstudio.com).
+
+I'm a **Data Science Educator** and R developer at [RStudio](https://rstudio.com).
 I use R, R Markdown, Shiny, and the tools of data science to make it easier to teach and learn data science with R.
 Prior to working at RStudio, I was a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc]. 
 Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](https://usfweb.usf.edu/usf-news-archive/News/article/7974).

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+
+/*
+.headroom {
+  background-color: #002b36;
+}
+
+.site-links .link {
+  color: #fff;
+}
+*/
+
+.post-body {
+  @extend .lh-copy;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-top: 1.75em;
+  a {
+    text-decoration: none;
+  }
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+.summary-post-date {
+  @extend .tl;
+  font-variant-numeric: tabular-nums;
+  min-width: max-content;
+  align-self: baseline;
+}
+
+.anchor-link {
+  @extend .o-40, .glow;
+  color: inherit !important;
+}
+
+.lead {
+  @extend .f4, .lh-copy, .avenir;
+}
+
+.figure {
+  @extend .mb4;
+  .caption {
+    @extend .tr, .i, .mt2;
+  }
+}
+
+pre {
+  @extend .ph0;
+  border: none;
+}

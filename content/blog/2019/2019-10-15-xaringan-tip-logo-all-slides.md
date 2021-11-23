@@ -60,11 +60,9 @@ every time you need to reset your layout.
 
 ## A logo for all the slides
 
-<center>
 ![The xaringan logo appears on all the slides!](xaringan-logo-all-slides.png)
 
 &#x1F4FA; **[Demo Slides][xaringan-logo-demo]**
-</center>
 
 Instead, 
 with a little bit of JavaScript and CSS, 
