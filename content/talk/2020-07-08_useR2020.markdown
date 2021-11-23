@@ -1,0 +1,36 @@
+---
+title: "Your Slides are So Extra!"
+subtitle: "Extra-Special Presentations with xaringanExtra"
+author:
+  - Garrick Aden-Buie
+description: |
+  A presentation writing and benefiting from programming with functions.
+date: '2020-07-08'
+twitter_image: "https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png"
+slug: extra-special-xaringan
+categories: []
+tags: 
+  - R
+  - xaringan
+  - xaringanExtra
+  - Conference
+  
+talk_author: [Garrick Aden-Buie]
+talk_type: Conference
+talk_event: "useR!2020"
+talk_event_url: https://user2020.r-project.org/
+talk_location: "Virtual Conference"
+talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-special-xaringan
+talk_slides_url: https://slides.garrickadenbuie.com/extra-special-xaringan
+talk_recording_url: https://www.youtube.com/watch?v=vZMuu77ocMY
+---
+
+<script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>
+<div class="shareagain" style="min-width:300px;margin:1em auto;">
+<iframe src="https://slides.garrickadenbuie.com/extra-special-xaringan" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+
+## Abstract
+
+> The `xaringan` package by Yihui Xie lets R users and R Markdown authors easily blend data, text, plots and `htmlwidgets` into beautiful HTML presentations that look great on the web, in print, and on screens. This lightning talk will highlight a new package for customizing and enhancing `xaringan` slides: `xaringanExtra`. This package provides a collection of extensions for `xaringan` presentations including a tiled slide overview, editable slides, embedded webcam, tabbed panels, slide change sounds, and more. Add something special to your next `xaringan` presentation with `xaringanExtra`.

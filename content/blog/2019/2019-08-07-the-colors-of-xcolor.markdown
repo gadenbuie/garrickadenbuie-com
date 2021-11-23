@@ -1,0 +1,606 @@
+---
+title: The Colors of xcolor
+author: Garrick Aden-Buie
+date: '2019-08-07'
+slug: colors-of-xcolor
+categories:
+  - Blog
+tags:
+  - R
+  - Scripts
+  - dplyr
+  - color
+description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
+twitterImage: /blog/colors-of-xcolor/colors-of-xcolor.png
+rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+
+Today I’m working on the final touches of a Shiny app called [ShinyDAG](https://gerkelab.com/project/shinydag).
+The goal of the app is to help users create DAGs for causal inference
+with a drag-and-drop interface.
+Way down deep underneath the hood,
+the DAG is rendered using TikZ and LaTeX
+(via the <span class="pkg">[texPreview](https://github.com/metrumresearchgroup/texPreview)</span> package),
+and the app allows the user to tweak the appearance of the DAG
+without having to learn TikZ.
+
+One of the appearance changes that the user can make is to
+change the color of the graph’s edges or nodes,
+using the colors defined in the [xcolor](http://www.ukern.de/tex/xcolor.html) LaTeX package.
+Rather than provide an open-ended text box,
+I wanted to give the user a dropdown menu containing the available colors.
+
+It turned out to be just a few lines of code to grab the `.def` files from the [xcolor](http://www.ukern.de/tex/xcolor.html) package page,
+strip out the non-color related TeX lines,
+and create a simple tibble of the provided colors.
+
+Quick sidenote: the `.def` files are actually `.def.gz` (or gzipped files),
+but we can read these directly into R using `url()` inside `gzcon()`,
+which is then passed to `readLines()` to read the uncompressed text.
+I wrapped this up into a simple helper function, `read_gz()`.
+
+``` r
+read_gz <- function(x) readLines(gzcon(url(x)))
+```
+
+Now we can grab those files and extract the color definitions.
+
+``` r
+library(dplyr)
+library(purrr)
+library(readr)
+library(stringr)
+
+read_gz <- function(x) readLines(gzcon(url(x)))
+
+xcolor <-
+  list(
+    svg = "http://www.ukern.de/tex/xcolor/tex/svgnam.def.gz",
+    x11 = "http://www.ukern.de/tex/xcolor/tex/x11nam.def.gz"
+  ) %>%
+  map(read_gz) %>%
+  flatten_chr() %>%
+  str_subset("^(%%|\\\\| )", negate = TRUE) %>%
+  str_remove("(;%|\\})$") %>%
+  read_csv(col_names = c("color", "r", "g", "b")) %>%
+  arrange(color)
+
+head(xcolor)
+```
+
+    ## # A tibble: 6 × 4
+    ##   color             r     g     b
+    ##   <chr>         <dbl> <dbl> <dbl>
+    ## 1 AliceBlue     0.94  0.972 1    
+    ## 2 AntiqueWhite  0.98  0.92  0.844
+    ## 3 AntiqueWhite1 1     0.936 0.86 
+    ## 4 AntiqueWhite2 0.932 0.875 0.8  
+    ## 5 AntiqueWhite3 0.804 0.752 0.69 
+    ## 6 AntiqueWhite4 0.545 0.512 0.47
+
+## A Shiny fixed-color picker
+
+I haven’t finished incorporating this into the app yet,
+but this is the how the color selector will look when I do.
+
+<center>
+<img src="xcolors-selector.gif" style="max-width: 300px">
+</center>
+
+## All of the `xcolor` colors
+
+Here are all of the
+**468**
+colors in the [xcolor](http://www.ukern.de/tex/xcolor.html) package.
+(And man, it’s [hard to sort colors](https://www.alanzucconi.com/2015/09/30/colour-sorting/).)
+If you’re interested, you can download the
+[final list as a csv file](xcolors.csv).
+
+<div id="xcolors" style="display: flex; flex-wrap: wrap; width: 100%; justify-content: center;">
+<div class="xcolor-color"style="background-color:rgb(127.5,0,0)"data-color="Maroon"><div class="xcolor-text">Maroon</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,34.68,34.68)"data-color="Brown4"><div class="xcolor-text">Brown4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,0,0)"data-color="DarkRed"><div class="xcolor-text">DarkRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,25.5,25.5)"data-color="Firebrick4"><div class="xcolor-text">Firebrick4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,58.14,58.14)"data-color="IndianRed4"><div class="xcolor-text">IndianRed4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,0,0)"data-color="Red4"><div class="xcolor-text">Red4</div></div>
+<div class="xcolor-color"style="background-color:rgb(165.24,42.075,42.075)"data-color="Brown"><div class="xcolor-text">Brown</div></div>
+<div class="xcolor-color"style="background-color:rgb(177.99,33.66,33.66)"data-color="FireBrick"><div class="xcolor-text">FireBrick</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,51,51)"data-color="Brown3"><div class="xcolor-text">Brown3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,38.25,38.25)"data-color="Firebrick3"><div class="xcolor-text">Firebrick3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,91.8,91.8)"data-color="IndianRed"><div class="xcolor-text">IndianRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,84.66,84.66)"data-color="IndianRed3"><div class="xcolor-text">IndianRed3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,0,0)"data-color="Red3"><div class="xcolor-text">Red3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,58.65,58.65)"data-color="Brown2"><div class="xcolor-text">Brown2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,43.86,43.86)"data-color="Firebrick2"><div class="xcolor-text">Firebrick2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,99.45,99.45)"data-color="IndianRed2"><div class="xcolor-text">IndianRed2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,0,0)"data-color="Red2"><div class="xcolor-text">Red2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,63.75,63.75)"data-color="Brown1"><div class="xcolor-text">Brown1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,48.45,48.45)"data-color="Firebrick1"><div class="xcolor-text">Firebrick1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,105.825,105.825)"data-color="IndianRed1"><div class="xcolor-text">IndianRed1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,0,0)"data-color="Red"><div class="xcolor-text">Red</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,0,0)"data-color="Red1"><div class="xcolor-text">Red1</div></div>
+<div class="xcolor-color"style="background-color:rgb(249.9,127.5,114.24)"data-color="Salmon"><div class="xcolor-text">Salmon</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,79.05,57.12)"data-color="Tomato3"><div class="xcolor-text">Tomato3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,91.8,66.3)"data-color="Tomato2"><div class="xcolor-text">Tomato2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,53.55,38.25)"data-color="Tomato4"><div class="xcolor-text">Tomato4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,99.45,71.4)"data-color="Tomato"><div class="xcolor-text">Tomato</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,99.45,71.4)"data-color="Tomato1"><div class="xcolor-text">Tomato1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,90.78,68.85)"data-color="Coral3"><div class="xcolor-text">Coral3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,62.22,47.175)"data-color="Coral4"><div class="xcolor-text">Coral4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,105.825,79.56)"data-color="Coral2"><div class="xcolor-text">Coral2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,114.24,85.68)"data-color="Coral1"><div class="xcolor-text">Coral1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,130.05,98.175)"data-color="Salmon2"><div class="xcolor-text">Salmon2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,75.99,57.12)"data-color="Salmon4"><div class="xcolor-text">Salmon4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,112.2,84.15)"data-color="Salmon3"><div class="xcolor-text">Salmon3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,140.25,104.55)"data-color="Salmon1"><div class="xcolor-text">Salmon1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,36.975,0)"data-color="OrangeRed4"><div class="xcolor-text">OrangeRed4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,54.825,0)"data-color="OrangeRed3"><div class="xcolor-text">OrangeRed3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,63.75,0)"data-color="OrangeRed2"><div class="xcolor-text">OrangeRed2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,68.85,0)"data-color="OrangeRed"><div class="xcolor-text">OrangeRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,68.85,0)"data-color="OrangeRed1"><div class="xcolor-text">OrangeRed1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,126.99,79.56)"data-color="Coral"><div class="xcolor-text">Coral</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,86.7,66.3)"data-color="LightSalmon4"><div class="xcolor-text">LightSalmon4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,104.04,57.12)"data-color="Sienna3"><div class="xcolor-text">Sienna3</div></div>
+<div class="xcolor-color"style="background-color:rgb(160.14,81.6,44.88)"data-color="Sienna"><div class="xcolor-text">Sienna</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,130.05,71.4)"data-color="Sienna1"><div class="xcolor-text">Sienna1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,121.125,66.3)"data-color="Sienna2"><div class="xcolor-text">Sienna2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,71.4,38.25)"data-color="Sienna4"><div class="xcolor-text">Sienna4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,68.85,19.125)"data-color="Chocolate4"><div class="xcolor-text">Chocolate4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,68.85,19.125)"data-color="SaddleBrown"><div class="xcolor-text">SaddleBrown</div></div>
+<div class="xcolor-color"style="background-color:rgb(210.12,104.55,29.58)"data-color="Chocolate"><div class="xcolor-text">Chocolate</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,102,28.56)"data-color="Chocolate3"><div class="xcolor-text">Chocolate3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,126.99,35.7)"data-color="Chocolate1"><div class="xcolor-text">Chocolate1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,118.32,33.15)"data-color="Chocolate2"><div class="xcolor-text">Chocolate2</div></div>
+<div class="xcolor-color"style="background-color:rgb(243.78,164.22,95.88)"data-color="SandyBrown"><div class="xcolor-text">SandyBrown</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,89.76,43.35)"data-color="Tan4"><div class="xcolor-text">Tan4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,132.6,63.24)"data-color="Peru"><div class="xcolor-text">Peru</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,132.6,63.24)"data-color="Tan3"><div class="xcolor-text">Tan3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,165.24,79.05)"data-color="Tan1"><div class="xcolor-text">Tan1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,154.02,73.44)"data-color="Tan2"><div class="xcolor-text">Tan2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,68.85,0)"data-color="DarkOrange4"><div class="xcolor-text">DarkOrange4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,102,0)"data-color="DarkOrange3"><div class="xcolor-text">DarkOrange3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,118.32,0)"data-color="DarkOrange2"><div class="xcolor-text">DarkOrange2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,126.99,0)"data-color="DarkOrange1"><div class="xcolor-text">DarkOrange1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,140.25,0)"data-color="DarkOrange"><div class="xcolor-text">DarkOrange</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,89.76,0)"data-color="Orange4"><div class="xcolor-text">Orange4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,132.6,0)"data-color="Orange3"><div class="xcolor-text">Orange3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,165.24,0)"data-color="Orange"><div class="xcolor-text">Orange</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,165.24,0)"data-color="Orange1"><div class="xcolor-text">Orange1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,154.02,0)"data-color="Orange2"><div class="xcolor-text">Orange2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,184.875,15.3)"data-color="DarkGoldenrod1"><div class="xcolor-text">DarkGoldenrod1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,104.55,20.4)"data-color="Goldenrod4"><div class="xcolor-text">Goldenrod4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,149.175,12.24)"data-color="DarkGoldenrod3"><div class="xcolor-text">DarkGoldenrod3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,100.98,7.65)"data-color="DarkGoldenrod4"><div class="xcolor-text">DarkGoldenrod4</div></div>
+<div class="xcolor-color"style="background-color:rgb(183.6,133.875,11.22)"data-color="DarkGoldenrod"><div class="xcolor-text">DarkGoldenrod</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,173.4,14.025)"data-color="DarkGoldenrod2"><div class="xcolor-text">DarkGoldenrod2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,192.78,36.975)"data-color="Goldenrod1"><div class="xcolor-text">Goldenrod1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,179.775,33.66)"data-color="Goldenrod2"><div class="xcolor-text">Goldenrod2</div></div>
+<div class="xcolor-color"style="background-color:rgb(218.025,165.24,31.875)"data-color="Goldenrod"><div class="xcolor-text">Goldenrod</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,155.04,28.56)"data-color="Goldenrod3"><div class="xcolor-text">Goldenrod3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,215.22,0)"data-color="Gold"><div class="xcolor-text">Gold</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,215.22,0)"data-color="Gold1"><div class="xcolor-text">Gold1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,117.3,0)"data-color="Gold4"><div class="xcolor-text">Gold4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,173.4,0)"data-color="Gold3"><div class="xcolor-text">Gold3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,201.45,0)"data-color="Gold2"><div class="xcolor-text">Gold2</div></div>
+<div class="xcolor-color"style="background-color:rgb(127.5,127.5,0)"data-color="Olive"><div class="xcolor-text">Olive</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,138.975,0)"data-color="Yellow4"><div class="xcolor-text">Yellow4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,205.02,0)"data-color="Yellow3"><div class="xcolor-text">Yellow3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,237.66,0)"data-color="Yellow2"><div class="xcolor-text">Yellow2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,0)"data-color="Yellow"><div class="xcolor-text">Yellow</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,0)"data-color="Yellow1"><div class="xcolor-text">Yellow1</div></div>
+<div class="xcolor-color"style="background-color:rgb(107.1,141.78,34.68)"data-color="OliveDrab"><div class="xcolor-text">OliveDrab</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.55,138.975,33.66)"data-color="OliveDrab4"><div class="xcolor-text">OliveDrab4</div></div>
+<div class="xcolor-color"style="background-color:rgb(191.76,255,62.22)"data-color="OliveDrab1"><div class="xcolor-text">OliveDrab1</div></div>
+<div class="xcolor-color"style="background-color:rgb(154.02,205.02,49.98)"data-color="OliveDrab3"><div class="xcolor-text">OliveDrab3</div></div>
+<div class="xcolor-color"style="background-color:rgb(154.02,205.02,49.98)"data-color="YellowGreen"><div class="xcolor-text">YellowGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(178.5,237.66,58.14)"data-color="OliveDrab2"><div class="xcolor-text">OliveDrab2</div></div>
+<div class="xcolor-color"style="background-color:rgb(201.96,255,112.2)"data-color="DarkOliveGreen1"><div class="xcolor-text">DarkOliveGreen1</div></div>
+<div class="xcolor-color"style="background-color:rgb(161.925,205.02,89.76)"data-color="DarkOliveGreen3"><div class="xcolor-text">DarkOliveGreen3</div></div>
+<div class="xcolor-color"style="background-color:rgb(187.68,237.66,104.04)"data-color="DarkOliveGreen2"><div class="xcolor-text">DarkOliveGreen2</div></div>
+<div class="xcolor-color"style="background-color:rgb(84.66,107.1,47.175)"data-color="DarkOliveGreen"><div class="xcolor-text">DarkOliveGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(109.65,138.975,61.2)"data-color="DarkOliveGreen4"><div class="xcolor-text">DarkOliveGreen4</div></div>
+<div class="xcolor-color"style="background-color:rgb(173.4,255,47.175)"data-color="GreenYellow"><div class="xcolor-text">GreenYellow</div></div>
+<div class="xcolor-color"style="background-color:rgb(126.99,255,0)"data-color="Chartreuse"><div class="xcolor-text">Chartreuse</div></div>
+<div class="xcolor-color"style="background-color:rgb(126.99,255,0)"data-color="Chartreuse1"><div class="xcolor-text">Chartreuse1</div></div>
+<div class="xcolor-color"style="background-color:rgb(118.32,237.66,0)"data-color="Chartreuse2"><div class="xcolor-text">Chartreuse2</div></div>
+<div class="xcolor-color"style="background-color:rgb(102,205.02,0)"data-color="Chartreuse3"><div class="xcolor-text">Chartreuse3</div></div>
+<div class="xcolor-color"style="background-color:rgb(68.85,138.975,0)"data-color="Chartreuse4"><div class="xcolor-text">Chartreuse4</div></div>
+<div class="xcolor-color"style="background-color:rgb(124.44,252.45,0)"data-color="LawnGreen"><div class="xcolor-text">LawnGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,99.96,0)"data-color="DarkGreen"><div class="xcolor-text">DarkGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,127.5,0)"data-color="Green"><div class="xcolor-text">Green</div></div>
+<div class="xcolor-color"style="background-color:rgb(33.66,138.975,33.66)"data-color="ForestGreen"><div class="xcolor-text">ForestGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,138.975,0)"data-color="Green4"><div class="xcolor-text">Green4</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,205.02,0)"data-color="Green3"><div class="xcolor-text">Green3</div></div>
+<div class="xcolor-color"style="background-color:rgb(49.98,205.02,49.98)"data-color="LimeGreen"><div class="xcolor-text">LimeGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,237.66,0)"data-color="Green2"><div class="xcolor-text">Green2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,0)"data-color="Green0"><div class="xcolor-text">Green0</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,0)"data-color="Green1"><div class="xcolor-text">Green1</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,0)"data-color="Lime"><div class="xcolor-text">Lime</div></div>
+<div class="xcolor-color"style="background-color:rgb(67.32,205.02,127.5)"data-color="SeaGreen3"><div class="xcolor-text">SeaGreen3</div></div>
+<div class="xcolor-color"style="background-color:rgb(45.9,138.975,86.7)"data-color="SeaGreen"><div class="xcolor-text">SeaGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(45.9,138.975,86.7)"data-color="SeaGreen4"><div class="xcolor-text">SeaGreen4</div></div>
+<div class="xcolor-color"style="background-color:rgb(77.775,237.66,147.9)"data-color="SeaGreen2"><div class="xcolor-text">SeaGreen2</div></div>
+<div class="xcolor-color"style="background-color:rgb(84.15,255,159.12)"data-color="SeaGreen1"><div class="xcolor-text">SeaGreen1</div></div>
+<div class="xcolor-color"style="background-color:rgb(59.925,178.5,113.22)"data-color="MediumSeaGreen"><div class="xcolor-text">MediumSeaGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,138.975,68.85)"data-color="SpringGreen4"><div class="xcolor-text">SpringGreen4</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,205.02,102)"data-color="SpringGreen3"><div class="xcolor-text">SpringGreen3</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,237.66,118.32)"data-color="SpringGreen2"><div class="xcolor-text">SpringGreen2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,126.99)"data-color="SpringGreen"><div class="xcolor-text">SpringGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,126.99)"data-color="SpringGreen1"><div class="xcolor-text">SpringGreen1</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,249.9,154.02)"data-color="MediumSpringGreen"><div class="xcolor-text">MediumSpringGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(63.75,224.4,207.825)"data-color="Turquoise"><div class="xcolor-text">Turquoise</div></div>
+<div class="xcolor-color"style="background-color:rgb(31.875,177.99,170.34)"data-color="LightSeaGreen"><div class="xcolor-text">LightSeaGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(72.42,209.1,204)"data-color="MediumTurquoise"><div class="xcolor-text">MediumTurquoise</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,127.5,127.5)"data-color="Teal"><div class="xcolor-text">Teal</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,138.975,138.975)"data-color="Cyan4"><div class="xcolor-text">Cyan4</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,138.975,138.975)"data-color="DarkCyan"><div class="xcolor-text">DarkCyan</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,205.02,205.02)"data-color="Cyan3"><div class="xcolor-text">Cyan3</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,237.66,237.66)"data-color="Cyan2"><div class="xcolor-text">Cyan2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,255)"data-color="Aqua"><div class="xcolor-text">Aqua</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,255)"data-color="Cyan"><div class="xcolor-text">Cyan</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,255,255)"data-color="Cyan1"><div class="xcolor-text">Cyan1</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,206.04,209.1)"data-color="DarkTurquoise"><div class="xcolor-text">DarkTurquoise</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,228.99,237.66)"data-color="Turquoise2"><div class="xcolor-text">Turquoise2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,133.875,138.975)"data-color="Turquoise4"><div class="xcolor-text">Turquoise4</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,196.86,205.02)"data-color="Turquoise3"><div class="xcolor-text">Turquoise3</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,244.8,255)"data-color="Turquoise1"><div class="xcolor-text">Turquoise1</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,154.02,205.02)"data-color="DeepSkyBlue3"><div class="xcolor-text">DeepSkyBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,191.25,255)"data-color="DeepSkyBlue"><div class="xcolor-text">DeepSkyBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,191.25,255)"data-color="DeepSkyBlue1"><div class="xcolor-text">DeepSkyBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,177.99,237.66)"data-color="DeepSkyBlue2"><div class="xcolor-text">DeepSkyBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,104.04,138.975)"data-color="DeepSkyBlue4"><div class="xcolor-text">DeepSkyBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(91.8,172.125,237.66)"data-color="SteelBlue2"><div class="xcolor-text">SteelBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(79.05,147.9,205.02)"data-color="SteelBlue3"><div class="xcolor-text">SteelBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(70.125,130.05,179.775)"data-color="SteelBlue"><div class="xcolor-text">SteelBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(53.55,99.96,138.975)"data-color="SteelBlue4"><div class="xcolor-text">SteelBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(99.45,183.6,255)"data-color="SteelBlue1"><div class="xcolor-text">SteelBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(23.97,116.025,205.02)"data-color="DodgerBlue3"><div class="xcolor-text">DodgerBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(29.58,144.075,255)"data-color="DodgerBlue"><div class="xcolor-text">DodgerBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(29.58,144.075,255)"data-color="DodgerBlue1"><div class="xcolor-text">DodgerBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(28.05,133.875,237.66)"data-color="DodgerBlue2"><div class="xcolor-text">DodgerBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(16.32,77.775,138.975)"data-color="DodgerBlue4"><div class="xcolor-text">DodgerBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(99.96,149.175,237.15)"data-color="CornflowerBlue"><div class="xcolor-text">CornflowerBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(72.42,118.32,255)"data-color="RoyalBlue1"><div class="xcolor-text">RoyalBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(58.14,94.86,205.02)"data-color="RoyalBlue3"><div class="xcolor-text">RoyalBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(38.76,63.75,138.975)"data-color="RoyalBlue4"><div class="xcolor-text">RoyalBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(67.32,109.65,237.66)"data-color="RoyalBlue2"><div class="xcolor-text">RoyalBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(65.025,104.55,225.42)"data-color="RoyalBlue"><div class="xcolor-text">RoyalBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(24.99,24.99,112.2)"data-color="MidnightBlue"><div class="xcolor-text">MidnightBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,127.5)"data-color="Navy"><div class="xcolor-text">Navy</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,127.5)"data-color="NavyBlue"><div class="xcolor-text">NavyBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,138.975)"data-color="Blue4"><div class="xcolor-text">Blue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,138.975)"data-color="DarkBlue"><div class="xcolor-text">DarkBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,205.02)"data-color="Blue3"><div class="xcolor-text">Blue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,205.02)"data-color="MediumBlue"><div class="xcolor-text">MediumBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,237.66)"data-color="Blue2"><div class="xcolor-text">Blue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,255)"data-color="Blue"><div class="xcolor-text">Blue</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,255)"data-color="Blue1"><div class="xcolor-text">Blue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.55,89.25,205.02)"data-color="SlateBlue3"><div class="xcolor-text">SlateBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(130.56,110.925,255)"data-color="SlateBlue1"><div class="xcolor-text">SlateBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(132.09,112.2,255)"data-color="LightSlateBlue"><div class="xcolor-text">LightSlateBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(105.825,89.76,205.02)"data-color="SlateBlue"><div class="xcolor-text">SlateBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(122.4,103.02,237.66)"data-color="SlateBlue2"><div class="xcolor-text">SlateBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(72.42,61.2,138.975)"data-color="DarkSlateBlue"><div class="xcolor-text">DarkSlateBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(123.42,104.04,237.66)"data-color="MediumSlateBlue"><div class="xcolor-text">MediumSlateBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(71.4,59.925,138.975)"data-color="SlateBlue4"><div class="xcolor-text">SlateBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(137.7,43.35,226.44)"data-color="BlueViolet"><div class="xcolor-text">BlueViolet</div></div>
+<div class="xcolor-color"style="background-color:rgb(155.04,48.45,255)"data-color="Purple1"><div class="xcolor-text">Purple1</div></div>
+<div class="xcolor-color"style="background-color:rgb(124.95,38.25,205.02)"data-color="Purple3"><div class="xcolor-text">Purple3</div></div>
+<div class="xcolor-color"style="background-color:rgb(84.66,25.5,138.975)"data-color="Purple4"><div class="xcolor-text">Purple4</div></div>
+<div class="xcolor-color"style="background-color:rgb(145.35,43.86,237.66)"data-color="Purple2"><div class="xcolor-text">Purple2</div></div>
+<div class="xcolor-color"style="background-color:rgb(74.97,0,130.05)"data-color="Indigo"><div class="xcolor-text">Indigo</div></div>
+<div class="xcolor-color"style="background-color:rgb(160.14,31.875,239.7)"data-color="Purple0"><div class="xcolor-text">Purple0</div></div>
+<div class="xcolor-color"style="background-color:rgb(177.99,58.14,237.66)"data-color="DarkOrchid2"><div class="xcolor-text">DarkOrchid2</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.04,33.66,138.975)"data-color="DarkOrchid4"><div class="xcolor-text">DarkOrchid4</div></div>
+<div class="xcolor-color"style="background-color:rgb(153,49.98,204)"data-color="DarkOrchid"><div class="xcolor-text">DarkOrchid</div></div>
+<div class="xcolor-color"style="background-color:rgb(191.25,62.22,255)"data-color="DarkOrchid1"><div class="xcolor-text">DarkOrchid1</div></div>
+<div class="xcolor-color"style="background-color:rgb(154.02,49.98,205.02)"data-color="DarkOrchid3"><div class="xcolor-text">DarkOrchid3</div></div>
+<div class="xcolor-color"style="background-color:rgb(147.9,0,211.14)"data-color="DarkViolet"><div class="xcolor-text">DarkViolet</div></div>
+<div class="xcolor-color"style="background-color:rgb(179.775,81.6,205.02)"data-color="MediumOrchid3"><div class="xcolor-text">MediumOrchid3</div></div>
+<div class="xcolor-color"style="background-color:rgb(209.1,94.86,237.66)"data-color="MediumOrchid2"><div class="xcolor-text">MediumOrchid2</div></div>
+<div class="xcolor-color"style="background-color:rgb(224.4,102,255)"data-color="MediumOrchid1"><div class="xcolor-text">MediumOrchid1</div></div>
+<div class="xcolor-color"style="background-color:rgb(186.15,84.66,211.14)"data-color="MediumOrchid"><div class="xcolor-text">MediumOrchid</div></div>
+<div class="xcolor-color"style="background-color:rgb(122.4,54.825,138.975)"data-color="MediumOrchid4"><div class="xcolor-text">MediumOrchid4</div></div>
+<div class="xcolor-color"style="background-color:rgb(127.5,0,127.5)"data-color="Purple"><div class="xcolor-text">Purple</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,0,138.975)"data-color="DarkMagenta"><div class="xcolor-text">DarkMagenta</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,0,138.975)"data-color="Magenta4"><div class="xcolor-text">Magenta4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,0,205.02)"data-color="Magenta3"><div class="xcolor-text">Magenta3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,0,237.66)"data-color="Magenta2"><div class="xcolor-text">Magenta2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,0,255)"data-color="Fuchsia"><div class="xcolor-text">Fuchsia</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,0,255)"data-color="Magenta"><div class="xcolor-text">Magenta</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,0,255)"data-color="Magenta1"><div class="xcolor-text">Magenta1</div></div>
+<div class="xcolor-color"style="background-color:rgb(208.08,31.875,144.075)"data-color="VioletRed"><div class="xcolor-text">VioletRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,28.05,98.175)"data-color="Maroon4"><div class="xcolor-text">Maroon4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,40.8,144.075)"data-color="Maroon3"><div class="xcolor-text">Maroon3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,48.45,167.025)"data-color="Maroon2"><div class="xcolor-text">Maroon2</div></div>
+<div class="xcolor-color"style="background-color:rgb(198.9,21.42,132.6)"data-color="MediumVioletRed"><div class="xcolor-text">MediumVioletRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,52.02,178.5)"data-color="Maroon1"><div class="xcolor-text">Maroon1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,17.85,136.68)"data-color="DeepPink2"><div class="xcolor-text">DeepPink2</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,16.32,118.32)"data-color="DeepPink3"><div class="xcolor-text">DeepPink3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,20.4,146.88)"data-color="DeepPink"><div class="xcolor-text">DeepPink</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,20.4,146.88)"data-color="DeepPink1"><div class="xcolor-text">DeepPink1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,10.2,79.56)"data-color="DeepPink4"><div class="xcolor-text">DeepPink4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,104.55,179.775)"data-color="HotPink"><div class="xcolor-text">HotPink</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,58.14,98.175)"data-color="HotPink4"><div class="xcolor-text">HotPink4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,109.65,179.775)"data-color="HotPink1"><div class="xcolor-text">HotPink1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,105.825,167.025)"data-color="HotPink2"><div class="xcolor-text">HotPink2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,62.22,150.45)"data-color="VioletRed1"><div class="xcolor-text">VioletRed1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,58.14,140.25)"data-color="VioletRed2"><div class="xcolor-text">VioletRed2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,33.66,81.6)"data-color="VioletRed4"><div class="xcolor-text">VioletRed4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,49.98,119.85)"data-color="VioletRed3"><div class="xcolor-text">VioletRed3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,95.88,144.075)"data-color="HotPink3"><div class="xcolor-text">HotPink3</div></div>
+<div class="xcolor-color"style="background-color:rgb(175.95,48.45,95.88)"data-color="Maroon0"><div class="xcolor-text">Maroon0</div></div>
+<div class="xcolor-color"style="background-color:rgb(220.32,20.4,59.925)"data-color="Crimson"><div class="xcolor-text">Crimson</div></div>
+<div class="xcolor-color"style="background-color:rgb(0,0,0)"data-color="Black"><div class="xcolor-text">Black</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.55,104.55,104.55)"data-color="DimGray"><div class="xcolor-text">DimGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.55,104.55,104.55)"data-color="DimGrey"><div class="xcolor-text">DimGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(127.5,127.5,127.5)"data-color="Gray"><div class="xcolor-text">Gray</div></div>
+<div class="xcolor-color"style="background-color:rgb(127.5,127.5,127.5)"data-color="Grey"><div class="xcolor-text">Grey</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,104.55,104.55)"data-color="RosyBrown4"><div class="xcolor-text">RosyBrown4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,136.68,136.68)"data-color="Snow4"><div class="xcolor-text">Snow4</div></div>
+<div class="xcolor-color"style="background-color:rgb(169.32,169.32,169.32)"data-color="DarkGray"><div class="xcolor-text">DarkGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(169.32,169.32,169.32)"data-color="DarkGrey"><div class="xcolor-text">DarkGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(187.68,142.8,142.8)"data-color="RosyBrown"><div class="xcolor-text">RosyBrown</div></div>
+<div class="xcolor-color"style="background-color:rgb(189.975,189.975,189.975)"data-color="Gray0"><div class="xcolor-text">Gray0</div></div>
+<div class="xcolor-color"style="background-color:rgb(189.975,189.975,189.975)"data-color="Grey0"><div class="xcolor-text">Grey0</div></div>
+<div class="xcolor-color"style="background-color:rgb(191.76,191.76,191.76)"data-color="Silver"><div class="xcolor-text">Silver</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,155.04,155.04)"data-color="RosyBrown3"><div class="xcolor-text">RosyBrown3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,201.45,201.45)"data-color="Snow3"><div class="xcolor-text">Snow3</div></div>
+<div class="xcolor-color"style="background-color:rgb(211.14,211.14,211.14)"data-color="LightGray"><div class="xcolor-text">LightGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(211.14,211.14,211.14)"data-color="LightGrey"><div class="xcolor-text">LightGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(220.32,220.32,220.32)"data-color="Gainsboro"><div class="xcolor-text">Gainsboro</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,179.775,179.775)"data-color="RosyBrown2"><div class="xcolor-text">RosyBrown2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,232.56,232.56)"data-color="Snow2"><div class="xcolor-text">Snow2</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,127.5,127.5)"data-color="LightCoral"><div class="xcolor-text">LightCoral</div></div>
+<div class="xcolor-color"style="background-color:rgb(244.8,244.8,244.8)"data-color="WhiteSmoke"><div class="xcolor-text">WhiteSmoke</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,192.78,192.78)"data-color="RosyBrown1"><div class="xcolor-text">RosyBrown1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,249.9,249.9)"data-color="Snow"><div class="xcolor-text">Snow</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,249.9,249.9)"data-color="Snow1"><div class="xcolor-text">Snow1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,255)"data-color="White"><div class="xcolor-text">White</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,182.58,181.05)"data-color="MistyRose3"><div class="xcolor-text">MistyRose3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,227.97,225.42)"data-color="MistyRose"><div class="xcolor-text">MistyRose</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,227.97,225.42)"data-color="MistyRose1"><div class="xcolor-text">MistyRose1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,124.95,123.42)"data-color="MistyRose4"><div class="xcolor-text">MistyRose4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,212.925,210.12)"data-color="MistyRose2"><div class="xcolor-text">MistyRose2</div></div>
+<div class="xcolor-color"style="background-color:rgb(232.56,150.45,122.4)"data-color="DarkSalmon"><div class="xcolor-text">DarkSalmon</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,149.175,114.24)"data-color="LightSalmon2"><div class="xcolor-text">LightSalmon2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,160.14,122.4)"data-color="LightSalmon"><div class="xcolor-text">LightSalmon</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,160.14,122.4)"data-color="LightSalmon1"><div class="xcolor-text">LightSalmon1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,128.775,98.175)"data-color="LightSalmon3"><div class="xcolor-text">LightSalmon3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,196.86,191.25)"data-color="Seashell3"><div class="xcolor-text">Seashell3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,244.8,237.66)"data-color="Seashell"><div class="xcolor-text">Seashell</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,244.8,237.66)"data-color="Seashell1"><div class="xcolor-text">Seashell1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,133.875,130.05)"data-color="Seashell4"><div class="xcolor-text">Seashell4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,228.99,221.85)"data-color="Seashell2"><div class="xcolor-text">Seashell2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,202.98,173.4)"data-color="PeachPuff2"><div class="xcolor-text">PeachPuff2</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,175.44,149.175)"data-color="PeachPuff3"><div class="xcolor-text">PeachPuff3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,218.025,184.875)"data-color="PeachPuff"><div class="xcolor-text">PeachPuff</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,218.025,184.875)"data-color="PeachPuff1"><div class="xcolor-text">PeachPuff1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,119.34,100.98)"data-color="PeachPuff4"><div class="xcolor-text">PeachPuff4</div></div>
+<div class="xcolor-color"style="background-color:rgb(249.9,239.7,229.5)"data-color="Linen"><div class="xcolor-text">Linen</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,182.58,158.1)"data-color="Bisque3"><div class="xcolor-text">Bisque3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,227.97,196.35)"data-color="Bisque"><div class="xcolor-text">Bisque</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,227.97,196.35)"data-color="Bisque1"><div class="xcolor-text">Bisque1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,238.68,219.3)"data-color="AntiqueWhite1"><div class="xcolor-text">AntiqueWhite1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,191.76,175.95)"data-color="AntiqueWhite3"><div class="xcolor-text">AntiqueWhite3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,212.925,182.58)"data-color="Bisque2"><div class="xcolor-text">Bisque2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,114.75,84.66)"data-color="Burlywood4"><div class="xcolor-text">Burlywood4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,196.86,145.35)"data-color="Burlywood2"><div class="xcolor-text">Burlywood2</div></div>
+<div class="xcolor-color"style="background-color:rgb(221.85,183.6,135.15)"data-color="BurlyWood"><div class="xcolor-text">BurlyWood</div></div>
+<div class="xcolor-color"style="background-color:rgb(249.9,234.6,215.22)"data-color="AntiqueWhite"><div class="xcolor-text">AntiqueWhite</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,124.95,107.1)"data-color="Bisque4"><div class="xcolor-text">Bisque4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,130.56,119.85)"data-color="AntiqueWhite4"><div class="xcolor-text">AntiqueWhite4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,211.14,155.04)"data-color="Burlywood1"><div class="xcolor-text">Burlywood1</div></div>
+<div class="xcolor-color"style="background-color:rgb(210.12,179.775,140.25)"data-color="Tan"><div class="xcolor-text">Tan</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,170.34,124.95)"data-color="Burlywood3"><div class="xcolor-text">Burlywood3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,223.125,204)"data-color="AntiqueWhite2"><div class="xcolor-text">AntiqueWhite2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,234.6,205.02)"data-color="BlanchedAlmond"><div class="xcolor-text">BlanchedAlmond</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,221.85,173.4)"data-color="NavajoWhite"><div class="xcolor-text">NavajoWhite</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,221.85,173.4)"data-color="NavajoWhite1"><div class="xcolor-text">NavajoWhite1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,206.55,160.65)"data-color="NavajoWhite2"><div class="xcolor-text">NavajoWhite2</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,178.5,138.975)"data-color="NavajoWhite3"><div class="xcolor-text">NavajoWhite3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,121.125,94.35)"data-color="NavajoWhite4"><div class="xcolor-text">NavajoWhite4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,238.68,212.925)"data-color="PapayaWhip"><div class="xcolor-text">PapayaWhip</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,227.97,181.05)"data-color="Moccasin"><div class="xcolor-text">Moccasin</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,230.775,186.15)"data-color="Wheat1"><div class="xcolor-text">Wheat1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,125.97,102)"data-color="Wheat4"><div class="xcolor-text">Wheat4</div></div>
+<div class="xcolor-color"style="background-color:rgb(252.96,244.8,229.5)"data-color="OldLace"><div class="xcolor-text">OldLace</div></div>
+<div class="xcolor-color"style="background-color:rgb(244.8,221.85,178.5)"data-color="Wheat"><div class="xcolor-text">Wheat</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,186.15,150.45)"data-color="Wheat3"><div class="xcolor-text">Wheat3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,216.24,174.42)"data-color="Wheat2"><div class="xcolor-text">Wheat2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,249.9,239.7)"data-color="FloralWhite"><div class="xcolor-text">FloralWhite</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,247.86,220.32)"data-color="Cornsilk"><div class="xcolor-text">Cornsilk</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,247.86,220.32)"data-color="Cornsilk1"><div class="xcolor-text">Cornsilk1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,135.66,119.85)"data-color="Cornsilk4"><div class="xcolor-text">Cornsilk4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,200.175,176.97)"data-color="Cornsilk3"><div class="xcolor-text">Cornsilk3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,232.05,205.02)"data-color="Cornsilk2"><div class="xcolor-text">Cornsilk2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,235.875,138.975)"data-color="LightGoldenrod1"><div class="xcolor-text">LightGoldenrod1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,189.975,112.2)"data-color="LightGoldenrod3"><div class="xcolor-text">LightGoldenrod3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,128.775,75.99)"data-color="LightGoldenrod4"><div class="xcolor-text">LightGoldenrod4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,220.32,130.05)"data-color="LightGoldenrod2"><div class="xcolor-text">LightGoldenrod2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.915,221.085,130.05)"data-color="LightGoldenrod"><div class="xcolor-text">LightGoldenrod</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,232.56,191.25)"data-color="LemonChiffon2"><div class="xcolor-text">LemonChiffon2</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,229.5,140.25)"data-color="Khaki"><div class="xcolor-text">Khaki</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,249.9,205.02)"data-color="LemonChiffon"><div class="xcolor-text">LemonChiffon</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,249.9,205.02)"data-color="LemonChiffon1"><div class="xcolor-text">LemonChiffon1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,201.45,165.24)"data-color="LemonChiffon3"><div class="xcolor-text">LemonChiffon3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,136.68,112.2)"data-color="LemonChiffon4"><div class="xcolor-text">LemonChiffon4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,133.875,77.775)"data-color="Khaki4"><div class="xcolor-text">Khaki4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,232.05,170.34)"data-color="PaleGoldenrod"><div class="xcolor-text">PaleGoldenrod</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,246.075,142.8)"data-color="Khaki1"><div class="xcolor-text">Khaki1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,197.88,114.75)"data-color="Khaki3"><div class="xcolor-text">Khaki3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,229.5,132.6)"data-color="Khaki2"><div class="xcolor-text">Khaki2</div></div>
+<div class="xcolor-color"style="background-color:rgb(188.7,182.58,107.1)"data-color="DarkKhaki"><div class="xcolor-text">DarkKhaki</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,138.975,130.56)"data-color="Ivory4"><div class="xcolor-text">Ivory4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,138.975,122.4)"data-color="LightYellow4"><div class="xcolor-text">LightYellow4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,205.02,192.78)"data-color="Ivory3"><div class="xcolor-text">Ivory3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,205.02,179.775)"data-color="LightYellow3"><div class="xcolor-text">LightYellow3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,237.66,224.4)"data-color="Ivory2"><div class="xcolor-text">Ivory2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,237.66,209.1)"data-color="LightYellow2"><div class="xcolor-text">LightYellow2</div></div>
+<div class="xcolor-color"style="background-color:rgb(244.8,244.8,220.32)"data-color="Beige"><div class="xcolor-text">Beige</div></div>
+<div class="xcolor-color"style="background-color:rgb(249.9,249.9,210.12)"data-color="LightGoldenrodYellow"><div class="xcolor-text">LightGoldenrodYellow</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,239.7)"data-color="Ivory"><div class="xcolor-text">Ivory</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,239.7)"data-color="Ivory1"><div class="xcolor-text">Ivory1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,224.4)"data-color="LightYellow"><div class="xcolor-text">LightYellow</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,255,224.4)"data-color="LightYellow1"><div class="xcolor-text">LightYellow1</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.55,138.975,104.55)"data-color="DarkSeaGreen4"><div class="xcolor-text">DarkSeaGreen4</div></div>
+<div class="xcolor-color"style="background-color:rgb(130.56,138.975,130.56)"data-color="Honeydew4"><div class="xcolor-text">Honeydew4</div></div>
+<div class="xcolor-color"style="background-color:rgb(84.15,138.975,84.15)"data-color="PaleGreen4"><div class="xcolor-text">PaleGreen4</div></div>
+<div class="xcolor-color"style="background-color:rgb(142.8,187.68,142.8)"data-color="DarkSeaGreen"><div class="xcolor-text">DarkSeaGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(155.04,205.02,155.04)"data-color="DarkSeaGreen3"><div class="xcolor-text">DarkSeaGreen3</div></div>
+<div class="xcolor-color"style="background-color:rgb(192.78,205.02,192.78)"data-color="Honeydew3"><div class="xcolor-text">Honeydew3</div></div>
+<div class="xcolor-color"style="background-color:rgb(124.44,205.02,124.44)"data-color="PaleGreen3"><div class="xcolor-text">PaleGreen3</div></div>
+<div class="xcolor-color"style="background-color:rgb(179.775,237.66,179.775)"data-color="DarkSeaGreen2"><div class="xcolor-text">DarkSeaGreen2</div></div>
+<div class="xcolor-color"style="background-color:rgb(224.4,237.66,224.4)"data-color="Honeydew2"><div class="xcolor-text">Honeydew2</div></div>
+<div class="xcolor-color"style="background-color:rgb(144.075,237.66,144.075)"data-color="LightGreen"><div class="xcolor-text">LightGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(144.075,237.66,144.075)"data-color="PaleGreen2"><div class="xcolor-text">PaleGreen2</div></div>
+<div class="xcolor-color"style="background-color:rgb(151.98,251.175,151.98)"data-color="PaleGreen"><div class="xcolor-text">PaleGreen</div></div>
+<div class="xcolor-color"style="background-color:rgb(192.78,255,192.78)"data-color="DarkSeaGreen1"><div class="xcolor-text">DarkSeaGreen1</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,255,239.7)"data-color="Honeydew"><div class="xcolor-text">Honeydew</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,255,239.7)"data-color="Honeydew1"><div class="xcolor-text">Honeydew1</div></div>
+<div class="xcolor-color"style="background-color:rgb(154.02,255,154.02)"data-color="PaleGreen1"><div class="xcolor-text">PaleGreen1</div></div>
+<div class="xcolor-color"style="background-color:rgb(244.8,255,249.9)"data-color="MintCream"><div class="xcolor-text">MintCream</div></div>
+<div class="xcolor-color"style="background-color:rgb(126.99,255,211.65)"data-color="Aquamarine"><div class="xcolor-text">Aquamarine</div></div>
+<div class="xcolor-color"style="background-color:rgb(126.99,255,211.65)"data-color="Aquamarine1"><div class="xcolor-text">Aquamarine1</div></div>
+<div class="xcolor-color"style="background-color:rgb(102,205.02,170.34)"data-color="Aquamarine3"><div class="xcolor-text">Aquamarine3</div></div>
+<div class="xcolor-color"style="background-color:rgb(102,205.02,170.34)"data-color="MediumAquamarine"><div class="xcolor-text">MediumAquamarine</div></div>
+<div class="xcolor-color"style="background-color:rgb(118.32,237.66,197.88)"data-color="Aquamarine2"><div class="xcolor-text">Aquamarine2</div></div>
+<div class="xcolor-color"style="background-color:rgb(68.85,138.975,116.025)"data-color="Aquamarine4"><div class="xcolor-text">Aquamarine4</div></div>
+<div class="xcolor-color"style="background-color:rgb(47.175,79.05,79.05)"data-color="DarkSlateGray"><div class="xcolor-text">DarkSlateGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(47.175,79.05,79.05)"data-color="DarkSlateGrey"><div class="xcolor-text">DarkSlateGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(130.56,138.975,138.975)"data-color="Azure4"><div class="xcolor-text">Azure4</div></div>
+<div class="xcolor-color"style="background-color:rgb(81.6,138.975,138.975)"data-color="DarkSlateGray4"><div class="xcolor-text">DarkSlateGray4</div></div>
+<div class="xcolor-color"style="background-color:rgb(122.4,138.975,138.975)"data-color="LightCyan4"><div class="xcolor-text">LightCyan4</div></div>
+<div class="xcolor-color"style="background-color:rgb(102,138.975,138.975)"data-color="PaleTurquoise4"><div class="xcolor-text">PaleTurquoise4</div></div>
+<div class="xcolor-color"style="background-color:rgb(192.78,205.02,205.02)"data-color="Azure3"><div class="xcolor-text">Azure3</div></div>
+<div class="xcolor-color"style="background-color:rgb(121.125,205.02,205.02)"data-color="DarkSlateGray3"><div class="xcolor-text">DarkSlateGray3</div></div>
+<div class="xcolor-color"style="background-color:rgb(179.775,205.02,205.02)"data-color="LightCyan3"><div class="xcolor-text">LightCyan3</div></div>
+<div class="xcolor-color"style="background-color:rgb(150.45,205.02,205.02)"data-color="PaleTurquoise3"><div class="xcolor-text">PaleTurquoise3</div></div>
+<div class="xcolor-color"style="background-color:rgb(224.4,237.66,237.66)"data-color="Azure2"><div class="xcolor-text">Azure2</div></div>
+<div class="xcolor-color"style="background-color:rgb(140.76,237.66,237.66)"data-color="DarkSlateGray2"><div class="xcolor-text">DarkSlateGray2</div></div>
+<div class="xcolor-color"style="background-color:rgb(209.1,237.66,237.66)"data-color="LightCyan2"><div class="xcolor-text">LightCyan2</div></div>
+<div class="xcolor-color"style="background-color:rgb(175.44,237.66,237.66)"data-color="PaleTurquoise"><div class="xcolor-text">PaleTurquoise</div></div>
+<div class="xcolor-color"style="background-color:rgb(174.42,237.66,237.66)"data-color="PaleTurquoise2"><div class="xcolor-text">PaleTurquoise2</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,255,255)"data-color="Azure"><div class="xcolor-text">Azure</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,255,255)"data-color="Azure1"><div class="xcolor-text">Azure1</div></div>
+<div class="xcolor-color"style="background-color:rgb(150.96,255,255)"data-color="DarkSlateGray1"><div class="xcolor-text">DarkSlateGray1</div></div>
+<div class="xcolor-color"style="background-color:rgb(224.4,255,255)"data-color="LightCyan"><div class="xcolor-text">LightCyan</div></div>
+<div class="xcolor-color"style="background-color:rgb(224.4,255,255)"data-color="LightCyan1"><div class="xcolor-text">LightCyan1</div></div>
+<div class="xcolor-color"style="background-color:rgb(186.66,255,255)"data-color="PaleTurquoise1"><div class="xcolor-text">PaleTurquoise1</div></div>
+<div class="xcolor-color"style="background-color:rgb(94.86,158.1,160.14)"data-color="CadetBlue"><div class="xcolor-text">CadetBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(141.78,228.99,237.66)"data-color="CadetBlue2"><div class="xcolor-text">CadetBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(82.875,133.875,138.975)"data-color="CadetBlue4"><div class="xcolor-text">CadetBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(175.95,224.4,229.5)"data-color="PowderBlue"><div class="xcolor-text">PowderBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(122.4,196.86,205.02)"data-color="CadetBlue3"><div class="xcolor-text">CadetBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(151.98,244.8,255)"data-color="CadetBlue1"><div class="xcolor-text">CadetBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(173.4,216.24,229.5)"data-color="LightBlue"><div class="xcolor-text">LightBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(104.04,130.56,138.975)"data-color="LightBlue4"><div class="xcolor-text">LightBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(177.99,223.125,237.66)"data-color="LightBlue2"><div class="xcolor-text">LightBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(191.25,238.68,255)"data-color="LightBlue1"><div class="xcolor-text">LightBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(154.02,191.76,205.02)"data-color="LightBlue3"><div class="xcolor-text">LightBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(135.15,206.04,234.6)"data-color="SkyBlue"><div class="xcolor-text">SkyBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(95.88,123.42,138.975)"data-color="LightSkyBlue4"><div class="xcolor-text">LightSkyBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(164.22,211.14,237.66)"data-color="LightSkyBlue2"><div class="xcolor-text">LightSkyBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(175.95,226.44,255)"data-color="LightSkyBlue1"><div class="xcolor-text">LightSkyBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(140.76,181.56,205.02)"data-color="LightSkyBlue3"><div class="xcolor-text">LightSkyBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(135.15,206.04,249.9)"data-color="LightSkyBlue"><div class="xcolor-text">LightSkyBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(108.12,165.75,205.02)"data-color="SkyBlue3"><div class="xcolor-text">SkyBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(135.15,206.04,255)"data-color="SkyBlue1"><div class="xcolor-text">SkyBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(125.97,191.76,237.66)"data-color="SkyBlue2"><div class="xcolor-text">SkyBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(73.95,112.2,138.975)"data-color="SkyBlue4"><div class="xcolor-text">SkyBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(239.7,247.86,255)"data-color="AliceBlue"><div class="xcolor-text">AliceBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(197.88,226.44,255)"data-color="SlateGray1"><div class="xcolor-text">SlateGray1</div></div>
+<div class="xcolor-color"style="background-color:rgb(184.875,211.14,237.66)"data-color="SlateGray2"><div class="xcolor-text">SlateGray2</div></div>
+<div class="xcolor-color"style="background-color:rgb(108.12,123.42,138.975)"data-color="SlateGray4"><div class="xcolor-text">SlateGray4</div></div>
+<div class="xcolor-color"style="background-color:rgb(159.12,181.56,205.02)"data-color="SlateGray3"><div class="xcolor-text">SlateGray3</div></div>
+<div class="xcolor-color"style="background-color:rgb(119.34,135.66,153)"data-color="LightSlateGray"><div class="xcolor-text">LightSlateGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(119.34,135.66,153)"data-color="LightSlateGrey"><div class="xcolor-text">LightSlateGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(112.2,127.5,144.075)"data-color="SlateGray"><div class="xcolor-text">SlateGray</div></div>
+<div class="xcolor-color"style="background-color:rgb(112.2,127.5,144.075)"data-color="SlateGrey"><div class="xcolor-text">SlateGrey</div></div>
+<div class="xcolor-color"style="background-color:rgb(109.65,123.42,138.975)"data-color="LightSteelBlue4"><div class="xcolor-text">LightSteelBlue4</div></div>
+<div class="xcolor-color"style="background-color:rgb(187.68,210.12,237.66)"data-color="LightSteelBlue2"><div class="xcolor-text">LightSteelBlue2</div></div>
+<div class="xcolor-color"style="background-color:rgb(175.95,196.35,221.85)"data-color="LightSteelBlue"><div class="xcolor-text">LightSteelBlue</div></div>
+<div class="xcolor-color"style="background-color:rgb(161.925,181.05,205.02)"data-color="LightSteelBlue3"><div class="xcolor-text">LightSteelBlue3</div></div>
+<div class="xcolor-color"style="background-color:rgb(201.96,225.42,255)"data-color="LightSteelBlue1"><div class="xcolor-text">LightSteelBlue1</div></div>
+<div class="xcolor-color"style="background-color:rgb(229.5,229.5,249.9)"data-color="Lavender"><div class="xcolor-text">Lavender</div></div>
+<div class="xcolor-color"style="background-color:rgb(247.86,247.86,255)"data-color="GhostWhite"><div class="xcolor-text">GhostWhite</div></div>
+<div class="xcolor-color"style="background-color:rgb(93.075,71.4,138.975)"data-color="MediumPurple4"><div class="xcolor-text">MediumPurple4</div></div>
+<div class="xcolor-color"style="background-color:rgb(136.68,104.04,205.02)"data-color="MediumPurple3"><div class="xcolor-text">MediumPurple3</div></div>
+<div class="xcolor-color"style="background-color:rgb(146.88,112.2,219.3)"data-color="MediumPurple"><div class="xcolor-text">MediumPurple</div></div>
+<div class="xcolor-color"style="background-color:rgb(159.12,121.125,237.66)"data-color="MediumPurple2"><div class="xcolor-text">MediumPurple2</div></div>
+<div class="xcolor-color"style="background-color:rgb(170.85,130.05,255)"data-color="MediumPurple1"><div class="xcolor-text">MediumPurple1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,102,138.975)"data-color="Plum4"><div class="xcolor-text">Plum4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,123.42,138.975)"data-color="Thistle4"><div class="xcolor-text">Thistle4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,150.45,205.02)"data-color="Plum3"><div class="xcolor-text">Plum3</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,181.05,205.02)"data-color="Thistle3"><div class="xcolor-text">Thistle3</div></div>
+<div class="xcolor-color"style="background-color:rgb(216.24,191.25,216.24)"data-color="Thistle"><div class="xcolor-text">Thistle</div></div>
+<div class="xcolor-color"style="background-color:rgb(221.34,160.14,221.34)"data-color="Plum"><div class="xcolor-text">Plum</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,174.42,237.66)"data-color="Plum2"><div class="xcolor-text">Plum2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,210.12,237.66)"data-color="Thistle2"><div class="xcolor-text">Thistle2</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,130.05,237.66)"data-color="Violet"><div class="xcolor-text">Violet</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,186.66,255)"data-color="Plum1"><div class="xcolor-text">Plum1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,225.42,255)"data-color="Thistle1"><div class="xcolor-text">Thistle1</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,71.4,136.68)"data-color="Orchid4"><div class="xcolor-text">Orchid4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,104.55,201.45)"data-color="Orchid3"><div class="xcolor-text">Orchid3</div></div>
+<div class="xcolor-color"style="background-color:rgb(218.025,112.2,214.2)"data-color="Orchid"><div class="xcolor-text">Orchid</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,130.56,249.9)"data-color="Orchid1"><div class="xcolor-text">Orchid1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,122.4,232.56)"data-color="Orchid2"><div class="xcolor-text">Orchid2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,130.56,133.875)"data-color="LavenderBlush4"><div class="xcolor-text">LavenderBlush4</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,224.4,228.99)"data-color="LavenderBlush2"><div class="xcolor-text">LavenderBlush2</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,192.78,196.86)"data-color="LavenderBlush3"><div class="xcolor-text">LavenderBlush3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,239.7,244.8)"data-color="LavenderBlush"><div class="xcolor-text">LavenderBlush</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,239.7,244.8)"data-color="LavenderBlush1"><div class="xcolor-text">LavenderBlush1</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,130.05,170.85)"data-color="PaleVioletRed1"><div class="xcolor-text">PaleVioletRed1</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,121.125,159.12)"data-color="PaleVioletRed2"><div class="xcolor-text">PaleVioletRed2</div></div>
+<div class="xcolor-color"style="background-color:rgb(219.3,112.2,146.88)"data-color="PaleVioletRed"><div class="xcolor-text">PaleVioletRed</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,104.04,136.68)"data-color="PaleVioletRed3"><div class="xcolor-text">PaleVioletRed3</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,71.4,93.075)"data-color="PaleVioletRed4"><div class="xcolor-text">PaleVioletRed4</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,99.45,108.12)"data-color="Pink4"><div class="xcolor-text">Pink4</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,181.05,196.86)"data-color="Pink1"><div class="xcolor-text">Pink1</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,145.35,158.1)"data-color="Pink3"><div class="xcolor-text">Pink3</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,169.32,183.6)"data-color="Pink2"><div class="xcolor-text">Pink2</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,191.76,202.98)"data-color="Pink"><div class="xcolor-text">Pink</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,181.56,192.78)"data-color="LightPink"><div class="xcolor-text">LightPink</div></div>
+<div class="xcolor-color"style="background-color:rgb(237.66,161.925,173.4)"data-color="LightPink2"><div class="xcolor-text">LightPink2</div></div>
+<div class="xcolor-color"style="background-color:rgb(138.975,94.86,100.98)"data-color="LightPink4"><div class="xcolor-text">LightPink4</div></div>
+<div class="xcolor-color"style="background-color:rgb(205.02,140.25,149.175)"data-color="LightPink3"><div class="xcolor-text">LightPink3</div></div>
+<div class="xcolor-color"style="background-color:rgb(255,174.42,184.875)"data-color="LightPink1"><div class="xcolor-text">LightPink1</div></div>
+</div>
+<style type="text/css">
+.xcolor-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+}
+.xcolor-text {
+  display: none;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+.xcolor-color:hover .xcolor-text,
+.xcolor-color:active .xcolor-text {
+  display: block;
+}
+
+@media (max-width: 500px) {
+  .xcolor-color {
+    width: 75px!important;
+    height: 75px!important;
+  }
+  .xcolor-text {
+    font-size: 50%;
+  }
+}
+</style>
+<script>
+  /* https://stackoverflow.com/a/18655059 */
+  document.body.addEventListener('touchstart',function(){},false);
+</script>

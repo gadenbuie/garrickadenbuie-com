@@ -1,0 +1,134 @@
+---
+title: A Holiday RStudio Theme
+description: Bring yuletide cheer and seasons greatings to RStudio.
+author: Garrick Aden-Buie
+date: '2018-12-05'
+slug: yule-rstudio-theme
+aliases: /blog/2018/12/05/holiday-rstudio-theme
+twitterImage: /images/2018/holiday-rstudio-theme/mockup-rstudio.png
+categories:
+  - Blog
+tags:
+  - R
+  - RStudio
+---
+
+[yule-base]: https://tmtheme-editor.herokuapp.com/#!/editor/theme/Yule
+[yule-rstudio]: https://github.com/gadenbuie/yule-rstudio/
+
+## Yule RStudio &#x2603;&#xFE0F; &#x1F384; &#x1F381;
+
+<!-- https://buttons.github.io/ -->
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow me</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/yule-rstudio" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/yule-rstudio on GitHub">Star yule-rstudio</a>&nbsp;
+
+![](/images/2018/holiday-rstudio-theme/mockup-rstudio.png)
+
+## &#x1F385; &#x1F936; 'Tis the season to be jolly!
+
+Bring yuletide cheer and seasons greetings to your [favorite R IDE](https://rstudio.com). Based on the [Yule tmTheme][yule-base] and modified to fit in well with RStudio Dark Mode. It's surprisingly pleasant and merrily festive!
+
+![](/images/2018/holiday-rstudio-theme/floating-rstudio.png)
+
+Featuring magical additions such as a candy cane style line highlight and a blinking Christmas-light cursor:
+
+<p align="center"><img src="/images/2018/holiday-rstudio-theme/blinking-cursor.gif"/></p>
+
+## Installation
+
+You'll need RStudio version 1.2. Grab the [preview version here](https://www.rstudio.com/products/rstudio/download/preview/).
+
+1. Run the following code in RStudio to download and apply the theme.
+
+   ```r
+   yule_theme <- fs::path_temp("Yule-RStudio", ext = "rstheme")
+   download.file("https://git.io/yule-rstudio", yule_theme)
+   rstudioapi::addTheme(yule_theme, apply = TRUE)
+   ```
+
+1. &#x2615; Make a cup of hot coco,
+
+    &#x1F4FB; turn on [SomaFM's Christmas Lounge](https://somafm.com/christmas/), 
+    
+    &#x1F4BB; and enjoy coding by the open fire.
+
+#### Manual Installation
+
+If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](https://github.com/gadenbuie/yule-rstudio/blob/master/Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
+
+## How I Made This
+
+I made this the way I do all web development: right-click on the thing I want to change, choose **Inspect Element**, and hack at it until it looks reasonable.
+Somehow this even works in RStudio! 
+(It's a web app underneath.)
+
+As a starting point, though, I used found the [Yule theme][yule-base] on the [tmTheme Editor](https://tmtheme-editor.herokuapp.com) and fiddled with the base colors there until they worked well with RStudio's blueish dark theme.
+
+The upcoming 1.2 version of RStudio now 
+[supports adding themes](https://github.com/batpigandme/night-owlish/blob/master/installation_notes.md), 
+and `.tmTheme` files are converted automatically into RStudio's `.rstheme` format.
+Turns out, an `.rstheme` is just CSS!
+
+This got me half the way there, but there were still a number of missing elements that I wanted to tweak. 
+Figuring out how tmTheme scopes get mapped to [Ace](https://github.com/ajaxorg/ace) CSS classes was painful trial and error.
+To get the theme all the way there, I went straight to the source. 
+I opened up a few scripts and R Markdown documents, used **Insepect Element** to identify the appropriate Ace CSS class, and then fiddled until it looked ~~great~~ good enough.
+
+The blinking Christmas-light cursor is just a CSS animation!
+
+```css
+.normal-mode .ace_cursor {
+  border: 0!important;
+  animation-name: color;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: step-start;
+  opacity: 0.75;
+}
+
+@keyframes color {
+  0% {
+    background-color: #ff00a9;
+  }
+  20% {
+    background-color: #7c3eff;
+  }
+  40% {
+    background-color: #64f3f0;
+  }
+  60% {
+    background-color: #4fe818;
+  }
+  80% {
+    background-color: #ffc400;
+  }
+  100 {
+    background-color: #ff0010;
+  }
+}
+```
+
+### &#x26A0;&#xFE0F; May waste some CPU cycles in the spirit of the holidays!
+
+The animated christmas-light cursors may increase the CPU usage of RStudio.
+To disable the animations but still enjoy the theme, edit the theme file in `~/.R/rstudio/themes/Yule-RStudio.rstheme`.
+
+```r
+rstudioapi::navigateToFile(
+  fs::path_home_r(".R", "rstudio", "themes", "Yule-RStudio.rstheme")
+)
+```
+
+Find the CSS blocks for `.ace_cursor` and `.normal-mode .ace_cursor` and comment out the lines starting with `animation-*`.
+
+```css
+.ace_cursor {
+  color: #ff0010;
+  /*
+  animation-name: xmas-colors;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps;
+  */
+}
+```
