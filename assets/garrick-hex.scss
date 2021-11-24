@@ -50,9 +50,11 @@
   --slate-30: #4A636C;
   --slate-20: #334F5A;
   --slate-10: #213F4B;
+  --slate-00: #121f26;
   // set your custom colors here
   --siteBgColorCustom: var(--slate-100);
-  --textColorCustom: var(--slate-10);
+  --textColorCustom: var(--slate-00);
+  --preBgColorCustom: var(--slate-100);
   --sidebarBgColorCustom: #FCFCFC;
   --sidebarTextColorCustom: #22404C;
   --headlineColorCustom: #3A3662;
@@ -87,8 +89,9 @@ $borderColorCustom: var(--borderColorCustom);
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --siteBgColorCustom: #121f26;
+    --siteBgColorCustom: var(--slate-00);
     --textColorCustom: var(--slate-80);
+    --preBgColorCustom: var(--slate-00);
     --sidebarBgColorCustom: #FCFCFC;
     --headingColorCustom: var(--blue-80);
     --bodyLinkColorCustom: var(--blue-50);

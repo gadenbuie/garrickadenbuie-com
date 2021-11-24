@@ -15,13 +15,15 @@ code, .code {
   font-size: 1em;
   pre {
     @extend .br0;
-	  background-color: var(--siteBgColorCustom) !important;
+    background-color: var(--preBgColorCustom) !important;
   }
 }
 
 pre {
   @extend .ph3, .pv2;
-  border-left: 1px solid var(--slate-80) !important;
+  border-left: 4px solid var(--slate-80) !important;
+  border-radius: 0;
+  background-color: var(--preBgColorCustom);
 }
 
 hr {
