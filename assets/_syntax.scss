@@ -1,0 +1,276 @@
+/* Background */
+.chroma {
+  background-color: var(--siteBgColorCustom);
+
+  /* Error */
+  .err {
+    color: var(--red-20);
+  }
+
+  /* LineTableTD */
+  .lntd {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  /* LineTable */
+  .lntable {
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: auto;
+    overflow: auto;
+    display: block;
+  }
+
+  /* LineHighlight */
+  .hl {
+    display: block;
+    width: 100%;
+    background-color: var(--orange-90);
+  }
+
+  /* LineNumbersTable */
+  .lnt {
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+  }
+
+  /* LineNumbers */
+  .ln {
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+  }
+
+  .k, /* Keyword */
+  .kc, /* KeywordConstant */
+  .kd, /* KeywordDeclaration */
+  .kn, /* KeywordNamespace */
+  .kp, /* KeywordPseudo */
+  .kr, /* KeywordReserved */
+  .kt {
+    /* KeywordType */
+    color: var(--pink-40);
+    background-color: var(--pink-90);
+    font-weight: 500;
+  }
+
+  // Names -------------------------------
+  /* NameAttribute */
+  .na {
+    color: var(--purple-30);
+  }
+
+  /* NameBuiltin */
+  .nb {
+    color: var(--purple-30);
+  }
+
+  /* NameClass */
+  .nc {
+    color: var(--purple-20);
+    font-weight: 500;
+  }
+
+  /* NameConstant */
+  .no {
+    color: var(--slate-20);
+    font-weight: 500;
+  }
+
+  /* NameDecorator */
+  .nd {
+    color: var(--slate-60);
+  }
+
+  /* NameException */
+  .ne {
+    color: var(--pink-50);
+    font-weight: 500;
+  }
+
+  /* NameFunction */
+  .nf {
+    color: var(--blue-30);
+    font-weight: 500;
+  }
+
+  /* NameLabel */
+  .nl {
+    color: #336699;
+    font-style: italic;
+  }
+
+  /* NameNamespace */
+  .nn {
+    color: var(--orange-40);
+    font-weight: 500;
+  }
+
+  /* NameProperty */
+  .py {
+    color: var(--orange-40);
+    font-weight: 500;
+  }
+
+  /* NameTag */
+  .nt {
+    color: var(--purple-20);
+    font-weight: 500;
+  }
+
+  /* NameVariable */
+  .nv {
+    color: #336699;
+  }
+
+  /* NameVariableClass */
+  .vc {
+    color: #336699;
+  }
+
+  /* NameVariableGlobal */
+  .vg {
+    color: var(--orange-50);
+  }
+
+  /* NameVariableInstance */
+  .vi {
+    color: var(--green-30);
+  }
+
+  .s, /* LiteralString */
+  .sa, /* LiteralStringAffix */
+  .sb, /* LiteralStringBacktick */
+  .sc, /* LiteralStringChar */
+  .dl, /* LiteralStringDelimiter */
+  .sd, /* LiteralStringDoc */
+  .s1, /* LiteralStringSingle */
+  .s2, /* LiteralStringDouble */
+  .ss, /* LiteralStringSymbol */
+  .sh {
+    /* LiteralStringHeredoc */
+    color: var(--green-40);
+    background-color: var(--green-90);
+  }
+
+  .se, /* LiteralStringEscape */
+  .si {
+    /* LiteralStringInterpol */
+    color: var(--blue-20);
+    background-color: var(--blue-90);
+  }
+
+  .sx, /* LiteralStringOther */
+  .sr {
+    /* LiteralStringRegex */
+    color: var(--green-20);
+  }
+
+  .m, /* LiteralNumber */
+  .mb, /* LiteralNumberBin */
+  .mf, /* LiteralNumberFloat */
+  .mh, /* LiteralNumberHex */
+  .mi, /* LiteralNumberInteger */
+  .il, /* LiteralNumberIntegerLong */
+  .mo {
+    /* LiteralNumberOct */
+    color: var(--red-40);
+    background-color: var(--red-90);
+    font-weight: 500;
+  }
+  /* OperatorWord */
+  .ow {
+    color: var(--green-60);
+  }
+
+  /* Operator */
+  .o {
+    color: var(--orange-50);
+  }
+
+  .p {
+    color: var(--purple-20);
+  }
+
+  .c, /* Comment */
+  .ch, /* CommentHashbang */
+  .cm, /* CommentMultiline */
+  .c1 {
+    /* CommentSingle */
+    color: var(--slate-60);
+    font-style: italic;
+  }
+
+  .cs,
+  .cp,
+  .cpf {
+    color: #cc0000;
+    font-weight: 500;
+  }
+
+  /* GenericDeleted */
+  .gd {
+    color: #000000;
+    background-color: #ffdddd;
+  }
+
+  /* GenericEmph */
+  .ge {
+    font-style: italic;
+  }
+
+  /* GenericError */
+  .gr {
+    color: #aa0000;
+  }
+
+  /* GenericHeading */
+  .gh {
+    color: var(--slate-40);
+  }
+
+  /* GenericInserted */
+  .gi {
+    color: #000000;
+    background-color: #ddffdd;
+  }
+
+  /* GenericOutput */
+  .go {
+    color: var(--slate-50);
+  }
+
+  /* GenericPrompt */
+  .gp {
+    color: #555555;
+  }
+
+  /* GenericStrong */
+  .gs {
+    font-weight: 500;
+  }
+
+  /* GenericSubheading */
+  .gu {
+    color: #666666;
+  }
+
+  /* GenericTraceback */
+  .gt {
+    color: #aa0000;
+  }
+
+  /* GenericUnderline */
+  .chroma .gl {
+    text-decoration: underline;
+  }
+
+  /* TextWhitespace */
+  .w {
+    color: var(--slate-70);
+  }
+}

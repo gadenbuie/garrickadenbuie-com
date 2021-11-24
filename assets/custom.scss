@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,200;1,500&display=swap');
+@import '_syntax';
 
 @media screen and (min-width: 56em) {
   html {
@@ -6,9 +7,11 @@
   }
 }
 
-code, .code {
-  font-family: 'IBM Plex Mono', Consolas,monaco,monospace;
+code,
+.code {
+  font-family: 'IBM Plex Mono', Consolas, monaco, monospace;
   font-size: 0.95em;
+  font-weight: 400;
 }
 
 .highlight {
@@ -26,6 +29,11 @@ pre {
   background-color: var(--preBgColorCustom);
 }
 
+.post-body > p > code,
+.page-body > p > code {
+  background-color: unset;
+}
+
 hr {
   border-color: var(--slate-50);
 }
@@ -34,11 +42,20 @@ hr {
   @extend .lh-copy;
 }
 
-h2, h3, h4, h5, h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 1.75em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   a {
     text-decoration: none;
   }
@@ -52,17 +69,19 @@ a {
   a::after {
     height: 0.15em;
   }
-  
+
   a.active::after {
     height: 0.15em;
   }
-  
+
   a {
     color: var(--textColorCustom);
   }
 }
 
-.bg-custom-nav-bg-color, .site-links a::after, .site-links a.active::after {
+.bg-custom-nav-bg-color,
+.site-links a::after,
+.site-links a.active::after {
   background-color: var(--red-50);
 }
 
@@ -106,3 +125,5 @@ post-body ul:not(.panel-tabs),
 .page-body blockquote {
   max-width: 100%;
 }
+
+@import '_dark';
