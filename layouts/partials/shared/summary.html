@@ -44,11 +44,11 @@
   
   <li class="flex items-center lh-copy pa3 ph0-l0">
       <div class="summary-post-date">
-        <a href="tel:" class="f6 link blue hover-dark-gray"><date>{{ .PublishDate.Format "2006-01-02" }}</date></a>
+        <date class="f6">{{ .PublishDate.Format "2006-01-02" }}</date>
       </div>
       <div class="pl3 flex-auto">
-        <h2 class="f4 db black-70 mt0 mb2 lh-title pointer"><a href="{{ .RelPermalink }}" class="db">{{ .Title | markdownify }}</a></h2>
-        <span class="f5 db black-70">{{ .Description | markdownify }}</span>
+        <h2 class="f4 db mt0 mb2 lh-title pointer"><a href="{{ .RelPermalink }}" class="db">{{ .Title | markdownify }}</a></h2>
+        <span class="f5 db">{{ .Description | markdownify }}</span>
       </div>
     </li>
   

@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 
+@media screen and (min-width: 56em) {
+  html {
+    font-size: 1.1em;
+  }
+}
+
 code, .code {
   font-family: 'IBM Plex Mono', Consolas,monaco,monospace;
   font-size: 0.95em;
@@ -7,6 +13,10 @@ code, .code {
 
 .highlight {
   font-size: 1em;
+  pre {
+    @extend .br0;
+	  background-color: var(--siteBgColorCustom) !important;
+  }
 }
 
 pre {
@@ -18,22 +28,15 @@ hr {
   border-color: var(--slate-50);
 }
 
-/*
-.headroom {
-  background-color: #002b36;
-}
-
-.site-links .link {
-  color: #fff;
-}
-*/
-
 .post-body {
   @extend .lh-copy;
 }
 
 h2, h3, h4, h5, h6 {
   margin-top: 1.75em;
+}
+
+h1, h2, h3, h4, h5, h6 {
   a {
     text-decoration: none;
   }
@@ -43,12 +46,18 @@ a {
   text-underline-offset: 3px;
 }
 
-.site-links a::after {
-  height: 0.15em;
-}
-
-.site-links a.active::after {
-  height: 0.15em;
+.site-links {
+  a::after {
+    height: 0.15em;
+  }
+  
+  a.active::after {
+    height: 0.15em;
+  }
+  
+  a {
+    color: var(--textColorCustom);
+  }
 }
 
 .bg-custom-nav-bg-color, .site-links a::after, .site-links a.active::after {

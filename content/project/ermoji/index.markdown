@@ -1,16 +1,28 @@
 ---
 title: ":joy:   ermoji"
 description: "RStudio Addin to Search and Copy Emoji"
-author: Garrick Aden-Buie
+summary: "RStudio Addin to Search and Copy Emoji"
 date: '2018-04-24'
 slug: ermoji
-twitterImage: /images/project/ermoji/example-browse.png
-type: page
-categories: ["Project"]
+images: 
+  - /images/project/ermoji/example-browse.png
 tags:
   - RStudio
   - Addin
   - emoji
+links:
+- icon: door-open # icon name without the 'fa-'
+  icon_pack: fas
+  name: website
+  url: https://allisonhorst.github.io/palmerpenguins/
+- icon: github # icon name without the 'fa-'
+  icon_pack: fab
+  name: code
+  url: https://github.com/allisonhorst/palmerpenguins/
+- icon: newspaper # icon name without the 'fa-'
+  icon_pack: far
+  name: Blog post
+  url: https://education.rstudio.com/blog/2020/07/palmerpenguins-cran/
 ---
 
 [ermoji-src]: https://github.com/gadenbuie/ermoji

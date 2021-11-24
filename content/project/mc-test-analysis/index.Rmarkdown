@@ -7,7 +7,6 @@ slug: "mc-test-analysis"
 tags: ["R", "R Package"]
 categories: 
   - Project
-type: page
 ---
 
 **Project Links:** [source][mctestanalysis], [documentation](https://gadenbuie.github.io/mctestanalysis/), [demo](https://apps.garrickadenbuie.com/mctestanalysis/)
