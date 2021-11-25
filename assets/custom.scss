@@ -27,6 +27,7 @@ pre {
   border-left: 4px solid var(--slate-80) !important;
   border-radius: 0;
   background-color: var(--preBgColorCustom);
+  line-height: 1.33;
 }
 
 .post-body > p > code,
@@ -38,8 +39,8 @@ hr {
   border-color: var(--slate-50);
 }
 
-.post-body {
-  @extend .lh-copy;
+.post-body p {
+  line-height: 1.5;
 }
 
 h2,
