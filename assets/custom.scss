@@ -126,4 +126,24 @@ post-body ul:not(.panel-tabs),
   max-width: 100%;
 }
 
+:root {
+  --scrollbarBgColor: var(--siteBgColorCustom);
+  --scrollbarColor: var(--slate-70);
+}
+*::-webkit-scrollbar {
+  width: 10px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbarColor) var(--scrollbarBgColor);
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBgColor);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarColor) ;
+  border-radius: 0;
+  border: 3px solid var(--scrollbarBgColor);
+}
+
 @import '_dark';
