@@ -34,6 +34,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
 
 [params]
   description = "Data Scientist. #rstats. Educator. Musician. Always learning something new."
+  orgName = "Garrick Aden-Buie"
   favicon = "/favicon.ico"
   logo = "/apple-touch-icon-152x152.png"
   mainSections = ["blog", "project", "talk"]
@@ -90,13 +91,25 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   # Icon pack "fas" includes solid icons, see: https://fontawesome.com/icons?d=gallery&s=solid&m=free
   # Icon pack "far" includes regular icons, see: https://fontawesome.com/icons?d=gallery&s=regular&m=free
   [[params.social]]
+      icon      = "twitter" # icon name without the 'fa-'
+      icon_pack = "fab"
+      url       = "https://twitter.com/grrrck"
+  [[params.social]]
       icon      = "github" # icon name without the 'fa-'
       icon_pack = "fab"
       url       = "https://github.com/gadenbuie"
   [[params.social]]
-      icon      = "twitter" # icon name without the 'fa-'
+      icon      = "r-project"
       icon_pack = "fab"
-      url       = "https://twitter.com/grrrck"
+      url       = "https://gadenbuie.r-universe.dev"
+  [[params.social]]
+      icon      = "keybase"
+      icon_pack = "fab"
+      url       = "https://keybase.io/grrrck"
+  [[params.social]]
+      icon      = "bandcamp"
+      icon_pack = "fab"
+      url       = "https://garrickadenbuie.bandcamp.com"
   [[params.social]]
       icon      = "orcid" # icon name without the 'fa-'
       icon_pack = "ai"
@@ -133,10 +146,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       name = "Talks"
       weight = 5
       url = "/talk/"
-  [[menu.header]]
-      name = "Music"
-      weight = 6
-      url = "/categories/music/"
+  #ddd[[menu.header]]
+  #    name = "Music"
+  #    weight = 6
+  #    url = "/categories/music/"
   #[[menu.header]]
   #    name = "Photos"
   #    weight = 4
@@ -159,20 +172,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       url = "https://garrickadenbuie.bandcamp.com"
   # Configure footer
   [[menu.footer]]
-    name = "License"
-    title = "License"
-    url = "/license/"
+    name = "Colophon"
+    title = "Colophon"
+    url = "/colophon/"
     weight = 1
-  [[menu.footer]]
-    name = "Contact"
-    title = "Contact form"
-    url = "/contact/"
-    weight = 2
-  [[menu.footer]]
-    name = "Contributors"
-    title = "Contributors"
-    url = "/contributors/"
-    weight = 3
 
 #[author]
 #    image = "images/garrick.png
