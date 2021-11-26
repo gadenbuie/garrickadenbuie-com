@@ -1,11 +1,11 @@
 ---
 title: ":books: MC Test Analysis"
 description: "Apps and reports for multiple-choice test analysis in R with Shiny"
-twitterImage: /project/2017-07-06-mc-test-analysis_files/explore-03-irt.png
+images: [ /project/2017-07-06-mc-test-analysis_files/explore-03-irt.png ]
 date: "2017-07-06"
 slug: "mc-test-analysis"
 tags: ["R", "R Package"]
-categories: 
+categories:
   - Project
 ---
 
@@ -19,7 +19,7 @@ In a paper in the highly regarded Journal of Engineering Education, Jorion, et a
 
 This [R] package provides useful interfaces and functions to assist with the analysis of data from a typical multiple-choice test.
 The user needs only to provide an answer key that optionally identifies the concept or topic of each question and a table of responses given by each student to the questions in the test.
-MCTestAnalysis provides a [Shiny] web app interface and an automatic report-generation tool featuring concepts from Classical Test Theory (CTT), Item Response Theory (IRT) and structural analysis. 
+MCTestAnalysis provides a [Shiny] web app interface and an automatic report-generation tool featuring concepts from Classical Test Theory (CTT), Item Response Theory (IRT) and structural analysis.
 We regard this package to be a work-in-progress and encourage contributions.
 At this time CTT results include item difficulty, item discrimination, Cronbach's alpha, and alpha-with-item-deleted.
 Item response functions include model estimation and item characteristic curves.
@@ -136,7 +136,7 @@ This report includes all of the information in the `explore()` app, in addition 
 
 ## Data format
 
-The MCTestAnalysis package requires both an **Answer Key** and a table of student responses, in other words the **Test Data**. 
+The MCTestAnalysis package requires both an **Answer Key** and a table of student responses, in other words the **Test Data**.
 An example of each table is provided, in the preferred format, in the  [`inst/extdata` folder](https://github.com/gadenbuie/mctestanalysis/tree/master/inst/extdata) of the [repo][mctestanalysis], or from links on the "Import" tab of the `explore()` or `report()` interfaces.
 
 A detailed overview of the required data format is available at <http://www.eng.usf.edu/~kaw/MCTestAnalysis/MCTestAnalysis_input.pdf>.

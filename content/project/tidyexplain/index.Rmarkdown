@@ -1,10 +1,10 @@
 ---
 title: "&#x1F939; tidyexplain"
 date: '2018-08-27'
-description: Animations of tidyverse verbs using R, the tidyverse, and gganimate
-twitterImage: /project/tidyexplain/images/static/png/original-dfs.png
+description: Animations of tidyverse verbs using R, the tidyverse, and gganimate.
+images:
+  - /project/tidyexplain/images/static/png/original-dfs.png
 slug: tidyexplain
-type: page
 categories: ["Project"]
 tags:
   - Data Analysis
@@ -13,7 +13,7 @@ tags:
   - dplyr
   - tidyr
   - R
---- 
+---
 
 ## Tidy Animated Verbs
 

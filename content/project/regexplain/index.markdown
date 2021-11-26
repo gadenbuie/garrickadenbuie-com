@@ -2,10 +2,10 @@
 title: ":male_detective:   RegExplain"
 slug: "regexplain"
 description: "An RStudio addin slash utility belt for regular expressions"
-twitterImage: /images/project/regexplain/regexplain-gadget-tabs.png
+images: [ "/images/project/regexplain/regexplain-gadget-tabs.png" ]
 date: 2018-04-04T00:00:00+00:00
 type: project
-categories: 
+categories:
   - Project
 tags: ["R", "R Package", "Shiny", "RStudio", "Addin", "Gadget"]
 ---
@@ -163,7 +163,7 @@ colorize the regex expression itself as well.
 
 ``` r
 text <- c("breakfast=eggs;lunch=pizza",
-          "breakfast=bacon;lunch=spaghetti", 
+          "breakfast=bacon;lunch=spaghetti",
           "no food here")
 pattern <- "((\\w+)=)(\\w+).+(ch=s?p)"
 

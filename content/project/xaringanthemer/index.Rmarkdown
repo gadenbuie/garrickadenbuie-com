@@ -4,8 +4,7 @@ description: "Give your xaringan slides some style without (much) CSS"
 author: Garrick Aden-Buie
 date: '2018-05-12'
 slug: xaringanthemer
-twitterImage: /images/project/xaringanthemer/examples.gif
-type: page
+images: [/images/project/xaringanthemer/examples.gif]
 categories: ["Project"]
 tags:
   - xaringan
@@ -62,7 +61,7 @@ output:
 Then, in a hidden chunk just after the knitr setup chunk, load **xaringanthemer** and try one of the [theme functions][theme-functions].
 
 ````markdown
-```{r xaringan-themer, include = FALSE}
+```{r xaringan-themer, include = FALSE}`r ""`
 library(xaringanthemer)
 mono_light(
   base_color = "#1c5253",
@@ -101,5 +100,5 @@ You can also skip the above and just create a *Ninja Themed Presentation* from t
 Big thank you to [Yihui Xie](https://yihui.name), especially for [xaringan].
 Also thanks to [Ole Petter Bang](http://gnab.org) for [remark.js][remarkjs].
 
-Feel free to [file an issue](https://github.com/gadenbuie/xaringanthemer/issues) 
+Feel free to [file an issue](https://github.com/gadenbuie/xaringanthemer/issues)
 if you find a bug or have a theme suggestion -- or better yet, submit a pull request!

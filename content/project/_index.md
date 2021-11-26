@@ -7,10 +7,10 @@ thumbnail_left: true # for list-sidebar only
 show_author_byline: true
 show_post_date: true
 # for listing page layout: list, list-sidebar, list-grid
-layout: list-grid
+layout: list-project-grid
 
 # set up common front matter for all individual pages inside project/
-cascade:    
+cascade:
   show_author_byline: true
   show_post_date: true
   show_comments: false # see site config to choose Disqus or Utterances

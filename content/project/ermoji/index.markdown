@@ -4,25 +4,25 @@ description: "RStudio Addin to Search and Copy Emoji"
 summary: "RStudio Addin to Search and Copy Emoji"
 date: '2018-04-24'
 slug: ermoji
-images: 
+images:
   - /images/project/ermoji/example-browse.png
 tags:
   - RStudio
   - Addin
   - emoji
 links:
-- icon: door-open # icon name without the 'fa-'
-  icon_pack: fas
-  name: website
-  url: https://allisonhorst.github.io/palmerpenguins/
 - icon: github # icon name without the 'fa-'
   icon_pack: fab
-  name: code
-  url: https://github.com/allisonhorst/palmerpenguins/
-- icon: newspaper # icon name without the 'fa-'
-  icon_pack: far
-  name: Blog post
-  url: https://education.rstudio.com/blog/2020/07/palmerpenguins-cran/
+  name: Source
+  url: https://github.com/gadenbuie/ermoji
+- icon: door-open # icon name without the 'fa-'
+  icon_pack: fas
+  name: Installation
+  url: #installation
+- icon: images # icon name without the 'fa-'
+  icon_pack: fas
+  name: Screenshots
+  url: #usage
 ---
 
 [ermoji-src]: https://github.com/gadenbuie/ermoji
@@ -32,8 +32,6 @@ links:
 [devtools]: https://github.com/r-lib/devtools
 [miniUI]: http://shiny.rstudio.com/articles/gadget-ui.html
 [addinlist]: https://github.com/daattali/addinslist
-
-**Project Links:** [source][ermoji-src], [installation](#installation), [screenshots](#usage)
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;

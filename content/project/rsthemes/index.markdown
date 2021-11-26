@@ -1,10 +1,9 @@
 ---
 title: ":crystal_ball:  rsthemes"
-description: "Full RStudio IDE and Syntax Themes "
+description: "Full RStudio IDE and Syntax Themes"
 author: Garrick Aden-Buie
 date: '2020-10-01'
-twitterImage: /project/rsthemes/social-card.png
-type: page
+images: [ /project/rsthemes/social-card.png ]
 categories: ["Project"]
 tags:
   - RStudio Theme
@@ -36,6 +35,7 @@ tags:
   grid-template-columns: repeat(3, 1fr);
   align-items: end;
   grid-gap: 0.66em;
+  max-width: 100%;
 }
 
 @media screen and (max-width: 400px) {
@@ -134,7 +134,7 @@ const rsthemesOpts = {
   // <a href="{url}" data-featherlight="image">
   item: `<li>
     <div class="rstheme-name"><span class="name"></span><div class="style"></div></div>
-    
+
     <div class="rstheme-image"><a class="imageLink" data-featherlight="image" href="#"><img class="image" src="#" /></a></div>
     </li>`
 }
@@ -178,12 +178,12 @@ const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/ass
       return t
     }).
     sort(t => t.isBase16 ? 1 : -1)
-    
+
     rsthemesList = new List('rsthemes-list', rsthemesOpts, json)
     btns.style.display = 'block'
     filterRsthemesList()
   })
-  
+
 btns.querySelectorAll('button').forEach(function(btn) {
   btn.addEventListener('click', function() {
     btn.classList.toggle('rsthemes-button-active')

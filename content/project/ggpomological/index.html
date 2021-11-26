@@ -4,9 +4,8 @@ author: Garrick Aden-Buie
 date: '2018-02-16'
 slug: ggpomological
 description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
-twitterImage: /images/project/ggpomological/ggpomological.png
-type: page
-categories: 
+images: [/images/project/ggpomological/ggpomological.png]
+categories:
   - Project
 tags:
   - R
@@ -131,7 +130,7 @@ pomological_iris &lt;- basic_iris_plot + theme_pomological_fancy()
 pomological_iris</code></pre>
 <p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-5.png" width="672" /></p>
 <pre class="r"><code># Painted!
-paint_pomological(pomological_iris, res = 110) %&gt;% 
+paint_pomological(pomological_iris, res = 110) %&gt;%
   magick::image_write(set_filename(&quot;plot-demo-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-demo-painted.png" /></p>
 </div>
@@ -139,9 +138,9 @@ paint_pomological(pomological_iris, res = 110) %&gt;%
 <h3>Stacked bar chart</h3>
 <pre class="r"><code>stacked_bar_plot &lt;- ggplot(diamonds) +
   aes(price, fill = cut) +
-  geom_histogram(binwidth = 850) + 
-  xlab(&#39;Price (USD)&#39;) + 
-  ylab(&#39;Count&#39;) + 
+  geom_histogram(binwidth = 850) +
+  xlab(&#39;Price (USD)&#39;) +
+  ylab(&#39;Count&#39;) +
   ggtitle(&quot;ggpomological&quot;) +
   scale_x_continuous(label = scales::dollar_format()) +
   scale_fill_pomological()
@@ -151,17 +150,17 @@ stacked_bar_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre
 <pre class="r"><code>paint_pomological(
   stacked_bar_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;% 
+) %&gt;%
   magick::image_write(set_filename(&quot;plot-bar-chart-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-bar-chart-painted.png" /></p>
 </div>
 <div id="density-plot" class="section level3">
 <h3>Density Plot</h3>
-<pre class="r"><code>density_plot &lt;- mtcars %&gt;% 
-  mutate(cyl = factor(cyl)) %&gt;% 
+<pre class="r"><code>density_plot &lt;- mtcars %&gt;%
+  mutate(cyl = factor(cyl)) %&gt;%
   ggplot() +
   aes(mpg, fill = cyl, color = cyl)+
-  geom_density(alpha = 0.75) + 
+  geom_density(alpha = 0.75) +
   labs(fill = &#39;Cylinders&#39;, colour = &#39;Cylinders&#39;, x = &#39;MPG&#39;, y = &#39;Density&#39;) +
   scale_color_pomological() +
   scale_fill_pomological()
@@ -171,7 +170,7 @@ density_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
 <pre class="r"><code>paint_pomological(
   density_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;% 
+) %&gt;%
   magick::image_write(set_filename(&quot;plot-density-demo-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-density-demo-painted.png" /></p>
 </div>
@@ -181,19 +180,19 @@ density_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
 <blockquote>
 <p>Information about the housing market in Texas provided by the TAMU real estate center, <a href="http://recenter.tamu.edu/" class="uri">http://recenter.tamu.edu/</a>.</p>
 </blockquote>
-<pre class="r"><code>big_volume_cities &lt;- txhousing %&gt;% 
-  group_by(city) %&gt;% 
-  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;% 
-  arrange(-mean_volume) %&gt;% 
-  top_n(length(ggpomological:::pomological_palette)) %&gt;% 
+<pre class="r"><code>big_volume_cities &lt;- txhousing %&gt;%
+  group_by(city) %&gt;%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;%
+  arrange(-mean_volume) %&gt;%
+  top_n(length(ggpomological:::pomological_palette)) %&gt;%
   pull(city)
 
-full_bar_stack_plot &lt;- txhousing %&gt;% 
-  filter(city %in% big_volume_cities) %&gt;% 
-  group_by(city, year) %&gt;% 
-  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;% 
-  ungroup %&gt;% 
-  mutate(city = factor(city, big_volume_cities)) %&gt;% 
+full_bar_stack_plot &lt;- txhousing %&gt;%
+  filter(city %in% big_volume_cities) %&gt;%
+  group_by(city, year) %&gt;%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;%
+  ungroup %&gt;%
+  mutate(city = factor(city, big_volume_cities)) %&gt;%
   ggplot() +
   aes(year, mean_volume, fill = city, group = city) +
   geom_col(position = &#39;fill&#39;, width = 0.9) +
@@ -206,25 +205,25 @@ full_bar_stack_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></
 <pre class="r"><code>paint_pomological(
   full_bar_stack_plot + theme_pomological_fancy(),
   res = 110
-) %&gt;% 
+) %&gt;%
   magick::image_write(set_filename(&quot;plot-full-bar-stack-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-full-bar-stack-painted.png" /></p>
 </div>
 <div id="one-last-plot" class="section level3">
 <h3>One last plot</h3>
 <p>This last one is in my own handwriting.</p>
-<pre class="r"><code>ridges_pomological &lt;- ggplot(diamonds) + 
-  aes(x = carat, y = clarity, color = clarity, fill = clarity) + 
-  ggridges::geom_density_ridges(alpha = 0.75) + 
+<pre class="r"><code>ridges_pomological &lt;- ggplot(diamonds) +
+  aes(x = carat, y = clarity, color = clarity, fill = clarity) +
+  ggridges::geom_density_ridges(alpha = 0.75) +
   theme_pomological(
     base_family = &#39;gWriting&#39;,
     base_size = 20,
     base_theme = ggridges::theme_ridges()
-    ) + 
-  scale_fill_pomological() + 
+    ) +
+  scale_fill_pomological() +
   scale_color_pomological()
 
-paint_pomological(ridges_pomological, res = 110) %&gt;% 
+paint_pomological(ridges_pomological, res = 110) %&gt;%
   magick::image_write(set_filename(&quot;plot-ridges-painted.png&quot;))</code></pre>
 <p><img src="/images/project/ggpomological/plot-ridges-painted.png" /></p>
 </div>

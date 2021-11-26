@@ -2,15 +2,15 @@
 title: ":information_source: metathis"
 date: '2019-09-11'
 description: <meta> and social media cards for R-made web things
-twitterImage: https://pkg.garrickadenbuie.com/metathis/reference/figures/card.png
+images:
+  - https://pkg.garrickadenbuie.com/metathis/reference/figures/card.png
 slug: metathis
-type: page
 categories: ["Project"]
 tags:
   - R Markdown
   - R Package
   - R
---- 
+---
 
 Redirecting to <https://pkg.garrickadenbuie.com/metathis>...
 
