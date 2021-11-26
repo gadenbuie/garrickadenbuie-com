@@ -24,7 +24,7 @@ editor_options:
 [xaringanExtra]: https://pkg.garrickadenbuie.com/xaringanExtra/
 [share-again]: https://pkg.garrickadenbuie.com/xaringanExtra/#/share-again
 [xaringan]: https://slides.yihui.org/xaringan
-  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE,
@@ -58,7 +58,7 @@ xaringanExtra::use_clipboard()
 
 
 ::: {.lead}
-Showcase your presentations in style 
+Showcase your presentations in style
 with great-looking social media cards
 and responsive, seamlessly embedded slides in web pages.
 :::
@@ -81,12 +81,12 @@ tweetrmd::tweet_screenshot(
 <center><a href="https://twitter.com/grrrck/status/1159087961931169795"><img src="tweet-slidecraft.png" style="width:100%;max-width:400px;" /></a></center>
 
 In this post,
-I'll share some tips and strategies for publishing your [[xaringan]]{.pkg} slides online.
+I'll share some tips and strategies for publishing your <span class="pkg">[xaringan]</span> slides online.
 Use the linked checklist below to get started or for review when prepping your next presentation.
 
-This post covers some new features just released in my package [[xaringanExtra]]{.pkg}.
+This post covers some new features just released in my package <span class="pkg">[xaringanExtra]</span>.
 If you haven't used it before,
-it provides a _playground of enhancements for_ [xaringan]{.pkg}.
+it provides a _playground of enhancements for_ <span class="pkg">xaringan</span>.
 It's not available on CRAN,
 so you'll need to install it from GitHub:
 
@@ -124,17 +124,17 @@ info <- function(slug) {
 
 ::: {.checklist}
 
-- <input type="checkbox"></input> `r info("fill-in-metadata")` Fill in metadata with [metathis]{.pkg}
+- <input type="checkbox"></input> `r info("fill-in-metadata")` Fill in metadata with <span class="pkg">metathis</span>
 
 - <input type="checkbox"></input> `r info("create-a-social-media-card")` Create a social media card
 
-- <input type="checkbox"></input> `r info("add-a-share-bar")` Add a "share bar" with `use_share_again()` from [xaringanExtra]{.pkg}
+- <input type="checkbox"></input> `r info("add-a-share-bar")` Add a "share bar" with `use_share_again()` from <span class="pkg">xaringanExtra</span>
 
 - <input type="checkbox"></input> `r info("get-your-slides-online")` Get your slides online
 
 - <input type="checkbox"></input> `r info("pre-flight-checks")` Pre-flight checks
 
-- <input type="checkbox"></input> `r info("embed-your-slides")` Embed your slides with `embed_xaringan()` from [xaringanExtra]{.pkg}
+- <input type="checkbox"></input> `r info("embed-your-slides")` Embed your slides with `embed_xaringan()` from <span class="pkg">xaringanExtra</span>
 
 - <input type="checkbox"></input> `r info("share-with-the-world")` Share with the world!
 
@@ -147,7 +147,7 @@ to be found via search engines or to look great
 when shared on social media sites.
 
 To do this,
-I recommend using a small package I wrote called [[metathis]]{.pkg}.
+I recommend using a small package I wrote called <span class="pkg">[metathis]</span>.
 It's available on CRAN!
 
 ```{r install-metathis, eval=FALSE, echo=TRUE}
@@ -155,25 +155,25 @@ install.packages("metathis")
 ```
 
 Basically,
-[metathis]{.pkg} helps fill out `<meta>` tags in your HTML document.
-These tags are used by 
-search engines and 
+<span class="pkg">metathis</span> helps fill out `<meta>` tags in your HTML document.
+These tags are used by
+search engines and
 social media sites like Twitter and Facebook
-to describe your page, 
+to describe your page,
 list the title and author,
 link to your profile,
 and show a preview image for the page
 (we'll get to this in [the next section](#create-a-social-media-card)).
 
 Here's a template you can use for your own slides.
-I'm using a [recent presentation](/talk/build-your-own-universe/) as an example, 
+I'm using a [recent presentation](/talk/build-your-own-universe/) as an example,
 or you can reference [the example in the metathis documentation][metathis-xaringan].
 
 ````markdown
 ```{r metathis, echo=FALSE}`r ''`
 library(metathis)
 meta() %>%
-  meta_name("github-repo" = "gadenbuie/build-your-own-universe") %>% 
+  meta_name("github-repo" = "gadenbuie/build-your-own-universe") %>%
   meta_social(
     title = "Build your own universe",
     description = paste(
@@ -183,8 +183,8 @@ meta() %>%
     url = "https://build-your-own-universe.netlify.app",
     image = "https://build-your-own-universe.netlify.app/social-card.png",
     image_alt = paste(
-      "Title slide of Build your own universe:", 
-      "Scale high-quality research data provisioning with R packages,", 
+      "Title slide of Build your own universe:",
+      "Scale high-quality research data provisioning with R packages,",
       "presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie"
     ),
     og_type = "website",
@@ -223,20 +223,20 @@ tweetrmd::tweet_screenshot(
 )
 ```
 
-Social media cards are the rich link previews 
+Social media cards are the rich link previews
 you see on websites like Twitter and Facebook.
 I think it's worth the extra work
 to include a preview image for several reasons.
 
 First, it's much more likely that your link will be seen,
 especially if your preview image is interesting or visually compelling.
-Users are more likely 
+Users are more likely
 to click through and take a look at your slides
 when they have some idea of what's on the other side of the link.
 
-Second, 
+Second,
 the preview image is a tiny window into your own personal style.
-You have no control over 
+You have no control over
 the rest of the time line where your link is being shared —
 your 280 characters look just like everyone else's —
 but your preview image is __your space__
@@ -290,7 +290,7 @@ that illustrate the various approaches to link previews.
 ::: tweet
 ```{r tweet-slides-no-preview, results="asis", echo=FALSE}
 lightbox_img(
-  "tweet-slides-no-preview.png", 
+  "tweet-slides-no-preview.png",
   alt = "Tweet from @revodavid sharing a link to slides. The slides' link has limited metadata and only text is shown in the link preview.",
   caption = "Slide link with limited metadata.  (<a href=\"https://twitter.com/revodavid/status/471320054874009600\">tweet</a>)"
 )
@@ -300,7 +300,7 @@ lightbox_img(
 ::: tweet
 ```{r tweet-slides-shared-image, results="asis", echo=FALSE}
 lightbox_img(
-  "tweet-slides-shared-image.png", 
+  "tweet-slides-shared-image.png",
   alt = "Tweet from @i_steves sharing a link to slides, with a screenshot of the first slide shared as an image attached to the tweet.",
   caption = "Slide link with a shared image. (<a href=\"https://twitter.com/i_steves/status/1086028069519933440\">tweet</a>)"
 )
@@ -311,7 +311,7 @@ lightbox_img(
 ::: tweet
 ```{r tweet-slides-share-card, results="asis", echo=FALSE}
 lightbox_img(
-  "tweet-slides-share-card.png", 
+  "tweet-slides-share-card.png",
   alt = "Tweet from @hadleywickham sharing a link to slides, with complete metadata. The preview image from the link shows the first slide.",
   caption = "Slide link with a preview image and complete metadata.  (<a href=\"https://twitter.com/hadleywickham/status/1096461439609511936\">tweet</a>)"
 )
@@ -366,8 +366,8 @@ lightbox_img(
 
 ### The perfect share image ratio
 
-If you're using 
-a `4:3` (the [xaringan]{.pkg} default)
+If you're using
+a `4:3` (the <span class="pkg">xaringan</span> default)
 or `16:9` (my personal favorite)
 slide ratio,
 chances are that your share image will look okay...
@@ -378,9 +378,9 @@ if you're targeting Twitter
 you might find that parts of your preview image
 are cut off if the image width and height aren't _just right_.
 
-It turns out that 
+It turns out that
 [the best ratio for share card images](https://marketing.twitter.com/na/en/solutions/ad-format-specs/website-card.html)
-on Twitter 
+on Twitter
 is `1.91:1`.
 
 So to get the best image possible,
@@ -405,9 +405,9 @@ and [take a screenshot](#taking-a-screenshot-of-your-slides).
 
 If this sounds like a hassle, it's because it kind of is.
 Fortunately,
-we can use the [[webshot2](https://github.com/rstudio/webshot2)]{.pkg} package
+we can use the <span class="pkg">[webshot2](https://github.com/rstudio/webshot2)</span> package
 to automate the entire process.
-Note [webshot2]{.pkg} requires that you have Chrome installed on your computer
+Note <span class="pkg">webshot2</span> requires that you have Chrome installed on your computer
 and is only available from GitHub.
 
 ```{r eval=FALSE, echo=TRUE}
@@ -433,11 +433,11 @@ screenshot_share_image <- function(
 ) {
   if (!requireNamespace("webshot2", quietly = TRUE)) {
     stop(
-      "`webshot2` is required: ", 
+      "`webshot2` is required: ",
       'remotes::install_github("rstudio/webshot2")'
     )
   }
-  
+
   webshot2::rmdshot(
     doc = slides_rmd,
     file = path_image,
@@ -450,7 +450,7 @@ screenshot_share_image <- function(
       )
     )
   )
-  
+
   path_image
 }
 ```
@@ -469,7 +469,7 @@ If you know that you'll embed your slides
 on your website or someone else's page,
 you'll want to add a **share bar** to your slides
 using [`use_share_again()`](https://pkg.garrickadenbuie.com/xaringanExtra/#/share-again)
-from [xaringanExtra]{.pkg}.
+from <span class="pkg">xaringanExtra</span>.
 
 ````markdown
 ```{r xaringanExtra-share-again, echo=FALSE}`r ''`
@@ -477,9 +477,9 @@ xaringanExtra::use_share_again()
 ```
 ````
 
-![Meet **share again** from [xaringanExtra]{.pkg}](meet-share-again.jpg)
+!<span class="pkg">Meet **share again** from [xaringanExtra</span>](meet-share-again.jpg)
 
-The **share again** extension adds a small bar at the bottom of your slides — 
+The **share again** extension adds a small bar at the bottom of your slides —
 but only when the slides are embedded in an `<iframe>`.
 The bar contains buttons to move between slides,
 which often isn't obvious when you're looking at embedded slides.
@@ -527,7 +527,7 @@ on Facebook's [Sharing Debugger](https://developers.facebook.com/tools/debug/).
 Finally,
 it's a good idea to open your slides in every browser you have on your machine
 — or at the very least in just one browser —
-and walk through your slides to make sure everything works 
+and walk through your slides to make sure everything works
 and that you haven't forgotten to upload any images or assets.
 
 ## Embed Your Slides
@@ -537,7 +537,7 @@ you might want to embed them in your web page,
 for example in a [talk page](/talks/build-your-own-universe)
 or the [talks](/talks) section of your website.
 
-To do this, I recommend using `embed_xaringan()` from [xaringanExtra]{.pkg}.
+To do this, I recommend using `embed_xaringan()` from <span class="pkg">xaringanExtra</span>.
 It embeds your slides in a responsive, aspect-ratio `<iframe>`,
 meaning that the slides are seamlessly embedded in the page
 and their size is automatically adjusted to maintain the aspect ratio
@@ -554,7 +554,7 @@ xaringanExtra::embed_xaringan(
 
 Notice that if you've used [share again](#add-a-share-bar),
 your embedded slides will have a nice share bar for navigation and sharing.
-  
+
 ## Share with the World!
 
 You're finally ready!

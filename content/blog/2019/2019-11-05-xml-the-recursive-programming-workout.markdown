@@ -13,14 +13,14 @@ tags:
   - xml2
   - purrr
   - recursive programming
-keywords: 
+keywords:
   - rstats
   - R
   - XML
   - xml2
   - purrr
   - recursive programming
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 

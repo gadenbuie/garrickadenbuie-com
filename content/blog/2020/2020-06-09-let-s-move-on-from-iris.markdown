@@ -11,8 +11,8 @@ tags:
 description: About iris and how to move on.
 twitterImage: /blog/lets-move-on-from-iris/de-iris-my-repos-issue.png
 summary: |
-  It's time for `iris` to go. Use 
-  <a href="https://github.com/gadenbuie/de-iris-my-repos">de_iris_my_repos()</a> 
+  It's time for `iris` to go. Use
+  <a href="https://github.com/gadenbuie/de-iris-my-repos">de_iris_my_repos()</a>
   to help find references to <code>iris</code> in your public GitHub code so you
   can replace it with something better.
 keywords: rstats
@@ -24,7 +24,7 @@ editor_options:
 
 <div class="lead">
 
-*It’s time for `iris` to go. Use [de_iris_my_repos()](https://github.com/gadenbuie/de-iris-my-repos) to help find references to `iris` in your public GitHub code so you can replace it with something better.*
+*It’s time for `iris` to go. Use [de\_iris\_my\_repos()](https://github.com/gadenbuie/de-iris-my-repos) to help find references to `iris` in your public GitHub code so you can replace it with something better.*
 
 </div>
 
@@ -89,12 +89,12 @@ Here’s a short list of other data sets you can turn to instead:
 
 -   <span class="pkg">fivethirtyeight</span>
 
--   Any of the many [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets
+-   Any of the many [\#TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets
 
 ## De-Iris Your Repos
 
 To help us move on into an `iris`-free world,
-I’ve created a small command-line utility to [de_iris_my_repos()](https://github.com/gadenbuie/de-iris-my-repos).
+I’ve created a small command-line utility to [de\_iris\_my\_repos()](https://github.com/gadenbuie/de-iris-my-repos).
 
 The code is available on GitHub at [gadenbuie/de-iris-my-repos](https://github.com/gadenbuie/de-iris-my-repos),
 and it only takes two lines in your console to find any references to `iris`

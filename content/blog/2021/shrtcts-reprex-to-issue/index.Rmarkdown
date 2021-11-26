@@ -32,7 +32,7 @@ Most of the time, I find my mistake in the journey to a reprex.
 But sometimes, I find a legitimate bug and in those cases,
 I want to quickly turn my reprex into a GitHub issue.
 
-Here's a quick way to get there using an RStudio addin and [[shrtcts]]{.pkg}.
+Here's a quick way to get there using an RStudio addin and <span class="pkg">[shrtcts]</span>.
 
 :::
 
@@ -72,7 +72,7 @@ xaringanExtra::style_panelset_tabs(
 
 ## `reprex` is awesome
 
-The [[reprex]]{.pkg} package is **awesome**.
+The <span class="pkg">[reprex]</span> package is **awesome**.
 If you've never used it before,
 I highly recommend that you stop reading this blog
 and go watch [Sharla Gelfand's _make a reprex... please_](https://youtu.be/G5Nm-GpmrLw?t=60)
@@ -83,14 +83,14 @@ that demonstrates the problem you've experienced
 and that is as self-contained as possible.
 
 To disentangle your problem from your personal R environment,
-[reprex]{.pkg} takes your code,
+<span class="pkg">reprex</span> takes your code,
 runs it in an isolated environment,
 and returns a rendered version of your code
-that's ready to be copy-pasted into a text box 
+that's ready to be copy-pasted into a text box
 on a number of common websites where R users go for help.
 
 This last feature is one of my favorites:
-the rendered format of a `reprex` 
+the rendered format of a `reprex`
 is the perfect way to start crafting a GitHub issue.
 Typically, I'll work out the reprex locally,
 then use the **Reprex selection** RStudio addin to render the code,
@@ -98,7 +98,7 @@ and finally jump over to the issues tab of a GitHub repo to paste the code right
 
 Here's an example reprex from [Sharla's talk](https://make-a-reprex-please.netlify.app/#33).
 We start with plain [R code](/blog/shrtcts-reprex-to-issue/?panelset=r-code#panelset_r-code).
-[reprex]{.pkg} renders the R code with additional information about my session
+<span class="pkg">reprex</span> renders the R code with additional information about my session
 and [shows me a preview](/blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#panelset_reprex-preview).
 And finally it also copies [the markdown I need](/blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard)
 in order to paste the reprex into a GitHub issue or other online location.
@@ -146,7 +146,7 @@ rprx <- paste(rprx, collapse = "\n")
 
 When you're working on debugging something,
 going from code in your RStudio IDE to something you can share with others is **huge**.
-But [reprex]{.pkg} can do more!
+But <span class="pkg">reprex</span> can do more!
 
 Because reprex uses `knitr::spin()` —
 [_knitr's best hidden gem_ according to Dean Attali](https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/) —
@@ -154,11 +154,11 @@ to turn R code into an R Markdown document,
 you have a few more options.
 
 `knitr::spin()` has a cool feature that lets you write markdown _in an R script_.
-You can check out 
+You can check out
 [Dean Attali's post](https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/)
 for more details,
 but the gist is this:
-any text on a line starting with a special comment format `#'` 
+any text on a line starting with a special comment format `#'`
 becomes markdown.
 
 This means we can add text directly to our reprex using these comments!
@@ -170,15 +170,15 @@ Below you can see that I've added some exposition around the problematic code.
 [R Code]{.panel-name}
 
 ```{r reprex-example-comments, eval = FALSE}
-#' I'm using the latest version of the `tidyverse`, 
+#' I'm using the latest version of the `tidyverse`,
 #' freshly installed.
 library(tidyverse)
 
-#' Suppose we have a data frame with a date column. 
-#' The date is stored as a _character_ vector, and 
+#' Suppose we have a data frame with a date column.
+#' The date is stored as a _character_ vector, and
 #' I'd like to convert it to a _year_ with a simple
-#' comparison. The first function I thought of was 
-#' `case_when()`, but it doesn't seem to be doing 
+#' comparison. The first function I thought of was
+#' `case_when()`, but it doesn't seem to be doing
 #' what I expect. Why am I getting this error?
 tibble(date = "2020-01-01") %>%
   mutate(year = case_when(
@@ -214,16 +214,16 @@ rprx2 <- paste(rprx2, collapse = "\n")
 
 ## There should be a shortcut
 
-Kick-starting an issue report using a reprex 
+Kick-starting an issue report using a reprex
 right from within my RStudio session is great,
 but there's still the part where I have to slog
-out of my IDE, 
+out of my IDE,
 into a browser,
 and find my way to the repo where this issue should go.
 
 Most of the time, though, I'm already **in the repo**.
-And [usethis]{.pkg} has 
-[a helpful function](https://usethis.r-lib.org/reference/browse-this.html) 
+And <span class="pkg">usethis</span> has
+[a helpful function](https://usethis.r-lib.org/reference/browse-this.html)
 to get me right to the issues page:
 
 ```{r eval=FALSE}
@@ -235,15 +235,15 @@ I want reprex to issue, _with magic_ &#x1F9D9; &#x2728;.
 
 So that's what we'll do!
 In the rest of this post,
-we'll use [reprex]{.pkg} and the [[rstudioapi]]{.pkg} package 
+we'll use <span class="pkg">reprex</span> and the <span class="pkg">[rstudioapi]</span> package
 to automatically go from code to GitHub issue.
 Then we'll wrap that logic into a function
-and turn it into an RStudio Addin with my package, [[shrtcts]]{.pkg}.
+and turn it into an RStudio Addin with my package, <span class="pkg">[shrtcts]</span>.
 
 ## From reprex to issue
 
 Suppose we have some `input` code and a target `repo`.
-Maybe we have a classic missing argument error 
+Maybe we have a classic missing argument error
 and we want to send the issue to [gadenbuie/shrtcts](https://github.com/gadenbuie/shrtcts)
 (please don't!).
 
@@ -256,7 +256,7 @@ repo <- "gadenbuie/shrtcts"
 
 Our goal is to render the reprex into an issue `body`
 and then we'll put together a URL
-that takes us to GitHub's 
+that takes us to GitHub's
 [new issue page](https://github.com/gadenbuie/shrtcts/issues/new)
 for the `repo` with the issue `body` pre-filled when we get there.
 
@@ -287,7 +287,7 @@ To put together the `body`, we first render the `input` using `reprex::reprex()`
 body <- reprex::reprex(input = input, venue = "gh", html_preview = TRUE)
 ```
 
-where we've asked for a reprex for GitHub — `venue = "gh"` — 
+where we've asked for a reprex for GitHub — `venue = "gh"` —
 and a local HTML preview — `html_preview = TRUE`.
 You can adjust the arguments to `reprex()` to fit your needs, of course.
 
@@ -328,22 +328,22 @@ Finally, we can make our new issue URL.
 url_new_issue
 ```
 
-I didn't make the link clickable, 
-but if you were to follow it, 
+I didn't make the link clickable,
+but if you were to follow it,
 you'd find a brand new issue page ready for you.
 
 ![A new GitHub issue page with our reprex as the issue body](reprex-new-issue.png)
 
 ### Grab the input from the user
 
-Of course, 
+Of course,
 we don't want to have to define `input` manualy every time we run this function.
 Instead, we'd rather get the `input` code from
 
 - the current selection in RStudio
 - or the clipboard if nothing is selected
 
-To make things easy, 
+To make things easy,
 we'll ignore the fact that RStudio has a multiple cursors feature,
 and we'll just get the first selection of code.
 We'll use the `getSourceEditorContext()` to get the currently open text file,
@@ -355,7 +355,7 @@ selection <- ctx$selection[[1]]$text
 ```
 
 If nothing is selected, `selection` will be an empty string, `""`,
-in which case we'd prefer to leave `input` as `NULL` 
+in which case we'd prefer to leave `input` as `NULL`
 so that `reprex()` will look in the clipboard for our input.
 We also need to make sure that `input` is a character vector
 so that `reprex()` knows that `input` contains the reprex code and not a path to a file.
@@ -380,10 +380,10 @@ if (is.null(input)) {
 ### Pick the repository
 
 Often, I'll be working in the repository where I want to create the issue.
-[usethis]{.pkg} does a great job guessing the repository
+<span class="pkg">usethis</span> does a great job guessing the repository
 from the information in a local copy of the repo.
 Rather than spending forever writing our own version,
-let's just reach into [usethis]{.pkg} with `:::` to call `target_repo_spec()`.
+let's just reach into <span class="pkg">usethis</span> with `:::` to call `target_repo_spec()`.
 
 The function returns the current repo in the form `"owner/repo"`,
 but since it isn't designed to be user-facing
@@ -393,7 +393,7 @@ and replacing the error with a `NULL` value.
 
 ```{r repo-try-usethis, eval=FALSE}
 repo_guess <- tryCatch(
-  usethis:::target_repo_spec("source", FALSE), 
+  usethis:::target_repo_spec("source", FALSE),
   error = function(err) NULL
 )
 ```
@@ -401,12 +401,12 @@ repo_guess <- tryCatch(
 Of course, maybe I'll want to create a reprex
 in _another_ repository that isn't the one I'm currently working in.
 So we can follow up with a prompt asking for the repo,
-using our guess from [usethis]{.pkg}.
-The prompt is created with the `showPrompt()` function from [rstudioapi]{.pkg}.
+using our guess from <span class="pkg">usethis</span>.
+The prompt is created with the `showPrompt()` function from <span class="pkg">rstudioapi</span>.
 
 ```{r repo-ask, eval=FALSE}
 repo <- rstudioapi::showPrompt(
-  title = "Which repository?", 
+  title = "Which repository?",
   message = "Where should we create the issue? (owner/repo)",
   default = repo_guess
 )
@@ -416,7 +416,7 @@ repo <- rstudioapi::showPrompt(
 
 Finally, the function we're putting together will also take a `repo` argument
 that _might be_ provided when we call it.
-In that case, 
+In that case,
 we'd wouldn't need to guess or ask for a repo.
 
 ```{r repo-final, eval=FALSE, style=TRUE}
@@ -432,17 +432,17 @@ if (is.null(repo)) {
 The last step in our process is to make it easy to run this code in RStudio,
 ideally as an
 [RStudio addin](https://rstudio.github.io/rstudioaddins/)
-that we can activate from the addins menu or 
+that we can activate from the addins menu or
 [the command palette](https://blog.rstudio.com/2020/10/14/rstudio-v1-4-preview-command-palette/).
 
-This is the exact goal of the [[shrtcts]]{.pkg} package:
-[shrtcts]{.pkg} lets you turn any function into an RStudio addin.
+This is the exact goal of the <span class="pkg">[shrtcts]</span> package:
+<span class="pkg">shrtcts</span> lets you turn any function into an RStudio addin.
 
 ### Set up `shrtcts`
 
-If you've never used [shrtcts]{.pkg} before, 
+If you've never used <span class="pkg">shrtcts</span> before,
 you need to do two things to get started.
-First, install the package, 
+First, install the package,
 from [my R-universe](https://gadenbuie.r-universe.dev)
 or from [GitHub](https://github.com/gadenbuie/shrtcts).
 
@@ -472,7 +472,7 @@ remotes::install_github("gadenbuie/shrtcts")
 :::
 ::::
 
-The next thing to do is to open a `.shrtcts.R` file 
+The next thing to do is to open a `.shrtcts.R` file
 where we'll add our new shortcut.
 This is easy to do with `shrtcts::edit_shortcuts()`,
 which will offer to create the `.shrtcts.R` file if it doesn't exit.
@@ -482,7 +482,7 @@ shrtcts::edit_shortcuts()
 ```
 
 ```
-Would you like to create a new shrtcts file at 
+Would you like to create a new shrtcts file at
 '~/Library/Application Support/shrtcts/.shrtcts.R' (Yes/no/cancel) yes
 ```
 
@@ -492,7 +492,7 @@ We'll write R functions in the `.shrtcts.R` file
 and turn them into RStudio addins
 by annotating those functions with roxygen-style comments.
 
-We start with a skeleton of a function that takes two arguments: 
+We start with a skeleton of a function that takes two arguments:
 `input` and `repo`,
 neither of which are required.
 Inside the function, we'll do all the steps from above,
@@ -509,11 +509,11 @@ create_issue_from_reprex <- function(input = NULL, repo = NULL) {
 ```
 
 Our next step is to turn this function into a shortcut.
-Using [[roxygen2]]{.pkg} documentation syntax,
+Using <span class="pkg">[roxygen2]</span> documentation syntax,
 we give the function a title and description —
 these will be used as the title and description of the shortcut.
 We can also use the `@shortcut` tag to set a keyboard shortcut (if you want),
-and the `@interactive` tag lets shortcuts know 
+and the `@interactive` tag lets shortcuts know
 that the addin should be run interactively rather than in the background.
 
 ```{r shortcut-roxy, include=FALSE}
@@ -537,12 +537,12 @@ with all of the code we wrote above.
 <<shortcut-roxy>>
 create_issue_from_reprex <- function(input = NULL, repo = NULL) {
   <<repo-final>>
-    
+
   if (is.null(input)) {
     <<get_source_editor_context>>
     <<input_prep>>
   }
-  
+
   <<body_reprex>>
   <<body_paste>>
   <<body_encode>>

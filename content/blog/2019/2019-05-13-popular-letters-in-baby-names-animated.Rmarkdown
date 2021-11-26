@@ -66,8 +66,8 @@ Earlier this week, a tweet from Kieran Healy caught my attention with a neat [an
 blogdown::shortcode("twitter", "1127951257392623616")
 ```
 
-I'm also a big fan of [[gganimate]]{.pkg} - check out my first project with [gganimate]{.pkg}, a collection of [join animations called _tidyexplain_][tidyexplain].
-And the [[babynames]]{.pkg} package by [Hadley Wickham][hadley] makes it pleasantly easy to work with the baby names data reported by the U.S. Social Security Administration.
+I'm also a big fan of <span class="pkg"><span class="pkg">gganimate]</span> - check out my first project with [gganimate</span>, a collection of [join animations called _tidyexplain_][tidyexplain].
+And the <span class="pkg">[babynames]</span> package by [Hadley Wickham][hadley] makes it pleasantly easy to work with the baby names data reported by the U.S. Social Security Administration.
 
 Kieran's animations inspired several questions that I hope to answer (or at least visualize) in this post:
 
@@ -75,7 +75,7 @@ Kieran's animations inspired several questions that I hope to answer (or at leas
 
 1. Can we visualize both _male_ and _female_ names in the same animation without overloading the animation?
 
-1. While I love [gganimate]{.pkg} and animated plots, are static plots more effective at displaying the same information?
+1. While I love <span class="pkg">gganimate</span> and animated plots, are static plots more effective at displaying the same information?
 
 Rather than answer these questions definitively or scientifically, I've stuck with the fun parts and made a few visualizations.
 I'll let you decide how effective they are.
@@ -91,17 +91,17 @@ library(gganimate)
 library(babynames)
 ```
 
-Next, I set up a base [ggplot2]{.pkg} theme that I'll use throughout.
+Next, I set up a base <span class="pkg">ggplot2</span> theme that I'll use throughout.
 Note that you can also set the `ggplot2` theme globally with `theme_set()`, but I'm not doing that here for complicated reasons related to my use of [knitr caching](https://yihui.name/knitr/demo/cache/) for faster rendering between post drafts.
 
-I also used the [[showtext]]{.pkg} and [[sysfonts]]{.pkg} packages.
-These two sister packages are my go-to packages for reliably being able to use [Google Fonts][google-fonts] with [ggplot2]{.pkg} on any system.
+I also used the <span class="pkg">[showtext]</span> and <span class="pkg">[sysfonts]</span> packages.
+These two sister packages are my go-to packages for reliably being able to use <span class="pkg">Google Fonts][google-fonts] with [ggplot2</span> on any system.
 
 ```{r theme, echo=TRUE}
 showtext::showtext_auto()
 sysfonts::font_add_google("PT Sans")
 sysfonts::font_add_google("PT Sans Narrow")
-base_theme <- 
+base_theme <-
   theme_minimal(base_size = 16, base_family = "PT Sans") +
   theme(
     legend.position      = c(0.5, 0.9),
@@ -118,7 +118,7 @@ base_theme <-
       size = rel(1.5), hjust = 0.5, margin = margin(t = 10)
     ),
     plot.caption  = element_text(color = "grey40", lineheight = 1.1)
-  ) 
+  )
 
 sex_colors <- c("Male" = "#00589A", "Female" = "#EB1455")
 caption_text <- paste(
@@ -133,21 +133,21 @@ caption_text <- paste(
 ### Letters in Baby Names
 
 To answer the first question, I needed to first establish what letters are used in a name, regardless of the letter's position in the name, and not counting duplicates.
-Rather than repeatedly calculate this information for every year, sex, and name pair in `babynames`, I used `distinct()` from [dplyr]{.pkg} to obtain the list of unique names.
+Rather than repeatedly calculate this information for every year, sex, and name pair in `babynames`, I used `distinct()` from <span class="pkg">dplyr</span> to obtain the list of unique names.
 
 ```{r babynames-and-letters, echo = TRUE}
-babynames_and_letters <- 
-  babynames %>% 
-  distinct(name) %>% 
-  mutate(letter = strsplit(tolower(name), character())) %>% 
+babynames_and_letters <-
+  babynames %>%
+  distinct(name) %>%
+  mutate(letter = strsplit(tolower(name), character())) %>%
   # strsplit() returns a list for each name,
   # so 'letter' is a list-column that can be converted to a
   # normal column with unnest()
-  unnest(letter) %>% 
+  unnest(letter) %>%
   # count each letter once
   distinct()
 
-babynames_and_letters %>% 
+babynames_and_letters %>%
   filter(name == "Garrick")
 ```
 
@@ -155,35 +155,35 @@ Then I joined `babynames` with the `babynames_and_letters` table to get the sum 
 
 ```{r babynames-containing, echo = TRUE}
 babynames_containing <-
-  left_join(babynames, babynames_and_letters, by = "name") %>% 
-  group_by(letter, year, sex) %>% 
-  summarize(prop = sum(prop)) %>% 
-  ungroup() %>% 
+  left_join(babynames, babynames_and_letters, by = "name") %>%
+  group_by(letter, year, sex) %>%
+  summarize(prop = sum(prop)) %>%
+  ungroup() %>%
   filter(year >= 1900) %>%
-  mutate(sex = recode(sex, M = "Male", F = "Female")) 
+  mutate(sex = recode(sex, M = "Male", F = "Female"))
 
-babynames_containing %>% 
-  filter(letter == "g") %>% 
+babynames_containing %>%
+  filter(letter == "g") %>%
   head()
 ```
 
 ### Plot and Animate
 
-At this point, my typical [gganimate]{.pkg} workflow is to first create a static [ggplot2]{.pkg} plot as a sanity check for the animation.
+At this point, my typical <span class="pkg">gganimate</span> workflow is to first create a static <span class="pkg">ggplot2</span> plot as a sanity check for the animation.
 If the static plot works with `facet_wrap(~ state_column)`, then using `transition_state(state_column)` is likely to work well (although you may need to filter the data to preview only a few states).
 In this case, I used `year` as the state column.
 
-I generally try to structure my [ggplot2]{.pkg} code in a consistent way (future blog post?) so I prefer having the [gganimate]{.pkg} specific parts at the end.
+I generally try to structure my <span class="pkg">ggplot2</span> code in a consistent way (future blog post?) so I prefer having the <span class="pkg">gganimate</span> specific parts at the end.
 I also directly called `gganimate::animate()` so that I could control specific parameters of the output, namely the number of frames and the size of the image.
-The default number of frames is 100 but I'm visualizing 117 years and [gganimate]{.pkg} will complain (i.e. throw an error) if there aren't enough frames to cover the number of states.
+The default number of frames is 100 but I'm visualizing 117 years and <span class="pkg">gganimate</span> will complain (i.e. throw an error) if there aren't enough frames to cover the number of states.
 
 ```{r babynames-animated-popular-letter-names, echo=TRUE, fig.show="hide"}
-ga_pop_letter <- 
+ga_pop_letter <-
   ggplot(babynames_containing) +
   aes(letter, prop, fill = sex) +
   geom_col(position = "identity", alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 10), 
+    labels = scales::percent_format(accuracy = 10),
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -202,10 +202,10 @@ ga_pop_letter <-
   )
 
 ga_pop_letter_animated <- animate(
-  ga_pop_letter, 
-  nframes = 117*2+10, 
+  ga_pop_letter,
+  nframes = 117*2+10,
   end_pause = 10,
-  width = 1024, 
+  width = 1024,
   height = 512
 )
 ```
@@ -222,8 +222,8 @@ The resulting animation, below, shows the proportion of babies given a name cont
 g2 <- ggplot(babynames_containing) +
   aes(year, prop, color = sex) +
   geom_text(
-    data = babynames_containing %>% 
-      distinct(year, letter) %>% 
+    data = babynames_containing %>%
+      distinct(year, letter) %>%
       mutate(prop = 0, year2 = 1967),
     aes(label = letter, x = year2),
     size = rel(15),
@@ -234,7 +234,7 @@ g2 <- ggplot(babynames_containing) +
   facet_wrap(~ letter, ncol = 6) +
   labs(x = "1917 - 2017") +
   scale_x_continuous(
-    breaks = seq(1900, 2017, by = 50), 
+    breaks = seq(1900, 2017, by = 50),
     expand = c(0, 0)
   ) +
   scale_y_continuous(
@@ -254,18 +254,18 @@ g2 <- ggplot(babynames_containing) +
 ## First and Last Letters of Baby Names
 
 To extract the first and last letter of each name, I wrote two small functions, `first_letter()` and `last_letter()` that use `substring()` to pull out the first and last letter of a string.
-These are reasonably fast when applied to all of the names using `map_chr()` from [purrr]{.pkg} within `mutate()` to add new columns `first_letter` and `last_letter`.
+These are reasonably fast when applied to all of the names using `map_chr()` from <span class="pkg">purrr</span> within `mutate()` to add new columns `first_letter` and `last_letter`.
 
 ```{r babynames_first_last, echo=TRUE}
 first_letter <- function(x) substring(x, 1, 1)
 last_letter  <- function(x) substring(x, nchar(x), nchar(x))
 
-babynames_first_last <- 
-  babynames %>% 
+babynames_first_last <-
+  babynames %>%
   mutate(
     first_letter = map_chr(name, first_letter),
     last_letter  = map_chr(name, last_letter),
-  ) %>% 
+  ) %>%
   mutate_at(vars(contains("letter")), tolower)
 
 set.seed(42)
@@ -283,16 +283,16 @@ Here's the code I used to produce the plot above.
 
 ```{r echo=TRUE}
 gb_last <-
-  babynames_first_last %>% 
-  filter(year >= 1900) %>% 
-  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
-  group_by(year, sex, last_letter) %>% 
+  babynames_first_last %>%
+  filter(year >= 1900) %>%
+  mutate(sex = recode(sex, M = "Male", F = "Female")) %>%
+  group_by(year, sex, last_letter) %>%
   summarize(prop = sum(prop)) %>%
   ggplot() +
   aes(last_letter, prop, fill = sex) +
   geom_col(position = "identity", alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 5), 
+    labels = scales::percent_format(accuracy = 5),
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -308,16 +308,16 @@ gb_last <-
   theme(legend.position = c(0.8, 0.9)) +
   ease_aes("linear") +
   transition_states(
-    year, 
-    transition_length = 1, 
+    year,
+    transition_length = 1,
     state_length = 0, wrap = FALSE
   )
 
 gb_last_animated <- animate(
-  gb_last, 
-  nframes = 117*2+10, 
+  gb_last,
+  nframes = 117*2+10,
   end_pause = 10,
-  width = 1024, height = 512 
+  width = 1024, height = 512
 )
 ```
 
@@ -334,16 +334,16 @@ And here's the code to create the above animation.
 
 ```{r echo=TRUE}
 gb_first <-
-  babynames_first_last %>% 
-  filter(year >= 1900) %>% 
-  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
-  group_by(year, sex, first_letter) %>% 
+  babynames_first_last %>%
+  filter(year >= 1900) %>%
+  mutate(sex = recode(sex, M = "Male", F = "Female")) %>%
+  group_by(year, sex, first_letter) %>%
   summarize(prop = sum(prop)) %>%
   ggplot() +
   aes(first_letter, prop, fill = sex) +
   geom_col(position = "identity", alpha = 0.6) +
   scale_y_continuous(
-    labels = scales::percent_format(accuracy = 5), 
+    labels = scales::percent_format(accuracy = 5),
     expand = c(0, 0)
   ) +
   scale_fill_manual(values = sex_colors) +
@@ -359,15 +359,15 @@ gb_first <-
   theme(legend.position = c(0.8, 0.9)) +
   ease_aes("linear") +
   transition_states(
-    year, 
-    transition_length = 1, 
-    state_length = 0, 
+    year,
+    transition_length = 1,
+    state_length = 0,
     wrap = FALSE
   )
 
 gb_first_animated <- animate(
-  gb_first, 
-  nframes = 117*2+10, 
+  gb_first,
+  nframes = 117*2+10,
   end_pause = 10,
   width = 1024, height = 512
 )
@@ -385,7 +385,7 @@ but they also make it hard to reason about overall trends.
 You have to watch the animation loop over and over, trying to watch one letter or one sex specifically.
 I feel like I'm seeing the movement but missing the picture.
 
-I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped [gganimate]{.pkg}'s `transition_state(year)` for [ggplot2]{.pkg}'s `facet_wrap(~ letter)`.
+I thought it would be interesting to compare the animated plots with line charts showing the same information, so I swapped <span class="pkg">gganimate</span>'s `transition_state(year)` for <span class="pkg">ggplot2</span>'s `facet_wrap(~ letter)`.
 
 I somewhat like these plots more than their animated versions.
 I get the sense that I'm seeing a fuller picture (or more easy-to-compare picture) of the overall trends in starting and ending letters of baby names.
@@ -397,19 +397,19 @@ I get the sense that I'm seeing a fuller picture (or more easy-to-compare pictur
 Here's the code to produce the static image of the trends in the last letter of baby names.
 
 ```{r babynames-last-static, echo=TRUE, fig.width=10, fig.height=5, dependson="theme", fig.show="hide"}
-babynames_first_last %>% 
-  filter(year >= 1900) %>% 
-  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
-  group_by(year, sex, last_letter) %>% 
+babynames_first_last %>%
+  filter(year >= 1900) %>%
+  mutate(sex = recode(sex, M = "Male", F = "Female")) %>%
+  group_by(year, sex, last_letter) %>%
   summarize(prop = sum(prop)) %>%
-  ungroup() %>% 
-  mutate(last_letter = toupper(last_letter)) %>% 
+  ungroup() %>%
+  mutate(last_letter = toupper(last_letter)) %>%
   ggplot() +
   aes(year, prop) +
   geom_text(
     data = tibble(
-      last_letter = LETTERS, 
-      x = 1900+117/2, 
+      last_letter = LETTERS,
+      x = 1900+117/2,
       prop = 0
     ),
     aes(label = last_letter, x = x),
@@ -421,7 +421,7 @@ babynames_first_last %>%
   geom_line(aes(color = sex)) +
   facet_wrap(~ last_letter) +
   scale_y_continuous(
-    labels = scales::percent_format(5), 
+    labels = scales::percent_format(5),
     breaks = c(0, 0.3)
   ) +
   scale_x_continuous(breaks = c(1900, 2000)) +
@@ -445,19 +445,19 @@ babynames_first_last %>%
 And here is the code to produce the plot of trends in the first letter of baby names.
 
 ```{r babynames-first-static, echo=TRUE, fig.width=10, fig.height=5, dependson="theme", fig.show="hide"}
-babynames_first_last %>% 
-  filter(year >= 1900) %>% 
-  mutate(sex = recode(sex, M = "Male", F = "Female")) %>% 
-  group_by(year, sex, first_letter) %>% 
+babynames_first_last %>%
+  filter(year >= 1900) %>%
+  mutate(sex = recode(sex, M = "Male", F = "Female")) %>%
+  group_by(year, sex, first_letter) %>%
   summarize(prop = sum(prop)) %>%
-  ungroup() %>% 
-  mutate(first_letter = toupper(first_letter)) %>% 
+  ungroup() %>%
+  mutate(first_letter = toupper(first_letter)) %>%
   ggplot() +
   aes(year, prop) +
   geom_text(
     data = tibble(
-      first_letter = LETTERS, 
-      x = 1900+117/2, 
+      first_letter = LETTERS,
+      x = 1900+117/2,
       prop = 0
     ),
     aes(label = first_letter, x = x),
@@ -469,7 +469,7 @@ babynames_first_last %>%
   geom_line(aes(color = sex)) +
   facet_wrap(~ first_letter) +
   scale_y_continuous(
-    labels = scales::percent_format(5), 
+    labels = scales::percent_format(5),
     breaks = c(0, 0.2)
   ) +
   scale_x_continuous(breaks = c(1900, 2000)) +

@@ -168,7 +168,7 @@ or you can reference [the example in the metathis documentation](https://pkg.gar
 ```{r metathis, echo=FALSE}
 library(metathis)
 meta() %>%
-  meta_name("github-repo" = "gadenbuie/build-your-own-universe") %>% 
+  meta_name("github-repo" = "gadenbuie/build-your-own-universe") %>%
   meta_social(
     title = "Build your own universe",
     description = paste(
@@ -178,8 +178,8 @@ meta() %>%
     url = "https://build-your-own-universe.netlify.app",
     image = "https://build-your-own-universe.netlify.app/social-card.png",
     image_alt = paste(
-      "Title slide of Build your own universe:", 
-      "Scale high-quality research data provisioning with R packages,", 
+      "Title slide of Build your own universe:",
+      "Scale high-quality research data provisioning with R packages,",
       "presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie"
     ),
     og_type = "website",
@@ -376,7 +376,7 @@ chances are that your share image will look okay…
 but not *perfect*.
 In particular,
 if you’re targeting Twitter
-(for sharing with [#rstats](https://twitter.com/hashtag/rstats)),
+(for sharing with [\#rstats](https://twitter.com/hashtag/rstats)),
 you might find that parts of your preview image
 are cut off if the image width and height aren’t *just right*.
 
@@ -434,11 +434,11 @@ screenshot_share_image <- function(
 ) {
   if (!requireNamespace("webshot2", quietly = TRUE)) {
     stop(
-      "`webshot2` is required: ", 
+      "`webshot2` is required: ",
       'remotes::install_github("rstudio/webshot2")'
     )
   }
-  
+
   webshot2::rmdshot(
     doc = slides_rmd,
     file = path_image,
@@ -451,7 +451,7 @@ screenshot_share_image <- function(
       )
     )
   )
-  
+
   path_image
 }
 ```
@@ -478,7 +478,7 @@ xaringanExtra::use_share_again()
 ```
 ````
 
-![Meet **share again** from <span class="pkg">xaringanExtra</span>](meet-share-again.jpg)
+!<span class="pkg">Meet **share again** from [xaringanExtra</span>](meet-share-again.jpg)
 
 The **share again** extension adds a small bar at the bottom of your slides —
 but only when the slides are embedded in an `<iframe>`.

@@ -76,12 +76,12 @@ thread <- readRDS("mac-install-tweet-thread.rds")
 lookup_urls <-
   bind_rows(
     thread %>%
-      select(short = media_t.co, long = media_url) %>% 
+      select(short = media_t.co, long = media_url) %>%
       unnest(everything()),
-    thread %>% 
-      select(short = urls_t.co, long = urls_expanded_url) %>% 
+    thread %>%
+      select(short = urls_t.co, long = urls_expanded_url) %>%
       unnest(everything())
-  ) %>% 
+  ) %>%
   drop_na()
 
 tweet_plain_markdown <- function(x) {
@@ -111,9 +111,9 @@ prepend_status_url <- function(text_markdown, status_url, created_at) {
   ts <- as.POSIXct(created_at)
   paste0(
     '<span class="tweet-timestamp">',
-    '<a class="tweet-link" href="', status_url, '" title="', created_at, '" target="_blank" rel="noopener noreferrer">', 
+    '<a class="tweet-link" href="', status_url, '" title="', created_at, '" target="_blank" rel="noopener noreferrer">',
     '<i class="fab fa-twitter fa-fw"></i>',
-    '<span class="tweet-timestamp__text">', 
+    '<span class="tweet-timestamp__text">',
     strftime(ts, "%I:%M%P", tz = "America/New_York"),
     '</span></a></span>',
     text_markdown
@@ -153,15 +153,15 @@ add_headings <- function(text_markdown, .row) {
   text_markdown
 }
 
-thread_markdown <- 
-  thread %>% 
+thread_markdown <-
+  thread %>%
   mutate(
     text_markdown = map_chr(text_markdown, tweet_plain_markdown),
     text_markdown = prepend_status_url(text_markdown, status_url, created_at),
     text_markdown = map2_chr(text_markdown, ext_media_url, append_images),
     text_markdown = imap(text_markdown, add_headings)
-  ) %>% 
-  pull(text_markdown) %>% 
+  ) %>%
+  pull(text_markdown) %>%
   paste(collapse = "\n\n")
 
 for (i in seq_len(nrow(lookup_urls))) {
@@ -176,7 +176,7 @@ thread_markdown <- sub("command line utility <x>", "command line utility `<x>`",
 
 # inline referenced tweets
 thread_markdown <- stringr::str_replace_all(
-    thread_markdown, 
+    thread_markdown,
     pattern = "<https://twitter.com/.+?/status/\\d+?>",
     replacement = function(status_url) {
       paste0("\n\n", tweetrmd::tweet_markdown(gsub("^<|>$", "", status_url)), "\n")
@@ -187,13 +187,13 @@ thread_markdown <- stringr::str_replace_all(
 thread_markdown <- stringr::str_replace_all(
   thread_markdown,
   c(
-    "Tog get" = "To get", 
-    "Big Sug" = "Big Sur", 
-    "(🍎.+?)\n" = "\\1  \n", 
-    "((↖️|↗️|↙️|↘️).+?)\n" = "\\1  \n", 
+    "Tog get" = "To get",
+    "Big Sug" = "Big Sur",
+    "(🍎.+?)\n" = "\\1  \n",
+    "((↖️|↗️|↙️|↘️).+?)\n" = "\\1  \n",
     "(\\\\\\*reboots\\\\\\*)\n" = "\\1  \n",
-    "\\{pak\\}" = "[[pak]]{.pkg}",
-    "\\{tidyverse\\}" = "[[tidyverse]]{.pkg}"
+    "\\{pak\\}" = "<span class="pkg">[pak]</span>",
+    "\\{tidyverse\\}" = "<span class="pkg">[tidyverse]</span>"
   )
 )
 ```

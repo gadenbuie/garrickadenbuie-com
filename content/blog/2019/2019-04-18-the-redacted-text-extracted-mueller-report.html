@@ -14,6 +14,7 @@ tags:
   - Visualization
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <p>Earlier today, the redacted Mueller report was <a href="https://www.npr.org/2019/04/18/708850903/read-the-full-mueller-report-with-redactions">released to the public</a>.
@@ -35,11 +36,11 @@ mueller_report_txt &lt;- pdf_text(&quot;Redacted-Mueller-Report.pdf&quot;)
 mueller_report &lt;- tibble(
   page = 1:length(mueller_report_txt),
   text = mueller_report_txt
-) %&gt;% 
-  separate_rows(text, sep = &quot;\n&quot;) %&gt;% 
-  group_by(page) %&gt;% 
-  mutate(line = row_number()) %&gt;% 
-  ungroup() %&gt;% 
+) %&gt;%
+  separate_rows(text, sep = &quot;\n&quot;) %&gt;%
+  group_by(page) %&gt;%
+  mutate(line = row_number()) %&gt;%
+  ungroup() %&gt;%
   select(page, line, text)
 
 write_csv(mueller_report, &quot;mueller_report.csv&quot;)</code></pre>
@@ -69,40 +70,40 @@ mueller_report_csv &lt;- &quot;https://raw.githubusercontent.com/gadenbuie/muell
 mueller_report &lt;- read_csv(mueller_report_csv)
 
 mueller_report</code></pre>
-<pre><code>## # A tibble: 19,195 x 3
-##     page  line text                                            
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                                           
-##  1     1     1 U.S. Department of Justice                      
-##  2     1     2 &quot;AttarAe:,c\\\\&#39;erlc Predtiet // Mtt; CeA1:ttiA&quot;
-##  3     1     3 Ma1:ertalPrn1:eetedUAder Fed. R. Crhtt. P. 6(e) 
-##  4     1     4 Report On The Investigation Into                
-##  5     1     5 Russian InterferenceIn The                      
-##  6     1     6 2016 PresidentialElection                       
-##  7     1     7 Volume I of II                                  
-##  8     1     8 Special Counsel Robert S. Mueller, III          
-##  9     1     9 Submitted Pursuant to 28 C.F.R. § 600.8(c)      
-## 10     1    10 Washington, D.C.                                
+<pre><code>## # A tibble: 19,195 × 3
+##     page  line text                                             
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                                            
+##  1     1     1 &quot;U.S. Department of Justice&quot;                     
+##  2     1     2 &quot;AttarAe:,c\\\\&#39;erlc Predtiet // Mtt; CeA1:ttiA&quot; 
+##  3     1     3 &quot;Ma1:ertalPrn1:eetedUAder Fed. R. Crhtt. P. 6(e)&quot;
+##  4     1     4 &quot;Report On The Investigation Into&quot;               
+##  5     1     5 &quot;Russian InterferenceIn The&quot;                     
+##  6     1     6 &quot;2016 PresidentialElection&quot;                      
+##  7     1     7 &quot;Volume I of II&quot;                                 
+##  8     1     8 &quot;Special Counsel Robert S. Mueller, III&quot;         
+##  9     1     9 &quot;Submitted Pursuant to 28 C.F.R. § 600.8(c)&quot;     
+## 10     1    10 &quot;Washington, D.C.&quot;                               
 ## # … with 19,185 more rows</code></pre>
 <p>The core of the next step is to pass the <code>mueller_report</code> to <code>ggpage::ggpage_build()</code>.
 Before doing that, though, I pad each page to make sure they have the same number of lines.
 The <code>ggpage_build()</code> function tokenizes the text into individual <code>word</code>s, so I then use <code>str_detect()</code> to find mentions of the key players.</p>
-<pre class="r"><code>mueller_pages &lt;- 
-  mueller_report %&gt;% 
+<pre class="r"><code>mueller_pages &lt;-
+  mueller_report %&gt;%
   # pad pages with fewer lines than expected
   complete(
-    page, 
+    page,
     line = 1:max(mueller_report$line),
     fill = list(text = &quot;&quot;)
-  ) %&gt;% 
+  ) %&gt;%
   # Pre-process for {ggpage}
   ggpage_build(
-    ncol = 30, 
-    bycol = FALSE, 
-    page.col = &quot;page&quot;, 
-    wtl = FALSE, 
+    ncol = 30,
+    bycol = FALSE,
+    page.col = &quot;page&quot;,
+    wtl = FALSE,
     x_space_pages = 10,
     y_space_pages = 100
-  ) %&gt;% 
+  ) %&gt;%
   mutate(
     color = case_when(
       str_detect(word, &quot;trump|president&quot;) ~ &quot;Trump&quot;,
@@ -122,7 +123,7 @@ The <code>ggpage_build()</code> function tokenizes the text into individual <cod
   )
 
 mueller_pages</code></pre>
-<pre><code>## # A tibble: 207,165 x 9
+<pre><code>## # A tibble: 207,165 × 9
 ##    word        page  line  xmin  xmax  ymin  ymax index_line color 
 ##    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;fct&gt; 
 ##  1 u.s            1     1   175   172  -204  -207 1-1        normal
@@ -153,7 +154,7 @@ colors[&quot;normal&quot;]   &lt;- &quot;#d0d0d0&quot;</code></pre>
 <pre class="r"><code>ggpage_plot(mueller_pages) +
   aes(fill = color) +
   scale_fill_manual(
-    values = colors, 
+    values = colors,
     breaks = setdiff(names(colors), &quot;normal&quot;)
   ) +
   labs(fill = NULL, caption = &quot;@grrrck&quot;) +

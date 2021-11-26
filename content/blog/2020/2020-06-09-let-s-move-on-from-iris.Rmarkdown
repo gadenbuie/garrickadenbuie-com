@@ -11,8 +11,8 @@ tags:
 description: About iris and how to move on.
 twitterImage: /blog/lets-move-on-from-iris/de-iris-my-repos-issue.png
 summary: |
-  It's time for `iris` to go. Use 
-  <a href="https://github.com/gadenbuie/de-iris-my-repos">de_iris_my_repos()</a> 
+  It's time for `iris` to go. Use
+  <a href="https://github.com/gadenbuie/de-iris-my-repos">de_iris_my_repos()</a>
   to help find references to <code>iris</code> in your public GitHub code so you
   can replace it with something better.
 keywords: rstats
@@ -59,10 +59,10 @@ iris_issues <- de_iris_my_repos()
 
 ---
 
-Last week, 
+Last week,
 motivated by the Black Lives Matter movement and protests around the United States,
 [Daniela Witten][dw]
-wrote a long and insightful 
+wrote a long and insightful
 [Twitter thread][fisher-thread]
 about the origins of an often-used and completely boring dataset: `iris`.
 
@@ -79,7 +79,7 @@ But Daniella and Timothée Poisot are right:
 
 ## Other Options
 
-I read Daniella's thread and Timothée's blog post and 
+I read Daniella's thread and Timothée's blog post and
 immediately realized that I needed to be more thoughtful in my choice of datasets.
 There is absolutely no need for `iris` in my examples;
 there are plenty of other options available.
@@ -99,9 +99,9 @@ Here's a short list of other data sets you can turn to instead:
 
 - `dplyr::starwars`
 
-- [nycflights13]{.pkg}
+- <span class="pkg">nycflights13</span>
 
-- [fivethirtyeight]{.pkg}
+- <span class="pkg">fivethirtyeight</span>
 
 - Any of the many [#TidyTuesday](https://github.com/rfordatascience/tidytuesday) datasets
 
@@ -123,7 +123,7 @@ iris_issues <- de_iris_my_repos()
 
 When you run `de_iris_my_repos()` it searches your public code for mentions of `iris`
 and asks you if you want to open an issue in each repo.
-If you do, 
+If you do,
 it opens an issue using the template in the screen shot below
 so that you can remember to remove `iris`.
 

@@ -69,11 +69,11 @@ xaringanExtra::style_panelset_tabs(
 }
 ```
 
-Here's a quick tip 
-for making your [[xaringan]]{.pkg} slides shine
+Here's a quick tip
+for making your <span class="pkg">[xaringan]</span> slides shine
 with a little CSS.
 Specifically,
-I'm going to show you how to use the 
+I'm going to show you how to use the
 [`:last-of-type` pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-of-type)
 to highlight the current bullet in progressive slides.
 We can also use the `:last-of-type` selector
@@ -82,7 +82,7 @@ In each case,
 these techniques work best for _progressive_ slides,
 or slides with content that builds up slowly.
 
-In this post, 
+In this post,
 I'll demonstrate how `:last-of-type` can be used to
 [highlight the last list item](#highlight-last-list-item),
 [bold the last list item](#bold-last-item),
@@ -90,7 +90,7 @@ or [reveal only the last R code chunk output](#show-only-last-code-output).
 
 ## Progressive List Slides
 
-To create progressive slides in [xaringan]{.pkg},
+To create progressive slides in <span class="pkg">xaringan</span>,
 use two dashes `--`,
 all alone on their own line,
 to indicate a pause in the current slide.
@@ -112,7 +112,7 @@ class: highlight-last-item
 - 2 teaspoons vanilla extract
 ```
 
-[xaringan]{.pkg} actually creates new slides for each _pause_,
+<span class="pkg">xaringan</span> actually creates new slides for each _pause_,
 where each slide shows the content up to the pause.
 So the markdown below creates three slides,
 the first having one bullet point,
@@ -136,7 +136,7 @@ and the final slide contains the following HTML.
 ```
 
 The first and second partial slides look exactly the same,
-except that the `<ul>` 
+except that the `<ul>`
 [unordered list element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul)
 contains only the first one or first two `<li>` list items.
 
@@ -151,7 +151,7 @@ or by changing the styling of the last item.
 In HTML, lists are unordered `<ul>` or ordered `<ol>` lists
 containing list elements created with the `<li>` tag.
 Here's a small example,
-similar to the structure of the HTML and CSS we'll use for [xaringan]{.pkg}.
+similar to the structure of the HTML and CSS we'll use for <span class="pkg">xaringan</span>.
 
 :::: {.flex}
 ::: {.dp33}
@@ -201,7 +201,7 @@ The `.demo > li` rule styles the list items
 under the `<ul>` tag with the `.demo` class,
 setting the text color to a muted gray.
 The `.demo > li:last-of-type` rule
-styles the last `<li>` that's one level below 
+styles the last `<li>` that's one level below
 (that's what the `>` means)
 the `.demo` element.
 
@@ -213,7 +213,7 @@ to highlight the last list item by reducing the opacity of the other list items.
 
 ````markdown
 ```{css echo=FALSE}`r ''`
-.highlight-last-item > ul > li, 
+.highlight-last-item > ul > li,
 .highlight-last-item > ol > li {
   opacity: 0.5;
 }
@@ -229,7 +229,7 @@ to focus on the current list item.
 
 Here's a complete example.
 Click into the _Slides_ tab to preview the style
-in an embedded [xaringan]{.pkg} presentation.
+in an embedded <span class="pkg">xaringan</span> presentation.
 
 ::::: {.panelset}
 :::: {.panel}
@@ -301,7 +301,7 @@ class: bold-last-item
 1. Preheat oven to 350 degrees F. Line a metal 9x9 pan with parchment paper.
 --
 
-1. Pour melted butter into a large mixing bowl. 
+1. Pour melted butter into a large mixing bowl.
     1. Whisk in sugar by hand until smooth, 30 seconds.
 --
 1. Add in eggs and vanilla extract. Whisk 1 minute.
@@ -382,14 +382,14 @@ rcauchy(5)
 
 ---
 
-If you like [[xaringan]]{.pkg},
-you should check out my package, [[xaringanthemer](https://pkg.garrickadenbuie.com/xaringanthemer)]{.pkg}!
+If you like <span class="pkg">[xaringan]</span>,
+you should check out my package, <span class="pkg">[xaringanthemer](https://pkg.garrickadenbuie.com/xaringanthemer)</span>!
 
-If you _really like_ [xaringan]{.pkg},
-you might also enjoy another package I've created: [[xaringanExtra](https://pkg.garrickadenbuie.com/xaringanExtra)]{.pkg}.
+If you _really like_ <span class="pkg">xaringan</span>,
+you might also enjoy another package I've created: <span class="pkg">[xaringanExtra](https://pkg.garrickadenbuie.com/xaringanExtra)</span>.
 It's also how I created the
 [panelsets](https://pkg.garrickadenbuie.com/xaringanExtra/#panelset)
-above, which work in [[blogdown](https://bookdown.org/yihui/blogdown/)]{.pkg} as well!
+above, which work in <span class="pkg">[blogdown](https://bookdown.org/yihui/blogdown/)</span> as well!
 
 <script src="/js/fitvids.min.js"></script>
 <script>fitvids('.iframe-slides', {players: ['iframe[src^="example"]']});</script>

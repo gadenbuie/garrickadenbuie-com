@@ -29,23 +29,23 @@ editor_options:
 [js4shiny]: https://pkg.js4shiny.com
 
 ::: {.lead}
-[[htmlwidgets]]{.pkg} makes it easy to create awesome web things from R and R Markdown, but sometimes you have to write your own JavaScript code... in strings... in R. What do you do if it doesn't work? How can you write JavaScript interactively? 
+<span class="pkg">[htmlwidgets]</span> makes it easy to create awesome web things from R and R Markdown, but sometimes you have to write your own JavaScript code... in strings... in R. What do you do if it doesn't work? How can you write JavaScript interactively?
 :::
 
 <p>
 `r blogdown::shortcode("youtube", "aNxT4IOZPtc")`
 </p>
 
-I "live streamed" my process 
-as I worked through debugging 
+I "live streamed" my process
+as I worked through debugging
 some buggy JavaScript that [Tom Mock][thomas-mock]
-[shared on twitter](https://twitter.com/thomas_mock/status/1284932187352072192), 
-touching on the tools used 
-to debug JavaScript and 
-some features from the [[js4shiny]]{.pkg} package
+[shared on twitter](https://twitter.com/thomas_mock/status/1284932187352072192),
+touching on the tools used
+to debug JavaScript and
+some features from the <span class="pkg">[js4shiny]</span> package
 that help R users with web development.
 
-The example uses the awesome [[reactable]]{.pkg} package,
+The example uses the awesome <span class="pkg">[reactable]</span> package,
 which helps you make some incredible HTML interactive HTML tables.
 
 If you want to try this at home,
@@ -55,8 +55,8 @@ and the
 [code that does work](https://gist.github.com/gadenbuie/7d8bb61476dcfa4459fb6e8b7a219022)
 as GitHub gists.
 
-Oh and by the way, 
-I'm using the RStudio theme "Flat White" from [[rsthemes]]{.pkg}.
+Oh and by the way,
+I'm using the RStudio theme "Flat White" from <span class="pkg">[rsthemes]</span>.
 
 ---
 

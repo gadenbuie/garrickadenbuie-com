@@ -10,8 +10,8 @@ tags:
   - ggplot2
   - Visualization
   - Tips
-description: > 
-  Building discrete color scales for ggplot2 
+description: >
+  Building discrete color scales for ggplot2
   with some cool features for binary categorical variables.
 twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
@@ -48,7 +48,7 @@ branded_colors <- list(
   "red"    = "#d1495b",
   "yellow" = "#edae49",
   "green"  = "#66a182",
-  "navy"   = "#2e4057", 
+  "navy"   = "#2e4057",
   "grey"   = "#8d96a3"
 )
 ```
@@ -80,15 +80,15 @@ but we’ll also let the user specify a manual color.
 
 ``` r
 branded_pal <- function(
-  primary = "blue", 
-  other = "grey", 
+  primary = "blue",
+  other = "grey",
   direction = 1
 ) {
   stopifnot(primary %in% names(branded_colors))
-  
+
   function(n) {
     if (n > 6) warning("Branded Color Palette only has 6 colors.")
-    
+
     if (n == 2) {
       other <- if (!other %in% names(branded_colors)) {
         other
@@ -99,7 +99,7 @@ branded_pal <- function(
     } else {
       color_list <- branded_colors[1:n]
     }
-    
+
     color_list <- unname(unlist(color_list))
     if (direction >= 0) color_list else rev(color_list)
   }
@@ -144,14 +144,14 @@ and to create an alias to the American spelling.
 
 ``` r
 scale_colour_branded <- function(
-  primary = "blue", 
-  other = "grey", 
-  direction = 1, 
+  primary = "blue",
+  other = "grey",
+  direction = 1,
   ...
 ) {
   ggplot2::discrete_scale(
-    "colour", "branded", 
-    branded_pal(primary, other, direction), 
+    "colour", "branded",
+    branded_pal(primary, other, direction),
     ...
   )
 }

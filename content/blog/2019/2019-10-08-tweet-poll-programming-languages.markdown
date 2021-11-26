@@ -103,7 +103,7 @@ in the form of the top 10 recipients of a reply or quote tweet.
 <div id="starter-tweet-container">
 <div id="plot">
 <div id="htmlwidget-1" style="width:100%;height:500px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"x":[0,78],"y":[1,1],"text":"   78 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(157,220,165,1)","dash":"solid"},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,79],"y":[2,2],"text":"   79 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(127,208,163,1)","dash":"solid"},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,80],"y":[3,3],"text":"   80 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(105,195,163,1)","dash":"solid"},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,85],"y":[4,4],"text":"   85 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(89,180,163,1)","dash":"solid"},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,88],"y":[5,5],"text":"   88 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(80,164,162,1)","dash":"solid"},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,122],"y":[6,6],"text":"  122 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(74,149,159,1)","dash":"solid"},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,138],"y":[7,7],"text":"  138 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(69,134,156,1)","dash":"solid"},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,156],"y":[8,8],"text":"  156 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(65,119,152,1)","dash":"solid"},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,539],"y":[9,9],"text":"  539 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,104,149,1)","dash":"solid"},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2045],"y":[10,10],"text":"2,045 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,88,144,1)","dash":"solid"},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[78],"y":[1],"text":"   78 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(157,220,165,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(157,220,165,1)"}},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[79],"y":[2],"text":"   79 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,208,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(127,208,163,1)"}},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[80],"y":[3],"text":"   80 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(105,195,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(105,195,163,1)"}},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[85],"y":[4],"text":"   85 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(89,180,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(89,180,163,1)"}},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[88],"y":[5],"text":"   88 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(80,164,162,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(80,164,162,1)"}},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[122],"y":[6],"text":"  122 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(74,149,159,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(74,149,159,1)"}},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[138],"y":[7],"text":"  138 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(69,134,156,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(69,134,156,1)"}},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[156],"y":[8],"text":"  156 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(65,119,152,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(65,119,152,1)"}},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[539],"y":[9],"text":"  539 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,104,149,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,104,149,1)"}},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2045],"y":[10],"text":"2,045 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,88,144,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,88,144,1)"}},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.958904109589,"r":7.30593607305936,"b":40.9132420091324,"l":92.7853881278539},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-102.25,2147.25],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Quotes and Replies","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,10.6],"tickmode":"array","ticktext":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative","dragmode":false},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"ae256b5da0a1":{"x":{},"y":{},"colour":{},"text":{},"yend":{},"xend":{},"type":"scatter"},"ae254fdce118":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"ae256b5da0a1","visdat":{"ae256b5da0a1":["function (y) ","x"],"ae254fdce118":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":{"render":[{"code":"\nfunction (el) {\n  const screenNames = JSON.parse(document.getElementById('screen-names').innerHTML)\n  el.on('plotly_click', function(d) {\n    const hoveredIdx = d.points[0].y\n    const tweet = screenNames[screenNames.length - hoveredIdx]\n    const tweetDiv = document.getElementById('tweet')\n    tweetDiv.innerHTML = ''\n    twttr.widgets.createTweet(tweet.status_id, tweetDiv)\n  })\n}\n    ","data":null}]}}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"x":[0,78],"y":[1,1],"text":"   78 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(157,220,165,1)","dash":"solid"},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,79],"y":[2,2],"text":"   79 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(127,208,163,1)","dash":"solid"},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,80],"y":[3,3],"text":"   80 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(105,195,163,1)","dash":"solid"},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,85],"y":[4,4],"text":"   85 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(89,180,163,1)","dash":"solid"},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,88],"y":[5,5],"text":"   88 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(80,164,162,1)","dash":"solid"},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,122],"y":[6,6],"text":"  122 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(74,149,159,1)","dash":"solid"},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,138],"y":[7,7],"text":"  138 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(69,134,156,1)","dash":"solid"},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,156],"y":[8,8],"text":"  156 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(65,119,152,1)","dash":"solid"},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,539],"y":[9,9],"text":"  539 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,104,149,1)","dash":"solid"},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2045],"y":[10,10],"text":"2,045 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,88,144,1)","dash":"solid"},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[78],"y":[1],"text":"   78 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(157,220,165,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(157,220,165,1)"}},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[79],"y":[2],"text":"   79 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,208,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(127,208,163,1)"}},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[80],"y":[3],"text":"   80 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(105,195,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(105,195,163,1)"}},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[85],"y":[4],"text":"   85 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(89,180,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(89,180,163,1)"}},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[88],"y":[5],"text":"   88 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(80,164,162,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(80,164,162,1)"}},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[122],"y":[6],"text":"  122 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(74,149,159,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(74,149,159,1)"}},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[138],"y":[7],"text":"  138 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(69,134,156,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(69,134,156,1)"}},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[156],"y":[8],"text":"  156 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(65,119,152,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(65,119,152,1)"}},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[539],"y":[9],"text":"  539 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,104,149,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,104,149,1)"}},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2045],"y":[10],"text":"2,045 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,88,144,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,88,144,1)"}},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.958904109589,"r":7.30593607305936,"b":40.9132420091324,"l":92.7853881278539},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-102.25,2147.25],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Quotes and Replies","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,10.6],"tickmode":"array","ticktext":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative","dragmode":false},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"14ddfca4e9a4":{"x":{},"y":{},"colour":{},"text":{},"yend":{},"xend":{},"type":"scatter"},"14ddf1ee71478":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"14ddfca4e9a4","visdat":{"14ddfca4e9a4":["function (y) ","x"],"14ddf1ee71478":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":{"render":[{"code":"\nfunction (el) {\n  const screenNames = JSON.parse(document.getElementById('screen-names').innerHTML)\n  el.on('plotly_click', function(d) {\n    const hoveredIdx = d.points[0].y\n    const tweet = screenNames[screenNames.length - hoveredIdx]\n    const tweetDiv = document.getElementById('tweet')\n    tweetDiv.innerHTML = ''\n    twttr.widgets.createTweet(tweet.status_id, tweetDiv)\n  })\n}\n    ","data":null}]}}</script>
 </div>
 <div id="tweet">
 <div class="tweet-placeholder">
@@ -170,7 +170,7 @@ and PHP certainly isn’t feeling the love.
 
 Which languages are most used compared with those that have caused difficulties?
 JavaScript is eating the world,
-and plenty of people are using workhorse languages like Python, Java and C#/C++.
+and plenty of people are using workhorse languages like Python, Java and C\#/C++.
 (And a quite a few are using PHP presumably because they have to.)
 Still, JavaScript’s love/hate relationship continues
 as many people indicated that it caused them problems.
@@ -215,7 +215,7 @@ the process for cleaning and standardizing the tweet repsonses
 looks like this.
 I abstracted some of the larger steps in [the pipeline](#tweets-lang-poll) into separate functions.
 
-1.  Pre-clean the tweet text, including [remove_unused_text()](#remove-unused-text)
+1.  Pre-clean the tweet text, including [remove\_unused\_text()](#remove-unused-text)
 
 2.  Separate tweets so that each line or item of the tweet is in its own row using `tidyr::separate_rows()`
 
@@ -227,9 +227,9 @@ I abstracted some of the larger steps in [the pipeline](#tweets-lang-poll) into 
 
 5.  Filter out empty answers and convert everything to lower case
 
-6.  Use a set of regular expressions to [process_answer()](#process-answer) into individual languages
+6.  Use a set of regular expressions to [process\_answer()](#process-answer) into individual languages
 
-7.  Use more regular expressions to [recode_answer()](#recode-answer) and [recode_category()](#recode-category), fixing spelling mistakes and combining overlapping groups
+7.  Use more regular expressions to [recode\_answer()](#recode-answer) and [recode\_category()](#recode-category), fixing spelling mistakes and combining overlapping groups
 
 8.  Count the number of replies mentioning each programming language by category
 
@@ -254,7 +254,7 @@ remove_unused_text <- function(text) {
     # remove parentheticals
     str_remove_all("\\s*\\(.+?\\)( |\n|$)") %>%
     # replace "#hashtag" with "hashtag"
-    str_replace_all("#(\\w)", "\\1") 
+    str_replace_all("#(\\w)", "\\1")
 }
 ```
 
@@ -269,7 +269,7 @@ To help with this process I created a list of common languages that frequently a
 ``` r
 common_langs <- c(
   # c, c#, c++, and .net are manually included later
-  "css", "html", "python", "javascript", "x86", "java", "ruby", "pascal", "php", 
+  "css", "html", "python", "javascript", "x86", "java", "ruby", "pascal", "php",
   "matlab", "perl", "fortran", "logo", "actionscript", "lua", "assembly",
   "delphi", "js", "scheme", "scratch", "go", "typescript", "clojure", "elixr",
   "kotlin", "ocaml", "rust", "mathematica", "matlab", "dart", "flutter", "groovy",
@@ -383,10 +383,10 @@ Finally, here is the full pipeline to go from raw tweets to poll results.
 
 ``` r
 tweets_lang_poll <-
-  tweets %>% 
+  tweets %>%
   select(status_id, created_at, user_id, screen_name, text) %>%
   # Remove tweets with "English" because that's probably a different thread
-  filter(!str_detect(text, "[eE]nglish")) %>% 
+  filter(!str_detect(text, "[eE]nglish")) %>%
   mutate(
     # Backup original tweet text
     text_og = text,
@@ -395,35 +395,35 @@ tweets_lang_poll <-
   ) %>%
   # Split text into question/answer pairs,
   # splitting on newline or one of: `N.`, `N)`, `N:`, or `N-`
-  separate_rows(text, sep = "\n|\\d\\s*[.):-]") %>% 
+  separate_rows(text, sep = "\n|\\d\\s*[.):-]") %>%
   # Remove whitespace and `N.` numbers from start of text
-  mutate(text = str_remove_all(text, "^\\s*(\\d[.):-])?\\s*")) %>% 
+  mutate(text = str_remove_all(text, "^\\s*(\\d[.):-])?\\s*")) %>%
   # Seperate question/answer into category, answer columns, splitting on colon `:`
   separate(
     col = text,
     into = c("category", "answer"),
-    sep = "\\s*:\\s*", 
+    sep = "\\s*:\\s*",
     remove = FALSE
-  ) %>% 
+  ) %>%
   # Remove nothing answers or answers without any letters
   filter(
     !is.na(answer),
     str_detect(answer, "[[:alnum:]]")
-  ) %>% 
+  ) %>%
   # Re-encode category, answer as UTF-8 (:shrug:) and lowercase
-  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %>% 
-  mutate_at(vars(category, answer), tolower) %>% 
+  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %>%
+  mutate_at(vars(category, answer), tolower) %>%
   # Category: Remove leading non-alpha characters and squish whitespace
   mutate(
     category = str_remove(category, "^[^[:alpha:]]+"),
     category = str_squish(category)
-  ) %>% 
+  ) %>%
   # Process answer as well as we can programmatically
-  mutate(answer = process_answer(answer, common_langs)) %>% 
+  mutate(answer = process_answer(answer, common_langs)) %>%
   # Separate into one language per row
-  separate_rows(answer, sep = "\\s*[,/]\\s*") %>% 
+  separate_rows(answer, sep = "\\s*[,/]\\s*") %>%
   # Squish the strings
-  mutate_at(vars(answer), str_squish) %>% 
+  mutate_at(vars(answer), str_squish) %>%
   mutate(
     answer = recode_answer(answer),
     category2 = recode_category(category)
@@ -433,7 +433,7 @@ tweets_lang_poll <-
   filter(
     nchar(answer) > 0,
     nchar(category) > 4
-  ) 
+  )
 ```
 
 And then to aggregate and count programming language mentions per category.
@@ -462,24 +462,24 @@ Emil Hvitfeldt’s
 
 ``` r
 plot_tweets_by_category <- function(
-  tweets_lang_counted, 
-  categories, 
+  tweets_lang_counted,
+  categories,
   ncol = 2,
   min_count = 10
 ) {
-  tweets_lang_counted %>% 
-    filter(category2 %in% categories) %>% 
-    mutate_at(vars(category2), factor, levels = categories) %>% 
-    group_by(category2) %>% 
-    arrange(desc(n)) %>% 
-    filter(n >= min_count) %>% 
-    top_n(20, n) %>% 
-    ungroup() %>% 
-    arrange(category2, answer, desc(n)) %>% 
+  tweets_lang_counted %>%
+    filter(category2 %in% categories) %>%
+    mutate_at(vars(category2), factor, levels = categories) %>%
+    group_by(category2) %>%
+    arrange(desc(n)) %>%
+    filter(n >= min_count) %>%
+    top_n(20, n) %>%
+    ungroup() %>%
+    arrange(category2, answer, desc(n)) %>%
     mutate(
       answer_within = tidytext::reorder_within(answer, n, category2),
       answer = fct_reorder(answer, n, first)
-    ) %>% 
+    ) %>%
     ggplot() +
     aes(answer_within, n, fill = answer) +
     geom_col() +

@@ -10,8 +10,8 @@ tags:
   - ggplot2
   - Visualization
   - Tips
-description: > 
-  Building discrete color scales for ggplot2 
+description: >
+  Building discrete color scales for ggplot2
   with some cool features for binary categorical variables.
 twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-This is a quick post demonstrating a custom discrete color scale for [[ggplot2]]{.pkg}.
+This is a quick post demonstrating a custom discrete color scale for <span class="pkg">[ggplot2]</span>.
 The goal is to create a branded color scale that we can apply to a ggplot2 plot
 with `+ scale_color_branded()`.
 
@@ -49,7 +49,7 @@ Suppose we have color palette for our brand or organization.
 I just grabbed a random color palette from [coolors.co](https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c)
 (but I think it actually looks okay!).
 We'll store this in a list called `branded_colors`,
-that you would ideally export from the package containing your brand's [ggplot2]{.pkg} themes.
+that you would ideally export from the package containing your brand's <span class="pkg">ggplot2</span> themes.
 
 ```{r brand-colors}
 branded_colors <- list(
@@ -57,7 +57,7 @@ branded_colors <- list(
   "red"    = "#d1495b",
   "yellow" = "#edae49",
   "green"  = "#66a182",
-  "navy"   = "#2e4057", 
+  "navy"   = "#2e4057",
   "grey"   = "#8d96a3"
 )
 ```
@@ -67,7 +67,7 @@ branded_colors <- list(
 library(ggplot2)
 bc_df <- data.frame(
   x = 1:6,
-  l = paste(names(branded_colors), unlist(branded_colors), sep = "\n"), 
+  l = paste(names(branded_colors), unlist(branded_colors), sep = "\n"),
   c = unlist(branded_colors)
 )
 
@@ -82,22 +82,22 @@ ggplot(bc_df) +
 
 ## Create a palette function
 
-Next we create the palette function. 
-Ultimately, what we need from a palette function is 
+Next we create the palette function.
+Ultimately, what we need from a palette function is
 a function that takes a single argument `n` and returns `n` colors.
 
 But in our case, we want to give the user some control over which colors are used,
 so our palette function needs to have some additional parameters.
-To balance both needs, we'll use a *closure*, 
+To balance both needs, we'll use a *closure*,
 which is fancy word for a function that returns another function.
-The outer function sets up the color choices 
-and the inner function returns a simple function of `n` that gives [ggplot2]{.pkg}
+The outer function sets up the color choices
+and the inner function returns a simple function of `n` that gives <span class="pkg">ggplot2</span>
 our brand's colors.
 
 What's great is that we can do whatever we want inside these functions.
 You can use this opportunity to re-order the colors for specific values of `n`, for example.
 
-We're going to make specific decisions about the colors used when `n == 2`. 
+We're going to make specific decisions about the colors used when `n == 2`.
 We want the palette to return two colors, `branded_colors[primary]` and another color.
 The `other` argument specifies the name of the second (or other) color,
 and we'll first try to lookup the color name from the brand colors,
@@ -105,15 +105,15 @@ but we'll also let the user specify a manual color.
 
 ```{r pal}
 branded_pal <- function(
-  primary = "blue", 
-  other = "grey", 
+  primary = "blue",
+  other = "grey",
   direction = 1
 ) {
   stopifnot(primary %in% names(branded_colors))
-  
+
   function(n) {
     if (n > 6) warning("Branded Color Palette only has 6 colors.")
-    
+
     if (n == 2) {
       other <- if (!other %in% names(branded_colors)) {
         other
@@ -124,15 +124,15 @@ branded_pal <- function(
     } else {
       color_list <- branded_colors[1:n]
     }
-    
+
     color_list <- unname(unlist(color_list))
     if (direction >= 0) color_list else rev(color_list)
   }
 }
 ```
 
-Here are a few examples of the colors 
-given by the pallete function 
+Here are a few examples of the colors
+given by the pallete function
 returned by `branded_pal()`
 for various values of `n`.
 
@@ -146,20 +146,20 @@ branded_pal(direction = -1)(3)
 ## Create a discrete color scale
 
 Now, we wrap this palette into a `scale_colour_branded()` function,
-using `ggplot2::discrete_scale()` to turn our palette into a [ggplot2]{.pkg} scale.
+using `ggplot2::discrete_scale()` to turn our palette into a <span class="pkg">ggplot2</span> scale.
 Note that ggplot2 convention is to spell `colour` with a `u`
 and to create an alias to the American spelling.
 
 ```{r scale}
 scale_colour_branded <- function(
-  primary = "blue", 
-  other = "grey", 
-  direction = 1, 
+  primary = "blue",
+  other = "grey",
+  direction = 1,
   ...
 ) {
   ggplot2::discrete_scale(
-    "colour", "branded", 
-    branded_pal(primary, other, direction), 
+    "colour", "branded",
+    branded_pal(primary, other, direction),
     ...
   )
 }
@@ -174,7 +174,7 @@ We'll create a simple plot using `mtcars` using the binary variable `vs`
 (engine shape, V or straight)
 for the point colors.
 
-Here's our plot using the standard [ggplot2]{.pkg} colors.
+Here's our plot using the standard <span class="pkg">ggplot2</span> colors.
 
 ```{r demo}
 library(ggplot2)
@@ -191,7 +191,7 @@ g <- ggplot(mtcars) +
 g
 ```
 
-Using our discrete color scale automatically uses our brand's primary color 
+Using our discrete color scale automatically uses our brand's primary color
 with the brand's grey color we chose as the default `other` value.
 
 ```{r demo2}
@@ -205,21 +205,21 @@ but you may want complementary colors instead.
 g + scale_color_branded(other = "yellow")
 ```
 
-When the level ordering doesn't match the colors, 
+When the level ordering doesn't match the colors,
 we let the user reverse the direction of the palette by setting `direction = -1`.
 
 ```{r demo4}
 g + scale_color_branded(other = "yellow", direction = -1)
 ```
 
-If you'd rather use a custom color for the `other` color, 
+If you'd rather use a custom color for the `other` color,
 we've given the user a small amount of leeway to deviate from the brand colors.
 
 ```{r demo5}
 g + scale_color_branded(other = "#a2d729")
 ```
 
-But when there are more than 2 categorical levels, 
+But when there are more than 2 categorical levels,
 the brand color palette is used...
 
 ```{r demo6}
@@ -241,18 +241,18 @@ g + aes(color = gear) + scale_color_branded(direction = -1)
 
 ## Final thoughts
 
-I used this technique to create a branded [ggplot2]{.pkg} theme
-at work and I've found that 
+I used this technique to create a branded <span class="pkg">ggplot2</span> theme
+at work and I've found that
 this special treatment of binary categorical variables is incredibly helpful.
 
-I frequently need to communicate two values or trends 
+I frequently need to communicate two values or trends
 in a way that allows for comparisons but clearly highlights one category.
-A common example would be comparing local cancer rates with statewide averages, 
+A common example would be comparing local cancer rates with statewide averages,
 and in these cases having a muted color for the comparison is incredibly helpful.
 
-Here's an example 
-using the Texas housing sales data that ships with [ggplot2]{.pkg}
-to showcase monthly total home sales in Austin 
+Here's an example
+using the Texas housing sales data that ships with <span class="pkg">ggplot2</span>
+to showcase monthly total home sales in Austin
 with Dallas sale volume shown for reference.
 
 ```{r tx-housing-example, echo=FALSE}
@@ -260,14 +260,14 @@ library(dplyr)
 txh <- ggplot2::txhousing
 
 # txh_summary <-
-#   txh %>% 
-#   group_by(year, month) %>% 
-#   summarize(sales = mean(sales, na.rm = TRUE)) %>% 
+#   txh %>%
+#   group_by(year, month) %>%
+#   summarize(sales = mean(sales, na.rm = TRUE)) %>%
 #   mutate(city = "Texas Average")
 
-txh <- txh %>% 
+txh <- txh %>%
   filter(city %in% c("Austin", "Dallas")) %>%
-  select(city, year, month, sales) %>% 
+  select(city, year, month, sales) %>%
   mutate(
     date = lubridate::make_date(year, month),
     city = factor(city, c("Dallas", "Austin"))
@@ -279,7 +279,7 @@ ggplot(txh) +
   scale_color_branded() +
   theme_bw() +
   ggtitle(
-    "Monthly House Sales in Austin, TX", 
+    "Monthly House Sales in Austin, TX",
     "Compared with sales in Dallas, TX"
   )
 ```
@@ -287,7 +287,7 @@ ggplot(txh) +
 ### Indicate discrete/continuous in the function name
 
 If you're using this as guidance for building your own discrete color scale,
-my final tip would be to modify the name of the scale function and 
+my final tip would be to modify the name of the scale function and
 append `_d` to the end to indicate that the scale is discrete.
 
 ```r
@@ -300,18 +300,18 @@ that will receive a `_c()` suffix.
 ### Create fill scale functions, too
 
 Finally, you'll also want to create `scale_fill_...()` functions as well.
-You can create those using the same `branded_palette()` functions 
-you used for `scale_color_branded()`, 
-with the small tweak of replacing `"color"` with `"fill"` 
+You can create those using the same `branded_palette()` functions
+you used for `scale_color_branded()`,
+with the small tweak of replacing `"color"` with `"fill"`
 as the first argument to `ggplot2::discrete_scale()`
 
 ### What about three colors?
 
 [Emily Riederer](https://emilyriederer.netlify.com/)
-has a neat function in her [Rtistic](https://github.com/emilyriederer/rtistic) package template 
-that I highly recommend you check out if you're making a package of branded [ggplot2]{.pkg} and [rmarkdown]{.pkg} themes.
+has a neat function in her [Rtistic](https://github.com/emilyriederer/rtistic) package template
+that I highly recommend you check out if you're making a package of branded <span class="pkg">ggplot2</span> and <span class="pkg">rmarkdown</span> themes.
 
-She calls it `scale_color_opinionated()` 
+She calls it `scale_color_opinionated()`
 and it works similarly to the functions I've laid out,
 except that it provides a color scale specifically for categorical variables with three levels: `"good"`, `"neutral"`, and `"bad"`.
 
@@ -323,7 +323,7 @@ Thanks for reading!
 Find me on Twitter [&commat;grrrck](https://twitter.com/grrrck)
 to let me know if this post was helpful.
 
-And thanks to 
+And thanks to
 [Benjamin Wolfe](https://twitter.com/BenjaminWolfe)
 for inspiring this post!
 
@@ -332,7 +332,7 @@ for inspiring this post!
 ```{r title-card, fig.show="hide", include=FALSE, fig.width=8, fig.height=4.5}
 library(magick)
 
-g2 <- g + 
+g2 <- g +
   theme_void() +
   guides(color = FALSE) +
   theme(
@@ -359,6 +359,6 @@ magick::image_annotate(
   size = 85,
   gravity = "Center",
   location = "+0+26"
-) 
+)
 ```
 

@@ -27,14 +27,14 @@ editor_options:
 
 
 
-Today I was [nerd sniped](https://xkcd.com/356/) 
+Today I was [nerd sniped](https://xkcd.com/356/)
 by [Mike FC](https://coolbutuseless.com)
 who goes by [&commat;coolbutuseless](https://twitter.com/coolbutuseless)
 on Twitter despite the fact that he makes cool and useful things on the regular.
 
 In his tweet, he shows a neat trick that works on Unix or macOS machines.
 These systems come with a command-line utility called `cal` ([read more here](https://www.computerhope.com/unix/ucal.htm)).
-By calling `cal` from the R console using `system()`, 
+By calling `cal` from the R console using `system()`,
 you can print a calendar in your console.
 
 
@@ -63,16 +63,16 @@ Here's Mike's [original tweet](https://twitter.com/coolbutuseless/status/1308163
 
 This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622; &#x1F937;&#x200D;.
 
-So I used [[lubridate]]{.pkg} and [[crayon](https://github.com/r-lib/crayon)]{.pkg}
+So I used <span class="pkg"><span class="pkg">lubridate]</span> and [[crayon](https://github.com/r-lib/crayon)</span>
 to recreate `cal` with an R function `cal()`.
-I'm not going to do a full walk through of the code, 
+I'm not going to do a full walk through of the code,
 but I still wanted to share it.
 Read on to explore the code or to try out the function yourself.
 
 ## Tidy Dates
 
 The first step was to write a function to set up a data frame of dates.
-This I cribbed heavily from [[ggweekly](/blog/ggplot2-weekly-planner/)]{.pkg}.
+This I cribbed heavily from <span class="pkg">[ggweekly](/blog/ggplot2-weekly-planner/)</span>.
 
 
 ```r
@@ -84,17 +84,17 @@ make_month_dates <- function(start_date, end_date, week_start = 1) {
     get_week <- lubridate::isoweek
     get_year <- lubridate::isoyear
   }
-  
+
   if (!inherits(start_date, "Date")) {
     start_date <- lubridate::ymd(start_date, truncated = 1)
   }
   if (!inherits(end_date, "Date")) {
     end_date <- lubridate::ymd(end_date, truncated = 1)
   }
-  
+
   start_date <- lubridate::floor_date(start_date, "month")
   end_date <- lubridate::rollback(lubridate::ceiling_date(end_date, "month"))
-  
+
   tibble::tibble(
     date      = seq(start_date, end_date, by = "day"),
     day       = lubridate::day(date),
@@ -138,7 +138,7 @@ make_month_dates("2020-09", "2020-11", week_start = 1)
 ## Make it a Calendar
 
 The next step is to wrangle the dates into a calendar shape.
-For this step, I used [dplyr]{.pkg}, [tidyr]{.pkg}, and [lubridate]{.pkg} together.
+For this step, I used <span class="pkg">dplyr</span>, <span class="pkg">tidyr</span>, and <span class="pkg">lubridate</span> together.
 
 The gist of the process is to
 
@@ -151,7 +151,7 @@ The gist of the process is to
 1. Finally print each line to print rows of calendars!
 
 Check out the whole function below for the complete details.
-I used package prefixes (and `cur_group_id()` from [dplyr]{.pkg} 1.0.0),
+I used package prefixes (and `cur_group_id()` from <span class="pkg">dplyr</span> 1.0.0),
 and I inlined the code from `make_month_dates()` above to facilitate copy-pasting-calendaring.
 
 <h4 id="code-cal" class="js-expandmore expand-for-code">R code</h4>
@@ -166,17 +166,17 @@ cal <- function(
   week_start = 1
 ) {
   `%>%` <- dplyr::`%>%`
-  
+
   if (!inherits(start_date, "Date")) {
     start_date <- lubridate::ymd(start_date, truncated = 1)
   }
   if (!inherits(end_date, "Date")) {
     end_date <- lubridate::ymd(end_date, truncated = 1)
   }
-  
+
   start_date <- lubridate::floor_date(start_date, "month")
   end_date <- lubridate::rollback(lubridate::ceiling_date(end_date, "month"))
-  
+
   tibble::tibble(
     date      = seq(start_date, end_date, by = "day"),
     day       = lubridate::day(date),
@@ -186,7 +186,7 @@ cal <- function(
     month     = lubridate::month(.data$date, label = TRUE, abbr = FALSE),
     month_int = lubridate::month(.data$date, label = FALSE),
     year      = lubridate::year(lubridate::floor_date(.data$date, unit = "year", week_start = week_start))
-  ) %>% 
+  ) %>%
     dplyr::group_by(month, year) %>%
     dplyr::mutate(week = week - min(week) + 1) %>%
     dplyr::ungroup() %>%
@@ -196,7 +196,7 @@ cal <- function(
       day = sprintf("%2s", day),
       day = dplyr::if_else(weekend, as.character(crayon::silver(day)), day),
       day = dplyr::if_else(
-        date == lubridate::today(), 
+        date == lubridate::today(),
         as.character(crayon::bold(crayon::red(day))),
         day
       ),

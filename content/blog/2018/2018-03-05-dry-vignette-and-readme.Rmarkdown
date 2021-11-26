@@ -50,13 +50,13 @@ There are a lot of READMEs out there that just answer the first question with a 
 I might not be the typical user, but this always seems like a missed opportunity to me.
 
 Of course, writing good documentation is tricky.
-And considering that a good package also has vignettes, a README, a related ([[blogdown]]{.pkg}) blog post, and possibly even a [[pkgdown]]{.pkg} site, making sure the documentation is up-to-date in all of these places can put undue burden on the package developers.
+And considering that a good package also has vignettes, a README, a related (<span class="pkg">[blogdown]</span>) blog post, and possibly even a <span class="pkg">[pkgdown]</span> site, making sure the documentation is up-to-date in all of these places can put undue burden on the package developers.
 
 ## Don't Repeat Yourself, Clone Yourself
 
 ![](/images/2018/the-simpsons-s01e02-Bart-the-Genius.jpg)
 
-In the spirit of Don't Repeat Yourself and maximizing the potential of [[knitr]]{.pkg} and [R Markdown][r-markdown] -- and the fact that you can use R Markdown for all of the above pieces -- I remembered recently reading about child documents in knitr.
+In the spirit of Don't Repeat Yourself and maximizing the potential of <span class="pkg">[knitr]</span> and [R Markdown][r-markdown] -- and the fact that you can use R Markdown for all of the above pieces -- I remembered recently reading about child documents in knitr.
 
 I posted my idea to [Jonathan's thread](https://twitter.com/carroll_jono/status/969442252610191361) and shortly afterwards [&commat;BrodieGaslam](https://twitter.com/BrodieGaslam) wrote back with an idea that [really makes the best of child documents](https://twitter.com/BrodieGaslam/status/969682597214343168).
 Here's the full idea:
@@ -64,7 +64,7 @@ Here's the full idea:
 ### Write repeatable sections in short .Rmd files.
 
 Adapting from Brodie's
-[[vetr][gh-vetr]]{.pkg}
+<span class="pkg">[vetr][gh-vetr]</span>
 package as an example,
 these files are stored in `man/fragments`:
 
@@ -105,8 +105,8 @@ because they aren't complete documents.
 
 ### Reference the repeatable sections using the `child` chunk option.
 
-[knitr]{.pkg} provides a [child document chunk option](https://yihui.name/knitr/options/#child-documents) that you can use to embed R Markdown from an external file.
-Anywhere that you would re-use the documentation, you simply include the following, such as in the [vetr]{.pkg} package vignette.
+<span class="pkg">knitr</span> provides a [child document chunk option](https://yihui.name/knitr/options/#child-documents) that you can use to embed R Markdown from an external file.
+Anywhere that you would re-use the documentation, you simply include the following, such as in the <span class="pkg">vetr</span> package vignette.
 Again, the following are from the [vetr package documentation files][gh-vetr].
 
 #### vignettes/vetr.Rmd >
@@ -140,7 +140,7 @@ It's also useful to be able to arrange or choose the content shown in certain pl
 (or even during editing!).
 For example, READMEs typically include installation instructions, but these would be redundant if included in the package vignettes.
 
-The above examples can be extended for use in [pkgdown]{.pkg} articles (which are essentially an extension of vignettes) or for blogdown posts if you develop your package and blog source on the same machine.
+The above examples can be extended for use in <span class="pkg">pkgdown</span> articles (which are essentially an extension of vignettes) or for blogdown posts if you develop your package and blog source on the same machine.
 
 #### Update: December 4, 2019 {#update}
 

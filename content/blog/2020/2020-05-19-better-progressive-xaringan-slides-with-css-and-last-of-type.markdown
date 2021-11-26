@@ -201,7 +201,7 @@ to highlight the last list item by reducing the opacity of the other list items.
 
 ```` markdown
 ```{css echo=FALSE}
-.highlight-last-item > ul > li, 
+.highlight-last-item > ul > li,
 .highlight-last-item > ol > li {
   opacity: 0.5;
 }
@@ -299,7 +299,7 @@ class: bold-last-item
 1. Preheat oven to 350 degrees F. Line a metal 9x9 pan with parchment paper.
 --
 
-1. Pour melted butter into a large mixing bowl. 
+1. Pour melted butter into a large mixing bowl.
     1. Whisk in sugar by hand until smooth, 30 seconds.
 --
 1. Add in eggs and vanilla extract. Whisk 1 minute.

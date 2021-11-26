@@ -10,7 +10,7 @@ tags:
   - usethis
   - Pull Requests
   - Workflow
-description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
+description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
 twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
@@ -89,7 +89,7 @@ Yes, [I’m ready to go](#get-started)!
 
 </div>
 
-## 
+##
 
 <div id="story" aria-live="polite" aria-relevant="additions">
 
@@ -322,7 +322,7 @@ pr_fetch()
 ```
 
     ℹ No PR specified ... looking up open PRs
-    Which PR are you interested in? (0 to exit) 
+    Which PR are you interested in? (0 to exit)
 
     1: 'gadenbuie/acme/#11' (@gadenbuie): 'Add an example'
     2: 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
@@ -686,14 +686,14 @@ you’re ready to [take a snapshot of your updates](#git-commit).
 > Taking breaks and resting is important!
 >
 > Last night I got caught up in a nested
-> [#RStats](https://twitter.com/hashtag/rstats)
+> [\#RStats](https://twitter.com/hashtag/rstats)
 > list problem and couldn’t solve it.
 >
 > Wrote the code this morning first shot.
 >
 > Take breaks! You need them!
 >
-> — Nicholas Tierney ((**nj_tierney?**)) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
+> — Nicholas Tierney ((**nj\_tierney?**)) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
 
 Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.
@@ -1193,7 +1193,7 @@ using `pr_fetch()`.
 
 </div>
 
-## 
+##
 
 <div id="step-list" style="display:none">
 
@@ -1222,10 +1222,10 @@ using `pr_fetch()`.
 <em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
   Pull Request Flow with usethis
 </em>
-by 
+by
 <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
 Garrick Aden-Buie
-</a> is licensed under a 
+</a> is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
 </div>

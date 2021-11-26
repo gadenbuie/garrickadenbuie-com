@@ -19,7 +19,7 @@ description: >
 twitterImage: "https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
 rmd_source: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmd"
 keywords: "rstats"
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 <script src="{{< blogdown/postref >}}index_files/clipboard-2.0.6/clipboard.min.js"></script>
@@ -39,8 +39,8 @@ editor_options:
 
 
 <div class="figure">
-<img 
-  src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" 
+<img
+  src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
   alt="The 'Branch Mover' shiny app on the main 'Repos' screen, showing an interactive table of repositories associated with a GitHub user. The table shows the default branch, language of the repo, number of forks and stars, and a button that can be clicked to initiate moving the repo's default branch."
 >
 <p class="caption">Branch Mover</p>
@@ -56,7 +56,7 @@ The app show you the default branch name for all of your repos and coordinates c
 
 ## Moving to `main` street
 
-Over the past year, 
+Over the past year,
 there's been a concerted effort among people who create and manage git repositories
 to move away from the default branch name of `master`
 to something more intentional: typically `main`.
@@ -64,7 +64,7 @@ to something more intentional: typically `main`.
 [RStudio] and the [tidyverse] team recently undertook the giant challenge
 of changing the default branch of RStudio's approximately 350 public repositories
 (most of which are all open source!).
-[Jenny Bryan](https://jennybryan.org/) wrote about 
+[Jenny Bryan](https://jennybryan.org/) wrote about
 [the branch-changing experience](https://www.tidyverse.org/blog/2021/10/renaming-default-branch/)
 on the tidyverse blog.
 
@@ -84,17 +84,17 @@ and the recently added
 function to update the default branch of your repo.
 
 I followed Jenny's lead and the app will create an issue announcing the change.
-If all goes well, 
+If all goes well,
 the issue is closed a few seconds later
 with instructions for your users on how to update any local copies of your repo.
-If it doesn't go well, 
+If it doesn't go well,
 the issue stay open as a reminder to you to finish the process.
 
 Unfortunately, branchMover *doesn’t* update the default branch in *your*
 local copies of your repos. Thankfully, this is relatively pain-free
 with the
 [usethis::git_default_branch_rediscover()](https://usethis.r-lib.org/reference/git-default-branch.html)
-function, added in [usethis]{.pkg} version 2.1.2.
+function, added in <span class="pkg">usethis</span> version 2.1.2.
 
 The next time you find yourself in your local copy of your repo,
 run `git_default_branch_rediscover()` to reconfigure your branch situation.
@@ -115,8 +115,8 @@ You can install [branchMover] from
 devtools::install_github("gadenbuie/branchMover")
 ```
 
-The app uses the [[usethis](https://usethis.r-lib.org)]{.pkg} and
-[[gh](https://gh.r-lib.org)]{.pkg} packages. You need to configure gh with a
+The app uses the <span class="pkg">[usethis](https://usethis.r-lib.org)</span> and
+<span class="pkg">[gh](https://gh.r-lib.org)</span> packages. You need to configure gh with a
 [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 to be able to authenticate with the GitHub API.
 Read more about setting up a PAT in one of these places:
@@ -151,14 +151,14 @@ branchMover::app("rstudio-education")
 
 If you want to learn more about how git's default branch works
 and why many are opting to choose a more intentional default,
-I highly recommend Jenny's detailed article 
+I highly recommend Jenny's detailed article
 [Renaming the default branch](https://www.tidyverse.org/blog/2021/10/renaming-default-branch/),
 which I'll quote directly:
 
 > Technically, Git has no official concept of the default branch. But in practice, most Git repos have an _effective default branch_. If there’s only one branch, this is it! It is the branch that most bug fixes and features get merged in to. It is the branch you see when you first visit a repo on a site such as GitHub. On a Git remote, it is the branch that `HEAD` points to. The default branch may not be precisely defined in Git itself, but most of us know it when we see it.
 >
 > Historically, `master` has been the most common name for the default branch, but `main` is an increasingly popular choice. There is coordinated change across the Git ecosystem that is making it easier for users to make this switch, for example:
-> 
+>
 > - [Regarding Git and Branch Naming](https://sfconservancy.org/news/2020/jun/23/gitbranchname/), statement from the Git project and the Software Freedom Conservancy regarding the new `init.defaultBranch` configuration option
 > - [Renaming the default branch from`master`](https://github.com/github/renaming#readme), GitHub’s roadmap for supporting the shift away from `master`
 > - [The new Git default branch name](https://about.gitlab.com/blog/2021/03/10/new-git-default-branch-name/), same, but for GitLab

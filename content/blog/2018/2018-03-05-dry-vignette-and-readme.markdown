@@ -21,7 +21,7 @@ that will most likely satisfy R CMD check.
 
 ------------------------------------------------------------------------
 
-Jonathan Carroll ([@carroll_jono](https://twitter.com/carroll_jono)) posted a twitter poll that turned out to be quite interesting this weekend:
+Jonathan Carroll ([@carroll\_jono](https://twitter.com/carroll_jono)) posted a twitter poll that turned out to be quite interesting this weekend:
 
 {{% tweet "969442252610191361" %}}
 
@@ -75,7 +75,7 @@ these files are stored in `man/fragments`:
 Notice `man/fragments/related-packages.Rmd`.
 It’s a short R Markdown file with a list of (not surprisingly) related packages – the kind of section that might be included in both the package overview vignette and the README.
 
-#### man/fragments/related-packages.Rmd \>
+#### man/fragments/related-packages.Rmd &gt;
 
 ``` markdown
 * [`vetr`](https://github.com/brodieG/vetr) by Yours Truly
@@ -98,7 +98,7 @@ because they aren’t complete documents.
 Anywhere that you would re-use the documentation, you simply include the following, such as in the <span class="pkg">vetr</span> package vignette.
 Again, the following are from the [vetr package documentation files](https://github.com/brodieG/vetr).
 
-#### vignettes/vetr.Rmd \>
+#### vignettes/vetr.Rmd &gt;
 
 ```` markdown
 ## Alternatives
@@ -112,7 +112,7 @@ following in our [parameter validation functions][4] review:
 
 This R Markdown “chunk” can be used anywhere else you need it, such as in the package README.Rmd file.
 
-#### README.Rmd \>
+#### README.Rmd &gt;
 
 ```` markdown
 ## Alternatives
@@ -147,4 +147,4 @@ Thanks to [Maëlle Salmon](https://twitter.com/ma_salmon) for the helpful advice
 
 ------------------------------------------------------------------------
 
-Thanks [@BrodieGaslam](https://twitter.com/BrodieGaslam) for the tip and [@carroll_jono](https://twitter.com/carroll_jono) for kicking off this thread!
+Thanks [@BrodieGaslam](https://twitter.com/BrodieGaslam) for the tip and [@carroll\_jono](https://twitter.com/carroll_jono) for kicking off this thread!

@@ -16,7 +16,7 @@ rmd_source: ''
 keywords: rstats
 editor_options:
   chunk_output_type: console
-output: 
+output:
   blogdown::html_page:
     fig_caption: no
 ---
@@ -84,21 +84,21 @@ lightbox_img <- function(url, caption = "", alt = caption, preview = TRUE) {
 
 This release has been a long time in the making,
 and I'm very excited to share with you all of the cool new things
-that [xaringanthemer]{.pkg} can bring to your [xaringan]{.pkg} slides!
+that <span class="pkg">xaringanthemer</span> can bring to your <span class="pkg">xaringan</span> slides!
 
 I started working on one of the key features of this release about a year ago ---
 [ggplot2 themes that magically match your slide theme](#matching-ggplot2-themes) ---
 but only recently was able to make the time to push the documentation and tests
 over the CRAN finish line.
 Equally exciting,
-[xaringanthemer]{.pkg} finally has it's own hex logo
-thanks to critical artistic help 
+<span class="pkg">xaringanthemer</span> finally has it's own hex logo
+thanks to critical artistic help
 from my amazingly talented sister [Aubrey Aden-Buie][aubrey]!
 
 This post walks through
 the [purpose of xaringanthemer](#what-does-xaringanthemer-do)
 and all of [the new features in version 0.3.0](#new-features).
-You can try out [xaringanthemer]{.pkg}
+You can try out <span class="pkg">xaringanthemer</span>
 for your next presentation,
 right after you install the package:
 
@@ -108,29 +108,29 @@ install.packages("xaringanthemer")
 
 ## What does xaringanthemer do?
 
-[xaringanthemer]{.pkg} works hand-in-hand with
-[[xaringan]]{.pkg},
+<span class="pkg">xaringanthemer</span> works hand-in-hand with
+<span class="pkg">[xaringan]</span>,
 the R package that turns your R Markdown into beautiful HTML slides
 rendered as web pages using the [remarkjs] library.
 
-[xaringan]{.pkg} slides tend to look like the slides below,
+<span class="pkg">xaringan</span> slides tend to look like the slides below,
 and, by default,
-[xaringan]{.pkg} uses the default slide theme from remarkjs.
+<span class="pkg">xaringan</span> uses the default slide theme from remarkjs.
 
 `r lightbox_img("xaringan-default.png", caption = "Default style of xaringan slides")`
 
-[xaringan]{.pkg} does come with a collection of
+<span class="pkg">xaringan</span> does come with a collection of
 [user-contributed themes][xaringan-themes]
 to choose from,
-but customizing any [xaringan]{.pkg} slide theme
-requires working with CSS and 
+but customizing any <span class="pkg">xaringan</span> slide theme
+requires working with CSS and
 learning which CSS rules apply to each element in the slides.
 
 Even if you love CSS,
 it can still be difficult and time-consuming
 to set up your slides to use a consistent color palette or custom fonts.
 
-The magic of [[xaringanthemer][xt]]{.pkg}
+The magic of <span class="pkg">[xaringanthemer][xt]</span>
 is that it grants you the power to
 **quickly set up a complete slide theme**,
 starting from only **one or two color choices**.
@@ -175,7 +175,7 @@ You can also easily use fonts from [Google Fonts]
 by using the `google_font()` helper.
 I used eye-catching fonts in this example
 that I probably wouldn't use in real life
-(the default fonts used by [xaringanthemer]{.pkg}
+(the default fonts used by <span class="pkg">xaringanthemer</span>
 [are much more readable](#new-default-fonts)).
 
 Here's the complete code chunk
@@ -200,7 +200,7 @@ Slide themes generated from a single color use the `style_mono_` prefix.
 There are also two complete styles based on the [solarized color palette][solarized]:
 `style_solarized_light()` and `style_solarized_dark()`.
 And finally, you can use the `style_xaringan()` base theme function directly,
-which starts from the default [xaringan]{.pkg} theme.
+which starts from the default <span class="pkg">xaringan</span> theme.
 
 All of the `style_` functions write a CSS file containing your complete slide theme.
 By default, the file is called `xaringan-themer.css`
@@ -218,7 +218,7 @@ output:
     css: xaringan-themer.css
 ```
 
-That's [xaringanthemer]{.pkg} in a nutshell!
+That's <span class="pkg">xaringanthemer</span> in a nutshell!
 You can learn more about the features in the package below,
 or by visiting [pkg.garrickadenbuie.com/xaringanthemer][xt].
 
@@ -237,14 +237,14 @@ If you've used the GitHub version before,
 the API has changed slightly,
 but there should not have been any breaking changes.
 In short, all of the files that write CSS,
-for example the functions previouslly called 
+for example the functions previouslly called
 `duo_accent()` or `write_xaringan_theme()`,
 are now prefixed with `style_`,
 e.g. `style_duo_accent()` and `style_xaringan()`.
 
 ### Powered by CSS variables
 
-[xaringanthemer]{.pkg} 
+<span class="pkg">xaringanthemer</span>
 does much of the work on the R side to prepare the theme,
 but nearly all of the properties of your theme are stored in
 [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
@@ -267,12 +267,12 @@ or if you're using a corporate color palette,
 you'll likely have more than just two colors that you want to use,
 and possibly not just in the components of your theme.
 
-The markdown syntax used by [xaringan]{.pkg}
+The markdown syntax used by <span class="pkg">xaringan</span>
 (actually remarkjs in this case)
 allows you to apply a class to text using syntax like this: `.class[ ... ]`
 
 Building on the use of CSS variables,
-[xaringanthemer]{.pkg} helps you add these additional colors to your theme.
+<span class="pkg">xaringanthemer</span> helps you add these additional colors to your theme.
 Using the `colors` argument,
 you can specify a vector of named colors.
 
@@ -289,7 +289,7 @@ style_xaringan(
 ```
 
 The color names are then used in three places.
-Using the `red` color as an example, [xaringanthemer]{.pkg} adds
+Using the `red` color as an example, <span class="pkg">xaringanthemer</span> adds
 
 1. a CSS variable `var(--red)` that use anywhere in custom CSS
 
@@ -297,11 +297,11 @@ Using the `red` color as an example, [xaringanthemer]{.pkg} adds
 
 1. a `.bg-red` class setting `background-color: var(--red)`.
 
-The named color and background classes are then easy to use in [xaringan]{.pkg}.
+The named color and background classes are then easy to use in <span class="pkg">xaringan</span>.
 Slide text like this
 
 ```markdown
-This **.red[simple]** .white.bg-purple[demo] 
+This **.red[simple]** .white.bg-purple[demo]
 _.orange[shows]_ the colors .green[in action].
 ```
 
@@ -318,13 +318,13 @@ the colors
 ### Matching ggplot2 themes
 
 At this point your slides look _a m a z i n g_,
-but your [[ggplot2]]{.pkg} plots stick out like a sore thumb
+but your <span class="pkg">[ggplot2]</span> plots stick out like a sore thumb
 with their sad shades of gray.
 
 You want your data visualizations
 to have the same level of visual appeal
 as your hand-crafted slide theme,
-and [xaringanthemer]{.pkg} can help!
+and <span class="pkg">xaringanthemer</span> can help!
 I'll quickly cover some of the new features for styling ggplots here,
 and you can learn more in the
 [ggplot2 Themes](https://pkg.garrickadenbuie.com/xaringanthemer/articles/ggplot2-themes.html)
@@ -332,10 +332,10 @@ vignette.
 
 #### theme_xaringan()
 
-[xaringanthemer]{.pkg} provides a [ggplot2]{.pkg} theme
+<span class="pkg">xaringanthemer</span> provides a <span class="pkg">ggplot2</span> theme
 that knows the styles used in your slides:
 `theme_xaringan()`.
-Let's start with a basic, typical [ggplot2]{.pkg} plot of fuel efficiency of cars
+Let's start with a basic, typical <span class="pkg">ggplot2</span> plot of fuel efficiency of cars
 using the `ggplot2::mpg` dataset.
 You only need to add `+ theme_xaringan()`
 to give your plot a makeover.
@@ -356,8 +356,8 @@ style <- style_duo_accent(
 ```{r ggplot2-demo-1, out.width = "48%", fig.show="hide"}
 library(ggplot2)
 
-g_base <- ggplot(mpg) + 
-  aes(hwy, cty) + 
+g_base <- ggplot(mpg) +
+  aes(hwy, cty) +
   geom_point() +
   labs(x = "Highway MPG", y = "City MPG", title = "Fuel Efficiency")
 
@@ -382,23 +382,23 @@ g_base + theme_xaringan()
 `theme_xaringan()` matches the colors used in your slides
 to the plot and axis titles (slide heading color)
 and axis tick labels and default text geometries (slide text color).
-It also uses the [[showtext]]{.pkg} by Yixuan Qiu
+It also uses the <span class="pkg">[showtext]</span> by Yixuan Qiu
 to match the fonts used in your slides ---
 this feature works particularly well when you use fonts from [Google Fonts].
 `theme_xaringan()` also sets
 the default color, fill and text family aesthetics
-of many [ggplot2]{.pkg} geoms,
+of many <span class="pkg">ggplot2</span> geoms,
 changing, for example, the color of points to match the primary slide color.
 
 Our `theme_xaringan()` themed plot
 would fit right in
-on just about any slide 
+on just about any slide
 in the slide deck we made with `style_duo_accent()` above,
 except for our inverse-styled slides...
 
 #### theme_xaringan_inverse()
 
-In [xaringan]{.pkg},
+In <span class="pkg">xaringan</span>,
 inverse slides provide a nice way to visually break up your presentation.
 You can create them using the `inverse` class:
 
@@ -409,11 +409,11 @@ class: inverse
 <!-- slide content -->
 ```
 
-[xaringanthemer]{.pkg} also provide a ggplot2 theme for these slides as well:
+<span class="pkg">xaringanthemer</span> also provide a ggplot2 theme for these slides as well:
 `theme_xaringan_inverse()`.
 
 ```{r eval=FALSE}
-# theme_xaringan() on the left, 
+# theme_xaringan() on the left,
 g_base + theme_xaringan()
 ```
 
@@ -432,18 +432,18 @@ g_base + theme_xaringan_inverse()
 #### Matching color and fill scales
 
 To give your plots a little more visual appeal,
-[xaringanthemer]{.pkg} includes custom color and fill scales
+<span class="pkg">xaringanthemer</span> includes custom color and fill scales
 based on the primary slide color.
-This feature uses 
-[`colorspace::sequential_hcl()`](http://colorspace.r-forge.r-project.org//reference/hcl_palettes.html) from the [[colorspace]]{.pkg} package.
+This feature uses
+[`colorspace::sequential_hcl()`](http://colorspace.r-forge.r-project.org//reference/hcl_palettes.html) from the <span class="pkg">[colorspace]</span> package.
 
-The scale functions all follow the naming pattern 
+The scale functions all follow the naming pattern
 `scale_xaringan_<aes>_<data_type>()`,
 where `<aes>` is replaced with either `color` or `fill`
 and `<data_type>` is one of `discrete` or `continuous`.
 For colors scales matching the inverse slide style,
 set `inverse = TRUE`.
-Occasionally, 
+Occasionally,
 you may want to use a different primary color
 to generate the color or fill scale
 using the `color` argument.
@@ -481,24 +481,24 @@ when you use any of the style functions in your slides' source code.
 
 Alternatively,
 you may want to create your CSS files in another process
-or to use a [xaringanthemer]{.pkg} CSS file
+or to use a <span class="pkg">xaringanthemer</span> CSS file
 that you share between presentations.
-In these cases, 
+In these cases,
 `theme_xaringan()` will find the CSS file
 if it's in the same folder or a subdirectory of the folder containing your slides source `.Rmd`.
 If you have multiple CSS files,
 or your CSS file is stored elsewhere,
 you can use the `css_file` argument to tell `theme_xaringan()` which file to use.
-This also means that you can easily match 
+This also means that you can easily match
 the plots in other R Markdown reports or webpages
-with `theme_xaringan()` 
+with `theme_xaringan()`
 to the styles used in your presentations
 by point `css_file` to the styles used in your slides.
 
 Finally,
 you can create themes without calling a style function or a CSS file
 using the `theme_xaringan_base()` function.
-This theme function can be used for complete [ggplot2]{.pkg} themes,
+This theme function can be used for complete <span class="pkg">ggplot2</span> themes,
 including Google Fonts.
 (Note that the `text_font` and `title_font` arguments can take a `google_font()` in all `theme_xaringan_` functions.)
 
@@ -514,16 +514,16 @@ ggplot(diamonds, aes(x = cut)) +
     text_font_size = 16,
     background_color = "#FFFFFF",
     text_color = "#444444",
-    accent_color = "#002B36", 
-  ) + 
+    accent_color = "#002B36",
+  ) +
   theme(plot.title = element_text(face = "bold"))
 ```
 
 #### Learning more about ggplot2 themes
 
-To learn more about the [ggplot2]{.pkg} themes,
-you can reference the 
-[ggplot2 themes vignette](https://pkg.garrickadenbuie.com/xaringanthemer/articles/ggplot2-themes.html) 
+To learn more about the <span class="pkg">ggplot2</span> themes,
+you can reference the
+[ggplot2 themes vignette](https://pkg.garrickadenbuie.com/xaringanthemer/articles/ggplot2-themes.html)
 online or with `vignettes("ggplot2-themes")`.
 
 ### Other new things
@@ -532,12 +532,12 @@ There are a few other new features that are worth a quick mention.
 
 #### Header background
 
-If you like the **metropolis** theme in [xaringan]{.pkg} ---
+If you like the **metropolis** theme in <span class="pkg">xaringan</span> ---
 ported from the classic beamer theme by [Patrick Schratz](https://pat-s.me/)
 who has a [demo slide deck](https://pat-s.me/files/xaringan-metropolis.html)
 on his site ---
 then you might like the _header background_ feature
-that brings the title bar background to any [xaringan]{.pkg} presentation.
+that brings the title bar background to any <span class="pkg">xaringan</span> presentation.
 
 `r lightbox_img("example_header-background.png", "Slides with class: header_background")`
 
@@ -545,8 +545,8 @@ The background is applied to the first level-1 heading on the slide ---
 either `<h1>Title</h1>` or `# Title`.
 There are two modes to the header background: auto and manual.
 
-Manual mode is the default, 
-meaning that for any [xaringanthemer]{.pkg} slides
+Manual mode is the default,
+meaning that for any <span class="pkg">xaringanthemer</span> slides
 you can enable the header background using the `header_background` slide class:
 
 ```
@@ -565,7 +565,7 @@ In auto mode,
 you can disable the header background
 manually by using `class: normal`.
 The header background isn't applied to
-`title` or `inverse` slides, 
+`title` or `inverse` slides,
 slides where the text is aligned `middle` or `bottom`,
 or slides with the `normal` class.
 
@@ -591,13 +591,13 @@ or slides with the `normal` class.
 }
 ```
 
-While the default [xaringan]{.pkg} fonts
+While the default <span class="pkg">xaringan</span> fonts
 are eye-catching and interesting when you first see them,
 I personally think that they don't work well in low-visibility settings,
 like presentations made in person.
-[xaringanthemer]{.pkg}
+<span class="pkg">xaringanthemer</span>
 therefore uses a different set of default fonts:
-[Cabin](https://fonts.google.com/specimen/Cabin) for headings and 
+[Cabin](https://fonts.google.com/specimen/Cabin) for headings and
 [Noto Sans](https://fonts.google.com/specimen/Noto+Sans)
 for body text.
 
@@ -607,10 +607,10 @@ for body text.
 </div>
 
 
-These fonts are easier to read on screens and at a distance during presentations, 
-and they support a wide variety of languages and weights. 
-Another reason for the change is that the xaringan (remarkjs) default body font, 
-_Droid Serif_, 
+These fonts are easier to read on screens and at a distance during presentations,
+and they support a wide variety of languages and weights.
+Another reason for the change is that the xaringan (remarkjs) default body font,
+_Droid Serif_,
 is no longer officially included in Google Fonts.
 
 
@@ -619,4 +619,4 @@ is no longer officially included in Google Fonts.
 Thanks to everyone who sumbitted pull requests, issues, or comments:
 [&#x0040;Btibert3](https://github.com/Btibert3), [&#x0040;Northbreeze](https://github.com/Northbreeze), [&#x0040;pat-s](https://github.com/pat-s), [&#x0040;PMassicotte](https://github.com/PMassicotte), [&#x0040;techisdead](https://github.com/techisdead), and [&#x0040;TrashBirdEcology](https://github.com/TrashBirdEcology)
 
-Thanks to [Aubrey Aden-Buie][aubrey] for help designing the [xaringanthemer]{.pkg} hex logo!
+Thanks to <span class="pkg">Aubrey Aden-Buie][aubrey] for help designing the [xaringanthemer</span> hex logo!

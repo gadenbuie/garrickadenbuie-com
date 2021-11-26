@@ -63,7 +63,7 @@ lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
 ::: {.lead}
 A modular collection of CSS stylesheets
 that lets you use any of [R's named colors][r-colors]
-in your 
+in your
 [xaringan] slides,
 [blogdown] pages,
 [Shiny] apps...
@@ -75,9 +75,9 @@ in short in any R Markdown HTML documents.
 ## R's Named Colors
 
 ```{css echo=FALSE}
-.tu-dotted:not(:hover) { 
+.tu-dotted:not(:hover) {
   text-decoration: underline;
-  text-decoration-style: dotted; 
+  text-decoration-style: dotted;
 }
 ```
 
@@ -87,25 +87,25 @@ and [firebrick2]{.tu-dotted .bg-firebrick2-hover .white-hover}.
 I don't know all of the names
 and used to turn to an [online list of colors](http://sape.inf.usi.ch/quick-reference/ggplot2/colour)
 so often
-that I put it on 
+that I put it on
 `r lightbox_img("r-colors-mug.jpg", alt = "a mug", preview = FALSE)`.
 
 In R,
 you can reference the color by name
 in nearly any function that applies to colors.
 They're particularly easy to use in visualizations,
-like those made with [ggplot2]{.pkg},
-because there are 
+like those made with <span class="pkg">ggplot2</span>,
+because there are
 `r length(colors())` colors
 and many have 4 variations on the same color hue,
 indexed by suffixes `1` to `4`.
-For example, there are 4 variations of 
+For example, there are 4 variations of
 [palevioletred]{.tu-dotted .bg-palevioletred-hover .white-hover}
 that I'm using in the following plot
 for each of 4 years of Austin housing sales data.
 
 ```{r echo=TRUE, eval=FALSE}
-g_austin_housing + 
+g_austin_housing +
   ## A basic ggplot of home sale prices in Austin
   ## over 4 years, using the ggplot2::txhousing data
   scale_color_manual(
@@ -161,7 +161,7 @@ txhousing %>%
 ## Utility CSS
 
 If you're used to working with R's color names,
-they unfortunately don't align with HTML's 
+they unfortunately don't align with HTML's
 [named colors](https://html-color-codes.info/color-names/),
 which means that you can't write a CSS rule like
 
@@ -176,13 +176,13 @@ This causes problems if you
 [use an R color name in a function that write CSS files](https://stackoverflow.com/a/63819561).
 
 I've also been interested lately in utility CSS frameworks,
-like [Tailwinds CSS](https://tailwindcss.com/) 
+like [Tailwinds CSS](https://tailwindcss.com/)
 and [Tachyons](http://tachyons.io/).
 What's awesome about these frameworks is that
 they use small, single-purpose CSS classes —
 called **utility classes** —
 that can be flexibly applied to your HTML elements.
-I do most, if not all, 
+I do most, if not all,
 of my writing in some variant of markdown,
 and utility classes let me build small components
 or slightly adjust appearances
@@ -197,7 +197,7 @@ and other R Markdown outputs where a complete CSS framework is in use
 (like [R Markdown](https://rmarkdown.rstudio.com)
 with [bootstrap](https://getbootstrap.com)).
 For that reason,
-I've included it in [[xaringanExtra]]{.pkg},
+I've included it in <span class="pkg">[xaringanExtra]</span>,
 and you can add Tachyons to any R Markdown document with
 `xaringanExtra::use_tachyons()`.
 
@@ -236,7 +236,7 @@ xaringanExtra::style_panelset_tabs(
 
 ```markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -247,7 +247,7 @@ Anything that you're willing to practice, you can do.
 
 ```markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -258,7 +258,7 @@ Anything that you're willing to practice, you can do.
 
 ```html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1">
-<p>Talent is a pursued interest. 
+<p>Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 </p>
 <p>—Bob Ross</p>
@@ -283,7 +283,7 @@ htmltools::div(
 _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 
 ```{css echo=TRUE}
-.b--gray { 
+.b--gray {
   border-color: #888888;
 }
 .ba {
@@ -306,7 +306,7 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 ::::
 
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -328,20 +328,20 @@ You can choose any or all of the three stylesheets,
 depending on your needs,
 they each work independently.
 
-1. [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css)  
+1. [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css)
    Classes for setting **foreground** and **background** colors
     - `.palevioletred1` sets the foreground color
     - `.bg-palevioletred1` sets the background color
 
-1. [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css)  
+1. [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css)
    Classes for setting foreground and background colors **on hover**
     - `.palevioletred1-hover` sets the foreground color on hover
     - `.bg-palevioletred1-hover` sets the background color on hover
-    
-1. [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css)  
+
+1. [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css)
    [CSS variables]() for each color name
     - `var(--palevioletred1)` for use in other CSS properties
-  
+
 
 For more on how to use the stylesheets,
 including a searchable table with all of the colors
@@ -375,10 +375,10 @@ This class sets the border color for the box to
 }
 ```
 
-The other colors used are 
-[steelblue4]{.bg-steelblue4-hover .white-hover .tu-dotted} (text), 
+The other colors used are
+[steelblue4]{.bg-steelblue4-hover .white-hover .tu-dotted} (text),
 [mintcream]{.bg-mintcream-hover .tu-dotted} (background),
-and 
+and
 [mediumvioletred]{.bg-mediumvioletred-hover .white-hover .tu-dotted}
 (text on hover, from the hover classes stylesheet).
 
@@ -386,7 +386,7 @@ and
 
 ```markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -397,7 +397,7 @@ Anything that you're willing to practice, you can do.
 
 ```markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -408,7 +408,7 @@ Anything that you're willing to practice, you can do.
 
 ```html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4">
-<p>Talent is a pursued interest. 
+<p>Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 </p>
 <p>—Bob Ross</p>
@@ -420,7 +420,7 @@ Anything that you're willing to practice, you can do.
 ```r
 htmltools::div(
   class = paste(
-    "b--gray ba bw2 ma2 pa4 shadow-1 steelblue4", 
+    "b--gray ba bw2 ma2 pa4 shadow-1 steelblue4",
     "bg-mintcream mediumvioletred-hover b--paleturquoise4"
   ),
   htmltools::p(
@@ -434,7 +434,7 @@ htmltools::div(
 ::::
 
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross

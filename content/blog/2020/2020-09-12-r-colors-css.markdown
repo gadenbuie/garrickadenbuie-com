@@ -46,9 +46,9 @@ in short in any R Markdown HTML documents.
 ## R’s Named Colors
 
 <style type="text/css">
-.tu-dotted:not(:hover) { 
+.tu-dotted:not(:hover) {
   text-decoration: underline;
-  text-decoration-style: dotted; 
+  text-decoration-style: dotted;
 }
 </style>
 
@@ -76,7 +76,7 @@ that I’m using in the following plot
 for each of 4 years of Austin housing sales data.
 
 ``` r
-g_austin_housing + 
+g_austin_housing +
   ## A basic ggplot of home sale prices in Austin
   ## over 4 years, using the ggplot2::txhousing data
   scale_color_manual(
@@ -169,7 +169,7 @@ Here are four markdown syntax variations that use those classes.
 
 ``` markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -180,7 +180,7 @@ Anything that you're willing to practice, you can do.
 
 ``` markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -191,7 +191,7 @@ Anything that you're willing to practice, you can do.
 
 ``` html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1">
-<p>Talent is a pursued interest. 
+<p>Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 </p>
 <p>—Bob Ross</p>
@@ -216,7 +216,7 @@ htmltools::div(
 *Note: this isn’t the exact CSS from Tachyons, but it’s very similar.*
 
 ``` css
-.b--gray { 
+.b--gray {
   border-color: #888888;
 }
 .ba {
@@ -237,7 +237,7 @@ htmltools::div(
 ```
 
 <style type="text/css">
-.b--gray { 
+.b--gray {
   border-color: #888888;
 }
 .ba {
@@ -293,15 +293,15 @@ You can choose any or all of the three stylesheets,
 depending on your needs,
 they each work independently.
 
-1.  [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css)  
+1.  [r-colors.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.css)
     Classes for setting **foreground** and **background** colors
     -   `.palevioletred1` sets the foreground color
     -   `.bg-palevioletred1` sets the background color
-2.  [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css)  
+2.  [r-colors.hover.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css)
     Classes for setting foreground and background colors **on hover**
     -   `.palevioletred1-hover` sets the foreground color on hover
     -   `.bg-palevioletred1-hover` sets the background color on hover
-3.  [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css)  
+3.  [r-colors.vars.css](https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.vars.css)
     [CSS variables]() for each color name
     -   `var(--palevioletred1)` for use in other CSS properties
 
@@ -354,7 +354,7 @@ and
 
 ``` markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -365,7 +365,7 @@ Anything that you're willing to practice, you can do.
 
 ``` markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 
 —Bob Ross
@@ -376,7 +376,7 @@ Anything that you're willing to practice, you can do.
 
 ``` html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4">
-<p>Talent is a pursued interest. 
+<p>Talent is a pursued interest.
 Anything that you're willing to practice, you can do.
 </p>
 <p>—Bob Ross</p>
@@ -388,7 +388,7 @@ Anything that you're willing to practice, you can do.
 ``` r
 htmltools::div(
   class = paste(
-    "b--gray ba bw2 ma2 pa4 shadow-1 steelblue4", 
+    "b--gray ba bw2 ma2 pa4 shadow-1 steelblue4",
     "bg-mintcream mediumvioletred-hover b--paleturquoise4"
   ),
   htmltools::p(

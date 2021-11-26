@@ -1,7 +1,7 @@
 ---
 title: Style knitr Code Output Appearance in HTML with Custom CSS Classes
-description: | 
-  Apply custom CSS classes to code chunk outputs to differentiate between 
+description: |
+  Apply custom CSS classes to code chunk outputs to differentiate between
   regular outputs and messages, warnings, and errors.
 twitterImage: "/blog/2019/knitr-custom-class-output/knitr-custom-chunk.png"
 author: Garrick Aden-Buie
@@ -32,7 +32,7 @@ tags:
 
 ![Create awesome-looking, content-dependent output styles in HTML with `knitr`'s new `class.*` chunk options.](/blog/2019/knitr-custom-class-output/knitr-custom-chunk.png)
 
-Last week, I learned that you can apply a custom CSS class to code chunk outputs using [knitr]{.pkg}'s [`class.output`][knitr-class-output], thanks to a two-year-old [pull request from Ian Lyttle][knitr-og-issue].
+Last week, I learned that you can apply a custom CSS class to code chunk outputs using <span class="pkg">knitr</span>'s [`class.output`][knitr-class-output], thanks to a two-year-old [pull request from Ian Lyttle][knitr-og-issue].
 
 At the time, I was working on customizing CSS classes of the code chunks in my blog after being inspired by the impeccable styling of [Brodie Gaslam's blog][brodieg-code].
 What I like most are the subtle visual clues that link code inputs and outputs by keeping both source and output inside the same box.

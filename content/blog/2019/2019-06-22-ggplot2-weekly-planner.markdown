@@ -27,7 +27,7 @@ editor_options:
 <!-- Post -->
 
 I was working on prioritizing some long term projects today and decided that _the one thing_ that would help me gain some clarity would be a weekly planner.
-Rather than waste hours of productive time fighting popups and banner adds on the million and a half SEO-fueled malware-laden "free printable calendar" websites, I decided to waste not quite as many hours of productive time creating the exact calendar I wanted using [ggplot2]{.pkg}.
+Rather than waste hours of productive time fighting popups and banner adds on the million and a half SEO-fueled malware-laden "free printable calendar" websites, I decided to waste not quite as many hours of productive time creating the exact calendar I wanted using <span class="pkg">ggplot2</span>.
 
 Here's the end result: a simple calendar where each week is a row.
 Weeks start on Mondays because that's when a new week starts.
@@ -44,13 +44,13 @@ I doubt it's bullet journal certified, but it worked for me and maybe it will fo
 I'll break down the pieces that went into the calendar, but if you just want to make your own you can ~~jump to the end~~ use the [ggweekly] package I shared on GitHub and get straight to calendar printing and project planning.
 
 **Update:** I realized it would be easier to share this code as a small R package rather than a gist or as a script embedded here.
-You can now install [ggweekly]{.pkg} from [github.com/gadenbuie/ggweekly][ggweekly] and use the `ggweek_planner()` function to make your own custom, printable calendars.
+You can now install <span class="pkg">ggweekly</span> from [github.com/gadenbuie/ggweekly][ggweekly] and use the `ggweek_planner()` function to make your own custom, printable calendars.
 
 ## The Making of a Calendar
 
 ### Load the tidyverse
 
-First, we need to load the usual suspects from the [tidyverse], plus the [lubridate]{.pkg} package (because dates).
+First, we need to load the usual suspects from the <span class="pkg">tidyverse], plus the [lubridate</span> package (because dates).
 
 
 ```r
@@ -63,7 +63,7 @@ library(ggplot2)
 library(lubridate)
 ```
 
-Let's also save ourselves some extra typing and tell [lubridate]{.pkg} to always start weeks with Monday.
+Let's also save ourselves some extra typing and tell <span class="pkg">lubridate</span> to always start weeks with Monday.
 
 
 ```r
@@ -127,7 +127,7 @@ Note that I've used `isoweek()` and `isoyear()`, which also follow the conventio
 This way, I now have the week number to which each day in the sequence belongs, but because we may be interested in creating calendars that span multiple years, the addition of `isoyear()` protects against repeated week numbers.
 
 This week year combination is destined for the *y* axis as it marks the row to which each day belongs.
-The *y* axis is typically increasing, with the smallest value at the bottom. 
+The *y* axis is typically increasing, with the smallest value at the bottom.
 This means that, if left as strings, the week of `"2019 - 25"` would be _below_ the week `"2019 - 26"`.
 Because calendars are typically read top to bottom, I used `fct_rev()` here to both convert `{isoyear} - {isoweek}` into a factor and then reverse the factor order so that `2019 - 25` is the last factor.
 
@@ -145,7 +145,7 @@ For a bit of convenience later, I then pull out the rows of `dates` representing
 
 
 ```r
-day_one <- dates %>% 
+day_one <- dates %>%
   filter(day(day) == 1)
 
 day_one
@@ -163,7 +163,7 @@ day_one
 
 Quick, what's the starting date of week 31 in 2019?
 
-Ok, fine, that was too hard. 
+Ok, fine, that was too hard.
 What month of 2019 does week 31 belong to?
 
 Trick question: that week starts on July 29, 2019 but ends on August 4th.
@@ -181,16 +181,16 @@ In other words, when `month == lag(month)`, I just need the day of the month the
 
 ```r
 week_start_labels <- dates %>%
-  filter(wday_name == "Mon") %>% 
+  filter(wday_name == "Mon") %>%
   arrange(day) %>%
   mutate(
-    month = month(day, label = TRUE), 
+    month = month(day, label = TRUE),
     label = case_when(
       month == lag(month) ~ paste(day(day)),
       TRUE ~ sprintf("%s %4i", month, day(day))
     )
-  ) %>% 
-  select(label, week_year) %>% 
+  ) %>%
+  select(label, week_year) %>%
   reduce(setNames)
 ```
 
@@ -226,13 +226,13 @@ highlight_days <- tribble(
   "2019-08-08",                 "",        NA, "#02307a",
   "2019-08-09",                 "",        NA, "#02307a",
   "2019-08-16", "Final Submission", "#02307a", "#02307a"
-) %>% 
+) %>%
   mutate_at(vars(day), ymd)
 ```
 
 ### Finally, ggplot the calendar
 
-Finally, we arrive at the main event, the actual creation of the calendar with [ggplot2]{.pkg}.
+Finally, we arrive at the main event, the actual creation of the calendar with <span class="pkg">ggplot2</span>.
 
 Here I use `geom_tile()` for each day, and then overlay tiles for the start-of-the-month days and the highlighted holiday and project-specific days.
 I also used `geom_text()` to add annotations to the special days, which I pushed to the top or bottom left corner of the day box.
@@ -240,11 +240,11 @@ I also used `geom_text()` to add annotations to the special days, which I pushed
 
 ```r
 gcal <-
-  dates %>% 
+  dates %>%
   mutate(
     # Softly fill in the weekend days
     weekend = case_when(weekend ~ "#f8f8f8", TRUE ~ "#FFFFFF")
-  ) %>% 
+  ) %>%
   ggplot() +
   aes(wday_name, week_year) +
   # the calendar grid
@@ -257,7 +257,7 @@ gcal <-
   ) +
   # add name of month to the first day
   geom_text(
-    data = day_one, 
+    data = day_one,
     aes(label = month),
     family = "PT Sans Narrow",
     color = "#f78154",
@@ -330,23 +330,23 @@ month_boundaries <- day_one %>%
   mutate(
     left = map2(wday_name, week_year, ~ {
       # n/a if month changes on first day
-      if (.x == 1) return(tibble(.missing = NA)) 
+      if (.x == 1) return(tibble(.missing = NA))
       tibble(
-        x = 0.5,      xend = .x - 0.5, 
+        x = 0.5,      xend = .x - 0.5,
         y = .y - 0.5, yend = y
       )
     }),
     up = map2(wday_name, week_year, ~ {
       # n/a if month changes on first day
-      if (.x == 1) return(tibble(.missing = NA)) 
+      if (.x == 1) return(tibble(.missing = NA))
       tibble(
-        x = .x - 0.5, xend = x, 
+        x = .x - 0.5, xend = x,
         y = .y - 0.5, yend = .y + 0.5
       )
     }),
     right = map2(wday_name, week_year, ~ {
       tibble(
-        x = .x - 0.5, xend = 7.5, 
+        x = .x - 0.5, xend = 7.5,
         y = .y + 0.5, yend = y
       )
     })
@@ -369,7 +369,7 @@ Then, I use a quick for loop to add each of these segments to the calendar plot.
 
 ```r
 for (boundary in c("left", "up", "right")) {
-  gcal <- gcal + 
+  gcal <- gcal +
     geom_segment(
       data = month_boundaries %>% unnest(!!rlang::sym(boundary)),
       aes(x = x, y = y, xend = xend, yend = yend),
@@ -395,7 +395,7 @@ gcal
 
 I originally thought I would simply include the code as a gist and move on with life, but I quickly realized that I might want to a) use this code again sometime and b) find some room for improvement and tweaks.
 
-So I created [ggweekly], a small package for creating calendars like these. In packaging the code, I made a few tweaks and changes. 
+So I created [ggweekly], a small package for creating calendars like these. In packaging the code, I made a few tweaks and changes.
 For example, I scraped the dates of federal holidays from the [U.S. Office of Personel Management](https://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/federal-holidays/) and separated the highlighted and holiday days.
 I also tweaked the function signatures a bit to make it more flexible.
 
@@ -407,7 +407,7 @@ devtools::install_github("gadenbuie/ggweekly")
 # create a calendar for April, May and June
 library(ggweekly)
 ggweek_planner(
-  start_day = "2019-04-01", 
-  end_day = "2019-06-30", 
+  start_day = "2019-04-01",
+  end_day = "2019-06-30",
 )
 ```

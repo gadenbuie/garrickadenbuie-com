@@ -11,7 +11,7 @@ tags:
   - R
   - netlify
   - hugo
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -31,7 +31,7 @@ editor_options:
 
 ## Overview
 
-This post presents my workflow for writing new posts for a [[blogdown]]{.pkg} website hosted on [GitHub] and served through [Netlify].
+This post presents my workflow for writing new posts for a <span class="pkg">[blogdown]</span> website hosted on [GitHub] and served through [Netlify].
 
 Here's a quick overview of the workflow:
 
@@ -49,17 +49,17 @@ The rest of this post describes [this workflow](#workflow) in more detail, inclu
 
 To get started you need three things:
 
-1. a [[blogdown]]{.pkg} website
-1. hosted on [GitHub] and 
+1. a <span class="pkg">[blogdown]</span> website
+1. hosted on [GitHub] and
 1. published via [Netlify].
 
 There are a lot of great resources for setting up and connecting these components if you haven't already, but the best place to start is the [blogdown book][blogdown].
-The process for setting up Netlify to serve your GitHub-hosted [blogdown]{.pkg} site is described in detail in the [_Netlify_ section][blogdown-netlify] of the [_Deployment_ chapter][blogdown-deployment] of the blogdown book.
+The process for setting up Netlify to serve your GitHub-hosted <span class="pkg">blogdown</span> site is described in detail in the [_Netlify_ section][blogdown-netlify] of the [_Deployment_ chapter][blogdown-deployment] of the blogdown book.
 Alison Presmanes Hill's [Up and running with blogdown][apreshill-blogdown] is another excellent guide for getting started down this path.
 
 I'm a huge fan of GitHub (or really open sharing of code) and I highly recommend using Netlify for a number of reasons.
 The main benefit of this combination is that Netlify's continuous deployment builds your website for you whenever you update your source files.
-Netlify also makes it easy to set up your website for [https with free, managed certificates][netlify-https], and their integration with GitHub makes [blogdown]{.pkg}, GitHub, and Netlify excellent partners.
+Netlify also makes it easy to set up your website for <span class="pkg">https with free, managed certificates][netlify-https], and their integration with GitHub makes [blogdown</span>, GitHub, and Netlify excellent partners.
 
 Note part of setup should include configuring the `baseurl` option in your `config.toml` file.
 This is the base of URLs used in your website wherever an absolute URL (i.e. the full URL rather than a relative or partial URL) is created.
@@ -83,9 +83,9 @@ Then click on **Site settings** and find **Build & deploy** on the left menu bar
 Under this settings group, click the _Edit settings_ button and select **Automatically build deploy previews for all pull requests** next to _Deploy previews_.
 
 ![Enable automatic deploy previews for pull requests in your site's settings.](netlify-deploy-context.png){.center}
-   
+
 ### Set up `netlify.toml` {#netlify-toml}
-   
+
 Finally, you need to create a file called `netlify.toml` in your website's root directory.
 This file allows you to very specifically customize your Netlify settings in addition to, or in place of, the settings available through the Netlify web app.
 
@@ -97,11 +97,11 @@ Two modifications from the default `hugo` command used to build the deploy previ
 1. Adding `--buildFuture` ensures that posts scheduled in the future are also rendered regardless of publication date.
    Without this, posts scheduled for future publication dates won't be displayed in the preview.
    You may also wish to enable `--buildDrafts` as well (but see the [side note on drafts](#side-note-drafts) below).
- 
+
 We can apply these settings in the context of deploy previews using the `context.deploy-preview` header, and if you've enabled _branch deploys_ in [the step above](#enable-deploy-previews), you can also enable these features under `context.branch-deploy`.
 
 Altogether, my `netlify.toml` file looks like this.
- 
+
 ```toml
 # netlify.toml
 [context.deploy-preview]
@@ -120,7 +120,7 @@ But I don't recommend using this flag for two reasons.
 
 First, it's likely that you'll forget to remove it before publishing.
 The local live preview will show your post, so it's easy to push your post only to discover that you forgot to set `draft: false` when your post doesn't appear on your site
-(not that I've ever 
+(not that I've ever
 [done](https://github.com/gadenbuie/garrickadenbuie-com/commit/7481fa7c1eff9b3c8a259271b7d188f0eaa3cd40)
 [that](https://github.com/gadenbuie/garrickadenbuie-com/commit/a6416000d7e1a8185c2e6fc3293fef28a4641a66)
 [before](https://github.com/gadenbuie/garrickadenbuie-com/commit/8d10d086ae3b287b7ea16ba1b781f2a374f8cf84).)
@@ -138,7 +138,7 @@ Okay, now that everything is set up, we're ready to dive into the workflow.
 
 ### Start in a new branch
 
-Create a new branch for your post. 
+Create a new branch for your post.
 Give your branch a meaningful name --- consider using the slug (short title) for the post.
 I wrote this post in a branch called `post-new-post-workflow`.
 
@@ -146,7 +146,7 @@ I wrote this post in a branch called `post-new-post-workflow`.
 
 ### Create a new post
 
-Create a new post in your blog using [blogdown]{.pkg}'s **New Post** addin.
+Create a new post in your blog using <span class="pkg">blogdown</span>'s **New Post** addin.
 This is generally the easiest way to get started with a post, although you can also manually call `blogdown::new_post()` from the R command prompt.
 
 ![Opening the <strong>New Post</strong> RStudio addin.](new-post_dropdown_crop.png){.center}
@@ -154,7 +154,7 @@ This is generally the easiest way to get started with a post, although you can a
 At this step, the default date of the post is set to the current date.
 If you'd like to "schedule" your post for a day in the future, you set the date now.
 (Remind yourself it's an aspirational goal and not a hard deadline.)
-(And [see below](#publish) for the reason for the scare quotes around _schedule_. 
+(And [see below](#publish) for the reason for the scare quotes around _schedule_.
 Spoiler: it's not automatic.)
 
 ![Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)](new-post_choose-future-date_crop.png){.center width=66%}
@@ -178,12 +178,12 @@ If you use your post's date in your site's permalinks[^permalinks] --- for examp
     Another quick side note to say that I highly recommend setting your permalinks to simply refer to your post's slugs.
     For some reason, I used the full year, month, _and day!_ of my post in my permalinks.
     Oh, the optimism!
-    
+
     I certainly do not post often enough that I would ever end up with a name clash that could only be resolved by the full date of the post.
     There is an incredibly small (and only _slightly_ non-zero) chance I'll use the same slug for two posts.
-    In my view, it's a worthwhile risk and much nicer to 
-    
-    a) not need to worry too much about the date in the post's metadata and 
+    In my view, it's a worthwhile risk and much nicer to
+
+    a) not need to worry too much about the date in the post's metadata and
     b) be able to share links like <https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/> than [https://garrickadenbuie.com/blog/2019/03/18/blogdown-netlify-new-post-workflow/](https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/).
 
 
@@ -196,7 +196,7 @@ Run `blogdown::serve_site()` and write your post draft, previewing locally as yo
 
 ### Commit and Push
 
-Commit your post when it's complete or after you've written a section or a draft version (commits are cheap!). 
+Commit your post when it's complete or after you've written a section or a draft version (commits are cheap!).
 When you have at least one commit in your post branch, say your draft post, push those commits to GitHub.
 Navigate to the GitHub page for your website repo and [open a pull request](https://help.github.com/en/articles/creating-a-pull-request) from your post branch.
 
@@ -235,7 +235,7 @@ The final step is to publish your post --- merge your pull request to master and
 
 
 Of course, if you've scheduled your post for a future release date, it's slightly more complicated.
-Hugo sites --- and by extension [blogdown]{.pkg} sites --- are _static_.
+Hugo sites --- and by extension <span class="pkg">blogdown</span> sites --- are _static_.
 The entire site is compiled and rendered once instead of every time a visitor access a page (like WordPress).
 
 As far as I know, there's no built-in mechanism to schedule the re-rendering of your site at a future date, so you'll need to manually trigger the rendering.
@@ -243,7 +243,7 @@ In my workflow, this means choosing from the following two options:
 
 1. Wait until on or after the date of your post to merge the pull request to master.
    Netlify will build and deploy your website immediately.
-   
+
 1. Merge your pull request, but then later use the Netlify settings page for your site to trigger a rebuild.
    This seems more complicated to me, so I recommend using the first option.
 

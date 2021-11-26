@@ -67,6 +67,7 @@ xcolor <-
   flatten_chr() %>%
   str_subset("^(%%|\\\\| )", negate = TRUE) %>%
   str_remove("(;%|\\})$") %>%
+  paste(collapse = "\n") %>%
   read_csv(col_names = c("color", "r", "g", "b")) %>%
   arrange(color)
 
@@ -582,7 +583,8 @@ If you’re interested, you can download the
 .xcolor-text {
   display: none;
   margin: auto;
-  background: white;
+  background: var(--siteBgColorCustom);
+  color: var(--textColorCustom);
   padding: 10px;
 }
 .xcolor-color:hover .xcolor-text,

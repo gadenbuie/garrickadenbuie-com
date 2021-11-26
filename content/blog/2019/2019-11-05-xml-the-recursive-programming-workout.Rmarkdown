@@ -13,14 +13,14 @@ tags:
   - xml2
   - purrr
   - recursive programming
-keywords: 
+keywords:
   - rstats
   - R
   - XML
   - xml2
   - purrr
   - recursive programming
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -75,7 +75,7 @@ xml_text <- '
 
 ## From XML to a `list()`
 
-With the [[xml2]]{.pkg} package and two tiny lines of R code
+With the <span class="pkg">[xml2]</span> package and two tiny lines of R code
 we have the XML file as a list in R.
 
 ```{r read-xml}
@@ -86,8 +86,8 @@ str(list_xml, max.level = 2)
 ```
 
 But as you can see from the preview above,
-when converted to a list, 
-[xml2]{.pkg} stores attributes at each node,
+when converted to a list,
+<span class="pkg">xml2</span> stores attributes at each node,
 like `company="MacroSoft"`,
 as R `attributes()` associated with the corresponding list item.
 
@@ -109,7 +109,7 @@ the function again on a smaller unit.
 
 ### Base case
 
-The base case of the recursive function 
+The base case of the recursive function
 is when we have an empty list that has attributes.
 In that case, we just return the attributes.
 A good example of the base case from our example XML
@@ -121,16 +121,16 @@ attributes(list_xml[[1]][[1]][[1]])
 
 ### Recursive case
 
-If, 
-on the other hand, 
+If,
+on the other hand,
 we find that we have a list that contains both items _and_ attributes
-we do three things. 
-First, 
-we keep a copy of the attributes of the list at the current level that we'll use later. 
-Second, 
+we do three things.
+First,
+we keep a copy of the attributes of the list at the current level that we'll use later.
+Second,
 we look inside each of the items
 in the list we currently have to see if we can promote their attributes.
-This triggers the recursion, 
+This triggers the recursion,
 so this function will keep calling itself on smaller
 and smaller units until eventually it reaches a list with no items and only attributes.
 At that point, it returns the attributes as a list.
@@ -158,20 +158,20 @@ The final step is to put this all together inside a function
 that handles the base case or recurses to iterate over list items further down the tree.
 
 But first...
-did you notice this line above? 
+did you notice this line above?
 
 ```{r echo=FALSE}
 str(this_attr["names"])
 ```
 
 We have also included the names of the sub-list items in our new list!
-This is because R uses named attributes 
+This is because R uses named attributes
 to keep track of things like `"names"`, `"class"`, `"dimnames"` etc.
-If the XML node has an attribute called `names="foo"`, 
-[xml2]{.pkg} will store that attribute-value pair as `.names`. 
+If the XML node has an attribute called `names="foo"`,
+<span class="pkg">xml2</span> will store that attribute-value pair as `.names`.
 I don't mind having `.names` entries in my lists
 (I can take care of that downstream),
-but I don't want to keep attributes named` names` or `class` etc., 
+but I don't want to keep attributes named` names` or `class` etc.,
 because those are reserved for special R functionality.
 
 Here's a small function that removes reserved R attributes
@@ -207,8 +207,8 @@ promote_attr <- function(ll) {
 }
 ```
 
-Quick aside: 
-this function makes very strong assumptions 
+Quick aside:
+this function makes very strong assumptions
 that every item in the list we're recursing over
 is also a list, all the way down.
 In this example processing a list derived from an XML document,
@@ -219,9 +219,9 @@ a whole lot more type checking will be required.
 
 ## The end result (for now)
 
-In the end, 
-by mapping `promote_attr()` over `list_xml`, 
-we get a nice, tidy-ish list. 
+In the end,
+by mapping `promote_attr()` over `list_xml`,
+we get a nice, tidy-ish list.
 This setup might not work for your XML data,
 but recursive programming can be a huge help when working with lists and tree structures.
 
@@ -238,7 +238,7 @@ widgetframe::frameWidget(listviewer::jsonedit(tidy_xml, height=375), height=425)
 
 ## Further Reading
 
-If you'd like to read more about [purrr]{.pkg}
+If you'd like to read more about <span class="pkg">purrr</span>
 or about rectangling tangled tree-like lists,
 I highly recommend Jenny Bryan's excellent
 [repurrrsive tutorial and package](https://github.com/jennybc/repurrrsive).

@@ -121,10 +121,10 @@ tibble(date = "2020-01-01") %>%
   ))
 #> Error: Problem with `mutate()` column `year`.
 #> ℹ `year = case_when(...)`.
-#> x must be a double vector, not a logical vector.
+#> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-23 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -143,7 +143,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-23                  
+#>  date     2021-11-24                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -190,7 +190,6 @@ sessioninfo::session_info()
 #>  reprex        2.0.1   2021-08-05 [1] standard (@2.0.1) 
 #>  rlang         0.4.12  2021-10-18 [1] standard (@0.4.12)
 #>  rmarkdown     2.11    2021-09-14 [1] standard (@2.11)  
-#>  rstudioapi    0.13    2020-11-12 [1] standard (@0.13)  
 #>  rvest         1.0.0   2021-03-09 [1] standard (@1.0.0) 
 #>  scales        1.1.1   2020-05-11 [1] standard (@1.1.1) 
 #>  sessioninfo   1.1.1   2018-11-05 [1] standard (@1.1.1) 
@@ -231,10 +230,10 @@ tibble(date = "2020-01-01") %>%
   ))
 #> Error: Problem with `mutate()` column `year`.
 #> ℹ `year = case_when(...)`.
-#> x must be a double vector, not a logical vector.
+#> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-23 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -253,7 +252,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-23                  
+#>  date     2021-11-24                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -300,7 +299,6 @@ sessioninfo::session_info()
 #>  reprex        2.0.1   2021-08-05 [1] standard (@2.0.1) 
 #>  rlang         0.4.12  2021-10-18 [1] standard (@0.4.12)
 #>  rmarkdown     2.11    2021-09-14 [1] standard (@2.11)  
-#>  rstudioapi    0.13    2020-11-12 [1] standard (@0.13)  
 #>  rvest         1.0.0   2021-03-09 [1] standard (@1.0.0) 
 #>  scales        1.1.1   2020-05-11 [1] standard (@1.1.1) 
 #>  sessioninfo   1.1.1   2018-11-05 [1] standard (@1.1.1) 
@@ -358,15 +356,15 @@ Below you can see that I’ve added some exposition around the problematic code.
 <span class="panel-name">R Code</span>
 
 ``` r
-#' I'm using the latest version of the `tidyverse`, 
+#' I'm using the latest version of the `tidyverse`,
 #' freshly installed.
 library(tidyverse)
 
-#' Suppose we have a data frame with a date column. 
-#' The date is stored as a _character_ vector, and 
+#' Suppose we have a data frame with a date column.
+#' The date is stored as a _character_ vector, and
 #' I'd like to convert it to a _year_ with a simple
-#' comparison. The first function I thought of was 
-#' `case_when()`, but it doesn't seem to be doing 
+#' comparison. The first function I thought of was
+#' `case_when()`, but it doesn't seem to be doing
 #' what I expect. Why am I getting this error?
 tibble(date = "2020-01-01") %>%
   mutate(year = case_when(
@@ -403,10 +401,10 @@ tibble(date = "2020-01-01") %>%
   ))
 #> Error: Problem with `mutate()` column `year`.
 #> ℹ `year = case_when(...)`.
-#> x must be a double vector, not a logical vector.
+#> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-23 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -425,7 +423,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-23                  
+#>  date     2021-11-24                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -472,7 +470,6 @@ sessioninfo::session_info()
 #>  reprex        2.0.1   2021-08-05 [1] standard (@2.0.1) 
 #>  rlang         0.4.12  2021-10-18 [1] standard (@0.4.12)
 #>  rmarkdown     2.11    2021-09-14 [1] standard (@2.11)  
-#>  rstudioapi    0.13    2020-11-12 [1] standard (@0.13)  
 #>  rvest         1.0.0   2021-03-09 [1] standard (@1.0.0) 
 #>  scales        1.1.1   2020-05-11 [1] standard (@1.1.1) 
 #>  sessioninfo   1.1.1   2018-11-05 [1] standard (@1.1.1) 
@@ -525,10 +522,10 @@ tibble(date = "2020-01-01") %>%
   ))
 #> Error: Problem with `mutate()` column `year`.
 #> ℹ `year = case_when(...)`.
-#> x must be a double vector, not a logical vector.
+#> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-23 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -547,7 +544,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-23                  
+#>  date     2021-11-24                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -594,7 +591,6 @@ sessioninfo::session_info()
 #>  reprex        2.0.1   2021-08-05 [1] standard (@2.0.1) 
 #>  rlang         0.4.12  2021-10-18 [1] standard (@0.4.12)
 #>  rmarkdown     2.11    2021-09-14 [1] standard (@2.11)  
-#>  rstudioapi    0.13    2020-11-12 [1] standard (@0.13)  
 #>  rvest         1.0.0   2021-03-09 [1] standard (@1.0.0) 
 #>  scales        1.1.1   2020-05-11 [1] standard (@1.1.1) 
 #>  sessioninfo   1.1.1   2018-11-05 [1] standard (@1.1.1) 
@@ -700,10 +696,12 @@ body <- reprex::reprex(input = input, venue = "gh", html_preview = TRUE)
 body
 ```
 
-    ## [1] "``` r"                                                                           
-    ## [2] "runif(min = 0, max = 10)"                                                        
-    ## [3] "#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"
-    ## [4] "```"
+    ## [1] "``` r"                                                                                          
+    ## [2] "runif(min = 0, max = 10)"                                                                       
+    ## [3] "#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"               
+    ## [4] "```"                                                                                            
+    ## [5] ""                                                                                               
+    ## [6] "<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
 
 Notice that it returns a character vector
 with one item per line of the rendered reprex.
@@ -713,7 +711,7 @@ We need to collapse it all into a single string.
 body <- paste(body, collapse = "\n")
 ```
 
-    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```"
+    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```\n\n<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
 
 But this still won’t fit in a URL
 because it contains spaces, new lines, and other characters URLs don’t like.
@@ -724,7 +722,7 @@ to turn the `body` text into something readable only by machines.
 body <- URLencode(body, reserved = TRUE)
 ```
 
-    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60"
+    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-24%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E"
 
 Finally, we can make our new issue URL.
 
@@ -733,7 +731,7 @@ url_new_issue <- glue::glue("https://github.com/{repo}/issues/new?body={body}")
 url_new_issue
 ```
 
-    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60
+    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-24%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E
 
 I didn’t make the link clickable,
 but if you were to follow it,
@@ -803,7 +801,7 @@ and replacing the error with a `NULL` value.
 
 ``` r
 repo_guess <- tryCatch(
-  usethis:::target_repo_spec("source", FALSE), 
+  usethis:::target_repo_spec("source", FALSE),
   error = function(err) NULL
 )
 ```
@@ -816,7 +814,7 @@ The prompt is created with the `showPrompt()` function from <span class="pkg">rs
 
 ``` r
 repo <- rstudioapi::showPrompt(
-  title = "Which repository?", 
+  title = "Which repository?",
   message = "Where should we create the issue? (owner/repo)",
   default = repo_guess
 )
@@ -834,12 +832,12 @@ we’d wouldn’t need to guess or ask for a repo.
 ``` r
 if (is.null(repo)) {
   repo_guess <- tryCatch(
-    usethis:::target_repo_spec("source", FALSE), 
+    usethis:::target_repo_spec("source", FALSE),
     error = function(err) NULL
   )
 
   repo <- rstudioapi::showPrompt(
-    title = "Which repository?", 
+    title = "Which repository?",
     message = "Where should we create the issue? (owner/repo)",
     default = repo_guess
   )
@@ -906,7 +904,7 @@ which will offer to create the `.shrtcts.R` file if it doesn’t exit.
 shrtcts::edit_shortcuts()
 ```
 
-    Would you like to create a new shrtcts file at 
+    Would you like to create a new shrtcts file at
     '~/Library/Application Support/shrtcts/.shrtcts.R' (Yes/no/cancel) yes
 
 ### Creating a shortcut function
@@ -968,17 +966,17 @@ with all of the code we wrote above.
 create_issue_from_reprex <- function(input = NULL, repo = NULL) {
   if (is.null(repo)) {
     repo_guess <- tryCatch(
-      usethis:::target_repo_spec("source", FALSE), 
+      usethis:::target_repo_spec("source", FALSE),
       error = function(err) NULL
     )
   
     repo <- rstudioapi::showPrompt(
-      title = "Which repository?", 
+      title = "Which repository?",
       message = "Where should we create the issue? (owner/repo)",
       default = repo_guess
     )
   }
-    
+
   if (is.null(input)) {
     ctx <- rstudioapi::getSourceEditorContext()
     selection <- ctx$selection[[1]]$text
@@ -986,7 +984,7 @@ create_issue_from_reprex <- function(input = NULL, repo = NULL) {
       c(strsplit(selection, "\n")[[1]], "")
     }
   }
-  
+
   body <- reprex::reprex(input = input, venue = "gh", html_preview = TRUE)
   body <- paste(body, collapse = "\n")
   body <- URLencode(body, reserved = TRUE)

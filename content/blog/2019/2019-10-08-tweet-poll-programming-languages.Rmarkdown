@@ -56,7 +56,7 @@ tweets <- read_rds(here::here("_data/tweets_first-lang.rds"))
 ```{r common-langs}
 common_langs <- c(
   # c, c#, c++, and .net are manually included later
-  "css", "html", "python", "javascript", "x86", "java", "ruby", "pascal", "php", 
+  "css", "html", "python", "javascript", "x86", "java", "ruby", "pascal", "php",
   "matlab", "perl", "fortran", "logo", "actionscript", "lua", "assembly",
   "delphi", "js", "scheme", "scratch", "go", "typescript", "clojure", "elixr",
   "kotlin", "ocaml", "rust", "mathematica", "matlab", "dart", "flutter", "groovy",
@@ -75,7 +75,7 @@ remove_unused_text <- function(text) {
     # remove parentheticals
     str_remove_all("\\s*\\(.+?\\)( |\n|$)") %>%
     # replace "#hashtag" with "hashtag"
-    str_replace_all("#(\\w)", "\\1") 
+    str_replace_all("#(\\w)", "\\1")
 }
 ```
 
@@ -151,10 +151,10 @@ recode_category <- function(category) {
 
 ```{r tweets-lang-poll, cache=TRUE}
 tweets_lang_poll <-
-  tweets %>% 
+  tweets %>%
   select(status_id, created_at, user_id, screen_name, text) %>%
   # Remove tweets with "English" because that's probably a different thread
-  filter(!str_detect(text, "[eE]nglish")) %>% 
+  filter(!str_detect(text, "[eE]nglish")) %>%
   mutate(
     # Backup original tweet text
     text_og = text,
@@ -163,35 +163,35 @@ tweets_lang_poll <-
   ) %>%
   # Split text into question/answer pairs,
   # splitting on newline or one of: `N.`, `N)`, `N:`, or `N-`
-  separate_rows(text, sep = "\n|\\d\\s*[.):-]") %>% 
+  separate_rows(text, sep = "\n|\\d\\s*[.):-]") %>%
   # Remove whitespace and `N.` numbers from start of text
-  mutate(text = str_remove_all(text, "^\\s*(\\d[.):-])?\\s*")) %>% 
+  mutate(text = str_remove_all(text, "^\\s*(\\d[.):-])?\\s*")) %>%
   # Seperate question/answer into category, answer columns, splitting on colon `:`
   separate(
     col = text,
     into = c("category", "answer"),
-    sep = "\\s*:\\s*", 
+    sep = "\\s*:\\s*",
     remove = FALSE
-  ) %>% 
+  ) %>%
   # Remove nothing answers or answers without any letters
   filter(
     !is.na(answer),
     str_detect(answer, "[[:alnum:]]")
-  ) %>% 
+  ) %>%
   # Re-encode category, answer as UTF-8 (:shrug:) and lowercase
-  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %>% 
-  mutate_at(vars(category, answer), tolower) %>% 
+  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %>%
+  mutate_at(vars(category, answer), tolower) %>%
   # Category: Remove leading non-alpha characters and squish whitespace
   mutate(
     category = str_remove(category, "^[^[:alpha:]]+"),
     category = str_squish(category)
-  ) %>% 
+  ) %>%
   # Process answer as well as we can programmatically
-  mutate(answer = process_answer(answer, common_langs)) %>% 
+  mutate(answer = process_answer(answer, common_langs)) %>%
   # Separate into one language per row
-  separate_rows(answer, sep = "\\s*[,/]\\s*") %>% 
+  separate_rows(answer, sep = "\\s*[,/]\\s*") %>%
   # Squish the strings
-  mutate_at(vars(answer), str_squish) %>% 
+  mutate_at(vars(answer), str_squish) %>%
   mutate(
     answer = recode_answer(answer),
     category2 = recode_category(category)
@@ -201,7 +201,7 @@ tweets_lang_poll <-
   filter(
     nchar(answer) > 0,
     nchar(category) > 4
-  ) 
+  )
 ```
 
 ```{r tweets-lang-counted}
@@ -212,10 +212,10 @@ tweets_lang_counted <-
 
 
 ```{r popular-categories}
-popular_categories <- 
-  tweets_lang_counted %>% 
-  count(category2, sort = TRUE) %>% 
-  top_n(6, n) %>% 
+popular_categories <-
+  tweets_lang_counted %>%
+  count(category2, sort = TRUE) %>%
+  top_n(6, n) %>%
   pull(category2)
 ```
 
@@ -233,24 +233,24 @@ standard_categories <- c(
 
 ```{r f-plot-tweets-by-category}
 plot_tweets_by_category <- function(
-  tweets_lang_counted, 
-  categories, 
+  tweets_lang_counted,
+  categories,
   ncol = 2,
   min_count = 10
 ) {
-  tweets_lang_counted %>% 
-    filter(category2 %in% categories) %>% 
-    mutate_at(vars(category2), factor, levels = categories) %>% 
-    group_by(category2) %>% 
-    arrange(desc(n)) %>% 
-    filter(n >= min_count) %>% 
-    top_n(20, n) %>% 
-    ungroup() %>% 
-    arrange(category2, answer, desc(n)) %>% 
+  tweets_lang_counted %>%
+    filter(category2 %in% categories) %>%
+    mutate_at(vars(category2), factor, levels = categories) %>%
+    group_by(category2) %>%
+    arrange(desc(n)) %>%
+    filter(n >= min_count) %>%
+    top_n(20, n) %>%
+    ungroup() %>%
+    arrange(category2, answer, desc(n)) %>%
     mutate(
       answer_within = tidytext::reorder_within(answer, n, category2),
       answer = fct_reorder(answer, n, first)
-    ) %>% 
+    ) %>%
     ggplot() +
     aes(answer_within, n, fill = answer) +
     geom_col() +
@@ -312,7 +312,7 @@ plot_tweets_by_category(tweets_lang_counted, standard_categories[5:6], ncol = 1)
 
 ```{r votes-curious-interesting-wide, fig.show="hide"}
 plot_tweets_by_category(
-  tweets_lang_counted, 
+  tweets_lang_counted,
   c("curious", "interesting"),
   min_count = 1
 )
@@ -320,26 +320,26 @@ plot_tweets_by_category(
 
 ```{r votes-curious-interesting-narrow, fig.show="hide", fig.width = 5, fig.height = 12}
 plot_tweets_by_category(
-  tweets_lang_counted, 
-  c("curious", "interesting"), 
+  tweets_lang_counted,
+  c("curious", "interesting"),
   ncol = 1,
   min_count = 1
 )
 ```
 
 ```{r}
-gg_starter_tweets <- 
-  tweets %>% 
-  mutate(related_to_status_id = coalesce(reply_to_status_id, quoted_status_id)) %>% 
-  group_by(related_to_status_id) %>% 
-  count(sort = TRUE) %>% 
-  filter(!is.na(related_to_status_id)) %>% 
-  ungroup() %>% 
-  top_n(10, n) %>% 
-  right_join(tweets, ., by = c("status_id" = "related_to_status_id")) %>% 
-  select(status_id, created_at, screen_name, text, n) %>% 
-  mutate(tooltip = glue::glue("{format(n, big.mark = ',')} quotes and replies")) %>% 
-  mutate(screen_name = fct_reorder(screen_name, n)) %>% 
+gg_starter_tweets <-
+  tweets %>%
+  mutate(related_to_status_id = coalesce(reply_to_status_id, quoted_status_id)) %>%
+  group_by(related_to_status_id) %>%
+  count(sort = TRUE) %>%
+  filter(!is.na(related_to_status_id)) %>%
+  ungroup() %>%
+  top_n(10, n) %>%
+  right_join(tweets, ., by = c("status_id" = "related_to_status_id")) %>%
+  select(status_id, created_at, screen_name, text, n) %>%
+  mutate(tooltip = glue::glue("{format(n, big.mark = ',')} quotes and replies")) %>%
+  mutate(screen_name = fct_reorder(screen_name, n)) %>%
   arrange(desc(screen_name)) %>%
   ggplot() +
   aes(n, screen_name, color = screen_name, text = tooltip) +
@@ -354,8 +354,8 @@ gg_starter_tweets <-
     panel.grid.major.y = element_blank()
   )
 
-plt_starter_tweets <- 
-  plotly::ggplotly(gg_starter_tweets, tooltip = "tooltip") %>% 
+plt_starter_tweets <-
+  plotly::ggplotly(gg_starter_tweets, tooltip = "tooltip") %>%
   plotly::layout(showlegend = FALSE, hovermode = "closest", dragmode = FALSE)
 
 plt_starter_tweets$sizingPolicy$defaultHeight <- NULL
@@ -378,15 +378,15 @@ replies and quote tweets from developers and programmers
 sharing their own experiences.
 
 ```{r tweets-per-day, fig.height=1}
-tweets %>% 
-  select(created_at) %>% 
-  mutate(time = lubridate::floor_date(created_at, "6 hours")) %>% 
-  group_by(time) %>% 
-  count() %>% 
-  ungroup() %>% 
-  mutate(total = cumsum(n)) %>% 
-  ggplot() + 
-  aes(time, n) + 
+tweets %>%
+  select(created_at) %>%
+  mutate(time = lubridate::floor_date(created_at, "6 hours")) %>%
+  group_by(time) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(total = cumsum(n)) %>%
+  ggplot() +
+  aes(time, n) +
   geom_area(fill = "#3E5E92", alpha = 0.25) +
   geom_line(color = "#3E5E92") +
   geom_point(color = "#3E5E92") +
@@ -401,7 +401,7 @@ tweets %>%
 
 My interest in the poll was piqued by another tweet by
 [&commat;edsu][edsu-tweet]
-sharing a 
+sharing a
 [Jupyter notebook][edsu-nb]
 analyzing the tweeted responses.
 I thought it would be interesting
@@ -410,12 +410,12 @@ initially thinking I could compare the R and Python versions.
 
 What I should have done is to have used *both* R and Python
 (because they're friends and language wars are silly),
-but instead I ended up going down the endless rabbit hole 
+but instead I ended up going down the endless rabbit hole
 of regular expressions and free-form informal survey results.
 
 ## Gather the Tweets
 
-I gathered all tweets containing `"first language"`, `"most used"`, and `"most loved"` 
+I gathered all tweets containing `"first language"`, `"most used"`, and `"most loved"`
 using the excellent [rtweet] package by [Mike Kearney][mikewk].
 
 ```r
@@ -435,7 +435,7 @@ with `rtweet::lookup_statuses()`.
 
 ```{r}
 n_tweets <- nrow(tweets)
-n_are_replies <- tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nrow() 
+n_are_replies <- tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nrow()
 ```
 
 There were
@@ -444,9 +444,9 @@ reponses to the poll and
 `r format(n_are_replies/n_tweets * 100, digits = 0)`%
 or
 `r format(n_are_replies, big.mark = ',')`
-of them are 
+of them are
 replies to or quotes of another tweet.
-Here are the top contributors to the popularity of the poll, 
+Here are the top contributors to the popularity of the poll,
 in the form of the top 10 recipients of a reply or quote tweet.
 
 ```{r starter-tweets-plot}
@@ -461,7 +461,7 @@ tagList(
     id = "starter-tweet-container",
     htmltools::tags$div(
       id = "plot",
-      plt_starter_tweets %>% 
+      plt_starter_tweets %>%
         htmlwidgets::onRender(
           "
 function (el) {
@@ -501,12 +501,12 @@ The category names and formatting were hand-typed, so flexible and prone to spel
 To get the broadest range of answers possible,
 I used flexible regular expressions to accept a variety of formatting choices,
 and I also widened the categories to encompass the same core themes.
-For example, 
-`first love`, `secret love`, and `mostly loved` 
-all were added to the **Most loved** category, 
+For example,
+`first love`, `secret love`, and `mostly loved`
+all were added to the **Most loved** category,
 which I called, simply, **love**.
 
-I also captured multiple programming languages in each category 
+I also captured multiple programming languages in each category
 (even the [original tweet][first-tweet] had multiple answers for first language (Basic/Java) and a few other categories).
 
 Each of the following plots shows the top 20 responses in each category.
@@ -533,14 +533,14 @@ compare to the languages _they_ would recommend to _others_
 to learn first?
 Many people started with older languages
 like Basic, C, Pascal, C++ and Java
-but would recommend new programmers start with Python, JavaScript, Ruby and also C or Java. 
+but would recommend new programmers start with Python, JavaScript, Ruby and also C or Java.
 
 `r plot_media_div("votes-first-beginner")`
 
 ### Love It or Hate It
 
 Which programming languages are loved and which languages are not?
-The world seems to have a love/hate relationship with JavaScript, 
+The world seems to have a love/hate relationship with JavaScript,
 but Python is much more loved than hated.
 Likewise Swift, Ruby, and Go are significantly more positive than negative,
 C++ is also a bit love/hate,
@@ -554,7 +554,7 @@ Which languages are most used compared with those that have caused difficulties?
 JavaScript is eating the world,
 and plenty of people are using workhorse languages like Python, Java and C#/C++.
 (And a quite a few are using PHP presumably because they have to.)
-Still, JavaScript's love/hate relationship continues 
+Still, JavaScript's love/hate relationship continues
 as many people indicated that it caused them problems.
 I'm not surprised to see C++, C, and Java on the _had difficulties_ list.
 Interestingly, Haskell shows up in the _loved_ list but seems to also be tricky to learn.
@@ -603,7 +603,7 @@ I abstracted some of the larger steps in [the pipeline](#tweets-lang-poll) into 
 
 1. Pre-clean the tweet text, including [remove_unused_text()](#remove-unused-text)
 
-1. Separate tweets so that each line or item of the tweet is in its own row using `tidyr::separate_rows()` 
+1. Separate tweets so that each line or item of the tweet is in its own row using `tidyr::separate_rows()`
    - Items are indicated by `N.`, `N)`, `N:`, or `N-`, or just appear on a new line without numbering.
 
 1. Remove whitespace and any numbering from each line
@@ -638,7 +638,7 @@ because many people specified their choices using language hashtags, like `#rsta
 
 The goal in processing the answers is to transform each answer to a single string of comma separated languages.
 In doing this, common variations of language lists should result in the same final answers.
-For example, 
+For example,
 `Python and R`, `Python/R`, and `Python or R` should all be handled similarly.
 To help with this process I created a list of common languages that frequently appear in the answers.
 
@@ -669,7 +669,7 @@ that I noticed while working with the data
 
 ### Recode Category
 
-As you might imagine with a free-form survey 
+As you might imagine with a free-form survey
 where users manually enter both the question _and_ the answer,
 there is a large amount of variation in the spelling and categories used.
 
@@ -703,14 +703,14 @@ And then to aggregate and count programming language mentions per category.
 Last, but not least,
 this function creates the plots for requested categories.
 One key detail is that bars are ordered within each facet
-using [tidytext]{.pkg}'s `reorder_within()` function.
+using <span class="pkg">tidytext</span>'s `reorder_within()` function.
 Check out Julia Silge's excellent blog post on this function:
 [Reordering and facetting for ggplot2](https://juliasilge.com/blog/reorder-within/).
 
 While the bars are ordered in descending order,
 I wanted the bar fill color to be consistent across facets
 to facilitate comparison between the two categories.
-The color palette is `ocean.deep` from the [pals]{.pkg} package, which I found by looking through
+The color palette is `ocean.deep` from the <span class="pkg">pals</span> package, which I found by looking through
 Emil Hvitfeldt's
 [Comprehensive list of color palettes in R](https://github.com/EmilHvitfeldt/r-color-palettes#comprehensive-list-of-color-palettes-in-r).
 
@@ -724,10 +724,10 @@ Emil Hvitfeldt's
 
 ## What About You?
 
-If you made it this far, 
+If you made it this far,
 share your programming experiences on Twitter!
 
-Thanks for reading and feel free to share 
+Thanks for reading and feel free to share
 feedback, thoughts, or questions with me on Twitter at
 [&commat;grrrck](https://twitter.com/grrrck).
 
