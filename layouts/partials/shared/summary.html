@@ -3,7 +3,7 @@
 {{ $root := .Scratch.Get "$root" }}     <!--save root section-->
 <!-- <article class="mv4 mv5-l"> -->
 <ul class="list pl0 mt0 measure-wide center">
-  
+
   <!--if show_post_thumbnail is TRUE in root-->
   {{ if $root.Params.show_post_thumbnail }}
   <!--featured image for the leaf bundle-->
@@ -38,21 +38,21 @@
     </footer>
     </div>
   </div>
-  
+
   <!--if show_post_thumbnail is FALSE in root-->
   {{ else }}
-  
-  <li class="flex items-center lh-copy pa3 ph0-l0">
-      <div class="summary-post-date">
+
+  <li class="flex flex-column flex-row-ns lh-copy pa3 ph0-l0">
+      <div class="summary-post-date mb2 mb0-ns o-60">
         <date class="f6">{{ .PublishDate.Format "2006-01-02" }}</date>
       </div>
-      <div class="pl3 flex-auto">
+      <div class="pl3-ns flex-auto">
         <h2 class="f4 db mt0 mb2 lh-title pointer"><a href="{{ .RelPermalink }}" class="db">{{ .Title | markdownify }}</a></h2>
         <span class="f5 db">{{ .Description | markdownify }}</span>
       </div>
     </li>
-  
-  
+
+
   <!--
   <div class="measure-wide center mb4 mb5-l">
     <header class="grid">
