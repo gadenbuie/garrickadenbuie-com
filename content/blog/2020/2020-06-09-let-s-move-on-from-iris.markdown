@@ -39,7 +39,7 @@ iris_issues <- de_iris_my_repos()
 
 <!-- https://buttons.github.io/ -->
 
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow (**gadenbuie?**)</a> 
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a> 
 <a class="github-button" href="https://github.com/gadenbuie/de-iris-my-repos" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/de-iris-my-repos on GitHub">Star <code>de-iris-my-repos</code></a> 
 <a class="github-button" href="https://github.com/gadenbuie/de-iris-my-repos/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/de-iris-my-repos on GitHub">Fork <code>de-iris-my-repos</code></a>
 
@@ -65,7 +65,7 @@ But Daniella and Timothée Poisot are right:
 <p dir="ltr" lang="en">
 Like many people, I have spent the last 10 days watching so much tragedy unfold. So much anguish from Black colleagues here on twitter. <br><br>And so I’ve been trying to think of ways that *I* can improve my tiny corner of the world. <br><br>A thread on why change is hard in academia 1/
 </p>
-— Dr. Daniela Witten ((**daniela\_witten?**)) <a href="https://twitter.com/daniela_witten/status/1268392721275744256?ref_src=twsrc%5Etfw">June 4, 2020</a>
+— Dr. Daniela Witten (@daniela\_witten) <a href="https://twitter.com/daniela_witten/status/1268392721275744256?ref_src=twsrc%5Etfw">June 4, 2020</a>
 </blockquote>
 
 ## Other Options
@@ -82,7 +82,7 @@ announced on Twitter by the amazing Allison Horst.
 <p dir="ltr" lang="en">
 The Iris dataset feels really gross now.
 </p>
-— Chris Albon ((**chrisalbon?**)) <a href="https://twitter.com/chrisalbon/status/1268594959436804097?ref_src=twsrc%5Etfw">June 4, 2020</a>
+— Chris Albon (@chrisalbon) <a href="https://twitter.com/chrisalbon/status/1268594959436804097?ref_src=twsrc%5Etfw">June 4, 2020</a>
 </blockquote>
 
 Here’s a short list of other data sets you can turn to instead:

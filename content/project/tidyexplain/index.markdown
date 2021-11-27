@@ -18,7 +18,7 @@ tags:
 ## Tidy Animated Verbs
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/tidyexplain" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/tidyexplain on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/tidyexplain/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/tidyexplain on GitHub">Fork</a>
 

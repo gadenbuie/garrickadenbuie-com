@@ -17,7 +17,7 @@ tags:
 **Project Links:** [installation](#installation), [usage](#usage), [source][gh]
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/rsthemes" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/rsthemes on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/rsthemes/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/rsthemes on GitHub">Fork</a>
 

@@ -10,7 +10,7 @@ tags:
   - usethis
   - Pull Requests
   - Workflow
-description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
+description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
 twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
@@ -709,7 +709,7 @@ you're ready to [take a snapshot of your updates](#git-commit).
 >
 > Take breaks! You need them!
 >
-> --- Nicholas Tierney (@nj_tierney) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
+> --- Nicholas Tierney (&commat;nj_tierney) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
 
 Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.

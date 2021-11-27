@@ -17,7 +17,7 @@ tags: ["R", "R Package", "Shiny", "RStudio", "Addin", "Gadget"]
 **Project Links:** [source][regexplain-src], [installation](#installation), [try the app](#demo), [overview](#overview)
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/regexplain" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/regexplain on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/regexplain/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/regexplain on GitHub">Fork</a>
 

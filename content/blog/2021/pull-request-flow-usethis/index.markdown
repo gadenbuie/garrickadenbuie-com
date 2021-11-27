@@ -89,7 +89,7 @@ Yes, [I’m ready to go](#get-started)!
 
 </div>
 
-##
+## 
 
 <div id="story" aria-live="polite" aria-relevant="additions">
 
@@ -693,7 +693,7 @@ you’re ready to [take a snapshot of your updates](#git-commit).
 >
 > Take breaks! You need them!
 >
-> — Nicholas Tierney ((**nj\_tierney?**)) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
+> — Nicholas Tierney (@nj\_tierney) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
 
 Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.
@@ -1193,7 +1193,7 @@ using `pr_fetch()`.
 
 </div>
 
-##
+## 
 
 <div id="step-list" style="display:none">
 

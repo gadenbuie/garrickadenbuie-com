@@ -36,7 +36,7 @@ options(htmltools.dir.version = TRUE)
 [rsam]: https://github.com/yonicd/rsam
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow&commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/shrtcts" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/shrtcts on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/shrtcts/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/shrtcts on GitHub">Fork</a>
 

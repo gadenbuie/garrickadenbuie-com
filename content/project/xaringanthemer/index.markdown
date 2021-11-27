@@ -23,7 +23,7 @@ tags:
 **Project Links:** [source][xt-src], [docs][xt-docs], [installation](#installation), [usage](#usage)
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/xaringanthemer" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/xaringanthemer on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/xaringanthemer/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/xaringanthemer on GitHub">Fork</a>
 

@@ -48,30 +48,30 @@ You'll need RStudio version 1.2. Grab the [preview version here](https://www.rst
 
 1. &#x2615; Make a cup of hot coco,
 
-    &#x1F4FB; turn on [SomaFM's Christmas Lounge](https://somafm.com/christmas/), 
-    
+    &#x1F4FB; turn on [SomaFM's Christmas Lounge](https://somafm.com/christmas/),
+
     &#x1F4BB; and enjoy coding by the open fire.
 
 #### Manual Installation
 
-If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](https://github.com/gadenbuie/yule-rstudio/blob/master/Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme. 
+If the steps above don't work, you can manually download the [Yule-RStudio.rstheme](https://github.com/gadenbuie/yule-rstudio/blob/master/Yule-RStudio.rstheme) file and place it in `.R/rstudio/themes` in your R home directory (see `path.expand("~")`). Then, in the RStudio appearance settings, select the _Yule RStudio_ editor theme.
 
 ## How I Made This
 
 I made this the way I do all web development: right-click on the thing I want to change, choose **Inspect Element**, and hack at it until it looks reasonable.
-Somehow this even works in RStudio! 
+Somehow this even works in RStudio!
 (It's a web app underneath.)
 
 As a starting point, though, I used found the [Yule theme][yule-base] on the [tmTheme Editor](https://tmtheme-editor.herokuapp.com) and fiddled with the base colors there until they worked well with RStudio's blueish dark theme.
 
-The upcoming 1.2 version of RStudio now 
-[supports adding themes](https://github.com/batpigandme/night-owlish/blob/master/installation_notes.md), 
+The upcoming 1.2 version of RStudio now
+[supports adding themes](https://github.com/batpigandme/night-owlish/blob/master/installation_notes.md),
 and `.tmTheme` files are converted automatically into RStudio's `.rstheme` format.
 Turns out, an `.rstheme` is just CSS!
 
-This got me half the way there, but there were still a number of missing elements that I wanted to tweak. 
+This got me half the way there, but there were still a number of missing elements that I wanted to tweak.
 Figuring out how tmTheme scopes get mapped to [Ace](https://github.com/ajaxorg/ace) CSS classes was painful trial and error.
-To get the theme all the way there, I went straight to the source. 
+To get the theme all the way there, I went straight to the source.
 I opened up a few scripts and R Markdown documents, used **Insepect Element** to identify the appropriate Ace CSS class, and then fiddled until it looked ~~great~~ good enough.
 
 The blinking Christmas-light cursor is just a CSS animation!

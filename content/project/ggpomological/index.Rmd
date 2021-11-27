@@ -6,7 +6,7 @@ slug: ggpomological
 description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
 twitterImage: /images/project/ggpomological/ggpomological.png
 type: page
-categories: 
+categories:
   - Project
 tags:
   - R
@@ -44,24 +44,24 @@ set_filename <- function(fname, rel = FALSE) {
 **Project Links:** [source][ggpomological], [readme](https://github.com/gadenbuie/ggpomological/#readme)
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/ggpomological" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/ggpomological on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/ggpomological/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/ggpomological on GitHub">Fork</a>
 
 ```{r header-demo, echo=FALSE}
 fruits <- c("Apple", "Apricot", "Banana", "Fig", "Cherry", "Kiwi", "Grape", "Mango", "Papaya", "Orange", "Peach", "Pear")
-readr::read_tsv("https://cs.joensuu.fi/sipu/datasets/Compound.txt", col_names = FALSE) %>% 
-  filter(X3 < 10) %>% 
-  mutate(X3 = sample(fruits, length(unique(X3)))[X3]) %>% 
+readr::read_tsv("https://cs.joensuu.fi/sipu/datasets/Compound.txt", col_names = FALSE) %>%
+  filter(X3 < 10) %>%
+  mutate(X3 = sample(fruits, length(unique(X3)))[X3]) %>%
   {
-    ggplot(., aes(x = X1, y = X2, color = X3)) + 
-      geom_point() + 
-      labs(x = "Space", y = "Time", 
+    ggplot(., aes(x = X1, y = X2, color = X3)) +
+      geom_point() +
+      labs(x = "Space", y = "Time",
            color = "Fruit", title = "ggpomological") +
-      scale_color_pomological() + 
+      scale_color_pomological() +
       theme_pomological_fancy()
-  } %>% 
-  paint_pomological(res = 110) %>% 
+  } %>%
+  paint_pomological(res = 110) %>%
   magick::image_write(set_filename("ggpomological.png"))
 ```
 
@@ -81,9 +81,9 @@ The perfect palette for a custom [ggplot2] theme.
 
 ![](`r set_filename("pom-examples.jpg", TRUE)`)
 
-> The collection spans the years 1886 to 1942. 
-> The majority of the paintings were created between 1894 and 1916. 
-> The plant specimens represented by these artworks originated in 29 countries and 51 states and territories in the U.S. 
+> The collection spans the years 1886 to 1942.
+> The majority of the paintings were created between 1894 and 1916.
+> The plant specimens represented by these artworks originated in 29 countries and 51 states and territories in the U.S.
 > There are 7,497 watercolor paintings, 87 line drawings, and 79 wax models created by approximately 21 artists.
 > [[USDA National Agricultural Library](https://usdawatercolors.nal.usda.gov/pom/about.xhtml)]
 
@@ -128,9 +128,9 @@ scales::show_col(unlist(ggpomological:::pomological_base))
 
 ## Setup theme and scales
 
-I created three variants of the theme-generating function `theme_pomological()`. 
+I created three variants of the theme-generating function `theme_pomological()`.
 
-- `theme_pomological()` sets the plot theme to be representative of the paper and styling of the watercolors and includes a paper-colored background, 
+- `theme_pomological()` sets the plot theme to be representative of the paper and styling of the watercolors and includes a paper-colored background,
 
 - `theme_pomological_plain()` has the same styling, just with a transparent (or white) background,
 
@@ -165,7 +165,7 @@ To opt into the full pomological effect, use `theme_pomological_fancy()` which i
 
 Great, but I want my plots to look even more pomological, you say?
 
-Perfect! 
+Perfect!
 **ggpomological** provides a function named `paint_pomological` that uses the [`magick`][magick] package to add a pomological watercolor paper background and a subtle texture overlay.
 
 
@@ -187,7 +187,7 @@ basic_iris_plot <- ggplot(iris) +
   geom_point(size = 2)
 
 # Just your standard Iris plot
-basic_iris_plot 
+basic_iris_plot
 
 # With pomological colors
 basic_iris_plot <- basic_iris_plot + scale_color_pomological()
@@ -197,14 +197,14 @@ basic_iris_plot
 basic_iris_plot + theme_pomological()
 
 # With transparent background
-basic_iris_plot + theme_pomological_plain() 
+basic_iris_plot + theme_pomological_plain()
 
 # Or with "fancy" pomological settings
 pomological_iris <- basic_iris_plot + theme_pomological_fancy()
 pomological_iris
 
 # Painted!
-paint_pomological(pomological_iris, res = 110) %>% 
+paint_pomological(pomological_iris, res = 110) %>%
   magick::image_write(set_filename("plot-demo-painted.png"))
 ```
 
@@ -216,9 +216,9 @@ paint_pomological(pomological_iris, res = 110) %>%
 ```{r plot-bar-chart}
 stacked_bar_plot <- ggplot(diamonds) +
   aes(price, fill = cut) +
-  geom_histogram(binwidth = 850) + 
-  xlab('Price (USD)') + 
-  ylab('Count') + 
+  geom_histogram(binwidth = 850) +
+  xlab('Price (USD)') +
+  ylab('Count') +
   ggtitle("ggpomological") +
   scale_x_continuous(label = scales::dollar_format()) +
   scale_fill_pomological()
@@ -228,7 +228,7 @@ stacked_bar_plot + theme_pomological("Homemade Apple", 16)
 paint_pomological(
   stacked_bar_plot + theme_pomological_fancy(),
   res = 110
-) %>% 
+) %>%
   magick::image_write(set_filename("plot-bar-chart-painted.png"))
 ```
 
@@ -237,11 +237,11 @@ paint_pomological(
 ### Density Plot
 
 ```{r plot-density}
-density_plot <- mtcars %>% 
-  mutate(cyl = factor(cyl)) %>% 
+density_plot <- mtcars %>%
+  mutate(cyl = factor(cyl)) %>%
   ggplot() +
   aes(mpg, fill = cyl, color = cyl)+
-  geom_density(alpha = 0.75) + 
+  geom_density(alpha = 0.75) +
   labs(fill = 'Cylinders', colour = 'Cylinders', x = 'MPG', y = 'Density') +
   scale_color_pomological() +
   scale_fill_pomological()
@@ -251,11 +251,11 @@ density_plot + theme_pomological("Homemade Apple", 16)
 paint_pomological(
   density_plot + theme_pomological_fancy(),
   res = 110
-) %>% 
+) %>%
   magick::image_write(set_filename("plot-density-demo-painted.png"))
 ```
 
-![](`r set_filename("plot-density-demo-painted.png", TRUE)`) 
+![](`r set_filename("plot-density-demo-painted.png", TRUE)`)
 
 
 ### Points and lines
@@ -265,19 +265,19 @@ Here I'll use the `txhousing` data provided with [ggplot2]
 > Information about the housing market in Texas provided by the TAMU real estate center, <http://recenter.tamu.edu/>.
 
 ```{r plot-full-bar-stack}
-big_volume_cities <- txhousing %>% 
-  group_by(city) %>% 
-  summarize(mean_volume = mean(volume, na.rm = TRUE)) %>% 
-  arrange(-mean_volume) %>% 
-  top_n(length(ggpomological:::pomological_palette)) %>% 
+big_volume_cities <- txhousing %>%
+  group_by(city) %>%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %>%
+  arrange(-mean_volume) %>%
+  top_n(length(ggpomological:::pomological_palette)) %>%
   pull(city)
 
-full_bar_stack_plot <- txhousing %>% 
-  filter(city %in% big_volume_cities) %>% 
-  group_by(city, year) %>% 
-  summarize(mean_volume = mean(volume, na.rm = TRUE)) %>% 
-  ungroup %>% 
-  mutate(city = factor(city, big_volume_cities)) %>% 
+full_bar_stack_plot <- txhousing %>%
+  filter(city %in% big_volume_cities) %>%
+  group_by(city, year) %>%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %>%
+  ungroup %>%
+  mutate(city = factor(city, big_volume_cities)) %>%
   ggplot() +
   aes(year, mean_volume, fill = city, group = city) +
   geom_col(position = 'fill', width = 0.9) +
@@ -290,7 +290,7 @@ full_bar_stack_plot + theme_pomological("Homemade Apple", 16)
 paint_pomological(
   full_bar_stack_plot + theme_pomological_fancy(),
   res = 110
-) %>% 
+) %>%
   magick::image_write(set_filename("plot-full-bar-stack-painted.png"))
 ```
 
@@ -301,18 +301,18 @@ paint_pomological(
 This last one is in my own handwriting.
 
 ```{r plot-ridges}
-ridges_pomological <- ggplot(diamonds) + 
-  aes(x = carat, y = clarity, color = clarity, fill = clarity) + 
-  ggridges::geom_density_ridges(alpha = 0.75) + 
+ridges_pomological <- ggplot(diamonds) +
+  aes(x = carat, y = clarity, color = clarity, fill = clarity) +
+  ggridges::geom_density_ridges(alpha = 0.75) +
   theme_pomological(
     base_family = 'gWriting',
     base_size = 20,
     base_theme = ggridges::theme_ridges()
-    ) + 
-  scale_fill_pomological() + 
+    ) +
+  scale_fill_pomological() +
   scale_color_pomological()
 
-paint_pomological(ridges_pomological, res = 110) %>% 
+paint_pomological(ridges_pomological, res = 110) %>%
   magick::image_write(set_filename("plot-ridges-painted.png"))
 ```
 

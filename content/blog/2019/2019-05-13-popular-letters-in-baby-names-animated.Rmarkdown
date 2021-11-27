@@ -62,7 +62,7 @@ lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
 
 Earlier this week, a tweet from Kieran Healy caught my attention with a neat [animation of the popularity of the final letters](https://twitter.com/kjhealy/status/1127951257392623616) of baby names.
 
-<blockquote><p dir="ltr" lang="en">Using gganimate to visualize a favorite finding (I think first noticed by Laura Wattenberg?) about US boys' names: the sharp, relatively recent rise in names ending in the letter 'n', at the expense of names with 'e', 'l', and 'y' endings. <a href="https://t.co/nRXl1KiFMe">pic.twitter.com/nRXl1KiFMe</a></p>— Kieran Healy (@kjhealy) <a href="https://twitter.com/kjhealy/status/1127951257392623616?ref_src=twsrc%5Etfw">May 13, 2019</a></blockquote>
+<blockquote><p dir="ltr" lang="en">Using gganimate to visualize a favorite finding (I think first noticed by Laura Wattenberg?) about US boys' names: the sharp, relatively recent rise in names ending in the letter 'n', at the expense of names with 'e', 'l', and 'y' endings. <a href="https://t.co/nRXl1KiFMe">pic.twitter.com/nRXl1KiFMe</a></p>— Kieran Healy (&commat;kjhealy) <a href="https://twitter.com/kjhealy/status/1127951257392623616?ref_src=twsrc%5Etfw">May 13, 2019</a></blockquote>
 
 I'm also a big fan of <span class="pkg"><span class="pkg">gganimate]</span> - check out my first project with [gganimate</span>, a collection of [join animations called _tidyexplain_][tidyexplain].
 And the <span class="pkg">[babynames]</span> package by [Hadley Wickham][hadley] makes it pleasantly easy to work with the baby names data reported by the U.S. Social Security Administration.

@@ -30,7 +30,7 @@ editor_options:
 [rsam]: https://github.com/yonicd/rsam
 
 <!-- https://buttons.github.io/ -->
-<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow&commat;gadenbuie</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/shrtcts" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/shrtcts on GitHub">Star</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/shrtcts/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/shrtcts on GitHub">Fork</a>
 
@@ -239,7 +239,7 @@ Here's an example shortcut that picks a number between 0 and 100.
 ```
 
 Notice the binding is just R code
-(I was thinking of 13, by the way),
+(I was thinking of 52, by the way),
 and the only fields you _need_ to include
 are the `Name` and the `Binding`.
 
