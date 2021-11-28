@@ -1,0 +1,14 @@
+{{ partial "head.html" . }}
+<body class="{{ .Site.Params.themeColor }}">
+  
+    <div class="content container">
+      <!-- <h1>404: Page not found</h1>
+        <p class="lead">Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <a href="{{ .Site.BaseURL }}">Head back home</a> to try finding it again.</p> -->
+        <a href="{{ .Site.BaseURL }}"><img src="/404.png" style="width: 95%; max-width: 600px"></a>
+    </div>
+
+{{ partial "sidebar.html" . }}
+
+
+  </body>
+</html>

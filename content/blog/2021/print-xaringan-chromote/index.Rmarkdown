@@ -138,7 +138,7 @@ that you can point either at your slides online or your at local rendered slides
 You can [copy the code below](#the-code), or you can source it from [this gist][gist-full] using the code and shortlink below[^why-here].
 _Please check the source before you run it!_
 
-<span class="pkg">^why-here]: I wasn't really sure where to put this function. Maybe I'll eventually add it to [xaringanExtra</span>, but for now it'll live here where hopefully it can still be useful to you!
+[^why-here]: I wasn't really sure where to put this function. Maybe I'll eventually add it to [xaringanExtra</span>, but for now it'll live here where hopefully it can still be useful to you!
 
 ```r
 source("https://git.io/xaringan2pdf")

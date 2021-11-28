@@ -92,10 +92,8 @@ all of which are made easier by <span class="pkg">chromote</span>.
 I’ve written a function, `xaringan_to_pdf()`,
 that you can point either at your slides online or your at local rendered slides (which may require `file://` before the full path to the `.html` file).
 
-You can [copy the code below](#the-code), or you can source it from [this gist](https://gist.github.com/gadenbuie/f6b8ec0335bdd45ed5a68bead60ef4fa) using the code and shortlink below\[^why-here\].
+You can [copy the code below](#the-code), or you can source it from [this gist](https://gist.github.com/gadenbuie/f6b8ec0335bdd45ed5a68bead60ef4fa) using the code and shortlink below[^1].
 *Please check the source before you run it!*
-
-<span class="pkg">^why-here\]: I wasn’t really sure where to put this function. Maybe I’ll eventually add it to \[xaringanExtra</span>, but for now it’ll live here where hopefully it can still be useful to you!
 
 ``` r
 source("https://git.io/xaringan2pdf")
@@ -336,3 +334,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })
 </script>
+
+[^1]: I wasn’t really sure where to put this function. Maybe I’ll eventually add it to \[xaringanExtra</span>, but for now it’ll live here where hopefully it can still be useful to you!

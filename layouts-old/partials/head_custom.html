@@ -1,0 +1,33 @@
+<!-- Icons -->
+<!-- Icons: General favicon -->
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+<meta name="application-name" content="Garrick Aden-Buie"/>
+<meta name="msapplication-TileColor" content="#002B36" />
+<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+<meta name="theme-color" content="#ffffff">
+<!-- Icons: Add to homescreen for Chrome on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<!-- Icons: Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Garrick Aden-Buie">
+<!-- Featherlight -->
+<link href="/css/featherlight.min.css" type="text/css" rel="stylesheet" />
+<!-- https://buttons.github.io/ -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- van11y-accessible-hide-show-aria -->
+<script defer src="/js/van11y-accessible-hide-show-aria.min.js"></script>
+{{ if ne .Section "talk" }}
+<script defer src="/js/toc.js"></script>
+{{ end }}
+<!-- Post-Custom Head Stuff-->
+{{ if .Params.head_custom }}
+{{ .Params.head_custom | safeHTML }}
+{{ end }}

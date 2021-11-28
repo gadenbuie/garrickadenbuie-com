@@ -1,0 +1,26 @@
+{{ partial "head.html" . }}
+	<body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}} h-entry">
+		<main class="content container" role="main">
+			<article class="post">
+				<header>
+					<a class="u-url" href="{{ .Permalink | replaceRE "/$" "" }}">
+						<h1 class="post-title p-name">{{ .Title }}</h1>
+					</a>
+					<h3 class="post-author">{{ index .Params "author" | default .Site.Title }}</h3>
+					<time class="post-date dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z" }}">{{ .Date.Format "Monday, 2 January 2006" }}</time>
+					{{ if .Params.rmd_source }}
+					<h4 class="post-source"><a class="post-source" href="{{ .Params.rmd_source }}">R Markdown Source</a></h4>
+					{{ end }}
+				</header>
+				<div class="post-content e-content">
+					{{ .Content }}
+				</div>
+				<footer class="footer">
+				  {{ partial "tags.html" . }}
+				</footer>
+			</article>
+		</main>
+		{{ partial "sidebar.html" . }}
+		{{ partial "footer.html" . }}
+	</body>
+</html>

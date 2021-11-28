@@ -99,7 +99,7 @@ Then, **create a YAML file** called `.shrtcts.yaml`
 and store it in your home directory[^home]
 or in a directory called `.config` in your home directory.
 
-<span class="pkg">^home]: You can find you home directory quickly using `fs::path_home_r()` or `fs::path_home()`. [shrtcts</span> will look in either location.
+[^home]: You can find you home directory quickly using `fs::path_home_r()` or `fs::path_home()`. [shrtcts</span> will look in either location.
 
 This YAML file holds your shortcuts as a YAML list.
 Each item looks a lot like the
@@ -239,7 +239,7 @@ Here's an example shortcut that picks a number between 0 and 100.
 ```
 
 Notice the binding is just R code
-(I was thinking of 52, by the way),
+(I was thinking of 0, by the way),
 and the only fields you _need_ to include
 are the `Name` and the `Binding`.
 

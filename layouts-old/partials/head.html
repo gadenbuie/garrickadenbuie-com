@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		{{ if .IsHome }}
+		<title>{{ .Site.Title }}</title>
+		<meta property="og:title" content="{{ .Site.Title }}">
+		<meta property="og:type" content="website">
+		{{ else }}
+		<title>{{ .Title | emojify }} &middot; {{ .Site.Title }}</title>
+		{{ if .Params.twitterTitle }}
+		<meta property="og:title" content="{{ .Params.twitterTitle | emojify }} - {{ .Site.Title }}">
+		{{ else }}
+		<meta property="og:title" content="{{ .Title | emojify }} - {{ .Site.Title }}">
+		{{ end }}
+		<meta property="og:type" content="article">
+		{{ end }}
+
+		{{ if eq .RelPermalink "/" }}
+		<meta property="description" content="{{ .Site.Params.description }}">
+		<meta property="og:description" content="{{ .Site.Params.description }}">
+		<meta property="twitter:card" content="summary">
+		<meta property="twitter:image" content="{{ .Site.Params.twitterImage | absURL }}">
+		{{ else }}
+			{{ if .Description }}
+			<meta property="description" content="{{ .Description }}">
+			<meta property="og:description" content="{{ .Description }}">
+			{{ else }}
+			{{ $defaultDescription := printf "Post by %s on %s" (.Params.author | default .Site.Params.author) (.Date.Format "Monday, January 2, 2006")}} 
+			<meta property="description" content="{{ $defaultDescription }}">
+			<meta property="og:description" content="{{ $defaultDescription }}">
+			{{ end }}
+			{{ if .Params.twitterImage }}
+			<meta name="twitter:card" content="summary_large_image">
+			<meta name="twitter:image" content="{{ .Params.twitterImage | absURL }}">
+			{{ else }}
+    	<meta property="twitter:card" content="summary">
+  		<meta property="twitter:image" content="{{ .Site.Params.twitterImage | absURL }}">
+			{{ end }}
+		{{ end }}
+
+		{{ if .Keywords }}
+		<meta property="keywords" content ="{{ delimit .Keywords ", " }}">
+		{{ end }}
+		
+		<meta name="twitter:creator" content="{{ .Site.Params.twitterAuthor }}">
+		<meta name="twitter:site" content="{{ .Site.Params.twitterSite }}">
+		
+		{{ with .OutputFormats.Get "RSS" }}
+		<link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
+		{{ end }}
+		{{ partial "head_highlightjs" . }}
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/poole.css">
+		<link rel="stylesheet" href="/css/syntax.css">
+		<link rel="stylesheet" href="/css/hyde.css">
+		<!-- Custom CSS style get applied last -->
+		{{ range .Site.Params.customCSS }}
+		<link rel="stylesheet" href="{{ . | relURL }}">
+		{{ end }}
+		{{ partial "head_custom" . }}
+		<link href="{{ if .IsPage }}{{ .Permalink | replaceRE "/$" "" }}{{ else }}{{ .Permalink }}{{ end }}" rel="canonical">
+	</head>
