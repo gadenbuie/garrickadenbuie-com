@@ -127,6 +127,17 @@ post-body ul:not(.panel-tabs),
   max-width: 100%;
 }
 
+.f7,
+figure figcaption p,
+figure figcaption h4,
+.post-body>.footnotes,
+.page-body>.footnotes,
+.post-body>table th,
+.page-body>table th {
+  font-size: 0.9rem;
+}
+
+
 :root {
   --scrollbarBgColor: var(--siteBgColorCustom);
   --scrollbarColor: var(--slate-70);
