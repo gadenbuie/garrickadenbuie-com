@@ -21,12 +21,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-<link href="/rmarkdown-libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/panelset-0.2.6/panelset.js"></script>
 <!-- Links -->
-
-<style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: var(--text-light);--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-lightest);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style>
-
 <style type="text/css">
 .iframe-slides {
   max-width: 625px;
@@ -41,11 +36,6 @@ editor_options:
 .panel > p:first-of-type,
 .panel > .iframe-slides:first-of-type {
     margin-top: 1em;
-}
-@media (prefers-color-scheme: dark) {
-  .panelset {
-    --panel-tab-background-color-hover: #282828;
-  }
 }
 </style>
 
@@ -133,9 +123,9 @@ containing list elements created with the `<li>` tag.
 Here’s a small example,
 similar to the structure of the HTML and CSS we’ll use for <span class="pkg">xaringan</span>.
 
-<div class="flex">
+<div class="flex flex-row-m flex-column">
 
-<div class="dp33">
+<div class="w-third-m w-100">
 
 #### HTML
 
@@ -147,7 +137,7 @@ similar to the structure of the HTML and CSS we’ll use for <span class="pkg">x
 
 </div>
 
-<div class="dp40">
+<div class="w-third-m w-100">
 
 #### CSS
 
@@ -161,7 +151,7 @@ similar to the structure of the HTML and CSS we’ll use for <span class="pkg">x
 
 </div>
 
-<div class="fluid">
+<div class="w-third-m w-100">
 
 #### Result
 
@@ -221,9 +211,10 @@ in an embedded <span class="pkg">xaringan</span> presentation.
 
 <div class="panelset">
 
-<div class="panel">
-
-<span class="panel-name">R Markdown</span>
+<section class="panel">
+<h3 class="panel-name">
+R Markdown
+</h3>
 
 ``` markdown
 class: highlight-last-item
@@ -241,11 +232,11 @@ class: highlight-last-item
 - ... more list items...
 ```
 
-</div>
-
-<div class="panel">
-
-<span class="panel-name">Slides</span>
+</section>
+<section class="panel">
+<h3 class="panel-name">
+Slides
+</h3>
 
 Click inside the slides below
 and press the <kbd>←</kbd>/<kbd>→</kbd>
@@ -258,7 +249,7 @@ arrows to progressively reveal the bullet points.
 
 </div>
 
-</div>
+</section>
 
 </div>
 
@@ -287,9 +278,10 @@ to create slides like the example below.
 
 <div class="panelset">
 
-<div class="panel">
-
-<span class="panel-name">R Markdown</span>
+<section class="panel">
+<h3 class="panel-name">
+R Markdown
+</h3>
 
 ``` markdown
 class: bold-last-item
@@ -308,11 +300,11 @@ class: bold-last-item
 1. ... More Steps ...
 ```
 
-</div>
-
-<div class="panel">
-
-<span class="panel-name">Slides</span>
+</section>
+<section class="panel">
+<h3 class="panel-name">
+Slides
+</h3>
 
 <div class="iframe-container iframe-slides">
 
@@ -321,7 +313,7 @@ class: bold-last-item
 
 </div>
 
-</div>
+</section>
 
 </div>
 

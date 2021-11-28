@@ -32,7 +32,7 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r panelset, echo=FALSE}
+```{r panelset, eval=FALSE, echo=FALSE}
 xaringanExtra::use_panelset()
 xaringanExtra::style_panelset_tabs(
   foreground = "var(--text-mild)",
@@ -61,11 +61,6 @@ xaringanExtra::style_panelset_tabs(
 .panel > p:first-of-type,
 .panel > .iframe-slides:first-of-type {
 	margin-top: 1em;
-}
-@media (prefers-color-scheme: dark) {
-  .panelset {
-    --panel-tab-background-color-hover: #282828;
-  }
 }
 ```
 
@@ -153,8 +148,8 @@ containing list elements created with the `<li>` tag.
 Here's a small example,
 similar to the structure of the HTML and CSS we'll use for <span class="pkg">xaringan</span>.
 
-:::: {.flex}
-::: {.dp33}
+<div class="flex flex-row-m flex-column">
+<div class="w-third-m w-100">
 #### HTML
 
 <pre><code>&lt;ul class="demo"&gt;
@@ -162,8 +157,10 @@ similar to the structure of the HTML and CSS we'll use for <span class="pkg">xar
 &nbsp;&nbsp;&lt;li&gt;item two&lt;/li&gt;
 &nbsp;&nbsp;<span style="background: var(--purple);color: var(--text-lightest)">&lt;li&gt;item three&lt;/li&gt;</span>
 &lt;ul&gt;</code></pre>
-:::
-::: {.dp40}
+
+</div>
+<div class="w-third-m w-100">
+
 #### CSS
 
 <pre><code>.demo &gt; li {
@@ -173,8 +170,10 @@ similar to the structure of the HTML and CSS we'll use for <span class="pkg">xar
 &nbsp;&nbsp;color: purple;
 &nbsp;&nbsp;font-weight: bold;
 }</code></pre>
-:::
-::: {.fluid}
+
+</div>
+<div class="w-third-m w-100">
+
 #### Result
 
 ```{=html}
@@ -184,8 +183,9 @@ similar to the structure of the HTML and CSS we'll use for <span class="pkg">xar
 <li>item three</li>
 <ul>
 ```
-:::
-::::
+
+</div>
+</div>
 
 ```{css echo=FALSE}
 .demo > li {
@@ -231,9 +231,9 @@ Here's a complete example.
 Click into the _Slides_ tab to preview the style
 in an embedded <span class="pkg">xaringan</span> presentation.
 
-::::: {.panelset}
-:::: {.panel}
-[R Markdown]{.panel-name}
+<div class="panelset">
+<section class="panel">
+<h3 class="panel-name">R Markdown</h3>
 
 ````markdown
 class: highlight-last-item
@@ -250,19 +250,18 @@ class: highlight-last-item
 
 - ... more list items...
 ````
-::::
-
-:::: {.panel}
-[Slides]{.panel-name}
+</section>
+<section class="panel">
+<h3 class="panel-name">Slides</h3>
 
 Click inside the slides below
 and press the <kbd>&larr;</kbd>/<kbd>&rarr;</kbd>
 arrows to progressively reveal the bullet points.
 
 <div class="iframe-container iframe-slides"><iframe src="example/highlight-last-item.html" width="480px" height="270px"></iframe></div>
-::::
 
-:::::
+</section>
+</div>
 
 As written above,
 the last list item of _each list_ on the slide will be highlighted,
@@ -289,9 +288,9 @@ this time simply making the last list items **bold**.
 Drop the CSS chunk above into your slides,
 to create slides like the example below.
 
-::::: {.panelset}
-:::: {.panel}
-[R Markdown]{.panel-name}
+<div class="panelset">
+<section class="panel">
+<h3 class="panel-name">R Markdown</h3>
 
 ````markdown
 class: bold-last-item
@@ -309,14 +308,14 @@ class: bold-last-item
 
 1. ... More Steps ...
 ````
-::::
+</section>
 
-:::: {.panel}
-[Slides]{.panel-name}
+<section class="panel">
+<h3 class="panel-name">Slides</h3>
 
 <div class="iframe-container iframe-slides"><iframe src="example/bold-last-item.html"  width="480px" height="270px"></iframe></div>
-::::
-:::::
+</section>
+</div>
 
 ## Show Only Last Code Output
 
@@ -343,7 +342,7 @@ and only showing the output from the last command.
 
 ::::: {.panelset}
 :::: {.panel}
-[R Markdown]{.panel-name}
+<span class="panel-name">R Markdown</span>
 
 ````markdown
 
@@ -373,7 +372,7 @@ rcauchy(5)
 ::::
 
 :::: {.panel}
-[Slides]{.panel-name}
+<span class="panel-name">Slides</span>
 
 <div class="iframe-container iframe-slides"><iframe src="example/show-only-last-code-result.html" width="480px" height="270px"></iframe></div>
 

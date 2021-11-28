@@ -154,21 +154,15 @@ by providing alternative values for many theme parameters.
   padding-left: 3px;
   padding-right: 3px;
 }
-.w-50 {
-  width: 50%;
-}
-.w-50 .caption {
+.plot-preview .caption {
   text-align: center;
-}
-.fl {
-  float: left;
 }
 ```
 
 These slides were styled using the `style_duo_accent()` function,
 which applied
-my [primary color]{.bg-blue .ph3}
-and my [secondary color]{.bg-green .ph3}
+my <span class="bg-blue ph3">primary color</span>
+and my <span class="bg-green ph3">secondary color</span>
 consistently throughout the slide theme.
 
 You can also easily use fonts from [Google Fonts]
@@ -372,12 +366,12 @@ g_base
 g_base + theme_xaringan()
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("ggplot2-demo-1", "png"), "Basic ggplot2 plot")`
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("ggplot2-demo-2", "png"), "A theme_xaringan() ggplot")`
-:::
+</div>
 
 `theme_xaringan()` matches the colors used in your slides
 to the plot and axis titles (slide heading color)
@@ -422,12 +416,12 @@ g_base + theme_xaringan()
 g_base + theme_xaringan_inverse()
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("ggplot2-demo-2", "png"), "theme_xaringan()")`
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("ggplot2-demo-inverse", "png"), "theme_xaringan_inverse()")`
-:::
+</div>
 
 #### Matching color and fill scales
 
@@ -466,12 +460,12 @@ ggplot(diamonds, aes(x = cut)) +
   scale_xaringan_fill_continuous(color = "#F2B155")
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("scale-xaringan-1", "png"), "scale_xaringan_fill_continuous()")`
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 `r lightbox_img(knitr::fig_chunk("scale-xaringan-2", "png"), "Custom color with scale_xaringan_fill_continuous()")`
-:::
+</div>
 
 #### Three ways to use `theme_xaringan()`
 

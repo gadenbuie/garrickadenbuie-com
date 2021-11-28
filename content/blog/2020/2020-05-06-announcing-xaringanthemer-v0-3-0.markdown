@@ -140,21 +140,15 @@ by providing alternative values for many theme parameters.
   padding-left: 3px;
   padding-right: 3px;
 }
-.w-50 {
-  width: 50%;
-}
-.w-50 .caption {
+.plot-preview .caption {
   text-align: center;
-}
-.fl {
-  float: left;
 }
 </style>
 
 These slides were styled using the `style_duo_accent()` function,
 which applied
-my [primary color]{.bg-blue .ph3}
-and my [secondary color]{.bg-green .ph3}
+my <span class="bg-blue ph3">primary color</span>
+and my <span class="bg-green ph3">secondary color</span>
 consistently throughout the slide theme.
 
 You can also easily use fonts from [Google Fonts]
@@ -350,22 +344,22 @@ g_base
 g_base + theme_xaringan()
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-1-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-1-1.png" alt="Basic ggplot2 plot">
 <p class="caption">Basic ggplot2 plot</p>
 </div>
 </a>
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-2-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-2-1.png" alt="A theme_xaringan() ggplot">
 <p class="caption">A theme_xaringan() ggplot</p>
 </div>
 </a>
-:::
+</div>
 
 `theme_xaringan()` matches the colors used in your slides
 to the plot and axis titles (slide heading color)
@@ -412,22 +406,22 @@ g_base + theme_xaringan()
 g_base + theme_xaringan_inverse()
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-2-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-2-1.png" alt="theme_xaringan()">
 <p class="caption">theme_xaringan()</p>
 </div>
 </a>
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-inverse-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/ggplot2-demo-inverse-1.png" alt="theme_xaringan_inverse()">
 <p class="caption">theme_xaringan_inverse()</p>
 </div>
 </a>
-:::
+</div>
 
 #### Matching color and fill scales
 
@@ -468,22 +462,22 @@ ggplot(diamonds, aes(x = cut)) +
   scale_xaringan_fill_continuous(color = "#F2B155")
 ```
 
-::: {.w-50 .fl}
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/scale-xaringan-1-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/scale-xaringan-1-1.png" alt="scale_xaringan_fill_continuous()">
 <p class="caption">scale_xaringan_fill_continuous()</p>
 </div>
 </a>
-:::
-::: {.w-50 .fl}
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
 <a href="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/scale-xaringan-2-1.png" data-featherlight="image">
 <div class="figure">
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/scale-xaringan-2-1.png" alt="Custom color with scale_xaringan_fill_continuous()">
 <p class="caption">Custom color with scale_xaringan_fill_continuous()</p>
 </div>
 </a>
-:::
+</div>
 
 #### Three ways to use `theme_xaringan()`
 

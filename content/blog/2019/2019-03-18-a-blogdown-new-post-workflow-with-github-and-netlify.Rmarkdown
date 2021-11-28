@@ -82,7 +82,7 @@ To turn on this feature, select your website from [your list of sites](https://a
 Then click on **Site settings** and find **Build & deploy** on the left menu bar.
 Under this settings group, click the _Edit settings_ button and select **Automatically build deploy previews for all pull requests** next to _Deploy previews_.
 
-![Enable automatic deploy previews for pull requests in your site's settings.](netlify-deploy-context.png){.center}
+![Enable automatic deploy previews for pull requests in your site's settings.](netlify-deploy-context.png)
 
 ### Set up `netlify.toml` {#netlify-toml}
 
@@ -142,14 +142,14 @@ Create a new branch for your post.
 Give your branch a meaningful name --- consider using the slug (short title) for the post.
 I wrote this post in a branch called `post-new-post-workflow`.
 
-![Create a New Branch with an informative name, like `post-<slug>`.](new-branch.png){.center}
+![Create a New Branch with an informative name, like `post-<slug>`.](new-branch.png)
 
 ### Create a new post
 
 Create a new post in your blog using <span class="pkg">blogdown</span>'s **New Post** addin.
 This is generally the easiest way to get started with a post, although you can also manually call `blogdown::new_post()` from the R command prompt.
 
-![Opening the <strong>New Post</strong> RStudio addin.](new-post_dropdown_crop.png){.center}
+![Opening the <strong>New Post</strong> RStudio addin.](new-post_dropdown_crop.png)
 
 At this step, the default date of the post is set to the current date.
 If you'd like to "schedule" your post for a day in the future, you set the date now.
@@ -157,7 +157,7 @@ If you'd like to "schedule" your post for a day in the future, you set the date 
 (And [see below](#publish) for the reason for the scare quotes around _schedule_.
 Spoiler: it's not automatic.)
 
-![Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)](new-post_choose-future-date_crop.png){.center width=66%}
+![Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)](new-post_choose-future-date_crop.png)
 
 Note that you can also use `publishDate` or separately set both `publishDate` and `date`.
 If you use `publishDate`, the post will not be rendered until on or after the `publishDate`, but once published the post will appear to have been written on `date` (although this depends on the settings of your hugo theme).
@@ -187,12 +187,12 @@ If you use your post's date in your site's permalinks[^permalinks] --- for examp
     b) be able to share links like <https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/> than [https://garrickadenbuie.com/blog/2019/03/18/blogdown-netlify-new-post-workflow/](https://garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/).
 
 
-![Fill out the rest of your post information.](new-post_addin-ready_crop.png){.center width=66%}
+![Fill out the rest of your post information.](new-post_addin-ready_crop.png)
 
 Your blank page is ready!
 Run `blogdown::serve_site()` and write your post draft, previewing locally as you write.
 
-![Writing this post in RStudio with the _Source_ and _Viewer_ panes maximized for  "live preview" feel.](blogdown-serve-site.png){.center}
+![Writing this post in RStudio with the _Source_ and _Viewer_ panes maximized for  "live preview" feel.](blogdown-serve-site.png)
 
 ### Commit and Push
 
@@ -204,7 +204,7 @@ When you do you'll see a yellow dot next to the most recent commit.
 When it turns into a green check mark, your preview is ready.
 
 
-![Your deploy preview is ready on Netlify!](netlify-pr-preview-complete.png){.center}
+![Your deploy preview is ready on Netlify!](netlify-pr-preview-complete.png)
 
 Click on the check mark and then click on _Details_.
 This will take you to a preview of your website at a URL like
