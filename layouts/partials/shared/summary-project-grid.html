@@ -8,17 +8,20 @@
   <div class="ph0 ph2-m ph3-l">
     {{- with $.Params.images -}}
       {{- $image := (index . 0) -}}
-      <a href="{{ $.Permalink }}"><img src="{{ $image }}" class="db w-100 br2 br--top dim" alt="{{ $.Title | emojify | plainify}}"></a>
+      <a href="{{ $.Permalink }}">
+        <div class="aspect-ratio--16x9 dim cover" style="background: url('{{ $image }}') top center no-repeat">
+        </div>
+      </a>
     {{ else -}}
-    <!--featured image for the leaf bundle-->
-    {{- $images := $page.Resources.ByType "image" -}}
-    {{ $leaf := $images.GetMatch "*feature*" }}
-    {{- $hex := $images.GetMatch "*hex*" -}}
-    {{- $thumbnail := cond (ne $hex nil) $hex $leaf -}}
-    <!--sidebar image for the branch bundle-->
-    {{ $branch := ($section.Resources.ByType "image").GetMatch "*feature*" }}
-    {{- $thumbnail := cond (ne $thumbnail nil) $thumbnail $branch -}}
-    <div class="aspect-ratio aspect-ratio--1x1 {{ if (ne $hex nil) }}contain{{ else }}cover{{ end }} dim"{{ with $thumbnail }}style="background: url('{{ .RelPermalink | absURL }}') center center no-repeat"{{ end }}><a href="{{ .Permalink }}" class="w-100 absolute top-0 bottom-0"></a></div>
+      <!--featured image for the leaf bundle-->
+      {{- $images := $page.Resources.ByType "image" -}}
+      {{ $leaf := $images.GetMatch "*feature*" }}
+      {{- $hex := $images.GetMatch "*hex*" -}}
+      {{- $thumbnail := cond (ne $hex nil) $hex $leaf -}}
+      <!--sidebar image for the branch bundle-->
+      {{ $branch := ($section.Resources.ByType "image").GetMatch "*feature*" }}
+      {{- $thumbnail := cond (ne $thumbnail nil) $thumbnail $branch -}}
+      <div class="aspect-ratio aspect-ratio--16x9 {{ if (ne $hex nil) }}contain{{ else }}cover{{ end }} dim"{{ with $thumbnail }}style="background: url('{{ .RelPermalink | absURL }}') center center no-repeat"{{ end }}><a href="{{ .Permalink }}" class="w-100 absolute top-0 bottom-0"></a></div>
     {{- end -}}
   </div>
   {{ end }}
