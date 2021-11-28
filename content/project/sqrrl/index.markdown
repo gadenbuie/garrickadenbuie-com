@@ -3,10 +3,11 @@ title: ":chipmunk: Sqrrl"
 slug: "sqrrl"
 description: "Easily build bespoke SQL queries programmatically in R"
 date: 2017-07-01T00:00:00+00:00
-categories: 
+categories:
   - Project
 tags: ["R", "R Package", "SQL", "MySQL", "Shiny"]
 page: project
+show_post_thumbnail: false
 ---
 
 
@@ -44,8 +45,8 @@ library('nycflights13') # install.packages('nycflights13')
 library('DBI')          # install.packages('DBI')
 library('dplyr')        # install.packages('dplyr')
 library('dbplyr')       # install.packages('dbplyr')
- 
-# Load the sqrrl pacakge
+
+# Load the sqrrl package
 # devtools::isntall_github('gadenbuie/sqrrl')
 library('sqrrl')
 
@@ -63,17 +64,17 @@ con <- dbConnect(RSQLite::SQLite(), path = ":memory:")
 
 # Use dplyr/dbplyr to copy flights table to the temp db
 copy_to(con, nycflights13::flights, "flights",
-  temporary = FALSE, 
+  temporary = FALSE,
   indexes = list(
-    c("year", "month", "day"), 
-    "carrier", 
+    c("year", "month", "day"),
+    "carrier",
     "tailnum",
     "dest"
   )
 )
 
 # Show first 5 rows
-dbGetQuery(con, 'SELECT * FROM flights LIMIT 5') %>% 
+dbGetQuery(con, 'SELECT * FROM flights LIMIT 5') %>%
   as_table
 ```
 
@@ -226,12 +227,12 @@ Now we can repeat the above `SELECT` statement using `sqrrl`, this time limiting
 
 
 ```r
-flight_cols <- c('year', 'month', 'day', 
+flight_cols <- c('year', 'month', 'day',
                  'carrier', 'flight', 'tailnum')
 SELECT(flight_cols) %+%
   FROM('flights') %+%
-  LIMIT(5) %>% 
-  flights %>% 
+  LIMIT(5) %>%
+  flights %>%
   as_table
 ```
 
@@ -318,8 +319,8 @@ SELECT('tailnum', delay = 'avg(arr_delay)', n = 'count(*)') %+%
   FROM('flights') %+%
   GROUP_BY('tailnum') %+%
   ORDER_BY(DESC('delay')) %+%
-  LIMIT(10) %>% 
-  flights %>% 
+  LIMIT(10) %>%
+  flights %>%
   as_table
 ```
 
@@ -393,7 +394,7 @@ SELECT('tailnum', delay = 'avg(arr_delay)', n = 'count(*)') %+%
   FROM('flights') %+%
   GROUP_BY('tailnum') %+%
   ORDER_BY(DESC('delay')) %+%
-  LIMIT(10) %>% 
+  LIMIT(10) %>%
   sqlformat %>% cat
 ```
 
@@ -422,8 +423,8 @@ query_all_arr_delay <- SELECT(
 SELECT() %+%
   FROM(delay = parens(query_all_arr_delay)) %+%
   WHERE(gt(n = 100)) %+%
-  LIMIT(10) %>% 
-  flights %>% 
+  LIMIT(10) %>%
+  flights %>%
   as_table
 ```
 
@@ -506,19 +507,23 @@ SELECT() %+%
       ORDER_BY(DESC('delay'))
   )) %+%
   WHERE(gt(n = 100)) %+%
-  LIMIT(10) %>% 
-  sqlformat %>% cat
-```
-
-Error in system("sqlformat -h", intern = TRUE) : error in running command
-
-```
-## Warning: Please install sqlformat via
-## https://github.com/andialbrecht/sqlparse
+  LIMIT(10) %>%
+  sqlformat() %>%
+  cat()
 ```
 
 ```sql
-SELECT * FROM (SELECT tailnum, avg(arr_delay) as delay, count(*) as n FROM flights  GROUP BY tailnum ORDER BY delay DESC) delay WHERE n>100 LIMIT 10
+SELECT *
+  FROM (
+        SELECT tailnum,
+               avg(arr_delay) AS delay,
+               count(*) AS n
+          FROM flights
+         GROUP BY tailnum
+         ORDER BY delay DESC
+       ) delay
+ WHERE n>100
+ LIMIT 10
 ```
 
 For me, at least, where the goal is to write SQL queries as bare strings, `sqrrl` lets me write in R and think in SQL without having to add a huge number of `paste` and `paste0` functions.
@@ -533,8 +538,8 @@ As a final example, here is a fully-loaded select query.
 
 
 ```r
-SELECT('`year`', 'carrier', 'flight', 'dest', 
-       n = 'count(*)', 
+SELECT('`year`', 'carrier', 'flight', 'dest',
+       n = 'count(*)',
        avg_dist = 'avg(distance)',
        avg_air_time = 'avg(air_time)') %+%
   FROM(f = 'flights') %+%
@@ -547,9 +552,9 @@ SELECT('`year`', 'carrier', 'flight', 'dest',
   ) %+%
   GROUP_BY('`year`', 'carrier', 'flight', 'dest') %+%
   ORDER_BY(DESC('n')) %+%
-  LIMIT(10) %>% 
-  { sqlformat(.) %>% cat; . } %>% 
-  flights %>% 
+  LIMIT(10) %>%
+  { sqlformat(.) %>% cat; . } %>%
+  flights %>%
   as_table
 ```
 
