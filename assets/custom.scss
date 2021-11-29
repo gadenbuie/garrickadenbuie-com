@@ -137,6 +137,18 @@ figure figcaption h4,
   font-size: 0.9rem;
 }
 
+.page-main h1 {
+	font-weight: 300;
+}
+
+.home {
+  .action.button {
+    text-transform: none;
+  }
+  .action.text {
+    text-transform: none;
+  }
+}
 
 :root {
   --scrollbarBgColor: var(--siteBgColorCustom);
