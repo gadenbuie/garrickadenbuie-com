@@ -89,10 +89,11 @@ links:
   font-size: 1em;
   padding: 10px;
   padding-left: 35px;
-  padding-right: 20px;
+  padding-right: 15px;
   margin-bottom: 1.5em;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 0;
+  border-width: 1px;
   break-inside: avoid;
   white-space: nowrap;
   position: relative;
