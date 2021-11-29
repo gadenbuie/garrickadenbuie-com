@@ -13,7 +13,8 @@ tags:
   - Programming
   - Poll
 description: A deep dive into an informal, free-form survey about experiences with programming languages.
-twitterImage: /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
+images:
+  - /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-10-08-tweet-poll-programming-languages.Rmd'
 keywords:
   - rstats

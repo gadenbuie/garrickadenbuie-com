@@ -12,7 +12,8 @@ tags:
   - Slides
   - xaringan Tip
 description: How to share your xaringan slides in style, on social media sites and embedded in your web page.
-twitterImage: /blog/sharing-xaringan-slides/sharing-xaringan-social-card.jpg
+images:
+  - /blog/sharing-xaringan-slides/sharing-xaringan-social-card.jpg
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -117,7 +118,7 @@ or you can reference <a href="https://pkg.garrickadenbuie.com/metathis/#in-xarin
 <pre class="markdown"><code>```{r metathis, echo=FALSE}
 library(metathis)
 meta() %&gt;%
-  meta_name(&quot;github-repo&quot; = &quot;gadenbuie/build-your-own-universe&quot;) %&gt;% 
+  meta_name(&quot;github-repo&quot; = &quot;gadenbuie/build-your-own-universe&quot;) %&gt;%
   meta_social(
     title = &quot;Build your own universe&quot;,
     description = paste(
@@ -127,8 +128,8 @@ meta() %&gt;%
     url = &quot;https://build-your-own-universe.netlify.app&quot;,
     image = &quot;https://build-your-own-universe.netlify.app/social-card.png&quot;,
     image_alt = paste(
-      &quot;Title slide of Build your own universe:&quot;, 
-      &quot;Scale high-quality research data provisioning with R packages,&quot;, 
+      &quot;Title slide of Build your own universe:&quot;,
+      &quot;Scale high-quality research data provisioning with R packages,&quot;,
       &quot;presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie&quot;
     ),
     og_type = &quot;website&quot;,
@@ -333,11 +334,11 @@ screenshot_share_image &lt;- function(
 ) {
   if (!requireNamespace(&quot;webshot2&quot;, quietly = TRUE)) {
     stop(
-      &quot;`webshot2` is required: &quot;, 
+      &quot;`webshot2` is required: &quot;,
       &#39;remotes::install_github(&quot;rstudio/webshot2&quot;)&#39;
     )
   }
-  
+
   webshot2::rmdshot(
     doc = slides_rmd,
     file = path_image,
@@ -350,7 +351,7 @@ screenshot_share_image &lt;- function(
       )
     )
   )
-  
+
   path_image
 }</code></pre>
 <p>To use the function, just give it the path to your slides <code>.Rmd</code>

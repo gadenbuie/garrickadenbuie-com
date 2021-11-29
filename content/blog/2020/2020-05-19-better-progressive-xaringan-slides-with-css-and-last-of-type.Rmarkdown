@@ -12,7 +12,8 @@ tags:
   - CSS
   - Slides
 description: A few CSS rules for focused, progressively revealed lists and R code chunks in xaringan slides.
-twitterImage: /blog/better-progressive-xaringan/better-progressive-xaringan.png
+images:
+  - /blog/better-progressive-xaringan/better-progressive-xaringan.png
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-05-19-better-progressive-xaringan-slides-with-css-and-last-of-type.Rmd
 head_custom: |
   <link href="/css/flexy.css" rel="stylesheet">

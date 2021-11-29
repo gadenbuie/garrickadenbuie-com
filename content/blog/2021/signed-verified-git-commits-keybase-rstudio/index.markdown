@@ -12,7 +12,8 @@ tags:
   - RStudio
   - Tutorials
 description: "Setting up signed git commits with a Keybase GPG key that works with RStudio."
-twitterImage: "/blog/signed-verified-git-commits-keybase-rstudio/social.png"
+images:
+  - "/blog/signed-verified-git-commits-keybase-rstudio/social.png"
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/signed-verified-git-commits-keybase-rstudio/index.Rmd'
 keywords: "rstats"
 ---
@@ -51,7 +52,7 @@ Along the way, we'll also make sure everything is set up in a way that plays nic
 
 ## Overview
 
-Did you know it's incredibly easy to 
+Did you know it's incredibly easy to
 [spoof commit authors with git](https://blog.gruntwork.io/how-to-spoof-any-user-on-github-and-what-to-do-to-prevent-it-e237e95b8deb)?
 Basically, you only need to tell `git` you're a different person.
 
@@ -67,14 +68,14 @@ git commit -m "Fix recode() arguments to new = old"
 while GitHub will try a little harder than `git`,
 it's surprisingly easy to pretend to be somewhere else in a git repo.
 
-This can obviously lead to problems 
+This can obviously lead to problems
 (that are admittedly mostly theoretical in my daily life)
 and there's a relatively easy solution: signed commits.
 With signed commits,
 you cryptographically sign each commit with your private key that only you own,
 and GitHub (and others) will verify your signature with the public key pair.
-When GitHub knows that the real you made the commit, 
-it adds the green 
+When GitHub knows that the real you made the commit,
+it adds the green
 <img src="verified-small.png" alt="verified" style="display:inline;margin:0;vertical-align:middle" height="24">
 badge.
 
@@ -82,7 +83,7 @@ In this post,
 I'll show you how to use Keybase to create your own GPG key.
 Then we'll set up `git` to use this key to sign your commits,
 and along the way we'll configure `git` to work with RStudio, too.
-I'm using a Mac, but the process is very similar for Linux/Unix 
+I'm using a Mac, but the process is very similar for Linux/Unix
 machines^[Windows users, I'm sorry! I don't own anything that runs Windows. &#x1F612;].
 
 ## Set up signed and verified commits
@@ -108,11 +109,11 @@ the [GNU Privacy Guard][gpg] command line tool.
 It manages the cryptographic steps:
 signing or encoding files with your personal GPG key.
 
-[Keybase] is 
+[Keybase] is
 _key directory that maps social media identities to encryption keys in a publicly auditable manner^[https://en.wikipedia.org/wiki/Keybase]_.
 In other words,
 Keybase is place to store encryption keys
-and to link your identity (and those keys) 
+and to link your identity (and those keys)
 to your public identities such as your accounts on [Twitter] or [GitHub].
 One advantage of Keybase is that its app and command line tool
 make it relatively easy to generate and store GPG keys.
@@ -120,18 +121,18 @@ It's also a great way to share that key between your own computers.
 
 ### Create a GPG key with Keybase
 
-If you don't have a Keybase account, 
+If you don't have a Keybase account,
 open the Keybase app that we installed with `brew`.
 Their app will guide you through the process of creating an account.
 
-Once you have a Keybase account, 
+Once you have a Keybase account,
 head back to the command line[^or-keybase-app]
 to create a new GPG key.
 Note that the `keybase` cli uses the `pgp` command,
 but we've been talking about _GPG_ keys.
 To most people, the terms GPG and PGP are functionally interchangeable:
 GPG is the [GNU Privacy Guard][gpg]
-which is an open-source version of 
+which is an open-source version of
 PGP ([Pretty Good Privacy](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)).
 
 [^or-keybase-app]: You could also create a GPG/PGP key in the Keybase app in the identities section of your profile, but I'm using the command line so it's easier to copy-paste.
@@ -142,8 +143,8 @@ keybase pgp gen --multi
 ```
 Enter your real name, which will be publicly visible in your new key: Garrick Aden-Buie
 Enter a public email address for your key: garrick@adenbuie.com
-Enter another email address (or <enter> when done): 
-Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y 
+Enter another email address (or <enter> when done):
+Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y
 When exporting to the GnuPG keychain, encrypt private keys with a passphrase? [Y/n] Y
 ▶ INFO PGP User ID: Garrick Aden-Buie <garrick@adenbuie.com> [primary]
 ▶ INFO Generating primary key (4096 bits)
@@ -159,8 +160,8 @@ To recap the process:
 - `keybase` will first ask you for your real name and email address.
   Make sure these match your identity on GitHub, or at least a
   [verified email that you use on GitHub](https://github.com/settings/emails).
-  
-- Then choose `Y` to push a copy of the key to Keybase 
+
+- Then choose `Y` to push a copy of the key to Keybase
   and `Y` again to add give your private key a passphrase.
 
 - After a few seconds, Keybase asks for your account password
@@ -201,14 +202,14 @@ gpg --edit-key B606B038A1A5CE20
 gpg> trust
 # Please decide how far you trust this user to correctly verify other users' keys
 # (by looking at passports, checking fingerprints from different sources, etc.)
-# 
+#
 #   1 = I don't know or won't say
 #   2 = I do NOT trust
 #   3 = I trust marginally
 #   4 = I trust fully
 #   5 = I trust ultimately
 #   m = back to the main menu
-# 
+#
 # Your decision? 5
 # Do you really want to set this key to ultimate trust? (y/N) y
 
@@ -233,7 +234,7 @@ ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]
 
 ### Configure git to always sign your commits
 
-Setting `git` to always sign your commits is straightforward. 
+Setting `git` to always sign your commits is straightforward.
 Update the git global config to sign commits using your default key
 with the following two commands,
 replacing my key id in the first command with _your_ key id.
@@ -388,7 +389,7 @@ that also integrates with MacOS's Keychain
 so you don't have to enter the passphrase with every commit.
 
 If you're using Windows, you might want to check out the [Gpg4win app](https://www.gpg4win.org/).
-On Linux, 
+On Linux,
 you may want to use [pinentry-gnome3](http://manpages.ubuntu.com/manpages/bionic/man1/pinentry-gnome3.1.html).
 Finally,
 you could also [configure `gpg-agent` to cache your passphrase](#gpg-agent-cache-passphrase)
@@ -420,7 +421,7 @@ Finally, restart the `gpg-agent` so that `pinentry-mac` is used for passphrase e
 gpgconf --kill gpg-agent
 ```
 
-When you create your next commit in RStudio, 
+When you create your next commit in RStudio,
 you'll be prompted with a dialog box to enter your passphrase.
 If you select the _Save in Keychain_ option,
 you won't be prompted again;
@@ -454,7 +455,7 @@ gpg> save
 ## Links and Resources
 
 Here's a short list of links that were helpful to me while figuring out this process.
-Hopefully, everything above _just works_ for you, 
+Hopefully, everything above _just works_ for you,
 but if not then maybe the posts below will help you out:
 
 - [pstadler/keybase-gpg-github: Step-by-step guide on how to create a GPG key on keybase.io, adding it to a local GPG setup and use it with Git and GitHub.](https://github.com/pstadler/keybase-gpg-github)
@@ -475,12 +476,12 @@ If you don't want to or can't [install a pinentry app](#install-a-pinentry-app),
 you can get `gpg-agent` to cache your passphrase for a fixed period of time,
 say 8 hours.
 
-When you start your day — 
+When you start your day —
 or when the cache expires —
 you'll need to sign something or commit once from the command line
 to re-enter your passphrase.
 
-The first step is to configure `gpg-agent` 
+The first step is to configure `gpg-agent`
 to remember your key's password for the day (8 hours or 28,800 seconds).
 
  ```bash
@@ -494,9 +495,9 @@ to remember your key's password for the day (8 hours or 28,800 seconds).
  ```bash
  gpgconf --kill gpg-agent
  ```
- 
- At this point, 
- any `git commit` will automatically be signed using your default key. 
+
+ At this point,
+ any `git commit` will automatically be signed using your default key.
  The first commit of the day
  will require you to enter your password,
  which does mean that
@@ -510,5 +511,5 @@ to remember your key's password for the day (8 hours or 28,800 seconds).
 
  ```bash
  echo "open sesame" | gpg -s > /dev/null
- # prompt for password 
+ # prompt for password
  ```

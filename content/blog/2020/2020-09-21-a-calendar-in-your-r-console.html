@@ -9,7 +9,8 @@ tags:
   - R
   - lubridate
 description: post description
-twitterImage: /blog/r-console-calendar/social-card.png
+images:
+  - /blog/r-console-calendar/social-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmd'
 keywords: rstats
 editor_options:
@@ -33,13 +34,13 @@ These systems come with a command-line utility called <code>cal</code> (<a href=
 By calling <code>cal</code> from the R console using <code>system()</code>,
 you can print a calendar in your console.</p>
 <pre class="r"><code>system(&quot;cal&quot;)</code></pre>
-<pre><code>    January 2021      
-Su Mo Tu We Th Fr Sa  
-                1  2  
- 3  4  5  6  7  8  9  
-10 11 12 13 14 15 16  
-17 18 19 20 21 22 23  
-24 25 26 27 28 29 30  
+<pre><code>    January 2021
+Su Mo Tu We Th Fr Sa
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 30
 31                    </code></pre>
 <p>Here’s Mike’s <a href="https://twitter.com/coolbutuseless/status/1308163906674790402">original tweet</a>.</p>
 <center>
@@ -63,17 +64,17 @@ This I cribbed heavily from <span class="pkg"><a href="/blog/ggplot2-weekly-plan
     get_week &lt;- lubridate::isoweek
     get_year &lt;- lubridate::isoyear
   }
-  
+
   if (!inherits(start_date, &quot;Date&quot;)) {
     start_date &lt;- lubridate::ymd(start_date, truncated = 1)
   }
   if (!inherits(end_date, &quot;Date&quot;)) {
     end_date &lt;- lubridate::ymd(end_date, truncated = 1)
   }
-  
+
   start_date &lt;- lubridate::floor_date(start_date, &quot;month&quot;)
   end_date &lt;- lubridate::rollback(lubridate::ceiling_date(end_date, &quot;month&quot;))
-  
+
   tibble::tibble(
     date      = seq(start_date, end_date, by = &quot;day&quot;),
     day       = lubridate::day(date),
@@ -129,17 +130,17 @@ R code
   week_start = 1
 ) {
   `%&gt;%` &lt;- dplyr::`%&gt;%`
-  
+
   if (!inherits(start_date, &quot;Date&quot;)) {
     start_date &lt;- lubridate::ymd(start_date, truncated = 1)
   }
   if (!inherits(end_date, &quot;Date&quot;)) {
     end_date &lt;- lubridate::ymd(end_date, truncated = 1)
   }
-  
+
   start_date &lt;- lubridate::floor_date(start_date, &quot;month&quot;)
   end_date &lt;- lubridate::rollback(lubridate::ceiling_date(end_date, &quot;month&quot;))
-  
+
   tibble::tibble(
     date      = seq(start_date, end_date, by = &quot;day&quot;),
     day       = lubridate::day(date),
@@ -149,7 +150,7 @@ R code
     month     = lubridate::month(.data$date, label = TRUE, abbr = FALSE),
     month_int = lubridate::month(.data$date, label = FALSE),
     year      = lubridate::year(lubridate::floor_date(.data$date, unit = &quot;year&quot;, week_start = week_start))
-  ) %&gt;% 
+  ) %&gt;%
     dplyr::group_by(month, year) %&gt;%
     dplyr::mutate(week = week - min(week) + 1) %&gt;%
     dplyr::ungroup() %&gt;%
@@ -159,7 +160,7 @@ R code
       day = sprintf(&quot;%2s&quot;, day),
       day = dplyr::if_else(weekend, as.character(crayon::silver(day)), day),
       day = dplyr::if_else(
-        date == lubridate::today(), 
+        date == lubridate::today(),
         as.character(crayon::bold(crayon::red(day))),
         day
       ),
@@ -199,20 +200,20 @@ But now I have a function <code>cal()</code> that prints out a calendar in my R 
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </STYLE>
 <pre class="r"><code>cal(&quot;2020-09&quot;, &quot;2020-12&quot;)</code></pre>
-<pre><code>   September 2020           October 2020    
+<pre><code>   September 2020           October 2020
     1  2  3  4  5  6              1  2  3  4
  7  8  9 10 11 12 13     5  6  7  8  9 10 11
 14 15 16 17 18 19 20    12 13 14 15 16 17 18
 21 22 23 24 25 26 27    19 20 21 22 23 24 25
-28 29 30                26 27 28 29 30 31   
-                                            
+28 29 30                26 27 28 29 30 31
 
-    November 2020           December 2020   
+
+    November 2020           December 2020
                    1        1  2  3  4  5  6
  2  3  4  5  6  7  8     7  8  9 10 11 12 13
  9 10 11 12 13 14 15    14 15 16 17 18 19 20
 16 17 18 19 20 21 22    21 22 23 24 25 26 27
-23 24 25 26 27 28 29    28 29 30 31         
+23 24 25 26 27 28 29    28 29 30 31
 30                                          </code></pre>
 <hr />
 <p>Edited on 2021-01-28 to fix a bug that caused days whose ISO weeks occur in an earlier year —

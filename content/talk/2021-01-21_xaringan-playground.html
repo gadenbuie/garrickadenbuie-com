@@ -5,7 +5,8 @@ author:
 description: |
   Making slides with xaringan is a great way to learn more about CSS
   and web development.
-twitterImage: "https://www.garrickadenbuie.com/ /blog/xaringan-playground/xaringan-playground-social.png"
+images:
+  - "https://www.garrickadenbuie.com/ /blog/xaringan-playground/xaringan-playground-social.png"
 date: '2021-01-21'
 slug: xaringan-playground
 tags:
@@ -14,7 +15,7 @@ tags:
   - Presentation
   - CSS
   - Web Development
-  
+
 talk_author: [Garrick Aden-Buie]
 talk_type: Conference
 talk_event: "rstudio::global"

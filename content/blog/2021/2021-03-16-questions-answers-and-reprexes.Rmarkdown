@@ -12,7 +12,7 @@ tags:
   - Programming
   - reprex
 description: A "CSS Battle" YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.
-# twitterImage: /path/to/image.png
+# images: [ /path/to/image.png ]
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/2021-03-16-questions-answers-and-reprexes.Rmd'
 editor_options:
   chunk_output_type: console
@@ -237,7 +237,7 @@ With [a reprex][reprex].
 
 A reprex is a small, reproducible example.
 Typically, it's a small little bit of code with a tiny bug.
-It's reproducible, 
+It's reproducible,
 meaning that it's designed to work anywhere for anyone,
 or at least to work with the minimal number of dependencies.
 It doesn't have to be buggy code,

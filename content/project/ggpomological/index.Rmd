@@ -4,7 +4,8 @@ author: Garrick Aden-Buie
 date: '2018-02-16'
 slug: ggpomological
 description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
-twitterImage: /images/project/ggpomological/ggpomological.png
+images:
+  - /images/project/ggpomological/ggpomological.png
 type: page
 categories:
   - Project

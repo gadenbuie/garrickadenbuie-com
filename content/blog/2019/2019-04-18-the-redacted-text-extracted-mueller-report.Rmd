@@ -2,7 +2,8 @@
 title: The Redacted, Text-Extracted Mueller Report
 author: Garrick Aden-Buie
 description: Visualizing extracted text from the Redacted Mueller Report using ggpage.
-twitterImage: "/blog/2019/2019-04-18-the-redacted-text-extracted-mueller-report_files/figure-html/mueller-ggpage-1.png"
+images:
+  - "/blog/2019/2019-04-18-the-redacted-text-extracted-mueller-report_files/figure-html/mueller-ggpage-1.png"
 date: '2019-04-18'
 slug: redacted-text-extracted-mueller-report
 categories:

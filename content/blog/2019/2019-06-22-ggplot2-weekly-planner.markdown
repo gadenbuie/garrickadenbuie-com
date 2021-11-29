@@ -11,7 +11,8 @@ tags:
   - Productivity
   - Scripts
 description: "Use ggplot2 to organize your life."
-twitterImage: "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
+images:
+  - "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-06-22-ggplot2-weekly-planner.Rmd
 keywords: rstats
 editor_options:
@@ -109,7 +110,7 @@ dates
 ```
 ## # A tibble: 54 × 7
 ##    day        wday_name weekend isoweek month isoyear week_year
-##    <date>     <ord>     <lgl>     <dbl> <ord>   <dbl> <fct>    
+##    <date>     <ord>     <lgl>     <dbl> <ord>   <dbl> <fct>
 ##  1 2019-06-24 Mon       FALSE        26 June     2019 2019 - 26
 ##  2 2019-06-25 Tue       FALSE        26 June     2019 2019 - 26
 ##  3 2019-06-26 Wed       FALSE        26 June     2019 2019 - 26
@@ -154,7 +155,7 @@ day_one
 ```
 ## # A tibble: 2 × 7
 ##   day        wday_name weekend isoweek month  isoyear week_year
-##   <date>     <ord>     <lgl>     <dbl> <ord>    <dbl> <fct>    
+##   <date>     <ord>     <lgl>     <dbl> <ord>    <dbl> <fct>
 ## 1 2019-07-01 Mon       FALSE        27 July      2019 2019 - 27
 ## 2 2019-08-01 Thu       FALSE        31 August    2019 2019 - 31
 ```
@@ -203,7 +204,7 @@ list(1:5, letters[1:5]) %>% purrr::reduce(setNames)
 ```
 
 ```
-## a b c d e 
+## a b c d e
 ## 1 2 3 4 5
 ```
 
@@ -358,7 +359,7 @@ month_boundaries
 
 ```
 ## # A tibble: 2 × 7
-##   day        month  wday_name week_year left             up               right 
+##   day        month  wday_name week_year left             up               right
 ##   <date>     <ord>      <int>     <int> <list>           <list>           <list>
 ## 1 2019-07-01 July           1         7 <tibble [1 × 1]> <tibble [1 × 1]> <tibb…
 ## 2 2019-08-01 August         4         3 <tibble [1 × 4]> <tibble [1 × 4]> <tibb…

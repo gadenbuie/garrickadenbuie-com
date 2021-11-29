@@ -6,7 +6,8 @@ author:
 description: |
   A brief introduction to the {xaringan} package and how you can make your
   slides look great with {xaringanthemer} and stand out with {xaringanExtra}.
-twitterImage: "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
+images:
+  - "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
 date: '2021-03-10'
 slug: extra-great-slides-nyhackr
 tags:
@@ -35,7 +36,7 @@ xaringanExtra::embed_xaringan(rmarkdown::metadata$talk_slides_url)
 
 The [xaringan] package by YiHui Xie lets R users and R Markdown authors easily blend data, text, plots and [htmlwidgets] into beautiful HTML presentations that look great on the web, in print, and on screens.
 
-In addition to demonstrating how to go from R Markdown to web-based slides with xaringan, in this talk I'll show you how to completely customize the appearance of your slides with [xaringanthemer], a package that lets you quickly create a complete slide theme from only a few color choices. 
+In addition to demonstrating how to go from R Markdown to web-based slides with xaringan, in this talk I'll show you how to completely customize the appearance of your slides with [xaringanthemer], a package that lets you quickly create a complete slide theme from only a few color choices.
 
 Then we'll go beyond appearances with a variety of addins and extensions from the [xaringanExtra] package, including: a tiled slide overview, editable slides, embedded webcam videos, tabbed panels, extra styles, shareable and embeddable slides, animations, and real time slide broadcasting.
 

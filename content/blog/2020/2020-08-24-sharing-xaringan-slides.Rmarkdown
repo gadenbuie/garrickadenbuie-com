@@ -12,7 +12,8 @@ tags:
   - Slides
   - xaringan Tip
 description: How to share your xaringan slides in style, on social media sites and embedded in your web page.
-twitterImage: /blog/sharing-xaringan-slides/sharing-xaringan-social-card.jpg
+images:
+  - /blog/sharing-xaringan-slides/sharing-xaringan-social-card.jpg
 keywords: rstats
 editor_options:
   chunk_output_type: console

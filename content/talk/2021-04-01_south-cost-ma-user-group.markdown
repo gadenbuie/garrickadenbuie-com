@@ -4,7 +4,8 @@ author:
   - Garrick Aden-Buie
 description: |
   Make stylish slides with {xaringanthemer} and a little bit of CSS.
-twitterImage: "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
+images:
+  - "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
 date: '2021-04-01'
 slug: sliding-in-style-south-coast-ma
 tags:

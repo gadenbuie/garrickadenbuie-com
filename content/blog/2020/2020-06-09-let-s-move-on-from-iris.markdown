@@ -9,7 +9,8 @@ tags:
   - R
   - Scripts
 description: About iris and how to move on.
-twitterImage: /blog/lets-move-on-from-iris/de-iris-my-repos-issue.png
+images:
+  - /blog/lets-move-on-from-iris/de-iris-my-repos-issue.png
 summary: |
   It's time for `iris` to go. Use
   <a href="https://github.com/gadenbuie/de-iris-my-repos">de_iris_my_repos()</a>

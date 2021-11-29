@@ -11,7 +11,8 @@ tags:
   - dplyr
   - color
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
-twitterImage: /blog/colors-of-xcolor/colors-of-xcolor.png
+images:
+  - /blog/colors-of-xcolor/colors-of-xcolor.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmd'
 keywords: rstats
 editor_options:
@@ -77,11 +78,11 @@ head(xcolor)
     ## # A tibble: 6 × 4
     ##   color             r     g     b
     ##   <chr>         <dbl> <dbl> <dbl>
-    ## 1 AliceBlue     0.94  0.972 1    
+    ## 1 AliceBlue     0.94  0.972 1
     ## 2 AntiqueWhite  0.98  0.92  0.844
-    ## 3 AntiqueWhite1 1     0.936 0.86 
-    ## 4 AntiqueWhite2 0.932 0.875 0.8  
-    ## 5 AntiqueWhite3 0.804 0.752 0.69 
+    ## 3 AntiqueWhite1 1     0.936 0.86
+    ## 4 AntiqueWhite2 0.932 0.875 0.8
+    ## 5 AntiqueWhite3 0.804 0.752 0.69
     ## 6 AntiqueWhite4 0.545 0.512 0.47
 
 ## A Shiny fixed-color picker

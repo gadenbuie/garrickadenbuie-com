@@ -13,7 +13,8 @@ tags:
 description: >
   Building discrete color scales for ggplot2
   with some cool features for binary categorical variables.
-twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
+images:
+  - /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
 keywords: rstats
 editor_options:

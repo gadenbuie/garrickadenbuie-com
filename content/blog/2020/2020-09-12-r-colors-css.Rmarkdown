@@ -15,7 +15,8 @@ tags:
   - Shiny
   - color
 description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
-twitterImage: https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
+images:
+  - https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-12-r-colors-css.Rmd
 keywords: rstats
 head_custom: |

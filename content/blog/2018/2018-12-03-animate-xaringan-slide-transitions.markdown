@@ -5,7 +5,8 @@ author: Garrick Aden-Buie
 date: '2018-12-03'
 slug: animate-xaringan-slide-transitions
 aliases: /blog/2018/12/03/animate-xaringan-slide-transitions
-twitterImage: /images/2018/animated-xaringan-slides/xaringan-animated.gif
+images:
+  - /images/2018/animated-xaringan-slides/xaringan-animated.gif
 categories:
   - Blog
 tags:
@@ -30,7 +31,7 @@ Check out [this gist](https://gist.github.com/gadenbuie/6ba134aec862e781cbb97e4b
 ## Add animate.css to your slide's css
 
 The first thing you need to do to add animations is to include `animate.css` in the css argument to `moon_reader()`.
-You can download the [animate.css  file](https://raw.githubusercontent.com/daneden/animate.css/master/animate.css) into your slides directory 
+You can download the [animate.css  file](https://raw.githubusercontent.com/daneden/animate.css/master/animate.css) into your slides directory
 
 ```r
 download.file(
@@ -39,7 +40,7 @@ download.file(
 )
 ```
 
-and then list `animate.css` in the `css` YAML section. 
+and then list `animate.css` in the `css` YAML section.
 
 ```yaml
 output:
@@ -56,14 +57,14 @@ output:
     lib_dir: libs
     css:
       - default
-      - default-fonts 
+      - default-fonts
       - "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
 ```
 
 ## Add animation classes to your slide's class
 
 Animations are specified on a per-slide basis and are applied to partial slide reveals as well.
-You can also use `layout: true` to apply animations to multiple slides, but I'm not aware of a way to set a default transition for all slides. 
+You can also use `layout: true` to apply animations to multiple slides, but I'm not aware of a way to set a default transition for all slides.
 Here's [a short gist](https://gist.github.com/gadenbuie/6ba134aec862e781cbb97e4bbf125814) as an example to get you started.
 
 To animate a slide's transition, add `animated` and the [animation type of your choice](https://github.com/daneden/animate.css#animations) to the slide's class.

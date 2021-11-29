@@ -13,7 +13,8 @@ tags:
   - Programming
   - Poll
 description: A deep dive into an informal, free-form survey about experiences with programming languages.
-twitterImage: /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
+images:
+  - /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-10-08-tweet-poll-programming-languages.Rmd'
 keywords:
   - rstats
@@ -282,7 +283,7 @@ because many people specified their choices using language hashtags, like <code>
     # remove parentheticals
     str_remove_all(&quot;\\s*\\(.+?\\)( |\n|$)&quot;) %&gt;%
     # replace &quot;#hashtag&quot; with &quot;hashtag&quot;
-    str_replace_all(&quot;#(\\w)&quot;, &quot;\\1&quot;) 
+    str_replace_all(&quot;#(\\w)&quot;, &quot;\\1&quot;)
 }</code></pre>
 </div>
 <div id="process-answer" class="section level3">
@@ -294,7 +295,7 @@ For example,
 To help with this process I created a list of common languages that frequently appear in the answers.</p>
 <pre class="r"><code>common_langs &lt;- c(
   # c, c#, c++, and .net are manually included later
-  &quot;css&quot;, &quot;html&quot;, &quot;python&quot;, &quot;javascript&quot;, &quot;x86&quot;, &quot;java&quot;, &quot;ruby&quot;, &quot;pascal&quot;, &quot;php&quot;, 
+  &quot;css&quot;, &quot;html&quot;, &quot;python&quot;, &quot;javascript&quot;, &quot;x86&quot;, &quot;java&quot;, &quot;ruby&quot;, &quot;pascal&quot;, &quot;php&quot;,
   &quot;matlab&quot;, &quot;perl&quot;, &quot;fortran&quot;, &quot;logo&quot;, &quot;actionscript&quot;, &quot;lua&quot;, &quot;assembly&quot;,
   &quot;delphi&quot;, &quot;js&quot;, &quot;scheme&quot;, &quot;scratch&quot;, &quot;go&quot;, &quot;typescript&quot;, &quot;clojure&quot;, &quot;elixr&quot;,
   &quot;kotlin&quot;, &quot;ocaml&quot;, &quot;rust&quot;, &quot;mathematica&quot;, &quot;matlab&quot;, &quot;dart&quot;, &quot;flutter&quot;, &quot;groovy&quot;,
@@ -393,10 +394,10 @@ Here are two additional categories that I created, <code>curious</code> and <cod
 <h3>Poll Processing Pipeline</h3>
 <p>Finally, here is the full pipeline to go from raw tweets to poll results.</p>
 <pre class="r"><code>tweets_lang_poll &lt;-
-  tweets %&gt;% 
+  tweets %&gt;%
   select(status_id, created_at, user_id, screen_name, text) %&gt;%
   # Remove tweets with &quot;English&quot; because that&#39;s probably a different thread
-  filter(!str_detect(text, &quot;[eE]nglish&quot;)) %&gt;% 
+  filter(!str_detect(text, &quot;[eE]nglish&quot;)) %&gt;%
   mutate(
     # Backup original tweet text
     text_og = text,
@@ -405,35 +406,35 @@ Here are two additional categories that I created, <code>curious</code> and <cod
   ) %&gt;%
   # Split text into question/answer pairs,
   # splitting on newline or one of: `N.`, `N)`, `N:`, or `N-`
-  separate_rows(text, sep = &quot;\n|\\d\\s*[.):-]&quot;) %&gt;% 
+  separate_rows(text, sep = &quot;\n|\\d\\s*[.):-]&quot;) %&gt;%
   # Remove whitespace and `N.` numbers from start of text
-  mutate(text = str_remove_all(text, &quot;^\\s*(\\d[.):-])?\\s*&quot;)) %&gt;% 
+  mutate(text = str_remove_all(text, &quot;^\\s*(\\d[.):-])?\\s*&quot;)) %&gt;%
   # Seperate question/answer into category, answer columns, splitting on colon `:`
   separate(
     col = text,
     into = c(&quot;category&quot;, &quot;answer&quot;),
-    sep = &quot;\\s*:\\s*&quot;, 
+    sep = &quot;\\s*:\\s*&quot;,
     remove = FALSE
-  ) %&gt;% 
+  ) %&gt;%
   # Remove nothing answers or answers without any letters
   filter(
     !is.na(answer),
     str_detect(answer, &quot;[[:alnum:]]&quot;)
-  ) %&gt;% 
+  ) %&gt;%
   # Re-encode category, answer as UTF-8 (:shrug:) and lowercase
-  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %&gt;% 
-  mutate_at(vars(category, answer), tolower) %&gt;% 
+  mutate_at(vars(category, answer), stringi::stri_enc_toutf8) %&gt;%
+  mutate_at(vars(category, answer), tolower) %&gt;%
   # Category: Remove leading non-alpha characters and squish whitespace
   mutate(
     category = str_remove(category, &quot;^[^[:alpha:]]+&quot;),
     category = str_squish(category)
-  ) %&gt;% 
+  ) %&gt;%
   # Process answer as well as we can programmatically
-  mutate(answer = process_answer(answer, common_langs)) %&gt;% 
+  mutate(answer = process_answer(answer, common_langs)) %&gt;%
   # Separate into one language per row
-  separate_rows(answer, sep = &quot;\\s*[,/]\\s*&quot;) %&gt;% 
+  separate_rows(answer, sep = &quot;\\s*[,/]\\s*&quot;) %&gt;%
   # Squish the strings
-  mutate_at(vars(answer), str_squish) %&gt;% 
+  mutate_at(vars(answer), str_squish) %&gt;%
   mutate(
     answer = recode_answer(answer),
     category2 = recode_category(category)
@@ -464,24 +465,24 @@ The color palette is <code>ocean.deep</code> from the <span class="pkg">pals</sp
 Emil Hvitfeldt’s
 <a href="https://github.com/EmilHvitfeldt/r-color-palettes#comprehensive-list-of-color-palettes-in-r">Comprehensive list of color palettes in R</a>.</p>
 <pre class="r"><code>plot_tweets_by_category &lt;- function(
-  tweets_lang_counted, 
-  categories, 
+  tweets_lang_counted,
+  categories,
   ncol = 2,
   min_count = 10
 ) {
-  tweets_lang_counted %&gt;% 
-    filter(category2 %in% categories) %&gt;% 
-    mutate_at(vars(category2), factor, levels = categories) %&gt;% 
-    group_by(category2) %&gt;% 
-    arrange(desc(n)) %&gt;% 
-    filter(n &gt;= min_count) %&gt;% 
-    top_n(20, n) %&gt;% 
-    ungroup() %&gt;% 
-    arrange(category2, answer, desc(n)) %&gt;% 
+  tweets_lang_counted %&gt;%
+    filter(category2 %in% categories) %&gt;%
+    mutate_at(vars(category2), factor, levels = categories) %&gt;%
+    group_by(category2) %&gt;%
+    arrange(desc(n)) %&gt;%
+    filter(n &gt;= min_count) %&gt;%
+    top_n(20, n) %&gt;%
+    ungroup() %&gt;%
+    arrange(category2, answer, desc(n)) %&gt;%
     mutate(
       answer_within = tidytext::reorder_within(answer, n, category2),
       answer = fct_reorder(answer, n, first)
-    ) %&gt;% 
+    ) %&gt;%
     ggplot() +
     aes(answer_within, n, fill = answer) +
     geom_col() +

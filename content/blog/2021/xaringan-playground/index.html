@@ -14,7 +14,8 @@ tags:
 description: |
   Making slides with xaringan is a great way to learn more about CSS
   and web development.
-twitterImage: /blog/xaringan-playground/xaringan-playground-social.png
+images:
+  - /blog/xaringan-playground/xaringan-playground-social.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/xaringan-playground/index.Rmd'
 keywords: rstats
 editor_options:

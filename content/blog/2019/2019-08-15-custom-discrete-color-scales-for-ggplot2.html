@@ -10,10 +10,11 @@ tags:
   - ggplot2
   - Visualization
   - Tips
-description: > 
-  Building discrete color scales for ggplot2 
+description: >
+  Building discrete color scales for ggplot2
   with some cool features for binary categorical variables.
-twitterImage: /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
+images:
+  - /blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/title-card-1.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2.Rmd'
 keywords: rstats
 editor_options:
@@ -45,7 +46,7 @@ that you would ideally export from the package containing your brand’s <span c
   &quot;red&quot;    = &quot;#d1495b&quot;,
   &quot;yellow&quot; = &quot;#edae49&quot;,
   &quot;green&quot;  = &quot;#66a182&quot;,
-  &quot;navy&quot;   = &quot;#2e4057&quot;, 
+  &quot;navy&quot;   = &quot;#2e4057&quot;,
   &quot;grey&quot;   = &quot;#8d96a3&quot;
 )</code></pre>
 <p><img src="/blog/2019/2019-08-15-custom-discrete-color-scales-for-ggplot2_files/figure-html/show-brand-colors-1.png" width="1728" /></p>
@@ -70,15 +71,15 @@ The <code>other</code> argument specifies the name of the second (or other) colo
 and we’ll first try to lookup the color name from the brand colors,
 but we’ll also let the user specify a manual color.</p>
 <pre class="r"><code>branded_pal &lt;- function(
-  primary = &quot;blue&quot;, 
-  other = &quot;grey&quot;, 
+  primary = &quot;blue&quot;,
+  other = &quot;grey&quot;,
   direction = 1
 ) {
   stopifnot(primary %in% names(branded_colors))
-  
+
   function(n) {
     if (n &gt; 6) warning(&quot;Branded Color Palette only has 6 colors.&quot;)
-    
+
     if (n == 2) {
       other &lt;- if (!other %in% names(branded_colors)) {
         other
@@ -89,7 +90,7 @@ but we’ll also let the user specify a manual color.</p>
     } else {
       color_list &lt;- branded_colors[1:n]
     }
-    
+
     color_list &lt;- unname(unlist(color_list))
     if (direction &gt;= 0) color_list else rev(color_list)
   }
@@ -114,14 +115,14 @@ using <code>ggplot2::discrete_scale()</code> to turn our palette into a <span cl
 Note that ggplot2 convention is to spell <code>colour</code> with a <code>u</code>
 and to create an alias to the American spelling.</p>
 <pre class="r"><code>scale_colour_branded &lt;- function(
-  primary = &quot;blue&quot;, 
-  other = &quot;grey&quot;, 
-  direction = 1, 
+  primary = &quot;blue&quot;,
+  other = &quot;grey&quot;,
+  direction = 1,
   ...
 ) {
   ggplot2::discrete_scale(
-    &quot;colour&quot;, &quot;branded&quot;, 
-    branded_pal(primary, other, direction), 
+    &quot;colour&quot;, &quot;branded&quot;,
+    branded_pal(primary, other, direction),
     ...
   )
 }

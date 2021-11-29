@@ -11,7 +11,7 @@ tags:
   - Tricks
   - Twitter
 description: A big post with all the Mac apps and command line utilities I use everyday.
-# twitterImage: /path/to/image.png
+# images: [ /path/to/image.png ]
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/setting-up-a-new-macbook-pro/index.Rmd'
 keywords: rstats
 editor_options:

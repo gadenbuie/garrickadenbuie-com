@@ -11,7 +11,8 @@ tags:
   - Pull Requests
   - Workflow
 description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
-twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
+images:
+  - /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |
@@ -89,7 +90,7 @@ Yes, [I’m ready to go](#get-started)!
 
 </div>
 
-## 
+##
 
 <div id="story" aria-live="polite" aria-relevant="additions">
 
@@ -1193,7 +1194,7 @@ using `pr_fetch()`.
 
 </div>
 
-## 
+##
 
 <div id="step-list" style="display:none">
 

@@ -15,7 +15,8 @@ tags:
   - Shiny
   - color
 description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
-twitterImage: https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
+images:
+  - https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-12-r-colors-css.Rmd
 keywords: rstats
 head_custom: |
@@ -302,11 +303,11 @@ that you could use in [xaringan](https://slides.yihui.org/xaringan) slides
 and other R Markdown outputs?
 
 > [@grrrck](https://twitter.com/grrrck) First of
-> all, I 😻 \`xaringanExtra\`!  
->   
+> all, I 😻 \`xaringanExtra\`!
+>
 > I am looking at the tachyons colors and can't help but think that the
-> palette is rather limited. <https://t.co/0BUPGnkrb4>  
->   
+> palette is rather limited. <https://t.co/0BUPGnkrb4>
+>
 > Is there a way to intercept a tachyon with a named R color and
 > generate a proper css with the correct hex code?
 >

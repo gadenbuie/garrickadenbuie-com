@@ -11,7 +11,8 @@ tags:
   - dplyr
   - color
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
-twitterImage: /blog/colors-of-xcolor/colors-of-xcolor.png
+images:
+  - /blog/colors-of-xcolor/colors-of-xcolor.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmd'
 keywords: rstats
 editor_options:
@@ -50,27 +51,27 @@ library(stringr)
 
 read_gz &lt;- function(x) readLines(gzcon(url(x)))
 
-xcolor &lt;- 
+xcolor &lt;-
   list(
     svg = &quot;http://www.ukern.de/tex/xcolor/tex/svgnam.def.gz&quot;,
     x11 = &quot;http://www.ukern.de/tex/xcolor/tex/x11nam.def.gz&quot;
-  ) %&gt;% 
-  map(read_gz) %&gt;% 
-  flatten_chr() %&gt;% 
-  str_subset(&quot;^(%%|\\\\| )&quot;, negate = TRUE) %&gt;% 
-  str_remove(&quot;(;%|\\})$&quot;) %&gt;% 
-  read_csv(col_names = c(&quot;color&quot;, &quot;r&quot;, &quot;g&quot;, &quot;b&quot;)) %&gt;% 
+  ) %&gt;%
+  map(read_gz) %&gt;%
+  flatten_chr() %&gt;%
+  str_subset(&quot;^(%%|\\\\| )&quot;, negate = TRUE) %&gt;%
+  str_remove(&quot;(;%|\\})$&quot;) %&gt;%
+  read_csv(col_names = c(&quot;color&quot;, &quot;r&quot;, &quot;g&quot;, &quot;b&quot;)) %&gt;%
   arrange(color)
 
 head(xcolor)</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   color             r     g     b
 ##   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 AliceBlue     0.94  0.972 1    
+## 1 AliceBlue     0.94  0.972 1
 ## 2 AntiqueWhite  0.98  0.92  0.844
-## 3 AntiqueWhite1 1     0.936 0.86 
-## 4 AntiqueWhite2 0.932 0.875 0.8  
-## 5 AntiqueWhite3 0.804 0.752 0.69 
+## 3 AntiqueWhite1 1     0.936 0.86
+## 4 AntiqueWhite2 0.932 0.875 0.8
+## 5 AntiqueWhite3 0.804 0.752 0.69
 ## 6 AntiqueWhite4 0.545 0.512 0.47</code></pre>
 <div id="a-shiny-fixed-color-picker" class="section level2">
 <h2>A Shiny fixed-color picker</h2>
@@ -572,7 +573,7 @@ If you’re interested, you can download the
   background: white;
   padding: 10px;
 }
-.xcolor-color:hover .xcolor-text, 
+.xcolor-color:hover .xcolor-text,
 .xcolor-color:active .xcolor-text {
   display: block;
 }

@@ -5,7 +5,8 @@ author: Garrick Aden-Buie
 date: '2018-12-05'
 slug: yule-rstudio-theme
 aliases: /blog/2018/12/05/holiday-rstudio-theme
-twitterImage: /images/2018/holiday-rstudio-theme/mockup-rstudio.png
+images:
+  - /images/2018/holiday-rstudio-theme/mockup-rstudio.png
 categories:
   - Blog
 tags:

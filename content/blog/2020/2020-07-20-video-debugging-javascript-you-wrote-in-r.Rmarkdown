@@ -15,7 +15,8 @@ tags:
   - htmlwidgets
   - Video
 description: A pseudo-live-streamed walkthrough as I debug some buggy JavaScript written in R for a {reactable} htmlwidget.
-twitterImage: /blog/video-debug-js-from-r/debug-js-from-r.png
+images:
+  - /blog/video-debug-js-from-r/debug-js-from-r.png
 keywords: rstats
 editor_options:
   chunk_output_type: console

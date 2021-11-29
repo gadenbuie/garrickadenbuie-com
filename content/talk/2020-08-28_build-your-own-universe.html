@@ -5,16 +5,17 @@ author:
   - Travis Gerke
 description: |
   Scale high-quality research data provisioning with R packages package.
-twitterImage: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
+images:
+  - "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
 date: '2020-08-28'
 slug: build-your-own-universe
 categories: []
-tags: 
+tags:
   - R
   - R Packages
   - Workflow
   - Education
-  
+
 talk_author: [Garrick Aden-Buie, Travis Gerke]
 talk_type: Conference
 talk_image: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"

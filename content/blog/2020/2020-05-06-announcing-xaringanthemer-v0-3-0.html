@@ -11,12 +11,13 @@ tags:
   - xaringanthemer
   - xaringan
 description: xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.
-twitterImage: /blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png
+images:
+  - /blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png
 rmd_source: ''
 keywords: rstats
 editor_options:
   chunk_output_type: console
-output: 
+output:
   blogdown::html_page:
     fig_caption: no
 ---
@@ -236,7 +237,7 @@ Using the <code>red</code> color as an example, <span class="pkg">xaringanthemer
 </ol>
 <p>The named color and background classes are then easy to use in <span class="pkg">xaringan</span>.
 Slide text like this</p>
-<pre class="markdown"><code>This **.red[simple]** .white.bg-purple[demo] 
+<pre class="markdown"><code>This **.red[simple]** .white.bg-purple[demo]
 _.orange[shows]_ the colors .green[in action].</code></pre>
 <p>will be rendered in HTML as</p>
 <blockquote>
@@ -271,8 +272,8 @@ You only need to add <code>+ theme_xaringan()</code>
 to give your plot a makeover.</p>
 <pre class="r"><code>library(ggplot2)
 
-g_base &lt;- ggplot(mpg) + 
-  aes(hwy, cty) + 
+g_base &lt;- ggplot(mpg) +
+  aes(hwy, cty) +
   geom_point() +
   labs(x = &quot;Highway MPG&quot;, y = &quot;City MPG&quot;, title = &quot;Fuel Efficiency&quot;)
 
@@ -330,7 +331,7 @@ class: inverse
 &lt;!-- slide content --&gt;</code></pre>
 <p><span class="pkg">xaringanthemer</span> also provide a ggplot2 theme for these slides as well:
 <code>theme_xaringan_inverse()</code>.</p>
-<pre class="r"><code># theme_xaringan() on the left, 
+<pre class="r"><code># theme_xaringan() on the left,
 g_base + theme_xaringan()</code></pre>
 <pre class="r"><code># theme_xaringan_inverse() on the right
 g_base + theme_xaringan_inverse()</code></pre>
@@ -443,8 +444,8 @@ including Google Fonts.
     text_font_size = 16,
     background_color = &quot;#FFFFFF&quot;,
     text_color = &quot;#444444&quot;,
-    accent_color = &quot;#002B36&quot;, 
-  ) + 
+    accent_color = &quot;#002B36&quot;,
+  ) +
   theme(plot.title = element_text(face = &quot;bold&quot;))</code></pre>
 <div class="figure"><span id="fig:theme-xaringan-base"></span>
 <img src="/blog/2020/2020-05-06-announcing-xaringanthemer-v0-3-0_files/figure-html/theme-xaringan-base-1.png" alt="A plot with theme_xaringan_base() styled to match this blog" width="960" />

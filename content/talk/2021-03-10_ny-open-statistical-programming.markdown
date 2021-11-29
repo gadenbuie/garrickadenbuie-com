@@ -6,7 +6,8 @@ author:
 description: |
   A brief introduction to the {xaringan} package and how you can make your
   slides look great with {xaringanthemer} and stand out with {xaringanExtra}.
-twitterImage: "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
+images:
+  - "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
 date: '2021-03-10'
 slug: extra-great-slides-nyhackr
 tags:

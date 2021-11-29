@@ -15,7 +15,8 @@ tags:
   - Shiny
   - color
 description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
-twitterImage: https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
+images:
+  - https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-12-r-colors-css.Rmd
 keywords: rstats
 head_custom: |
@@ -46,9 +47,9 @@ in short in any R Markdown HTML documents.</p>
 <div id="rs-named-colors" class="section level2">
 <h2>R’s Named Colors</h2>
 <style type="text/css">
-.tu-dotted:not(:hover) { 
+.tu-dotted:not(:hover) {
   text-decoration: underline;
-  text-decoration-style: dotted; 
+  text-decoration-style: dotted;
 }
 </style>
 <p>R ships with a list of colors with wonderful names,
@@ -72,7 +73,7 @@ For example, there are 4 variations of
 <span class="tu-dotted bg-palevioletred-hover white-hover">palevioletred</span>
 that I’m using in the following plot
 for each of 4 years of Austin housing sales data.</p>
-<pre class="r"><code>g_austin_housing + 
+<pre class="r"><code>g_austin_housing +
   ## A basic ggplot of home sale prices in Austin
   ## over 4 years, using the ggplot2::txhousing data
   scale_color_manual(
@@ -151,7 +152,7 @@ Here are four markdown syntax variations that use those classes.</p>
 <div id="xaringan" class="section level3 panel">
 <h3>xaringan</h3>
 <pre class="markdown"><code>.b--gray.ba.bw2.ma2.pa4.shadow-1[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 
 —Bob Ross
@@ -160,7 +161,7 @@ Anything that you&#39;re willing to practice, you can do.
 <div id="r-markdown" class="section level3 panel">
 <h3>R Markdown</h3>
 <pre class="markdown"><code>::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 
 —Bob Ross
@@ -169,7 +170,7 @@ Anything that you&#39;re willing to practice, you can do.
 <div id="html" class="section level3 panel">
 <h3>HTML</h3>
 <pre class="html"><code>&lt;div class=&quot;b--gray ba bw2 ma2 pa4 shadow-1&quot;&gt;
-&lt;p&gt;Talent is a pursued interest. 
+&lt;p&gt;Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 &lt;/p&gt;
 &lt;p&gt;—Bob Ross&lt;/p&gt;
@@ -189,7 +190,7 @@ Anything that you&#39;re willing to practice, you can do.
 <div id="css" class="section level3 panel">
 <h3>CSS</h3>
 <p><em>Note: this isn’t the exact CSS from Tachyons, but it’s very similar.</em></p>
-<pre class="css"><code>.b--gray { 
+<pre class="css"><code>.b--gray {
   border-color: #888888;
 }
 .ba {
@@ -208,7 +209,7 @@ Anything that you&#39;re willing to practice, you can do.
   box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
 }</code></pre>
 <style type="text/css">
-.b--gray { 
+.b--gray {
   border-color: #888888;
 }
 .ba {
@@ -316,7 +317,7 @@ and
 <div id="xaringan-1" class="section level3 panel">
 <h3>xaringan</h3>
 <pre class="markdown"><code>.b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 
 —Bob Ross
@@ -325,7 +326,7 @@ Anything that you&#39;re willing to practice, you can do.
 <div id="r-markdown-1" class="section level3 panel">
 <h3>R Markdown</h3>
 <pre class="markdown"><code>::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
-Talent is a pursued interest. 
+Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 
 —Bob Ross
@@ -334,7 +335,7 @@ Anything that you&#39;re willing to practice, you can do.
 <div id="html-1" class="section level3 panel">
 <h3>HTML</h3>
 <pre class="html"><code>&lt;div class=&quot;b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4&quot;&gt;
-&lt;p&gt;Talent is a pursued interest. 
+&lt;p&gt;Talent is a pursued interest.
 Anything that you&#39;re willing to practice, you can do.
 &lt;/p&gt;
 &lt;p&gt;—Bob Ross&lt;/p&gt;
@@ -344,7 +345,7 @@ Anything that you&#39;re willing to practice, you can do.
 <h3>htmltools (R)</h3>
 <pre class="r"><code>htmltools::div(
   class = paste(
-    &quot;b--gray ba bw2 ma2 pa4 shadow-1 steelblue4&quot;, 
+    &quot;b--gray ba bw2 ma2 pa4 shadow-1 steelblue4&quot;,
     &quot;bg-mintcream mediumvioletred-hover b--paleturquoise4&quot;
   ),
   htmltools::p(

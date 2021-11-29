@@ -11,7 +11,8 @@ tags:
   - Productivity
   - Scripts
 description: "Use ggplot2 to organize your life."
-twitterImage: "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
+images:
+  - "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-06-22-ggplot2-weekly-planner.Rmd
 keywords: rstats
 editor_options:

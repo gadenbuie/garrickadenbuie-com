@@ -11,7 +11,8 @@ tags:
   - xaringanthemer
   - xaringan
 description: xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.
-twitterImage: /blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png
+images:
+  - /blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png
 rmd_source: ''
 keywords: rstats
 editor_options:

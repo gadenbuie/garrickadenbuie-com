@@ -5,7 +5,8 @@ author:
 description: |
   An incomplete history of the literate programming origins of R Markdown.
   Plus some cool things I'm tinkering with: {epoxy} and {shinyComponents}.
-twitterImage: "https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png"
+images:
+  - "https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png"
 date: '2021-02-11'
 slug: toronto-data-workshop
 tags:
@@ -16,7 +17,7 @@ tags:
   - knitr
   - Sweave
   - Literate Programming
-  
+
 talk_author: [Garrick Aden-Buie]
 talk_type: Talk
 talk_event: "Toronto Data Workshop"

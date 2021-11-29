@@ -9,7 +9,8 @@ tags:
   - R
   - lubridate
 description: post description
-twitterImage: /blog/r-console-calendar/social-card.png
+images:
+  - /blog/r-console-calendar/social-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmd'
 keywords: rstats
 editor_options:

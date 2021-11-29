@@ -11,7 +11,8 @@ tags:
   - dplyr
   - color
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
-twitterImage: /blog/colors-of-xcolor/colors-of-xcolor.png
+images:
+  - /blog/colors-of-xcolor/colors-of-xcolor.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmd'
 keywords: rstats
 editor_options:

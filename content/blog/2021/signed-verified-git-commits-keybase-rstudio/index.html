@@ -12,7 +12,8 @@ tags:
   - RStudio
   - Tutorials
 description: "Setting up signed git commits with a Keybase GPG key that works with RStudio."
-twitterImage: "/blog/signed-verified-git-commits-keybase-rstudio/social.png"
+images:
+  - "/blog/signed-verified-git-commits-keybase-rstudio/social.png"
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/signed-verified-git-commits-keybase-rstudio/index.Rmd'
 keywords: "rstats"
 ---
@@ -110,8 +111,8 @@ PGP (<a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">Pretty Good Pri
 <pre class="bash"><code>keybase pgp gen --multi</code></pre>
 <pre><code>Enter your real name, which will be publicly visible in your new key: Garrick Aden-Buie
 Enter a public email address for your key: garrick@adenbuie.com
-Enter another email address (or &lt;enter&gt; when done): 
-Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y 
+Enter another email address (or &lt;enter&gt; when done):
+Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y
 When exporting to the GnuPG keychain, encrypt private keys with a passphrase? [Y/n] Y
 ▶ INFO PGP User ID: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt; [primary]
 ▶ INFO Generating primary key (4096 bits)
@@ -155,14 +156,14 @@ choose <code>I trust ultimately</code> and finally run <code>save</code>.</p>
 <pre><code>gpg&gt; trust
 # Please decide how far you trust this user to correctly verify other users&#39; keys
 # (by looking at passports, checking fingerprints from different sources, etc.)
-# 
+#
 #   1 = I don&#39;t know or won&#39;t say
 #   2 = I do NOT trust
 #   3 = I trust marginally
 #   4 = I trust fully
 #   5 = I trust ultimately
 #   m = back to the main menu
-# 
+#
 # Your decision? 5
 # Do you really want to set this key to ultimate trust? (y/N) y
 
