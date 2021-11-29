@@ -1,6 +1,5 @@
+// https://github.com/gadenbuie/xaringanExtra/blob/cc1f613b6c41fc1ee8d14e66e5b0b237703fb75f/inst/panelset/panelset.js
 /* global slideshow */
-/* https://github.com/gadenbuie/xaringanExtra/blob/93429efefb268a4df2f43935304a8f781f73ece8/inst/panelset/panelset.js
-*/
 (function () {
   const ready = function (fn) {
     /* MIT License Copyright (c) 2016 Nuclei */
@@ -237,6 +236,7 @@
 
       const contents = panels.map(processPanelItem).filter(o => o !== null)
       const newPanelSet = reflowPanelSet(contents, idx)
+      newPanelSet.classList = panelset.classList
       panelset.parentNode.insertBefore(newPanelSet, panelset)
       panelset.parentNode.removeChild(panelset)
 
