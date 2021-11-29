@@ -7,10 +7,10 @@
 {{ range $grouped }}
   {{ $section := $.Site.GetPage "section" .Key }}
   {{ with $section }}
-    <h5 class="f4 fw7 tracked ttu lh-title mb0 bt pv3"><a href="{{ .RelPermalink }}" class="dim no-underline">{{ .Title }}</a></h5>
+    <h5 class="f4 fw7 tracked ttu lh-title mb0 bt bw2 pv3"><a href="{{ .RelPermalink }}" class="dim no-underline">{{ .Title }}</a></h5>
   {{ else }}
   <!-- If no _index.md is available, ".Key" defaults to the section title and filters to title casing -->
-    <h5 class="f4 fw7 tracked ttu lh-title mb0 bt pv4-ns pv3"><a href="{{ .RelPermalink }}" class="dim no-underline">{{ .Key | title }}</a></h5>
+    <h5 class="f4 fw7 tracked ttu lh-title mb0 bt bw2 pv4-ns pv3"><a href="{{ .RelPermalink }}" class="dim no-underline">{{ .Key | title }}</a></h5>
   {{ end }}
 
   <!--now add the featured content-->
@@ -19,7 +19,7 @@
   <article class="pb1 pb2-ns">
     <h4 class="f4 mt3 mb2 lh-title"><a href="{{ .RelPermalink }}" class="dim no-underline">{{ .Title }}</a></h4>
       <div class="flex flex-column flex-row-ns mb2 mb3-l items-center">
-          <figure class="mr3 w-50 w-20-ns">
+          <figure class="mr3 w-50 w-third-ns">
             {{- with .Params.images -}}
               <!--featured image for social-->
               {{- $image := (index . 0) -}}
@@ -40,7 +40,7 @@
             </a>
           </figure>
 
-        <div class="w-100 w-80-ns pl3-ns">
+        <div class="w-100 w-two-thirds-ns pl3-ns">
       {{ $summary := .Params.excerpt | default (.Params.summary | default (.Params.description | default .Summary)) }}
       {{ with $summary }}<p class="measure lh-copy cf">{{ . | markdownify | emojify }}</p>{{ end }}
           <a href="{{ .RelPermalink }}">Read more</a></p>

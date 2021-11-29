@@ -12,7 +12,7 @@ show_action_link: true
 show_featured: true
 number_featured: 3
 action_link: /blog
-action_label: "Read More &rarr;"
+action_label: "About Me &rarr;"
 action_type: text # text, button
 type: home
 ---

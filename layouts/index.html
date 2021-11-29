@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $page := . }}
 <main class="page-main pa4" role="main">
-  <section class="page-content mw9 center">
+  <section class="page-content mw7 center">
     <div class="flex-l items-center" style="{{ if .Params.image_left }}flex-direction: row-reverse;{{ end }}">
       <div class="mh4 {{ if .Params.show_image }}w-50-l {{ end }}{{ if not .Params.text_align_left }}tr{{ end }}">
         {{ with .Params.title }}<h1 class="f2 f1-m f-subheadline-l fw5-ns mv4 lh-solid">{{ . }}</h1>{{ end }}
