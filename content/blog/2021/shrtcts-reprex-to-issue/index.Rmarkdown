@@ -15,6 +15,7 @@ description: |
   Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmd'
 keywords: rstats
+references: ~
 ---
 
 [reprex]: https://reprex.tidyverse.org/
@@ -25,7 +26,7 @@ keywords: rstats
 ::: lead
 
 Have you ever spent a few ~~minutes~~ hours turning a bug in your code
-into a [reprex] -- a minimumal **repr**oducible **ex**ample?
+into a [reprex] -- a minimal **repr**oducible **ex**ample?
 
 Getting to a reprex is 90% of the challenge.
 Most of the time, I find my mistake in the journey to a reprex.
@@ -38,37 +39,8 @@ Here's a quick way to get there using an RStudio addin and <span class="pkg">[sh
 
 
 ```{r setup, echo=FALSE}
-xaringanExtra::use_panelset(in_xaringan = FALSE)
 xaringanExtra::use_clipboard(selector = "pre.r")
-xaringanExtra::style_panelset_tabs(
-  foreground = "var(--text-mild)",
-  active_foreground = "var(--text-dark)",
-  active_background =  "var(--text-lightest)",
-  active_border_color = "var(--purple)",
-  hover_background =  "var(--text-lightest)",
-  hover_border_color = "var(--text-lightest)",
-  inactive_opacity = 1,
-  tabs_border_bottom = "var(--text-lightest)",
-  font_family = 'unset'
-)
 ```
-
-```{css echo=FALSE}
-.panel {
-  border: var(--text-lightest) 2px solid;
-  border-top: none;
-  margin-top: -1em;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-.panel > :last-child {
-  margin-bottom: 0;
-}
-```
-
 
 ## `reprex` is awesome
 
@@ -103,7 +75,7 @@ and [shows me a preview](/blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#
 And finally it also copies [the markdown I need](/blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard)
 in order to paste the reprex into a GitHub issue or other online location.
 
-:::::: panelset
+:::::: {.panelset .panelset--bordered}
 ::: panel
 [R Code]{.panel-name}
 
@@ -446,7 +418,7 @@ First, install the package,
 from [my R-universe](https://gadenbuie.r-universe.dev)
 or from [GitHub](https://github.com/gadenbuie/shrtcts).
 
-:::: panelset
+:::: {.panelset .panelset--bordered}
 ::: panel
 [R-universe]{.panel-name}
 

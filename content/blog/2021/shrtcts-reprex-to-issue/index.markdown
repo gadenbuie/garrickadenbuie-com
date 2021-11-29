@@ -15,10 +15,9 @@ description: |
   Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmd'
 keywords: rstats
+references: ~
 ---
 
-<link href="{{< blogdown/postref >}}index_files/panelset/panelset.css" rel="stylesheet" />
-<script src="{{< blogdown/postref >}}index_files/panelset/panelset.js"></script>
 <script src="{{< blogdown/postref >}}index_files/clipboard/clipboard.min.js"></script>
 <link href="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
@@ -27,7 +26,7 @@ keywords: rstats
 <div class="lead">
 
 Have you ever spent a few ~~minutes~~ hours turning a bug in your code
-into a [reprex](https://reprex.tidyverse.org/) – a minimumal **repr**oducible **ex**ample?
+into a [reprex](https://reprex.tidyverse.org/) – a minimal **repr**oducible **ex**ample?
 
 Getting to a reprex is 90% of the challenge.
 Most of the time, I find my mistake in the journey to a reprex.
@@ -37,24 +36,6 @@ I want to quickly turn my reprex into a GitHub issue.
 Here’s a quick way to get there using an RStudio addin and <span class="pkg">[shrtcts](https://pkg.garrickadenbuie.com/shrtcts)</span>.
 
 </div>
-
-<style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: var(--text-lightest);--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-lightest);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style>
-
-<style type="text/css">
-.panel {
-  border: var(--text-lightest) 2px solid;
-  border-top: none;
-  margin-top: -1em;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-.panel > :last-child {
-  margin-bottom: 0;
-}
-</style>
 
 ## `reprex` is awesome
 
@@ -89,7 +70,7 @@ and [shows me a preview](/blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#
 And finally it also copies [the markdown I need](/blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard)
 in order to paste the reprex into a GitHub issue or other online location.
 
-<div class="panelset">
+<div class="panelset panelset--bordered">
 
 <div class="panel">
 
@@ -124,7 +105,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -143,7 +124,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-24                  
+#>  date     2021-11-28                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -233,7 +214,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -252,7 +233,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-24                  
+#>  date     2021-11-28                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -404,7 +385,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -423,7 +404,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-24                  
+#>  date     2021-11-28                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -525,7 +506,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -544,7 +525,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-24                  
+#>  date     2021-11-28                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -701,7 +682,7 @@ body
     ## [3] "#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"               
     ## [4] "```"                                                                                            
     ## [5] ""                                                                                               
-    ## [6] "<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
+    ## [6] "<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
 
 Notice that it returns a character vector
 with one item per line of the rendered reprex.
@@ -711,7 +692,7 @@ We need to collapse it all into a single string.
 body <- paste(body, collapse = "\n")
 ```
 
-    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```\n\n<sup>Created on 2021-11-24 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
+    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```\n\n<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
 
 But this still won’t fit in a URL
 because it contains spaces, new lines, and other characters URLs don’t like.
@@ -722,7 +703,7 @@ to turn the `body` text into something readable only by machines.
 body <- URLencode(body, reserved = TRUE)
 ```
 
-    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-24%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E"
+    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-28%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E"
 
 Finally, we can make our new issue URL.
 
@@ -731,7 +712,7 @@ url_new_issue <- glue::glue("https://github.com/{repo}/issues/new?body={body}")
 url_new_issue
 ```
 
-    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-24%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E
+    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-28%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E
 
 I didn’t make the link clickable,
 but if you were to follow it,
@@ -863,7 +844,7 @@ First, install the package,
 from [my R-universe](https://gadenbuie.r-universe.dev)
 or from [GitHub](https://github.com/gadenbuie/shrtcts).
 
-<div class="panelset">
+<div class="panelset panelset--bordered">
 
 <div class="panel">
 

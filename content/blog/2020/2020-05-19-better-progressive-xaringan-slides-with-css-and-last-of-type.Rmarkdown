@@ -32,21 +32,6 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r panelset, eval=FALSE, echo=FALSE}
-xaringanExtra::use_panelset()
-xaringanExtra::style_panelset_tabs(
-  foreground = "var(--text-mild)",
-  active_foreground = "var(--text-dark)",
-  active_background =  "var(--text-lightest)",
-  active_border_color = "var(--purple)",
-  hover_background =  "var(--text-light)",
-  hover_border_color = "var(--text-lightest)",
-  inactive_opacity = 1,
-  tabs_border_bottom = "var(--text-lightest)",
-  font_family = 'unset'
-)
-```
-
 ```{css echo=FALSE}
 .iframe-slides {
   max-width: 625px;
