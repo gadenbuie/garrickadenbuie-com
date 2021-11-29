@@ -10,11 +10,22 @@ tags:
   - R Package
   - R
   - RStudio
+links:
+- icon: github # icon name without the 'fa-'
+  icon_pack: fab
+  name: Source
+  url: https://github.com/gadenbuie/rsthemes
+- icon: download # icon name without the 'fa-'
+  icon_pack: fas
+  name: Installation
+  url: #installation
+- icon: info-circle # icon name without the 'fa-'
+  icon_pack: fas
+  name: Usage
+  url: #usage
 ---
 
 [gh]: https://github.com/gadenbuie/rsthemes
-
-**Project Links:** [installation](#installation), [usage](#usage), [source][gh]
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
@@ -71,8 +82,9 @@ tags:
 }
 
 #rsthemes-buttons button {
-  color: var(--text-dark);
-  border-color: var(--primary-dark);
+  color: var(--textColorCustom);
+  border-color: var(--textColorCustom);
+  background-color: unset;
   display: inline-block;
   font-size: 1em;
   padding: 10px;
@@ -85,6 +97,8 @@ tags:
   white-space: nowrap;
   position: relative;
   text-align: left;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
 }
 
 #rsthemes-buttons button + button {
@@ -92,24 +106,28 @@ tags:
 }
 
 #rsthemes-buttons button:hover,
-#rsthemes-buttons button:active,
-#rsthemes-buttons button:focus{
-  background: var(--text-dark);
-  border-color: var(--text-dark);
-  color: var(--text-lightest);
+#rsthemes-buttons button:active {
+  opacity: 1;
 }
 
 #rsthemes-buttons .rsthemes-button-active,
 #rsthemes-buttons .rsthemes-button-active:hover {
-  background: var(--primary-light);
-  color: var(--text-lightest);
-  border-color: var(--primary-light);
+  color: var(--blue-30);
+  border-color: var(--blue-30);
+}
+
+@media (prefers-color-scheme: dark) {
+  #rsthemes-buttons .rsthemes-button-active,
+  #rsthemes-buttons .rsthemes-button-active:hover {
+    color: var(--blue-60);
+    border-color: var(--blue-60);
+  }
 }
 
 #rsthemes-buttons button.rsthemes-button-active::before {
   content: '\2713';
   position: absolute;
-  left: 10px;
+  left: 12px;
 }
 </style>
 
