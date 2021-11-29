@@ -23,6 +23,7 @@ head_custom: |
   <link href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css" rel="stylesheet">
 editor_options:
   chunk_output_type: console
+references: ~
 ---
 
 <!-- Links -->
@@ -215,7 +216,7 @@ If I want to create a simple box with...
 ...I can use those classes on the same element.
 Here are four markdown syntax variations that use those classes.
 
-```{r echo=FALSE}
+```{r echo=FALSE, eval=FALSE}
 xaringanExtra::use_panelset()
 xaringanExtra::style_panelset_tabs(
   foreground = "var(--text-mild)",
@@ -232,7 +233,8 @@ xaringanExtra::style_panelset_tabs(
 
 :::: {.panelset}
 
-### xaringan {.panel}
+::: panel
+<h3 class="panel-name">xaringan</h3>
 
 ```markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1[
@@ -242,8 +244,10 @@ Anything that you're willing to practice, you can do.
 —Bob Ross
 ]
 ```
+:::
 
-### R Markdown {.panel}
+::: panel
+<h3 class="panel-name">R Markdown</h3>
 
 ```markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
@@ -253,8 +257,10 @@ Anything that you're willing to practice, you can do.
 —Bob Ross
 :::
 ```
+:::
 
-### HTML {.panel}
+::: panel
+<h3 class="panel-name">HTML</h3>
 
 ```html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1">
@@ -264,8 +270,10 @@ Anything that you're willing to practice, you can do.
 <p>—Bob Ross</p>
 </div>
 ```
+:::
 
-### htmltools (R) {.panel}
+::: panel
+<h3 class="panel-name">htmltools (R)</h3>
 
 ```r
 htmltools::div(
@@ -277,8 +285,10 @@ htmltools::div(
   htmltools::p("—Bob Ross")
 )
 ```
+:::
 
-### CSS {.panel}
+::: panel
+<h3 class="panel-name">CSS</h3>
 
 _Note: this isn't the exact CSS from Tachyons, but it's very similar._
 
@@ -302,6 +312,7 @@ _Note: this isn't the exact CSS from Tachyons, but it's very similar._
   box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
 }
 ```
+:::
 
 ::::
 
@@ -355,7 +366,8 @@ to pick out an interesting color combination.
 
 :::: {.panelset}
 
-### CSS {.panel}
+::: panel
+<h3 class="panel-name">CSS</h3>
 
 I used the CSS variables stylesheet to add a new CSS rule
 in addition to the CSS in the example above.
@@ -382,7 +394,10 @@ and
 [mediumvioletred]{.bg-mediumvioletred-hover .white-hover .tu-dotted}
 (text on hover, from the hover classes stylesheet).
 
-### xaringan {.panel}
+:::
+
+::: panel
+<h3 class="panel-name">xaringan</h3>
 
 ```markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
@@ -393,7 +408,10 @@ Anything that you're willing to practice, you can do.
 ]
 ```
 
-### R Markdown {.panel}
+:::
+
+::: panel
+<h3 class="panel-name">R Markdown</h3>
 
 ```markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
@@ -404,7 +422,10 @@ Anything that you're willing to practice, you can do.
 :::
 ```
 
-### HTML {.panel}
+:::
+
+::: panel
+<h3 class="panel-name">HTML</h3>
 
 ```html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4">
@@ -415,7 +436,10 @@ Anything that you're willing to practice, you can do.
 </div>
 ```
 
-### htmltools (R) {.panel}
+:::
+
+::: panel
+<h3 class="panel-name">htmltools (R)</h3>
 
 ```r
 htmltools::div(
@@ -430,6 +454,7 @@ htmltools::div(
   htmltools::p("—Bob Ross")
 )
 ```
+:::
 
 ::::
 

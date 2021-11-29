@@ -23,10 +23,9 @@ head_custom: |
   <link href="https://pkg.garrickadenbuie.com/r-colors-css/dist/r-colors.hover.css" rel="stylesheet">
 editor_options:
   chunk_output_type: console
+references: ~
 ---
 
-<link href="/rmarkdown-libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/panelset-0.2.6/panelset.js"></script>
 <!-- Links -->
 
 <div class="lead">
@@ -161,11 +160,13 @@ If I want to create a simple box with…
 …I can use those classes on the same element.
 Here are four markdown syntax variations that use those classes.
 
-<style>.panelset{--panel-tab-foreground: var(--text-mild);--panel-tab-active-foreground: var(--text-dark);--panel-tab-active-background: var(--text-lightest);--panel-tab-active-border-color: var(--purple);--panel-tab-hover-background: var(--text-light);--panel-tab-hover-border-color: var(--text-lightest);--panel-tabs-border-bottom: var(--text-lightest);--panel-tab-inactive-opacity: 1;--panel-tab-font-family: unset;}</style>
-
 <div class="panelset">
 
-### xaringan
+<div class="panel">
+
+<h3 class="panel-name">
+xaringan
+</h3>
 
 ``` markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1[
@@ -176,7 +177,13 @@ Anything that you're willing to practice, you can do.
 ]
 ```
 
-### R Markdown
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+R Markdown
+</h3>
 
 ``` markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1}
@@ -187,7 +194,13 @@ Anything that you're willing to practice, you can do.
 :::
 ```
 
-### HTML
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+HTML
+</h3>
 
 ``` html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1">
@@ -198,7 +211,13 @@ Anything that you're willing to practice, you can do.
 </div>
 ```
 
-### htmltools (R)
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+htmltools (R)
+</h3>
 
 ``` r
 htmltools::div(
@@ -211,7 +230,13 @@ htmltools::div(
 )
 ```
 
-### CSS
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+CSS
+</h3>
 
 *Note: this isn’t the exact CSS from Tachyons, but it’s very similar.*
 
@@ -256,6 +281,8 @@ htmltools::div(
   box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
 }
 </style>
+
+</div>
 
 </div>
 
@@ -317,7 +344,11 @@ to pick out an interesting color combination.
 
 <div class="panelset">
 
-### CSS
+<div class="panel">
+
+<h3 class="panel-name">
+CSS
+</h3>
 
 I used the CSS variables stylesheet to add a new CSS rule
 in addition to the CSS in the example above.
@@ -350,7 +381,13 @@ and
 <span class="bg-mediumvioletred-hover white-hover tu-dotted">mediumvioletred</span>
 (text on hover, from the hover classes stylesheet).
 
-### xaringan
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+xaringan
+</h3>
 
 ``` markdown
 .b--gray.ba.bw2.ma2.pa4.shadow-1.steelblue4.bg-mintcream.mediumvioletred-hover.b--paleturquoise4[
@@ -361,7 +398,13 @@ Anything that you're willing to practice, you can do.
 ]
 ```
 
-### R Markdown
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+R Markdown
+</h3>
 
 ``` markdown
 ::: {.b--gray .ba .bw2 .ma2 .pa4 .shadow-1 .steelblue4 .bg-mintcream .mediumvioletred-hover .b--paleturquoise4}
@@ -372,7 +415,13 @@ Anything that you're willing to practice, you can do.
 :::
 ```
 
-### HTML
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+HTML
+</h3>
 
 ``` html
 <div class="b--gray ba bw2 ma2 pa4 shadow-1 steelblue4 bg-mintcream mediumvioletred-hover b--paleturquoise4">
@@ -383,7 +432,13 @@ Anything that you're willing to practice, you can do.
 </div>
 ```
 
-### htmltools (R)
+</div>
+
+<div class="panel">
+
+<h3 class="panel-name">
+htmltools (R)
+</h3>
 
 ``` r
 htmltools::div(
@@ -398,6 +453,8 @@ htmltools::div(
   htmltools::p("—Bob Ross")
 )
 ```
+
+</div>
 
 </div>
 
