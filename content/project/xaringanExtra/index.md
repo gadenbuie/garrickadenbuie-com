@@ -1,5 +1,5 @@
 ---
-title: ":ferris_wheel: xaringanExtra"
+title: "🎡 xaringanExtra"
 date: '2020-07-06'
 description: A playground of enhancements and extensions for xaringan slides.
 images:

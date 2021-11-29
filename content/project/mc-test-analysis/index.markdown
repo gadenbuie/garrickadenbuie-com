@@ -1,5 +1,5 @@
 ---
-title: ":books: MC Test Analysis"
+title: "📚 MC Test Analysis"
 description: "Apps and reports for multiple-choice test analysis in R with Shiny"
 images: [ /project/2017-07-06-mc-test-analysis_files/explore-03-irt.png ]
 date: "2017-07-06"

@@ -1,8 +1,8 @@
 ---
-title: ":cake: shrtcts"
+title: "🍰 shrtcts"
 date: '2020-09-13'
 description: Make anything an RStudio shortcut!
-images: 
+images:
   - https://pkg.garrickadenbuie.com/shrtcts/reference/figures/shrtcts-card.png
 summary: |
   An easily customizable method for creating RStudio
@@ -17,13 +17,12 @@ tags:
   - Shortcuts
   - R Package
   - R
---- 
+---
 
 Redirecting to <https://pkg.garrickadenbuie.com/shrtcts>...
 
-<!-- <meta http-equiv="refresh" content="0; url=https://pkg.garrickadenbuie.com/shrtcts" />
+<meta http-equiv="refresh" content="0; url=https://pkg.garrickadenbuie.com/shrtcts" />
 
 <script type="text/javascript">
   window.location.href = "https://pkg.garrickadenbuie.com/shrtcts";
 </script>
--->

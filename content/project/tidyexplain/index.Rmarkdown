@@ -1,5 +1,5 @@
 ---
-title: "&#x1F939; tidyexplain"
+title: "🤹 tidyexplain"
 date: '2018-08-27'
 description: Animations of tidyverse verbs using R, the tidyverse, and gganimate.
 images:

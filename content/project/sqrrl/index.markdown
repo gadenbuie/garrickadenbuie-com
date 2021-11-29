@@ -1,5 +1,5 @@
 ---
-title: ":chipmunk: Sqrrl"
+title: "🐿️ Sqrrl"
 slug: "sqrrl"
 description: "Easily build bespoke SQL queries programmatically in R"
 date: 2017-07-01T00:00:00+00:00
@@ -398,15 +398,14 @@ SELECT('tailnum', delay = 'avg(arr_delay)', n = 'count(*)') %+%
   sqlformat %>% cat
 ```
 
-Error in system("sqlformat -h", intern = TRUE) : error in running command
-
-```
-## Warning: Please install sqlformat via
-## https://github.com/andialbrecht/sqlparse
-```
-
 ```sql
-SELECT tailnum, avg(arr_delay) as delay, count(*) as n FROM flights  GROUP BY tailnum ORDER BY delay DESC LIMIT 10
+SELECT tailnum,
+       avg(arr_delay) AS delay,
+       count(*) AS n
+  FROM flights
+ GROUP BY tailnum
+ ORDER BY delay DESC
+ LIMIT 10
 ```
 
 Let's use the above as an inner query and filter on `n > 100`:
@@ -558,10 +557,26 @@ SELECT('`year`', 'carrier', 'flight', 'dest',
   as_table
 ```
 
-Error in system("sqlformat -h", intern = TRUE) : error in running command
-
 ```sql
-SELECT `year`, carrier, flight, dest, count(*) as n, avg(distance) as avg_dist, avg(air_time) as avg_air_time FROM flights f WHERE `month` BETWEEN 6 AND 12 AND carrier IN ("UA", "AA", "US", "WN") AND dep_time>=800 AND air_time<=120 AND origin LIKE("JFK") GROUP BY `year`, carrier, flight, dest ORDER BY n DESC LIMIT 10
+SELECT `year`,
+       carrier,
+       flight,
+       dest,
+       count(*) AS n,
+       avg(distance) AS avg_dist,
+       avg(air_time) AS avg_air_time
+  FROM flights f
+ WHERE `month` BETWEEN 6 AND 12
+   AND carrier IN ("UA", "AA", "US", "WN")
+   AND dep_time>=800
+   AND air_time<=120
+   AND origin LIKE("JFK")
+ GROUP BY `year`,
+          carrier,
+          flight,
+          dest
+ ORDER BY n DESC
+ LIMIT 10
 ```
 <table>
  <thead>

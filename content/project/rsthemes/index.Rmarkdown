@@ -1,5 +1,5 @@
 ---
-title: ":crystal_ball:  rsthemes"
+title: "🔮 rsthemes"
 description: "Full RStudio IDE and Syntax Themes"
 author: Garrick Aden-Buie
 date: '2020-10-01'

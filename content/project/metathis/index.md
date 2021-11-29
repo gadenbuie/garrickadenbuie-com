@@ -1,5 +1,5 @@
 ---
-title: ":information_source: metathis"
+title: "ℹ️ metathis"
 date: '2019-09-11'
 description: <meta> and social media cards for R-made web things
 images:

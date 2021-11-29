@@ -1,5 +1,5 @@
 ---
-title: ":timer_clock: countdown"
+title: "⏲️ countdown"
 date: '2019-05-07'
 description: A countdown timer for R Markdown slides and HTML docs
 images: [ /project/countdown/countdown.png ]

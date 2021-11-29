@@ -1,5 +1,5 @@
 ---
-title: ":peach: ggpomological: A Pomological ggplot2 Theme"
+title: "🍑 ggpomological: A Pomological ggplot2 Theme"
 author: Garrick Aden-Buie
 date: '2018-02-16'
 slug: ggpomological

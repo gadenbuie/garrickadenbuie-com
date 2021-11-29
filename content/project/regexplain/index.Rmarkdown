@@ -1,5 +1,5 @@
 ---
-title: ":male_detective:   RegExplain"
+title: "🕵️‍♂️ RegExplain"
 slug: "regexplain"
 description: "An RStudio addin slash utility belt for regular expressions"
 images: [ "/images/project/regexplain/regexplain-gadget-tabs.png" ]

@@ -1,5 +1,5 @@
 ---
-title: ":joy:   ermoji"
+title: "😂 ermoji"
 description: "RStudio Addin to Search and Copy Emoji"
 summary: "RStudio Addin to Search and Copy Emoji"
 date: '2018-04-24'

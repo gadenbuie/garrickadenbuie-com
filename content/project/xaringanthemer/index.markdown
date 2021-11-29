@@ -1,5 +1,5 @@
 ---
-title: ":art:  xaringanthemer"
+title: "🎨 xaringanthemer"
 description: "Give your xaringan slides some style without (much) CSS"
 author: Garrick Aden-Buie
 date: '2018-05-12'
