@@ -11,11 +11,14 @@ tags:
   - Tricks
   - Twitter
 description: A big post with all the Mac apps and command line utilities I use everyday.
-# images: [ /path/to/image.png ]
+images: [ /blog/setting-up-a-new-macbook-pro/img/EoLPlKhXUAAVThW.jpg ]
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/setting-up-a-new-macbook-pro/index.Rmd'
 keywords: rstats
 editor_options:
   chunk_output_type: console
+layout: single
+featured: true
+references: ~
 ---
 
 <!-- Links -->
@@ -192,8 +195,8 @@ thread_markdown <- stringr::str_replace_all(
     "(🍎.+?)\n" = "\\1  \n",
     "((↖️|↗️|↙️|↘️).+?)\n" = "\\1  \n",
     "(\\\\\\*reboots\\\\\\*)\n" = "\\1  \n",
-    "\\{pak\\}" = "<span class="pkg">[pak]</span>",
-    "\\{tidyverse\\}" = "<span class="pkg">[tidyverse]</span>"
+    "\\{pak\\}" = "<span class=\"pkg\">[pak]</span>",
+    "\\{tidyverse\\}" = "<span class=\"pkg\">[tidyverse]</span>"
   )
 )
 ```
@@ -206,7 +209,8 @@ xaringanExtra::use_clipboard()
 ```{css echo=FALSE}
 .tweet-timestamp {
   display: block;
-  font-size: 0.9em;
+  position: relative;
+  font-size: 1em;
 }
 .tweet-timestamp a .tweet-timestamp__text {
   color: var(--text-light);
@@ -216,7 +220,9 @@ xaringanExtra::use_clipboard()
 }
 .tweet-timestamp .tweet-link > i {
 	display: inline-block;
-	padding-right: 1.5em;
+	position: absolute;
+  left: -1.5em;
+  top: 3px;
 }
 ```
 

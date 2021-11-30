@@ -18,6 +18,7 @@ images:
   - /blog/xaringan-playground/xaringan-playground-social.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/xaringan-playground/index.Rmd'
 keywords: rstats
+references: ~
 editor_options:
   chunk_output_type: console
 ---

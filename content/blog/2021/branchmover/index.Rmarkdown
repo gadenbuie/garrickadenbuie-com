@@ -3,6 +3,7 @@ title: 'branchMover: A Shiny app for moving the default branch of your GitHub re
 author: Garrick Aden-Buie
 date: '2021-11-02'
 slug: branchmover
+featured: true
 categories:
   - Blog
 tags:
@@ -20,6 +21,7 @@ images:
   - "https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
 rmd_source: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmd"
 keywords: "rstats"
+references: ~
 editor_options:
   chunk_output_type: console
 ---
@@ -44,10 +46,7 @@ xaringanExtra::use_clipboard()
 ```
 
 <div class="figure">
-<img
-  src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
-  alt="The 'Branch Mover' shiny app on the main 'Repos' screen, showing an interactive table of repositories associated with a GitHub user. The table shows the default branch, language of the repo, number of forks and stars, and a button that can be clicked to initiate moving the repo's default branch."
->
+<img src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" alt="The 'Branch Mover' shiny app on the main 'Repos' screen, showing an interactive table of repositories associated with a GitHub user. The table shows the default branch, language of the repo, number of forks and stars, and a button that can be clicked to initiate moving the repo's default branch." >
 <p class="caption">Branch Mover</p>
 </div>
 
