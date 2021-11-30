@@ -11,7 +11,8 @@ show_social_links: true # specify social accounts in site config
 show_action_link: true
 show_featured: true
 number_featured: 3
-action_link: /blog
+use_featured: false
+action_link: /about
 action_label: "About Me &rarr;"
 action_type: text # text, button
 type: home
