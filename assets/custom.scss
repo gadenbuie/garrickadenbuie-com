@@ -142,11 +142,12 @@ figure figcaption h4,
 }
 
 .home {
-  .action.button {
-    text-transform: none;
-  }
-  .action.text {
-    text-transform: none;
+  .action {
+    &.button, &.text {
+      text-transform: none;
+      @extend .avenir;
+      font-weight: 400;
+    }
   }
 }
 
