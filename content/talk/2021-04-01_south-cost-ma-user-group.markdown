@@ -5,7 +5,7 @@ author:
 description: |
   Make stylish slides with {xaringanthemer} and a little bit of CSS.
 images:
-  - "https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png"
+  - "https://slides.garrickadenbuie.com/sliding-in-style/assets/img/social.png"
 date: '2021-04-01'
 slug: sliding-in-style-south-coast-ma
 tags:
