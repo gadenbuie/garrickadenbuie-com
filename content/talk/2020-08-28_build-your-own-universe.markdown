@@ -23,7 +23,11 @@ event: "R/Medicine 2020"
 event_url: https://events.linuxfoundation.org/r-medicine/
 location: Virtual Conference
 talk_code_url: https://github.com/tgerke/build-your-own-universe
-talk_slides_url: https://slides.garrickadenbuie.com/build-your-own-universe/
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/build-your-own-universe/
 talk_recording_url: https://youtu.be/lm0QYr1C2Sw
 ---
 

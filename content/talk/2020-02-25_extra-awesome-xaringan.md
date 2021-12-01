@@ -22,7 +22,11 @@ event: "Tampa R Users Group"
 event_url: https://www.meetup.com/Tampa-R-Users-Group/events/268614041/
 location: Tampa, FL
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-awesome-xaringan
-talk_slides_url: https://slides.garrickadenbuie.com/extra-awesome-xaringan/intro/
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/extra-awesome-xaringan/intro/
 ---
 
 [xaringan]: https://slides.yihui.org/xaringan/

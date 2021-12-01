@@ -17,12 +17,16 @@ tags:
   - Web Development
 
 talk_author: [Garrick Aden-Buie]
-talk_type: Conference
+categories: [ Conference ]
 event: "rstudio::global"
 event_url: https://global.rstudio.com
 location: Virtual Conference
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
-talk_slides_url: https://slides.garrickadenbuie.com/xaringan-playground
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/xaringan-playground
 talk_recording_url: https://rstudio.com/resources/rstudioglobal-2021/xaringan-playground-using-xaringan-to-learn-web-development/
 ---
 

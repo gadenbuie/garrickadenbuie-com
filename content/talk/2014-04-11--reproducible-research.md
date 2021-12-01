@@ -19,6 +19,10 @@ event_url: http://bit.ly/USFCodeCamp2014
 talk_venue: University of South Florida
 location: "Tampa, FL"
 talk_code_url: https://github.com/gadenbuie/usf-boot-camp-R
-talk_slides_url: "/slides/usf-bootcamp/reproducible-research.pdf"
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: "/slides/usf-bootcamp/reproducible-research.pdf"
 ---
 

@@ -21,7 +21,11 @@ event: "useR!2020"
 event_url: https://user2020.r-project.org/
 location: "Virtual Conference"
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-special-xaringan
-talk_slides_url: https://slides.garrickadenbuie.com/extra-special-xaringan
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/extra-special-xaringan
 talk_recording_url: https://www.youtube.com/watch?v=vZMuu77ocMY
 ---
 
