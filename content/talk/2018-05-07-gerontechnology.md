@@ -20,7 +20,6 @@ talk_date: "7 May 2018"
 categories: [ "Conference Presentation" ]
 event: "Gerontechnology 2018"
 event_url: http://www.sfu.ca/fc/ISG2018.html
-# talk_venue: "Conference Center"
 location: "St. Petersburg, FL"
 links:
   - icon: chalkboard-teacher

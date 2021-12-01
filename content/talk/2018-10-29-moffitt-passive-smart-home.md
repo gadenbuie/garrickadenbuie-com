@@ -12,12 +12,8 @@ tags:
   - Gerontechnology
   - Ambient Assisted Living
 
-talk_author:
-  - Garrick Aden-Buie
-talk_date: "29 October 2018"
 categories: [ "Mini-Conference" ]
 event: "Utilizing Technology for Data Collection and Intervention"
-# event_url:
 talk_venue: "Health Outcomes and Behavior"
 location: "Moffitt Cancer Center, Tampa, FL"
 links:

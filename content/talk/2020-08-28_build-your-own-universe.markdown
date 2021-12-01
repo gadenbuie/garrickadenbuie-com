@@ -18,7 +18,6 @@ tags:
 
 talk_author: [Garrick Aden-Buie, Travis Gerke]
 categories: [ Conference ]
-talk_image: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
 event: "R/Medicine 2020"
 event_url: https://events.linuxfoundation.org/r-medicine/
 location: Virtual Conference

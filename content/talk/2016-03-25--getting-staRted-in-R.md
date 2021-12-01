@@ -13,8 +13,7 @@ talk_author: [Garrick Aden-Buie]
 categories: [ "Education" ]
 event: "INFORMS@USF Code & Data Boot Camp"
 # event_url:
-talk_venue: University of South Florida
-location: "Tampa, FL"
+location: University of South Florida
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
