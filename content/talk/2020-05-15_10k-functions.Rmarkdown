@@ -23,12 +23,15 @@ talk_image: "https://garrickadenbuie.com/talks/ten-thousand-functions.png"
 event: "Bio-Data Club at Moffitt Cancer Center"
 event_url: https://www.biodataclub.org/
 location: "Tampa, FL"
-talk_code_url: https://github.com/gadenbuie/ten-thousand-functions
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://slides.garrickadenbuie.com/ten-thousand-functions/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/ten-thousand-functions
 ---
 
 ```{r echo=FALSE}

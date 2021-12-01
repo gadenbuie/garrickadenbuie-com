@@ -21,12 +21,15 @@ talk_image: "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-int
 event: "Bio-Data Club at Moffitt Cancer Center"
 event_url: https://www.biodataclub.org/
 location: "Tampa, FL"
-talk_code_url: https://github.com/gadenbuie/drake-intro/
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://gadenbuie.github.io/drake-intro/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/drake-intro/
 ---
 
 **drake** is an R package that provides a powerful, flexible workflow management tool for reproducible data analysis pipelines. **drake** alleviates the pain of managing large (and even small) data analyses, speeding up iteration and development while providing reproducibility guarantees that are essential for modern research.

@@ -22,11 +22,14 @@ talk_image: "/images/2018/gentle-ggplot2/gentle-ggplot2-usf-asu.png"
 event: "Workshop on Data Analysis Using R (ASA at USF)"
 event_url: https://r2018workshop.wixsite.com/r2018
 location: "Tampa, FL"
-talk_code_url: https://github.com/gadenbuie/gentle-ggplot2/
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://gadenbuie.github.io/gentle-ggplot2/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/gentle-ggplot2/
 ---
 

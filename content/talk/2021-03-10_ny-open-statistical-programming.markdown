@@ -22,12 +22,15 @@ categories: [ Talk ]
 event: "New York Open Statistical Programming Meetup"
 event_url: https://www.meetup.com/nyhackr/events/276573540
 location: Virtual Presentation
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://slides.garrickadenbuie.com/extra-great-slides/intro/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
 talk_recording_url: https://youtu.be/FHy6NseH8yk
 ---
 

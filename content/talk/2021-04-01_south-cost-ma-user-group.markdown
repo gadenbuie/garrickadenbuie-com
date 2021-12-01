@@ -20,12 +20,15 @@ categories: [ Talk ]
 event: "South Coast MA UseR Group"
 event_url: https://www.meetup.com/South-Coast-useR-Group/events/277235768/
 location: Virtual Presentation
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/sliding-in-style
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://slides.garrickadenbuie.com/sliding-in-style
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/sliding-in-style
 ---
 
 <script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>

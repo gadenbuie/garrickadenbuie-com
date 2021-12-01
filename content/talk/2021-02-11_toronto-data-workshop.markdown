@@ -23,12 +23,15 @@ categories: [ Talk ]
 event: "Toronto Data Workshop"
 event_url: https://rohanalexander.com/toronto_data_workshop.html
 location: Virtual Workshop
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://slides.garrickadenbuie.com/toronto-data-workshop/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop
 talk_recording_url: https://www.youtube.com/watch?v=Hl798H6J-bg
 ---
 

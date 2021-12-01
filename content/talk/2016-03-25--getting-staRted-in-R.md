@@ -15,11 +15,14 @@ event: "INFORMS@USF Code & Data Boot Camp"
 # event_url:
 talk_venue: University of South Florida
 location: "Tampa, FL"
-talk_code_url: https://github.com/gadenbuie/usf-boot-camp-R
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: "/slides/usf-bootcamp/getting-staRted-in-R.pdf"
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/usf-boot-camp-R
 ---
 

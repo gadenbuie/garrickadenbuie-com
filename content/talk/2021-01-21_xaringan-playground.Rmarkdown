@@ -21,7 +21,10 @@ categories: [ Conference ]
 event: "rstudio::global"
 event_url: https://global.rstudio.com
 location: Virtual Conference
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
