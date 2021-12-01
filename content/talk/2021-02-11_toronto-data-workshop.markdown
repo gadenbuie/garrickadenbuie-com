@@ -32,7 +32,10 @@ links:
     icon_pack: fab
     name: Code
     url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop
-talk_recording_url: https://www.youtube.com/watch?v=Hl798H6J-bg
+  - icon: play
+    icon_pack: fas
+    name: Video
+    url: https://www.youtube.com/watch?v=Hl798H6J-bg
 ---
 
 <script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>

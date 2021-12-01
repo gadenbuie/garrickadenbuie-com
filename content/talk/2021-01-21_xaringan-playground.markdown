@@ -21,13 +21,19 @@ categories: [ Conference ]
 event: "rstudio::global"
 event_url: https://global.rstudio.com
 location: Virtual Conference
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
 links:
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
     url: https://slides.garrickadenbuie.com/xaringan-playground
-talk_recording_url: https://rstudio.com/resources/rstudioglobal-2021/xaringan-playground-using-xaringan-to-learn-web-development/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
+  - icon: play
+    icon_pack: fas
+    name: Video
+    url: https://rstudio.com/resources/rstudioglobal-2021/xaringan-playground-using-xaringan-to-learn-web-development/
 ---
 
 <script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>

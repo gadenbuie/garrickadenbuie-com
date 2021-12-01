@@ -31,7 +31,10 @@ links:
     icon_pack: fab
     name: Code
     url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
-talk_recording_url: https://youtu.be/FHy6NseH8yk
+  - icon: play
+    icon_pack: fas
+    name: Video
+    url: https://youtu.be/FHy6NseH8yk
 ---
 
 ```{r echo=FALSE}

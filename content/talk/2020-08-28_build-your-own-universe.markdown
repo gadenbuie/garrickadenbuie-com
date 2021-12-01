@@ -31,7 +31,10 @@ links:
     icon_pack: fab
     name: Code
     url: https://github.com/tgerke/build-your-own-universe
-talk_recording_url: https://youtu.be/lm0QYr1C2Sw
+  - icon: play
+    icon_pack: fas
+    name: Video
+    url: https://youtu.be/lm0QYr1C2Sw
 ---
 
 <script src="/rmarkdown-libs/fitvids-2.1.1/fitvids.min.js"></script>
