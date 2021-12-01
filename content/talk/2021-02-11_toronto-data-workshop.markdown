@@ -20,9 +20,9 @@ tags:
 
 talk_author: [Garrick Aden-Buie]
 talk_type: Talk
-talk_event: "Toronto Data Workshop"
-talk_event_url: https://rohanalexander.com/toronto_data_workshop.html
-talk_location: Virtual Workshop
+event: "Toronto Data Workshop"
+event_url: https://rohanalexander.com/toronto_data_workshop.html
+location: Virtual Workshop
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop
 talk_slides_url: https://slides.garrickadenbuie.com/toronto-data-workshop/
 talk_recording_url: https://www.youtube.com/watch?v=Hl798H6J-bg

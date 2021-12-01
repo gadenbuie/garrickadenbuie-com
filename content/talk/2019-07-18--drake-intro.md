@@ -3,24 +3,24 @@ title: "Reproducible Data Workflows With Drake"
 author: Garrick Aden-Buie
 description: |
   A gentle introduction to reproducible data workflows with the {drake} package.
-twitterImage: "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg"
+images: [ "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg" ]
 date: '2019-07-19'
 slug: drake-intro-biodataclub
-categories: []
-tags: 
+
+tags:
   - R
   - drake
   - Reproducible Research
   - Workflow
   - Tutorials
   - Education
-  
+
 talk_author: [Garrick Aden-Buie]
-talk_type: Education
+categories: [ Education ]
 talk_image: "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg"
-talk_event: "Bio-Data Club at Moffitt Cancer Center"
-talk_event_url: https://www.biodataclub.org/
-talk_location: "Tampa, FL"
+event: "Bio-Data Club at Moffitt Cancer Center"
+event_url: https://www.biodataclub.org/
+location: "Tampa, FL"
 talk_code_url: https://github.com/gadenbuie/drake-intro/
 talk_slides_url: https://gadenbuie.github.io/drake-intro/
 ---

@@ -9,7 +9,7 @@ images:
   - "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
 date: '2020-08-28'
 slug: build-your-own-universe
-categories: []
+
 tags:
   - R
   - R Packages
@@ -17,11 +17,11 @@ tags:
   - Education
 
 talk_author: [Garrick Aden-Buie, Travis Gerke]
-talk_type: Conference
+categories: [ Conference ]
 talk_image: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
-talk_event: "R/Medicine 2020"
-talk_event_url: https://events.linuxfoundation.org/r-medicine/
-talk_location: Virtual Conference
+event: "R/Medicine 2020"
+event_url: https://events.linuxfoundation.org/r-medicine/
+location: Virtual Conference
 talk_code_url: https://github.com/tgerke/build-your-own-universe
 talk_slides_url: https://slides.garrickadenbuie.com/build-your-own-universe/
 talk_recording_url: https://youtu.be/lm0QYr1C2Sw

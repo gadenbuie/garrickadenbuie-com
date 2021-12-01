@@ -6,20 +6,20 @@ author:
 description: |
   A presentation writing and benefiting from programming with functions.
 date: '2020-07-08'
-twitter_image: "https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png"
+images: [ "https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png" ]
 slug: extra-special-xaringan
-categories: []
-tags: 
+
+tags:
   - R
   - xaringan
   - xaringanExtra
   - Conference
-  
+
 talk_author: [Garrick Aden-Buie]
-talk_type: Conference
-talk_event: "useR!2020"
-talk_event_url: https://user2020.r-project.org/
-talk_location: "Virtual Conference"
+categories: [ Conference ]
+event: "useR!2020"
+event_url: https://user2020.r-project.org/
+location: "Virtual Conference"
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-special-xaringan
 talk_slides_url: https://slides.garrickadenbuie.com/extra-special-xaringan
 talk_recording_url: https://www.youtube.com/watch?v=vZMuu77ocMY

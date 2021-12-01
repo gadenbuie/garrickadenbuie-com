@@ -19,9 +19,9 @@ tags:
   - Presentations
 talk_author: [Garrick Aden-Buie]
 talk_type: Talk
-talk_event: "New York Open Statistical Programming Meetup"
-talk_event_url: https://www.meetup.com/nyhackr/events/276573540
-talk_location: Virtual Presentation
+event: "New York Open Statistical Programming Meetup"
+event_url: https://www.meetup.com/nyhackr/events/276573540
+location: Virtual Presentation
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-great-slides
 talk_slides_url: https://slides.garrickadenbuie.com/extra-great-slides/intro/
 talk_recording_url: https://youtu.be/FHy6NseH8yk

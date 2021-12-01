@@ -17,9 +17,9 @@ tags:
   - Presentations
 talk_author: [Garrick Aden-Buie]
 talk_type: Talk
-talk_event: "South Coast MA UseR Group"
-talk_event_url: https://www.meetup.com/South-Coast-useR-Group/events/277235768/
-talk_location: Virtual Presentation
+event: "South Coast MA UseR Group"
+event_url: https://www.meetup.com/South-Coast-useR-Group/events/277235768/
+location: Virtual Presentation
 talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/sliding-in-style
 talk_slides_url: https://slides.garrickadenbuie.com/sliding-in-style
 ---
