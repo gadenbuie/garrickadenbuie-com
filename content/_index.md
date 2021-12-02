@@ -7,7 +7,7 @@ description: >
   to help you teach and learn data science with R.
 images:
   - img/revoir.jpg
-image_left: true
+image_left: false
 text_align_left: true
 show_social_links: true # specify social accounts in site config
 show_action_link: true
