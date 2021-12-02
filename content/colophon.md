@@ -7,7 +7,7 @@ header:
   caption: ""
   image: ""
 share: false
-title: "Colophon"
+title: "Made with 🧡"
 ---
 
 ## Made with Hugo Apéro and blogdown
