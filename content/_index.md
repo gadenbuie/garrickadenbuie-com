@@ -4,7 +4,7 @@ description: >
   I’m a **Data Science Educator** and R developer at [RStudio](https://rstudio.com/).
   I use [R](https://r-project.org), [R Markdown](https://rmarkdown.rstudio.com),
   [Shiny](https://shiny.rstudio.com), and the tools of data science
-  to make it easier to teach and learn data science with R.
+  to help you teach and learn data science with R.
 images:
   - img/revoir.jpg
 image_left: true
