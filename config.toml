@@ -139,13 +139,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       weight = 3
       url = "/project/"
   [[menu.header]]
-      name = "Shiny Apps"
-      weight = 4
-      url = "https://apps.garrickadenbuie.com"
-  [[menu.header]]
       name = "Talks"
-      weight = 5
+      weight = 4
       url = "/talk/"
+  [[menu.header]]
+      name = "Shiny Apps"
+      weight = 5
+      url = "https://apps.garrickadenbuie.com"
   #ddd[[menu.header]]
   #    name = "Music"
   #    weight = 6
