@@ -80,6 +80,13 @@ a {
   }
 }
 
+.site-brand {
+  color: var(--bodyLinkColorCustom);
+}
+.site-brand:hover {
+  color: var(--purple-40);
+}
+
 .bg-custom-nav-bg-color,
 .site-links a::after,
 .site-links a.active::after {

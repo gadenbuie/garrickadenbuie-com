@@ -1,8 +1,16 @@
 {{ $page := . }}
-<header class="site-header pt4 pb2 mb4 bb b--transparent ph5-ns ph3 headroom z-max" role="banner">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph6-ns ph3 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="{{ .Site.BaseURL }}" title="Home">
-      {{ if .Site.Params.logo }}<img src="{{ .Site.Params.logo | relURL }}" class="dib db-l h2 w-auto" alt="{{ .Site.Title }}">{{ else }}<span class="f4 fw7">{{ .Site.Title }}</span>{{ end }}
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-10-l tc tl-l" href="{{ .Site.BaseURL }}" title="Home">
+      {{ if .Site.Params.logo -}}
+        {{ if .Site.Params.logo_is_svg }}
+        {{ .Site.Params.logo | readFile | safeHTML }}
+        {{ else }}
+        <img src="{{ .Site.Params.logo | relURL }}" class="dib db-l h2 w-auto" alt="{{ .Site.Title }}">
+        {{ end }}
+      {{- else -}}
+        <span class="f4 fw7">{{ .Site.Title }}</span>
+      {{ end }}
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l {{ if $.Site.Params.navallcaps }}ttu tracked{{ end }}">
       {{ range .Site.Menus.header }}
