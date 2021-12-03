@@ -219,27 +219,27 @@ figure figcaption h4,
 
   @-webkit-keyframes animate-svg-fill-1 {
     0% {
-      fill: transparent;
+      fill: var(--siteBgColorCustom);
     }
 
     100% {
-      fill: currentColor;
+      fill: var(--bodyLinkColorCustom);
     }
   }
 
   @keyframes animate-svg-fill-1 {
     0% {
-      fill: transparent;
+      fill: var(--siteBgColorCustom);
     }
 
     100% {
-      fill: currentColor;
+      fill: var(--bodyLinkColorCustom);
     }
   }
 
   .site-logo .site-brand-letter-g-1 {
     -webkit-animation: animate-svg-stroke-1 1.5s cubic-bezier(0.6, 0.04, 0.98, 0.335) 0s both,
-                        animate-svg-fill-1 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) 1.2s both;
+                        animate-svg-fill-1 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) 2s both;
             animation: animate-svg-stroke-1 1.5s cubic-bezier(0.6, 0.04, 0.98, 0.335) 0s both,
                 animate-svg-fill-1 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) 1.2s both;
   }
