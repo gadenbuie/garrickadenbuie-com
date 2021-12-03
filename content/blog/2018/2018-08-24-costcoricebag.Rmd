@@ -14,6 +14,8 @@ tags:
   - Twitter
   - rtweet
 source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2018/2018-08-24-costcoricebag.Rmd
+head_custom: |
+  <link rel="stylesheet" type="text/css" href="/css/tooltips.css">
 editor_options:
   chunk_output_type: console
 references: ~
@@ -88,9 +90,10 @@ Hover over each word to see the text of the full tweet, or click on the word to 
 first_words %>%
   mutate(
     text = gsub("'", "\u2019", text), # Fix issue with single quote
-    text = gsub("\"", "&quot;", text)
+    text = gsub("\"", "&quot;", text),
+    text = gsub("\n", "&#13;&#10;", text)
   ) %>%
-  glue::glue_data('<a title="{text}" style="color: #606060;" href="{status_url}">{first_word}</a>') %>%
+  glue::glue_data('<a class="tooltip-top no-underline" data-tooltip="{text}" style="color: var(--slate-40);" href="{status_url}">{first_word}</a>') %>%
   glue::glue_collapse(sep = " ") %>%
   cat()
 ```
