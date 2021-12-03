@@ -13,7 +13,7 @@ tags:
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
 images:
   - /blog/colors-of-xcolor/colors-of-xcolor.png
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console

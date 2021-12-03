@@ -13,7 +13,7 @@ tags:
   - reprex
 description: |
   Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmarkdown'
 keywords: rstats
 references: ~
 ---
@@ -105,7 +105,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-12-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -124,7 +124,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-28                  
+#>  date     2021-12-03                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -214,7 +214,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-12-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -233,7 +233,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-28                  
+#>  date     2021-12-03                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -385,7 +385,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-12-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -404,7 +404,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-28                  
+#>  date     2021-12-03                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -506,7 +506,7 @@ tibble(date = "2020-01-01") %>%
 #> ✖ must be a double vector, not a logical vector.
 ```
 
-<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
+<sup>Created on 2021-12-03 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>
 
 <details style="margin-bottom:10px;">
 <summary>
@@ -525,7 +525,7 @@ sessioninfo::session_info()
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       America/New_York            
-#>  date     2021-11-28                  
+#>  date     2021-12-03                  
 #> 
 #> ─ Packages ───────────────────────────────────────────────────────────────────
 #>  package     * version date       lib source            
@@ -677,12 +677,10 @@ body <- reprex::reprex(input = input, venue = "gh", html_preview = TRUE)
 body
 ```
 
-    ## [1] "``` r"                                                                                          
-    ## [2] "runif(min = 0, max = 10)"                                                                       
-    ## [3] "#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"               
-    ## [4] "```"                                                                                            
-    ## [5] ""                                                                                               
-    ## [6] "<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
+    ## [1] "``` r"                                                                           
+    ## [2] "runif(min = 0, max = 10)"                                                        
+    ## [3] "#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"
+    ## [4] "```"
 
 Notice that it returns a character vector
 with one item per line of the rendered reprex.
@@ -692,7 +690,7 @@ We need to collapse it all into a single string.
 body <- paste(body, collapse = "\n")
 ```
 
-    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```\n\n<sup>Created on 2021-11-28 by the [reprex package](https://reprex.tidyverse.org) (v2.0.1)</sup>"
+    ## [1] "``` r\nrunif(min = 0, max = 10)\n#> Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```"
 
 But this still won’t fit in a URL
 because it contains spaces, new lines, and other characters URLs don’t like.
@@ -703,7 +701,7 @@ to turn the `body` text into something readable only by machines.
 body <- URLencode(body, reserved = TRUE)
 ```
 
-    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-28%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E"
+    ## [1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60"
 
 Finally, we can make our new issue URL.
 
@@ -712,7 +710,7 @@ url_new_issue <- glue::glue("https://github.com/{repo}/issues/new?body={body}")
 url_new_issue
 ```
 
-    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60%0A%0A%3Csup%3ECreated%20on%202021-11-28%20by%20the%20%5Breprex%20package%5D%28https%3A%2F%2Freprex.tidyverse.org%29%20%28v2.0.1%29%3C%2Fsup%3E
+    ## https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60
 
 I didn’t make the link clickable,
 but if you were to follow it,

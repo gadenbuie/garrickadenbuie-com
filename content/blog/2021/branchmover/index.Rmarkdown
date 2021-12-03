@@ -19,7 +19,7 @@ description: >
   default branch changes across your GitHub repositories.
 images:
   - "https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
-rmd_source: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmd"
+source_link: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmarkdown"
 keywords: "rstats"
 references: ~
 editor_options:

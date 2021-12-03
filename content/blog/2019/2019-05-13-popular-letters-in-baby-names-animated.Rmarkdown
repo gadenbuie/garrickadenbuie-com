@@ -14,7 +14,7 @@ tags:
 description: "An animation of letter popularity in baby names"
 images:
   - "/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmd
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmarkdown
 keywords: rstats
 editor_options:
   chunk_output_type: console

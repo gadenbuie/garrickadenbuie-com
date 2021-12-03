@@ -14,7 +14,7 @@ tags:
 description: "An animation of letter popularity in baby names"
 images:
   - "/blog/2019/2019-05-13-popular-letters-in-baby-names-animated_files/figure-html/babynames-any-letter-1.gif"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmd
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmarkdown
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -136,12 +136,12 @@ babynames_and_letters %>%
 ```
 ## # A tibble: 6 × 2
 ##   name    letter
-##   <chr>   <chr>
-## 1 Garrick g
-## 2 Garrick a
-## 3 Garrick r
-## 4 Garrick i
-## 5 Garrick c
+##   <chr>   <chr> 
+## 1 Garrick g     
+## 2 Garrick a     
+## 3 Garrick r     
+## 4 Garrick i     
+## 5 Garrick c     
 ## 6 Garrick k
 ```
 
@@ -256,12 +256,12 @@ babynames_first_last %>% sample_n(6)
 ```
 ## # A tibble: 6 × 7
 ##    year sex   name         n      prop first_letter last_letter
-##   <dbl> <chr> <chr>    <int>     <dbl> <chr>        <chr>
-## 1  1991 M     Bobby     1508 0.000712  b            y
-## 2  1900 F     Pamela       5 0.0000157 p            a
-## 3  1964 F     Marline     21 0.0000107 m            e
-## 4  1992 F     Carlos      31 0.0000155 c            s
-## 5  1991 F     Charlene   531 0.000261  c            e
+##   <dbl> <chr> <chr>    <int>     <dbl> <chr>        <chr>      
+## 1  1991 M     Bobby     1508 0.000712  b            y          
+## 2  1900 F     Pamela       5 0.0000157 p            a          
+## 3  1964 F     Marline     21 0.0000107 m            e          
+## 4  1992 F     Carlos      31 0.0000155 c            s          
+## 5  1991 F     Charlene   531 0.000261  c            e          
 ## 6  1985 F     Mariya      27 0.0000146 m            a
 ```
 

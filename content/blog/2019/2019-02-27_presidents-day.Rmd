@@ -18,7 +18,7 @@ Description: |
   As in: What does Presdient Trump do with his day? (Spoiler: A whole lot of "executive time".)
 images:
   - "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
 head_custom: |
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
 output:

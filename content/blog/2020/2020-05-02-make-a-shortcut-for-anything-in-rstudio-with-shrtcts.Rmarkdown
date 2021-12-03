@@ -12,7 +12,7 @@ tags:
   - Addin
   - Shortcuts
 description: Quickly turn any R function or code into an RStudio addin with {shrtcts}
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console

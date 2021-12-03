@@ -12,7 +12,7 @@ tags:
   - Twitter
 description: A big post with all the Mac apps and command line utilities I use everyday.
 images: [ /blog/setting-up-a-new-macbook-pro/img/EoLPlKhXUAAVThW.jpg ]
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/setting-up-a-new-macbook-pro/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/setting-up-a-new-macbook-pro/index.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console

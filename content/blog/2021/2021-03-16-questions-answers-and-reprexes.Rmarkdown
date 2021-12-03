@@ -13,7 +13,7 @@ tags:
   - reprex
 description: A "CSS Battle" YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.
 # images: [ /path/to/image.png ]
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/2021-03-16-questions-answers-and-reprexes.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/2021-03-16-questions-answers-and-reprexes.Rmarkdown'
 editor_options:
   chunk_output_type: console
 ---

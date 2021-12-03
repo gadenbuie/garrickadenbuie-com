@@ -13,7 +13,7 @@ tags:
   - Tips
   - Scripts
 description: Create PDF versions of complicated xaringan slides using {chromote} and a little magic.
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/print-xaringan-chromote/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/print-xaringan-chromote/index.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console

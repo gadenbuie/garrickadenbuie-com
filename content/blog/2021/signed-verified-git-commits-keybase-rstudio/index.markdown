@@ -14,7 +14,7 @@ tags:
 description: "Setting up signed git commits with a Keybase GPG key that works with RStudio."
 images:
   - "/blog/signed-verified-git-commits-keybase-rstudio/social.png"
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/signed-verified-git-commits-keybase-rstudio/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/signed-verified-git-commits-keybase-rstudio/index.Rmarkdown'
 keywords: "rstats"
 references: ~
 ---

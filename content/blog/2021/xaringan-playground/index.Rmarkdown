@@ -16,7 +16,7 @@ description: |
   and web development.
 images:
   - /blog/xaringan-playground/xaringan-playground-social.png
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/xaringan-playground/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/xaringan-playground/index.Rmarkdown'
 keywords: rstats
 references: ~
 editor_options:

@@ -12,7 +12,7 @@ tags:
   - Addin
   - Shortcuts
 description: Quickly turn any R function or code into an RStudio addin with {shrtcts}
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-05-02-make-a-shortcut-for-anything-in-rstudio-with-shtrcts.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -239,7 +239,7 @@ Here's an example shortcut that picks a number between 0 and 100.
 ```
 
 Notice the binding is just R code
-(I was thinking of 0, by the way),
+(I was thinking of 50, by the way),
 and the only fields you _need_ to include
 are the `Name` and the `Binding`.
 

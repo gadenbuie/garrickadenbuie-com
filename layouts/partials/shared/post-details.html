@@ -25,10 +25,10 @@
     <dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd>
   </dl>
   {{ end }}
-  {{ with .Params.rmd_source }}
+  {{ with .Params.source_link }}
   <dl class="f6 lh-copy">
     <dt class="fw7">Source:</dt>
-    <dd class="fw5 ml0"><a href="{{ . }}">{{ replaceRE "^https://github[.]com/gadenbuie/garrickadenbuie-com/tree/main/" "" . }}</a></dd>
+    <dd class="fw5 ml0"><a href="{{ . }}">{{ replaceRE "^https://github[.]com/gadenbuie/garrickadenbuie-com/(blob|tree)/main/" "" . }}</a></dd>
   </dl>
   {{ end }}
   <dl class="f6 lh-copy">

@@ -13,7 +13,7 @@ tags:
 description: "Use ggplot2 to organize your life."
 images:
   - "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-06-22-ggplot2-weekly-planner.Rmd
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-06-22-ggplot2-weekly-planner.Rmarkdown
 keywords: rstats
 editor_options:
   chunk_output_type: console

@@ -12,7 +12,7 @@ description: >
   Print a nicely-formatted calendar in your R console.
 images:
   - /blog/r-console-calendar/social-card.png
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console
