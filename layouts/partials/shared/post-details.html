@@ -1,4 +1,4 @@
-<details {{ .Scratch.Get "details" }} class="f6 fw7 input-reset">
+<details {{ .Scratch.Get "details" }} class="f6 fw7 input-reset mt2">
   <dl class="f6 lh-copy">
     <dt class="fw7">Posted on:</dt>
     <dd class="fw5 ml0">{{ .PublishDate.Format "January 2, 2006" }}</dd>
@@ -23,6 +23,12 @@
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
     <dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd>
+  </dl>
+  {{ end }}
+  {{ with .Params.rmd_source }}
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Source:</dt>
+    <dd class="fw5 ml0"><a href="{{ . }}">{{ replaceRE "^https://github[.]com/gadenbuie/garrickadenbuie-com/tree/main/" "" . }}</a></dd>
   </dl>
   {{ end }}
   <dl class="f6 lh-copy">
