@@ -2,10 +2,11 @@
 title: "Unsupervised behavior change detection using passive sensor systems in the homes of older adults"
 author: Garrick Aden-Buie
 date: '2018-05-07'
+images: [ isg-2018.png ]
 description: Presented at the 11th World Conference of Gerontechnology in St. Petersburg, FL.
 slug: isg-2018
-categories: []
-tags: 
+
+tags:
   - Research
   - Smart Home
   - Gerontechnology
@@ -16,12 +17,15 @@ talk_author:
   - Ali Yalcin, Ph.D.
   - Carla VandeWeerd, Ph.D.
 talk_date: "7 May 2018"
-talk_type: "Conference Presentation"
-talk_event: "Gerontechnology 2018"
-talk_event_url: http://www.sfu.ca/fc/ISG2018.html
-# talk_venue: "Conference Center"
-talk_location: "St. Petersburg, FL"
-talk_slides_url: http://gadenbuie.github.io/isg-2018
+categories: [ "Conference Presentation" ]
+event: "Gerontechnology 2018"
+event_url: http://www.sfu.ca/fc/ISG2018.html
+location: "St. Petersburg, FL"
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: http://gadenbuie.github.io/isg-2018
 ---
 
 ### Abstract

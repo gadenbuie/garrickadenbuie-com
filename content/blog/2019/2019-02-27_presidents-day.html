@@ -16,8 +16,9 @@ tags:
 Keywords: ["rstats", "rtweet", "ggplot2", "tidyverse", "data cleaning", "data visualization", "politics", "trump", "tweets"]
 Description: |
   As in: What does Presdient Trump do with his day? (Spoiler: A whole lot of "executive time".)
-twitterImage: "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
+images:
+  - "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
 head_custom: |
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
 output:
@@ -80,7 +81,7 @@ executive_categories &lt;- c(
   &quot;no_data&quot; = &quot;Unknown&quot;,
   &quot;travel&quot;  = &quot;Travel&quot;
 )
-  
+
 # Exec Time Downloaded from http://bit.ly/2Sk9Vj7
 exec_time &lt;-
   read_csv(
@@ -97,32 +98,32 @@ exec_time &lt;-
     time_end   = paste(date, time_end),
     time_start = ymd_hm(time_start, tz = &quot;America/New_York&quot;),
     time_end   = ymd_hm(time_end, tz = &quot;America/New_York&quot;),
-    time_end   = if_else(time_start &gt; time_end, 
+    time_end   = if_else(time_start &gt; time_end,
                          time_end + hours(24), time_end),
     # Recode the activity category with nicer labels
-    top_category = factor(top_category, 
+    top_category = factor(top_category,
                           levels = names(executive_categories),
                           labels = executive_categories)
-  ) %&gt;% 
+  ) %&gt;%
   mutate(
     # Create label pieces for plotly hover text
     label_title    = glue(&quot;&lt;b&gt;{top_category}&lt;/b&gt;&quot;),
     has_uniq_title = tolower(top_category) != tolower(listed_title),
     has_subtitle   = has_uniq_title &amp; !is.na(listed_title),
-    label_subtitle = if_else(has_subtitle, 
+    label_subtitle = if_else(has_subtitle,
                              glue(&quot;&lt;br&gt;&lt;em&gt;{listed_title}&lt;/em&gt;&quot;), &quot;&quot;),
     has_location   = !is.na(listed_location),
-    label_location = if_else(has_location, 
+    label_location = if_else(has_location,
                              glue(&quot;&lt;br&gt;&lt;em&gt;{listed_location}&lt;/em&gt;&quot;), &quot;&quot;),
     label_time     = glue(
-      &quot;&lt;br&gt;&lt;br&gt;{strftime(time_start, &#39;%A, %B %e %H:%M&#39;)} &quot;, 
+      &quot;&lt;br&gt;&lt;br&gt;{strftime(time_start, &#39;%A, %B %e %H:%M&#39;)} &quot;,
       &quot;to {strftime(time_end, &#39;%H:%M&#39;)}&quot;),
     has_notes      = !is.na(notes),
     label_notes    = if_else(has_notes, paste0(&quot;&lt;br&gt;&lt;br&gt;&quot;, notes), &quot;&quot;),
     # Compose final tooltip text
-    label = paste0(label_title, label_subtitle, label_location, 
+    label = paste0(label_title, label_subtitle, label_location,
                    label_time, label_notes)
-  ) %&gt;% 
+  ) %&gt;%
   mutate(
     # truncate any activities that span 8am or 5pm
     time_start = if_else(
@@ -138,9 +139,9 @@ exec_time &lt;-
     # create 5 minute increments &quot;inside&quot; each activity
     time_inc   = map2(time_start, time_end, seq, by = &quot;5 mins&quot;)
   ) %&gt;%
-  select(event_id, time_start, time_end, time_inc, 
+  select(event_id, time_start, time_end, time_inc,
          listed_title, top_category, label)
-  
+
 glimpse(exec_time)</code></pre>
 <pre><code>## Observations: 577
 ## Variables: 7
@@ -166,7 +167,7 @@ I also set the global plot theme, and created a few constants that I used across
   y[x &gt; 12] &lt;- paste(x[x &gt; 12] - 12, &quot;pm&quot;)
   y
 }
-  
+
 am_pm(seq(8, 17, 3))</code></pre>
 <pre><code>## [1] &quot;8 am&quot;  &quot;11 am&quot; &quot;2 pm&quot;  &quot;5 pm&quot;</code></pre>
 <p>The second helper function is copied directly from <a href="https://stackoverflow.com/a/43626186">StackOverflow: Reverse datetime (POSIXct data) axis in ggplot</a>, in one of the rare-but-beautiful moments when directly copying and pasting from SO works out perfectly.
@@ -174,21 +175,21 @@ This gives me a <code>rev_date()</code> transformer function that can be passed 
 <p>A third helper function abstracts the code required to filter out the portion of the data set that belongs to the workday, which I use throughout this post.
 This function is a nice example of how <a href="https://tidyeval.tidyverse.org/">tidyeval</a> can be used for flexible dplyr wrapper functions.</p>
 <pre class="r"><code>filter_workday &lt;- function(
-  df,  
-  start = hms::hms(0, 0, 8), 
+  df,
+  start = hms::hms(0, 0, 8),
   end = hms::hms(0, 0, 17),
   start_var = time_start,
   end_var = time_end
 ) {
   start_var &lt;- rlang::enquo(start_var)
   end_var &lt;- rlang::enquo(end_var)
-  
-  df %&gt;% 
+
+  df %&gt;%
     filter(
       date(!!start_var) == date(!!end_var),
-      hms::as.hms(!!start_var) &gt;= start, 
+      hms::as.hms(!!start_var) &gt;= start,
       hms::as.hms(!!end_var) &lt;= end
-    ) 
+    )
 }</code></pre>
 <p>Finally, another helper function creates the plot caption credits.</p>
 <pre class="r"><code>credit_caption &lt;- function(rtweet = FALSE) {
@@ -259,7 +260,7 @@ event_type_labels &lt;- sub(&quot; &quot;, &quot;\n&quot;, names(event_type_colo
 <pre class="r"><code>g &lt;-
   exec_time %&gt;%
   mutate(date = floor_date(time_start, &quot;day&quot;)) %&gt;%
-  filter_workday() %&gt;% 
+  filter_workday() %&gt;%
   mutate_at(vars(time_start, time_end), in_hours) %&gt;%
   ggplot() +
   geom_rect(
@@ -283,7 +284,7 @@ event_type_labels &lt;- sub(&quot; &quot;, &quot;\n&quot;, names(event_type_colo
     expand = expand_scale(c(0.025, 0), 0)
   ) +
   scale_fill_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = event_type_labels
   ) +
   labs(x = &quot;Hour of the Day&quot;, y = NULL, fill = NULL) +
@@ -298,7 +299,7 @@ event_type_labels &lt;- sub(&quot; &quot;, &quot;\n&quot;, names(event_type_colo
     plot.margin = margin(3, 0, 0, 0, unit = &quot;line&quot;)
   )
 
-plotly::ggplotly(g + aes(text = label), tooltip = &quot;label&quot;) %&gt;% 
+plotly::ggplotly(g + aes(text = label), tooltip = &quot;label&quot;) %&gt;%
   plotly::layout(xaxis = list(side = &quot;top&quot;, title = &quot;&quot;))</code></pre>
 <p>And that’s it!
 <a href="#the-presidents-daily-8am-to-5pm-schedule">Jump back up</a> to see the final product.</p>
@@ -357,30 +358,30 @@ if (FALSE) {
 <p>To align the tweets with the President’s schedule, I rounded (actually, floored) the time stamp of each tweet down to the nearest 5 minute interval.
 Then, I joined the tweets to the schedule using the 5 minute intervals I created while importing the schedule (see above).
 This gives me the category and scheduled activity of each tweet.</p>
-<pre class="r"><code>djt_simple &lt;- 
-  djt %&gt;% 
-  filter(!is_retweet) %&gt;% 
+<pre class="r"><code>djt_simple &lt;-
+  djt %&gt;%
+  filter(!is_retweet) %&gt;%
   mutate(
     created_at = with_tz(created_at, tzone = &quot;America/New_York&quot;),
     time_inc = floor_date(created_at, &quot;5 min&quot;)
-  ) %&gt;% 
+  ) %&gt;%
   select(created_at, time_inc, text, status_id)
 
-djt_joined_all &lt;- 
-  exec_time %&gt;% 
-  unnest() %&gt;% 
-  filter(time_end != time_inc) %&gt;% 
-  full_join(djt_simple, by = &quot;time_inc&quot;) %&gt;% 
+djt_joined_all &lt;-
+  exec_time %&gt;%
+  unnest() %&gt;%
+  filter(time_end != time_inc) %&gt;%
+  full_join(djt_simple, by = &quot;time_inc&quot;) %&gt;%
   select(
-    event_id, starts_with(&quot;time_&quot;), created_at, 
+    event_id, starts_with(&quot;time_&quot;), created_at,
     listed_title, top_category, text
-  ) %&gt;% 
+  ) %&gt;%
   filter(
     !is.na(text)
-  ) %&gt;% 
-  distinct(text, .keep_all = TRUE) %&gt;% 
+  ) %&gt;%
+  distinct(text, .keep_all = TRUE) %&gt;%
   mutate(
-    hour = in_hours(created_at), 
+    hour = in_hours(created_at),
     date = floor_date(created_at, &quot;day&quot;),
     top_category = factor(top_category, executive_categories),
     label_sched = if_else(
@@ -392,29 +393,29 @@ djt_joined_all &lt;-
         &quot;to {strftime(time_end, &#39;%I:%M %p&#39;)}&quot;)
     ),
     label = glue(&quot;{str_wrap(text, 50)}&quot;,
-                 &quot;&lt;br&gt;&lt;i&gt;@realDonaldTrump &quot;, 
+                 &quot;&lt;br&gt;&lt;i&gt;@realDonaldTrump &quot;,
                  &quot;{strftime(created_at, &#39;%a, %b %e, %I:%M %p&#39;)}&lt;/i&gt;&quot;,
                  &quot;{label_sched}&quot;)
   ) %&gt;%
-  select(-time_start, -time_end, -label_sched) %&gt;% 
+  select(-time_start, -time_end, -label_sched) %&gt;%
   arrange(created_at)
 
 djt_joined &lt;-
-  djt_joined_all %&gt;% 
+  djt_joined_all %&gt;%
   filter(!is.na(top_category))</code></pre>
 <p>Finally, I still need to do a little bit of processing to get these tweets to fit into the previous plot.</p>
-<pre class="r"><code>djt_workday &lt;- 
+<pre class="r"><code>djt_workday &lt;-
   djt_joined_all %&gt;%
   filter_workday(
     start_var = created_at, end_var = created_at
-  ) %&gt;% 
-  filter(date &gt;= &quot;2018-11-07&quot;, date &lt;= &quot;2019-02-02&quot;) %&gt;% 
+  ) %&gt;%
+  filter(date &gt;= &quot;2018-11-07&quot;, date &lt;= &quot;2019-02-02&quot;) %&gt;%
   select(-text)</code></pre>
 <p>At this point, there are a few versions of the tweets data set that I can use in different places.
 The <code>djt_simple</code> is a basic, bare-bones tibble of tweets.</p>
 <pre><code>## # A tibble: 758 x 4
-##    created_at          time_inc            text                 status_id  
-##    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;                &lt;chr&gt;      
+##    created_at          time_inc            text                 status_id
+##    &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;                &lt;chr&gt;
 ##  1 2018-11-07 01:27:01 2018-11-07 01:25:00 “There’s only been … 1060056007…
 ##  2 2018-11-07 01:37:48 2018-11-07 01:35:00 ....unbelievably lu… 1060058718…
 ##  3 2018-11-07 01:49:40 2018-11-07 01:45:00 .@DavidAsmanfox  “H… 1060061704…
@@ -428,8 +429,8 @@ The <code>djt_simple</code> is a basic, bare-bones tibble of tweets.</p>
 ## # … with 748 more rows</code></pre>
 <p>The <code>djt_joined_all</code> variable holds the complete set of all tweets joined with the full schedule, meaning that there will be missing values where no tweets occurred in a 5 minute window or where the schedule data doesn’t cover a tweet.</p>
 <pre><code>## # A tibble: 1,182 x 9
-##    time_inc            top_category text  event_id created_at         
-##    &lt;dttm&gt;              &lt;fct&gt;        &lt;chr&gt;    &lt;int&gt; &lt;dttm&gt;             
+##    time_inc            top_category text  event_id created_at
+##    &lt;dttm&gt;              &lt;fct&gt;        &lt;chr&gt;    &lt;int&gt; &lt;dttm&gt;
 ##  1 2018-10-18 17:20:00 &lt;NA&gt;         Look…       NA 2018-10-18 17:22:53
 ##  2 2018-10-25 14:40:00 &lt;NA&gt;         Spok…       NA 2018-10-25 14:42:05
 ##  3 2018-11-05 16:25:00 &lt;NA&gt;         Than…       NA 2018-11-05 16:26:24
@@ -444,8 +445,8 @@ The <code>djt_simple</code> is a basic, bare-bones tibble of tweets.</p>
 ## #   hour &lt;dbl&gt;, date &lt;dttm&gt;, label &lt;S3: glue&gt;</code></pre>
 <p>And <code>djt_workday</code> contains the tweets within the period covered by the Axios schedules and during workday hours.</p>
 <pre><code>## # A tibble: 418 x 9
-##    time_inc            top_category label event_id created_at         
-##    &lt;dttm&gt;              &lt;fct&gt;        &lt;S3:&gt;    &lt;int&gt; &lt;dttm&gt;             
+##    time_inc            top_category label event_id created_at
+##    &lt;dttm&gt;              &lt;fct&gt;        &lt;S3:&gt;    &lt;int&gt; &lt;dttm&gt;
 ##  1 2018-11-07 08:00:00 Executive T… &quot;If …        1 2018-11-07 08:04:02
 ##  2 2018-11-07 08:30:00 Executive T… &quot;In …        1 2018-11-07 08:31:24
 ##  3 2018-11-07 10:35:00 Executive T… &quot;Acc…        1 2018-11-07 10:39:11
@@ -465,8 +466,8 @@ g_subdued &lt;- g
 g_subdued$layers[[1]]$aes_params$alpha &lt;- 0.6
 
 # Add tweets to the plot
-g_subdued &lt;- 
-  g_subdued + 
+g_subdued &lt;-
+  g_subdued +
   ggtitle(&quot;President Trump&#39;s Daily Tweeting&quot;) +
   geom_point(
     data = djt_workday,
@@ -477,8 +478,8 @@ g_subdued &lt;-
 <p>At this point, the plot is almost ready to go, except for the fact that the tooltip text will appear for the underlying activity layers.
 Fortunately, once again <a href="https://stackoverflow.com/a/45802923/2022615">StackOverflow</a> comes to the rescue.
 To disable the tooltip, I have to save the plotly object and change the <code>$hoverinfo</code> value to <code>&quot;none&quot;</code> for each of the data layers of the activity categories.</p>
-<pre class="r"><code>gpltly &lt;- 
-  plotly::ggplotly(g_subdued, tooltip = &quot;label&quot;) %&gt;% 
+<pre class="r"><code>gpltly &lt;-
+  plotly::ggplotly(g_subdued, tooltip = &quot;label&quot;) %&gt;%
   plotly::layout(xaxis = list(side = &quot;top&quot;, title = &quot;&quot;))
 
 # remove hover labels for time category layers (6 categories)
@@ -512,8 +513,8 @@ This data frame will be used for several plots.</p>
   nest(-date) %&gt;%
   mutate(
     total = map_dbl(data, ~ {
-      filter(., top_category != &quot;Unknown&quot;) %&gt;% 
-        pull(pct) %&gt;% 
+      filter(., top_category != &quot;Unknown&quot;) %&gt;%
+        pull(pct) %&gt;%
         sum()
     }),
     unaccounted = 1 - total,
@@ -525,31 +526,31 @@ This data frame will be used for several plots.</p>
   gather(&quot;top_category&quot;, &quot;pct&quot;, -date) %&gt;%
   mutate(top_category = factor(top_category, rev(names(event_type_colors))))
 
-exec_time_total %&gt;% 
+exec_time_total %&gt;%
   arrange(date, desc(pct))</code></pre>
 <pre><code>## # A tibble: 378 x 3
 ##    date                top_category      pct
 ##    &lt;dttm&gt;              &lt;fct&gt;           &lt;dbl&gt;
-##  1 2018-11-07 00:00:00 Executive Time 0.833 
-##  2 2018-11-07 00:00:00 Lunch          0.111 
+##  1 2018-11-07 00:00:00 Executive Time 0.833
+##  2 2018-11-07 00:00:00 Lunch          0.111
 ##  3 2018-11-07 00:00:00 Meeting        0.0556
-##  4 2018-11-07 00:00:00 Event          0     
-##  5 2018-11-07 00:00:00 Unknown        0     
-##  6 2018-11-07 00:00:00 Travel         0     
-##  7 2018-11-08 00:00:00 Executive Time 0.5   
-##  8 2018-11-08 00:00:00 Meeting        0.222 
-##  9 2018-11-08 00:00:00 Lunch          0.111 
+##  4 2018-11-07 00:00:00 Event          0
+##  5 2018-11-07 00:00:00 Unknown        0
+##  6 2018-11-07 00:00:00 Travel         0
+##  7 2018-11-08 00:00:00 Executive Time 0.5
+##  8 2018-11-08 00:00:00 Meeting        0.222
+##  9 2018-11-08 00:00:00 Lunch          0.111
 ## 10 2018-11-08 00:00:00 Unknown        0.0833
 ## # … with 368 more rows</code></pre>
 <p>The above tibble contains a summary of time use by day, but the first plot requires a full summary of all days in the schedule.
 The following code chunk caculates total hours spent in each group and creates a text label that is used to label the regions of the stacked bar in the plot.</p>
-<pre class="r"><code>exec_time_hours &lt;- 
-  exec_time_total %&gt;% 
+<pre class="r"><code>exec_time_hours &lt;-
+  exec_time_total %&gt;%
   # Only the days covered by the schedule
-  filter(!(pct == 1 &amp; top_category == &quot;Unknown&quot;)) %&gt;% 
-  group_by(top_category) %&gt;% 
-  summarize(hours = sum(pct * 60 * 90)) %&gt;% 
-  arrange(desc(top_category)) %&gt;% 
+  filter(!(pct == 1 &amp; top_category == &quot;Unknown&quot;)) %&gt;%
+  group_by(top_category) %&gt;%
+  summarize(hours = sum(pct * 60 * 90)) %&gt;%
+  arrange(desc(top_category)) %&gt;%
   mutate(
     pct = hours / sum(hours),
     pct_upto = cumsum(pct),
@@ -560,18 +561,18 @@ The following code chunk caculates total hours spent in each group and creates a
 
 exec_time_hours</code></pre>
 <pre><code>## # A tibble: 6 x 5
-##   top_category     hours    pct pct_upto label                
-##   &lt;fct&gt;            &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                
+##   top_category     hours    pct pct_upto label
+##   &lt;fct&gt;            &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;
 ## 1 Executive Time 162650  0.591     0.591 &quot;Executive Time\n59%&quot;
-## 2 Travel          23350  0.0848    0.675 &quot;Travel\n8%&quot;         
-## 3 Lunch           23400  0.0850    0.760 &quot;Lunch\n8%&quot;          
-## 4 Meeting         45350  0.165     0.925 &quot;Meeting\n16%&quot;       
-## 5 Event           13850  0.0503    0.975 &quot;Event\n5%&quot;          
+## 2 Travel          23350  0.0848    0.675 &quot;Travel\n8%&quot;
+## 3 Lunch           23400  0.0850    0.760 &quot;Lunch\n8%&quot;
+## 4 Meeting         45350  0.165     0.925 &quot;Meeting\n16%&quot;
+## 5 Event           13850  0.0503    0.975 &quot;Event\n5%&quot;
 ## 6 Unknown          6800. 0.0247    1     &quot;&quot;</code></pre>
 <p>Finally, I create the plot using <code>geom_col()</code> to create a stacked bar chart, that I then rotate to be horizontal with <code>coord_flip()</code>.
 The bar labels are added as a text annotation, and I do a little adjustment to make sure the annotations fit in the plot and to hide the axis that aren’t relevant.</p>
 <pre class="r"><code>ggplot(exec_time_hours) +
-  aes(x = 1, 
+  aes(x = 1,
       y = pct,
       fill = top_category) +
   geom_col() +
@@ -595,8 +596,8 @@ The bar labels are added as a text annotation, and I do a little adjustment to m
   ) +
   coord_flip() +
   labs(
-    x = NULL, 
-    y = &quot;Percent of Workday Between 8am and 5pm&quot;, 
+    x = NULL,
+    y = &quot;Percent of Workday Between 8am and 5pm&quot;,
     fill = NULL
   ) +
   ggtitle(
@@ -636,7 +637,7 @@ work weeks where executive time was not the dominant activity.</p>
   aes(date + 3600*12, pct, fill = top_category) +
   geom_col(width = 3600*24) +
   scale_fill_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = rev(event_type_labels)
   ) +
   scale_y_continuous(
@@ -653,13 +654,13 @@ work weeks where executive time was not the dominant activity.</p>
   ) +
   coord_flip() +
   labs(
-    x = NULL, 
-    y = &quot;Percent of Workday Between 8am and 5pm&quot;, 
+    x = NULL,
+    y = &quot;Percent of Workday Between 8am and 5pm&quot;,
     fill = NULL
   ) +
   guides(
-    fill = guide_legend(nrow = 1, 
-                        reverse = TRUE, 
+    fill = guide_legend(nrow = 1,
+                        reverse = TRUE,
                         label.position = &quot;bottom&quot;)
   ) +
   ggtitle(
@@ -688,11 +689,11 @@ days where executive time isn’t more than half of Trump’s workday are almost
   arrange(date, desc(duration)) %&gt;%
   filter(listed_title != &quot;Executive time&quot;) %&gt;%
   group_by(date) %&gt;%
-  slice(1) %&gt;% 
-  mutate(duration = round(duration, 2)) %&gt;% 
+  slice(1) %&gt;%
+  mutate(duration = round(duration, 2)) %&gt;%
   knitr::kable(col.names = c(
     &quot;Date&quot;, &quot;Duration&quot;, &quot;Longest Non-Executive-Time Activity&quot;
-  ), format = &quot;html&quot;) %&gt;% 
+  ), format = &quot;html&quot;) %&gt;%
   kableExtra::column_spec(1:2, width = &quot;6.5em&quot;) </code></pre>
 </div>
 <table>
@@ -807,16 +808,16 @@ My (completely speculative) guess is that this is in part due to travel being th
 <pre class="r"><code>exec_time_total %&gt;%
   # Drop &quot;Unkown&quot; time category, not that important
   filter(top_category != &quot;Unknown&quot;) %&gt;%
-  # Spread top_category... 
+  # Spread top_category...
   spread(top_category, pct) %&gt;%
   # ...and gather to leave Executive Time in own column
   gather(other_activity, pct, -date, -`Executive Time`) %&gt;%
   # Ignore points where both groups are 0% (not informative)
-  filter(pct + `Executive Time` &gt; 0) %&gt;% 
+  filter(pct + `Executive Time` &gt; 0) %&gt;%
   # Pipe into ggplot
-  ggplot() + 
-  aes(`Executive Time`, pct, color = other_activity) + 
-  geom_point() + 
+  ggplot() +
+  aes(`Executive Time`, pct, color = other_activity) +
+  geom_point() +
   facet_wrap(~ other_activity, nrow = 1) +
   scale_x_continuous(
     breaks = c(0, 0.5, 1),
@@ -829,7 +830,7 @@ My (completely speculative) guess is that this is in part due to travel being th
     limits = c(0, 1)
   ) +
   scale_color_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = rev(event_type_labels),
     guide  = FALSE
   ) +
@@ -859,8 +860,8 @@ And the answer is: primarily on the weekends, during executive time, or before o
 <div class="js-to_expand">
 <pre class="r"><code># Start and end dates of Axios-pubslished schedules
 # which I called `exec_time` for some reason and am sticking with
-exec_time_boundaries &lt;- 
-  exec_time %&gt;% 
+exec_time_boundaries &lt;-
+  exec_time %&gt;%
   summarize(min = min(time_start), max = max(time_end))
 
 exec_time %&gt;%
@@ -874,26 +875,26 @@ exec_time %&gt;%
     between(time_inc, exec_time_boundaries$min, exec_time_boundaries$max)
   ) %&gt;%
   mutate(
-    wday = wday(created_at, abbr = FALSE, week_start = 1), 
+    wday = wday(created_at, abbr = FALSE, week_start = 1),
     top_category = case_when(
       !is.na(top_category) ~ paste(top_category),
-      wday &gt; 5 ~ &quot;Weekend&quot;, 
+      wday &gt; 5 ~ &quot;Weekend&quot;,
       between(wday, 1, 5) &amp; hour(created_at) &lt;  6 ~ &quot;Early Morning (before 6am)&quot;,
       between(wday, 1, 5) &amp; hour(created_at) &lt;  8 ~ &quot;Morning (6-8 am)&quot;,
       between(wday, 1, 5) &amp; hour(created_at) &gt; 17 ~ &quot;Evening (after 5pm)&quot;,
       is.na(top_category) ~ &quot;Unknown&quot;,
       TRUE ~ paste(top_category))
   ) %&gt;%
-  count(top_category) %&gt;% 
-  arrange(n) %&gt;% 
-  mutate(top_category = fct_inorder(top_category)) %&gt;% 
-  ggplot() + 
-  aes(top_category, n) + 
-  geom_col(fill = &quot;#445566&quot;) + 
+  count(top_category) %&gt;%
+  arrange(n) %&gt;%
+  mutate(top_category = fct_inorder(top_category)) %&gt;%
+  ggplot() +
+  aes(top_category, n) +
+  geom_col(fill = &quot;#445566&quot;) +
   scale_y_continuous(expand = c(0, 0, 0, 5)) +
   coord_flip() +
   theme(panel.grid.major.y = element_blank()) +
-  labs(x = &quot;Activity or Time of Day&quot;, 
+  labs(x = &quot;Activity or Time of Day&quot;,
        y = paste(
          &quot;Total Tweets Sent Between&quot;,
          strftime(exec_time_boundaries$min, &quot;%F&quot;),
@@ -916,24 +917,24 @@ The following plot shows each tweet as a vertical line and considers only workda
 <div class="js-to_expand">
 <pre class="r"><code>event_type_colors_extra &lt;- c(event_type_colors, &quot;Non-Work Hours&quot; = &quot;#828486&quot;)
 
-djt_joined_work_non_work &lt;- 
-  djt_joined_all %&gt;% 
-  mutate_at(vars(top_category),  as.character) %&gt;% 
+djt_joined_work_non_work &lt;-
+  djt_joined_all %&gt;%
+  mutate_at(vars(top_category),  as.character) %&gt;%
   mutate(weekend = wday(created_at, abbr = FALSE, week_start = 1) &gt; 5) %&gt;%
   filter(
     !weekend,
     between(created_at, exec_time_boundaries$min, exec_time_boundaries$max)
-  ) %&gt;% 
+  ) %&gt;%
   mutate(top_category = if_else(
     between(in_hours(created_at), 8, 17) &amp; is.na(top_category),
     &quot;Unknown&quot;,
     top_category
-  )) %&gt;% 
-  replace_na(list(top_category = &quot;Non-Work Hours&quot;)) %&gt;% 
+  )) %&gt;%
+  replace_na(list(top_category = &quot;Non-Work Hours&quot;)) %&gt;%
   mutate(
     top_category = fct_infreq(top_category)
   )</code></pre>
-<pre class="r"><code>ggplot(djt_joined_work_non_work) + 
+<pre class="r"><code>ggplot(djt_joined_work_non_work) +
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0), alpha = 0.6, size = 0.5) +
   facet_wrap(~ top_category, ncol = 1, strip.position = &quot;left&quot;) +
@@ -945,11 +946,11 @@ djt_joined_work_non_work &lt;-
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
   scale_color_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   scale_fill_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   coord_cartesian(clip = &quot;off&quot;) +
@@ -958,15 +959,15 @@ djt_joined_work_non_work &lt;-
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    strip.text.y = element_text(angle = 180, 
-                                margin = margin(r = 5, l = 25), 
+    strip.text.y = element_text(angle = 180,
+                                margin = margin(r = 5, l = 25),
                                 hjust = 1),
     panel.spacing.y = unit(0, &quot;pt&quot;)
   ) +
   ggtitle(
     &quot;What&#39;s On His Schedule When He&#39;s Tweeting?&quot;,
     &quot;Each line represents a tweet, colored by the activity on his White House Schedule&quot;
-  ) + 
+  ) +
   labs(caption = credit_caption(rtweet = TRUE))</code></pre>
 </div>
 <a href="/blog/2019/2019-02-27_presidents-day_files/figure-html/djt-tweets-timeline-1.png" data-featherlight="image">
@@ -979,11 +980,11 @@ djt_joined_work_non_work &lt;-
 <p>Most of Trump’s tweeting happens betewen 7 and 9 am, but what’s striking is that it’s nearly impossible to tell the difference between early morning tweeting and the start of President Trump’s official workday at 8am.</p>
 <h5 id="code-plot-tweets-work-non-work-same-timeline" class="js-expandmore expand-for-code">R code…</h5>
 <div class="js-to_expand">
-<pre class="r"><code>djt_joined_work_non_work %&gt;% 
-  filter(top_category %in% c(&quot;Non-Work Hours&quot;, &quot;Executive Time&quot;)) %&gt;% 
+<pre class="r"><code>djt_joined_work_non_work %&gt;%
+  filter(top_category %in% c(&quot;Non-Work Hours&quot;, &quot;Executive Time&quot;)) %&gt;%
   mutate(week = floor_date(created_at, &quot;week&quot;),
-         week = strftime(week, &quot;%F&quot;)) %&gt;% 
-  ggplot() + 
+         week = strftime(week, &quot;%F&quot;)) %&gt;%
+  ggplot() +
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0)) +
   facet_wrap(~ week, ncol = 1, strip.position = &quot;left&quot;) +
@@ -995,11 +996,11 @@ djt_joined_work_non_work &lt;-
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
   scale_color_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   scale_fill_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   labs(x = NULL, y = NULL, color = NULL, caption = credit_caption(TRUE)) +
@@ -1036,23 +1037,23 @@ This makes sense: there is very little variation in the amount of the day spent 
   count() %&gt;%
   rename(tweets = n) %&gt;%
   left_join(exec_time_total, ., by = &quot;date&quot;) %&gt;%
-  replace_na(list(tweets = 0)) %&gt;% 
+  replace_na(list(tweets = 0)) %&gt;%
   filter(top_category %in% c(&quot;Executive Time&quot;, &quot;Unknown&quot;, &quot;Travel&quot;, &quot;Lunch&quot;)) %&gt;%
-  spread(top_category, pct, fill = 0) %&gt;% 
-  filter(!Unknown == 1) %&gt;% 
-  mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %&gt;% 
+  spread(top_category, pct, fill = 0) %&gt;%
+  filter(!Unknown == 1) %&gt;%
+  mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %&gt;%
   ggplot() +
   aes(pct, tweets) +
   geom_smooth(
-    method = &quot;lm&quot;, 
-    color = event_type_colors[&quot;Executive Time&quot;], 
+    method = &quot;lm&quot;,
+    color = event_type_colors[&quot;Executive Time&quot;],
     fill = event_type_colors[&quot;Unknown&quot;]
   ) +
-  geom_point(color = event_type_colors[&quot;Executive Time&quot;]) + 
+  geom_point(color = event_type_colors[&quot;Executive Time&quot;]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
   labs(
-    x = &quot;Percent of Workday Dedicated to Downtime\n(Executive Time, Travel, Unknown)&quot;, 
-    y = &quot;Number of Tweets&quot;, 
+    x = &quot;Percent of Workday Dedicated to Downtime\n(Executive Time, Travel, Unknown)&quot;,
+    y = &quot;Number of Tweets&quot;,
     title = &quot;Does Trump Tweet More When He Has More Downtime?&quot;,
     caption = credit_caption(rtweet = TRUE))</code></pre>
 </div>
@@ -1072,19 +1073,19 @@ This makes sense: there is very little variation in the amount of the day spent 
   rename(tweets = n) %&gt;%
   left_join(exec_time_total, ., by = &quot;date&quot;) %&gt;%
   filter(top_category %in% c(&quot;Meeting&quot;, &quot;Event&quot;, &quot;Lunch&quot;)) %&gt;%
-  group_by(date) %&gt;% 
-  summarize(pct = sum(pct), tweets = max(tweets)) %&gt;% 
-  filter(pct &gt; 0) %&gt;% 
+  group_by(date) %&gt;%
+  summarize(pct = sum(pct), tweets = max(tweets)) %&gt;%
+  filter(pct &gt; 0) %&gt;%
   ggplot() +
   aes(pct, tweets) +
   geom_smooth(
-    method = &quot;lm&quot;, 
-    color = event_type_colors[&quot;Executive Time&quot;], 
+    method = &quot;lm&quot;,
+    color = event_type_colors[&quot;Executive Time&quot;],
     fill = event_type_colors[&quot;Unknown&quot;]
   ) +
   geom_point(color = event_type_colors[&quot;Executive Time&quot;]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
-  labs(x = &quot;Percent of Workday Dedicated to Meetings, Lunches, or Events&quot;, 
+  labs(x = &quot;Percent of Workday Dedicated to Meetings, Lunches, or Events&quot;,
        y = &quot;Number of Tweets&quot;,
        title = &quot;Does Trump Tweet Less When He Does More \&quot;Work\&quot;?&quot;,
        caption = credit_caption(rtweet = TRUE))</code></pre>
@@ -1103,11 +1104,11 @@ Are his event-related tweets more positive?</p>
 This function returns an integer score from 0 to 10 for a range of positive and negative emotions.</p>
 <h5 id="code-tweet-emotion-by-event" class="js-expandmore expand-for-code">R code…</h5>
 <div class="js-to_expand">
-<pre class="r"><code>djt_sentiment &lt;- 
-  djt_joined %&gt;% 
-  select(top_category, text) %&gt;% 
-  mutate(sentiment = map(text, syuzhet::get_nrc_sentiment)) %&gt;% 
-  unnest() %&gt;% 
+<pre class="r"><code>djt_sentiment &lt;-
+  djt_joined %&gt;%
+  select(top_category, text) %&gt;%
+  mutate(sentiment = map(text, syuzhet::get_nrc_sentiment)) %&gt;%
+  unnest() %&gt;%
   gather(emotion, value, -top_category, -text)
 
 djt_sentiment</code></pre>
@@ -1125,11 +1126,11 @@ djt_sentiment</code></pre>
 ##  9 Travel         As soon as Democrats sent their best Elect… anger       2
 ## 10 Travel         Jeff Flake(y) doesn’t want to protect the … anger       2
 ## # … with 2,940 more rows</code></pre>
-<pre class="r"><code>djt_sentiment_mean &lt;- 
-  djt_sentiment %&gt;% 
-  group_by(top_category, emotion) %&gt;% 
-  summarize(value = mean(value)) %&gt;% 
-  mutate(emotion = fct_reorder(emotion, value)) %&gt;% 
+<pre class="r"><code>djt_sentiment_mean &lt;-
+  djt_sentiment %&gt;%
+  group_by(top_category, emotion) %&gt;%
+  summarize(value = mean(value)) %&gt;%
+  mutate(emotion = fct_reorder(emotion, value)) %&gt;%
   filter(top_category != &quot;Unknown&quot;)
 
 djt_sentiment_mean</code></pre>
@@ -1142,14 +1143,14 @@ djt_sentiment_mean</code></pre>
 ##  3 Executive Time disgust      0.525
 ##  4 Executive Time fear         0.772
 ##  5 Executive Time joy          0.654
-##  6 Executive Time negative     1.36 
-##  7 Executive Time positive     2.01 
+##  6 Executive Time negative     1.36
+##  7 Executive Time positive     2.01
 ##  8 Executive Time sadness      0.562
 ##  9 Executive Time surprise     0.537
-## 10 Executive Time trust        1.52 
+## 10 Executive Time trust        1.52
 ## # … with 40 more rows</code></pre>
 <pre class="r"><code>emotions &lt;- c(
-  &quot;positive&quot;, &quot;joy&quot;, &quot;trust&quot;, &quot;surprise&quot;, &quot;anticipation&quot;, 
+  &quot;positive&quot;, &quot;joy&quot;, &quot;trust&quot;, &quot;surprise&quot;, &quot;anticipation&quot;,
   &quot;sadness&quot;, &quot;anger&quot;, &quot;fear&quot;, &quot;disgust&quot;, &quot;negative&quot;
 )
 
@@ -1160,9 +1161,9 @@ djt_sentiment %&gt;%
   # ggridges::geom_density_ridges() +
   geom_boxplot(alpha = 0.7, color = &quot;grey20&quot;, outlier.shape = NA) +
   scale_fill_manual(values = event_type_colors) +
-  guides(fill = FALSE, color = FALSE) + 
+  guides(fill = FALSE, color = FALSE) +
   coord_flip() +
-  facet_wrap(~top_category, scales = &quot;free_y&quot;) + 
+  facet_wrap(~top_category, scales = &quot;free_y&quot;) +
   labs(y = &quot;Sentiment Score&quot;, x = NULL,
        title = &quot;Emotions Expressed in Trump Tweets&quot;,
        caption = credit_caption(rtweet = TRUE))</code></pre>

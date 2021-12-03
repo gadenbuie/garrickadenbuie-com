@@ -2,7 +2,8 @@
 title: The Redacted, Text-Extracted Mueller Report
 author: Garrick Aden-Buie
 description: Visualizing extracted text from the Redacted Mueller Report using ggpage.
-twitterImage: "/blog/2019/2019-04-18-the-redacted-text-extracted-mueller-report_files/figure-html/mueller-ggpage-1.png"
+images:
+  - "/blog/2019/2019-04-18-the-redacted-text-extracted-mueller-report_files/figure-html/mueller-ggpage-1.png"
 date: '2019-04-18'
 slug: redacted-text-extracted-mueller-report
 categories:
@@ -54,11 +55,11 @@ Only about [12% of the report is redacted][wsj-12pct-redacted], but 100% of it i
 There are many people interested in [taking a deeper look at the report](https://twitter.com/AOC/status/1118989661555372033), whether within the U.S. government, as citizens, or as data scientists.
 
 Rather than disect the report and its political implications, I'm going to use open-source tools to [extract the text from the report](#pdftools).
-I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, [ggpage]{.pkg} by [Emil Hvitfeldt][ggpage] to [visualize the report's pages](#ggpage-plot) and highlight the most-often referenced people in the report.
+I'm also going to take advantage of the opportunity to use a new R package I've been wanting to try, <span class="pkg">ggpage</span> by [Emil Hvitfeldt][ggpage] to [visualize the report's pages](#ggpage-plot) and highlight the most-often referenced people in the report.
 
 ## Extracting the report text with pdftools {#pdftools}
 
-I used the [[pdftools]]{.pkg} package by [ROpenSci] to extract the text from the document, using the report posted by [&commat;dataeditor][dataeditor] of the Washington Post, [available here][pdf-source].
+I used the <span class="pkg">[pdftools]</span> package by [ROpenSci] to extract the text from the document, using the report posted by [&commat;dataeditor][dataeditor] of the Washington Post, [available here][pdf-source].
 Extracting the text was as simple as downloading the PDF and running `pdftools::pdf_text()`.
 I added page and line numbers to the extracted text and stored the result as a CSV that you can download from the [GitHub repository][github-mueller-report].
 
@@ -72,11 +73,11 @@ mueller_report_txt <- pdf_text("Redacted-Mueller-Report.pdf")
 mueller_report <- tibble(
   page = 1:length(mueller_report_txt),
   text = mueller_report_txt
-) %>% 
-  separate_rows(text, sep = "\n") %>% 
-  group_by(page) %>% 
-  mutate(line = row_number()) %>% 
-  ungroup() %>% 
+) %>%
+  separate_rows(text, sep = "\n") %>%
+  group_by(page) %>%
+  mutate(line = row_number()) %>%
+  ungroup() %>%
   select(page, line, text)
 
 write_csv(mueller_report, "mueller_report.csv")
@@ -90,7 +91,7 @@ The LA Times published an widely-shared piece visualizing [each of the pages of 
 
 `r lightbox_img("wsj-redacted-mueller-report.jpg", caption = "Source: <a href='https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage'>LA Times</a>")`
 
-Recently, Emil Hvitfeldt released [[ggpage]]{.pkg}, a package that lets you create a page-layout visualization using [[ggplot2]]{.pkg}.
+Recently, Emil Hvitfeldt released <span class="pkg">[ggpage]</span>, a package that lets you create a page-layout visualization using <span class="pkg">[ggplot2]</span>.
 While the package uses the text content of the document only --- so the visualized text layout doesn't completely match the layout of the original document --- it does allow you to highlight text elements, like mentions of any of the recurring cast of characters in [Stupid Watergate][stupid-watergate].
 
 The first step is to load the text version of the Mueller report.
@@ -113,23 +114,23 @@ Before doing that, though, I pad each page to make sure they have the same numbe
 The `ggpage_build()` function tokenizes the text into individual `word`s, so I then use `str_detect()` to find mentions of the key players.
 
 ```{r ggpage_build}
-mueller_pages <- 
-  mueller_report %>% 
+mueller_pages <-
+  mueller_report %>%
   # pad pages with fewer lines than expected
   complete(
-    page, 
+    page,
     line = 1:max(mueller_report$line),
     fill = list(text = "")
-  ) %>% 
+  ) %>%
   # Pre-process for {ggpage}
   ggpage_build(
-    ncol = 30, 
-    bycol = FALSE, 
-    page.col = "page", 
-    wtl = FALSE, 
+    ncol = 30,
+    bycol = FALSE,
+    page.col = "page",
+    wtl = FALSE,
     x_space_pages = 10,
     y_space_pages = 100
-  ) %>% 
+  ) %>%
   mutate(
     color = case_when(
       str_detect(word, "trump|president") ~ "Trump",
@@ -151,7 +152,7 @@ mueller_pages <-
 mueller_pages
 ```
 
-The following bit of code sets up the color palette, which is derived from the Libre Office Calc theme provided by [[ggthemes]]{.pkg}.
+The following bit of code sets up the color palette, which is derived from the Libre Office Calc theme provided by <span class="pkg">[ggthemes]</span>.
 
 ```{r plot-colors}
 # manually assigned colors from ggthemes::pal_calc()
@@ -168,13 +169,13 @@ colors["McGahn"]   <- "#FFD040"
 colors["normal"]   <- "#d0d0d0"
 ```
 
-Finally, `ggpage_plot()` from [ggpage]{.pkg} creates the [ggplot2]{.pkg} page layout, and adding the fill aesthetic using the manual color scale defined above adds color highlights for mentions of Trump, Russia, and others.
+Finally, `ggpage_plot()` from <span class="pkg">ggpage</span> creates the <span class="pkg">ggplot2</span> page layout, and adding the fill aesthetic using the manual color scale defined above adds color highlights for mentions of Trump, Russia, and others.
 
-```{r mueller-ggpage, fig.show = "hide", fig.width=18, fig.height=11, dependson="ggpage_build"}
+```{r mueller-ggpage, fig.show = "hide", fig.width=18, fig.height=11, dependson="ggpage_build", warning=FALSE}
 ggpage_plot(mueller_pages) +
   aes(fill = color) +
   scale_fill_manual(
-    values = colors, 
+    values = colors,
     breaks = setdiff(names(colors), "normal")
   ) +
   labs(fill = NULL, caption = "@grrrck") +

@@ -16,8 +16,9 @@ tags:
 Keywords: ["rstats", "rtweet", "ggplot2", "tidyverse", "data cleaning", "data visualization", "politics", "trump", "tweets"]
 Description: |
   As in: What does Presdient Trump do with his day? (Spoiler: A whole lot of "executive time".)
-twitterImage: "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
-rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
+images:
+  - "/blog/2019/2019-02-27_presidents-day_files/figure-html/plot-time-category-total-pct-1.png"
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-02-27_presidents-day.Rmd
 head_custom: |
   <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
 output:
@@ -78,21 +79,21 @@ executive_categories <- c(
 
 ```{r function-filter_workday}
 filter_workday <- function(
-  df,  
-  start = hms::hms(0, 0, 8), 
+  df,
+  start = hms::hms(0, 0, 8),
   end = hms::hms(0, 0, 17),
   start_var = time_start,
   end_var = time_end
 ) {
   start_var <- rlang::enquo(start_var)
   end_var <- rlang::enquo(end_var)
-  
-  df %>% 
+
+  df %>%
     filter(
       date(!!start_var) == date(!!end_var),
-      hms::as.hms(!!start_var) >= start, 
+      hms::as.hms(!!start_var) >= start,
       hms::as.hms(!!end_var) <= end
-    ) 
+    )
 }
 ```
 
@@ -113,32 +114,32 @@ exec_time <-
     time_end   = paste(date, time_end),
     time_start = ymd_hm(time_start, tz = "America/New_York"),
     time_end   = ymd_hm(time_end, tz = "America/New_York"),
-    time_end   = if_else(time_start > time_end, 
+    time_end   = if_else(time_start > time_end,
                          time_end + hours(24), time_end),
     # Recode the activity category with nicer labels
-    top_category = factor(top_category, 
+    top_category = factor(top_category,
                           levels = names(executive_categories),
                           labels = executive_categories)
-  ) %>% 
+  ) %>%
   mutate(
     # Create label pieces for plotly hover text
     label_title    = glue("<b>{top_category}</b>"),
     has_uniq_title = tolower(top_category) != tolower(listed_title),
     has_subtitle   = has_uniq_title & !is.na(listed_title),
-    label_subtitle = if_else(has_subtitle, 
+    label_subtitle = if_else(has_subtitle,
                              glue("<br><em>{listed_title}</em>"), ""),
     has_location   = !is.na(listed_location),
-    label_location = if_else(has_location, 
+    label_location = if_else(has_location,
                              glue("<br><em>{listed_location}</em>"), ""),
     label_time     = glue(
-      "<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ", 
+      "<br><br>{strftime(time_start, '%A, %B %e %H:%M')} ",
       "to {strftime(time_end, '%H:%M')}"),
     has_notes      = !is.na(notes),
     label_notes    = if_else(has_notes, paste0("<br><br>", notes), ""),
     # Compose final tooltip text
-    label = paste0(label_title, label_subtitle, label_location, 
+    label = paste0(label_title, label_subtitle, label_location,
                    label_time, label_notes)
-  ) %>% 
+  ) %>%
   mutate(
     # truncate any activities that span 8am or 5pm
     time_start = if_else(
@@ -154,7 +155,7 @@ exec_time <-
     # create 5 minute increments "inside" each activity
     time_inc   = map2(time_start, time_end, seq, by = "5 mins")
   ) %>%
-  select(event_id, time_start, time_end, time_inc, 
+  select(event_id, time_start, time_end, time_inc,
          listed_title, top_category, label)
 ```
 
@@ -175,35 +176,35 @@ if (FALSE) {
 ```
 
 ```{r load-djt-tweets}
-djt <- readRDS(here::here("_data", "djt-tweets-2018-09--2019-02.rds")) %>% 
+djt <- readRDS(here::here("_data", "djt-tweets-2018-09--2019-02.rds")) %>%
   distinct(status_id, .keep_all = TRUE)
 ```
 
 ```{r djt-tweets}
-djt_simple <- 
-  djt %>% 
-  filter(!is_retweet) %>% 
+djt_simple <-
+  djt %>%
+  filter(!is_retweet) %>%
   mutate(
     created_at = with_tz(created_at, tzone = "America/New_York"),
     time_inc = floor_date(created_at, "5 min")
-  ) %>% 
+  ) %>%
   select(created_at, time_inc, text, status_id)
 
-djt_joined_all <- 
-  exec_time %>% 
-  unnest() %>% 
-  filter(time_end != time_inc) %>% 
-  full_join(djt_simple, by = "time_inc") %>% 
+djt_joined_all <-
+  exec_time %>%
+  unnest() %>%
+  filter(time_end != time_inc) %>%
+  full_join(djt_simple, by = "time_inc") %>%
   select(
-    event_id, starts_with("time_"), created_at, 
+    event_id, starts_with("time_"), created_at,
     listed_title, top_category, text
-  ) %>% 
+  ) %>%
   filter(
     !is.na(text)
-  ) %>% 
-  distinct(text, .keep_all = TRUE) %>% 
+  ) %>%
+  distinct(text, .keep_all = TRUE) %>%
   mutate(
-    hour = in_hours(created_at), 
+    hour = in_hours(created_at),
     date = floor_date(created_at, "day"),
     top_category = factor(top_category, executive_categories),
     label_sched = if_else(
@@ -215,15 +216,15 @@ djt_joined_all <-
         "to {strftime(time_end, '%I:%M %p')}")
     ),
     label = glue("{str_wrap(text, 50)}",
-                 "<br><i>@realDonaldTrump ", 
+                 "<br><i>@realDonaldTrump ",
                  "{strftime(created_at, '%a, %b %e, %I:%M %p')}</i>",
                  "{label_sched}")
   ) %>%
-  select(-time_start, -time_end, -label_sched) %>% 
+  select(-time_start, -time_end, -label_sched) %>%
   arrange(created_at)
 
 djt_joined <-
-  djt_joined_all %>% 
+  djt_joined_all %>%
   filter(!is.na(top_category))
 ```
 
@@ -365,7 +366,7 @@ You can also toggle activity categories --- try removing everything except **Mee
 g <-
   exec_time %>%
   mutate(date = floor_date(time_start, "day")) %>%
-  filter_workday() %>% 
+  filter_workday() %>%
   mutate_at(vars(time_start, time_end), in_hours) %>%
   ggplot() +
   geom_rect(
@@ -389,7 +390,7 @@ g <-
     expand = expand_scale(c(0.025, 0), 0)
   ) +
   scale_fill_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = event_type_labels
   ) +
   labs(x = "Hour of the Day", y = NULL, fill = NULL) +
@@ -404,7 +405,7 @@ g <-
     plot.margin = margin(3, 0, 0, 0, unit = "line")
   )
 
-plotly::ggplotly(g + aes(text = label), tooltip = "label") %>% 
+plotly::ggplotly(g + aes(text = label), tooltip = "label") %>%
   plotly::layout(xaxis = list(side = "top", title = ""))
 ```
 
@@ -438,10 +439,10 @@ library(sysfonts)
 ```{r view-load-axios, eval=FALSE, echo=TRUE}
 <<function-in_hours>>
 
-<<function-executive_categories>>  
-  
+<<function-executive_categories>>
+
 <<load-exec-time>>
-  
+
 glimpse(exec_time)
 ```
 
@@ -462,7 +463,7 @@ The first helper adds `"am"` or `"pm"` to an integer hour for easy-to-read label
 
 ```{r view-am-pm, echo = TRUE}
 <<functions-am-pm>>
-  
+
 am_pm(seq(8, 17, 3))
 ```
 
@@ -541,57 +542,57 @@ And that's it!
 ```{r djt-workday}
 djt_axios_sched <-
   djt_joined_all %>%
-  filter(date >= "2018-11-07", date <= "2019-02-02") %>% 
+  filter(date >= "2018-11-07", date <= "2019-02-02") %>%
   mutate(
     weekend = wday(created_at, abbr = FALSE, week_start = 1) >= 6,
     weekend = if_else(weekend, "weekend", "weekday")
-  ) %>% 
+  ) %>%
   select(-text)
 
-djt_workday <- 
-  djt_axios_sched %>% 
+djt_workday <-
+  djt_axios_sched %>%
   filter_workday(
     start_var = created_at, end_var = created_at
   )
 ```
 
 ```{r djt-workday-for-text}
-djt_per_workday <- 
-  djt_axios_sched %>% 
+djt_per_workday <-
+  djt_axios_sched %>%
   filter_workday(
     start_var = created_at, end_var = created_at
-  ) %>% 
-  group_by(weekend) %>% 
-  count(date) %>% 
+  ) %>%
+  group_by(weekend) %>%
+  count(date) %>%
   summarize(
-    tweets = sum(n), 
-    n = n(), 
-    mean = tweets/n) %>% 
+    tweets = sum(n),
+    n = n(),
+    mean = tweets/n) %>%
   split(.$weekend)
 
-djt_per_day <- 
-  djt_axios_sched %>% 
-  group_by(weekend) %>% 
-  count(date) %>% 
+djt_per_day <-
+  djt_axios_sched %>%
+  group_by(weekend) %>%
+  count(date) %>%
   summarize(
-    tweets = sum(n), 
-    n = n(), 
-    mean = tweets/n) %>% 
+    tweets = sum(n),
+    n = n(),
+    mean = tweets/n) %>%
   split(.$weekend)
 ```
 
-Donald Trump tweets about 
+Donald Trump tweets about
 `r round(djt_per_workday$weekday$mean, 1)`
 tweets per working day within working hours.
-Why does this number feel so low? 
-Then again, this represents 
-`r djt_per_workday$weekday$tweets` 
-tweets published over 
-`r djt_per_workday$weekday$n` 
-workdays and 
-`r djt_per_workday$weekend$tweets` 
-tweets over the 
-`r djt_per_workday$weekend$n` 
+Why does this number feel so low?
+Then again, this represents
+`r djt_per_workday$weekday$tweets`
+tweets published over
+`r djt_per_workday$weekday$n`
+workdays and
+`r djt_per_workday$weekend$tweets`
+tweets over the
+`r djt_per_workday$weekend$n`
 weekend days in the same time period.
 Outside of work hours, the average rises to
 `r round(djt_per_day$weekday$mean, 1)`
@@ -611,8 +612,8 @@ g_subdued <- g
 g_subdued$layers[[1]]$aes_params$alpha <- 0.6
 
 # Add tweets to the plot
-g_subdued <- 
-  g_subdued + 
+g_subdued <-
+  g_subdued +
   ggtitle("President Trump's Daily Tweeting") +
   geom_point(
     data = djt_workday,
@@ -621,8 +622,8 @@ g_subdued <-
     size = 0.8
   )
 
-gpltly <- 
-  plotly::ggplotly(g_subdued, tooltip = "label") %>% 
+gpltly <-
+  plotly::ggplotly(g_subdued, tooltip = "label") %>%
   plotly::layout(xaxis = list(side = "top", title = ""))
 
 # remove hover labels for time category layers (6 categories)
@@ -675,12 +676,12 @@ This gives me the category and scheduled activity of each tweet.
 Finally, I still need to do a little bit of processing to get these tweets to fit into the previous plot.
 
 ```r
-djt_workday <- 
+djt_workday <-
   djt_joined_all %>%
   filter_workday(
     start_var = created_at, end_var = created_at
-  ) %>% 
-  filter(date >= "2018-11-07", date <= "2019-02-02") %>% 
+  ) %>%
+  filter(date >= "2018-11-07", date <= "2019-02-02") %>%
   select(-text)
 ```
 
@@ -688,8 +689,8 @@ At this point, there are a few versions of the tweets data set that I can use in
 The `djt_simple` is a basic, bare-bones tibble of tweets.
 
 ```{r view-djt-simple}
-djt_simple %>% 
-  arrange(created_at) %>% 
+djt_simple %>%
+  arrange(created_at) %>%
   filter(created_at >= "2018-11-07")
 ```
 
@@ -702,15 +703,15 @@ header_rows <- c(
   sort(top_10),
   setdiff(1:nrow(djt_joined_all), top_10)
 )
-djt_joined_all %>% 
-  slice(header_rows) %>% 
+djt_joined_all %>%
+  slice(header_rows) %>%
   select(time_inc, top_category, text, everything())
 ```
 
 And `djt_workday` contains the tweets within the period covered by the Axios schedules and during workday hours.
 
 ```{r view-djt-workday}
-djt_workday %>% 
+djt_workday %>%
   select(time_inc, top_category, label, everything())
 ```
 
@@ -764,8 +765,8 @@ exec_time_total <-
   nest(-date) %>%
   mutate(
     total = map_dbl(data, ~ {
-      filter(., top_category != "Unknown") %>% 
-        pull(pct) %>% 
+      filter(., top_category != "Unknown") %>%
+        pull(pct) %>%
         sum()
     }),
     unaccounted = 1 - total,
@@ -777,7 +778,7 @@ exec_time_total <-
   gather("top_category", "pct", -date) %>%
   mutate(top_category = factor(top_category, rev(names(event_type_colors))))
 
-exec_time_total %>% 
+exec_time_total %>%
   arrange(date, desc(pct))
 ```
 
@@ -785,13 +786,13 @@ The above tibble contains a summary of time use by day, but the first plot requi
 The following code chunk caculates total hours spent in each group and creates a text label that is used to label the regions of the stacked bar in the plot.
 
 ```{r exec-time-total-hours, echo=TRUE}
-exec_time_hours <- 
-  exec_time_total %>% 
+exec_time_hours <-
+  exec_time_total %>%
   # Only the days covered by the schedule
-  filter(!(pct == 1 & top_category == "Unknown")) %>% 
-  group_by(top_category) %>% 
-  summarize(hours = sum(pct * 60 * 90)) %>% 
-  arrange(desc(top_category)) %>% 
+  filter(!(pct == 1 & top_category == "Unknown")) %>%
+  group_by(top_category) %>%
+  summarize(hours = sum(pct * 60 * 90)) %>%
+  arrange(desc(top_category)) %>%
   mutate(
     pct = hours / sum(hours),
     pct_upto = cumsum(pct),
@@ -808,7 +809,7 @@ The bar labels are added as a text annotation, and I do a little adjustment to m
 
 ```{r plot-time-category-total-pct, fig.height=4, echo = TRUE}
 ggplot(exec_time_hours) +
-  aes(x = 1, 
+  aes(x = 1,
       y = pct,
       fill = top_category) +
   geom_col() +
@@ -832,8 +833,8 @@ ggplot(exec_time_hours) +
   ) +
   coord_flip() +
   labs(
-    x = NULL, 
-    y = "Percent of Workday Between 8am and 5pm", 
+    x = NULL,
+    y = "Percent of Workday Between 8am and 5pm",
     fill = NULL
   ) +
   ggtitle(
@@ -853,34 +854,34 @@ ggplot(exec_time_hours) +
 
 ```{r exec-time-summary}
 untracked_days <-
-  exec_time_total %>% 
+  exec_time_total %>%
   filter(
     top_category == "Unknown",
     pct ==1
-  ) %>% 
+  ) %>%
   pull(date)
 
-exec_time_summary <- 
-  exec_time_total %>% 
+exec_time_summary <-
+  exec_time_total %>%
   complete(
     date = seq(min(.$date), max(.$date), by = "DSTday"),
     top_category
-  ) %>% 
+  ) %>%
   filter(
     top_category == "Executive Time",
     !date %in% untracked_days
   ) %>%
-  replace_na(list(pct = 0)) %>% 
+  replace_na(list(pct = 0)) %>%
   mutate(weekday = wday(date, abbr = FALSE, week_start = 1) < 6)
 
 exec_time_n_weekdays <-
-  exec_time_summary %>% 
-  filter(weekday) %>% 
+  exec_time_summary %>%
+  filter(weekday) %>%
   nrow()
 
-exec_time_gt_half <- 
-  exec_time_summary %>% 
-  filter(weekday, pct >= 0.5) %>% 
+exec_time_gt_half <-
+  exec_time_summary %>%
+  filter(weekday, pct >= 0.5) %>%
   nrow()
 ```
 
@@ -888,7 +889,7 @@ For
 **`r exec_time_gt_half`**
 of the
 **`r exec_time_n_weekdays`**
-workdays 
+workdays
 (that's **`r scales::percent(exec_time_gt_half/exec_time_n_weekdays)`**)
 covered by the Axios schedules and for which there is schedule information,
 Trump spent 50% _or more_ of his day in executive time.
@@ -911,7 +912,7 @@ ggplot(exec_time_total) +
   aes(date + 3600*12, pct, fill = top_category) +
   geom_col(width = 3600*24) +
   scale_fill_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = rev(event_type_labels)
   ) +
   scale_y_continuous(
@@ -928,13 +929,13 @@ ggplot(exec_time_total) +
   ) +
   coord_flip() +
   labs(
-    x = NULL, 
-    y = "Percent of Workday Between 8am and 5pm", 
+    x = NULL,
+    y = "Percent of Workday Between 8am and 5pm",
     fill = NULL
   ) +
   guides(
-    fill = guide_legend(nrow = 1, 
-                        reverse = TRUE, 
+    fill = guide_legend(nrow = 1,
+                        reverse = TRUE,
                         label.position = "bottom")
   ) +
   ggtitle(
@@ -965,12 +966,12 @@ exec_time_summary %>%
   arrange(date, desc(duration)) %>%
   filter(listed_title != "Executive time") %>%
   group_by(date) %>%
-  slice(1) %>% 
-  mutate(duration = round(duration, 2)) %>% 
+  slice(1) %>%
+  mutate(duration = round(duration, 2)) %>%
   knitr::kable(col.names = c(
     "Date", "Duration", "Longest Non-Executive-Time Activity"
-  ), format = "html") %>% 
-  kableExtra::column_spec(1:2, width = "6.5em") 
+  ), format = "html") %>%
+  kableExtra::column_spec(1:2, width = "6.5em")
 ```
 
 </div>
@@ -990,16 +991,16 @@ My (completely speculative) guess is that this is in part due to travel being th
 exec_time_total %>%
   # Drop "Unkown" time category, not that important
   filter(top_category != "Unknown") %>%
-  # Spread top_category... 
+  # Spread top_category...
   spread(top_category, pct) %>%
   # ...and gather to leave Executive Time in own column
   gather(other_activity, pct, -date, -`Executive Time`) %>%
   # Ignore points where both groups are 0% (not informative)
-  filter(pct + `Executive Time` > 0) %>% 
+  filter(pct + `Executive Time` > 0) %>%
   # Pipe into ggplot
-  ggplot() + 
-  aes(`Executive Time`, pct, color = other_activity) + 
-  geom_point() + 
+  ggplot() +
+  aes(`Executive Time`, pct, color = other_activity) +
+  geom_point() +
   facet_wrap(~ other_activity, nrow = 1) +
   scale_x_continuous(
     breaks = c(0, 0.5, 1),
@@ -1012,7 +1013,7 @@ exec_time_total %>%
     limits = c(0, 1)
   ) +
   scale_color_manual(
-    values = event_type_colors, 
+    values = event_type_colors,
     labels = rev(event_type_labels),
     guide  = FALSE
   ) +
@@ -1045,8 +1046,8 @@ And the answer is: primarily on the weekends, during executive time, or before o
 ```{r plot-tweet-counts-by-activity, fig.height = 5, echo=TRUE}
 # Start and end dates of Axios-pubslished schedules
 # which I called `exec_time` for some reason and am sticking with
-exec_time_boundaries <- 
-  exec_time %>% 
+exec_time_boundaries <-
+  exec_time %>%
   summarize(min = min(time_start), max = max(time_end))
 
 exec_time %>%
@@ -1060,26 +1061,26 @@ exec_time %>%
     between(time_inc, exec_time_boundaries$min, exec_time_boundaries$max)
   ) %>%
   mutate(
-    wday = wday(created_at, abbr = FALSE, week_start = 1), 
+    wday = wday(created_at, abbr = FALSE, week_start = 1),
     top_category = case_when(
       !is.na(top_category) ~ paste(top_category),
-      wday > 5 ~ "Weekend", 
+      wday > 5 ~ "Weekend",
       between(wday, 1, 5) & hour(created_at) <  6 ~ "Early Morning (before 6am)",
       between(wday, 1, 5) & hour(created_at) <  8 ~ "Morning (6-8 am)",
       between(wday, 1, 5) & hour(created_at) > 17 ~ "Evening (after 5pm)",
       is.na(top_category) ~ "Unknown",
       TRUE ~ paste(top_category))
   ) %>%
-  count(top_category) %>% 
-  arrange(n) %>% 
-  mutate(top_category = fct_inorder(top_category)) %>% 
-  ggplot() + 
-  aes(top_category, n) + 
-  geom_col(fill = "#445566") + 
+  count(top_category) %>%
+  arrange(n) %>%
+  mutate(top_category = fct_inorder(top_category)) %>%
+  ggplot() +
+  aes(top_category, n) +
+  geom_col(fill = "#445566") +
   scale_y_continuous(expand = c(0, 0, 0, 5)) +
   coord_flip() +
   theme(panel.grid.major.y = element_blank()) +
-  labs(x = "Activity or Time of Day", 
+  labs(x = "Activity or Time of Day",
        y = paste(
          "Total Tweets Sent Between",
          strftime(exec_time_boundaries$min, "%F"),
@@ -1104,27 +1105,27 @@ The following plot shows each tweet as a vertical line and considers only workda
 ```{r djt-tweets-with-non-work, echo=TRUE}
 event_type_colors_extra <- c(event_type_colors, "Non-Work Hours" = "#828486")
 
-djt_joined_work_non_work <- 
-  djt_joined_all %>% 
-  mutate_at(vars(top_category),  as.character) %>% 
+djt_joined_work_non_work <-
+  djt_joined_all %>%
+  mutate_at(vars(top_category),  as.character) %>%
   mutate(weekend = wday(created_at, abbr = FALSE, week_start = 1) > 5) %>%
   filter(
     !weekend,
     between(created_at, exec_time_boundaries$min, exec_time_boundaries$max)
-  ) %>% 
+  ) %>%
   mutate(top_category = if_else(
     between(in_hours(created_at), 8, 17) & is.na(top_category),
     "Unknown",
     top_category
-  )) %>% 
-  replace_na(list(top_category = "Non-Work Hours")) %>% 
+  )) %>%
+  replace_na(list(top_category = "Non-Work Hours")) %>%
   mutate(
     top_category = fct_infreq(top_category)
   )
 ```
 
 ```{r djt-tweets-timeline, fig.height=6, echo=TRUE}
-ggplot(djt_joined_work_non_work) + 
+ggplot(djt_joined_work_non_work) +
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0), alpha = 0.6, size = 0.5) +
   facet_wrap(~ top_category, ncol = 1, strip.position = "left") +
@@ -1136,11 +1137,11 @@ ggplot(djt_joined_work_non_work) +
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
   scale_color_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   scale_fill_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   coord_cartesian(clip = "off") +
@@ -1149,15 +1150,15 @@ ggplot(djt_joined_work_non_work) +
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    strip.text.y = element_text(angle = 180, 
-                                margin = margin(r = 5, l = 25), 
+    strip.text.y = element_text(angle = 180,
+                                margin = margin(r = 5, l = 25),
                                 hjust = 1),
     panel.spacing.y = unit(0, "pt")
   ) +
   ggtitle(
     "What's On His Schedule When He's Tweeting?",
     "Each line represents a tweet, colored by the activity on his White House Schedule"
-  ) + 
+  ) +
   labs(caption = credit_caption(rtweet = TRUE))
 ```
 
@@ -1172,11 +1173,11 @@ Most of Trump's tweeting happens betewen 7 and 9 am, but what's striking is that
 <div class="js-to_expand">
 
 ```{r plot-tweets-work-non-work-same-timeline, fig.height=7, echo=TRUE}
-djt_joined_work_non_work %>% 
-  filter(top_category %in% c("Non-Work Hours", "Executive Time")) %>% 
+djt_joined_work_non_work %>%
+  filter(top_category %in% c("Non-Work Hours", "Executive Time")) %>%
   mutate(week = floor_date(created_at, "week"),
-         week = strftime(week, "%F")) %>% 
-  ggplot() + 
+         week = strftime(week, "%F")) %>%
+  ggplot() +
   aes(x = hour, y = 1, color = top_category) +
   geom_segment(aes(xend = hour, yend = 0)) +
   facet_wrap(~ week, ncol = 1, strip.position = "left") +
@@ -1188,11 +1189,11 @@ djt_joined_work_non_work %>%
     expand   = expand_scale(c(0.025, 0), 0)
   ) +
   scale_color_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   scale_fill_manual(
-    values = event_type_colors_extra, 
+    values = event_type_colors_extra,
     labels = names(event_type_colors_extra)
   ) +
   labs(x = NULL, y = NULL, color = NULL, caption = credit_caption(TRUE)) +
@@ -1233,23 +1234,23 @@ djt_joined %>%
   count() %>%
   rename(tweets = n) %>%
   left_join(exec_time_total, ., by = "date") %>%
-  replace_na(list(tweets = 0)) %>% 
+  replace_na(list(tweets = 0)) %>%
   filter(top_category %in% c("Executive Time", "Unknown", "Travel", "Lunch")) %>%
-  spread(top_category, pct, fill = 0) %>% 
-  filter(!Unknown == 1) %>% 
-  mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %>% 
+  spread(top_category, pct, fill = 0) %>%
+  filter(!Unknown == 1) %>%
+  mutate(pct = Unknown + `Executive Time` + Travel + Lunch) %>%
   ggplot() +
   aes(pct, tweets) +
   geom_smooth(
-    method = "lm", 
-    color = event_type_colors["Executive Time"], 
+    method = "lm",
+    color = event_type_colors["Executive Time"],
     fill = event_type_colors["Unknown"]
   ) +
-  geom_point(color = event_type_colors["Executive Time"]) + 
+  geom_point(color = event_type_colors["Executive Time"]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
   labs(
-    x = "Percent of Workday Dedicated to Downtime\n(Executive Time, Travel, Unknown)", 
-    y = "Number of Tweets", 
+    x = "Percent of Workday Dedicated to Downtime\n(Executive Time, Travel, Unknown)",
+    y = "Number of Tweets",
     title = "Does Trump Tweet More When He Has More Downtime?",
     caption = credit_caption(rtweet = TRUE))
 ```
@@ -1270,19 +1271,19 @@ djt_simple %>%
   rename(tweets = n) %>%
   left_join(exec_time_total, ., by = "date") %>%
   filter(top_category %in% c("Meeting", "Event", "Lunch")) %>%
-  group_by(date) %>% 
-  summarize(pct = sum(pct), tweets = max(tweets)) %>% 
-  filter(pct > 0) %>% 
+  group_by(date) %>%
+  summarize(pct = sum(pct), tweets = max(tweets)) %>%
+  filter(pct > 0) %>%
   ggplot() +
   aes(pct, tweets) +
   geom_smooth(
-    method = "lm", 
-    color = event_type_colors["Executive Time"], 
+    method = "lm",
+    color = event_type_colors["Executive Time"],
     fill = event_type_colors["Unknown"]
   ) +
   geom_point(color = event_type_colors["Executive Time"]) +
   scale_x_continuous(labels = scales::percent_format(10)) +
-  labs(x = "Percent of Workday Dedicated to Meetings, Lunches, or Events", 
+  labs(x = "Percent of Workday Dedicated to Meetings, Lunches, or Events",
        y = "Number of Tweets",
        title = "Does Trump Tweet Less When He Does More \"Work\"?",
        caption = credit_caption(rtweet = TRUE))
@@ -1304,20 +1305,20 @@ This function returns an integer score from 0 to 10 for a range of positive and 
 <div class="js-to_expand">
 
 ```{r djt-tweet-sentiment, echo=TRUE}
-djt_sentiment <- 
-  djt_joined %>% 
-  select(top_category, text) %>% 
-  mutate(sentiment = map(text, syuzhet::get_nrc_sentiment)) %>% 
-  unnest() %>% 
+djt_sentiment <-
+  djt_joined %>%
+  select(top_category, text) %>%
+  mutate(sentiment = map(text, syuzhet::get_nrc_sentiment)) %>%
+  unnest() %>%
   gather(emotion, value, -top_category, -text)
 
 djt_sentiment
 
-djt_sentiment_mean <- 
-  djt_sentiment %>% 
-  group_by(top_category, emotion) %>% 
-  summarize(value = mean(value)) %>% 
-  mutate(emotion = fct_reorder(emotion, value)) %>% 
+djt_sentiment_mean <-
+  djt_sentiment %>%
+  group_by(top_category, emotion) %>%
+  summarize(value = mean(value)) %>%
+  mutate(emotion = fct_reorder(emotion, value)) %>%
   filter(top_category != "Unknown")
 
 djt_sentiment_mean
@@ -1325,7 +1326,7 @@ djt_sentiment_mean
 
 ```{r tweet-emotion-by-event, echo=TRUE, fig.height=7}
 emotions <- c(
-  "positive", "joy", "trust", "surprise", "anticipation", 
+  "positive", "joy", "trust", "surprise", "anticipation",
   "sadness", "anger", "fear", "disgust", "negative"
 )
 
@@ -1336,9 +1337,9 @@ djt_sentiment %>%
   # ggridges::geom_density_ridges() +
   geom_boxplot(alpha = 0.7, color = "grey20", outlier.shape = NA) +
   scale_fill_manual(values = event_type_colors) +
-  guides(fill = FALSE, color = FALSE) + 
+  guides(fill = FALSE, color = FALSE) +
   coord_flip() +
-  facet_wrap(~top_category, scales = "free_y") + 
+  facet_wrap(~top_category, scales = "free_y") +
   labs(y = "Sentiment Score", x = NULL,
        title = "Emotions Expressed in Trump Tweets",
        caption = credit_caption(rtweet = TRUE))

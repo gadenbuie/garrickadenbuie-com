@@ -1,0 +1,37 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --siteBgColorCustom: var(--slate-00);
+    --textColorCustom: var(--slate-80);
+    --preBgColorCustom: var(--slate-00);
+    --sidebarBgColorCustom: #fcfcfc;
+    --headingColorCustom: var(--blue-80);
+    --headlineColorCustom: var(--blue-60);
+    --bodyLinkColorCustom: var(--blue-50);
+    --navLinkColorCustom: var(--purple-60);
+    --sidebarLinkColorCustom: #2c2857;
+    --footerTextColorCustom: var(--slate-70);
+    --buttonTextColorCustom: var(--purple-80);
+    --buttonHoverTextColorCustom: var(--purple-10);
+    --buttonBgColorCustom: var(--purple-20);
+    --buttonHoverBgColorCustom: var(--purple-70);
+    --borderColorCustom: var(--slate-20);
+    --scrollbarColor: var(--slate-30);
+  }
+
+  pre {
+    border-left-color: var(--slate-20) !important;
+  }
+
+  @import '_syntax-dark';
+
+  img {
+    opacity: 0.66;
+    transition: opacity 250ms ease-in-out;
+  }
+
+  img:hover,
+  img:focus,
+  img:active {
+    opacity: 1;
+  }
+}

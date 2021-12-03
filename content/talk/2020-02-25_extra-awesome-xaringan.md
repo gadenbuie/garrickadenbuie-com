@@ -5,7 +5,7 @@ author:
 description: |
   A brief introduction to the {xaringan} package and how you can make your
   slides look great with {xaringanthemer} and stand out with {xaringanExtra}.
-twitterImage: "https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg"
+images: [ "https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg" ]
 date: '2020-02-25'
 slug: trug-extra-awesome-xaringan
 tags:
@@ -15,14 +15,21 @@ tags:
   - xaringanExtra
   - Slides
   - Presentations
-  
+
 talk_author: [Garrick Aden-Buie]
-talk_type: Talk
-talk_event: "Tampa R Users Group"
-talk_event_url: https://www.meetup.com/Tampa-R-Users-Group/events/268614041/
-talk_location: Tampa, FL
-talk_code_url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-awesome-xaringan
-talk_slides_url: https://slides.garrickadenbuie.com/extra-awesome-xaringan/intro/
+categories: [ Talk ]
+event: "Tampa R Users Group"
+event_url: https://www.meetup.com/Tampa-R-Users-Group/events/268614041/
+location: Tampa, FL
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/extra-awesome-xaringan/intro/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/extra-awesome-xaringan
 ---
 
 [xaringan]: https://slides.yihui.org/xaringan/

@@ -1,10 +1,10 @@
 ---
 title: "Reporting Reproducible Research with R and Markdown"
-author: ~ 
+author: ~
 date: '2014-04-11'
 slug: reproducible-research
-categories: []
-tags: 
+
+tags:
   - R
   - Markdown
   - Research
@@ -13,12 +13,18 @@ tags:
   - Education
 
 talk_author: [Garrick Aden-Buie]
-talk_type: "Education"
-talk_event: "INFORMS@USF Code & Data Boot Camp"
-talk_event_url: http://bit.ly/USFCodeCamp2014 
-talk_venue: University of South Florida
-talk_location: "Tampa, FL"
-talk_code_url: https://github.com/gadenbuie/usf-boot-camp-R
-talk_slides_url: "/slides/usf-bootcamp/reproducible-research.pdf"
+categories: [ "Education" ]
+event: "INFORMS@USF Code & Data Boot Camp"
+event_url: http://bit.ly/USFCodeCamp2014
+location: University of South Florida
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: "/slides/usf-bootcamp/reproducible-research.pdf"
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/usf-boot-camp-R
 ---
 

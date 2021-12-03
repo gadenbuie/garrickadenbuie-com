@@ -1,0 +1,39 @@
+---
+title: "10,000 Reasons to Love Functions"
+author:
+  - Garrick Aden-Buie
+description: |
+  A presentation writing and benefiting from programming with functions.
+date: '2020-05-15'
+images: [ "https://garrickadenbuie.com/talk/ten-thousand-functions.png" ]
+slug: ten-thousand-functions
+
+tags:
+  - R
+  - R Packages
+  - Functions
+  - Reproducible Research
+  - Workflow
+  - Tutorials
+  - Education
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Education ]
+event: "Bio-Data Club at Moffitt Cancer Center"
+event_url: https://www.biodataclub.org/
+location: "Tampa, FL"
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/ten-thousand-functions/
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/ten-thousand-functions
+---
+
+```{r echo=FALSE}
+options(htmltools.dir.version = TRUE)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+```

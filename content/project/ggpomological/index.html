@@ -1,0 +1,236 @@
+---
+title: ":peach: ggpomological: A Pomological ggplot2 Theme"
+author: Garrick Aden-Buie
+date: '2018-02-16'
+slug: ggpomological
+description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
+images: [/images/project/ggpomological/ggpomological.png]
+categories:
+  - Project
+tags:
+  - R
+  - ggplot2
+  - R Package
+  - Visualization
+---
+
+
+
+<!-- LINKS -->
+<p><strong>Project Links:</strong> <a href="https://github.com/gadenbuie/ggpomological">source</a>, <a href="https://github.com/gadenbuie/ggpomological/#readme">readme</a></p>
+<!-- https://buttons.github.io/ -->
+<p><a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow <span class="citation">@gadenbuie</span></a> 
+<a class="github-button" href="https://github.com/gadenbuie/ggpomological" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/ggpomological on GitHub">Star</a> 
+<a class="github-button" href="https://github.com/gadenbuie/ggpomological/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/ggpomological on GitHub">Fork</a></p>
+<p><img src="/images/project/ggpomological/ggpomological.png" /></p>
+<div id="a-brief-history" class="section level2">
+<h2>A brief history</h2>
+<p>Aron Atkins (<a href="https://twitter.com/aronatkins">@aronatkins</a>) gave a great talk at <a href="https://www.rstudio.com/conference/">rstudio::conf 2018</a> about a subject near and dear to my heart: parameterized RMarkdown.
+And apples.</p>
+<blockquote class="twitter-tweet" data-cards="hidden" data-twitter-extracted-i163061348414916786="true"><p dir="ltr" lang="en">I did not know about R Markdown parameterized reports...just params in the YAML and boom! Repeated analyses without messing with the original report code. Also, <a href="https://twitter.com/aronatkins?ref_src=twsrc%5Etfw">@aronatkins</a> really likes 🍎 <a href="https://twitter.com/hashtag/rstudioconf?src=hash&amp;ref_src=twsrc%5Etfw">#rstudioconf</a> <a href="https://t.co/g2OC2lTnJc">pic.twitter.com/g2OC2lTnJc</a></p>— Larie (@lariebyrd) <a href="https://twitter.com/lariebyrd/status/959919533820583936?ref_src=twsrc%5Etfw">February 3, 2018</a></blockquote>
+<p>In his talk, he designed a parameterized RMarkdown report that would provide the user with a customized report for their selected fruit and pulling in images from the <a href="https://usdawatercolors.nal.usda.gov/pom">USDA Pomological Watercolor Collection</a>.
+I had never heard of the pomological watercolors – or the fan club twitter account <a href="https://twitter.com/pomological">@pomological</a> – until watching his talk.
+It’s a treasure trove of thousands of watercolor images of fruits; beautiful images with intricate details and a very unique and stunning palette.
+The perfect palette for a custom <a href="http://ggplot2.tidyverse.org/">ggplot2</a> theme.</p>
+<p><img src="/images/project/ggpomological/pom-examples.jpg" /></p>
+<blockquote>
+<p>The collection spans the years 1886 to 1942.
+The majority of the paintings were created between 1894 and 1916.
+The plant specimens represented by these artworks originated in 29 countries and 51 states and territories in the U.S.
+There are 7,497 watercolor paintings, 87 line drawings, and 79 wax models created by approximately 21 artists.
+[<a href="https://usdawatercolors.nal.usda.gov/pom/about.xhtml">USDA National Agricultural Library</a>]</p>
+</blockquote>
+<p>I pulled together a small set of functions into a <a href="https://github.com/gadenbuie/ggpomological">simple package called <strong>ggpomological</strong></a> that provides a custom, pomological-inspired ggplot2 theme.</p>
+<p>Before reading more about <strong>ggpomological</strong>, you should really check out <a href="https://youtu.be/Ol1FjFR2IMU?t=5h21m15s">Aron’s talk</a> or <a href="https://github.com/rstudio/rstudio-conf/tree/master/2018/Fruit_For_Thought--Aron_Atkins">his slides</a>.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p><a href="https://github.com/gadenbuie/ggpomological">ggpomological</a> lives on GitHub for now (and probably ever), so you’ll need to use the devtools (or similar) to install:</p>
+<pre class="r"><code># if you don&#39;t have devtools
+install.packages(&quot;devtools&quot;)
+
+devtools::install_github(&quot;gadenbuie/ggpomological&quot;)</code></pre>
+</div>
+<div id="color-palette" class="section level2">
+<h2>Color Palette</h2>
+<p>The first thing I did after watching Aron’s talk was to browse through the <a href="https://usdawatercolors.nal.usda.gov/pom">pomological watercolors collection</a>, downloading images of a wide variety of fruits.
+I didn’t do this in any systematic way, other than occasionally searching for a particular type of fruit, like “grape” or “papaya”.</p>
+<p>From these images, I used an application (that I installed forever ago and apparently is no longer around) called ColorSchemer Studio to pull out a set of colors that I felt represented the collection.</p>
+<p>I ended up with <strong>a lot</strong> of colors.</p>
+<p><img src="/images/project/ggpomological/pomological_colors.png" /></p>
+<p>From this list, I chose just a few that I thought worked well together for color and fill scales</p>
+<pre class="r"><code>scales::show_col(ggpomological:::pomological_palette)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>and a few colors for the plot background and decoration</p>
+<pre class="r"><code>scales::show_col(unlist(ggpomological:::pomological_base))</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="setup-theme-and-scales" class="section level2">
+<h2>Setup theme and scales</h2>
+<p>I created three variants of the theme-generating function <code>theme_pomological()</code>.</p>
+<ul>
+<li><p><code>theme_pomological()</code> sets the plot theme to be representative of the paper and styling of the watercolors and includes a paper-colored background,</p></li>
+<li><p><code>theme_pomological_plain()</code> has the same styling, just with a transparent (or white) background,</p></li>
+<li><p><code>theme_pomological_fancy()</code> has the paper-colored background and defaults to a fancy handwritten font (<a href="https://fonts.google.com/specimen/Homemade+Apple/">Homemade Apple</a>).</p></li>
+</ul>
+<p>For color and fill scales, <strong>ggpomological</strong> provides <code>scale_color_pomological()</code> and <code>scale_fill_pomological()</code>.</p>
+<p>In the future, I might revisit this package to</p>
+<ol style="list-style-type: decimal">
+<li><p>Increase colors in discrete scale</p></li>
+<li><p>Setup paired color scales as there are lots of great color pairs in the extracted colors</p></li>
+<li><p>Set up continuous scale colors.</p></li>
+</ol>
+</div>
+<div id="fonts" class="section level2">
+<h2>Fonts</h2>
+<p>To get the fully authentic pomological look you really need a handwritten font style, and I found a few from Google Fonts that fit the bill.</p>
+<ul>
+<li><a href="https://fonts.google.com/specimen/Mr+De+Haviland">Mr. De Haviland</a></li>
+<li><a href="https://fonts.google.com/specimen/Homemade+Apple/">Homemade Apple</a></li>
+<li><a href="https://fonts.google.com/specimen/Marck+Script/">Marck Script</a></li>
+<li><a href="https://fonts.google.com/specimen/Mr+Bedfort/">Mr. Bedfort</a></li>
+</ul>
+<p>Alternatively, you can use something like <a href="https://www.calligraphr.com/">calligrapher.com</a> to create your own handwriting font!</p>
+<p>But fonts can be painful in R, so the base functions – <code>theme_pomological()</code> and <code>theme_pomological_plain()</code> – don’t change the font by default.
+To opt into the full pomological effect, use <code>theme_pomological_fancy()</code> which is just an alias for <code>theme_pomological(base_family = &quot;Homemade Apple&quot;, base_size = 16)</code>.</p>
+</div>
+<div id="add-paper-background" class="section level2">
+<h2>Add paper background!</h2>
+<p>Great, but I want my plots to look even more pomological, you say?</p>
+<p>Perfect!
+<strong>ggpomological</strong> provides a function named <code>paint_pomological</code> that uses the <a href="https://cran.r-project.org/web/packages/magick/index.html"><code>magick</code></a> package to add a pomological watercolor paper background and a subtle texture overlay.</p>
+</div>
+<div id="demo-time" class="section level2">
+<h2>Demo time!</h2>
+<p>We’ll need <a href="http://ggplot2.tidyverse.org/">ggplot2</a> (loaded with <strong>ggpomological</strong>) and <a href="http://dplyr.tidyverse.org/">dplyr</a></p>
+<pre class="r"><code>library(ggpomological)
+library(dplyr)</code></pre>
+<div id="basic-iris-plot" class="section level3">
+<h3>Basic iris plot</h3>
+<pre class="r"><code># Base plot
+basic_iris_plot &lt;- ggplot(iris) +
+  aes(x = Sepal.Length, y = Sepal.Width, color = Species) +
+  geom_point(size = 2)
+
+# Just your standard Iris plot
+basic_iris_plot </code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-1.png" width="672" /></p>
+<pre class="r"><code># With pomological colors
+basic_iris_plot &lt;- basic_iris_plot + scale_color_pomological()
+basic_iris_plot</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-2.png" width="672" /></p>
+<pre class="r"><code># With pomological theme
+basic_iris_plot + theme_pomological()</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-3.png" width="672" /></p>
+<pre class="r"><code># With transparent background
+basic_iris_plot + theme_pomological_plain() </code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-4.png" width="672" /></p>
+<pre class="r"><code># Or with &quot;fancy&quot; pomological settings
+pomological_iris &lt;- basic_iris_plot + theme_pomological_fancy()
+pomological_iris</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-demo-5.png" width="672" /></p>
+<pre class="r"><code># Painted!
+paint_pomological(pomological_iris, res = 110) %&gt;%
+  magick::image_write(set_filename(&quot;plot-demo-painted.png&quot;))</code></pre>
+<p><img src="/images/project/ggpomological/plot-demo-painted.png" /></p>
+</div>
+<div id="stacked-bar-chart" class="section level3">
+<h3>Stacked bar chart</h3>
+<pre class="r"><code>stacked_bar_plot &lt;- ggplot(diamonds) +
+  aes(price, fill = cut) +
+  geom_histogram(binwidth = 850) +
+  xlab(&#39;Price (USD)&#39;) +
+  ylab(&#39;Count&#39;) +
+  ggtitle(&quot;ggpomological&quot;) +
+  scale_x_continuous(label = scales::dollar_format()) +
+  scale_fill_pomological()
+
+stacked_bar_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-bar-chart-1.png" width="672" /></p>
+<pre class="r"><code>paint_pomological(
+  stacked_bar_plot + theme_pomological_fancy(),
+  res = 110
+) %&gt;%
+  magick::image_write(set_filename(&quot;plot-bar-chart-painted.png&quot;))</code></pre>
+<p><img src="/images/project/ggpomological/plot-bar-chart-painted.png" /></p>
+</div>
+<div id="density-plot" class="section level3">
+<h3>Density Plot</h3>
+<pre class="r"><code>density_plot &lt;- mtcars %&gt;%
+  mutate(cyl = factor(cyl)) %&gt;%
+  ggplot() +
+  aes(mpg, fill = cyl, color = cyl)+
+  geom_density(alpha = 0.75) +
+  labs(fill = &#39;Cylinders&#39;, colour = &#39;Cylinders&#39;, x = &#39;MPG&#39;, y = &#39;Density&#39;) +
+  scale_color_pomological() +
+  scale_fill_pomological()
+
+density_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-density-1.png" width="672" /></p>
+<pre class="r"><code>paint_pomological(
+  density_plot + theme_pomological_fancy(),
+  res = 110
+) %&gt;%
+  magick::image_write(set_filename(&quot;plot-density-demo-painted.png&quot;))</code></pre>
+<p><img src="/images/project/ggpomological/plot-density-demo-painted.png" /></p>
+</div>
+<div id="points-and-lines" class="section level3">
+<h3>Points and lines</h3>
+<p>Here I’ll use the <code>txhousing</code> data provided with <a href="http://ggplot2.tidyverse.org/">ggplot2</a></p>
+<blockquote>
+<p>Information about the housing market in Texas provided by the TAMU real estate center, <a href="http://recenter.tamu.edu/" class="uri">http://recenter.tamu.edu/</a>.</p>
+</blockquote>
+<pre class="r"><code>big_volume_cities &lt;- txhousing %&gt;%
+  group_by(city) %&gt;%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;%
+  arrange(-mean_volume) %&gt;%
+  top_n(length(ggpomological:::pomological_palette)) %&gt;%
+  pull(city)
+
+full_bar_stack_plot &lt;- txhousing %&gt;%
+  filter(city %in% big_volume_cities) %&gt;%
+  group_by(city, year) %&gt;%
+  summarize(mean_volume = mean(volume, na.rm = TRUE)) %&gt;%
+  ungroup %&gt;%
+  mutate(city = factor(city, big_volume_cities)) %&gt;%
+  ggplot() +
+  aes(year, mean_volume, fill = city, group = city) +
+  geom_col(position = &#39;fill&#39;, width = 0.9) +
+  labs(x = &#39;City&#39;, y = &#39;Mean Volume&#39;, color = &#39;City&#39;) +
+  theme(panel.grid.minor.x = element_blank()) +
+  scale_fill_pomological()
+
+full_bar_stack_plot + theme_pomological(&quot;Homemade Apple&quot;, 16)</code></pre>
+<p><img src="/project/2018-02-12-ggpomological-a-pomological-ggplot2-theme_files/figure-html/plot-full-bar-stack-1.png" width="672" /></p>
+<pre class="r"><code>paint_pomological(
+  full_bar_stack_plot + theme_pomological_fancy(),
+  res = 110
+) %&gt;%
+  magick::image_write(set_filename(&quot;plot-full-bar-stack-painted.png&quot;))</code></pre>
+<p><img src="/images/project/ggpomological/plot-full-bar-stack-painted.png" /></p>
+</div>
+<div id="one-last-plot" class="section level3">
+<h3>One last plot</h3>
+<p>This last one is in my own handwriting.</p>
+<pre class="r"><code>ridges_pomological &lt;- ggplot(diamonds) +
+  aes(x = carat, y = clarity, color = clarity, fill = clarity) +
+  ggridges::geom_density_ridges(alpha = 0.75) +
+  theme_pomological(
+    base_family = &#39;gWriting&#39;,
+    base_size = 20,
+    base_theme = ggridges::theme_ridges()
+    ) +
+  scale_fill_pomological() +
+  scale_color_pomological()
+
+paint_pomological(ridges_pomological, res = 110) %&gt;%
+  magick::image_write(set_filename(&quot;plot-ridges-painted.png&quot;))</code></pre>
+<p><img src="/images/project/ggpomological/plot-ridges-painted.png" /></p>
+</div>
+</div>
+<div id="thanks-to-these-related-packages" class="section level2">
+<h2>Thanks to these related packages</h2>
+<p>I learned a lot about how to set up a <a href="http://ggplot2.tidyverse.org/">ggplot2</a> package theme from <a href="https://twitter.com/hrbrmstr">@hrbrmstr’s</a> <a href="https://github.com/hrbrmstr/hrbrthemes">hrbrthemes</a> package.
+I highly recommend checking that out, in most cases you can just add <code>+ theme_ipsum()</code> to your ggplot and get an amazingly good looking plot.</p>
+<p>I also recommend taking a look at <a href="https://github.com/jrnold/ggthemes">ggthemes</a>, <a href="https://github.com/cttobin/ggthemr">ggthemr</a> and the <a href="https://github.com/briandconnelly/lato">lato ggplot2 theme</a> packages.</p>
+</div>

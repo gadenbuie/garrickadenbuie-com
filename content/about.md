@@ -1,8 +1,7 @@
 ---
 title: "About Me"
 slug: about
-date: 2014-01-11T19:25:00+00:00
-type: page
+hide_details: true
 ---
 
 [moffitt]: https://moffitt.org
@@ -14,17 +13,16 @@ type: page
 [garrick-talks]: /tags/education/
 [moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
 
-<img src="/images/garrick-profile_300.png" 
-     class="center"
-     width="150px"
-     alt="Profile picture of Garrick Aden-Buie on a white background"
-     style="float:left;margin:0 2em 0.5em 0;"
-/>
+<div class="f1 avenir">:wave: Hey there!<br>I'm Garrick Aden-Buie.</div>
 
-Hello, my name is Garrick Aden-Buie.
-I'm a [Data Science Educator](/training/) and R developer for [RStudio](https://rstudio.com).
-I use R, R Markdown, Shiny, and the tools of data science to make it easier to teach and learn data science with R.
-Prior to working at RStudio, I was a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc]. 
+<div class="lead">
+
+I'm a **Data Science Educator** and R developer at [RStudio](https://rstudio.com).
+I use R, R Markdown, Shiny, and the tools of data science to help you to teach and learn data science with R.
+
+</div>
+
+Prior to working at RStudio, I was a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc].
 Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](https://usfweb.usf.edu/usf-news-archive/News/article/7974).
 
 I'm a passionate R user and educator.
@@ -35,13 +33,13 @@ Browse my [list of projects][garrick-projects] for examples of my work, a [selec
 
 If you're interested in working with me, please drop me a line at [garrick@adenbuie.com](mailto:garrick@adenbuie.com)!
 
-### A little bit more about me... 
+### A little bit more about me...
 
 As an undergrad, I studied at [Lehigh University](https://lehigh.edu/),
 in [Bethlehem, PA](https://en.wikipedia.org/wiki/Allentown_(song)), only
 twenty minutes from where I grew up. There, I received a B.S in Applied
 Mathematics. I also spent a year living and studying in Madrid, Spain,
-which helped me earn a B.A. in Spanish at Lehigh.  
+which helped me earn a B.A. in Spanish at Lehigh.
 
 I am a [Returned Peace Corps Volunteer](https://peacecorps.gov/).
 I lived in small town outside of Cuenca, Ecuador where I taught Math, English and life and parenting skills.
@@ -50,21 +48,21 @@ I also [write songs and play acoustic guitar](https://garrickadebuie.bandcamp.co
 
 ## Research
 
-- **HomeSense: Design of an ambient home health and wellness monitoring platform for older adults**  
+- **HomeSense: Design of an ambient home health and wellness monitoring platform for older adults**
   VandeWeerd C, Yalcin A, Aden-Buie G, Wang Y, Roberts M, Mahser N, Fnu C, Fabiano D,
   In: Health and Technology: 2020 July.
   [10.1007/s12553-019-00404-6](https://link.springer.com/article/10.1007/s12553-019-00404-6)
 
-- **epiTAD: a web application for visualizing chromosome conformation capture data in the context of genetic epidemiology.**  
+- **epiTAD: a web application for visualizing chromosome conformation capture data in the context of genetic epidemiology.**
   Creed J, Aden-Buie G, Monteiro A, Gerke TA. In: Bioinformatics: 2019 May. [10.1093/bioinformatics/btz387](https://doi.org/10.1093/bioinformatics/btz387)
 
-- **Prostate-specific antigen (PSA) levels in men 60 to 70 years of age predict aggressive prostate cancer in the PLCO cancer screening trial: Implications for risk-stratified screening.**  
+- **Prostate-specific antigen (PSA) levels in men 60 to 70 years of age predict aggressive prostate cancer in the PLCO cancer screening trial: Implications for risk-stratified screening.**
   Berger A, Aden-Buie G, Kibel AS, Mucci LA, Penney K, Wilson K, Gerke TA, Preston M.  In: European Association of Urology Congress: 2019 Mar 15--19; Barcelona, Spain.
 
-- **Identifying genetic interactions that drive aggressive prostate cancer using an ensemble of penalized Cox regression models.**  
+- **Identifying genetic interactions that drive aggressive prostate cancer using an ensemble of penalized Cox regression models.**
   Laajala TD, Aden-Buie G, Gerke T, Creed J, Berglund A, Stopsack K, Cramer SD, Tyekucheva S, Aittokallio T, Costello JC.  In: AACR Convergence: Artificial Intelligence, Big Data, and Prediction in Cancer: 2018 Oct 14-17; Newport, RI.
 
-- **Accessible pipeline for translational research using TCGA: Tristetraprolin as an example relating gene mechanism to a disease specific outcomes.**  
+- **Accessible pipeline for translational research using TCGA: Tristetraprolin as an example relating gene mechanism to a disease specific outcomes.**
   Berglund A, Putney R, Creed J, Aden-Buie G, Gerke T, Rounbehler R. In: TCGA Legacy: Multi-Omic Studies in Cancer: 2018 Sep 27-29; Washington, DC
 
 - **The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring**.<br>Garrick Aden-Buie. _Utilizing Technology for Data Collection and Intervention_, Moffitt Cancer Center. 2018

@@ -8,3 +8,4 @@ deploy.sh
 public*/
 ISSUES.md
 .history/
+content/project/sqrrl/index_cache/*

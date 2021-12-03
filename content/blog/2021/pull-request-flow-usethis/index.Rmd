@@ -10,15 +10,17 @@ tags:
   - usethis
   - Pull Requests
   - Workflow
-description: Choose your own adeventure and get in the 'usethis' pull request flow with this flow chart.
-twitterImage: /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
-rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
+description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
+images:
+  - /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |
   <link href="usethis-adventure.css" rel="stylesheet">
   <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
 editor_options:
   chunk_output_type: console
+references: ~
 ---
 
 [usethis]: https://usethis.r-lib.org
@@ -55,7 +57,7 @@ lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
 
 way_point <- function(add_class = TRUE) {
   glue::glue(
-    '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>', 
+    '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>',
     '<span class="sr-only">Decision time:</span>',
     cls = if (add_class) "way-point " else ""
   )
@@ -63,7 +65,7 @@ way_point <- function(add_class = TRUE) {
 
 back_button <- function() {
   glue::glue(
-    '<i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i>', 
+    '<i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i>',
     '<span class="sr-only">back</span>'
   )
 }
@@ -79,7 +81,7 @@ lightbox_img(
 
 ## Introduction
 
-The [[usethis]]{.pkg} package is full of incredibly helpful functions
+The <span class="pkg">[usethis]</span> package is full of incredibly helpful functions
 that make life as an R developer easier.
 A lot of the package's functions target R package maintainers,
 but there's a small cluster of functions that are life changing
@@ -99,7 +101,7 @@ I can move in and out of collaborative work seamlessly.
 The flow chart above is my personal mental model of this cluster of functions
 and I hope it helps you make sense of them, too.
 
-There are other great resources available in the [usethis]{.pkg} documentation.
+There are other great resources available in the <span class="pkg">usethis</span> documentation.
 Beyond the [function documentation][usethis-pr-docs],
 there's also the great [_Pull request helpers_ article][usethis-pr-article].
 That article walks through a pull request
@@ -140,14 +142,14 @@ to retrace your steps.
 
 You open your project in RStudio (or the editor of your choice).
 You make a note to yourself to come up with a better name for your package —
-for now you're calling it [acme]{.pkg} 
+for now you're calling it <span class="pkg">acme</span>
 because it's mostly a collection of random functions you've written.
 
 Anyway, you're thankful that you closed all of your open files the last time you were working,
 but now the empty console beckons.
 You're ready to do some work.
 
-Where do you begin? With [[usethis]]{.pkg} of course.
+Where do you begin? With <span class="pkg">[usethis]</span> of course.
 
 ```{r eval=TRUE}
 library(usethis)
@@ -192,7 +194,7 @@ pr_init("add-example")
 ● Use `pr_push()` to create PR.
 ```
 
-The console output reminds you that [usethis]{.pkg} updated your local repo
+The console output reminds you that <span class="pkg">usethis</span> updated your local repo
 and created and switched to a new branch for you.
 
 ::: decision
@@ -229,7 +231,7 @@ But which one you do you want to work in?
 
 ### Choose a branch and resume working {#pr-resume-no-branch .step}
 
-Don't worry, [usethis]{.pkg} has your back.
+Don't worry, <span class="pkg">usethis</span> has your back.
 Just run `pr_resume()` without any arguments
 to get a list of local branches available to you.
 `pr_resume()` helpfully sorts the branches by recency of work
@@ -262,11 +264,11 @@ making sure that your local copy is up-to-date.
 
 ### Get back to the branch {#pr-resume-branch .step}
 
-Look at you, smarty pants. 
+Look at you, smarty pants.
 You remember your git branch names!
 I'm proud of you.
 
-Good news, 
+Good news,
 `pr_resume()` can switch to the `"add-example"` branch for you
 and it also makes sure that your local copy is up-to-date!
 
@@ -290,7 +292,7 @@ and collaborative coding platforms like GitHub
 are plenty of fun when you're working on your own.
 But they really start to shine when you use them to collaborate with others.
 
-The same is true for the [usethis]{.pkg} PR helper functions.
+The same is true for the <span class="pkg">usethis</span> PR helper functions.
 Setting up your local repo to pull down the changes from a collaborator --
 changes that probably live in a branch in _their copy_ of the repo --
 can be a frustrating experience full of online searching
@@ -331,7 +333,7 @@ and poke it with debuggers.
 Your friend,
 who affectionately calls themselves `@wileycoyote` on GitHub,
 helpfully contributed a new function
-to your bag of tricks package, [acme]{.pkg}.
+to your bag of tricks package, <span class="pkg">acme</span>.
 They sent you a message on Slack letting you know they submitted a PR,
 but they didn't mention the PR number.
 
@@ -346,7 +348,7 @@ pr_fetch()
 ```
 ```
 ℹ No PR specified ... looking up open PRs
-Which PR are you interested in? (0 to exit) 
+Which PR are you interested in? (0 to exit)
 
 1: 'gadenbuie/acme/#11' (@gadenbuie): 'Add an example'
 2: 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
@@ -364,7 +366,7 @@ Next time you can perform the same steps by providing the PR number —
 or you can use the menu again.
 Who has time or brain space to memorize pull request numbers?
 
-Now that you have the code from the PR available to you locally, 
+Now that you have the code from the PR available to you locally,
 you're free to poke around to try out the code and review it.
 
 ::: decision
@@ -375,13 +377,13 @@ you're free to poke around to try out the code and review it.
 - I reviewed the code and left comments for the PR author in the pull request.
 
    - [I'm done with this branch](#pr-forget-theirs).
-   
+
    - [I'm done for now, but I'll probably come back to this branch later](#pr-pause).
 :::
 
 ### Open a PR locally {#pr-fetch-branch .step}
 
-You've been working with your friend, 
+You've been working with your friend,
 `@wileycoyote`,
 on a new set of model tuning functions.
 They've helpfully started working on a PR,
@@ -423,7 +425,7 @@ pr_pull()
 - I reviewed the code and left comments for the PR author in the pull request.
 
    - [I'm done with this branch](#pr-forget-theirs).
-   
+
    - [I'm done for now, but I'll probably come back to this branch later](#pr-pause).
 :::
 
@@ -608,9 +610,9 @@ the *incoming* version, i.e. the `main` branch
 
 To resolve the conflict, you
 
-1. Edit from `<<<<<<<` to `>>>>>>>` 
+1. Edit from `<<<<<<<` to `>>>>>>>`
    choosing one or the other or a blend of the two versions
-   
+
 1. Save the file and stage it with `gert::git_add()`
 
 1. Repeat for other files with merge conflicts
@@ -647,7 +649,7 @@ pr_merge_main()
 Merged origin/main into wileycoyote-toone-model
 ```
 
-If there aren't any merge conflicts, 
+If there aren't any merge conflicts,
 you'll get a nice, quick confirmation that the merge went well.
 
 ::: decision
@@ -663,7 +665,7 @@ you'll get a nice, quick confirmation that the merge went well.
 Let's make sure we're in the right branch in your local project.
 
 ::: decision
-`r way_point()` 
+`r way_point()`
 Which branch do you want to work with right now?
 
 - The one I'm in right now, so
@@ -691,25 +693,25 @@ Go write some code.
 &#x1F3A7;
 
 ::: decision
-`r way_point()` 
-Sweet! 
+`r way_point()`
+Sweet!
 Now that you feel good about your work,
 you're ready to [take a snapshot of your updates](#git-commit).
-::: 
+:::
 
 ### Keep doing some work {#do-work-yours .step}
 
 > Taking breaks and resting is important!
-> 
+>
 > Last night I got caught up in a nested
 > [#RStats](https://twitter.com/hashtag/rstats)
 > list problem and couldn't solve it.
-> 
+>
 > Wrote the code this morning first shot.
-> 
+>
 > Take breaks! You need them!
 >
-> --- Nicholas Tierney (@nj_tierney) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
+> --- Nicholas Tierney (&commat;nj_tierney) [April 16,2019](https://twitter.com/nj_tierney/status/1117964839127674881)
 
 Sometimes the best thing you can do to solve a problem is give it some time.
 Go for a walk, read something engaging, talk to a friend, take a shower.
@@ -749,9 +751,9 @@ As you work,
 you pause occasionally to stage files with `gert::git_add()`
 and to commit them with `gert::git_commit()`.
 Since you're working with someone else,
-you remember to 
+you remember to
 [write good commit messages](https://xkcd.com/1296/),
-but since you're having fun you also use 
+but since you're having fun you also use
 [gitmoji to give each commit a good emoji.](https://gitmoji.dev/)
 
 It's a lot later than you expect when you start wrapping up.
@@ -767,19 +769,19 @@ Go head and [update the PR with your latest changes](#pr-push-theirs).
 _If you like it then you shoulda made a `git commit`._
 
 There are two parts to taking a snapshot of your code.
-And really, 
+And really,
 it's less like taking a picture and more like sending yourself an email
 with a copy of your files.
 
 First, you'll pick the files that you want to add to the snapshot (or commit).
-You can do this in the R console using `git_add()` from the [[gert]]{.pkg} package.
+You can do this in the R console using `git_add()` from the <span class="pkg">[gert]</span> package.
 Give the function a vector with the paths to the files you changed.
 
 ```{r eval=FALSE}
 gert::git_add(c("R/atom_arranger.R", "man/atom_arranger.Rd"))
 ```
 
-In git-speak, 
+In git-speak,
 `git_add()` adds the changes in the listed files to a staging area.
 Running this command is like dragging a file into the email you're writing.
 We haven't officially sent that email yet,
@@ -794,13 +796,13 @@ you _commit_ the changes.
 In our email metaphor,
 committing is a lot like pressing send on the email.
 
-And just like an email, 
+And just like an email,
 the commit includes a message
 where you can describe the updates you made to the files in the email (commit).
 
 For this step you can use
-`git_commit()` 
-(also from the [[gert]]{.pkg} package)
+`git_commit()`
+(also from the <span class="pkg">[gert]</span> package)
 which takes the commit message as a parameter.
 Think of this message like the subject of an email to your future self.
 
@@ -821,7 +823,7 @@ _P.S. You can do this adding-and-committing dance in the [Git pane in RStudio](h
 - Actually, I don't think I'm on the right track here.
   I'd [rather back out of this branch and forget all about it](#pr-forget-yours).
 :::
-  
+
 ### Fix something {#fix-something .step}
 
 Oh no, you need to fix something!
@@ -829,7 +831,7 @@ I hope it's just a typo and not a big scary error!
 But first...
 
 ::: decision
-`r way_point()` 
+`r way_point()`
 This thing that needs to be fixed —
 [what branch is it in](#do-choose-branch)?
 :::
@@ -841,7 +843,7 @@ I hope it's just a typo and not a big scary error!
 But first...
 
 ::: decision
-`r way_point()` 
+`r way_point()`
 This thing that needs to be fixed — what branch is it in?
 
 - The one I'm in right now, so
@@ -859,7 +861,7 @@ I hope it's just a typo and not a big scary error!
 But first...
 
 ::: decision
-`r way_point()` 
+`r way_point()`
 This thing that needs to be fixed — what branch is it in?
 
 - The one I'm in right now, so
@@ -905,7 +907,7 @@ pr_push()
 
 `pr_push()` sends the local changes in your new branch to GitHub,
 and opens a browser window where you can review your changes once more.
-If everything looks good, 
+If everything looks good,
 go ahead click the _Create Pull Request_ button.
 
 ::: decision
@@ -928,7 +930,7 @@ go ahead click the _Create Pull Request_ button.
 
 ### Update your existing pull request {#pr-push-yours .step}
 
-You just made [and committed](#git-commit) 
+You just made [and committed](#git-commit)
 some changes to an existing PR you created,
 and now you'd like to update that PR on GitHub.
 `pr_push()` also does this for you!
@@ -1037,13 +1039,13 @@ That's one less branch you need to keep around on your computer.
 - **Yes**, and...
 
    - [I'm still in the PR branch in my local project](#pr-finish-yours)
-   
+
    - [I'm in the main branch now, but I have the PR branch here somewhere](#pr-finish-number)
-   
+
 - **No**, and...
 
    - [I'm still in the PR branch in my local project](#pr-finish-theirs)
-   
+
    - [I'm in the main branch now, but I have the PR branch here somewhere](#pr-finish-number)
 :::
 
@@ -1069,7 +1071,7 @@ pr_finish()
 
 ### Finish your work {#pr-finish-theirs .step}
 
-Well done, 
+Well done,
 your collaboration with `@wileycoyote` is complete and their PR is merged!
 That's awesome.
 Now it's time to wrap things up by calling `pr_finish()`.
@@ -1178,7 +1180,7 @@ Notice that `pr_forget()` moved you into the default branch of your repo,
 and it even made sure that branch is up to date.
 
 `pr_forget()` is safe and cautious.
-If your local `wileycoyote-toone-models` branch 
+If your local `wileycoyote-toone-models` branch
 had had any changes in it that you might have lost,
 `pr_forget()` would have warned you.
 You also know that you can get back to the PR branch any time
@@ -1212,10 +1214,10 @@ using `pr_fetch()`.
 <em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
   Pull Request Flow with usethis
 </em>
-by 
+by
 <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
 Garrick Aden-Buie
-</a> is licensed under a 
+</a> is licensed under a
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 ```
 

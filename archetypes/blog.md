@@ -2,9 +2,9 @@
 date: {{ .Date }}
 description: "post description"
 twitterImage: "/path/to/image.png"
-rmd_source: ""
+source_link: ""
 keywords: "rstats"
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 

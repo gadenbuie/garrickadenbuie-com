@@ -1,8 +1,8 @@
 if (file.exists('~/.Rprofile')) {
   sys.source('~/.Rprofile', envir = environment())
 }
-
 options(
+  blogdown.hugo.version = "0.89.1",
   blogdown.generator.server = TRUE,
   blogdown.author = "Garrick Aden-Buie",
   blogdown.subdir = strftime(Sys.time(), "blog/%Y"),

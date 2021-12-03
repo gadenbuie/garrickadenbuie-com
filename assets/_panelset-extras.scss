@@ -1,0 +1,61 @@
+.post-body .panelset {
+  --panel-tabs-border-bottom: var(--slate-80);
+  --panel-tabs-sideways-max-width: 25%;
+  --panel-tab-foreground: currentColor;
+  --panel-tab-background: unset;
+  --panel-tab-active-foreground: var(--blue-20);
+  --panel-tab-active-background: var(--blue-90);
+  --panel-tab-hover-foreground: var(--blue-40);
+  --panel-tab-hover-background: unset;
+  --panel-tab-active-border-color: var(--blue-30);
+  --panel-tab-hover-border-color: var(--red-50);
+  --panel-tab-inactive-opacity: 0.5;
+  --panel-tab-font-family: inherit;
+
+  &.sideways {
+    --panel-tab-active-background: unset;
+  }
+
+  .panel-tabs .panel-tab.panel-tab-active {
+    border-top-color: transparent;
+    border-bottom-color: var(--panel-tab-active-border-color);
+  }
+}
+
+.panelset.panelset--bordered:not(.sideways) .panel {
+  border-color: var(--slate-90);
+  border-width: 2px;
+  border-style: solid;
+  border-top: none;
+  margin-top: -1em;
+  margin-bottom: 1rem;
+}
+.panelset.panelset--bordered .panel {
+  @extend .ph3, .mb2;
+  max-height: 50vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.panelset.panelset--bordered .panel > .highlight > pre,
+.panelset.panelset--bordered .panel > pre {
+  border-left: none !important;
+  padding-left: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-body .panelset {
+    --panel-tabs-border-bottom: var(--slate-10);
+    --panel-tab-foreground: var(--slate-30);
+    --panel-tab-active-foreground: var(--blue-60);
+    --panel-tab-active-background: mix(#71aeb7, #0e181e, $weight: 100%);
+    --panel-tab-active-background: #132026;
+    --panel-tab-hover-foreground: var(--slate-60);
+    --panel-tab-hover-border-color: var(--red-50);
+    --panel-tab-inactive-opacity: 0.66;
+
+    &.panelset--bordered .panel {
+      border-color: var(--panel-tabs-border-bottom);
+    }
+  }
+}

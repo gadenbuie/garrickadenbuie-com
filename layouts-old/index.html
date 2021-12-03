@@ -1,0 +1,71 @@
+{{ partial "head.html" . }}
+	<body class="{{ .Site.Params.themeColor }} {{if .Site.Params.layoutReverse}}layout-reverse{{end}}">
+		<main class="content container" role="main">
+			{{ if .Site.Params.show_projects_front }}
+			{{ $projectPages := where .Data.Pages "Section" "project" }}
+			{{ if ge (len $projectPages) 1 }}
+			<section class='recent recent-projects'>
+				<h2><a href={{ relURL "project" }}>Projects</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_projects_front | default 10) (where .Data.Pages "Section" "project") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title | emojify }}</a>
+						<span class="post-date">{{ .Description }}</span>
+					</li>
+					{{ end }}
+					{{ if ge (len $projectPages) .Site.Params.n_projects_front }}
+					<li style="list-style: none">
+					  <a href={{ relURL "project" }} style="color: #9a9a9a">More projects...</a>
+					</li>
+					{{ end }}
+				</ul>
+			</section>
+			{{ end }}
+			{{ end }}
+			{{ $blogPages := where .Data.Pages "Section" "blog" }}
+			{{ if ge (len $blogPages) 1 }}
+			<section class="recent">
+				<h2><a href={{ relURL "blog" }}>Recent Posts</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_posts_front | default 10) (where .Data.Pages "Section" "blog") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title }}</a>
+						<time class="post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z" }}">{{ .Date.Format "Monday, 2 January 2006" }}</time>
+					</li>
+					{{ end }}
+					{{ if ge (len $blogPages) .Site.Params.n_posts_front }}
+					<li style="list-style: none">
+					  <a href={{ relURL "blog" }} style="color: #9a9a9a">More posts...</a>
+					</li>
+					{{ end }}
+				</ul>
+				<!-- <a href={{ relURL "blog" }} style="padding-left: 40px">more...</a> -->
+			</section>
+			{{ end }}
+			{{ if .Site.Params.show_talks_front }}
+			{{ $talkPages := where .Data.Pages "Section" "talk" }}
+			{{ if ge (len $blogPages) 1 }}
+			<section class='recent recent-talks'>
+				<h2><a href={{ relURL "talk" }}>Talks</a></h2>
+				<ul class="posts">
+					{{ range first (.Site.Params.n_talks_front | default 10) (where .Data.Pages "Section" "talk") }}
+					<li>
+						<a class="post-title" href="{{ .RelPermalink | replaceRE "/$" "" }}">{{ .Title | emojify }}</a>
+						<span class="post-date">
+						   {{ .Date.Format "2 January 2006" }} — {{ .Params.talk_event }}
+						</span>
+					</li>
+					{{ end }}
+					{{ if ge (len $talkPages) .Site.Params.n_talks_front }}
+					<li style="list-style: none">
+					  <a href={{ relURL "talk" }} style="color: #9a9a9a">More talks...</a>
+					</li>
+					{{ end }}
+				</ul>
+			</section>
+			{{ end }}
+			{{ end }}
+		</main>
+{{ partial "sidebar.html" . }}
+	</body>
+</html>

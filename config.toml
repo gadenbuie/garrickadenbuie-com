@@ -1,99 +1,211 @@
 title = "Garrick Aden\u2011Buie"
 baseurl = "https://www.garrickadenbuie.com"
 relativeurls = false
+author = "Garrick Aden-Buie"
 languageCode = "en-us"
-theme = "hyde"
+theme = "hugo-apero"
 googleAnalytics = ""
 disqusShortname = ""
+metaDataFormat = "yaml"
+footnoteReturnLinkContents = "&#8617;" # ↩
+# set deliberately low for testing choose your preffered number based on the blog layout you've chosen
+paginate = 50
+preserveTaxonomyNames = true
+enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
-rssLimit = 10
 
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark.renderer]
+    unsafe = true  # Enable user to embed HTML snippets in Markdown content.
+    hardwraps = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 2
+    ordered = false
+  [markup.highlight]
+    # one of: https://xyproto.github.io/splash/docs/
+    style = ""
+    noClasses = false
 
 [permalinks]
     post = "blog/:slug/"
     blog = "blog/:slug/"
 
-[[menu.main]]
-    name = "Blog"
+[params]
+  description = "Data Scientist. #rstats. Educator. Musician. Always learning something new."
+  orgName = "Garrick Aden-Buie"
+  favicon = "/favicon.ico"
+  logo = "static/letter-g.svg"
+  logo_is_svg = true
+  mainSections = ["blog", "project", "talk"]
+  navallcaps = false
+  # show/hide social icons in site header & footer
+  # configure social icons and links below in [[params.social]]
+  socialInHeader = true
+  socialInFooter = true
+  # Default image for social sharing and search engines.
+  # Place image file in `static` folder and specify image name here.
+  sharing_image = "social-default.png"
+  # Twitter username (without @). Used when a visitor shares your site on Twitter.
+  twitter = "grrrck"
+
+  # use a built-in color theme
+  # one of: forest / grayscale / peach / plum /
+  #         poppy / sky / violet / water
+  theme = ""
+
+  # or, leave theme empty & make your own palette
+  # see docs at https://hugo-apero.netlify.app/blog/color-themes/
+  # the custom scss file must be in the assets/ folder
+  # add the filename name here, without extension
+  # to use hex colors instead of named tachyons colors, include "hex" in filename
+  custom_theme = "garrick-hex"
+  show_post_thumbnail = false
+
+  # use an embedded font-family
+  # serif options: Fraunces / EB Garamond / Bitter
+  # sans-serif options: Commissioner / Atkinson Hyperlegible / Metropolis
+  # if you import your own fonts, name them here too
+  customtextFontFamily = ""
+  customheadingFontFamily = ""
+  # alternatively, leave empty and select basic font options: sans-serif or serif
+  # for more http://tachyons.io/docs/typography/font-family/
+  textFontFamily = "sans-serif"
+  headingFontFamily = "avenir"
+
+  # Configuration of https://utteranc.es/ for comments
+  #[params.utterances]
+  #  use_utterances = true
+  #  repo_name = "apreshill/apero"
+  #  issue_term = "pathname" # url, pathname, or title
+  #  theme = "boxy-light"
+  #  label = "comments :crystal_ball:"
+
+  # Configuration of https://giscus.app/ for comments
+  [params.giscus]
+    use_giscus = true
+    repo = "gadenbuie/garrickadenbuie-com"
+    repo_id = "MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ"
+    category = "Comments"
+    category_id = "DIC_kwDOB0UOXs4CAIFZ"
+    mapping = "pathname"
+    reactions_enabled = "1"
+    emit_metadata = "0"
+    theme = "preferred_color_scheme"
+    lang = "en"
+
+  # Configuration of math rendering
+  [params.math]
+    renderer = "katex" # one of "mathjax" / "katex"
+
+  # Social icons may appear on homepage and in site header or footer
+  # Configure show/hide above - add as many as you like below
+  # Icon pack "fab" includes brand icons, see: https://fontawesome.com/icons?d=gallery&s=brands&m=free
+  # Icon pack "fas" includes solid icons, see: https://fontawesome.com/icons?d=gallery&s=solid&m=free
+  # Icon pack "far" includes regular icons, see: https://fontawesome.com/icons?d=gallery&s=regular&m=free
+  [[params.social]]
+      icon      = "twitter" # icon name without the 'fa-'
+      icon_pack = "fab"
+      url       = "https://twitter.com/grrrck"
+  [[params.social]]
+      icon      = "github" # icon name without the 'fa-'
+      icon_pack = "fab"
+      url       = "https://github.com/gadenbuie"
+  [[params.social]]
+      icon      = "r-project"
+      icon_pack = "fab"
+      url       = "https://gadenbuie.r-universe.dev"
+  [[params.social]]
+      icon      = "keybase"
+      icon_pack = "fab"
+      url       = "https://keybase.io/grrrck"
+  [[params.social]]
+      icon      = "bandcamp"
+      icon_pack = "fab"
+      url       = "https://garrickadenbuie.bandcamp.com"
+  [[params.social]]
+      icon      = "orcid" # icon name without the 'fa-'
+      icon_pack = "ai"
+      url       = "http://orcid.org/0000-0002-8082-1890"
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[menu]
+  [[menu.header]]
+      name = "About"
+      weight = 99
+      url = "/about/"
+  [[menu.header]]
+      name = "Blog"
+      weight = 1
+      identifier = "blog"
+      url = "/blog/"
+  [[menu.header]]
+      name = "Projects"
+      weight = 3
+      url = "/project/"
+  [[menu.header]]
+      name = "Talks"
+      weight = 4
+      url = "/talk/"
+  [[menu.header]]
+      name = "Shiny Apps"
+      weight = 5
+      url = "https://apps.garrickadenbuie.com"
+  [[menu.contact]]
+      name = "Email"
+      weight = 3
+      url = "mailto:g.adenbuie@gmail.com"
+  [[menu.contact]]
+      name = "GitHub"
+      weight = 2
+      url = "https://github.com/gadenbuie"
+  [[menu.contact]]
+      name = "Twitter"
+      weight = 1
+      url = "https://twitter.com/grrrck"
+  [[menu.contact]]
+      name = "Bandcamp"
+      weight = 100
+      url = "https://garrickadenbuie.bandcamp.com"
+  # Configure footer
+  [[menu.footer]]
+    name = "Made with 🧡"
+    title = "Made with Hugo Apéro and blogdown and coffee"
+    url = "/colophon/"
     weight = 1
-    identifier = "blog"
-    url = "/blog/"
-[[menu.main]]
-    name = "About"
-    weight = -1
-    url = "/about/"
-[[menu.main]]
-    name = "Training"
+  [[menu.footer]]
+    name = '<i class="fas fa-rss" aria-hidden="true"><span class="sr-only">Site RSS Feed</span></i>'
+    title = "Site RSS Feed"
+    url = "/blog/index.xml"
     weight = 2
-    url = "/training/"
-[[menu.main]]
-    name = "Projects"
-    weight = 3
-    url = "/project/"
-[[menu.main]]
-    name = "Shiny Apps"
-    weight = 4
-    url = "https://apps.garrickadenbuie.com"
-[[menu.main]]
-    name = "Talks"
-    weight = 5
-    url = "/talk/"
-[[menu.main]]
-    name = "Music"
-    weight = 6
-    url = "/categories/music/"
-#[[menu.main]]
-#    name = "Photos"
-#    weight = 4
-#    url = "/categories/photos/"
-[[menu.contact]]
-    name = "Email"
-    weight = 3
-    url = "mailto:g.adenbuie@gmail.com"
-[[menu.contact]]
-    name = "GitHub"
-    weight = 2
-    url = "https://github.com/gadenbuie"
-[[menu.contact]]
-    name = "Twitter"
-    weight = 1
-    url = "https://twitter.com/grrrck"
-[[menu.contact]]
-    name = "Bandcamp"
-    weight = 100
-    url = "https://garrickadenbuie.bandcamp.com"
 
 #[author]
 #    image = "images/garrick.png
 
-
-[params]
-    description = "Data Scientist. #rstats. Educator. Musician. Always learning something new."
-    author = "Garrick Aden-Buie"
-    EnableEmoji = true
-    #contactHeader = "Links"
-    n_posts_front = 5
-    show_projects_front = true
-    n_projects_front = 5
-    show_talks_front = true
-    n_talks_front = 5
-
-    # Twitter Card info
-    twitterAuthor = "@grrrck"
-    twitterSite = "https://www.garrickadenbuie.com"
-    twitterImage = "/apple-touch-icon-152x152.png"
-
-    # hyde
-    # themeColor = "base16-solarized-garrick"
-    themeColor = "restyled-garrick"
-    customCss = ["css/hamburgers.css", "css/custom.css"]
-
-    # options for highlight.js (version, additional languages, and theme)
-    # import minified languages to /js/highlight.js/{version}/languages
-    highlightjsVersion = "9.11.0"
-    highlightjsCDN = "/js"
-    highlightjsLang = ["r", "yaml", "bash", "tex", "sql", "markdown"]
-    highlightjsTheme = "github"
-
-    MathJaxCDN = "https://cdn.bootcss.com"
-    MathJaxVersion = "2.7.1"
+# see https://gohugo.io/about/hugo-and-gdpr/
+[privacy]
+  [privacy.disqus]
+    disable = false
+  [privacy.googleAnalytics]
+    disable = false
+    anonymizeIP = true
+    respectDoNotTrack = true
+  [privacy.instagram]
+    disable = false
+    simple = true
+  [privacy.twitter]
+    disable = false
+    enableDNT = true
+    simple = false
+  [privacy.vimeo]
+    disable = false
+    enableDNT = true
+    simple = true
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true
