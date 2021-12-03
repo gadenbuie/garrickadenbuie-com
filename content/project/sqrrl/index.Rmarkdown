@@ -7,7 +7,7 @@ categories:
   - Project
 tags: ["R", "R Package", "SQL", "MySQL", "Shiny"]
 page: project
-show_post_thumbnail: false
+show_post_thumbnail: true
 ---
 
 
