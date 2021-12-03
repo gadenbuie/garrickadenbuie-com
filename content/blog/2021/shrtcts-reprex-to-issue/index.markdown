@@ -330,7 +330,7 @@ becomes markdown.
 This means we can add text directly to our reprex using these comments!
 Below you can see that I’ve added some exposition around the problematic code.
 
-<div class="panelset">
+<div class="panelset panelset--bordered">
 
 <div class="panel">
 
