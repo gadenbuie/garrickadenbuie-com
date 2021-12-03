@@ -10,7 +10,7 @@
     {{ end }}
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
       {{ range site.Menus.footer }}
-      <a class="dib pv1 ph2 link" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
+      <a class="dib pv1 ph2 link" href="{{ .URL }}" title="{{ .Title }}">{{ .Name | safeHTML }}</a>
       {{ end }}
     </div>
   </nav>

@@ -115,10 +115,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       icon      = "orcid" # icon name without the 'fa-'
       icon_pack = "ai"
       url       = "http://orcid.org/0000-0002-8082-1890"
-  [[params.social]]
-      icon      = "rss" # icon name without the 'fa-'
-      icon_pack = "fas"
-      url       = "/blog/index.xml"
 
 [taxonomies]
   category = "categories"
@@ -147,14 +143,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       name = "Shiny Apps"
       weight = 5
       url = "https://apps.garrickadenbuie.com"
-  #ddd[[menu.header]]
-  #    name = "Music"
-  #    weight = 6
-  #    url = "/categories/music/"
-  #[[menu.header]]
-  #    name = "Photos"
-  #    weight = 4
-  #    url = "/categories/photos/"
   [[menu.contact]]
       name = "Email"
       weight = 3
@@ -177,6 +165,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
     title = "Made with Hugo Apéro and blogdown and coffee"
     url = "/colophon/"
     weight = 1
+  [[menu.footer]]
+    name = '<i class="fas fa-rss" aria-hidden="true"><span class="sr-only">Site RSS Feed</span></i>'
+    title = "Site RSS Feed"
+    url = "/blog/index.xml"
+    weight = 2
 
 #[author]
 #    image = "images/garrick.png
