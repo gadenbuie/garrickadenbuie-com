@@ -4,6 +4,9 @@ author: Garrick Aden-Buie
 date: '2018-08-24'
 slug: greatest-twitter-scheme
 aliases: /blog/2018/08/24/greatest-twitter-scheme
+description: |
+  In which I investigate a very cool thing that someone claims
+  to have done on Twitter. Using R and the rtweet package.
 categories:
   - Blog
 tags:
@@ -11,72 +14,62 @@ tags:
   - Twitter
   - rtweet
 rmd_source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2018/2018-08-24-costcoricebag.Rmd
-editor_options: 
+editor_options:
   chunk_output_type: console
+references: ~
 ---
 
-I found this tweet today and I was intrigued.
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
-{{% tweet "1032699857117605888" %}}
 
-What exactly had this person pulled off?
-What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?
-
-I wanted to know.
+<p>I found this tweet today and I was intrigued.</p>
+<p>{{% tweet "1032699857117605888" %}}</p>
+<p>What exactly had this person pulled off?
+What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?</p>
+<p>I wanted to know.
 But I didn’t want to scroll through endless tweets.
-[Jump ahead to the answer](#final-result) if you’re in a hurry yourself.
-
-To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: [rtweet](https://rtweet.info).
-Getting all of [@CostcoRiceBag](https://twitter.com/CostcoRiceBag)’s recent tweets was suprisingly simple — all it takes is a single call to [`get_timeline()`](https://rtweet.info/reference/get_timeline.html):
-
-``` r
-library(rtweet)
+<a href="#final-result">Jump ahead to the answer</a> if you’re in a hurry yourself.</p>
+<p>To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: <a href="https://rtweet.info">rtweet</a>.
+Getting all of <a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a>’s recent tweets was suprisingly simple — all it takes is a single call to <a href="https://rtweet.info/reference/get_timeline.html"><code>get_timeline()</code></a>:</p>
+<pre class="r"><code>library(rtweet)
 library(dplyr)
 
-crb_tweets <- get_timeline("costcoricebag", n = 3200)
-```
-
-From here, I simply filtered out replies and straight-up retweets (but not quote tweets), and then extracted the first word in the tweet text using a little [regex](/project/regexplain/).
-Upon arranging the tweets in reverse chronological order, the pattern in the `first_word` column is immediately apparent.
-
-``` r
-first_words <- crb_tweets %>% 
+crb_tweets &lt;- get_timeline(&quot;costcoricebag&quot;, n = 3200)</code></pre>
+<p>From here, I simply filtered out replies and straight-up retweets (but not quote tweets), and then extracted the first word in the tweet text using a little <a href="/project/regexplain/">regex</a>.
+Upon arranging the tweets in reverse chronological order, the pattern in the <code>first_word</code> column is immediately apparent.</p>
+<pre class="r"><code>first_words &lt;- crb_tweets %&gt;%
   filter(
-    !is_retweet, 
+    !is_retweet,
     is.na(reply_to_status_id),
-    created_at <= lubridate::ymd_hms("2018-08-23 18:43:27"),
-    created_at >= lubridate::ymd_h("2018-05-07 15"),
-    !grepl("^@", text)
-  ) %>% 
+    created_at &lt;= lubridate::ymd_hms(&quot;2018-08-23 18:43:27&quot;),
+    created_at &gt;= lubridate::ymd_h(&quot;2018-05-07 15&quot;),
+    !grepl(&quot;^@&quot;, text)
+  ) %&gt;%
   mutate(
-    first_word = sub("^\\W*([\\w'’]+)[\\S\\s]+", "\\1", text, perl = TRUE)
-  ) %>% 
+    first_word = sub(&quot;^\\W*([\\w&#39;’]+)[\\S\\s]+&quot;, &quot;\\1&quot;, text, perl = TRUE)
+  ) %&gt;%
   arrange(desc(created_at))
 
-first_words %>% 
-  select(created_at, text, first_word) 
-```
-
-    ## # A tibble: 376 × 3
-    ##    created_at          text                                           first_word
-    ##    <dttm>              <chr>                                          <chr>     
-    ##  1 2018-08-23 18:43:27 "IS IT JUST ME, OR DID I JUST PULL OFF THE GR… IS        
-    ##  2 2018-08-23 18:42:49 "This is the moment I’ve been waiting for for… This      
-    ##  3 2018-08-23 17:53:19 "The best state fair food is corn on the cob … The       
-    ##  4 2018-08-23 17:46:29 "Real talk: idk what I’m going to do when my … Real      
-    ##  5 2018-08-23 04:35:54 "Life was so much easier when my school suppl… Life      
-    ##  6 2018-08-23 01:43:50 "IS THERE A MORE ACCURATE REPRESENTATION OF M… IS        
-    ##  7 2018-08-23 00:36:12 "This is the 9th time I’ve heard Africa today… This      
-    ##  8 2018-08-22 17:22:21 "Just told an 11 year old boy what’s up bc he… Just      
-    ##  9 2018-08-22 13:56:58 "Fantasy football:"                            Fantasy   
-    ## 10 2018-08-22 13:53:41 "Caught me https://t.co/SvUL450t3D"            Caught    
-    ## # … with 366 more rows
-
-## Queen of the First Word Tweets
-
-The final result is amazing and definitely pretty much the greatest Twitter scheme ever.
-Hover over each word to see the text of the full tweet, or click on the word to go to the tweet.
-
+first_words %&gt;%
+  select(created_at, text, first_word)</code></pre>
+<pre><code>## # A tibble: 376 × 3
+##    created_at          text                                           first_word
+##    &lt;dttm&gt;              &lt;chr&gt;                                          &lt;chr&gt;     
+##  1 2018-08-23 18:43:27 &quot;IS IT JUST ME, OR DID I JUST PULL OFF THE GR… IS        
+##  2 2018-08-23 18:42:49 &quot;This is the moment I’ve been waiting for for… This      
+##  3 2018-08-23 17:53:19 &quot;The best state fair food is corn on the cob … The       
+##  4 2018-08-23 17:46:29 &quot;Real talk: idk what I’m going to do when my … Real      
+##  5 2018-08-23 04:35:54 &quot;Life was so much easier when my school suppl… Life      
+##  6 2018-08-23 01:43:50 &quot;IS THERE A MORE ACCURATE REPRESENTATION OF M… IS        
+##  7 2018-08-23 00:36:12 &quot;This is the 9th time I’ve heard Africa today… This      
+##  8 2018-08-22 17:22:21 &quot;Just told an 11 year old boy what’s up bc he… Just      
+##  9 2018-08-22 13:56:58 &quot;Fantasy football:&quot;                            Fantasy   
+## 10 2018-08-22 13:53:41 &quot;Caught me https://t.co/SvUL450t3D&quot;            Caught    
+## # … with 366 more rows</code></pre>
+<div id="final-result" class="section level2">
+<h2>Queen of the First Word Tweets</h2>
+<p>The final result is amazing and definitely pretty much the greatest Twitter scheme ever.
+Hover over each word to see the text of the full tweet, or click on the word to go to the tweet.</p>
 <blockquote>
 <a title="IS IT JUST ME, OR DID I JUST PULL OFF THE GREATEST TWITTER SCHEME OF ALL TIME?????
 
@@ -234,24 +227,18 @@ Me 3 months later: KEVIN WINGE (the author of my favorite Leadership readings) b
 Fly through my 8am final 
 HAVE THE BEST SUMMER EVER" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993689447173672961">To</a> <a title="Me ?? Turning in an assignment EARLY ??" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993633693888544768">Me</a> <a title="Any person who voted “fingers as long as legs” has never had acrylic nails" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993611975514120192">Any</a> <a title="Way too interested to see the results of that poll honesty" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993604782442115072">Way</a> <a title="The important questions are finally being asked https://t.co/oU1aHUcohi" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993604638426501121">The</a> <a title="Wind is the most reckless element" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993592702095843329">Wind</a> <a title="Blows my mind that school used to go into JUNE and somehow I tolorated it" style="color: #606060;" href="https://twitter.com/CostcoRiceBag/status/993553004967100416">Blows</a>
 </blockquote>
-
-In total, writing out the lyrics to Bohemian Rhapsody in reverse order took
-**376** tweets over
-**108** days.
-
-When did [@CostcoRiceBag](https://twitter.com/CostcoRiceBag) do most of their Queen-related tweeting?
-To get an idea of how often they tweeted, I created a calendar heatmap (or GitHub-style square tile plot) of their daily tweeting activities.
-
-<img src="/blog/2018/2018-08-24-costcoricebag_files/figure-html/tileplot-1.png" width="1152" />
-
-What’s really impressive is that, except for a few [Bismillah](https://twitter.com/CostcoRiceBag/status/1006312148497305601) and [Scaramouche](https://twitter.com/CostcoRiceBag/status/1017228225779511297) tweets, most of the tweets are really just
-[normal](https://twitter.com/CostcoRiceBag/status/1011437034035122178)
-[everyday](https://twitter.com/CostcoRiceBag/status/996618711535640577)
-[tweeting](https://twitter.com/CostcoRiceBag/status/1023396608426303489).
-I’d love to get into a textual analysis, but it’s late so I’ll leave you with this:
-
-{{% tweet "997437696476934144" %}}
-
-Rock on! 🤘
-
-![](https://media.giphy.com/media/3o6ZtjUZAD5Lf0QFLW/giphy.gif)
+<p>In total, writing out the lyrics to Bohemian Rhapsody in reverse order took
+<strong>376</strong> tweets over
+<strong>108</strong> days.</p>
+<p>When did <a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a> do most of their Queen-related tweeting?
+To get an idea of how often they tweeted, I created a calendar heatmap (or GitHub-style square tile plot) of their daily tweeting activities.</p>
+<p><img src="/blog/2018/2018-08-24-costcoricebag_files/figure-html/tileplot-1.png" width="1152" /></p>
+<p>What’s really impressive is that, except for a few <a href="https://twitter.com/CostcoRiceBag/status/1006312148497305601">Bismillah</a> and <a href="https://twitter.com/CostcoRiceBag/status/1017228225779511297">Scaramouche</a> tweets, most of the tweets are really just
+<a href="https://twitter.com/CostcoRiceBag/status/1011437034035122178">normal</a>
+<a href="https://twitter.com/CostcoRiceBag/status/996618711535640577">everyday</a>
+<a href="https://twitter.com/CostcoRiceBag/status/1023396608426303489">tweeting</a>.
+I’d love to get into a textual analysis, but it’s late so I’ll leave you with this:</p>
+<p>{{% tweet "997437696476934144" %}}</p>
+<p>Rock on! 🤘</p>
+<p><img src="https://media.giphy.com/media/3o6ZtjUZAD5Lf0QFLW/giphy.gif" /></p>
+</div>
