@@ -20,6 +20,7 @@ head_custom: |
   <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
 editor_options:
   chunk_output_type: console
+references: ~
 ---
 
 [usethis]: https://usethis.r-lib.org
