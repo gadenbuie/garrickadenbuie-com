@@ -1,5 +1,5 @@
 ---
-title: Blog
+title: My Blog
 description: >
   Mostly things I've figured out and wanted to share with you.
   Or remember later. Or things I wrote about because I wanted
