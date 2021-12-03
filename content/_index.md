@@ -5,8 +5,6 @@ description: >
   I use [R](https://r-project.org), [R Markdown](https://rmarkdown.rstudio.com),
   [Shiny](https://shiny.rstudio.com), and the tools of data science
   to help you teach and learn data science with R.
-images:
-  - img/revoir.jpg
 image_left: false
 text_align_left: true
 show_social_links: true # specify social accounts in site config
