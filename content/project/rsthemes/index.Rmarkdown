@@ -18,11 +18,11 @@ links:
 - icon: download # icon name without the 'fa-'
   icon_pack: fas
   name: Installation
-  url: #installation
+  url: /project/rsthemes/#installation
 - icon: info-circle # icon name without the 'fa-'
   icon_pack: fas
   name: Usage
-  url: #usage
+  url: /project/rsthemes/#usage
 ---
 
 [gh]: https://github.com/gadenbuie/rsthemes

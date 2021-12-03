@@ -7,9 +7,24 @@ slug: "mc-test-analysis"
 tags: ["R", "R Package"]
 categories:
   - Project
+links:
+- icon: github # icon name without the 'fa-'
+  icon_pack: fab
+  name: Source
+  url: https://github.com/gadenbuie/mctestanalysis
+- icon: bolt
+  icon_pack: fas
+  name: Try the App
+  url: "/project/mc-test-analysis/#try-online"
+- icon: download # icon name without the 'fa-'
+  icon_pack: fas
+  name: Installation
+  url: "/project/mc-test-analysis/#installation"
+- icon: info-circle # icon name without the 'fa-'
+  icon_pack: fas
+  name: Docs
+  url: https://pkg.garrickadenbuie.com/mctestanalysis/
 ---
-
-**Project Links:** [source][mctestanalysis], [documentation](https://gadenbuie.github.io/mctestanalysis/), [demo](https://apps.garrickadenbuie.com/mctestanalysis/)
 
 **Jump to:** [Try Online](#try-online) | [Installation](#installation) | [Usage](#usage) ([app](#explore) | [report](#report)) | [Data Format](#data-format) | [Built With](#built-with)
 

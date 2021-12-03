@@ -15,14 +15,14 @@ links:
   icon_pack: fab
   name: Source
   url: https://github.com/gadenbuie/ermoji
-- icon: door-open # icon name without the 'fa-'
+- icon: download # icon name without the 'fa-'
   icon_pack: fas
   name: Installation
-  url: #installation
+  url: /project/ermoji/#installation
 - icon: images # icon name without the 'fa-'
   icon_pack: fas
   name: Screenshots
-  url: #usage
+  url: /project/ermoji/#usage
 ---
 
 [ermoji-src]: https://github.com/gadenbuie/ermoji

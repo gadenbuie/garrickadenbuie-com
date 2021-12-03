@@ -8,13 +8,28 @@ type: project
 categories:
   - Project
 tags: ["R", "R Package", "Shiny", "RStudio", "Addin", "Gadget"]
+links:
+- icon: github # icon name without the 'fa-'
+  icon_pack: fab
+  name: Source
+  url: https://github.com/gadenbuie/regexplain
+- icon: bolt
+  icon_pack: fas
+  name: Try the App
+  url: "/project/regexplain/#demo"
+- icon: download # icon name without the 'fa-'
+  icon_pack: fas
+  name: Installation
+  url: "/project/regexplain/#installation"
+- icon: info-circle # icon name without the 'fa-'
+  icon_pack: fas
+  name: Usage
+  url: /project/regexplain/#overview
 ---
 
 
 
 [regexplain-src]: https://github.com/gadenbuie/regexplain
-
-**Project Links:** [source][regexplain-src], [installation](#installation), [try the app](#demo), [overview](#overview)
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;

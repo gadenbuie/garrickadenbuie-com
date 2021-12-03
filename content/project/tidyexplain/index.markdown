@@ -13,6 +13,11 @@ tags:
   - dplyr
   - tidyr
   - R
+links:
+- icon: github # icon name without the 'fa-'
+  icon_pack: fab
+  name: Source
+  url: https://github.com/gadenbuie/tidyexplain
 ---
 
 ## Tidy Animated Verbs
