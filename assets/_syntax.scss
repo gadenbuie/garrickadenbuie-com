@@ -55,7 +55,6 @@
     /* KeywordType */
     color: var(--pink-40);
     background-color: var(--pink-90);
-    font-weight: 500;
   }
 
   // Names -------------------------------
@@ -72,13 +71,13 @@
   /* NameClass */
   .nc {
     color: var(--purple-20);
-    font-weight: 500;
+
   }
 
   /* NameConstant */
   .no {
     color: var(--slate-20);
-    font-weight: 500;
+
   }
 
   /* NameDecorator */
@@ -89,7 +88,7 @@
   /* NameException */
   .ne {
     color: var(--pink-50);
-    font-weight: 500;
+
   }
 
   /* NameFunction */
@@ -107,19 +106,19 @@
   /* NameNamespace */
   .nn {
     color: var(--orange-40);
-    font-weight: 500;
+
   }
 
   /* NameProperty */
   .py {
     color: var(--orange-40);
-    font-weight: 500;
+
   }
 
   /* NameTag */
   .nt {
     color: var(--purple-20);
-    font-weight: 500;
+
   }
 
   /* NameVariable */
@@ -180,7 +179,7 @@
     /* LiteralNumberOct */
     color: var(--red-40);
     background-color: var(--red-90);
-    font-weight: 500;
+
   }
   /* OperatorWord */
   .ow {
@@ -209,7 +208,7 @@
   .cp,
   .cpf {
     color: #cc0000;
-    font-weight: 500;
+
   }
 
   /* GenericDeleted */
