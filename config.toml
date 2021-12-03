@@ -82,6 +82,19 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   #  theme = "boxy-light"
   #  label = "comments :crystal_ball:"
 
+  # Configuration of https://giscus.app/ for comments
+  [params.giscus]
+    use_giscus = true
+    repo = "gadenbuie/garrickadenbuie-com"
+    repo_id = "MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ"
+    category = "Comments"
+    category_id = "DIC_kwDOB0UOXs4CAIFZ"
+    mapping = "pathname"
+    reactions_enabled = "1"
+    emit_metadata = "0"
+    theme = "preferred_color_scheme"
+    lang = "en"
+
   # Configuration of math rendering
   [params.math]
     renderer = "katex" # one of "mathjax" / "katex"

@@ -31,7 +31,7 @@ cascade:
   show_author_byline: false
   show_post_date: true
   show_post_time: false
-  show_comments: false # see site config to choose Disqus or Utterances
+  show_comments: true # see site config to choose Disqus or Utterances
   # for single-sidebar layout
   sidebar:
     text_link_label: View recent talks
