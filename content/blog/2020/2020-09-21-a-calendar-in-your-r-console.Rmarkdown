@@ -8,7 +8,8 @@ categories:
 tags:
   - R
   - lubridate
-description: post description
+description: >
+  Print a nicely-formatted calendar in your R console.
 images:
   - /blog/r-console-calendar/social-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmd'
@@ -25,6 +26,7 @@ knitr::opts_chunk$set(
   echo = FALSE, warning = FALSE, message = FALSE,
   fig.width = 9, fig.height = 10
 )
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 options(htmltools.dir.version = TRUE)
 ```
 
@@ -67,7 +69,7 @@ tweetrmd::tweet_screenshot(
 
 This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622; &#x1F937;&#x200D;.
 
-So I used <span class="pkg"><span class="pkg">lubridate]</span> and [[crayon](https://github.com/r-lib/crayon)</span>
+So I used <span class="pkg">[lubridate]</span> and <span class="pkg">[crayon](https://github.com/r-lib/crayon)</span>
 to recreate `cal` with an R function `cal()`.
 I'm not going to do a full walk through of the code,
 but I still wanted to share it.

@@ -8,7 +8,8 @@ categories:
 tags:
   - R
   - lubridate
-description: post description
+description: >
+  Print a nicely-formatted calendar in your R console.
 images:
   - /blog/r-console-calendar/social-card.png
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmd'
@@ -46,14 +47,14 @@ system("cal")
 ```
 
 ```
-   November 2021
-Su Mo Tu We Th Fr Sa
-    1  2  3  4  5  6
- 7  8  9 10 11 12 13
-14 15 16 17 18 19 20
-21 22 23 24 25 26 27
-28 29 30
-
+   December 2021      
+Su Mo Tu We Th Fr Sa  
+          1  2  3  4  
+ 5  6  7  8  9 10 11  
+12 13 14 15 16 17 18  
+19 20 21 22 23 24 25  
+26 27 28 29 30 31     
+                      
 ```
 
 Here's Mike's [original tweet](https://twitter.com/coolbutuseless/status/1308163906674790402).
@@ -64,7 +65,7 @@ Here's Mike's [original tweet](https://twitter.com/coolbutuseless/status/1308163
 
 This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622; &#x1F937;&#x200D;.
 
-So I used <span class="pkg"><span class="pkg">lubridate]</span> and [[crayon](https://github.com/r-lib/crayon)</span>
+So I used <span class="pkg">[lubridate]</span> and <span class="pkg">[crayon](https://github.com/r-lib/crayon)</span>
 to recreate `cal` with an R function `cal()`.
 I'm not going to do a full walk through of the code,
 but I still wanted to share it.
@@ -251,16 +252,16 @@ cal("2020-09", "2020-12")
  7  8  9 10 11 <span style='color: #555555;'>12</span> <span style='color: #555555;'>13</span>     5  6  7  8  9 <span style='color: #555555;'>10</span> <span style='color: #555555;'>11</span>
 14 15 16 17 18 <span style='color: #555555;'>19</span> <span style='color: #555555;'>20</span>    12 13 14 15 16 <span style='color: #555555;'>17</span> <span style='color: #555555;'>18</span>
 21 22 23 24 25 <span style='color: #555555;'>26</span> <span style='color: #555555;'>27</span>    19 20 21 22 23 <span style='color: #555555;'>24</span> <span style='color: #555555;'>25</span>
-28 29 30                26 27 28 29 30 <span style='color: #555555;'>31</span>
-
+28 29 30                26 27 28 29 30 <span style='color: #555555;'>31</span>   
+                                            
 
 <span style='font-weight: bold;'>    November 2020   </span>    <span style='font-weight: bold;'>    December 2020   </span>
                   <span style='color: #555555;'> 1</span>        1  2  3  4 <span style='color: #555555;'> 5</span> <span style='color: #555555;'> 6</span>
  2  3  4  5  6 <span style='color: #555555;'> 7</span> <span style='color: #555555;'> 8</span>     7  8  9 10 11 <span style='color: #555555;'>12</span> <span style='color: #555555;'>13</span>
  9 10 11 12 13 <span style='color: #555555;'>14</span> <span style='color: #555555;'>15</span>    14 15 16 17 18 <span style='color: #555555;'>19</span> <span style='color: #555555;'>20</span>
 16 17 18 19 20 <span style='color: #555555;'>21</span> <span style='color: #555555;'>22</span>    21 22 23 24 25 <span style='color: #555555;'>26</span> <span style='color: #555555;'>27</span>
-23 24 25 26 27 <span style='color: #555555;'>28</span> <span style='color: #555555;'>29</span>    28 29 30 31
-30
+23 24 25 26 27 <span style='color: #555555;'>28</span> <span style='color: #555555;'>29</span>    28 29 30 31         
+30                                          
 </CODE></PRE>
 
 ***
