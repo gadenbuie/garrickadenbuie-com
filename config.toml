@@ -39,10 +39,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   logo = "static/letter-g.svg"
   logo_is_svg = true
   mainSections = ["blog", "project", "talk"]
-  navallcaps = true
+  navallcaps = false
   # show/hide social icons in site header & footer
   # configure social icons and links below in [[params.social]]
-  socialInHeader = false
+  socialInHeader = true
   socialInFooter = true
   # Default image for social sharing and search engines.
   # Place image file in `static` folder and specify image name here.

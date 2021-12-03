@@ -19,11 +19,11 @@
         {{ $active = or $active (eq $page.RelPermalink .URL ) }}
       <a class="link f6 f5-l dib pv1 ph2 {{ if $active }}active{{ end }}" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
       {{ end }}
-      {{ if .Site.Params.socialInHeader }}
-      <div class="dib v-mid">
-        {{ partial "shared/social-links.html" . }}
-      </div>
-      {{ end }}
     </div>
   </nav>
+  {{ if .Site.Params.socialInHeader }}
+  <div class="flex justify-center justify-end-ns mt3 mt2-ns">
+    {{ partial "shared/social-links.html" . }}
+  </div>
+  {{ end }}
 </header>
