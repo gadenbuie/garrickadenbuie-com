@@ -22,7 +22,7 @@ links:
   - icon: home
     icon_pack: fas
     name: Website
-    url: hhttps://presentable-user2021.netlify.app/
+    url: https://presentable-user2021.netlify.app/
   - icon: chalkboard-teacher
     icon_pack: fas
     name: Slides
