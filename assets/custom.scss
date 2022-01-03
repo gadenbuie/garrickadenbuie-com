@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,500;1,200;1,500&family=Montserrat:ital,wght@0,500;1,500&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,300;1,500&family=Poppins:ital,wght@0,300;0,400;1,300&display=swap');
 @import '_syntax';
 
 body {
@@ -52,8 +52,9 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 1.75em;
+  margin-top: 1.66em;
   font-weight: inherit;
+  margin-bottom: 0.66em;
 }
 
 h1,
