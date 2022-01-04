@@ -56,9 +56,9 @@ links:
 
 Please feel free to use these images for teaching or learning about
 action verbs from the [tidyverse](https://tidyverse.org). You can
-directly download the [original animations](https://github.com/gadenbuie/tidyexplain/blob/master/images/) or static images in
-[svg](https://github.com/gadenbuie/tidyexplain/blob/master/images/static/svg/) or [png](https://github.com/gadenbuie/tidyexplain/blob/master/images/static/png/) formats, or you
-can use the [scripts](https://github.com/gadenbuie/tidyexplain/blob/master/R/) to recreate the images locally.
+directly download the [original animations](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/) or static images in
+[svg](https://github.com/gadenbuie/tidyexplain/blob/main/images/static/svg/) or [png](https://github.com/gadenbuie/tidyexplain/blob/main/images/static/png/) formats, or you
+can use the [scripts](https://github.com/gadenbuie/tidyexplain/blob/main/R/) to recreate the images locally.
 
 Currently, the animations cover the [dplyr two-table
 verbs](https://dplyr.tidyverse.org/articles/two-table.html) and I’d like
@@ -129,7 +129,7 @@ y
 > All rows from `x` where there are matching values in `y`, and all
 > columns from `x` and `y`.
 
-![](images/inner-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/inner-join.gif)
 
 ``` r
 inner_join(x, y, by = "id")
@@ -145,7 +145,7 @@ inner_join(x, y, by = "id")
 > All rows from `x`, and all columns from `x` and `y`. Rows in `x` with
 > no match in `y` will have `NA` values in the new columns.
 
-![](images/left-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join.gif)
 
 ``` r
 left_join(x, y, by = "id")
@@ -162,7 +162,7 @@ left_join(x, y, by = "id")
 > … If there are multiple matches between `x` and `y`, all combinations
 > of the matches are returned.
 
-![](images/left-join-extra.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join-extra.gif)
 
 ``` r
 y_extra # has multiple rows with the key from `x`
@@ -188,7 +188,7 @@ left_join(x, y_extra, by = "id")
 > All rows from y, and all columns from `x` and `y`. Rows in `y` with no
 > match in `x` will have `NA` values in the new columns.
 
-![](images/right-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/right-join.gif)
 
 ``` r
 right_join(x, y, by = "id")
@@ -205,7 +205,7 @@ right_join(x, y, by = "id")
 > All rows and all columns from both `x` and `y`. Where there are not
 > matching values, returns `NA` for the one missing.
 
-![](images/full-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/full-join.gif)
 
 ``` r
 full_join(x, y, by = "id")
@@ -232,7 +232,7 @@ full_join(x, y, by = "id")
 > All rows from `x` where there are matching values in `y`, keeping just
 > columns from `x`.
 
-![](images/semi-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/semi-join.gif)
 
 ``` r
 semi_join(x, y, by = "id")
@@ -248,7 +248,7 @@ semi_join(x, y, by = "id")
 > All rows from `x` where there are not matching values in `y`, keeping
 > just columns from `x`.
 
-![](images/anti-join.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/anti-join.gif)
 
 ``` r
 anti_join(x, y, by = "id")
@@ -290,7 +290,7 @@ y
 
 > All unique rows from `x` and `y`.
 
-![](images/union.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union.gif)
 
 ``` r
 union(x, y)
@@ -303,7 +303,7 @@ union(x, y)
 #> 4 2     b
 ```
 
-![](images/union-rev.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-rev.gif)
 
 ``` r
 union(y, x)
@@ -320,7 +320,7 @@ union(y, x)
 
 > All rows from `x` and `y`, keeping duplicates.
 
-![](images/union-all.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-all.gif)
 
 ``` r
 union_all(x, y)
@@ -338,7 +338,7 @@ union_all(x, y)
 
 > Common rows in both `x` and `y`, keeping just unique rows.
 
-![](images/intersect.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/intersect.gif)
 
 ``` r
 intersect(x, y)
@@ -353,7 +353,7 @@ intersect(x, y)
 > All rows from `x` which are not also rows in `y`, keeping just unique
 > rows.
 
-![](images/setdiff.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff.gif)
 
 ``` r
 setdiff(x, y)
@@ -364,7 +364,7 @@ setdiff(x, y)
 #> 2 2     a
 ```
 
-![](images/setdiff-rev.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff-rev.gif)
 
 ``` r
 setdiff(y, x)
@@ -388,7 +388,7 @@ to be formatted as a tidy dataset and the
 [tidyr](https://tidyr.tidyverse.org) package provides functions to help
 you organize your data into tidy data.
 
-![](images/static/png/original-dfs-tidy.png)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/static/png/original-dfs-tidy.png)
 
 ``` r
 wide
@@ -436,7 +436,7 @@ pivot_longer(data, cols = x:y, names_to = "key", values_to = "val")
 > `pivot_longer()` “lengthens” data, increasing the number of rows and
 > decreasing the number of columns.
 
-![](images/tidyr-pivoting.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-pivoting.gif)
 
 ### Spread and Gather
 
@@ -456,7 +456,7 @@ gather(data, key = "key", value = "value", ...)
 > notice that your column names are not names of variables, but *values*
 > of a variable.
 
-![](images/tidyr-spread-gather.gif)
+![](https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-spread-gather.gif)
 
 ``` r
 gather(wide, key, val, x:z)
