@@ -115,9 +115,14 @@ remotes::install_github("gadenbuie/xaringanExtra")
 ```{r info-icon, echo=FALSE}
 info <- function(slug) {
   htmltools::withTags(
+    .noWS = c("before-end", "after-begin", "outside"),
     a(
       href = paste0("#", slug),
-      i(class = "fa fa-info-circle")
+      title = "Jump to section",
+      class = "ml1 no-underline",
+      i(class = "fa fa-info-circle", 
+        span(class = "sr-only", "jump to section")
+      )
     )
   )
 }
@@ -125,19 +130,19 @@ info <- function(slug) {
 
 ::: {.checklist}
 
-- <input type="checkbox"></input> `r info("fill-in-metadata")` Fill in metadata with <span class="pkg">metathis</span>
+- <input type="checkbox"></input> Fill in metadata with <span class="pkg">metathis</span> `r info("fill-in-metadata")`
 
-- <input type="checkbox"></input> `r info("create-a-social-media-card")` Create a social media card
+- <input type="checkbox"></input> Create a social media card `r info("create-a-social-media-card")`
 
-- <input type="checkbox"></input> `r info("add-a-share-bar")` Add a "share bar" with `use_share_again()` from <span class="pkg">xaringanExtra</span>
+- <input type="checkbox"></input> Add a "share bar" with `use_share_again()` from <span class="pkg">xaringanExtra</span> `r info("add-a-share-bar")`
 
-- <input type="checkbox"></input> `r info("get-your-slides-online")` Get your slides online
+- <input type="checkbox"></input> Get your slides online `r info("get-your-slides-online")`
 
-- <input type="checkbox"></input> `r info("pre-flight-checks")` Pre-flight checks
+- <input type="checkbox"></input> Pre-flight checks `r info("pre-flight-checks")`
 
-- <input type="checkbox"></input> `r info("embed-your-slides")` Embed your slides with `embed_xaringan()` from <span class="pkg">xaringanExtra</span>
+- <input type="checkbox"></input> Embed your slides with `embed_xaringan()` from <span class="pkg">xaringanExtra</span> `r info("embed-your-slides")`
 
-- <input type="checkbox"></input> `r info("share-with-the-world")` Share with the world!
+- <input type="checkbox"></input> Share with the world! `r info("share-with-the-world")`
 
 :::
 

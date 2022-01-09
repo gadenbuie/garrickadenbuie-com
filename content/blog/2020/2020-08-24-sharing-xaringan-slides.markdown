@@ -78,61 +78,19 @@ remotes::install_github("gadenbuie/xaringanExtra")
 
 <div class="checklist">
 
--   <input type="checkbox"></input>
+-   <input type="checkbox"></input> Fill in metadata with <span class="pkg">metathis</span> <a href="#fill-in-metadata" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
-<a href="#fill-in-metadata">
-<i class="fa fa-info-circle"></i>
-</a>
+-   <input type="checkbox"></input> Create a social media card <a href="#create-a-social-media-card" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
-Fill in metadata with <span class="pkg">metathis</span>
+-   <input type="checkbox"></input> Add a “share bar” with `use_share_again()` from <span class="pkg">xaringanExtra</span> <a href="#add-a-share-bar" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
--   <input type="checkbox"></input>
+-   <input type="checkbox"></input> Get your slides online <a href="#get-your-slides-online" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
-<a href="#create-a-social-media-card">
-<i class="fa fa-info-circle"></i>
-</a>
+-   <input type="checkbox"></input> Pre-flight checks <a href="#pre-flight-checks" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
-Create a social media card
+-   <input type="checkbox"></input> Embed your slides with `embed_xaringan()` from <span class="pkg">xaringanExtra</span> <a href="#embed-your-slides" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
--   <input type="checkbox"></input>
-
-<a href="#add-a-share-bar">
-<i class="fa fa-info-circle"></i>
-</a>
-
-Add a “share bar” with `use_share_again()` from <span class="pkg">xaringanExtra</span>
-
--   <input type="checkbox"></input>
-
-<a href="#get-your-slides-online">
-<i class="fa fa-info-circle"></i>
-</a>
-
-Get your slides online
-
--   <input type="checkbox"></input>
-
-<a href="#pre-flight-checks">
-<i class="fa fa-info-circle"></i>
-</a>
-
-Pre-flight checks
-
--   <input type="checkbox"></input>
-
-<a href="#embed-your-slides">
-<i class="fa fa-info-circle"></i>
-</a>
-
-Embed your slides with `embed_xaringan()` from <span class="pkg">xaringanExtra</span>
-
--   <input type="checkbox"></input>
-
-<a href="#share-with-the-world">
-<i class="fa fa-info-circle"></i>
-</a>
-
-Share with the world!
+-   <input type="checkbox"></input> Share with the world! <a href="#share-with-the-world" title="Jump to section" class="ml1 no-underline"><i class="fa fa-info-circle"><span class="sr-only">jump to section</span></i></a>
 
 </div>
 
@@ -377,7 +335,7 @@ chances are that your share image will look okay…
 but not *perfect*.
 In particular,
 if you’re targeting Twitter
-(for sharing with [\#rstats](https://twitter.com/hashtag/rstats)),
+(for sharing with [#rstats](https://twitter.com/hashtag/rstats)),
 you might find that parts of your preview image
 are cut off if the image width and height aren’t *just right*.
 
