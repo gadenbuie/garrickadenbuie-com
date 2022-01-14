@@ -68,11 +68,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   # sans-serif options: Commissioner / Atkinson Hyperlegible / Metropolis
   # if you import your own fonts, name them here too
   customtextFontFamily = ""
-  customheadingFontFamily = "Poppins"
+  customheadingFontFamily = "Roboto Slab, Merriweather, Georgia, serif"
   # alternatively, leave empty and select basic font options: sans-serif or serif
   # for more http://tachyons.io/docs/typography/font-family/
   textFontFamily = "sans-serif"
-  headingFontFamily = "avenir"
+  headingFontFamily = "avenir next,avenir,Poppins,sans-serif"
 
   # Configuration of https://utteranc.es/ for comments
   #[params.utterances]

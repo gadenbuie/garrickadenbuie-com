@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,300;1,500&family=Poppins:ital,wght@0,300;0,400;1,300&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,300;1,500&family=Roboto+Slab:wght@400;500;700&display=swap');
 @import '_syntax';
 
 body {
@@ -53,7 +53,7 @@ h4,
 h5,
 h6 {
   margin-top: 1.66em;
-  font-weight: inherit;
+  font-weight: 400;
   margin-bottom: 0.66em;
 }
 
@@ -63,6 +63,7 @@ h3,
 h4,
 h5,
 h6 {
+  color: var(--blue-10);
   a {
     text-decoration: none;
   }
@@ -120,7 +121,12 @@ a {
 }
 
 .lead {
-  @extend .f4, .lh-copy, .avenir;
+  @extend .f3, .lh-copy;
+  font-weight: 300;
+}
+
+.serif {
+  font-family: Roboto Slab, Merriweather, Georgia, serif;
 }
 
 .figure {
@@ -163,9 +169,9 @@ figure figcaption h4,
 .home {
   .action {
     &.button, &.text {
+      @extend .serif;
       text-transform: none;
-      @extend .avenir;
-      font-weight: 400;
+      font-weight: 500;
     }
   }
 }
