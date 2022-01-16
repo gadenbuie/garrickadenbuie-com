@@ -26,6 +26,35 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
+```{r wordle-component, echo=FALSE}
+wordle_component <- function(word, answer, large = TRUE) {
+  word <- str_split(word, "")[[1]]
+  answer <- str_split(answer, "")[[1]]
+  letters <- map2(word, answer, function(letter, ans) {
+    if (ans == ".") {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "incorrect"),
+        letter,
+        htmltools::span(class = "sr-only", "(incorrect)")
+      )
+    } else if (ans == "-") {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "in-solution"),
+        letter,
+        htmltools::span(class = "sr-only", "(in solution, wrong position)")
+      )
+    } else {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "correct"),
+        letter,
+        htmltools::span(class = "sr-only", "(correct)")
+      )
+    }
+  })
+  htmltools::div(class = "wordle", letters)
+}
+```
+
 ## Setup
 
 [wordle] is...
@@ -41,26 +70,27 @@ library(purrr)
 library(stringr)
 
 words <- 
-  words::words %>% 
+  words::words %>%
+  as_tibble() %>%
   filter(word_length == 5) %>% 
   select(-word_length)
 
-head(words)
+words
 ```
 
 Letter frequency of appearance in a word
 
 ```{r letter-freq}
-letter_freq <- 
-  words %>% 
+letter_freq <-
+  words %>%
   pull(word) %>% 
-  str_split("") %>% 
+  str_split("") %>%
   map(unique) %>%
-  unlist() %>% 
+  unlist() %>%
   table() %>%
-  sort() %>% 
-  rev() %>% 
-  `/`(nrow(words)) %>% 
+  sort() %>%
+  rev() %>%
+  `/`(nrow(words)) %>%
   c()
 
 letter_freq
@@ -88,6 +118,20 @@ letter_freq_pos
 
 ## First Choice
 
+```{r entropy}
+score_entropy <- function(word) {
+  chars <- str_split(word, "")[[1]]
+  p <- letter_freq[chars]
+  # we learn something but not much from duplicated letters
+  p[duplicated(chars)] <- min(letter_freq)
+  - sum(p * log(p, base = 2))
+}
+
+words %>% 
+  mutate(score = map_dbl(word, score_entropy)) %>% 
+  arrange(desc(score))
+```
+
 ```{r points}
 score_choice <- function(word) {
   word_len <- str_length(word)
@@ -98,11 +142,10 @@ score_choice <- function(word) {
 
 words_first_choice <- 
   words %>% 
-  mutate(score = map_dbl(word, score_choice)) %>% 
+  mutate(score = map_dbl(word, score_entropy)) %>% 
   arrange(desc(score))
 
-words_first_choice %>% 
-  slice_max(score, n = 10)
+words_first_choice
 ```
 
 According to this, the best first-choice words are
@@ -115,7 +158,7 @@ After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
 1. &#x2B1B; aren't in the solution
-2. &#x1F7E8; are in the solution, but not where you guessed
+2. &#x1F7E8; are in the solution but not where you guessed
 3. &#x1F7E9; are in the solution and are where you guessed
 
 What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
@@ -127,14 +170,13 @@ str_has_none_of <- function(words, letters) {
 }
 
 words_first_choice %>% 
-  filter(str_has_none_of(word, c("a", "r", "o", "s", "e"))) %>% 
-  slice_max(score, n = 10)
+  filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
 ```
 
-If none of the letters in **arose** and **unlit** appear in the solution, then your answer is most definitely...
+If none of the letters in **arose** and **until** appear in the solution, then your answer is most definitely...
 
 ```{r third-strike}
-letters_guess <- str_split("arose unlit", "")[[1]]
+letters_guess <- str_split("arose until", "")[[1]]
 
 words_first_choice %>% 
   filter(str_has_none_of(word, letters_guess))
@@ -144,12 +186,14 @@ If you learn something from the guess, though, you can filter the word list base
 
 <!-- arose, intro, motor -->
 
-Say we guess **arose** and wordle reveals that <kbd>R</kbd> and <kbd>O</kbd> appear in the solution.
+`r wordle_component("arose", ".--..")`
+
+Say we guess **arose** and wordle reveals that [R]{.letter} and [O]{.letter} appear in the solution.
 We now know that the solution:
 
-1. Doesn't have <kbd>A</kbd>, <kbd>S</kbd> or <kbd>E</kbd>
-1. Does contain <kbd>R</kbd> and <kbd>O</kbd>
-1. Doesn't have <kbd>R</kbd> as the 2^nd^ letter and <kbd>O</kbd> as the 3^rd^.
+1. Doesn't have [A]{.letter}, [S]{.letter} or [E]{.letter}
+1. Does contain [R]{.letter} and [O]{.letter}
+1. Doesn't have [R]{.letter} as the 2^nd^ letter and [O]{.letter} as the 3^rd^.
 
 We've already implemented step 1 as `str_has_none_of()`.
 We also need a similar version called `str_has_all_of()`.
@@ -173,23 +217,20 @@ words_first_choice %>%
     str_has_none_of(word, c("a", "s", "e")),
     str_has_all_of(word, c("r", "o")),
     str_detect(word, ".[^r][^o]..")
-  ) %>% 
-  slice_head(n = 10)
+  )
 ```
 
 **lirot** is an unusual word, so let's choose the next word on the list: **intro**.
 
-```{=html}
-<pre><code>i n t r o
-&#x2B1B;&#x2B1B;&#x1F7E9;&#x1F7E8;&#x1F7E8;</code></pre>
-```
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
 
-wordle thinks and tells us that we have <kbd>T</kbd> in the right spot!
-Also, we now know that <kbd>I</kbd> and <kbd>N</kbd> aren't in the solution,
-and we still haven't got <kbd>R</kbd> and <kbd>O</kbd> in the right place.
+wordle thinks and tells us that we have [T]{.letter} in the right spot!
+Also, we now know that [I]{.letter} and [N]{.letter} aren't in the solution,
+and we still haven't got [R]{.letter} and [O]{.letter} in the right place.
 
 We can repeat the step above, but using a new regular expression: `".[^r]t[^r][^o]"`.
-Notice that we know a little more about where <kbd>R</kbd> and <kbd>O</kbd> _can't be_,
+Notice that we know a little more about where [R]{.letter} and [O]{.letter} _can't be_,
 but importantly we have `t` as the middle character.
 
 This leaves us with a few good choices:
@@ -214,8 +255,8 @@ But no, let's power forward and add more complexity to this blog post.
 
 What if we switched our scoring at this point and considered the position of the letters in the candidate words?
 Doing something medium-naive, let's frame this as:
-what's the probability of <kbd>T</kbd> in the first position **and**
-<kbd>U</kbd> in the second **and** so on...
+what's the probability of [T]{.letter} in the first position **and**
+[U]{.letter} in the second **and** so on...
 
 ```{r}
 score_by_position <- function(word) {
@@ -236,8 +277,7 @@ words_score_pos <-
   mutate(score_pos = map_dbl(word, score_by_position)) %>%
   arrange(desc(score_pos))
 
-words_score_pos %>% 
-  slice_max(score_pos, n = 15)
+words_score_pos
 ```
 
 If we join this with our "new information" score, we now have to scores to choose from:
@@ -254,7 +294,12 @@ words_first_choice %>%
 ```
 
 Now we see that **motor** and **rotor** are the most likely words based on their position.
-We guess **motor**... and we're right.
+We guess **motor**... and we're right!
+
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
+`r wordle_component("motor", "+++++")`
+
 It only took three guesses!
 It's almost like I planned this example to work out just like I wanted.
 
@@ -310,6 +355,13 @@ summarize_guesses <- function(guesses, results) {
   
   pattern <- coalesce(coalesce(exact, exclude), ".")
   
+  # Say you guess a word with two Ts, 
+  # but there's only one T in the solution.
+  # T will appear on keep and discard bucket,
+  # so we need to explicitly keep it.
+  # (we could use that info, though, e.g. at most 1 T)
+  bucket_discard <- setdiff(bucket_discard, bucket_keep)
+  
   list(
     discard = unique(bucket_discard),
     keep = unique(bucket_keep),
@@ -361,6 +413,8 @@ score_next_guess(
 )
 ```
 
+How did this work for me today?
+
 ```{r live}
 # 2022-01-16
 score_next_guess(
@@ -372,4 +426,100 @@ score_next_guess(
   guesses = c("arose", "solar"),
   results = c("----.", "+++++")
 )
+```
+
+How can we get to igloo?
+
+```{r igloo}
+score_next_guess(
+  guesses = c("arose"),
+  results = c("..-..")
+)
+
+score_next_guess(
+  guesses = c("arose", "indol"),
+  results = c("..-..", "+..+-")
+)
+
+score_next_guess(
+  guesses = c("arose", "indol", "igloo"),
+  results = c("..-..", "+..+-", "+++++")
+)
+```
+
+Ferry furor?
+
+```{r ferry}
+score_next_guess(
+  guesses = c("arose"),
+  results = c(".-..-")
+)
+
+score_next_guess(
+  guesses = c("arose", "liter"),
+  results = c(".-..-", "...--")
+) %>% 
+  arrange(desc(score_pos))
+
+# skip berry and perry
+score_next_guess(
+  guesses = c("arose", "liter", "ferny"),
+  results = c(".-..-", "...--", "+++.+")
+)
+
+score_next_guess(
+  guesses = c("arose", "liter", "ferny", "ferry"),
+  results = c(".-..-", "...--", "+++.+", "+++++")
+)
+```
+
+
+```{css echo=FALSE}
+.wordle {
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  min-width: 8em;
+}
+.letter {
+  display: inline-flex;
+  height: 1em;
+  width: 1em;
+  border: 2px rgba(125, 125, 125, 0.25) solid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.2em;
+  text-transform: uppercase;
+}
+.letter-large {
+  font-size: 2em;
+  height: 1.5em;
+  width: 1.5em;
+}
+.letter.incorrect {
+  color: var(--slate-20);
+  background-color: var(--slate-80);
+}
+.letter.correct {
+  color: var(--green-20);
+  background-color: var(--green-80);
+}
+.letter.in-solution {
+  color: var(--orange-20);
+  background-color: var(--orange-80);
+}
+@media (prefers-color-scheme: dark) {
+  .letter.incorrect {
+    color: var(--slate-80);
+    background-color: var(--slate-30);
+  }
+  .letter.correct {
+    color: var(--green-80);
+    background-color: var(--green-30);
+  }
+  .letter.in-solution {
+    color: var(--orange-80);
+    background-color: var(--orange-30);
+  }
+}
 ```
