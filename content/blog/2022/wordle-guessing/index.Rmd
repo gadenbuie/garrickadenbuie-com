@@ -407,10 +407,20 @@ score_next_guess(
   guesses = c("arose", "intro"), 
   results = c(".--..", "..+--")
 )
+
 score_next_guess(
   guesses = c("arose", "intro", "rotch"), 
   results = c(".--..", "..+--", "-++..")
 )
+```
+
+```{r replay-view, echo=FALSE}
+map2(
+  c("arose", "intro", "rotch", "motor"), 
+  c(".--..", "..+--", "-++..", "+++++"),
+  wordle_component
+) %>% 
+  htmltools::tagList()
 ```
 
 How did this work for me today?
@@ -421,11 +431,15 @@ score_next_guess(
   guesses = c("arose"),
   results = c("----.")
 )
+```
 
-score_next_guess(
-  guesses = c("arose", "solar"),
-  results = c("----.", "+++++")
-)
+```{r live-view, echo=FALSE}
+map2(
+  c("arose", "solar"),
+  c("----.", "+++++"),
+  wordle_component
+) %>% 
+  htmltools::tagList()
 ```
 
 How can we get to igloo?
@@ -440,11 +454,15 @@ score_next_guess(
   guesses = c("arose", "indol"),
   results = c("..-..", "+..+-")
 )
+```
 
-score_next_guess(
-  guesses = c("arose", "indol", "igloo"),
-  results = c("..-..", "+..+-", "+++++")
-)
+```{r igloo-view, echo=FALSE}
+map2(
+  c("arose", "indol", "igloo"),
+  c("..-..", "+..+-", "+++++"),
+  wordle_component
+) %>% 
+  htmltools::tagList()
 ```
 
 Ferry furor?
@@ -466,11 +484,15 @@ score_next_guess(
   guesses = c("arose", "liter", "ferny"),
   results = c(".-..-", "...--", "+++.+")
 )
+```
 
-score_next_guess(
-  guesses = c("arose", "liter", "ferny", "ferry"),
-  results = c(".-..-", "...--", "+++.+", "+++++")
-)
+```{r ferry-view, echo=FALSE}
+map2(
+  c("arose", "liter", "ferny", "ferry"),
+  c(".-..-", "...--", "+++.+", "+++++"),
+  wordle_component
+) %>% 
+  htmltools::tagList()
 ```
 
 

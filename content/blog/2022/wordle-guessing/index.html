@@ -577,6 +577,94 @@ words_first_choice %&gt;%
 ##   word  score  score_pos
 ##   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 motor  2.00 0.00000129</code></pre>
+<div class="wordle">
+<span class="letter letter-large incorrect">
+a
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+o
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large incorrect">
+s
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+e
+<span class="sr-only">(incorrect)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large incorrect">
+i
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+n
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large correct">
+t
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+o
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+t
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large incorrect">
+c
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+h
+<span class="sr-only">(incorrect)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+m
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+t
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+r
+<span class="sr-only">(correct)</span>
+</span>
+</div>
 <p>How did this work for me today?</p>
 <pre class="r"><code># 2022-01-16
 score_next_guess(
@@ -597,14 +685,50 @@ score_next_guess(
 ##  9 sarod  2.53 0.00000666  
 ## 10 oscar  2.51 0.0000000235
 ## # … with 18 more rows</code></pre>
-<pre class="r"><code>score_next_guess(
-  guesses = c(&quot;arose&quot;, &quot;solar&quot;),
-  results = c(&quot;----.&quot;, &quot;+++++&quot;)
-)</code></pre>
-<pre><code>## # A tibble: 1 × 3
-##   word  score  score_pos
-##   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
-## 1 solar  2.58 0.00000591</code></pre>
+<div class="wordle">
+<span class="letter letter-large in-solution">
+a
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+o
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+s
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large incorrect">
+e
+<span class="sr-only">(incorrect)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+s
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+l
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+a
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+r
+<span class="sr-only">(correct)</span>
+</span>
+</div>
 <p>How can we get to igloo?</p>
 <pre class="r"><code>score_next_guess(
   guesses = c(&quot;arose&quot;),
@@ -632,14 +756,72 @@ score_next_guess(
 ##   word  score     score_pos
 ##   &lt;chr&gt; &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 igloo  1.96 0.00000000817</code></pre>
-<pre class="r"><code>score_next_guess(
-  guesses = c(&quot;arose&quot;, &quot;indol&quot;, &quot;igloo&quot;),
-  results = c(&quot;..-..&quot;, &quot;+..+-&quot;, &quot;+++++&quot;)
-)</code></pre>
-<pre><code>## # A tibble: 1 × 3
-##   word  score     score_pos
-##   &lt;chr&gt; &lt;dbl&gt;         &lt;dbl&gt;
-## 1 igloo  1.96 0.00000000817</code></pre>
+<div class="wordle">
+<span class="letter letter-large incorrect">
+a
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+r
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large in-solution">
+o
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large incorrect">
+s
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+e
+<span class="sr-only">(incorrect)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+i
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large incorrect">
+n
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+d
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large in-solution">
+l
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+i
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+g
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+l
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+o
+<span class="sr-only">(correct)</span>
+</span>
+</div>
 <p>Ferry furor?</p>
 <pre class="r"><code>score_next_guess(
   guesses = c(&quot;arose&quot;),
@@ -687,14 +869,94 @@ score_next_guess(
 ##   word  score  score_pos
 ##   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 ferry  1.81 0.00000300</code></pre>
-<pre class="r"><code>score_next_guess(
-  guesses = c(&quot;arose&quot;, &quot;liter&quot;, &quot;ferny&quot;, &quot;ferry&quot;),
-  results = c(&quot;.-..-&quot;, &quot;...--&quot;, &quot;+++.+&quot;, &quot;+++++&quot;)
-)</code></pre>
-<pre><code>## # A tibble: 1 × 3
-##   word  score  score_pos
-##   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
-## 1 ferry  1.81 0.00000300</code></pre>
+<div class="wordle">
+<span class="letter letter-large incorrect">
+a
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large incorrect">
+o
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+s
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large in-solution">
+e
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large incorrect">
+l
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+i
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large incorrect">
+t
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large in-solution">
+e
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large in-solution">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+f
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+e
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+r
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large incorrect">
+n
+<span class="sr-only">(incorrect)</span>
+</span>
+<span class="letter letter-large correct">
+y
+<span class="sr-only">(correct)</span>
+</span>
+</div>
+<div class="wordle">
+<span class="letter letter-large correct">
+f
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+e
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+r
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+r
+<span class="sr-only">(correct)</span>
+</span>
+<span class="letter letter-large correct">
+y
+<span class="sr-only">(correct)</span>
+</span>
+</div>
 <style type="text/css">
 .wordle {
   margin-left: auto;
