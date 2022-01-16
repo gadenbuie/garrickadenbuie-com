@@ -1,0 +1,428 @@
+---
+title: Wordle Guessing
+author: Garrick Aden-Buie
+date: '2022-01-15'
+slug: wordle-guessing
+categories:
+  - Blog
+tags:
+  - R
+description: Optimizing wordle guesses. It's only fun if you can solve it with R.
+#twitterImage: /path/to/image.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/wordle-guessing/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs-2.11/header-attrs.js"></script>
+
+
+<!-- Links -->
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p><a href="https://www.powerlanguage.co.uk/wordle/">wordle</a> is…</p>
+<pre class="r"><code># List of English words from Scrabble dictionary
+install.packages(&quot;words&quot;)</code></pre>
+<pre class="r"><code>library(dplyr)
+library(purrr)
+library(stringr)
+
+words &lt;- 
+  words::words %&gt;% 
+  filter(word_length == 5) %&gt;% 
+  select(-word_length)
+
+head(words)</code></pre>
+<pre><code>##    word
+## 1 aahed
+## 2 aalii
+## 3 aargh
+## 4 abaca
+## 5 abaci
+## 6 aback</code></pre>
+<p>Letter frequency of appearance in a word</p>
+<pre class="r"><code>letter_freq &lt;- 
+  words %&gt;% 
+  pull(word) %&gt;% 
+  str_split(&quot;&quot;) %&gt;% 
+  map(unique) %&gt;%
+  unlist() %&gt;% 
+  table() %&gt;%
+  sort() %&gt;% 
+  rev() %&gt;% 
+  `/`(nrow(words)) %&gt;% 
+  c()
+
+letter_freq</code></pre>
+<pre><code>##           s           e           a           r           o           i 
+## 0.459699893 0.443193998 0.405680600 0.305359057 0.296248660 0.282207931 
+##           l           t           n           u           d           c 
+## 0.246945338 0.237620579 0.214362272 0.187888532 0.178349411 0.158628081 
+##           y           p           m           h           g           b 
+## 0.155198285 0.147052519 0.142979636 0.133654877 0.118435155 0.114147910 
+##           k           f           w           v           z           x 
+## 0.105251876 0.077920686 0.076312969 0.052625938 0.026473741 0.023579850 
+##           j           q 
+## 0.021221865 0.009110397</code></pre>
+<p>Letter frequency by position</p>
+<pre class="r"><code>letter_freq_pos &lt;- 
+  words %&gt;% 
+  select(word) %&gt;% 
+  mutate(letter = word) %&gt;% 
+  tidyr::separate_rows(letter, sep = &quot;&quot;) %&gt;% 
+  filter(letter != &quot;&quot;) %&gt;%
+  group_by(word) %&gt;%
+  mutate(position = row_number()) %&gt;%
+  ungroup() %&gt;%
+  select(-word) %&gt;%
+  group_by(position, letter) %&gt;%
+  summarize(n = n() / nrow(words), .groups = &quot;drop&quot;) %&gt;% 
+  tidyr::pivot_wider(names_from = position, values_from = n, values_fill = 0, names_prefix = &quot;p&quot;)
+
+letter_freq_pos</code></pre>
+<pre><code>## # A tibble: 26 × 6
+##    letter     p1       p2      p3      p4      p5
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 a      0.0572 0.172    0.0952  0.0789  0.0453 
+##  2 b      0.0693 0.00600  0.0256  0.0170  0.00439
+##  3 c      0.0759 0.0139   0.0322  0.0340  0.0108 
+##  4 d      0.0519 0.00686  0.0316  0.0354  0.0652 
+##  5 e      0.0225 0.124    0.0646  0.194   0.105  
+##  6 f      0.0479 0.00150  0.0141  0.0177  0.00622
+##  7 g      0.0484 0.00600  0.0282  0.0323  0.0107 
+##  8 h      0.0386 0.0437   0.00815 0.0168  0.0296 
+##  9 i      0.0134 0.111    0.0839  0.0684  0.0193 
+## 10 j      0.0155 0.000965 0.00322 0.00171 0      
+## # … with 16 more rows</code></pre>
+</div>
+<div id="first-choice" class="section level2">
+<h2>First Choice</h2>
+<pre class="r"><code>score_choice &lt;- function(word) {
+  word_len &lt;- str_length(word)
+  chars &lt;- str_split(word, &quot;&quot;)[[1]]
+  chars &lt;- unique(chars)
+  1 - prod(1 - letter_freq[chars])
+}
+
+words_first_choice &lt;- 
+  words %&gt;% 
+  mutate(score = map_dbl(word, score_choice)) %&gt;% 
+  arrange(desc(score))
+
+words_first_choice %&gt;% 
+  slice_max(score, n = 10)</code></pre>
+<pre><code>##     word     score
+## 1  arose 0.9125946
+## 2  arise 0.9108507
+## 3  raise 0.9108507
+## 4  reais 0.9108507
+## 5  serai 0.9108507
+## 6  arles 0.9064711
+## 7  earls 0.9064711
+## 8  lares 0.9064711
+## 9  laser 0.9064711
+## 10 lears 0.9064711
+## 11 rales 0.9064711
+## 12 reals 0.9064711
+## 13 seral 0.9064711</code></pre>
+<p>According to this, the best first-choice words are
+arose, arise, and raise.
+<strong>arose</strong> uses all five of the letters that most commonly appear in a word.</p>
+</div>
+<div id="second-choice" class="section level2">
+<h2>Second Choice</h2>
+<p>After your first choice, you know up to three pieces of additional information.
+Some of the letters in your guess</p>
+<ol style="list-style-type: decimal">
+<li>⬛ aren’t in the solution</li>
+<li>🟨 are in the solution, but not where you guessed</li>
+<li>🟩 are in the solution and are where you guessed</li>
+</ol>
+<p>What if you guessed <strong>arose</strong> and got five gray boxes telling you that none of those letters appear in the solution?</p>
+<pre class="r"><code>str_has_none_of &lt;- function(words, letters) {
+  words &lt;- str_split(words, &quot;&quot;)
+  map_lgl(words, ~ length(intersect(letters, .x)) == 0)
+}
+
+words_first_choice %&gt;% 
+  filter(str_has_none_of(word, c(&quot;a&quot;, &quot;r&quot;, &quot;o&quot;, &quot;s&quot;, &quot;e&quot;))) %&gt;% 
+  slice_max(score, n = 10)</code></pre>
+<pre><code>##     word     score
+## 1  unlit 0.7370735
+## 2  until 0.7370735
+## 3  linty 0.7264899
+## 4  culti 0.7184212
+## 5  glint 0.7145875
+## 6  tulip 0.7145472
+## 7  uplit 0.7145472
+## 8  lytic 0.7070867
+## 9  cunit 0.7062379
+## 10 cutin 0.7062379
+## 11 tunic 0.7062379</code></pre>
+<p>If none of the letters in <strong>arose</strong> and <strong>unlit</strong> appear in the solution, then your answer is most definitely…</p>
+<pre class="r"><code>letters_guess &lt;- str_split(&quot;arose unlit&quot;, &quot;&quot;)[[1]]
+
+words_first_choice %&gt;% 
+  filter(str_has_none_of(word, letters_guess))</code></pre>
+<pre><code>##    word     score
+## 1 pygmy 0.4555945</code></pre>
+<p>If you learn something from the guess, though, you can filter the word list based on the information you just learned.</p>
+<!-- arose, intro, motor -->
+<p>Say we guess <strong>arose</strong> and wordle reveals that <kbd>R</kbd> and <kbd>O</kbd> appear in the solution.
+We now know that the solution:</p>
+<ol style="list-style-type: decimal">
+<li>Doesn’t have <kbd>A</kbd>, <kbd>S</kbd> or <kbd>E</kbd></li>
+<li>Does contain <kbd>R</kbd> and <kbd>O</kbd></li>
+<li>Doesn’t have <kbd>R</kbd> as the 2<sup>nd</sup> letter and <kbd>O</kbd> as the 3<sup>rd</sup>.</li>
+</ol>
+<p>We’ve already implemented step 1 as <code>str_has_none_of()</code>.
+We also need a similar version called <code>str_has_all_of()</code>.</p>
+<pre class="r"><code>str_has_all_of &lt;- function(words, letters) {
+  words &lt;- str_split(words, &quot;&quot;)
+  map_lgl(words, ~ length(setdiff(letters, .x)) == 0)
+}
+
+str_has_all_of(&quot;rhino&quot;, c(&quot;r&quot;, &quot;o&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>And finally we can write the third piece of information as a regular expression: <code>".[^r][^o].."</code>.
+The <code>[]</code> indicate a set of options that could be present at a location in the string.
+The opening <code>^</code> negates the selection, so <code>[^r]</code> means <em>a character that isn’t</em> <code>r</code>.</p>
+<pre class="r"><code>words_first_choice %&gt;% 
+  filter(
+    str_has_none_of(word, c(&quot;a&quot;, &quot;s&quot;, &quot;e&quot;)),
+    str_has_all_of(word, c(&quot;r&quot;, &quot;o&quot;)),
+    str_detect(word, &quot;.[^r][^o]..&quot;)
+  ) %&gt;% 
+  slice_head(n = 10)</code></pre>
+<pre><code>##     word     score
+## 1  lirot 0.7985460
+## 2  intro 0.7898295
+## 3  nitro 0.7898295
+## 4  roily 0.7767664
+## 5  toric 0.7749197
+## 6  porin 0.7648620
+## 7  minor 0.7637392
+## 8  rhino 0.7611685
+## 9  curio 0.7602371
+## 10 giron 0.7569728</code></pre>
+<p><strong>lirot</strong> is an unusual word, so let’s choose the next word on the list: <strong>intro</strong>.</p>
+<pre><code>i n t r o
+&#x2B1B;&#x2B1B;&#x1F7E9;&#x1F7E8;&#x1F7E8;</code></pre>
+<p>wordle thinks and tells us that we have <kbd>T</kbd> in the right spot!
+Also, we now know that <kbd>I</kbd> and <kbd>N</kbd> aren’t in the solution,
+and we still haven’t got <kbd>R</kbd> and <kbd>O</kbd> in the right place.</p>
+<p>We can repeat the step above, but using a new regular expression: <code>".[^r]t[^r][^o]"</code>.
+Notice that we know a little more about where <kbd>R</kbd> and <kbd>O</kbd> <em>can’t be</em>,
+but importantly we have <code>t</code> as the middle character.</p>
+<p>This leaves us with a few good choices:</p>
+<pre class="r"><code>words_first_choice %&gt;% 
+  filter(
+    str_has_none_of(word, c(&quot;a&quot;, &quot;s&quot;, &quot;e&quot;, &quot;i&quot;, &quot;n&quot;)),
+    str_has_all_of(word, c(&quot;r&quot;, &quot;o&quot;, &quot;t&quot;)),
+    str_detect(word, &quot;.[^r]t[^r][^o]&quot;)
+  )</code></pre>
+<pre><code>##    word     score
+## 1 rotch 0.7283375
+## 2 tutor 0.6973321
+## 3 motor 0.6805948
+## 4 rotor 0.6273074</code></pre>
+<p><strong>rotch</strong> seems very unlikely, so we can pick from <strong>tutor</strong>, <strong>motor</strong> and <strong>rotor</strong>.
+But notice that the these include a small set of the same letters.
+In a sense, we might ask ourselves a new question — which is the more likely starting combination:
+<strong>tu</strong>, <strong>mo</strong> or <strong>ro</strong>?</p>
+<p>At this point, you could just guess.
+It is a game after all!
+But no, let’s power forward and add more complexity to this blog post.</p>
+<p>What if we switched our scoring at this point and considered the position of the letters in the candidate words?
+Doing something medium-naive, let’s frame this as:
+what’s the probability of <kbd>T</kbd> in the first position <strong>and</strong>
+<kbd>U</kbd> in the second <strong>and</strong> so on…</p>
+<pre class="r"><code>score_by_position &lt;- function(word) {
+  chars &lt;- str_split(word, &quot;&quot;)[[1]]
+  
+  res &lt;- c()
+  for (i in seq_along(chars)) {
+    pos_alpha &lt;- which(letters == chars[i])
+    p &lt;- letter_freq_pos[[str_c(&quot;p&quot;, i)]][pos_alpha]
+    res &lt;- c(res, p)
+  }
+  
+  prod(res)
+}
+
+words_score_pos &lt;- 
+  words %&gt;% 
+  mutate(score_pos = map_dbl(word, score_by_position)) %&gt;%
+  arrange(desc(score_pos))
+
+words_score_pos %&gt;% 
+  slice_max(score_pos, n = 15)</code></pre>
+<pre><code>##     word    score_pos
+## 1  sores 1.023180e-04
+## 2  sanes 9.165891e-05
+## 3  sales 8.450634e-05
+## 4  sones 8.310332e-05
+## 5  seres 8.125043e-05
+## 6  soles 7.661838e-05
+## 7  sires 7.268297e-05
+## 8  cares 7.185164e-05
+## 9  senes 6.599213e-05
+## 10 bares 6.566103e-05
+## 11 cores 6.514489e-05
+## 12 pares 6.251498e-05
+## 13 sates 6.119424e-05
+## 14 tares 6.109419e-05
+## 15 bores 5.953212e-05</code></pre>
+<p>If we join this with our “new information” score, we now have to scores to choose from:</p>
+<pre class="r"><code>words_first_choice %&gt;% 
+  filter(
+    str_has_none_of(word, c(&quot;a&quot;, &quot;s&quot;, &quot;e&quot;, &quot;i&quot;, &quot;n&quot;)),
+    str_has_all_of(word, c(&quot;r&quot;, &quot;o&quot;, &quot;t&quot;)),
+    str_detect(word, &quot;.[^r]t[^r][^o]&quot;)
+  ) %&gt;% 
+  left_join(words_score_pos) %&gt;% 
+  arrange(desc(score_pos))</code></pre>
+<pre><code>##    word     score    score_pos
+## 1 motor 0.6805948 1.287742e-06
+## 2 rotor 0.6273074 1.205262e-06
+## 3 tutor 0.6973321 9.596981e-07
+## 4 rotch 0.7283375 3.773635e-07</code></pre>
+<p>Now we see that <strong>motor</strong> and <strong>rotor</strong> are the most likely words based on their position.
+We guess <strong>motor</strong>… and we’re right.
+It only took three guesses!
+It’s almost like I planned this example to work out just like I wanted.</p>
+</div>
+<div id="generalizing" class="section level2">
+<h2>Generalizing</h2>
+<p>Okay, let’s do this for any number of guesses.
+First, let’s join our scored words into a single data frame.</p>
+<pre class="r"><code>words_scored &lt;- left_join(
+  words_first_choice,
+  words_score_pos,
+  by = &quot;word&quot;
+)</code></pre>
+<p>Then, we need a function that takes our guesses and results and generalizes them into the pieces of information our guesses reveal about the solution.
+Behold, <code>summarize_guesses()</code>:</p>
+<pre class="r"><code>#&#39; @param guesses A vector of words that you have guessed
+#&#39; @param result A vector of results for each guess using `.` for a miss, `-` 
+#&#39;   for a letter in the solution that isn&#39;t in the right place and `+` for a
+#&#39;   letter that&#39;s in the right spot.
+summarize_guesses &lt;- function(guesses, results) {
+  stopifnot(all(str_length(c(guesses, results)) == 5))
+  
+  guesses &lt;- str_split(guesses, &quot;&quot;)
+  results &lt;- str_split(results, &quot;&quot;)
+  
+  exclude &lt;- character(5)
+  exact &lt;- character(5)
+  bucket_keep &lt;- c()
+  bucket_discard &lt;- c()
+  
+  walk2(guesses, results, function(g, r) {
+    if (any(r == &quot;+&quot;)) {
+      exact[r == &quot;+&quot;] &lt;&lt;- g[r == &quot;+&quot;]
+      bucket_keep &lt;&lt;- c(bucket_keep, g[r == &quot;+&quot;])
+    }
+    if (any(r == &quot;-&quot;)) {
+      bucket_keep &lt;&lt;- c(bucket_keep, g[r == &quot;-&quot;])
+      exclude[r == &quot;-&quot;] &lt;&lt;- paste0(exclude[r == &quot;-&quot;], g[r == &quot;-&quot;])
+    }
+    if (any(r == &quot;.&quot;)) {
+      bucket_discard &lt;&lt;- c(bucket_discard, g[r == &quot;.&quot;])
+    }
+  })
+  
+  exclude[exclude != &quot;&quot;] &lt;- paste0(&quot;[^&quot;, exclude[exclude != &quot;&quot;], &quot;]&quot;)
+  exact[exact == &quot;&quot;] &lt;- NA_character_
+  exclude[exclude == &quot;&quot;] &lt;- NA_character_
+  
+  pattern &lt;- coalesce(coalesce(exact, exclude), &quot;.&quot;)
+  
+  list(
+    discard = unique(bucket_discard),
+    keep = unique(bucket_keep),
+    specific = str_c(pattern, collapse = &quot;&quot;)
+  )
+}</code></pre>
+<pre class="r"><code>summarize_guesses(&quot;arose&quot;, &quot;.--..&quot;)</code></pre>
+<pre><code>## $discard
+## [1] &quot;a&quot; &quot;s&quot; &quot;e&quot;
+## 
+## $keep
+## [1] &quot;r&quot; &quot;o&quot;
+## 
+## $specific
+## [1] &quot;.[^r][^o]..&quot;</code></pre>
+<pre class="r"><code>guess_results &lt;- summarize_guesses(c(&quot;arose&quot;, &quot;intro&quot;), c(&quot;.--..&quot;, &quot;..+--&quot;))
+
+words_first_choice %&gt;% 
+  left_join(words_score_pos) %&gt;%
+  filter(
+    str_has_none_of(word, guess_results$discard),
+    str_has_all_of(word, guess_results$keep),
+    str_detect(word, guess_results$specific)
+  )</code></pre>
+<pre><code>##    word     score    score_pos
+## 1 rotch 0.7283375 3.773635e-07
+## 2 tutor 0.6973321 9.596981e-07
+## 3 motor 0.6805948 1.287742e-06
+## 4 rotor 0.6273074 1.205262e-06</code></pre>
+</div>
+<div id="all-together-now" class="section level2">
+<h2>All together now</h2>
+<pre class="r"><code>score_next_guess &lt;- function(guesses, results) {
+  guess_results &lt;- summarize_guesses(guesses, results)
+  
+  words_scored %&gt;%
+    filter(
+      str_has_none_of(word, guess_results$discard),
+      str_has_all_of(word, guess_results$keep),
+      str_detect(word, guess_results$specific)
+    )
+}</code></pre>
+<pre class="r"><code>score_next_guess(
+  guesses = c(&quot;arose&quot;, &quot;intro&quot;), 
+  results = c(&quot;.--..&quot;, &quot;..+--&quot;)
+)</code></pre>
+<pre><code>##    word     score    score_pos
+## 1 rotch 0.7283375 3.773635e-07
+## 2 tutor 0.6973321 9.596981e-07
+## 3 motor 0.6805948 1.287742e-06
+## 4 rotor 0.6273074 1.205262e-06</code></pre>
+<pre class="r"><code>score_next_guess(
+  guesses = c(&quot;arose&quot;, &quot;intro&quot;, &quot;rotch&quot;), 
+  results = c(&quot;.--..&quot;, &quot;..+--&quot;, &quot;-++..&quot;)
+)</code></pre>
+<pre><code>##    word     score    score_pos
+## 1 motor 0.6805948 1.287742e-06</code></pre>
+<pre class="r"><code># 2022-01-16
+score_next_guess(
+  guesses = c(&quot;arose&quot;),
+  results = c(&quot;----.&quot;)
+)</code></pre>
+<pre><code>##     word     score    score_pos
+## 1  solar 0.8817881 5.907816e-06
+## 2  ratos 0.8803244 7.022045e-06
+## 3  rotas 0.8803244 9.205923e-06
+## 4  taros 0.8803244 1.720915e-05
+## 5  toras 0.8803244 2.256125e-05
+## 6  roans 0.8766734 1.341512e-05
+## 7  sonar 0.8766734 6.407851e-06
+## 8  roads 0.8710202 7.933676e-06
+## 9  sarod 0.8710202 6.664589e-06
+## 10 oscar 0.8679244 2.349518e-08
+## 11 sapor 0.8661073 1.977701e-06
+## 12 moras 0.8654680 1.813895e-05
+## 13 roams 0.8654680 6.851811e-06
+## 14 hoars 0.8640042 9.304515e-06
+## 15 horas 0.8640042 1.349178e-05
+## 16 sargo 0.8616151 1.646464e-06
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 12 rows ]</code></pre>
+<pre class="r"><code>score_next_guess(
+  guesses = c(&quot;arose&quot;, &quot;solar&quot;),
+  results = c(&quot;----.&quot;, &quot;+++++&quot;)
+)</code></pre>
+<pre><code>##    word     score    score_pos
+## 1 solar 0.8817881 5.907816e-06</code></pre>
+</div>

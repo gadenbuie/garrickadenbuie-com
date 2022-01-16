@@ -1,0 +1,375 @@
+---
+title: Wordle Guessing
+author: Garrick Aden-Buie
+date: '2022-01-15'
+slug: wordle-guessing
+categories:
+  - Blog
+tags:
+  - R
+description: Optimizing wordle guesses. It's only fun if you can solve it with R.
+#twitterImage: /path/to/image.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/wordle-guessing/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+[wordle]: https://www.powerlanguage.co.uk/wordle/
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+```
+
+## Setup
+
+[wordle] is...
+
+```{r install-words, eval=FALSE}
+# List of English words from Scrabble dictionary
+install.packages("words")
+```
+
+```{r load-words}
+library(dplyr)
+library(purrr)
+library(stringr)
+
+words <- 
+  words::words %>% 
+  filter(word_length == 5) %>% 
+  select(-word_length)
+
+head(words)
+```
+
+Letter frequency of appearance in a word
+
+```{r letter-freq}
+letter_freq <- 
+  words %>% 
+  pull(word) %>% 
+  str_split("") %>% 
+  map(unique) %>%
+  unlist() %>% 
+  table() %>%
+  sort() %>% 
+  rev() %>% 
+  `/`(nrow(words)) %>% 
+  c()
+
+letter_freq
+```
+
+Letter frequency by position
+
+```{r letter-freq-pos}
+letter_freq_pos <- 
+  words %>% 
+  select(word) %>% 
+  mutate(letter = word) %>% 
+  tidyr::separate_rows(letter, sep = "") %>% 
+  filter(letter != "") %>%
+  group_by(word) %>%
+  mutate(position = row_number()) %>%
+  ungroup() %>%
+  select(-word) %>%
+  group_by(position, letter) %>%
+  summarize(n = n() / nrow(words), .groups = "drop") %>% 
+  tidyr::pivot_wider(names_from = position, values_from = n, values_fill = 0, names_prefix = "p")
+
+letter_freq_pos
+```
+
+## First Choice
+
+```{r points}
+score_choice <- function(word) {
+  word_len <- str_length(word)
+  chars <- str_split(word, "")[[1]]
+  chars <- unique(chars)
+  1 - prod(1 - letter_freq[chars])
+}
+
+words_first_choice <- 
+  words %>% 
+  mutate(score = map_dbl(word, score_choice)) %>% 
+  arrange(desc(score))
+
+words_first_choice %>% 
+  slice_max(score, n = 10)
+```
+
+According to this, the best first-choice words are
+`r knitr::combine_words(words_first_choice$word[1:3])`.
+**arose** uses all five of the letters that most commonly appear in a word.
+
+## Second Choice
+
+After your first choice, you know up to three pieces of additional information.
+Some of the letters in your guess
+
+1. &#x2B1B; aren't in the solution
+2. &#x1F7E8; are in the solution, but not where you guessed
+3. &#x1F7E9; are in the solution and are where you guessed
+
+What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
+
+```{r str_has_none_of}
+str_has_none_of <- function(words, letters) {
+  words <- str_split(words, "")
+  map_lgl(words, ~ length(intersect(letters, .x)) == 0)
+}
+
+words_first_choice %>% 
+  filter(str_has_none_of(word, c("a", "r", "o", "s", "e"))) %>% 
+  slice_max(score, n = 10)
+```
+
+If none of the letters in **arose** and **unlit** appear in the solution, then your answer is most definitely...
+
+```{r third-strike}
+letters_guess <- str_split("arose unlit", "")[[1]]
+
+words_first_choice %>% 
+  filter(str_has_none_of(word, letters_guess))
+```
+
+If you learn something from the guess, though, you can filter the word list based on the information you just learned.
+
+<!-- arose, intro, motor -->
+
+Say we guess **arose** and wordle reveals that <kbd>R</kbd> and <kbd>O</kbd> appear in the solution.
+We now know that the solution:
+
+1. Doesn't have <kbd>A</kbd>, <kbd>S</kbd> or <kbd>E</kbd>
+1. Does contain <kbd>R</kbd> and <kbd>O</kbd>
+1. Doesn't have <kbd>R</kbd> as the 2^nd^ letter and <kbd>O</kbd> as the 3^rd^.
+
+We've already implemented step 1 as `str_has_none_of()`.
+We also need a similar version called `str_has_all_of()`.
+
+```{r str-has-all-of}
+str_has_all_of <- function(words, letters) {
+  words <- str_split(words, "")
+  map_lgl(words, ~ length(setdiff(letters, .x)) == 0)
+}
+
+str_has_all_of("rhino", c("r", "o"))
+```
+
+And finally we can write the third piece of information as a regular expression: `".[^r][^o].."`.
+The `[]` indicate a set of options that could be present at a location in the string.
+The opening `^` negates the selection, so `[^r]` means _a character that isn't_ `r`.
+
+```{r}
+words_first_choice %>% 
+  filter(
+    str_has_none_of(word, c("a", "s", "e")),
+    str_has_all_of(word, c("r", "o")),
+    str_detect(word, ".[^r][^o]..")
+  ) %>% 
+  slice_head(n = 10)
+```
+
+**lirot** is an unusual word, so let's choose the next word on the list: **intro**.
+
+```{=html}
+<pre><code>i n t r o
+&#x2B1B;&#x2B1B;&#x1F7E9;&#x1F7E8;&#x1F7E8;</code></pre>
+```
+
+wordle thinks and tells us that we have <kbd>T</kbd> in the right spot!
+Also, we now know that <kbd>I</kbd> and <kbd>N</kbd> aren't in the solution,
+and we still haven't got <kbd>R</kbd> and <kbd>O</kbd> in the right place.
+
+We can repeat the step above, but using a new regular expression: `".[^r]t[^r][^o]"`.
+Notice that we know a little more about where <kbd>R</kbd> and <kbd>O</kbd> _can't be_,
+but importantly we have `t` as the middle character.
+
+This leaves us with a few good choices:
+
+```{r}
+words_first_choice %>% 
+  filter(
+    str_has_none_of(word, c("a", "s", "e", "i", "n")),
+    str_has_all_of(word, c("r", "o", "t")),
+    str_detect(word, ".[^r]t[^r][^o]")
+  )
+```
+
+**rotch** seems very unlikely, so we can pick from **tutor**, **motor** and **rotor**.
+But notice that the these include a small set of the same letters.
+In a sense, we might ask ourselves a new question — which is the more likely starting combination:
+**tu**, **mo** or **ro**?
+
+At this point, you could just guess.
+It is a game after all!
+But no, let's power forward and add more complexity to this blog post.
+
+What if we switched our scoring at this point and considered the position of the letters in the candidate words?
+Doing something medium-naive, let's frame this as:
+what's the probability of <kbd>T</kbd> in the first position **and**
+<kbd>U</kbd> in the second **and** so on...
+
+```{r}
+score_by_position <- function(word) {
+  chars <- str_split(word, "")[[1]]
+  
+  res <- c()
+  for (i in seq_along(chars)) {
+    pos_alpha <- which(letters == chars[i])
+    p <- letter_freq_pos[[str_c("p", i)]][pos_alpha]
+    res <- c(res, p)
+  }
+  
+  prod(res)
+}
+
+words_score_pos <- 
+  words %>% 
+  mutate(score_pos = map_dbl(word, score_by_position)) %>%
+  arrange(desc(score_pos))
+
+words_score_pos %>% 
+  slice_max(score_pos, n = 15)
+```
+
+If we join this with our "new information" score, we now have to scores to choose from:
+
+```{r}
+words_first_choice %>% 
+  filter(
+    str_has_none_of(word, c("a", "s", "e", "i", "n")),
+    str_has_all_of(word, c("r", "o", "t")),
+    str_detect(word, ".[^r]t[^r][^o]")
+  ) %>% 
+  left_join(words_score_pos) %>% 
+  arrange(desc(score_pos))
+```
+
+Now we see that **motor** and **rotor** are the most likely words based on their position.
+We guess **motor**... and we're right.
+It only took three guesses!
+It's almost like I planned this example to work out just like I wanted.
+
+## Generalizing
+
+Okay, let's do this for any number of guesses.
+First, let's join our scored words into a single data frame.
+
+```{r words_scored}
+words_scored <- left_join(
+  words_first_choice,
+  words_score_pos,
+  by = "word"
+)
+```
+
+Then, we need a function that takes our guesses and results and generalizes them into the pieces of information our guesses reveal about the solution.
+Behold, `summarize_guesses()`:
+
+```{r regex-after-guess}
+#' @param guesses A vector of words that you have guessed
+#' @param result A vector of results for each guess using `.` for a miss, `-` 
+#'   for a letter in the solution that isn't in the right place and `+` for a
+#'   letter that's in the right spot.
+summarize_guesses <- function(guesses, results) {
+  stopifnot(all(str_length(c(guesses, results)) == 5))
+  
+  guesses <- str_split(guesses, "")
+  results <- str_split(results, "")
+  
+  exclude <- character(5)
+  exact <- character(5)
+  bucket_keep <- c()
+  bucket_discard <- c()
+  
+  walk2(guesses, results, function(g, r) {
+    if (any(r == "+")) {
+      exact[r == "+"] <<- g[r == "+"]
+      bucket_keep <<- c(bucket_keep, g[r == "+"])
+    }
+    if (any(r == "-")) {
+      bucket_keep <<- c(bucket_keep, g[r == "-"])
+      exclude[r == "-"] <<- paste0(exclude[r == "-"], g[r == "-"])
+    }
+    if (any(r == ".")) {
+      bucket_discard <<- c(bucket_discard, g[r == "."])
+    }
+  })
+  
+  exclude[exclude != ""] <- paste0("[^", exclude[exclude != ""], "]")
+  exact[exact == ""] <- NA_character_
+  exclude[exclude == ""] <- NA_character_
+  
+  pattern <- coalesce(coalesce(exact, exclude), ".")
+  
+  list(
+    discard = unique(bucket_discard),
+    keep = unique(bucket_keep),
+    specific = str_c(pattern, collapse = "")
+  )
+}
+```
+
+
+```{r regex-after-guess-ex}
+summarize_guesses("arose", ".--..")
+```
+
+```{r score-after-guess, eval=TRUE}
+guess_results <- summarize_guesses(c("arose", "intro"), c(".--..", "..+--"))
+
+words_first_choice %>% 
+  left_join(words_score_pos) %>%
+  filter(
+    str_has_none_of(word, guess_results$discard),
+    str_has_all_of(word, guess_results$keep),
+    str_detect(word, guess_results$specific)
+  )
+```
+
+## All together now
+
+```{r score_next_guess}
+score_next_guess <- function(guesses, results) {
+  guess_results <- summarize_guesses(guesses, results)
+  
+  words_scored %>%
+    filter(
+      str_has_none_of(word, guess_results$discard),
+      str_has_all_of(word, guess_results$keep),
+      str_detect(word, guess_results$specific)
+    )
+}
+```
+
+```{r replay}
+score_next_guess(
+  guesses = c("arose", "intro"), 
+  results = c(".--..", "..+--")
+)
+score_next_guess(
+  guesses = c("arose", "intro", "rotch"), 
+  results = c(".--..", "..+--", "-++..")
+)
+```
+
+```{r live}
+# 2022-01-16
+score_next_guess(
+  guesses = c("arose"),
+  results = c("----.")
+)
+
+score_next_guess(
+  guesses = c("arose", "solar"),
+  results = c("----.", "+++++")
+)
+```
