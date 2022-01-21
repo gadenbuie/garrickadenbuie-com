@@ -69,13 +69,9 @@ library(dplyr)
 library(purrr)
 library(stringr)
 
-words <- 
-  words::words %>%
-  as_tibble() %>%
-  filter(word_length == 5) %>% 
-  select(-word_length)
+wordle_words <- words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
 
-words
+words <- wordle_words %>% unlist() %>% unique()
 ```
 
 Letter frequency of appearance in a word
@@ -83,14 +79,14 @@ Letter frequency of appearance in a word
 ```{r letter-freq}
 letter_freq <-
   words %>%
-  pull(word) %>% 
+  # pull(word) %>% 
   str_split("") %>%
   map(unique) %>%
   unlist() %>%
   table() %>%
   sort() %>%
   rev() %>%
-  `/`(nrow(words)) %>%
+  `/`(length(words)) %>%
   c()
 
 letter_freq
@@ -100,7 +96,7 @@ Letter frequency by position
 
 ```{r letter-freq-pos}
 letter_freq_pos <- 
-  words %>% 
+  tibble(word = words) %>% 
   select(word) %>% 
   mutate(letter = word) %>% 
   tidyr::separate_rows(letter, sep = "") %>% 
@@ -110,7 +106,7 @@ letter_freq_pos <-
   ungroup() %>%
   select(-word) %>%
   group_by(position, letter) %>%
-  summarize(n = n() / nrow(words), .groups = "drop") %>% 
+  summarize(n = n() / length(words), .groups = "drop") %>% 
   tidyr::pivot_wider(names_from = position, values_from = n, values_fill = 0, names_prefix = "p")
 
 letter_freq_pos
@@ -127,7 +123,7 @@ score_entropy <- function(word) {
   - sum(p * log(p, base = 2))
 }
 
-words %>% 
+tibble(word = words) %>% 
   mutate(score = map_dbl(word, score_entropy)) %>% 
   arrange(desc(score))
 ```
@@ -141,7 +137,7 @@ score_choice <- function(word) {
 }
 
 words_first_choice <- 
-  words %>% 
+  tibble(word = words) %>% 
   mutate(score = map_dbl(word, score_entropy)) %>% 
   arrange(desc(score))
 
@@ -273,7 +269,7 @@ score_by_position <- function(word) {
 }
 
 words_score_pos <- 
-  words %>% 
+  tibble(word = words) %>% 
   mutate(score_pos = map_dbl(word, score_by_position)) %>%
   arrange(desc(score_pos))
 
@@ -335,19 +331,22 @@ summarize_guesses <- function(guesses, results) {
   bucket_keep <- c()
   bucket_discard <- c()
   
-  walk2(guesses, results, function(g, r) {
+  for (i in seq_along(guesses)) {
+    g <- guesses[[i]]
+    r <- results[[i]]
+    
     if (any(r == "+")) {
-      exact[r == "+"] <<- g[r == "+"]
+      exact[r == "+"] <- g[r == "+"]
       bucket_keep <<- c(bucket_keep, g[r == "+"])
     }
     if (any(r == "-")) {
-      bucket_keep <<- c(bucket_keep, g[r == "-"])
-      exclude[r == "-"] <<- paste0(exclude[r == "-"], g[r == "-"])
+      bucket_keep <- c(bucket_keep, g[r == "-"])
+      exclude[r == "-"] <- paste0(exclude[r == "-"], g[r == "-"])
     }
     if (any(r == ".")) {
-      bucket_discard <<- c(bucket_discard, g[r == "."])
+      bucket_discard <- c(bucket_discard, g[r == "."])
     }
-  })
+  }
   
   exclude[exclude != ""] <- paste0("[^", exclude[exclude != ""], "]")
   exact[exact == ""] <- NA_character_
@@ -495,6 +494,123 @@ map2(
   htmltools::tagList()
 ```
 
+## Another thought
+
+```{r js4shiny, echo=FALSE}
+js4shiny::html_setup_blogdown("none")
+tidyjs::use_tidyjs()
+
+words_scored %>% 
+  mutate(score_pos = score_pos / (max(score_pos) - min(score_pos))) %>% 
+  jsonlite::write_json("wordle-scored.json")
+
+htmltools::tags$script(
+  id = "words-scored",
+  type = "application/json",
+  readLines("wordle-scored.json")
+)
+```
+
+```{js js_redirect = FALSE}
+const { tidy, filter, sliceMax } = Tidy
+wordsScored = JSON.parse(document.getElementById('words-scored').innerText)
+```
+
+```{js}
+tidy(
+  wordsScored,
+  sliceMax(5, 'score')
+)
+```
+
+```{js js_redirect = FALSE}
+summarizeGuesses = function ({guesses, results}) {
+  if (!(guesses.every(s => s.length == 5) && results.every(s => s.length == 5))) {
+    console.error('All guesses and results must have 5 characters.')
+  }
+  
+  guesses = guesses.map(s => s.split(''))
+  results = results.map(s => s.split(''))
+  
+  let exclude = Array(5).fill('')
+  let exact = Array(5).fill('')
+  let keep = []
+  let discard = []
+  
+  for (i = 0; i < guesses.length; i++) {
+    let g = guesses[i]
+    let r = results[i]
+    
+    for (j = 0; j < r.length; j++) {
+      if (r[j] == '+') {
+        exact[j] = g[j]
+        keep.push(g[j])
+      } else if (r[j] == '-') {
+        keep.push(g[j])
+        exclude[j] += g[j]
+      } else {
+        discard.push(g[j])
+      }
+    }
+  }
+  
+  const pattern = Array(5).fill('.')
+  for (i = 0; i < 5; i++) {
+    if (exact[i] != '') {
+      pattern[i] = exact[i]
+    } else if (exclude[i] != '') {
+      pattern[i] = `[^${exclude[i]}]`
+    }
+  }
+  
+  discard = discard.filter(x => !keep.includes(x))
+  return {discard, keep, pattern: pattern.join('')}
+}
+```
+
+```{js js_redirect = FALSE}
+function searchNextGuess({guesses, results}) {
+  const guessResult = summarizeGuesses({guesses, results})
+  
+  return tidy(
+    wordsScored,
+    // discard words that contain a letter in the discard pile
+    filter(d => !guessResult.discard.some(l => d.word.includes(l))),
+    // keep only words that have all letters in the keep pile
+    filter(d => guessResult.keep.every(l => d.word.includes(l))),
+    // keep words that are consistent with results to date
+    filter(d => RegExp(guessResult.pattern).test(d.word)),
+    // and don't show too many words
+    sliceMax(20, 'score')
+  )
+}
+```
+
+
+
+```{js}
+const rounds = {
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+}
+
+console.log(summarizeGuesses(rounds))
+
+const answer = searchNextGuess(rounds)
+console.table(answer[0])
+```
+
+```{js}
+const rounds = {
+  guesses: ["arose", "intro"],
+  results: [".--..", "..+--"]
+}
+
+console.log(summarizeGuesses(rounds))
+
+const answer = searchNextGuess(rounds)
+answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
+```
 
 ```{css echo=FALSE}
 .wordle {
