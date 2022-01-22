@@ -59,11 +59,6 @@ wordle_component <- function(word, answer, large = TRUE) {
 
 [wordle] is...
 
-```{r install-words, eval=FALSE}
-# List of English words from Scrabble dictionary
-install.packages("words")
-```
-
 ```{r load-words}
 library(dplyr)
 library(purrr)
@@ -524,8 +519,9 @@ tidy(
 ```
 
 ```{js js_redirect = FALSE}
-summarizeGuesses = function ({guesses, results}) {
-  if (!(guesses.every(s => s.length == 5) && results.every(s => s.length == 5))) {
+function summarizeGuesses ({ guesses, results }) {
+  const allComplete = [...guesses, ...results].every(s => s.length == 5)
+  if (!allComplete) {
     console.error('All guesses and results must have 5 characters.')
   }
   
@@ -569,7 +565,7 @@ summarizeGuesses = function ({guesses, results}) {
 ```
 
 ```{js js_redirect = FALSE}
-function searchNextGuess({guesses, results}) {
+function searchNextGuess ({ guesses, results }) {
   const guessResult = summarizeGuesses({guesses, results})
   
   return tidy(
@@ -610,6 +606,54 @@ console.log(summarizeGuesses(rounds))
 
 const answer = searchNextGuess(rounds)
 answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
+```
+
+```{=html}
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+
+<textarea id="entries" class="code" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea>
+<div id="words-table"></div>
+```
+
+```{js js_redirect = FALSE, echo = FALSE}
+const wordsTable = new gridjs.Grid({
+  data: wordsScored,
+  columns: [
+    {id: "word",      name: "Word"},
+    {id: "score",     name: "Score (Entropy)"},
+    {id: "score_pos", name: "Score (Position)"}
+  ],
+  sort: true,
+  pagination: {
+    enabled: true,
+    limit: 10,
+    summary: false,
+    nextButton: true,
+    prevButton: true
+  }
+})
+wordsTable.render(document.getElementById("words-table"))
+```
+
+```{js js_redirect = FALSE, echo = FALSE}
+document.getElementById("entries").addEventListener("input", function(ev) {
+  if (!ev.target.value) {
+    return
+  }
+  const text = ev.target.value.split(/\r\n|\n/)
+  if (text.length < 2) {
+    wordsTable.updateConfig({data: wordsScored}).forceRender()
+    return
+  }
+  const guesses = text[0].split(' ')
+  const results = text[1].split(' ')
+  if (guesses.some(g => g.length != 5) || results.some(r => r.length != 5)) {
+    return
+  }
+  const nextGuess = searchNextGuess({guesses, results})
+  wordsTable.updateConfig({data: nextGuess}).forceRender()
+})
 ```
 
 ```{css echo=FALSE}
