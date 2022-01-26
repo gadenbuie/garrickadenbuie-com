@@ -33,13 +33,13 @@ wordle_component <- function(word, answer, large = TRUE) {
   letters <- map2(word, answer, function(letter, ans) {
     if (ans == ".") {
       htmltools::span(
-        class = c("letter", if (large) "letter-large", "incorrect"),
+        class = c("letter", if (large) "letter-large", "absent"),
         letter,
-        htmltools::span(class = "sr-only", "(incorrect)")
+        htmltools::span(class = "sr-only", "(absent)")
       )
     } else if (ans == "-") {
       htmltools::span(
-        class = c("letter", if (large) "letter-large", "in-solution"),
+        class = c("letter", if (large) "letter-large", "present"),
         letter,
         htmltools::span(class = "sr-only", "(in solution, wrong position)")
       )
@@ -51,8 +51,14 @@ wordle_component <- function(word, answer, large = TRUE) {
       )
     }
   })
-  htmltools::div(class = "wordle", letters)
+  htmltools::div(class = "wordle-solo", letters)
 }
+```
+
+```{=html}
+<div id="wordle"></div>
+<textarea id="entries" class="code pa4 black-80" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea>
+<div id="words-table"></div>
 ```
 
 ## Setup
@@ -64,7 +70,7 @@ library(dplyr)
 library(purrr)
 library(stringr)
 
-wordle_words <- words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
+wordle_words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
 
 words <- wordle_words %>% unlist() %>% unique()
 ```
@@ -260,7 +266,7 @@ score_by_position <- function(word) {
     res <- c(res, p)
   }
   
-  prod(res)
+  - sum(p * log(p, base = 2))
 }
 
 words_score_pos <- 
@@ -274,7 +280,7 @@ words_score_pos
 If we join this with our "new information" score, we now have to scores to choose from:
 
 ```{r}
-words_first_choice %>% 
+words_first_choice %>%
   filter(
     str_has_none_of(word, c("a", "s", "e", "i", "n")),
     str_has_all_of(word, c("r", "o", "t")),
@@ -611,9 +617,8 @@ answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
 ```{=html}
 <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
 <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
-
-<textarea id="entries" class="code" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea>
-<div id="words-table"></div>
+<link href="wordle-component.css" rel="stylesheet">
+<script src="wordle-component.js"></script>
 ```
 
 ```{js js_redirect = FALSE, echo = FALSE}
@@ -656,52 +661,3 @@ document.getElementById("entries").addEventListener("input", function(ev) {
 })
 ```
 
-```{css echo=FALSE}
-.wordle {
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
-  min-width: 8em;
-}
-.letter {
-  display: inline-flex;
-  height: 1em;
-  width: 1em;
-  border: 2px rgba(125, 125, 125, 0.25) solid;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0.2em;
-  text-transform: uppercase;
-}
-.letter-large {
-  font-size: 2em;
-  height: 1.5em;
-  width: 1.5em;
-}
-.letter.incorrect {
-  color: var(--slate-20);
-  background-color: var(--slate-80);
-}
-.letter.correct {
-  color: var(--green-20);
-  background-color: var(--green-80);
-}
-.letter.in-solution {
-  color: var(--orange-20);
-  background-color: var(--orange-80);
-}
-@media (prefers-color-scheme: dark) {
-  .letter.incorrect {
-    color: var(--slate-80);
-    background-color: var(--slate-30);
-  }
-  .letter.correct {
-    color: var(--green-80);
-    background-color: var(--green-30);
-  }
-  .letter.in-solution {
-    color: var(--orange-80);
-    background-color: var(--orange-30);
-  }
-}
-```

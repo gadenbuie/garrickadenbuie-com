@@ -1,0 +1,126 @@
+.wordle-solo {
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  min-width: 8em;
+}
+.wordle-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 400px;
+  min-width: ;
+  margin: 1em auto;
+}
+.letter-wrapper {
+  display: grid;
+  width: min-content;
+  grid-template-areas:
+    "l l l"
+    "a p c";
+  margin-right: 1em;
+}
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+}
+.btn-letter-action {
+  height: 1.25em;
+  max-width: 100%;
+  margin-top: 0.25em;
+  border-radius: 0;
+  border: none;
+}
+.btn-letter-action + .btn-letter-action {
+  margin-left: 5px;
+}
+.btn-letter-action.absent {
+  grid-area: a;
+}
+.btn-letter-action.present {
+  grid-area: p;
+}
+.btn-letter-action.correct {
+  grid-area: c;
+}
+.letter:hover,
+.letter:focus,
+.btn-letter-action:hover,
+.btn-letter-action:focus,
+.btn-row-action:hover,
+.btn-row-action:focus {
+  outline: 2px #80808080 solid;
+  outline-offset: -2px;
+}
+.btn-row-action {
+  display: block;
+  padding: 0;
+  border: 1px solid var(--slate-80);
+  color: var(--slate-20);
+  background-color: var(--slate-80);
+  font-size: 1.25em;
+  border-radius: 5px;
+  height: 1.5em;
+  width: 1.5em;
+}
+.letter {
+  grid-area: l;
+  display: inline-flex;
+  height: 1em;
+  width: 1em;
+  border: 2px rgba(125, 125, 125, 0.25) solid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.2em;
+  padding: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.letter[contenteditable="true"] {
+  caret-color: transparent;
+}
+.letter-large {
+  font-size: 2em;
+  height: 2em;
+  width: 2em;
+}
+.absent {
+  color: var(--slate-20);
+  background-color: var(--slate-80);
+}
+.correct {
+  color: var(--green-20);
+  background-color: var(--green-80);
+}
+.present {
+  color: var(--orange-20);
+  background-color: var(--orange-80);
+}
+@media (prefers-color-scheme: dark) {
+  .absent {
+    color: var(--slate-80);
+    background-color: var(--slate-30);
+  }
+  .correct {
+    color: var(--green-80);
+    background-color: var(--green-30);
+  }
+  .present {
+    color: var(--orange-80);
+    background-color: var(--orange-30);
+  }
+  .letter:hover,
+  .letter:focus,
+  .btn-letter-action:hover,
+  .btn-letter-action:focus,
+  .btn-row-action:hover,
+  .btn-row-action:focus {
+    outline: 2px #aaaaaa80 solid;
+  }
+  .btn-row-action {
+    background-color: var(--slate-20);
+    color: var(--slate-80);
+    border-color: var(--slate-40);
+  }
+}
