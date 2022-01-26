@@ -15,7 +15,7 @@ function makeLetter(value = "_", index = 0) {
   ;['absent', 'present', 'correct'].forEach(c => {
     const btn = document.createElement('button')
     btn.classList = 'btn-letter-action ' + c
-    btn.innerHTML = `<span class="sr-only">${ordinal[index]} letter ${c}</span>`
+    btn.innerHTML = `<span class="clip">${ordinal[index]} letter ${c}</span>`
     btn.dataset.action = c
     el.appendChild(btn)
   })

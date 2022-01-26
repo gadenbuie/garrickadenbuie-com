@@ -9,6 +9,8 @@
   grid-template-columns: repeat(6, 1fr);
   max-width: 400px;
   margin: 1em auto;
+  align-items: center;
+  justify-items: center;
 }
 .letter-wrapper {
   display: grid;
@@ -16,7 +18,7 @@
   grid-template-areas:
     "l l l"
     "a p c";
-  margin-right: 1em;
+  gap: 0.25em;
 }
 .btn-action {
   display: flex;
@@ -25,15 +27,11 @@
   width: 1.5em;
 }
 .btn-letter-action {
-  height: 1.25em;
-  width: calc(100% - 0.16666em);
-  max-width: 100%;
-  margin-top: 0.25em;
+  height: 1em;
+  width: 100%;
+  max-width: 0.833em;
   border-radius: 0;
   border: none;
-}
-.btn-letter-action + .btn-letter-action {
-  margin-left: 5px;
 }
 .btn-letter-action.absent {
   grid-area: a;
