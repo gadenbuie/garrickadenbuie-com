@@ -8,12 +8,11 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   max-width: 400px;
-  min-width: ;
   margin: 1em auto;
 }
 .letter-wrapper {
   display: grid;
-  width: min-content;
+  width: 3em;
   grid-template-areas:
     "l l l"
     "a p c";
@@ -27,6 +26,7 @@
 }
 .btn-letter-action {
   height: 1.25em;
+  width: calc(100% - 0.16666em);
   max-width: 100%;
   margin-top: 0.25em;
   border-radius: 0;
@@ -82,8 +82,8 @@
 }
 .letter-large {
   font-size: 2em;
-  height: 2em;
-  width: 2em;
+  height: 1.5em;
+  width: 1.5em;
 }
 .absent {
   color: var(--slate-20);

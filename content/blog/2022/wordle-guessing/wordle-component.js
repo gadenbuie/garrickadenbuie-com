@@ -75,12 +75,65 @@ function isAlphaKeyCode (keyCode) {
   return isAlphaUpper || isAlphaLower
 }
 
+function updateGuesses (wordle) {
+  wordle = wordle || document.getElementById('wordle')
+  
+  const guesses = [...wordle.querySelectorAll('.wordle-row')]
+    .map(row => [...row.querySelectorAll('.letter')]
+    .map(l => l.innerText)
+    .reduce((x, y) => x + y, ''))
+    .map(w => w.toLowerCase())
+    
+  const results = [...wordle.querySelectorAll('.wordle-row')]
+    .map(row => [...row.querySelectorAll('.letter')]
+    .map(l => {
+      if (l.matches('.correct')) return '+'
+      if (l.matches('.present')) return '-'
+      if (l.matches('.absent'))  return '.'
+      return ''
+    })
+    .reduce((x, y) => x + y, ''))
+    
+  if (guesses.some(g => g.length != 5) || results.some(r => r.length != 5)) {
+    return
+  }
+  
+  wordle.state = {guesses, results}
+  const nextGuess = searchNextGuess(wordle.state)
+  wordle.table.updateConfig({data: nextGuess}).forceRender()
+  
+  return wordle.state
+}
+
 const wordle = document.getElementById('wordle')
+wordle.state = {guesses: [], results: []}
 addWordleRow(wordle)
+
+if (window.wordsScored) {
+  wordle.table = new gridjs.Grid({
+    data: wordsScored,
+    columns: [
+      {id: "word",      name: "Word"},
+      {id: "score",     name: "Score (Entropy)"},
+      {id: "score_pos", name: "Score (Position)"}
+    ],
+    sort: true,
+    pagination: {
+      enabled: true,
+      limit: 10,
+      summary: false,
+      nextButton: true,
+      prevButton: true
+    }
+  })
+  wordle.table.render(document.getElementById("words-table"))
+}
+
 
 wordle.addEventListener('click', function(ev) {
   if (ev.target.matches('.btn-letter-action')) {
     btnUpdateLetter(ev.target)
+    updateGuesses(wordle)
     return
   }
   
@@ -119,6 +172,7 @@ wordle.addEventListener('keyup', function(ev) {
   }
 
   ev.target.innerText = ev.key
+  updateGuesses(wordle)
   
   const nextLetter = ev.target.parentElement.nextElementSibling
   

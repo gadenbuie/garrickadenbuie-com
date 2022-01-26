@@ -23,7 +23,7 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/tidyjs-2.4.5/tidy.min.js"></script>
 <!-- Links -->
 <div id="wordle"></div>
-<textarea id="entries" class="code pa4 black-80" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea>
+<!-- <textarea id="entries" class="code pa4 black-80" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea> -->
 <div id="words-table"></div>
 
 ## Setup
@@ -1306,41 +1306,3 @@ answer.forEach(ans => console.log(\`\${ans.word} (\${ans.score})\`))`)
 <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 <link href="wordle-component.css" rel="stylesheet">
 <script src="wordle-component.js"></script>
-<script type="text/javascript">
-const wordsTable = new gridjs.Grid({
-  data: wordsScored,
-  columns: [
-    {id: "word",      name: "Word"},
-    {id: "score",     name: "Score (Entropy)"},
-    {id: "score_pos", name: "Score (Position)"}
-  ],
-  sort: true,
-  pagination: {
-    enabled: true,
-    limit: 10,
-    summary: false,
-    nextButton: true,
-    prevButton: true
-  }
-})
-wordsTable.render(document.getElementById("words-table"))
-</script>
-<script type="text/javascript">
-document.getElementById("entries").addEventListener("input", function(ev) {
-  if (!ev.target.value) {
-    return
-  }
-  const text = ev.target.value.split(/\r\n|\n/)
-  if (text.length < 2) {
-    wordsTable.updateConfig({data: wordsScored}).forceRender()
-    return
-  }
-  const guesses = text[0].split(' ')
-  const results = text[1].split(' ')
-  if (guesses.some(g => g.length != 5) || results.some(r => r.length != 5)) {
-    return
-  }
-  const nextGuess = searchNextGuess({guesses, results})
-  wordsTable.updateConfig({data: nextGuess}).forceRender()
-})
-</script>
