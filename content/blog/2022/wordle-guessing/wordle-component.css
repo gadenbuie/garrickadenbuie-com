@@ -13,12 +13,7 @@
   justify-items: center;
 }
 .letter-wrapper {
-  display: grid;
   width: 3em;
-  grid-template-areas:
-    "l l l"
-    "a p c";
-  gap: 0.25em;
 }
 .btn-action {
   display: flex;
@@ -26,21 +21,25 @@
   justify-content: center;
   width: 1.5em;
 }
-.btn-letter-action {
-  height: 1em;
+.letter-action {
   width: 100%;
-  max-width: 0.833em;
+  height: 1em;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25em;
+}
+.btn-letter-action {
+  height: 100%;
+  width: 1em;
   border-radius: 0;
   border: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
-.btn-letter-action.absent {
-  grid-area: a;
-}
-.btn-letter-action.present {
-  grid-area: p;
-}
-.btn-letter-action.correct {
-  grid-area: c;
+.btn-letter-action + .btn-letter-action {
+  margin-left: 3px;
 }
 .letter:hover,
 .letter:focus,
@@ -63,7 +62,7 @@
   width: 1.5em;
 }
 .letter {
-  grid-area: l;
+  grid-column: span 3 / 3;
   display: inline-flex;
   height: 1em;
   width: 1em;

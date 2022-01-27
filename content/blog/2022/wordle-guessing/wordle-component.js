@@ -10,6 +10,10 @@ function makeLetter(value = "_", index = 0) {
   
   el.appendChild(letter)
   
+  const letterAction = document.createElement('div')
+  letterAction.classList = 'letter-action'
+  el.appendChild(letterAction)
+  
   const ordinal = ['first', 'second', 'third', 'fourth', 'fifth']
   
   ;['absent', 'present', 'correct'].forEach(c => {
@@ -17,7 +21,7 @@ function makeLetter(value = "_", index = 0) {
     btn.classList = 'btn-letter-action ' + c
     btn.innerHTML = `<span class="clip">${ordinal[index]} letter ${c}</span>`
     btn.dataset.action = c
-    el.appendChild(btn)
+    letterAction.appendChild(btn)
   })
   
   return el
@@ -45,11 +49,14 @@ function makeWordRow(word) {
 }
 
 function btnUpdateLetter (btn) {
-  const letter = btn.parentElement.querySelector('.letter')
+  const letter = btn.closest('.letter-wrapper').querySelector('.letter')
   const newClass = btn.dataset.action
+  const hasNewClass = letter.classList.contains(newClass)
 
   letter.classList.remove('present', 'absent', 'correct')
-  letter.classList.add(newClass)
+  if (!hasNewClass) {
+    letter.classList.add(newClass)
+  }
 }
 
 function addWordleRow (wordle, focus = false) {
@@ -94,12 +101,16 @@ function updateGuesses (wordle) {
     })
     .reduce((x, y) => x + y, ''))
     
-  if (guesses.some(g => g.length != 5) || results.some(r => r.length != 5)) {
+  if (
+    guesses.some(g => g.length != 5) || 
+    guesses.some(g => g.includes('_')) ||
+    results.some(r => r.length != 5)
+  ) {
     return
   }
   
   wordle.state = {guesses, results}
-  const nextGuess = searchNextGuess(wordle.state)
+  const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
   wordle.table.updateConfig({data: nextGuess}).forceRender()
   
   return wordle.state
@@ -111,7 +122,7 @@ addWordleRow(wordle)
 
 if (window.wordsScored) {
   wordle.table = new gridjs.Grid({
-    data: wordsScored,
+    data: wordsScored.sort((x, y) => y.score - x.score),
     columns: [
       {id: "word",      name: "Word"},
       {id: "score",     name: "Score (Entropy)"},
@@ -151,21 +162,33 @@ wordle.addEventListener('keydown', function(ev) {
   ev.target.innerText = ''
 })
 
+// delete letter
 wordle.addEventListener('keydown', function(ev) {
   if (!ev.target.matches('.letter') || ev.key !== 'Backspace') {
     return
   }
   
-  ev.target.innerText = '_'
-  if (ev.target.closest('.wordle-row').firstChild == ev.target.parentElement) {
+  const wasEmpty = ev.target.innerText === '_'
+  
+  ev.target.classList.remove('absent', 'present', 'correct')
+  
+  if (
+    !wasEmpty ||
+    ev.target.closest('.wordle-row').firstChild == ev.target.parentElement
+  ) {
+    ev.target.innerText = '_'
     return
   }
-  ev.target.parentElement
+  
+  const prevLetter = ev.target.parentElement
     .previousElementSibling
     .querySelector('.letter')
-    .focus()
+  
+  prevLetter.innerText = '_'
+  prevLetter.focus()
 })
 
+// Type new letter
 wordle.addEventListener('keyup', function(ev) {
   if (!ev.target.matches('.letter') || !isAlphaKeyCode(ev.keyCode)) {
     return
