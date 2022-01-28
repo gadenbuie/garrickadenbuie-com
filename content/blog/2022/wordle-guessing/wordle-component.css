@@ -4,6 +4,9 @@
   width: max-content;
   min-width: 8em;
 }
+#words-stats {
+  text-align: center;
+}
 .wordle-row {
   display: grid;
   grid-template-columns: repeat(6, 1fr);

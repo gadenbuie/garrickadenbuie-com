@@ -115,6 +115,9 @@ function updateGuesses (wordle) {
   const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
   wordle.table.updateConfig({data: nextGuess}).forceRender()
   
+  const stats = document.getElementById('words-stats')
+  stats.innerHTML = `<p><strong>${nextGuess.length.toLocaleString()}</strong> word choices`
+  
   return wordle.state
 }
 
@@ -140,6 +143,7 @@ if (window.wordsScored) {
     }
   })
   wordle.table.render(document.getElementById("words-table"))
+  document.getElementById('words-stats').innerHTML = `<p><strong>${wordsScored.length.toLocaleString()}</strong> word choices`
 }
 
 wordle.addEventListener('click', function(ev) {
@@ -157,7 +161,10 @@ wordle.addEventListener('click', function(ev) {
 })
 
 wordle.addEventListener('keydown', function(ev) {
-  if (!ev.target.matches('.letter') || !isAlphaKeyCode(ev.keyCode)) {
+  if (!ev.target.matches('.letter')) {
+    return
+  }
+  if (!isAlphaKeyCode(ev.keyCode)) {
     if (!(ev.key == "Tab" || ev.key == 'Backspace')) {
       ev.stopPropagation()
       ev.preventDefault()
