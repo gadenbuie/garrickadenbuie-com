@@ -19,6 +19,7 @@ function makeLetter(value = "_", index = 0) {
   ;['absent', 'present', 'correct'].forEach(c => {
     const btn = document.createElement('button')
     btn.classList = 'btn-letter-action ' + c
+    btn.title = c.charAt(0).toUpperCase() + c.slice(1)
     btn.innerHTML = `<span class="clip">${ordinal[index]} letter ${c}</span>`
     btn.dataset.action = c
     letterAction.appendChild(btn)
@@ -41,6 +42,7 @@ function makeWordRow(word) {
   const btnAction = document.createElement('button')
   btnAction.classList = 'btn-row-action'
   btnAction.dataset.action = 'add'
+  btnAction.title = 'Add row'
   btnAction.innerHTML = '+ <span class="sr-only">Add row</span>'
   div.appendChild(btnAction)
   
@@ -140,7 +142,6 @@ if (window.wordsScored) {
   wordle.table.render(document.getElementById("words-table"))
 }
 
-
 wordle.addEventListener('click', function(ev) {
   if (ev.target.matches('.btn-letter-action')) {
     btnUpdateLetter(ev.target)
@@ -157,6 +158,10 @@ wordle.addEventListener('click', function(ev) {
 
 wordle.addEventListener('keydown', function(ev) {
   if (!ev.target.matches('.letter') || !isAlphaKeyCode(ev.keyCode)) {
+    if (!(ev.key == "Tab" || ev.key == 'Backspace')) {
+      ev.stopPropagation()
+      ev.preventDefault()
+    }
     return
   }
   ev.target.innerText = ''
