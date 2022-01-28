@@ -21,16 +21,17 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE,
+  cache = TRUE,
   fig.width = 9, fig.height = 10
 )
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r wordle-component, echo=FALSE}
+```{r wordle-component, echo=FALSE, cahe = FALSE}
 wordle_component <- function(word, answer, large = TRUE) {
-  word <- str_split(word, "")[[1]]
-  answer <- str_split(answer, "")[[1]]
-  letters <- map2(word, answer, function(letter, ans) {
+  word <- stringr::str_split(word, "")[[1]]
+  answer <- stringr::str_split(answer, "")[[1]]
+  letters <- purrr::map2(word, answer, function(letter, ans) {
     if (ans == ".") {
       htmltools::span(
         class = c("letter", if (large) "letter-large", "absent"),
@@ -57,7 +58,6 @@ wordle_component <- function(word, answer, large = TRUE) {
 
 ```{=html}
 <div id="wordle"></div>
-<!-- <textarea id="entries" class="code pa4 black-80" rows="2" cols="54" autocomplete="false" autocorrect="off" spellcheck="false" autocapitalize="false"></textarea> -->
 <div id="words-table"></div>
 ```
 
@@ -129,14 +129,7 @@ tibble(word = words) %>%
   arrange(desc(score))
 ```
 
-```{r points}
-score_choice <- function(word) {
-  word_len <- str_length(word)
-  chars <- str_split(word, "")[[1]]
-  chars <- unique(chars)
-  1 - prod(1 - letter_freq[chars])
-}
-
+```{r words_first_choice}
 words_first_choice <- 
   tibble(word = words) %>% 
   mutate(score = map_dbl(word, score_entropy)) %>% 
@@ -266,12 +259,15 @@ score_by_position <- function(word) {
     res <- c(res, p)
   }
   
-  - sum(p * log(p, base = 2))
+  prod(res)
 }
 
 words_score_pos <- 
   tibble(word = words) %>% 
-  mutate(score_pos = map_dbl(word, score_by_position)) %>%
+  mutate(
+    score_pos = map_dbl(word, score_by_position),
+    score_pos = score_pos / diff(range(score_pos))
+  ) %>%
   arrange(desc(score_pos))
 
 words_score_pos
