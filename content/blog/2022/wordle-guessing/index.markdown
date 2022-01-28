@@ -19,6 +19,7 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/tidyjs-2.4.5/tidy.min.js"></script>
 <!-- Links -->
 <div id="wordle"></div>
+<div id="words-stats"></div>
 <div id="words-table"></div>
 
 ## Setup
@@ -1096,6 +1097,7 @@ function summarizeGuesses ({ guesses, results }) {
   const allComplete = [...guesses, ...results].every(s => s.length == 5)
   if (!allComplete) {
     console.error('All guesses and results must have 5 characters.')
+    return
   }
   
   guesses = guesses.map(s => s.split(''))
@@ -1142,6 +1144,7 @@ function summarizeGuesses ({ guesses, results }) {
   const allComplete = [...guesses, ...results].every(s => s.length == 5)
   if (!allComplete) {
     console.error('All guesses and results must have 5 characters.')
+    return
   }
   
   guesses = guesses.map(s => s.split(''))
@@ -1194,9 +1197,7 @@ function searchNextGuess ({ guesses, results }) {
     // keep only words that have all letters in the keep pile
     filter(d => guessResult.keep.every(l => d.word.includes(l))),
     // keep words that are consistent with results to date
-    filter(d => RegExp(guessResult.pattern).test(d.word)),
-    // and don't show too many words
-    sliceMax(20, 'score')
+    filter(d => RegExp(guessResult.pattern).test(d.word))
   )
 }
 ```
@@ -1212,9 +1213,7 @@ function searchNextGuess ({ guesses, results }) {
     // keep only words that have all letters in the keep pile
     filter(d => guessResult.keep.every(l => d.word.includes(l))),
     // keep words that are consistent with results to date
-    filter(d => RegExp(guessResult.pattern).test(d.word)),
-    // and don't show too many words
-    sliceMax(20, 'score')
+    filter(d => RegExp(guessResult.pattern).test(d.word))
   )
 }
 </script>
