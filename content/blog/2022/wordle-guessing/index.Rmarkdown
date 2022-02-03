@@ -57,7 +57,7 @@ wordle_component <- function(word, answer, large = TRUE) {
 ```
 
 ```{=html}
-<div id="wordle"></div>
+<div id="wordle" style="position:relative"><textarea style="height:0;width:0;position:absolute;left:-100vw;bottom:0"></textarea></div>
 <div id="words-stats"></div>
 <div id="words-table"></div>
 ```
@@ -544,9 +544,9 @@ function summarizeGuesses ({ guesses, results }) {
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
       } else if (r[j] == '-') {
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
         exclude[j] += g[j]
       } else {
         discard.push(g[j])

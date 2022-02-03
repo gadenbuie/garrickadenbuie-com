@@ -7,16 +7,28 @@
 #words-stats {
   text-align: center;
 }
+#wordle {
+  position: relative;
+}
+#wordle > textarea {
+  height: 0;
+  width: 0;
+  position: absolute;
+  left: -100vw;
+}
 .wordle-row {
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: repeat(6, 1fr);
   max-width: 400px;
   margin: 1em auto;
-  align-items: center;
-  justify-items: center;
 }
 .letter-wrapper {
   width: 3em;
+}
+.letter-wrapper + .letter-wrapper {
+  margin-left: 1em;
 }
 .btn-action {
   display: flex;
@@ -52,6 +64,11 @@
 .btn-row-action:focus {
   outline: 2px #80808080 solid;
   outline-offset: -2px;
+}
+.letter.letter-focus,
+.letter.letter-focus:hover, 
+.letter.letter-focus:focus {
+  outline: 2px solid var(--red-50);
 }
 .btn-row-action {
   display: block;

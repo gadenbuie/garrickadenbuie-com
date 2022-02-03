@@ -1,11 +1,9 @@
-function makeLetter(value = "_", index = 0) {
+function makeLetter(value = "_", index = 0, state) {
   const el = document.createElement('div')
   el.classList = 'letter-wrapper'
   
   const letter = document.createElement('div')
   letter.classList = 'letter letter-large'
-  letter.setAttribute('contenteditable', true)
-  letter.setAttribute('tabindex', '0')
   letter.innerText = value
   
   el.appendChild(letter)
@@ -14,13 +12,25 @@ function makeLetter(value = "_", index = 0) {
   letterAction.classList = 'letter-action'
   el.appendChild(letterAction)
   
+  if (value === "_" && (!state || state === "_")) {
+    return el
+  }
+  
+  const resultClass = {
+    '+': 'correct',
+    '-': 'present',
+    '.': 'absent'
+  }
+  
+  letter.classList.add(resultClass[state])
+  
   const ordinal = ['first', 'second', 'third', 'fourth', 'fifth']
   
   ;['absent', 'present', 'correct'].forEach(c => {
     const btn = document.createElement('button')
     btn.classList = 'btn-letter-action ' + c
     btn.title = c.charAt(0).toUpperCase() + c.slice(1)
-    btn.innerHTML = `<span class="clip">${ordinal[index]} letter ${c}</span>`
+    btn.setAttribute("aria-label", `Set ${ordinal[index]} letter ${value.toUpperCase()} ${c}`)
     btn.dataset.action = c
     letterAction.appendChild(btn)
   })
@@ -28,25 +38,26 @@ function makeLetter(value = "_", index = 0) {
   return el
 }
 
-function makeWordRow(word) {
+function fillWord(word) {
   word = word || '_____'
   word = word.slice(0, 5).split('')
+  while (word.length < 5) {
+   word.push('_')
+  }
+  return word
+}
+
+function makeWordRow(word, state) {
+  word = fillWord(word)
+  state = fillWord(state)
   
   const row = document.createElement('div')
   row.classList = 'wordle-row'
   
-  word.map(makeLetter).forEach(l => row.appendChild(l))
+  word
+    .map((l, idx) => makeLetter(l, idx, state[idx]))
+    .forEach(l => row.appendChild(l))
   
-  const div = document.createElement('div')
-  div.classList = 'btn-action'
-  const btnAction = document.createElement('button')
-  btnAction.classList = 'btn-row-action'
-  btnAction.dataset.action = 'add'
-  btnAction.title = 'Add row'
-  btnAction.innerHTML = '+ <span class="sr-only">Add row</span>'
-  div.appendChild(btnAction)
-  
-  row.appendChild(div)
   return row
 }
 
@@ -77,6 +88,35 @@ function addWordleRow (wordle, focus = false) {
   return row
 }
 
+function getWords (wordle) {
+  wordle = wordle || document.getElementById("wordle")
+  return wordle.querySelector('textarea').value
+    .split(/\r\n|\n/)
+    .map(w => w.toLowerCase())
+}
+
+function renderWords (wordle) {
+  const words = getWords(wordle)
+  
+  // clear current guesses
+  while (wordle.querySelector('.wordle-row')) {
+    wordle.removeChild(wordle.querySelector('.wordle-row'))
+  }
+  
+  if (wordle.state && wordle.state.guesses.length) {
+    const { guesses, results } = wordle.state
+    for (let i = 0; i < guesses.length; i++) {
+      const row = makeWordRow(guesses[i], results[i])
+      wordle.appendChild(row)
+    }
+  } else {
+    words.forEach(function(word) {
+      const row = makeWordRow(word)
+      wordle.appendChild(row)
+    })
+  }
+}
+
 function isAlphaKeyCode (keyCode) {
   const isAlphaUpper = keyCode >= 65 && keyCode <= 90
   const isAlphaLower = keyCode >= 97 && keyCode <= 122
@@ -87,11 +127,7 @@ function isAlphaKeyCode (keyCode) {
 function updateGuesses (wordle) {
   wordle = wordle || document.getElementById('wordle')
   
-  const guesses = [...wordle.querySelectorAll('.wordle-row')]
-    .map(row => [...row.querySelectorAll('.letter')]
-    .map(l => l.innerText)
-    .reduce((x, y) => x + y, ''))
-    .map(w => w.toLowerCase())
+  const guesses = getWords(wordle)
     
   const results = [...wordle.querySelectorAll('.wordle-row')]
     .map(row => [...row.querySelectorAll('.letter')]
@@ -103,6 +139,8 @@ function updateGuesses (wordle) {
     })
     .reduce((x, y) => x + y, ''))
     
+  wordle.state = {guesses, results}
+  
   if (
     guesses.some(g => g.length != 5) || 
     guesses.some(g => g.includes('_')) ||
@@ -111,19 +149,38 @@ function updateGuesses (wordle) {
     return
   }
   
-  wordle.state = {guesses, results}
+  const summary = summarizeGuesses({guesses, results})
   const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
   wordle.table.updateConfig({data: nextGuess}).forceRender()
   
   const stats = document.getElementById('words-stats')
-  stats.innerHTML = `<p><strong>${nextGuess.length.toLocaleString()}</strong> word choices`
+  stats.innerHTML = `<p>
+    <strong>${nextGuess.length.toLocaleString()}</strong> word choices<br/>
+    Pattern <code>${summary.pattern}</code><br/>
+    Has ${summary.keep.sort((x, y) => x > y).map(l => `<code>${l}</code>`).join(' ')}<br/>
+    Not ${summary.discard.sort((x, y) => x > y).map(l => `<code>${l}</code>`).join(' ')}
+  </p>`
   
   return wordle.state
 }
 
+function updateLetterFocus () {
+  const letters = Array.from(wordle.querySelectorAll('.letter'))
+  const letterEmpty = letters.filter(l => l.innerText === '_')
+  if (letterEmpty.length) {
+    letterEmpty[0].classList.add('letter-focus')
+  } else {
+    letters[letters.length - 1].classList.add('letter-focus')
+  }
+}
+
+function removeLetterFocus () {
+  wordle.querySelector('.letter-focus').classList.remove('letter-focus')
+}
+
 const wordle = document.getElementById('wordle')
 wordle.state = {guesses: [], results: []}
-addWordleRow(wordle)
+renderWords(wordle)
 
 if (window.wordsScored) {
   wordle.table = new gridjs.Grid({
@@ -153,72 +210,49 @@ wordle.addEventListener('click', function(ev) {
     return
   }
   
-  if (ev.target.matches('.btn-row-action[data-action="add"]')) {
-    ev.target.remove()
-    addWordleRow(wordle, true)
-    return
+  if (ev.target.matches('.letter')) {
+    wordle.querySelector('textarea').focus()
   }
 })
 
-wordle.addEventListener('keydown', function(ev) {
-  if (!ev.target.matches('.letter')) {
-    return
-  }
-  if (!isAlphaKeyCode(ev.keyCode)) {
-    if (!(ev.key == "Tab" || ev.key == 'Backspace')) {
-      ev.stopPropagation()
-      ev.preventDefault()
+wordle
+  .querySelector('textarea')
+  .addEventListener('keydown', function(ev) {
+    const lines = ev.target.value.split(/\r\n|\n/)
+    const lastWord = lines[lines.length - 1]
+    
+    if (['Tab', 'Backspace'].includes(ev.key)) {
+      return
     }
-    return
-  }
-  ev.target.innerText = ''
-})
+    
+    if (ev.key === 'Enter' && lines.length < 6 && lastWord.length == 5) {
+      return
+    }
+    
+    if (isAlphaKeyCode(ev.keyCode) && lastWord.length < 5) {
+      return
+    }
+    
+    // disallow all other input
+    ev.stopPropagation()
+    ev.preventDefault()
+  })
 
-// delete letter
-wordle.addEventListener('keydown', function(ev) {
-  if (!ev.target.matches('.letter') || ev.key !== 'Backspace') {
-    return
-  }
+wordle
+  .querySelector('textarea')
+  .addEventListener('keyup', function(ev) {
+    
+    const words = ev.target.value.split(/\r\n|\n/)
+    
+    updateGuesses(wordle)
+    renderWords(wordle)
+    updateLetterFocus()
+  })
   
-  const wasEmpty = ev.target.innerText === '_'
+wordle
+  .querySelector('textarea')
+  .addEventListener('focus', updateLetterFocus)
   
-  ev.target.classList.remove('absent', 'present', 'correct')
-  
-  if (
-    !wasEmpty ||
-    ev.target.closest('.wordle-row').firstChild == ev.target.parentElement
-  ) {
-    ev.target.innerText = '_'
-    return
-  }
-  
-  const prevLetter = ev.target.parentElement
-    .previousElementSibling
-    .querySelector('.letter')
-  
-  prevLetter.innerText = '_'
-  prevLetter.focus()
-})
-
-// Type new letter
-wordle.addEventListener('keyup', function(ev) {
-  if (!ev.target.matches('.letter') || !isAlphaKeyCode(ev.keyCode)) {
-    return
-  }
-
-  ev.target.innerText = ev.key
-  updateGuesses(wordle)
-  
-  const nextLetter = ev.target.parentElement.nextElementSibling
-  
-  if (nextLetter.matches('.btn-action')) {
-    ev.target.closest('.wordle-row').querySelector('.btn-letter-action').focus()
-    return
-  }
-  
-  if (!nextLetter.matches('.letter-wrapper')) {
-    return
-  }
-  
-  nextLetter.querySelector('.letter').focus()
-})
+wordle
+  .querySelector('textarea')
+  .addEventListener('blur', removeLetterFocus)

@@ -18,7 +18,7 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/d3-array-2.12.1/d3-array.min.js"></script>
 <script src="{{< blogdown/postref >}}index_files/tidyjs-2.4.5/tidy.min.js"></script>
 <!-- Links -->
-<div id="wordle"></div>
+<div id="wordle" style="position:relative"><textarea style="height:0;width:0;position:absolute;left:-100vw;bottom:0"></textarea></div>
 <div id="words-stats"></div>
 <div id="words-table"></div>
 
@@ -1115,9 +1115,9 @@ function summarizeGuesses ({ guesses, results }) {
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
       } else if (r[j] == '-') {
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
         exclude[j] += g[j]
       } else {
         discard.push(g[j])
@@ -1162,9 +1162,9 @@ function summarizeGuesses ({ guesses, results }) {
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
       } else if (r[j] == '-') {
-        keep.push(g[j])
+        if (!keep.includes(g[j])) keep.push(g[j])
         exclude[j] += g[j]
       } else {
         discard.push(g[j])
