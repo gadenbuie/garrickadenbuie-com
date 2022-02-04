@@ -21,7 +21,6 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE,
-  cache = TRUE,
   fig.width = 9, fig.height = 10
 )
 options(htmltools.dir.version = TRUE)
@@ -494,10 +493,9 @@ map2(
 
 ## Another thought
 
-```{r js4shiny, echo=FALSE}
-js4shiny::html_setup_blogdown("none")
-tidyjs::use_tidyjs()
+Embed the data into the webpage
 
+```{r embed-words, echo=TRUE}
 words_scored %>% 
   mutate(score_pos = score_pos / (max(score_pos) - min(score_pos))) %>% 
   jsonlite::write_json("wordle-scored.json")
@@ -509,14 +507,44 @@ htmltools::tags$script(
 )
 ```
 
+so that we can switch gears; the rest of the blog post is rendered _in your browser_.
+This uses an extension I built for the js knitr engine for js4shiny.
+
+```{r js4shiny, echo=TRUE}
+js4shiny::html_setup_blogdown(stylize = "none")
+```
+
+And also, we'll use tidyjs in the browser. 
+If you squint really hard, it's remarkably similar to the tidyverse, just with a JavaScript spin.
+
+```{r tidy-js, echo=TRUE}
+tidyjs::use_tidyjs()
+```
+
+Now that we've included tidyjs in this page, we can import a couple of functions that we're going to want to use. 
+With tidyjs, all transformations are wrapped in a call `tidy()`, so we have to import `tidy`.
+We also need `filter()` and `sliceMax()` for easy filtering.
+
 ```{js js_redirect = FALSE}
 const { tidy, filter, sliceMax } = Tidy
-wordsScored = JSON.parse(document.getElementById('words-scored').innerText)
 ```
+
+The next step is to find the JSON data we just serialized and stashed in the browser.
+We use `document.getElementById()` to find the element with the ID we chose previously.
+Adding `.innerText` pulls out the inner text of that object.
+Finally, we take the JSON text and parse it into a JavaScript object with `JSON.parse()`.
+
+```{js js_redirect = FALSE}
+wordsScored = JSON.parse(
+  document.getElementById('words-scored').innerText
+)
+```
+
+Here's a quick preview...
 
 ```{js}
 tidy(
-  wordsScored,
+  wordsScored, // %>%
   sliceMax(5, 'score')
 )
 ```
@@ -544,9 +572,9 @@ function summarizeGuesses ({ guesses, results }) {
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
-        if (!keep.includes(g[j])) keep.push(g[j])
+        keep.push(g[j])
       } else if (r[j] == '-') {
-        if (!keep.includes(g[j])) keep.push(g[j])
+        keep.push(g[j])
         exclude[j] += g[j]
       } else {
         discard.push(g[j])
