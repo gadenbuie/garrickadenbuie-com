@@ -149,19 +149,48 @@ function updateGuesses (wordle) {
     return
   }
   
-  const summary = summarizeGuesses({guesses, results})
   const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
   wordle.table.updateConfig({data: nextGuess}).forceRender()
   
+  let { pattern, keep, discard } = summarizeGuesses({guesses, results})
+  const knownLetters = [...keep, ...discard]
+  keep = Tidy.distinct()(keep)
+    .sort((x, y) => x > y)
+    .map(l => `<code>${l}</code>`)
+    .join(' ')
+  discard = Tidy.distinct()(discard)
+    .sort((x, y) => x > y)
+    .map(l => `<code>${l}</code>`)
+    .join(' ')
+    
   const stats = document.getElementById('words-stats')
   stats.innerHTML = `<p>
-    <strong>${nextGuess.length.toLocaleString()}</strong> word choices<br/>
-    Pattern <code>${summary.pattern}</code><br/>
-    Has ${summary.keep.sort((x, y) => x > y).map(l => `<code>${l}</code>`).join(' ')}<br/>
-    Not ${summary.discard.sort((x, y) => x > y).map(l => `<code>${l}</code>`).join(' ')}
-  </p>`
+    <strong>${nextGuess.length.toLocaleString()}</strong> word choices</p>
+  <table class="center"><tr><td class="tr b pr2">Pattern</td><td class="tl b"><code>${pattern}</code></td></tr>
+    <tr><td class="tr b pr2">Yes</td><td class="tl">${keep}</td></tr>
+    <tr><td class="tr b pr2">No</td><td class="tl">${discard}</td></tr>
+    <tr><td class="tr b pr2">Maybe</td><td class="tl">${uniqueLetters(nextGuess, knownLetters)}</td></tr>
+  </table>`
   
   return wordle.state
+}
+
+function uniqueLetters (words, exclude) {
+  const letters = words
+    .map(x => x.word)
+    .reduce((x, y) => x + y)
+    .split('')
+    .filter(l => !exclude.includes(l))
+    .reduce((x, y) => {
+      x[y] = x[y] ? x[y] + 1 : 1
+      return x
+    }, {})
+    
+  return Object.keys(letters)
+    .map(x => ({letter: x, count: letters[x]}))
+    .sort((x, y) => x.count < y.count)
+    .map(l => `<code title="${l.count} times">${l.letter}</code>`)
+    .join(' ')
 }
 
 function updateLetterFocus () {
