@@ -55,6 +55,16 @@ wordle_component <- function(word, answer, large = TRUE) {
 }
 ```
 
+::: {.intro .center .mw6 .mb3}
+Have you heard of [Wordle]?
+Who am I kidding, of course you've heard of Wordle!
+In fact, I'm pretty certain we're way past peak Wordle at this point.
+
+Here's a Wordle helper that doesn't completely take the fun out of the guessing, while also making sure you've got a good chance at winning every time.
+
+Type your guesses below and then use the buttons to report Wordle's response. As soon as you add the results for a new word, the table of next guess candidates will update! Pick wisely.
+:::
+
 ```{=html}
 <div id="wordle" style="position:relative"><textarea style="height:0;width:0;position:absolute;left:-100vw;bottom:0"></textarea></div>
 <div id="words-stats"></div>
@@ -62,8 +72,6 @@ wordle_component <- function(word, answer, large = TRUE) {
 ```
 
 ## Setup
-
-[wordle] is...
 
 ```{r load-words}
 library(dplyr)

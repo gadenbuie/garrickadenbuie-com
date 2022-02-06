@@ -22,13 +22,24 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/d3-array-2.12.1/d3-array.min.js"></script>
 <script src="{{< blogdown/postref >}}index_files/tidyjs-2.4.5/tidy.min.js"></script>
 <!-- Links -->
+
+<div class="intro center mw6 mb3">
+
+Have you heard of [Wordle](https://www.powerlanguage.co.uk/wordle/)?
+Who am I kidding, of course you’ve heard of Wordle!
+In fact, I’m pretty certain we’re way past peak Wordle at this point.
+
+Here’s a Wordle helper that doesn’t completely take the fun out of the guessing, while also making sure you’ve got a good chance at winning every time.
+
+Type your guesses below and then use the buttons to report Wordle’s response. As soon as you add the results for a new word, the table of next guess candidates will update! Pick wisely.
+
+</div>
+
 <div id="wordle" style="position:relative"><textarea style="height:0;width:0;position:absolute;left:-100vw;bottom:0"></textarea></div>
 <div id="words-stats"></div>
 <div id="words-table"></div>
 
 ## Setup
-
-[wordle](https://www.powerlanguage.co.uk/wordle/) is…
 
 ``` r
 library(dplyr)

@@ -166,7 +166,7 @@ function updateGuesses (wordle) {
   const stats = document.getElementById('words-stats')
   stats.innerHTML = `<p>
     <strong>${nextGuess.length.toLocaleString()}</strong> word choices</p>
-  <table class="center"><tr><td class="tr b pr2">Pattern</td><td class="tl b"><code>${pattern}</code></td></tr>
+  <table class="center mb3"><tr><td class="tr b pr2">Pattern</td><td class="tl b"><code>${pattern}</code></td></tr>
     <tr><td class="tr b pr2">Yes</td><td class="tl">${keep}</td></tr>
     <tr><td class="tr b pr2">No</td><td class="tl">${discard}</td></tr>
     <tr><td class="tr b pr2">Maybe</td><td class="tl">${uniqueLetters(nextGuess, knownLetters)}</td></tr>
