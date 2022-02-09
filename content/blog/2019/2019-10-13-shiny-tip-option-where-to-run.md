@@ -31,9 +31,10 @@ you can choose to run the app in the _Viewer Pane_,
 a new _Window_,
 or in an _External_ browser window.
 
-<div class="center"><img
+<div><img
   src="shiny-rstudio-run-in.png"
   alt="RStudio 'Run App' drop down menu available for Shiny apps, for example in source files named 'app.R'"
+  class = "db center"
 /></div>
 
 This works well for typical Shiny apps in `app.R` or `{global,ui,server}.R`,
