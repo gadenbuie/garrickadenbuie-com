@@ -55,7 +55,7 @@ then I'd recommend adding a conditional guard to check that RStudio is running f
 ```r
 if (
   # Make sure that {rstudioapi} is available
-  requiresNamespace("rstudioapi", quietly = TRUE) &&
+  requireNamespace("rstudioapi", quietly = TRUE) &&
   # Returns TRUE if RStudio is running
   rstudioapi::hasFun("viewer")
 ) {
