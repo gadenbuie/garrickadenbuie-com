@@ -23,7 +23,7 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/tidyjs-2.4.5/tidy.min.js"></script>
 <!-- Links -->
 
-<div class="intro center mw6 mb3">
+<div class="intro center mw6-l mb3">
 
 Have you heard of [Wordle](https://www.powerlanguage.co.uk/wordle/)?
 Who am I kidding, of course you’ve heard of Wordle!

@@ -55,7 +55,7 @@ wordle_component <- function(word, answer, large = TRUE) {
 }
 ```
 
-::: {.intro .center .mw6 .mb3}
+::: {.intro .center .mw6-l .mb3}
 Have you heard of [Wordle]?
 Who am I kidding, of course you've heard of Wordle!
 In fact, I'm pretty certain we're way past peak Wordle at this point.
