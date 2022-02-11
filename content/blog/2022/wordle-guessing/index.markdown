@@ -31,7 +31,11 @@ In fact, I’m pretty certain we’re way past peak Wordle at this point.
 
 Here’s a Wordle helper that doesn’t completely take the fun out of the guessing, while also making sure you’ve got a good chance at winning every time.
 
-Type your guesses below and then use the buttons to report Wordle’s response. As soon as you add the results for a new word, the table of next guess candidates will update! Pick wisely.
+Type your guesses below and then use the buttons below each letter to report Wordle’s response.
+Press <kbd>return</kbd> to start the next guess.
+Use <kbd>delete</kbd> to remove letters or words you’ve entered.
+
+As soon as you add the results for a new word, the table of next guess candidates will update! Pick wisely.
 
 </div>
 
@@ -39,24 +43,136 @@ Type your guesses below and then use the buttons to report Wordle’s response. 
 <div id="words-stats"></div>
 <div id="words-table"></div>
 
-## Setup
+## Intro
+
+I started this post about a month ago,
+roughly at the same time that
+every other person with a blog about doing things with computers
+also decided to start writing a post about Wordle.
+
+I’ve been tempted to just walk away from this post more than once.
+After all,
+since I’ve started writing this post
+[Wordle has been solved](https://jonathanolson.net/wordle-solver/),
+Winston Chang rewrote [Wordle in Shiny](https://youtu.be/quvz4xLbW88),
+roughly [70 other people wrote World clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) *in R alone*.
+Felienne Hermans wrote a Twitter bot to
+[guess the word from shared game emojis](https://twitter.com/Felienne/status/1482681664765636608).
+Someone else wrote a bot to
+[intentionally ruin everyone’s day](https://twitter.com/dancow/status/1485660308622528513)
+by spoling the answer to the next day’s Wordle.
+(Both bots were eventually suspended by Twitter.)
+Oh and Wordle was bought for
+[big money by the New York Times](https://www.thetimes.co.uk/article/wordle-sold-new-york-times-n0mqm3rl7)
+who fumbled the handoff and
+[lost everyone’s word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
+in the transfer.
+
+I should admit up-front that I’ve never really *played* Wordle.
+It’s exactly the kind of task that immediately cries out to be automated:
+I’d apparently much rather spend a month’s worth of after-hours tinkering time
+to think through and codify a decent strategy than to just think up some words on my own.
+
+And yet I love Wordle.
+I think it’s awesome.
+The rules are simple, but deceptively ambiguous.
+The game play is so concise it can fit in a tweet
+(even though that’s (annoying for [accessibility reasons](https://slate.com/culture/2022/02/wordle-word-game-results-accessibility-twitter.html))).
+Still, the UI is simple, intuitive and fun
+without trying to hack your brain to be addictive.
+It’s a [feel good game](https://uxdesign.cc/wordle-ux-sometimes-a-game-just-feels-good-8749b26834ef).
+
+Another reason to love Wordle: there are so many great programming tasks around Wordle.
+It’s easy to describe the mechanics,
+to understand the game play,
+to look at the app and think: I can do that.
+Which is why, right now, programmers are hard at work tinkering over word lists
+or practicing web development in their favorite framework using Wordle.
+
+As an educator, it means you can tailor a Wordle-based programming challenge
+to be as simple or complicated as needed.
+But once you start to break down the game, it’s more complicated than it appears at first glance.
+State management, data structures, browser storage, game theory, CSS, user interface design, accessibility.
+You can go deep on any of these topics.
+
+So if you have a Wordle idea you want to tinker with,
+I wholeheartedly encourage you to run with it.
+Let Wordle inspire you to practice
+[using regular expressions with stringr](https://gist.github.com/hadley/6db2217dff40cb56b524943492771227),
+[web scraping with httr](https://gist.github.com/scarpino/eb2f58745bab14417a6bca4955cf1f9c),
+[text processing with Python](https://gist.github.com/twjang/5d6118f80a1884d3759640a128d43c46),
+[working with Twitter data with rtweet](https://www.rostrum.blog/2022/01/14/wordle/),
+or [making accessible plots with ggplot2](https://gist.github.com/thoughtfulbloke/ebfb1865acbc1bb5c7c482d6ebfef2b8).
+
+## Let’s look at some words
+
+Let’s dig in.
+To get started, I’m using a few of the usual suspects from the [tidyverse](https://tidyverse.org) package.
+Out of habit, I’ll load the ones I want specifically.
+(I think I also used tidyr somewhere in here, too.)
 
 ``` r
 library(dplyr)
 library(purrr)
 library(stringr)
-
-wordle_words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
-
-words <- wordle_words %>% unlist() %>% unique()
 ```
 
-Letter frequency of appearance in a word
+Now we’re ready to load our word list.
+At first I started with Scrabble’s word list,
+but it turns out that Wordle included the complete word list in its source code.
+(You could [call it a hack](https://screenrant.com/wordle-source-code-hack-every-word-revealed/)
+but only in the [state of Missouri](https://www.theverge.com/2021/12/31/22861188/missouri-governor-mike-parson-hack-website-source-code).)
+
+I used my leet hacker copy-and-paste skills
+to store [Wordle’s word list as a JSON file](wordle.json) (165K).
+
+``` r
+wordle_words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
+```
+
+It turns out that Worlde maintains two separate lists.
+One list contains the 2,315 words used as solutions
+
+``` r
+sample(wordle_words$answers, 5)
+```
+
+    ## [1] "chain" "match" "mount" "bongo" "rogue"
+
+and the other contains the 10,657 words that the game considers a valid guess.
+
+``` r
+sample(wordle_words$words, 5)
+```
+
+    ## [1] "lotsa" "piler" "dills" "skivy" "palas"
+
+Do the two word lists overlap?
+
+``` r
+wordle_words %>% reduce(intersect) %>% length()
+```
+
+    ## [1] 0
+
+No, they do not (since the intersection of the two word lists is empty).
+We could make things super easy for ourselves by favoring the words on the solution list,
+but that would *really* ruin the fun.
+So let’s combine the two lists.
+
+``` r
+words <- unlist(wordle_words)
+```
+
+Now lets turn those words into data we can work with.
+
+## A letter popularity contest
+
+Letter frequency by appearance in a word.
 
 ``` r
 letter_freq <-
   words %>%
-  # pull(word) %>% 
   str_split("") %>%
   map(unique) %>%
   unlist() %>%
@@ -83,18 +199,18 @@ letter_freq
 Letter frequency by position
 
 ``` r
-letter_freq_pos <- 
-  tibble(word = words) %>% 
-  select(word) %>% 
-  mutate(letter = word) %>% 
-  tidyr::separate_rows(letter, sep = "") %>% 
+letter_freq_pos <-
+  tibble(word = words) %>%
+  select(word) %>%
+  mutate(letter = word) %>%
+  tidyr::separate_rows(letter, sep = "") %>%
   filter(letter != "") %>%
   group_by(word) %>%
   mutate(position = row_number()) %>%
   ungroup() %>%
   select(-word) %>%
   group_by(position, letter) %>%
-  summarize(n = n() / length(words), .groups = "drop") %>% 
+  summarize(n = n() / length(words), .groups = "drop") %>%
   tidyr::pivot_wider(names_from = position, values_from = n, values_fill = 0, names_prefix = "p")
 
 letter_freq_pos
@@ -126,8 +242,8 @@ score_entropy <- function(word) {
   - sum(p * log(p, base = 2))
 }
 
-tibble(word = words) %>% 
-  mutate(score = map_dbl(word, score_entropy)) %>% 
+tibble(word = words) %>%
+  mutate(score = map_dbl(word, score_entropy)) %>%
   arrange(desc(score))
 ```
 
@@ -147,9 +263,9 @@ tibble(word = words) %>%
     ## # … with 12,962 more rows
 
 ``` r
-words_first_choice <- 
-  tibble(word = words) %>% 
-  mutate(score = map_dbl(word, score_entropy)) %>% 
+words_first_choice <-
+  tibble(word = words) %>%
+  mutate(score = map_dbl(word, score_entropy)) %>%
   arrange(desc(score))
 
 words_first_choice
@@ -191,7 +307,7 @@ str_has_none_of <- function(words, letters) {
   map_lgl(words, ~ length(intersect(letters, .x)) == 0)
 }
 
-words_first_choice %>% 
+words_first_choice %>%
   filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
 ```
 
@@ -215,7 +331,7 @@ If none of the letters in **arose** and **until** appear in the solution, then y
 ``` r
 letters_guess <- str_split("arose until", "")[[1]]
 
-words_first_choice %>% 
+words_first_choice %>%
   filter(str_has_none_of(word, letters_guess))
 ```
 
@@ -278,7 +394,7 @@ The `[]` indicate a set of options that could be present at a location in the st
 The opening `^` negates the selection, so `[^r]` means *a character that isn’t* `r`.
 
 ``` r
-words_first_choice %>% 
+words_first_choice %>%
   filter(
     str_has_none_of(word, c("a", "s", "e")),
     str_has_all_of(word, c("r", "o")),
@@ -359,7 +475,7 @@ but importantly we have `t` as the middle character.
 This leaves us with a few good choices:
 
 ``` r
-words_first_choice %>% 
+words_first_choice %>%
   filter(
     str_has_none_of(word, c("a", "s", "e", "i", "n")),
     str_has_all_of(word, c("r", "o", "t")),
@@ -392,19 +508,19 @@ what’s the probability of <span class="letter">T</span> in the first position 
 ``` r
 score_by_position <- function(word) {
   chars <- str_split(word, "")[[1]]
-  
+
   res <- c()
   for (i in seq_along(chars)) {
     pos_alpha <- which(letters == chars[i])
     p <- letter_freq_pos[[str_c("p", i)]][pos_alpha]
     res <- c(res, p)
   }
-  
+
   prod(res)
 }
 
-words_score_pos <- 
-  tibble(word = words) %>% 
+words_score_pos <-
+  tibble(word = words) %>%
   mutate(
     score_pos = map_dbl(word, score_by_position),
     score_pos = score_pos / diff(range(score_pos))
@@ -437,8 +553,8 @@ words_first_choice %>%
     str_has_none_of(word, c("a", "s", "e", "i", "n")),
     str_has_all_of(word, c("r", "o", "t")),
     str_detect(word, ".[^r]t[^r][^o]")
-  ) %>% 
-  left_join(words_score_pos) %>% 
+  ) %>%
+  left_join(words_score_pos) %>%
   arrange(desc(score_pos))
 ```
 
@@ -541,24 +657,24 @@ Behold, `summarize_guesses()`:
 
 ``` r
 #' @param guesses A vector of words that you have guessed
-#' @param result A vector of results for each guess using `.` for a miss, `-` 
+#' @param result A vector of results for each guess using `.` for a miss, `-`
 #'   for a letter in the solution that isn't in the right place and `+` for a
 #'   letter that's in the right spot.
 summarize_guesses <- function(guesses, results) {
   stopifnot(all(str_length(c(guesses, results)) == 5))
-  
+
   guesses <- str_split(guesses, "")
   results <- str_split(results, "")
-  
+
   exclude <- character(5)
   exact <- character(5)
   bucket_keep <- c()
   bucket_discard <- c()
-  
+
   for (i in seq_along(guesses)) {
     g <- guesses[[i]]
     r <- results[[i]]
-    
+
     if (any(r == "+")) {
       exact[r == "+"] <- g[r == "+"]
       bucket_keep <<- c(bucket_keep, g[r == "+"])
@@ -571,20 +687,20 @@ summarize_guesses <- function(guesses, results) {
       bucket_discard <- c(bucket_discard, g[r == "."])
     }
   }
-  
+
   exclude[exclude != ""] <- paste0("[^", exclude[exclude != ""], "]")
   exact[exact == ""] <- NA_character_
   exclude[exclude == ""] <- NA_character_
-  
+
   pattern <- coalesce(coalesce(exact, exclude), ".")
-  
-  # Say you guess a word with two Ts, 
+
+  # Say you guess a word with two Ts,
   # but there's only one T in the solution.
   # T will appear on keep and discard bucket,
   # so we need to explicitly keep it.
   # (we could use that info, though, e.g. at most 1 T)
   bucket_discard <- setdiff(bucket_discard, bucket_keep)
-  
+
   list(
     discard = unique(bucket_discard),
     keep = unique(bucket_keep),
@@ -609,7 +725,7 @@ summarize_guesses("arose", ".--..")
 ``` r
 guess_results <- summarize_guesses(c("arose", "intro"), c(".--..", "..+--"))
 
-words_first_choice %>% 
+words_first_choice %>%
   left_join(words_score_pos) %>%
   filter(
     str_has_none_of(word, guess_results$discard),
@@ -631,7 +747,7 @@ words_first_choice %>%
 ``` r
 score_next_guess <- function(guesses, results) {
   guess_results <- summarize_guesses(guesses, results)
-  
+
   words_scored %>%
     filter(
       str_has_none_of(word, guess_results$discard),
@@ -643,7 +759,7 @@ score_next_guess <- function(guesses, results) {
 
 ``` r
 score_next_guess(
-  guesses = c("arose", "intro"), 
+  guesses = c("arose", "intro"),
   results = c(".--..", "..+--")
 )
 ```
@@ -658,7 +774,7 @@ score_next_guess(
 
 ``` r
 score_next_guess(
-  guesses = c("arose", "intro", "rotch"), 
+  guesses = c("arose", "intro", "rotch"),
   results = c(".--..", "..+--", "-++..")
 )
 ```
@@ -958,7 +1074,7 @@ score_next_guess(
 score_next_guess(
   guesses = c("arose", "liter"),
   results = c(".-..-", "...--")
-) %>% 
+) %>%
   arrange(desc(score_pos))
 ```
 
@@ -1084,8 +1200,8 @@ y
 Embed the data into the webpage
 
 ``` r
-words_scored %>% 
-  mutate(score_pos = score_pos / (max(score_pos) - min(score_pos))) %>% 
+words_scored %>%
+  mutate(score_pos = score_pos / (max(score_pos) - min(score_pos))) %>%
   jsonlite::write_json("wordle-scored.json")
 
 htmltools::tags$script(
@@ -1149,16 +1265,16 @@ tidy(
 )
 ```
 
-<div id="out-unnamed-chunk-7">
+<div id="out-unnamed-chunk-10">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_7 = redirectLogger(document.querySelector("#out-unnamed-chunk-7 > pre"))
+const log_out_unnamed_chunk_10 = redirectLogger(document.querySelector("#out-unnamed-chunk-10 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_7(`tidy(
+log_out_unnamed_chunk_10(`tidy(
   wordsScored, // %>%
   sliceMax(5, 'score')
 )`)
@@ -1172,19 +1288,19 @@ function summarizeGuesses ({ guesses, results }) {
     console.error('All guesses and results must have 5 characters.')
     return
   }
-  
+
   guesses = guesses.map(s => s.split(''))
   results = results.map(s => s.split(''))
-  
+
   let exclude = Array(5).fill('')
   let exact = Array(5).fill('')
   let keep = []
   let discard = []
-  
+
   for (i = 0; i < guesses.length; i++) {
     let g = guesses[i]
     let r = results[i]
-    
+
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
@@ -1197,7 +1313,7 @@ function summarizeGuesses ({ guesses, results }) {
       }
     }
   }
-  
+
   const pattern = Array(5).fill('.')
   for (i = 0; i < 5; i++) {
     if (exact[i] != '') {
@@ -1206,7 +1322,7 @@ function summarizeGuesses ({ guesses, results }) {
       pattern[i] = `[^${exclude[i]}]`
     }
   }
-  
+
   discard = discard.filter(x => !keep.includes(x))
   return {discard, keep, pattern: pattern.join('')}
 }
@@ -1219,19 +1335,19 @@ function summarizeGuesses ({ guesses, results }) {
     console.error('All guesses and results must have 5 characters.')
     return
   }
-  
+
   guesses = guesses.map(s => s.split(''))
   results = results.map(s => s.split(''))
-  
+
   let exclude = Array(5).fill('')
   let exact = Array(5).fill('')
   let keep = []
   let discard = []
-  
+
   for (i = 0; i < guesses.length; i++) {
     let g = guesses[i]
     let r = results[i]
-    
+
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
         exact[j] = g[j]
@@ -1244,7 +1360,7 @@ function summarizeGuesses ({ guesses, results }) {
       }
     }
   }
-  
+
   const pattern = Array(5).fill('.')
   for (i = 0; i < 5; i++) {
     if (exact[i] != '') {
@@ -1253,7 +1369,7 @@ function summarizeGuesses ({ guesses, results }) {
       pattern[i] = `[^${exclude[i]}]`
     }
   }
-  
+
   discard = discard.filter(x => !keep.includes(x))
   return {discard, keep, pattern: pattern.join('')}
 }
@@ -1262,7 +1378,7 @@ function summarizeGuesses ({ guesses, results }) {
 ``` js
 function searchNextGuess ({ guesses, results }) {
   const guessResult = summarizeGuesses({guesses, results})
-  
+
   return tidy(
     wordsScored,
     // discard words that contain a letter in the discard pile
@@ -1278,7 +1394,7 @@ function searchNextGuess ({ guesses, results }) {
 <script type="text/javascript">
 function searchNextGuess ({ guesses, results }) {
   const guessResult = summarizeGuesses({guesses, results})
-  
+
   return tidy(
     wordsScored,
     // discard words that contain a letter in the discard pile
@@ -1303,16 +1419,16 @@ const answer = searchNextGuess(rounds)
 console.table(answer[0])
 ```
 
-<div id="out-unnamed-chunk-10">
+<div id="out-unnamed-chunk-13">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_10 = redirectLogger(document.querySelector("#out-unnamed-chunk-10 > pre"))
+const log_out_unnamed_chunk_13 = redirectLogger(document.querySelector("#out-unnamed-chunk-13 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_10(`const rounds = {
+log_out_unnamed_chunk_13(`const rounds = {
   guesses: ["arose", "indol"],
   results: ["..-..", "+..+-"]
 }
@@ -1336,16 +1452,16 @@ const answer = searchNextGuess(rounds)
 answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
 ```
 
-<div id="out-unnamed-chunk-11">
+<div id="out-unnamed-chunk-14">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_11 = redirectLogger(document.querySelector("#out-unnamed-chunk-11 > pre"))
+const log_out_unnamed_chunk_14 = redirectLogger(document.querySelector("#out-unnamed-chunk-14 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_11(`const rounds = {
+log_out_unnamed_chunk_14(`const rounds = {
   guesses: ["arose", "intro"],
   results: [".--..", "..+--"]
 }
