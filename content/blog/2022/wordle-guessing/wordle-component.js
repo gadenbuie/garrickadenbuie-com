@@ -149,18 +149,24 @@ function updateGuesses (wordle) {
     return
   }
   
+  const abc = 'abcdefghijklmnopqrstuvwxyz'.split('')
+  
   const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
   wordle.table.updateConfig({data: nextGuess}).forceRender()
   
   let { pattern, keep, discard } = summarizeGuesses({guesses, results})
   const knownLetters = [...keep, ...discard]
+  const remainingLetters = uniqueLetters(nextGuess, knownLetters)
+  const accountedLetters = [...knownLetters, ...Object.keys(remainingLetters)]
+  const impossibleLetters = abc.filter(l => !accountedLetters.includes(l))
+  
   keep = Tidy.distinct()(keep)
     .sort((x, y) => x > y)
     .map(l => `<code>${l}</code>`)
     .join(' ')
-  discard = Tidy.distinct()(discard)
+  discard = Tidy.distinct()([...discard, ...impossibleLetters])
     .sort((x, y) => x > y)
-    .map(l => `<code>${l}</code>`)
+    .map(l => `<code${impossibleLetters.includes(l) ? ' class="o-60"' : ''}>${l}</code>`)
     .join(' ')
     
   const stats = document.getElementById('words-stats')
@@ -169,7 +175,7 @@ function updateGuesses (wordle) {
   <table class="center mb3"><tr><td class="tr b pr2">Pattern</td><td class="tl b"><code>${pattern}</code></td></tr>
     <tr><td class="tr b pr2">Yes</td><td class="tl">${keep}</td></tr>
     <tr><td class="tr b pr2">No</td><td class="tl">${discard}</td></tr>
-    <tr><td class="tr b pr2">Maybe</td><td class="tl">${uniqueLetters(nextGuess, knownLetters)}</td></tr>
+    <tr><td class="tr b pr2">Maybe</td><td class="tl">${describeUniqueLetters(remainingLetters)}</td></tr>
   </table>`
   
   return wordle.state
@@ -186,6 +192,10 @@ function uniqueLetters (words, exclude) {
       return x
     }, {})
     
+  return letters
+}
+
+function describeUniqueLetters(letters) {
   return Object.keys(letters)
     .map(x => ({letter: x, count: letters[x]}))
     .sort((x, y) => x.count < y.count)
