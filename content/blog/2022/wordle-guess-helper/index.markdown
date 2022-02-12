@@ -146,7 +146,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "fetch" "rowdy" "dimly" "ample" "carat"
+    ## [1] "gonad" "sally" "shout" "rajah" "leafy"
 
 and the other contains the
 10,657
@@ -156,7 +156,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "barny" "pools" "eland" "shawm" "bizes"
+    ## [1] "fremd" "withe" "nonyl" "nazir" "flans"
 
 Do the two word lists overlap?
 
