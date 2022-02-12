@@ -416,7 +416,10 @@ Some of the letters in your guess
 2. [&nbsp;[yellow square]{.clip}]{.letter .present} are in the solution but not where you guessed
 3. [&nbsp;[green square]{.clip}]{.letter .correct} are in the solution and are where you guessed
 
-What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
+What if you guessed **arose** and got five gray boxes
+telling you that none of those letters appear in the solution?
+
+`r wordle_component("arose", ".....")`
 
 ```{r str_has_none_of}
 str_has_none_of <- function(words, letters) {
@@ -428,16 +431,30 @@ words_first_choice %>%
   filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
 ```
 
-If none of the letters in **arose** and **until** appear in the solution, then your answer is most definitely...
+You're next best guess is _until_.
+And if none of the letters in **arose** and **until**
+appear in the solution...
 
-```{r third-strike}
+`r wordle_component("arose", ".....")`
+`r wordle_component("until", ".....")`
+
+```{r third-strike, echo=1:4}
 letters_guess <- str_split("arose until", "")[[1]]
 
 words_first_choice %>%
   filter(str_has_none_of(word, letters_guess))
 ```
 
-If you learn something from the guess, though, you can filter the word list based on the information you just learned.
+```{r echo=FALSE}
+arose_until <- words_first_choice %>%
+  filter(str_has_none_of(word, letters_guess))
+```
+
+then your answer is most definitely one of
+`r knitr::combine_words(arose_until$word, before = "_", and = " or ")`.
+
+If you learn something from the guess, though,
+you can filter the word list based on the information you just learned.
 
 <!-- arose, intro, motor -->
 
@@ -446,12 +463,13 @@ If you learn something from the guess, though, you can filter the word list base
 Say we guess **arose** and wordle reveals that [R]{.letter} and [O]{.letter} appear in the solution.
 We now know that the solution:
 
-1. Doesn't have [A]{.letter}, [S]{.letter} or [E]{.letter}
-1. Does contain [R]{.letter} and [O]{.letter}
-1. Doesn't have [R]{.letter} as the 2^nd^ letter and [O]{.letter} as the 3^rd^.
+1. Doesn't have [A]{.letter .absent}, [S]{.letter .absent} or [E]{.letter .absent}
+1. Does contain [R]{.letter .present} and [O]{.letter .present}
+1. Doesn't have [R]{.letter .present} as the 2^nd^ letter and [O]{.letter .present} as the 3^rd^.
 
-We've already implemented step 1 as `str_has_none_of()`.
-We also need a similar version called `str_has_all_of()`.
+We've already implemented this the first step by discarding words with `str_has_none_of()`.
+We also need a similar version called `str_has_all_of()`
+to keep only words that have letters we know are in the solution.
 
 ```{r str-has-all-of}
 str_has_all_of <- function(words, letters) {
@@ -462,9 +480,18 @@ str_has_all_of <- function(words, letters) {
 str_has_all_of("rhino", c("r", "o"))
 ```
 
-And finally we can write the third piece of information as a regular expression: `".[^r][^o].."`.
+And finally we can use [regular expressions](/project/regexplain)
+to keep track of the third piece of information:
+
+```
+.[^r][^o]..
+```
+
+A `.` means any letter at that spot in the word
+(other than the ones we've excluded).
 The `[]` indicate a set of options that could be present at a location in the string.
-The opening `^` negates the selection, so `[^r]` means _a character that isn't_ `r`.
+The opening `^` negates the selection,
+so `[^r]` means _a character that isn't_ `r`.
 
 ```{r}
 words_first_choice %>%
@@ -480,13 +507,14 @@ words_first_choice %>%
 `r wordle_component("arose", ".--..")`
 `r wordle_component("intro", "..+--")`
 
-wordle thinks and tells us that we have [T]{.letter} in the right spot!
-Also, we now know that [I]{.letter} and [N]{.letter} aren't in the solution,
-and we still haven't got [R]{.letter} and [O]{.letter} in the right place.
+Wordle thinks and tells us that we have [T]{.letter .correct} in the right spot!
+Also, we now know that [I]{.letter .absent} and [N]{.letter .absent} aren't in the solution,
+and we still haven't got [R]{.letter .present} and [O]{.letter .present} in the right place.
 
-We can repeat the step above, but using a new regular expression: `".[^r]t[^r][^o]"`.
-Notice that we know a little more about where [R]{.letter} and [O]{.letter} _can't be_,
-but importantly we have `t` as the middle character.
+We can repeat the step above, but using a new regular expression: `".[^r]t[^ro][^o]"`.
+Notice that we know a little more about where [R]{.letter .present} and [O]{.letter .present} _can't be_,
+but importantly the `t` in the middle letter ensures
+we find words with [T]{.letter .correct} in the right place.
 
 This leaves us with a few good choices:
 
@@ -499,16 +527,19 @@ words_first_choice %>%
   )
 ```
 
-**rotch** seems very unlikely, so we can pick from **tutor**, **motor** and **rotor**.
+**rotch** seems very unlikely,
+so we can pick from **tutor**, **motor** and **rotor**.
 But notice that the these include a small set of the same letters.
-In a sense, we might ask ourselves a new question — which is the more likely starting combination:
+In a sense, we might ask ourselves a new question —
+which is the more likely starting combination:
 **tu**, **mo** or **ro**?
 
 At this point, you could just guess.
 It is a game after all!
 But no, let's power forward and add more complexity to this blog post.
 
-What if we switched our scoring at this point and considered the position of the letters in the candidate words?
+What if we switched our scoring at this point
+and considered the position of the letters in the candidate words?
 Doing something medium-naive, let's frame this as:
 what's the probability of [T]{.letter} in the first position **and**
 [U]{.letter} in the second **and** so on...

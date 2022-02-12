@@ -146,7 +146,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "curry" "angle" "aping" "genie" "berth"
+    ## [1] "brisk" "prong" "jerky" "forum" "shell"
 
 and the other contains the
 10,657
@@ -156,7 +156,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "begar" "whear" "pized" "bitts" "pitta"
+    ## [1] "apish" "chive" "chews" "rages" "celts"
 
 Do the two word lists overlap?
 
@@ -445,7 +445,31 @@ Some of the letters in your guess
 2.  <span class="letter present"> <span class="clip">yellow square</span></span> are in the solution but not where you guessed
 3.  <span class="letter correct"> <span class="clip">green square</span></span> are in the solution and are where you guessed
 
-What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
+What if you guessed **arose** and got five gray boxes
+telling you that none of those letters appear in the solution?
+
+<div class="wordle-solo">
+<span class="letter letter-large absent">
+a
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+r
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+o
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+s
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+e
+<span class="sr-only">(absent)</span>
+</span>
+</div>
 
 ``` r
 str_has_none_of <- function(words, letters) {
@@ -472,7 +496,54 @@ words_first_choice %>%
     ## 10 lindy  2.34
     ## # … with 567 more rows
 
-If none of the letters in **arose** and **until** appear in the solution, then your answer is most definitely…
+You’re next best guess is *until*.
+And if none of the letters in **arose** and **until**
+appear in the solution…
+
+<div class="wordle-solo">
+<span class="letter letter-large absent">
+a
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+r
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+o
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+s
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+e
+<span class="sr-only">(absent)</span>
+</span>
+</div>
+<div class="wordle-solo">
+<span class="letter letter-large absent">
+u
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+n
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+t
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+i
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+l
+<span class="sr-only">(absent)</span>
+</span>
+</div>
 
 ``` r
 letters_guess <- str_split("arose until", "")[[1]]
@@ -488,7 +559,11 @@ words_first_choice %>%
     ## 2 hyphy  1.33
     ## 3 gyppy  1.31
 
-If you learn something from the guess, though, you can filter the word list based on the information you just learned.
+then your answer is most definitely one of
+*pygmy*, *hyphy*, or *gyppy*.
+
+If you learn something from the guess, though,
+you can filter the word list based on the information you just learned.
 
 <!-- arose, intro, motor -->
 <div class="wordle-solo">
@@ -517,12 +592,13 @@ e
 Say we guess **arose** and wordle reveals that <span class="letter">R</span> and <span class="letter">O</span> appear in the solution.
 We now know that the solution:
 
-1.  Doesn’t have <span class="letter">A</span>, <span class="letter">S</span> or <span class="letter">E</span>
-2.  Does contain <span class="letter">R</span> and <span class="letter">O</span>
-3.  Doesn’t have <span class="letter">R</span> as the 2<sup>nd</sup> letter and <span class="letter">O</span> as the 3<sup>rd</sup>.
+1.  Doesn’t have <span class="letter absent">A</span>, <span class="letter absent">S</span> or <span class="letter absent">E</span>
+2.  Does contain <span class="letter present">R</span> and <span class="letter present">O</span>
+3.  Doesn’t have <span class="letter present">R</span> as the 2<sup>nd</sup> letter and <span class="letter present">O</span> as the 3<sup>rd</sup>.
 
-We’ve already implemented step 1 as `str_has_none_of()`.
-We also need a similar version called `str_has_all_of()`.
+We’ve already implemented this the first step by discarding words with `str_has_none_of()`.
+We also need a similar version called `str_has_all_of()`
+to keep only words that have letters we know are in the solution.
 
 ``` r
 str_has_all_of <- function(words, letters) {
@@ -535,9 +611,16 @@ str_has_all_of("rhino", c("r", "o"))
 
     ## [1] TRUE
 
-And finally we can write the third piece of information as a regular expression: `".[^r][^o].."`.
+And finally we can use [regular expressions](/project/regexplain)
+to keep track of the third piece of information:
+
+    .[^r][^o]..
+
+A `.` means any letter at that spot in the word
+(other than the ones we’ve excluded).
 The `[]` indicate a set of options that could be present at a location in the string.
-The opening `^` negates the selection, so `[^r]` means *a character that isn’t* `r`.
+The opening `^` negates the selection,
+so `[^r]` means *a character that isn’t* `r`.
 
 ``` r
 words_first_choice %>%
@@ -610,13 +693,14 @@ o
 </span>
 </div>
 
-wordle thinks and tells us that we have <span class="letter">T</span> in the right spot!
-Also, we now know that <span class="letter">I</span> and <span class="letter">N</span> aren’t in the solution,
-and we still haven’t got <span class="letter">R</span> and <span class="letter">O</span> in the right place.
+Wordle thinks and tells us that we have <span class="letter correct">T</span> in the right spot!
+Also, we now know that <span class="letter absent">I</span> and <span class="letter absent">N</span> aren’t in the solution,
+and we still haven’t got <span class="letter present">R</span> and <span class="letter present">O</span> in the right place.
 
-We can repeat the step above, but using a new regular expression: `".[^r]t[^r][^o]"`.
-Notice that we know a little more about where <span class="letter">R</span> and <span class="letter">O</span> *can’t be*,
-but importantly we have `t` as the middle character.
+We can repeat the step above, but using a new regular expression: `".[^r]t[^ro][^o]"`.
+Notice that we know a little more about where <span class="letter present">R</span> and <span class="letter present">O</span> *can’t be*,
+but importantly the `t` in the middle letter ensures
+we find words with <span class="letter correct">T</span> in the right place.
 
 This leaves us with a few good choices:
 
@@ -637,16 +721,19 @@ words_first_choice %>%
     ## 3 motor  1.99
     ## 4 rotor  1.65
 
-**rotch** seems very unlikely, so we can pick from **tutor**, **motor** and **rotor**.
+**rotch** seems very unlikely,
+so we can pick from **tutor**, **motor** and **rotor**.
 But notice that the these include a small set of the same letters.
-In a sense, we might ask ourselves a new question — which is the more likely starting combination:
+In a sense, we might ask ourselves a new question —
+which is the more likely starting combination:
 **tu**, **mo** or **ro**?
 
 At this point, you could just guess.
 It is a game after all!
 But no, let’s power forward and add more complexity to this blog post.
 
-What if we switched our scoring at this point and considered the position of the letters in the candidate words?
+What if we switched our scoring at this point
+and considered the position of the letters in the candidate words?
 Doing something medium-naive, let’s frame this as:
 what’s the probability of <span class="letter">T</span> in the first position **and**
 <span class="letter">U</span> in the second **and** so on…
@@ -1411,16 +1498,16 @@ tidy(
 )
 ```
 
-<div id="out-unnamed-chunk-13">
+<div id="out-unnamed-chunk-14">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_13 = redirectLogger(document.querySelector("#out-unnamed-chunk-13 > pre"))
+const log_out_unnamed_chunk_14 = redirectLogger(document.querySelector("#out-unnamed-chunk-14 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_13(`tidy(
+log_out_unnamed_chunk_14(`tidy(
   wordsScored, // %>%
   sliceMax(5, 'score')
 )`)
@@ -1565,16 +1652,16 @@ const answer = searchNextGuess(rounds)
 console.table(answer[0])
 ```
 
-<div id="out-unnamed-chunk-16">
+<div id="out-unnamed-chunk-17">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_16 = redirectLogger(document.querySelector("#out-unnamed-chunk-16 > pre"))
+const log_out_unnamed_chunk_17 = redirectLogger(document.querySelector("#out-unnamed-chunk-17 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_16(`const rounds = {
+log_out_unnamed_chunk_17(`const rounds = {
   guesses: ["arose", "indol"],
   results: ["..-..", "+..+-"]
 }
@@ -1598,16 +1685,16 @@ const answer = searchNextGuess(rounds)
 answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
 ```
 
-<div id="out-unnamed-chunk-17">
+<div id="out-unnamed-chunk-18">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_17 = redirectLogger(document.querySelector("#out-unnamed-chunk-17 > pre"))
+const log_out_unnamed_chunk_18 = redirectLogger(document.querySelector("#out-unnamed-chunk-18 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_17(`const rounds = {
+log_out_unnamed_chunk_18(`const rounds = {
   guesses: ["arose", "intro"],
   results: [".--..", "..+--"]
 }
