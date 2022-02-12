@@ -13,7 +13,7 @@ body {
 
 code,
 .code {
-  font-family: 'IBM Plex Mono', Consolas, monaco, monospace;
+  font-family: var(--font-monospace);
   font-size: 0.95em;
   font-weight: 400;
 }
@@ -173,6 +173,23 @@ figure figcaption h4,
       font-weight: 500;
     }
   }
+}
+
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid var(--borderColorCustom);
+  font-family: var(--font-monospace);
+  background-color: var(--preBgColorCustom);
+  color: var(--textColorCustom);
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2), 0 0 0 1px #fff inset;
+  box-shadow: 0 1px 0px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px #fff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  line-height: inherit;
+  white-space: nowrap;
 }
 
 :root {
