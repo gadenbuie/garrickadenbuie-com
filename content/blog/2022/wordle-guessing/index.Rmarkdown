@@ -1,8 +1,8 @@
 ---
-title: Wordle Guessing
+title: Wordle Guess Helper
 author: Garrick Aden-Buie
 date: '2022-01-15'
-slug: wordle-guessing
+slug: wordle-guess-helper
 categories:
   - Blog
 tags:
@@ -24,7 +24,6 @@ knitr::opts_chunk$set(
   cache = FALSE,
   fig.width = 9, fig.height = 10
 )
-knitr::clean_cache()
 options(htmltools.dir.version = TRUE)
 ```
 
@@ -62,7 +61,8 @@ Have you heard of [Wordle]?
 Who am I kidding, of course you've heard of Wordle!
 In fact, I'm pretty certain we're way past peak Wordle at this point.
 
-Here's a Wordle helper that doesn't completely take the fun out of the guessing, while also making sure you've got a good chance at winning every time.
+Here's a Wordle helper that doesn't completely take the fun out of the guessing,
+while also making sure you've got a good chance at winning every time.
 
 Type your guesses below and then use the buttons below each letter to report Wordle's response.
 Press <kbd>return</kbd> to start the next guess.
@@ -89,7 +89,7 @@ After all,
 since I've started writing this post
 [Wordle has been solved](https://jonathanolson.net/wordle-solver/),
 Winston Chang rewrote [Wordle in Shiny](https://youtu.be/quvz4xLbW88),
-roughly [70 other people wrote World clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) _in R alone_.
+roughly [70 other people wrote Wordle clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) _in R alone_.
 Felienne Hermans wrote a Twitter bot to
 [guess the word from shared game emojis](https://twitter.com/Felienne/status/1482681664765636608).
 Someone else wrote a bot to
@@ -111,7 +111,7 @@ And yet I love Wordle.
 I think it's awesome.
 The rules are simple, but deceptively ambiguous.
 The game play is so concise it can fit in a tweet
-(even though that's (annoying for [accessibility reasons](https://slate.com/culture/2022/02/wordle-word-game-results-accessibility-twitter.html))).
+(even though that's annoying for [accessibility reasons](https://slate.com/culture/2022/02/wordle-word-game-results-accessibility-twitter.html)).
 Still, the UI is simple, intuitive and fun
 without trying to hack your brain to be addictive.
 It's a [feel good game](https://uxdesign.cc/wordle-ux-sometimes-a-game-just-feels-good-8749b26834ef).
@@ -125,7 +125,9 @@ or practicing web development in their favorite framework using Wordle.
 
 As an educator, it means you can tailor a Wordle-based programming challenge
 to be as simple or complicated as needed.
-But once you start to break down the game, it's more complicated than it appears at first glance.
+Once you start to break down the game,
+it's more complicated than it appears at first glance,
+and there's so much to choose from.
 State management, data structures, browser storage, game theory, CSS, user interface design, accessibility.
 You can go deep on any of these topics.
 
@@ -141,7 +143,8 @@ or [making accessible plots with ggplot2](https://gist.github.com/thoughtfulblok
 ## Let's look at some words
 
 Let's dig in.
-To get started, I'm using a few of the usual suspects from the [tidyverse](https://tidyverse.org) package.
+To get started,
+I'm using a few of the usual suspects from the [tidyverse](https://tidyverse.org) package.
 Out of habit, I'll load the ones I want specifically.
 (I think I also used tidyr somewhere in here, too.)
 
@@ -157,21 +160,28 @@ but it turns out that Wordle included the complete word list in its source code.
 (You could [call it a hack](https://screenrant.com/wordle-source-code-hack-every-word-revealed/)
 but only in the [state of Missouri](https://www.theverge.com/2021/12/31/22861188/missouri-governor-mike-parson-hack-website-source-code).)
 
-I used my leet hacker copy-and-paste skills
+I used my elite hacker copy-and-paste skills
 to store [Wordle's word list as a JSON file](wordle.json) (`r format(fs::file_size("wordle.json"))`).
 
 ```{r load-words}
-wordle_words <- jsonlite::fromJSON("wordle.json", simplifyVector = TRUE)
+wordle_words <- jsonlite::fromJSON(
+  "wordle.json",
+  simplifyVector = TRUE
+)
 ```
 
-It turns out that Worlde maintains two separate lists.
-One list contains the `r format(length(wordle_words$answers), big.mark = ",")` words used as solutions
+It turns out that Wordle maintains two separate lists.
+One list contains the
+`r format(length(wordle_words$answers), big.mark = ",")`
+words used as solutions
 
 ```{r}
 sample(wordle_words$answers, 5)
 ```
 
-and the other contains the `r format(length(wordle_words$words), big.mark = ",")` words that the game considers a valid guess.
+and the other contains the
+`r format(length(wordle_words$words), big.mark = ",")`
+words that the game considers a valid guess.
 
 ```{r}
 sample(wordle_words$words, 5)
@@ -180,11 +190,14 @@ sample(wordle_words$words, 5)
 Do the two word lists overlap?
 
 ```{r}
-wordle_words %>% reduce(intersect) %>% length()
+wordle_words %>%
+  reduce(intersect) %>%
+  length()
 ```
 
-No, they do not (since the intersection of the two word lists is empty).
-We could make things super easy for ourselves by favoring the words on the solution list,
+No, they do not (the intersection of the two word lists is empty).
+We could make things super easy for ourselves
+by only considering the words on the solution list,
 but that would _really_ ruin the fun.
 So let's combine the two lists.
 
@@ -196,24 +209,82 @@ Now lets turn those words into data we can work with.
 
 ## A letter popularity contest
 
-Letter frequency by appearance in a word.
+### Popularity by word
+
+My first thought
+(and I think it's many people first thought)
+was to consider the probability that a letter appears in a word.
+In other words: is [R]{.letter} more popular than [F]{.letter}?
+
+To answer this we can split each word into a vector of letters,
+take only the unique letters,
+and then count how many times each letter appears in a word.
+
+Splitting the word into a vector of letters is something we'll be doing a lot,
+and `stringr::str_split()` or `strsplit()` can help.
+The trick is to use and empty string as the split pattern
+to break apart each string character by character.
+
+```{r}
+str_split(c("unhip", "jeans"), "")
+```
+
+Note that this process takes our vector and gives us a list of vectors,
+which means we'll be seeing a lot of purrr's `map()` function in this post.
 
 ```{r letter-freq}
 letter_freq <-
   words %>%
+  # Split each word into a vector of letters
   str_split("") %>%
+  # Keep one of each letter per word
   map(unique) %>%
+  # Unlist into a big vector of letters
   unlist() %>%
+  # Count the letters (each appearance in a word)
   table() %>%
-  sort() %>%
-  rev() %>%
+  # Most popular letters first
+  sort(decreasing = TRUE) %>%
+  # Turn into frequency table
   `/`(length(words)) %>%
+  # Remove attributes from table()
   c()
 
 letter_freq
 ```
 
-Letter frequency by position
+Note that we only counted each letter once per word,
+so we now know that [R]{.letter} appears in
+`r scales::percent(letter_freq["r"])`
+of the words in the word list,
+while [F]{.letter} appears in only
+`r scales::percent(letter_freq["f"])`.
+So we'd a first guess that includes [R]{.letter}
+would probably be better than one with an [F]{.letter}.
+
+### Popularity by position
+
+Another way to look at letter frequency
+would be to consider the position of the letter in the word.
+What if we know that [R]{.letter} and [F]{.letter} are in the word:
+which is a more likely choice as the fourth letter?
+
+To do this we...
+
+* First turn the word list into a tibble with one row per word.
+* Then, using `tidyr::separate_rows()`,
+  we can add a new column with the letters in each word.
+* Grouping by `word` and adding a `row_number()`
+  gives us the position of each letter in the word.
+* Then we can count the number of times each letter occurs in a given position
+  with a new `group_by()` and `summarize()`
+  (we could have used `count()` with another `ungroup()`, too).
+* Then, if we re-use our letter-word counts from the last step,
+   we can count the number of words that have a the letter in question
+  so that our frequency is effectively
+  _given the letter [R]{.letter}, how often does it appear as the fourth letter?
+* Finally, `tidyr::pivot_wider()` moves the positions to the columns
+  so the table is easier to read.
 
 ```{r letter-freq-pos}
 letter_freq_pos <-
@@ -224,16 +295,75 @@ letter_freq_pos <-
   filter(letter != "") %>%
   group_by(word) %>%
   mutate(position = row_number()) %>%
-  ungroup() %>%
-  select(-word) %>%
-  group_by(position, letter) %>%
-  summarize(n = n() / length(words), .groups = "drop") %>%
-  tidyr::pivot_wider(names_from = position, values_from = n, values_fill = 0, names_prefix = "p")
+  group_by(letter, position) %>%
+  summarize(n = n(), .groups = "drop") %>%
+  mutate(
+    words = letter_freq[letter] * length(!!words),
+    freq = n / words
+  ) %>%
+  select(-n, -words) %>%
+  tidyr::pivot_wider(
+    names_from = position,
+    values_from = freq,
+    values_fill = 0,
+    names_prefix = "p"
+  )
 
 letter_freq_pos
 ```
 
+Now we can answer our question about
+[R]{.letter} and [F]{.letter} in the fourth position.
+
+```{r}
+letter_freq_pos %>%
+  filter(letter %in% c("r", 'f')) %>%
+  select(letter, p4)
+```
+
+So [R]{.letter} is the fourth letter in
+`r scales::percent(letter_freq_pos$p4[letter_freq_pos$letter == "r"])`
+of the words containing [R]{.letter} —
+but [F]{.letter} is the fourth letter in
+`r scales::percent(letter_freq_pos$p4[letter_freq_pos$letter == "f"])`
+of its words.
+
+Ideally this information will help us filter guesses
+when we know that a set of letters are in the solution,
+but we don't yet know where.
+
 ## First Choice
+
+What word should we guess first?
+Ideally, we want a word whose answer gives us the most information.
+Intuitively, if we pick a word that has the most popular letters
+and each letter is different,
+we'll be able to discard or include the most words
+when Wordle tells us which letters are in or out.
+
+Formally,
+this calculation is called [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)).
+It measures how much information is encoded in a particular instance of a random process.
+In this case, words with higher entropy give us more information
+because they encode more information.
+
+This is all a little hand-wavy,
+so I'll just duck the details and call this number a _score_.
+The higher the score, the better the word choice.
+
+To calculate the entropy score, we take a word, split it into it's letters,
+and then get the probability of each letter appearing in the word.
+Duplicated letters don't tell us much,
+so we set second appearances of a letter close to zero.
+And then we calculate entropy, which in R code is
+
+```r
+- sum(p * log(p, base = 2))
+```
+
+where `p` is a vector of probabilities for a given outome.
+
+We can wrap all of that up into a function `score_entropy()`:
 
 ```{r entropy}
 score_entropy <- function(word) {
@@ -243,11 +373,25 @@ score_entropy <- function(word) {
   p[duplicated(chars)] <- min(letter_freq)
   - sum(p * log(p, base = 2))
 }
-
-tibble(word = words) %>%
-  mutate(score = map_dbl(word, score_entropy)) %>%
-  arrange(desc(score))
 ```
+
+Notice that `score_entropy()` isn't vectorized,
+so we'll have to use a `map()` function to call it over a vector of words.
+We can be even more specific and use `map_dbl()`
+since we know that `score_entropy()` returns a number.
+
+```{r}
+c("unhip", "jeans", "pools") %>%
+  set_names() %>%
+  map_dbl(score_entropy)
+```
+
+This tells us, broadly that _unhip_ is a better choice than _jeans_
+and _pools_ is worse than either.
+(Intuitively: you don't learn much from the second [O]{.letter}.)
+
+Let's use this to create a table of words and their associated entropy scores.
+Taking a peak at the highest scoring words tells us...
 
 ```{r words_first_choice}
 words_first_choice <-
@@ -258,9 +402,10 @@ words_first_choice <-
 words_first_choice
 ```
 
-According to this, the best first-choice words are
+... that according to this measure, the best first-choice words are
 `r knitr::combine_words(words_first_choice$word[1:3])`.
-**arose** uses all five of the letters that most commonly appear in a word.
+**arose** uses all five of the letters that most commonly appear in a word,
+so _hello new first word choice_!
 
 ## Second Choice
 
