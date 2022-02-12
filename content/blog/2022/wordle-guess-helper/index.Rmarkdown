@@ -259,7 +259,7 @@ so we now know that [R]{.letter} appears in
 of the words in the word list,
 while [F]{.letter} appears in only
 `r scales::percent(letter_freq["f"])`.
-So we'd a first guess that includes [R]{.letter}
+A first guess that includes [R]{.letter}
 would probably be better than one with an [F]{.letter}.
 
 ### Popularity by position
@@ -282,7 +282,7 @@ To do this we...
 * Then, if we re-use our letter-word counts from the last step,
    we can count the number of words that have a the letter in question
   so that our frequency is effectively
-  _given the letter [R]{.letter}, how often does it appear as the fourth letter?
+  _given the letter [R]{.letter}, how often does it appear as the fourth letter?_
 * Finally, `tidyr::pivot_wider()` moves the positions to the columns
   so the table is easier to read.
 
@@ -391,7 +391,7 @@ and _pools_ is worse than either.
 (Intuitively: you don't learn much from the second [O]{.letter}.)
 
 Let's use this to create a table of words and their associated entropy scores.
-Taking a peak at the highest scoring words tells us...
+Taking a peek at the highest scoring words tells us...
 
 ```{r words_first_choice}
 words_first_choice <-
@@ -412,9 +412,9 @@ so _hello new first word choice_!
 After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
-1. &#x2B1B; aren't in the solution
-2. &#x1F7E8; are in the solution but not where you guessed
-3. &#x1F7E9; are in the solution and are where you guessed
+1. [&nbsp;[dark square]{.clip}]{.letter .absent} aren't in the solution
+2. [&nbsp;[yellow square]{.clip}]{.letter .present} are in the solution but not where you guessed
+3. [&nbsp;[green square]{.clip}]{.letter .correct} are in the solution and are where you guessed
 
 What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
 

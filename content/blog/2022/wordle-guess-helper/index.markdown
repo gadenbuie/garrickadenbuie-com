@@ -146,7 +146,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "gonad" "sally" "shout" "rajah" "leafy"
+    ## [1] "curry" "angle" "aping" "genie" "berth"
 
 and the other contains the
 10,657
@@ -156,7 +156,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "fremd" "withe" "nonyl" "nazir" "flans"
+    ## [1] "begar" "whear" "pized" "bitts" "pitta"
 
 Do the two word lists overlap?
 
@@ -249,7 +249,7 @@ so we now know that <span class="letter">R</span> appears in
 of the words in the word list,
 while <span class="letter">F</span> appears in only
 8%.
-So we’d a first guess that includes <span class="letter">R</span>
+A first guess that includes <span class="letter">R</span>
 would probably be better than one with an <span class="letter">F</span>.
 
 ### Popularity by position
@@ -272,7 +272,7 @@ To do this we…
 -   Then, if we re-use our letter-word counts from the last step,
     we can count the number of words that have a the letter in question
     so that our frequency is effectively
-    \_given the letter <span class="letter">R</span>, how often does it appear as the fourth letter?
+    *given the letter <span class="letter">R</span>, how often does it appear as the fourth letter?*
 -   Finally, `tidyr::pivot_wider()` moves the positions to the columns
     so the table is easier to read.
 
@@ -405,7 +405,7 @@ and *pools* is worse than either.
 (Intuitively: you don’t learn much from the second <span class="letter">O</span>.)
 
 Let’s use this to create a table of words and their associated entropy scores.
-Taking a peak at the highest scoring words tells us…
+Taking a peek at the highest scoring words tells us…
 
 ``` r
 words_first_choice <-
@@ -441,9 +441,9 @@ so *hello new first word choice*!
 After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
-1.  ⬛ aren’t in the solution
-2.  🟨 are in the solution but not where you guessed
-3.  🟩 are in the solution and are where you guessed
+1.  <span class="letter absent"> <span class="clip">dark square</span></span> aren’t in the solution
+2.  <span class="letter present"> <span class="clip">yellow square</span></span> are in the solution but not where you guessed
+3.  <span class="letter correct"> <span class="clip">green square</span></span> are in the solution and are where you guessed
 
 What if you guessed **arose** and got five gray boxes telling you that none of those letters appear in the solution?
 
