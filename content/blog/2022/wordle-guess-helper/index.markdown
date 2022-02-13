@@ -146,7 +146,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "brisk" "prong" "jerky" "forum" "shell"
+    ## [1] "brute" "repay" "plumb" "posit" "qualm"
 
 and the other contains the
 10,657
@@ -156,7 +156,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "apish" "chive" "chews" "rages" "celts"
+    ## [1] "sites" "riyal" "howks" "surds" "curet"
 
 Do the two word lists overlap?
 
@@ -354,7 +354,7 @@ when Wordle tells us which letters are in or out.
 
 Formally,
 this calculation is called [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)).
-It measures how much information is encoded in a particular instance of a random process.
+It measures how much information is contained in a particular instance of a random process.
 In this case, words with higher entropy give us more information
 because they encode more information.
 
@@ -366,7 +366,11 @@ To calculate the entropy score, we take a word, split it into it’s letters,
 and then get the probability of each letter appearing in the word.
 Duplicated letters don’t tell us much,
 so we set second appearances of a letter close to zero.
-And then we calculate entropy, which in R code is
+And then we calculate entropy
+
+`$$-\sum_{i=1}^{n} p_i \log_2 p_i$$`
+
+which in R code is
 
 ``` r
 - sum(p * log(p, base = 2))
@@ -434,6 +438,7 @@ words_first_choice
 … that according to this measure, the best first-choice words are
 arose, aeros, and soare.
 **arose** uses all five of the letters that most commonly appear in a word,
+and is also probably (okay, it *is*) on the answers list,
 so *hello new first word choice*!
 
 ## Second Choice
@@ -441,11 +446,13 @@ so *hello new first word choice*!
 After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
-1.  <span class="letter absent"> <span class="clip">dark square</span></span> aren’t in the solution
-2.  <span class="letter present"> <span class="clip">yellow square</span></span> are in the solution but not where you guessed
-3.  <span class="letter correct"> <span class="clip">green square</span></span> are in the solution and are where you guessed
+1.  <span class="letter absent"> <span class="clip">dark square</span></span> **aren’t** in the solution
+2.  <span class="letter present"> <span class="clip">yellow square</span></span> **are** in the solution but **not where** you guessed
+3.  <span class="letter correct"> <span class="clip">green square</span></span> **are** in the solution and **are where** you guessed
 
-What if you guessed **arose** and got five gray boxes
+### None of the letters are in the solution
+
+What if you guessed *arose* and got five gray boxes
 telling you that none of those letters appear in the solution?
 
 <div class="wordle-solo">
@@ -471,12 +478,29 @@ e
 </span>
 </div>
 
+We need to discard any words with
+<span class="letter">a</span>, <span class="letter">r</span>, <span class="letter">o</span>, <span class="letter">s</span>,
+or <span class="letter">E</span> in them.
+To do this, we’ll write a small function `str_has_none_of()`
+that takes a vector of words and a vector of letters,
+and checks if any of the letters are in each of the words.
+Technically, we use our same `str_split()` trick to split each word into a vector of letters
+and then check that the intersection of word letters and unwanted letters is empty.
+
 ``` r
 str_has_none_of <- function(words, letters) {
   words <- str_split(words, "")
   map_lgl(words, ~ length(intersect(letters, .x)) == 0)
 }
+```
 
+Using this function, we can quickly reduce our word list from
+12,972
+to
+577
+words.
+
+``` r
 words_first_choice %>%
   filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
 ```
@@ -496,7 +520,8 @@ words_first_choice %>%
     ## 10 lindy  2.34
     ## # … with 567 more rows
 
-You’re next best guess is *until*.
+This new word list suggests that *unlit* or *until* would be a good next choice,
+so we’ll go with *until*.
 And if none of the letters in **arose** and **until**
 appear in the solution…
 
@@ -562,10 +587,15 @@ words_first_choice %>%
 then your answer is most definitely one of
 *pygmy*, *hyphy*, or *gyppy*.
 
+### Right letter, wrong place
+
 If you learn something from the guess, though,
 you can filter the word list based on the information you just learned.
 
 <!-- arose, intro, motor -->
+
+Say we guess **arose** and wordle reveals that <span class="letter">R</span> and <span class="letter">O</span> appear in the solution.
+
 <div class="wordle-solo">
 <span class="letter letter-large absent">
 a
@@ -589,7 +619,6 @@ e
 </span>
 </div>
 
-Say we guess **arose** and wordle reveals that <span class="letter">R</span> and <span class="letter">O</span> appear in the solution.
 We now know that the solution:
 
 1.  Doesn’t have <span class="letter absent">A</span>, <span class="letter absent">S</span> or <span class="letter absent">E</span>
@@ -697,7 +726,12 @@ Wordle thinks and tells us that we have <span class="letter correct">T</span> in
 Also, we now know that <span class="letter absent">I</span> and <span class="letter absent">N</span> aren’t in the solution,
 and we still haven’t got <span class="letter present">R</span> and <span class="letter present">O</span> in the right place.
 
-We can repeat the step above, but using a new regular expression: `".[^r]t[^ro][^o]"`.
+### Right letter, right place
+
+We can repeat the step above, but using a new regular expression:
+
+    .[^r]t[^ro][^o]
+
 Notice that we know a little more about where <span class="letter present">R</span> and <span class="letter present">O</span> *can’t be*,
 but importantly the `t` in the middle letter ensures
 we find words with <span class="letter correct">T</span> in the right place.
@@ -799,7 +833,7 @@ words_first_choice %>%
     ## 3 rotch  2.33    0.0199
     ## 4 rotor  1.65    0.0132
 
-Now we see that **motor** and **rotor** are the most likely words based on their position.
+Now we see that **motor** and **tutor** are the most likely words based on their position.
 We guess **motor**… and we’re right!
 
 <div class="wordle-solo">
@@ -878,15 +912,38 @@ Okay, let’s do this for any number of guesses.
 First, let’s join our scored words into a single data frame.
 
 ``` r
-words_scored <- left_join(
-  words_first_choice,
-  words_score_pos,
-  by = "word"
-)
+words_scored <-
+  left_join(
+    words_first_choice,
+    words_score_pos,
+    by = "word"
+  )
 ```
 
 Then, we need a function that takes our guesses and results and generalizes them into the pieces of information our guesses reveal about the solution.
-Behold, `summarize_guesses()`:
+This function is going to take a vector of `guesses` and a vector of `results`.
+The `guesses` are just the words we guessed,
+but we’ll need to invent a syntax to concicesly report the results.
+Here’s the syntax I decided to use:
+
+-   <span class="letter code absent">.</span> means the letter is absent
+-   <span class="letter code present">-</span> means the letter is present (wrong place)
+-   <span class="letter code correct">+</span> means the letter is correct (right place)
+
+In broad strokes, the function will take each guess
+and use the result
+
+-   Pull out the correct letters and their positions in `exact`
+    so we can pick out words with letters in those spots.
+-   Pull out present letters and their positions into `exclude`
+    so we can compose the regular expression to filter out words that have
+    these letters in those places.
+-   Add the present by wrong place letters to `bucket_keep`,
+    a bucket of letters that we know are in the solution.
+-   And add any absent letters to `bucket_dicard`
+    so we can filter out words that have any of these letters.
+-   The last step is to compose the regular expression from `exact` and `exclude`,
+    and then return the regexp and the letters to keep and discard.
 
 ``` r
 #' @param guesses A vector of words that you have guessed
@@ -942,8 +999,38 @@ summarize_guesses <- function(guesses, results) {
 }
 ```
 
+Remember when we guessed *arose* and got this answer?
+
+<div class="wordle-solo">
+<span class="letter letter-large absent">
+a
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large present">
+r
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large present">
+o
+<span class="sr-only">(in solution, wrong position)</span>
+</span>
+<span class="letter letter-large absent">
+s
+<span class="sr-only">(absent)</span>
+</span>
+<span class="letter letter-large absent">
+e
+<span class="sr-only">(absent)</span>
+</span>
+</div>
+
+Our new function summarizes the information we’ve learned from this guess.
+
 ``` r
-summarize_guesses("arose", ".--..")
+summarize_guesses(
+  guesses = "arose",
+  results = ".--.."
+)
 ```
 
     ## $discard
@@ -1498,16 +1585,16 @@ tidy(
 )
 ```
 
-<div id="out-unnamed-chunk-14">
+<div id="out-unnamed-chunk-15">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_14 = redirectLogger(document.querySelector("#out-unnamed-chunk-14 > pre"))
+const log_out_unnamed_chunk_15 = redirectLogger(document.querySelector("#out-unnamed-chunk-15 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_14(`tidy(
+log_out_unnamed_chunk_15(`tidy(
   wordsScored, // %>%
   sliceMax(5, 'score')
 )`)
@@ -1652,16 +1739,16 @@ const answer = searchNextGuess(rounds)
 console.table(answer[0])
 ```
 
-<div id="out-unnamed-chunk-17">
+<div id="out-unnamed-chunk-18">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_17 = redirectLogger(document.querySelector("#out-unnamed-chunk-17 > pre"))
+const log_out_unnamed_chunk_18 = redirectLogger(document.querySelector("#out-unnamed-chunk-18 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_17(`const rounds = {
+log_out_unnamed_chunk_18(`const rounds = {
   guesses: ["arose", "indol"],
   results: ["..-..", "+..+-"]
 }
@@ -1685,16 +1772,16 @@ const answer = searchNextGuess(rounds)
 answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
 ```
 
-<div id="out-unnamed-chunk-18">
+<div id="out-unnamed-chunk-19">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_18 = redirectLogger(document.querySelector("#out-unnamed-chunk-18 > pre"))
+const log_out_unnamed_chunk_19 = redirectLogger(document.querySelector("#out-unnamed-chunk-19 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_18(`const rounds = {
+log_out_unnamed_chunk_19(`const rounds = {
   guesses: ["arose", "intro"],
   results: [".--..", "..+--"]
 }

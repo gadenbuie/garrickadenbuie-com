@@ -343,7 +343,7 @@ when Wordle tells us which letters are in or out.
 
 Formally,
 this calculation is called [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)).
-It measures how much information is encoded in a particular instance of a random process.
+It measures how much information is contained in a particular instance of a random process.
 In this case, words with higher entropy give us more information
 because they encode more information.
 
@@ -355,7 +355,11 @@ To calculate the entropy score, we take a word, split it into it's letters,
 and then get the probability of each letter appearing in the word.
 Duplicated letters don't tell us much,
 so we set second appearances of a letter close to zero.
-And then we calculate entropy, which in R code is
+And then we calculate entropy
+
+$$-\sum_{i=1}^{n} p_i \log_2 p_i$$
+
+ which in R code is
 
 ```r
 - sum(p * log(p, base = 2))
@@ -405,6 +409,7 @@ words_first_choice
 ... that according to this measure, the best first-choice words are
 `r knitr::combine_words(words_first_choice$word[1:3])`.
 **arose** uses all five of the letters that most commonly appear in a word,
+and is also probably (okay, it _is_) on the answers list,
 so _hello new first word choice_!
 
 ## Second Choice
@@ -412,26 +417,46 @@ so _hello new first word choice_!
 After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
-1. [&nbsp;[dark square]{.clip}]{.letter .absent} aren't in the solution
-2. [&nbsp;[yellow square]{.clip}]{.letter .present} are in the solution but not where you guessed
-3. [&nbsp;[green square]{.clip}]{.letter .correct} are in the solution and are where you guessed
+1. [&nbsp;[dark square]{.clip}]{.letter .absent} **aren't** in the solution
+2. [&nbsp;[yellow square]{.clip}]{.letter .present} **are** in the solution but **not where** you guessed
+3. [&nbsp;[green square]{.clip}]{.letter .correct} **are** in the solution and **are where** you guessed
 
-What if you guessed **arose** and got five gray boxes
+### None of the letters are in the solution
+
+What if you guessed _arose_ and got five gray boxes
 telling you that none of those letters appear in the solution?
 
 `r wordle_component("arose", ".....")`
+
+We need to discard any words with
+`r map(c("a", "r", "o", "s"), ~ glue::glue("[{letter}]{{.letter}}", letter = .x))`,
+or [E]{.letter} in them.
+To do this, we'll write a small function `str_has_none_of()`
+that takes a vector of words and a vector of letters,
+and checks if any of the letters are in each of the words.
+Technically, we use our same `str_split()` trick to split each word into a vector of letters
+and then check that the intersection of word letters and unwanted letters is empty.
 
 ```{r str_has_none_of}
 str_has_none_of <- function(words, letters) {
   words <- str_split(words, "")
   map_lgl(words, ~ length(intersect(letters, .x)) == 0)
 }
+```
 
+Using this function, we can quickly reduce our word list from
+`r format(length(words), big.mark = ",")`
+to
+`r words_first_choice %>% filter(str_has_none_of(word, c("a", "r", "o", "s", "e"))) %>% nrow()`
+words.
+
+```{r}
 words_first_choice %>%
   filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
 ```
 
-You're next best guess is _until_.
+This new word list suggests that _unlit_ or _until_ would be a good next choice,
+so we'll go with _until_.
 And if none of the letters in **arose** and **until**
 appear in the solution...
 
@@ -453,14 +478,17 @@ arose_until <- words_first_choice %>%
 then your answer is most definitely one of
 `r knitr::combine_words(arose_until$word, before = "_", and = " or ")`.
 
+### Right letter, wrong place
+
 If you learn something from the guess, though,
 you can filter the word list based on the information you just learned.
 
 <!-- arose, intro, motor -->
 
+Say we guess **arose** and wordle reveals that [R]{.letter} and [O]{.letter} appear in the solution.
+
 `r wordle_component("arose", ".--..")`
 
-Say we guess **arose** and wordle reveals that [R]{.letter} and [O]{.letter} appear in the solution.
 We now know that the solution:
 
 1. Doesn't have [A]{.letter .absent}, [S]{.letter .absent} or [E]{.letter .absent}
@@ -511,7 +539,14 @@ Wordle thinks and tells us that we have [T]{.letter .correct} in the right spot!
 Also, we now know that [I]{.letter .absent} and [N]{.letter .absent} aren't in the solution,
 and we still haven't got [R]{.letter .present} and [O]{.letter .present} in the right place.
 
-We can repeat the step above, but using a new regular expression: `".[^r]t[^ro][^o]"`.
+### Right letter, right place
+
+We can repeat the step above, but using a new regular expression:
+
+```
+.[^r]t[^ro][^o]
+```
+
 Notice that we know a little more about where [R]{.letter .present} and [O]{.letter .present} _can't be_,
 but importantly the `t` in the middle letter ensures
 we find words with [T]{.letter .correct} in the right place.
@@ -582,7 +617,7 @@ words_first_choice %>%
   arrange(desc(score_pos))
 ```
 
-Now we see that **motor** and **rotor** are the most likely words based on their position.
+Now we see that **motor** and **tutor** are the most likely words based on their position.
 We guess **motor**... and we're right!
 
 `r wordle_component("arose", ".--..")`
@@ -598,15 +633,38 @@ Okay, let's do this for any number of guesses.
 First, let's join our scored words into a single data frame.
 
 ```{r words_scored}
-words_scored <- left_join(
-  words_first_choice,
-  words_score_pos,
-  by = "word"
-)
+words_scored <-
+  left_join(
+    words_first_choice,
+    words_score_pos,
+    by = "word"
+  )
 ```
 
 Then, we need a function that takes our guesses and results and generalizes them into the pieces of information our guesses reveal about the solution.
-Behold, `summarize_guesses()`:
+This function is going to take a vector of `guesses` and a vector of `results`.
+The `guesses` are just the words we guessed,
+but we'll need to invent a syntax to concicesly report the results.
+Here's the syntax I decided to use:
+
+* [.]{.letter .code .absent} means the letter is absent
+* [-]{.letter .code .present} means the letter is present (wrong place)
+* [+]{.letter .code .correct} means the letter is correct (right place)
+
+In broad strokes, the function will take each guess
+and use the result
+
+* Pull out the correct letters and their positions in `exact`
+  so we can pick out words with letters in those spots.
+* Pull out present letters and their positions into `exclude`
+  so we can compose the regular expression to filter out words that have
+  these letters in those places.
+* Add the present by wrong place letters to `bucket_keep`,
+  a bucket of letters that we know are in the solution.
+* And add any absent letters to `bucket_dicard`
+  so we can filter out words that have any of these letters.
+* The last step is to compose the regular expression from `exact` and `exclude`,
+  and then return the regexp and the letters to keep and discard.
 
 ```{r regex-after-guess}
 #' @param guesses A vector of words that you have guessed
@@ -662,10 +720,20 @@ summarize_guesses <- function(guesses, results) {
 }
 ```
 
+Remember when we guessed _arose_ and got this answer?
+
+`r wordle_component("arose", ".--..")`
+
+Our new function summarizes the information we've learned from this guess.
 
 ```{r regex-after-guess-ex}
-summarize_guesses("arose", ".--..")
+summarize_guesses(
+  guesses = "arose",
+  results = ".--.."
+)
 ```
+
+
 
 ```{r score-after-guess, eval=TRUE}
 guess_results <- summarize_guesses(c("arose", "intro"), c(".--..", "..+--"))
