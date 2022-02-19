@@ -663,7 +663,7 @@ and use the result
   a bucket of letters that we know are in the solution.
 * And add any absent letters to `bucket_dicard`
   so we can filter out words that have any of these letters.
-* The last step is to compose the regular expression from `exact` and `exclude`,
+* The last step is to compose the regular expression `pattern` from `exact` and `exclude`,
   and then return the regexp and the letters to keep and discard.
 
 ```{r regex-after-guess}
@@ -715,12 +715,12 @@ summarize_guesses <- function(guesses, results) {
   list(
     discard = unique(bucket_discard),
     keep = unique(bucket_keep),
-    specific = str_c(pattern, collapse = "")
+    pattern = str_c(pattern, collapse = "")
   )
 }
 ```
 
-Remember when we guessed _arose_ and got this answer?
+Remember when we guessed _arose_ and got this result?
 
 `r wordle_component("arose", ".--..")`
 
@@ -733,21 +733,43 @@ summarize_guesses(
 )
 ```
 
+Then we guessed _intro_ and got this result.
 
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
+
+And again we have this summary.
 
 ```{r score-after-guess, eval=TRUE}
-guess_results <- summarize_guesses(c("arose", "intro"), c(".--..", "..+--"))
+guess_results <-
+  summarize_guesses(
+    guesses = c("arose", "intro"),
+    results = c(".--..", "..+--")
+  )
 
-words_first_choice %>%
-  left_join(words_score_pos) %>%
+guess_results
+```
+
+To get the remaining possible words,
+we can use this information to filter down to the words that
+
+1. have none of the `$discard` letters
+2. have all of the `$keep` letters
+3. match the regular expression `$pattern`.
+
+```{r words-after-guess}
+words_scored %>%
   filter(
     str_has_none_of(word, guess_results$discard),
     str_has_all_of(word, guess_results$keep),
-    str_detect(word, guess_results$specific)
+    str_detect(word, guess_results$pattern)
   )
 ```
 
-## All together now
+### All together now
+
+Now that we know how to summarize and use the guess results to filter our next word choices,
+we can do this in one step with another small function, `score_next_guess()`.
 
 ```{r score_next_guess}
 score_next_guess <- function(guesses, results) {
@@ -757,33 +779,55 @@ score_next_guess <- function(guesses, results) {
     filter(
       str_has_none_of(word, guess_results$discard),
       str_has_all_of(word, guess_results$keep),
-      str_detect(word, guess_results$specific)
+      str_detect(word, guess_results$pattern)
     )
 }
 ```
 
-```{r replay}
-score_next_guess(
-  guesses = c("arose", "intro"),
-  results = c(".--..", "..+--")
-)
+Having guessed _arose_ and _intro_,
+what would happen if we guessed _rotch_^[rotch] next?
 
+[^rotch]: What does _rotch_ mean? Is it even a word? No, it is not. It's a [surname](https://en.wikipedia.org/w/index.php?title=Rotch) for a few Americans: a meteorologist, an architect, a tennis player, two politicians and a pediatrician.
+
+```{r replay-view, echo=FALSE}
+map2(
+  c("arose", "intro", "rotch"),
+  c(".--..", "..+--", "-++.."),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+```{r replay}
 score_next_guess(
   guesses = c("arose", "intro", "rotch"),
   results = c(".--..", "..+--", "-++..")
 )
 ```
 
-```{r replay-view, echo=FALSE}
-map2(
-  c("arose", "intro", "rotch", "motor"),
-  c(".--..", "..+--", "-++..", "+++++"),
-  wordle_component
-) %>%
-  htmltools::tagList()
-```
+From _rotch_ we learn that the first letter isn't [R]{.letter .present},
+but the second letter **is** [o]{.letter .correct},
+which leaves us just one choice: _motor_.
 
-How did this work for me today?
+`r wordle_component("motor", "+++++")`
+
+## Guessing Wordle words in real life
+
+### Beginner's Luck
+
+I wrapped up the `score_next_guess()` function on January 16th, 2022,
+which happened to be the easiest Wordle day of any day I've "played".
+But it was a nice motivator to feel like I had spent my Sunday tinkering time well.
+
+Opening with _arose_ lead to a pleasant surprise.
+
+`r wordle_component("arose", "----.")`
+
+From
+`r format(length(words), big.mark = ",")`
+words down to
+`r score_next_guess("arose", "----.") %>% nrow() %>% format(big.mark = ",")`
+words with our first guess. Nice!
 
 ```{r live}
 # 2022-01-16
@@ -792,6 +836,8 @@ score_next_guess(
   results = c("----.")
 )
 ```
+
+Let's just pick the first word on the list: _solar_.
 
 ```{r live-view, echo=FALSE}
 map2(
@@ -802,68 +848,245 @@ map2(
   htmltools::tagList()
 ```
 
-How can we get to igloo?
+Very nice!
 
-```{r igloo}
+### Problematic words
+
+In working on this,
+I ran into more than a few posts that had trouble with a few more obscure words,
+like _igloo_ and _ferry_.
+
+#### igloo
+
+How many guesses would it take for us to get to _igloo_?
+
+::: {.panelset .panelset--bordered}
+::: panel
+[Round 1]{.panel-name}
+
+`r wordle_component("arose", "..-..")`
+
+Opening with _arose_ is helpfulish.
+
+```{r igloo-1}
 score_next_guess(
   guesses = c("arose"),
   results = c("..-..")
 )
-
-score_next_guess(
-  guesses = c("arose", "indol"),
-  results = c("..-..", "+..+-")
-)
 ```
 
-```{r igloo-view, echo=FALSE}
+Many of the words are obviously not the answer.
+_Pilot_ is the first reasonable word on the list,
+and its score is relatively similar to the other top word choices,
+so I'd go with _pilot_.
+:::
+
+::: panel
+[Round 2]{.panel-name}
+
+```{r igloo-2-view, echo=FALSE}
 map2(
-  c("arose", "indol", "igloo"),
-  c("..-..", "+..+-", "+++++"),
+  c("arose", "pilot"),
+  c("..-..", ".-++."),
   wordle_component
 ) %>%
   htmltools::tagList()
 ```
 
-Ferry furor?
+Picking _pilot_ is a good choice!
 
-```{r ferry}
+```{r igloo-2}
+score_next_guess(
+  guesses = c("arose", "pilot"),
+  results = c("..-..", ".-++.")
+)
+```
+
+:::
+
+::: {.panel .pb2}
+[Round 3]{.panel-name}
+
+```{r igloo-view, echo=FALSE}
+map2(
+  c("arose", "pilot", "igloo"),
+  c("..-..", ".-++.", "+++++"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+:tada: Great work!
+
+:::
+:::
+
+
+#### ferry
+
+Apparently there was a general furor about _ferry_
+when it was the Wordle solution of the day.
+Let's see how long it takes us to get to that word.
+
+::: {.panelset .panelset--bordered}
+::: panel
+[Round 1]{.panel-name}
+
+`r wordle_component("arose", ".-..-")`
+
+Opening with _arose_ narrows down our word choices to
+`r score_next_guess("arose", ".-..-") %>% nrow() %>% format(big.mark = ",")`
+words.
+
+```{r ferry-1}
 score_next_guess(
   guesses = c("arose"),
   results = c(".-..-")
 )
+```
 
+_liter_ is both a word **and** at the top of our list,
+so it's an easy next choice.
+
+:::
+
+::: panel
+[Round 2]{.panel-name}
+
+```{r ferry-2-view, echo=FALSE}
+map2(
+  c("arose", "liter"),
+  c(".-..-", "...--"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+The word list is now full of words with similar patterns,
+so let's sort by position score to help us choose.
+
+```{r ferry-2}
 score_next_guess(
   guesses = c("arose", "liter"),
   results = c(".-..-", "...--")
 ) %>%
   arrange(desc(score_pos))
-
-# skip berry and perry
-score_next_guess(
-  guesses = c("arose", "liter", "ferny"),
-  results = c(".-..-", "...--", "+++.+")
-)
 ```
 
-```{r ferry-view, echo=FALSE}
+:::
+
+::: panel
+[Round 3]{.panel-name}
+
+```{r ferry-3-view, echo=FALSE}
 map2(
-  c("arose", "liter", "ferny", "ferry"),
-  c(".-..-", "...--", "+++.+", "+++++"),
+  c("arose", "liter", "jerky"),
+  c(".-..-", "...--", ".++.+"),
   wordle_component
 ) %>%
   htmltools::tagList()
 ```
 
-## Another thought
+Now we're down to
+`r score_next_guess(c("arose", "liter", "jerky"), c(".-..-", "...--", ".++.+")) %>% nrow() %>% format(big.mark = ",")`
+words to choose from.
+Still complicated.
+But if we arrange by position score, our top two choices are _ferny_ and _ferry_.
 
-Embed the data into the webpage
+You can see where this is headed, but let's pretend we had no idea.
+Which would you pick?
 
-```{r embed-words, echo=TRUE}
+```{r ferry-3}
+score_next_guess(
+  guesses = c("arose", "liter", "jerky"),
+  results = c(".-..-", "...--", ".++.+")
+) %>%
+  arrange(desc(score_pos))
+```
+
+:::
+
+::: panel
+[Round 4]{.panel-name}
+
+```{r ferry-4-view, echo=FALSE}
+map2(
+  c("arose", "liter", "jerky", "ferny"),
+  c(".-..-", "...--", ".++.+", "+++.+"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+Now we're down to
+`r score_next_guess(c("arose", "liter", "jerky", "ferny"), c(".-..-", "...--", ".++.+", "+++.+")) %>% nrow() %>% format(big.mark = ",")`
+words to choose from.
+
+```{r ferry-4}
+score_next_guess(
+  guesses = c("arose", "liter", "jerky", "ferny"),
+  results = c(".-..-", "...--", ".++.+", "+++.+")
+) %>%
+  arrange(desc(score_pos))
+```
+
+:::
+
+::: panel
+[Round 5]{.panel-name}
+
+```{r ferry-5-view, echo=FALSE}
+map2(
+  c("arose", "liter", "jerky", "ferny", "ferry"),
+  c(".-..-", "...--", ".++.+", "+++.+", "+++++"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+:tada: We did it! 5 isn't bad,
+especially considering the terrible choices we had in round 3.
+:::
+:::::
+
+## Make it an app
+
+It's awesome being able to run R code to test things out,
+but it's also a little tedious.
+Since we've done the heavy lifting of prepping and scoring words,
+it'd be great if we could have a little web app that would help us
+
+* Input our guesses and results
+* Show us possible words after each round
+
+And since I'm writing this blog post in
+[R Markdown](https://rmarkdown.rstudio.com)
+via [blogdown](https://pkgs.rstudio.com/blogdown/),
+I can do it all right here!
+
+### Move the data from R to the web
+
+The first thing we need to do is save our data
+in a way that it can be accessed by JavaScript in the browser.
+To do this, we'll take our `words_scored` table and use
+[jsonlite::write_json()](https://jeroen.cran.dev/jsonlite/reference/read_json.html)
+to save the data frame as JSON.
+
+```{r save-words, echo=TRUE}
 words_scored %>%
-  mutate(score_pos = score_pos / (max(score_pos) - min(score_pos))) %>%
   jsonlite::write_json("wordle-scored.json")
+```
 
+Now we have the data in a [JSON file (that you can download if you want)](wordle-scored.json).
+
+But to make life even easier,
+I'm going to use a trick I learned from [htmlwidgets](https://htmlwidgets.org).
+What we can do is embed in the JSON file,
+which is only `r format(fs::file_size("wordle-scored.json"))`,
+in a `<script type="application/json">` tag
+with a specific `id` that makes it easy to find later on.
+
+```{r embed-words, echo = TRUE}
 htmltools::tags$script(
   id = "words-scored",
   type = "application/json",
@@ -871,22 +1094,45 @@ htmltools::tags$script(
 )
 ```
 
-so that we can switch gears; the rest of the blog post is rendered _in your browser_.
-This uses an extension I built for the js knitr engine for js4shiny.
+Now that we have the data in a place where we can get it, let's switch gears and write some JavaScript!
+
+### Start working in JavaScript
+
+Here's the cool thing:
+from here on out, the actual computation of the rest of the blog post is done _in your browser_.
+
+To facilitate this, I'll use an extension I built for knitr
+for [literate JavaScript programming](https://pkg.js4shiny.com/articles/literate-javascript.html)
+with the [js4shiny](https://pkg.js4shiny.com) package.
+
+Setting it up is pretty straight-forward:
 
 ```{r js4shiny, echo=TRUE}
 js4shiny::html_setup_blogdown(stylize = "none")
 ```
 
-And also, we'll use tidyjs in the browser.
-If you squint really hard, it's remarkably similar to the tidyverse, just with a JavaScript spin.
+The other cool thing we'll use is [tidyjs](https://pbeshai.github.io/tidy/).
+It's a really neat JavaScript library
+that makes it easy to work with data frames in the browser.
+If you squint really hard,
+it's remarkably similar to the tidyverse,
+just with a JavaScript spin.
+
+I wrapped [tidyjs in an R package](https://pkg.garrickadenbuie.com/tidyjs-r/)
+that automatically stays up to date with the latest version of tidyjs.
+To use tidyjs, we just need to call `use_tidyjs()`.
 
 ```{r tidy-js, echo=TRUE}
 tidyjs::use_tidyjs()
 ```
 
-Now that we've included tidyjs in this page, we can import a couple of functions that we're going to want to use.
-With tidyjs, all transformations are wrapped in a call `tidy()`, so we have to import `tidy`.
+Now that we've included tidyjs in this page,
+we can finally switch to writing JavaScript instead of R.
+
+First, we need to import a couple of functions from tidyjs that we're going to want to use.
+With tidyjs,
+all transformations are wrapped in a call `tidy()`,
+so we have to import `tidy`.
 We also need `filter()` and `sliceMax()` for easy filtering.
 
 ```{js js_redirect = FALSE}
@@ -904,7 +1150,10 @@ wordsScored = JSON.parse(
 )
 ```
 
-Here's a quick preview...
+Here's a quick preview of the data.
+In tidyjs you wrap a pipeline in `tidy()`
+and then each statement is the next step in the pipe.
+To make it look a little more familiar, I've added the `%>%` in the comments.
 
 ```{js}
 tidy(
@@ -912,6 +1161,10 @@ tidy(
   sliceMax(5, 'score')
 )
 ```
+
+### Same song, different dance
+
+Next, we translate `summarize_guesses()` from R to `summarizeGuesses()` in JavaScript.
 
 ```{js js_redirect = FALSE}
 function summarizeGuesses ({ guesses, results }) {
@@ -960,6 +1213,8 @@ function summarizeGuesses ({ guesses, results }) {
 }
 ```
 
+And then we need to do the same for `search_next_guess()`.
+
 ```{js js_redirect = FALSE}
 function searchNextGuess ({ guesses, results }) {
   const guessResult = summarizeGuesses({guesses, results})
@@ -976,7 +1231,7 @@ function searchNextGuess ({ guesses, results }) {
 }
 ```
 
-
+Let's prove to ourselves that these functions work.
 
 ```{js}
 const rounds = {
