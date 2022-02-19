@@ -1074,6 +1074,7 @@ to save the data frame as JSON.
 
 ```{r save-words, echo=TRUE}
 words_scored %>%
+  mutate(across(starts_with("score"), round, digits = 2)) %>%
   jsonlite::write_json("wordle-scored.json")
 ```
 
