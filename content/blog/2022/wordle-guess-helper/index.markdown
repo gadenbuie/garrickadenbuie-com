@@ -62,7 +62,8 @@ also decided to start writing a post about Wordle.
 I’ve been tempted to just walk away from this post more than once.
 After all,
 since I’ve started writing this post
-[Wordle has been solved](https://jonathanolson.net/wordle-solver/),
+Wordle [has been solved](https://jonathanolson.net/wordle-solver/)
+[more than once](https://youtu.be/fRed0Xmc2Wg),
 Winston Chang rewrote [Wordle in Shiny](https://youtu.be/quvz4xLbW88),
 roughly [70 other people wrote Wordle clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) *in R alone*.
 Felienne Hermans wrote a Twitter bot to
@@ -74,7 +75,7 @@ by spoling the answer to the next day’s Wordle.
 Oh and Wordle was bought for
 [big money by the New York Times](https://www.thetimes.co.uk/article/wordle-sold-new-york-times-n0mqm3rl7)
 who fumbled the handoff and
-[lost everyone’s word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
+[lost more than a few player’s word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
 in the transfer.
 
 I should admit up-front that I’ve never really *played* Wordle.
@@ -163,7 +164,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "melee" "debit" "depot" "quoth" "smirk"
+    ## [1] "leapt" "skulk" "blimp" "dally" "wrist"
 
 and the other contains the
 10,657
@@ -173,7 +174,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "laxly" "kagus" "weans" "kelts" "unaus"
+    ## [1] "torrs" "izars" "nitry" "hodja" "hilus"
 
 Do the two word lists overlap?
 
@@ -204,7 +205,7 @@ Now lets turn those words into data we can work with.
 My first thought
 (and I think it’s many people first thought)
 was to consider the probability that a letter appears in a word.
-In other words: is <span class="letter">R</span> more popular than <span class="letter">F</span>?
+In other words: does <span class="letter">R</span> appear in more words than <span class="letter">F</span>?
 
 To answer this we can split each word into a vector of letters,
 take only the unique letters,
@@ -212,7 +213,7 @@ and then count how many times each letter appears in a word.
 
 Splitting the word into a vector of letters is something we’ll be doing a lot,
 and `stringr::str_split()` or `strsplit()` can help.
-The trick is to use and empty string as the split pattern
+The trick is to use an empty string as the split pattern
 to break apart each string character by character.
 
 ``` r
@@ -421,7 +422,7 @@ c("unhip", "jeans", "pools") %>%
     ##    unhip    jeans    pools 
     ## 2.232150 2.163479 1.994939
 
-This tells us, broadly that *unhip* is a better choice than *jeans*
+This tells us, broadly, that *unhip* is a better choice than *jeans*
 and *pools* is worse than either.
 (Intuitively: you don’t learn much from the second <span class="letter">O</span>.)
 
@@ -640,7 +641,8 @@ We now know that the solution:
 
 1.  Doesn’t have <span class="letter absent">A</span>, <span class="letter absent">S</span> or <span class="letter absent">E</span>
 2.  Does contain <span class="letter present">R</span> and <span class="letter present">O</span>
-3.  Doesn’t have <span class="letter present">R</span> as the 2<sup>nd</sup> letter and <span class="letter present">O</span> as the 3<sup>rd</sup>.
+3.  Doesn’t have <span class="letter present">R</span> as the 2<sup>nd</sup> letter
+    or <span class="letter present">O</span> as the 3<sup>rd</sup>.
 
 We’ve already implemented this the first step by discarding words with `str_has_none_of()`.
 We also need a similar version called `str_has_all_of()`

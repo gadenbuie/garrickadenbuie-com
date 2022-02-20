@@ -95,7 +95,8 @@ also decided to start writing a post about Wordle.
 I've been tempted to just walk away from this post more than once.
 After all,
 since I've started writing this post
-[Wordle has been solved](https://jonathanolson.net/wordle-solver/),
+Wordle [has been solved](https://jonathanolson.net/wordle-solver/)
+[more than once](https://youtu.be/fRed0Xmc2Wg),
 Winston Chang rewrote [Wordle in Shiny](https://youtu.be/quvz4xLbW88),
 roughly [70 other people wrote Wordle clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) _in R alone_.
 Felienne Hermans wrote a Twitter bot to
@@ -107,7 +108,7 @@ by spoling the answer to the next day's Wordle.
 Oh and Wordle was bought for
 [big money by the New York Times](https://www.thetimes.co.uk/article/wordle-sold-new-york-times-n0mqm3rl7)
 who fumbled the handoff and
-[lost everyone's word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
+[lost more than a few player's word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
 in the transfer.
 
 I should admit up-front that I've never really _played_ Wordle.
@@ -231,7 +232,7 @@ Now lets turn those words into data we can work with.
 My first thought
 (and I think it's many people first thought)
 was to consider the probability that a letter appears in a word.
-In other words: is [R]{.letter} more popular than [F]{.letter}?
+In other words: does [R]{.letter} appear in more words than [F]{.letter}?
 
 To answer this we can split each word into a vector of letters,
 take only the unique letters,
@@ -239,7 +240,7 @@ and then count how many times each letter appears in a word.
 
 Splitting the word into a vector of letters is something we'll be doing a lot,
 and `stringr::str_split()` or `strsplit()` can help.
-The trick is to use and empty string as the split pattern
+The trick is to use an empty string as the split pattern
 to break apart each string character by character.
 
 ```{r}
@@ -407,7 +408,7 @@ c("unhip", "jeans", "pools") %>%
   map_dbl(score_entropy)
 ```
 
-This tells us, broadly that _unhip_ is a better choice than _jeans_
+This tells us, broadly, that _unhip_ is a better choice than _jeans_
 and _pools_ is worse than either.
 (Intuitively: you don't learn much from the second [O]{.letter}.)
 
@@ -510,7 +511,8 @@ We now know that the solution:
 
 1. Doesn't have [A]{.letter .absent}, [S]{.letter .absent} or [E]{.letter .absent}
 1. Does contain [R]{.letter .present} and [O]{.letter .present}
-1. Doesn't have [R]{.letter .present} as the 2^nd^ letter and [O]{.letter .present} as the 3^rd^.
+1. Doesn't have [R]{.letter .present} as the 2^nd^ letter
+   or [O]{.letter .present} as the 3^rd^.
 
 We've already implemented this the first step by discarding words with `str_has_none_of()`.
 We also need a similar version called `str_has_all_of()`
