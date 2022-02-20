@@ -1,63 +1,65 @@
-function makeLetter(value = "_", index = 0, state) {
+/* globals Tidy, gridjs, searchNextGuess, summarizeGuesses */
+
+function makeLetter (value = '_', index = 0, state) {
   const el = document.createElement('div')
   el.classList = 'letter-wrapper'
-  
+
   const letter = document.createElement('div')
   letter.classList = 'letter letter-large'
   letter.innerText = value
-  
+
   el.appendChild(letter)
-  
+
   const letterAction = document.createElement('div')
   letterAction.classList = 'letter-action'
   el.appendChild(letterAction)
-  
-  if (value === "_" && (!state || state === "_")) {
+
+  if (value === '_' && (!state || state === '_')) {
     return el
   }
-  
+
   const resultClass = {
     '+': 'correct',
     '-': 'present',
     '.': 'absent'
   }
-  
+
   letter.classList.add(resultClass[state])
-  
+
   const ordinal = ['first', 'second', 'third', 'fourth', 'fifth']
-  
+
   ;['absent', 'present', 'correct'].forEach(c => {
     const btn = document.createElement('button')
     btn.classList = 'btn-letter-action ' + c
     btn.title = c.charAt(0).toUpperCase() + c.slice(1)
-    btn.setAttribute("aria-label", `Set ${ordinal[index]} letter ${value.toUpperCase()} ${c}`)
+    btn.setAttribute('aria-label', `Set ${ordinal[index]} letter ${value.toUpperCase()} ${c}`)
     btn.dataset.action = c
     letterAction.appendChild(btn)
   })
-  
+
   return el
 }
 
-function fillWord(word) {
+function fillWord (word) {
   word = word || '_____'
   word = word.slice(0, 5).split('')
   while (word.length < 5) {
-   word.push('_')
+    word.push('_')
   }
   return word
 }
 
-function makeWordRow(word, state) {
+function makeWordRow (word, state) {
   word = fillWord(word)
   state = fillWord(state)
-  
+
   const row = document.createElement('div')
   row.classList = 'wordle-row'
-  
+
   word
     .map((l, idx) => makeLetter(l, idx, state[idx]))
     .forEach(l => row.appendChild(l))
-  
+
   return row
 }
 
@@ -72,24 +74,8 @@ function btnUpdateLetter (btn) {
   }
 }
 
-function addWordleRow (wordle, focus = false) {
-  wordle = wordle || document.getElementById('wordle')
-  
-  if (wordle.children.length == 6) {
-    console.log("no more guesses left!")
-    return
-  }
-  
-  const row = makeWordRow()
-  wordle.appendChild(row)
-  if (focus) {
-    row.querySelector('.letter').focus()
-  }
-  return row
-}
-
 function getWords (wordle) {
-  wordle = wordle || document.getElementById("wordle")
+  wordle = wordle || document.getElementById('wordle')
   return wordle.querySelector('textarea').value
     .split(/\r\n|\n/)
     .map(w => w.toLowerCase())
@@ -97,12 +83,12 @@ function getWords (wordle) {
 
 function renderWords (wordle) {
   const words = getWords(wordle)
-  
+
   // clear current guesses
   while (wordle.querySelector('.wordle-row')) {
     wordle.removeChild(wordle.querySelector('.wordle-row'))
   }
-  
+
   if (wordle.state && wordle.state.guesses.length) {
     const { guesses, results } = wordle.state
     for (let i = 0; i < guesses.length; i++) {
@@ -110,7 +96,7 @@ function renderWords (wordle) {
       wordle.appendChild(row)
     }
   } else {
-    words.forEach(function(word) {
+    words.forEach(function (word) {
       const row = makeWordRow(word)
       wordle.appendChild(row)
     })
@@ -120,46 +106,47 @@ function renderWords (wordle) {
 function isAlphaKeyCode (keyCode) {
   const isAlphaUpper = keyCode >= 65 && keyCode <= 90
   const isAlphaLower = keyCode >= 97 && keyCode <= 122
-  
+
   return isAlphaUpper || isAlphaLower
 }
 
 function updateGuesses (wordle) {
   wordle = wordle || document.getElementById('wordle')
-  
+
   const guesses = getWords(wordle)
-    
+
   const results = [...wordle.querySelectorAll('.wordle-row')]
     .map(row => [...row.querySelectorAll('.letter')]
-    .map(l => {
-      if (l.matches('.correct')) return '+'
-      if (l.matches('.present')) return '-'
-      if (l.matches('.absent'))  return '.'
-      return ''
-    })
-    .reduce((x, y) => x + y, ''))
-    
-  wordle.state = {guesses, results}
-  
+      .map(l => {
+        if (l.matches('.correct')) return '+'
+        if (l.matches('.present')) return '-'
+        if (l.matches('.absent')) return '.'
+        return ''
+      })
+      .reduce((x, y) => x + y, ''))
+
+  wordle.state = { guesses, results }
+
   if (
-    guesses.some(g => g.length != 5) || 
+    guesses.some(g => g.length !== 5) ||
     guesses.some(g => g.includes('_')) ||
-    results.some(r => r.length != 5)
+    results.some(r => r.length !== 5)
   ) {
     return
   }
-  
+
   const abc = 'abcdefghijklmnopqrstuvwxyz'.split('')
-  
-  const nextGuess = searchNextGuess(wordle.state).sort((x, y) => y.score - x.score)
-  wordle.table.updateConfig({data: nextGuess}).forceRender()
-  
-  let { pattern, keep, discard } = summarizeGuesses({guesses, results})
+
+  const nextGuess = searchNextGuess(wordle.state)
+    .sort((x, y) => y.score - x.score)
+  wordle.table.updateConfig({ data: nextGuess }).forceRender()
+
+  let { pattern, keep, discard } = summarizeGuesses({ guesses, results })
   const knownLetters = [...keep, ...discard]
   const remainingLetters = uniqueLetters(nextGuess, knownLetters)
   const accountedLetters = [...knownLetters, ...Object.keys(remainingLetters)]
   const impossibleLetters = abc.filter(l => !accountedLetters.includes(l))
-  
+
   keep = Tidy.distinct()(keep)
     .sort((x, y) => x > y)
     .map(l => `<code>${l}</code>`)
@@ -168,7 +155,7 @@ function updateGuesses (wordle) {
     .sort((x, y) => x > y)
     .map(l => `<code${impossibleLetters.includes(l) ? ' class="o-60"' : ''}>${l}</code>`)
     .join(' ')
-    
+
   const stats = document.getElementById('words-stats')
   stats.innerHTML = `<p>
     <strong>${nextGuess.length.toLocaleString()}</strong> word choices</p>
@@ -177,7 +164,7 @@ function updateGuesses (wordle) {
     <tr><td class="tr b pr2">No</td><td class="tl">${discard}</td></tr>
     <tr><td class="tr b pr2">Maybe</td><td class="tl">${describeUniqueLetters(remainingLetters)}</td></tr>
   </table>`
-  
+
   return wordle.state
 }
 
@@ -191,13 +178,13 @@ function uniqueLetters (words, exclude) {
       x[y] = x[y] ? x[y] + 1 : 1
       return x
     }, {})
-    
+
   return letters
 }
 
-function describeUniqueLetters(letters) {
+function describeUniqueLetters (letters) {
   return Object.keys(letters)
-    .map(x => ({letter: x, count: letters[x]}))
+    .map(x => ({ letter: x, count: letters[x] }))
     .sort((x, y) => x.count < y.count)
     .map(l => `<code title="${l.count} times">${l.letter}</code>`)
     .join(' ')
@@ -218,16 +205,16 @@ function removeLetterFocus () {
 }
 
 const wordle = document.getElementById('wordle')
-wordle.state = {guesses: [], results: []}
+wordle.state = { guesses: [], results: [] }
 renderWords(wordle)
 
 if (window.wordsScored) {
   wordle.table = new gridjs.Grid({
-    data: wordsScored.sort((x, y) => y.score - x.score),
+    data: window.wordsScored.sort((x, y) => y.score - x.score),
     columns: [
-      {id: "word",      name: "Word"},
-      {id: "score",     name: "Score (Entropy)"},
-      {id: "score_pos", name: "Score (Position)"}
+      { id: 'word', name: 'Word' },
+      { id: 'score', name: 'Score (Entropy)' },
+      { id: 'score_pos', name: 'Score (Position)' }
     ],
     sort: true,
     pagination: {
@@ -238,17 +225,17 @@ if (window.wordsScored) {
       prevButton: true
     }
   })
-  wordle.table.render(document.getElementById("words-table"))
-  document.getElementById('words-stats').innerHTML = `<p><strong>${wordsScored.length.toLocaleString()}</strong> word choices`
+  wordle.table.render(document.getElementById('words-table'))
+  document.getElementById('words-stats').innerHTML = `<p><strong>${window.wordsScored.length.toLocaleString()}</strong> word choices`
 }
 
-wordle.addEventListener('click', function(ev) {
+wordle.addEventListener('click', function (ev) {
   if (ev.target.matches('.btn-letter-action')) {
     btnUpdateLetter(ev.target)
     updateGuesses(wordle)
     return
   }
-  
+
   if (ev.target.matches('.letter')) {
     wordle.querySelector('textarea').focus()
   }
@@ -256,22 +243,22 @@ wordle.addEventListener('click', function(ev) {
 
 wordle
   .querySelector('textarea')
-  .addEventListener('keydown', function(ev) {
+  .addEventListener('keydown', function (ev) {
     const lines = ev.target.value.split(/\r\n|\n/)
     const lastWord = lines[lines.length - 1]
-    
+
     if (['Tab', 'Backspace'].includes(ev.key)) {
       return
     }
-    
-    if (ev.key === 'Enter' && lines.length < 6 && lastWord.length == 5) {
+
+    if (ev.key === 'Enter' && lines.length < 6 && lastWord.length === 5) {
       return
     }
-    
+
     if (isAlphaKeyCode(ev.keyCode) && lastWord.length < 5) {
       return
     }
-    
+
     // disallow all other input
     ev.stopPropagation()
     ev.preventDefault()
@@ -279,19 +266,16 @@ wordle
 
 wordle
   .querySelector('textarea')
-  .addEventListener('keyup', function(ev) {
-    
-    const words = ev.target.value.split(/\r\n|\n/)
-    
+  .addEventListener('keyup', function (ev) {
     updateGuesses(wordle)
     renderWords(wordle)
     updateLetterFocus()
   })
-  
+
 wordle
   .querySelector('textarea')
   .addEventListener('focus', updateLetterFocus)
-  
+
 wordle
   .querySelector('textarea')
   .addEventListener('blur', removeLetterFocus)

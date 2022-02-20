@@ -7,8 +7,16 @@ categories:
   - Blog
 tags:
   - R
-description: Optimizing wordle guesses. It's only fun if you can solve it with R.
-#twitterImage: /path/to/image.png
+  - JavaScript
+  - dplyr
+  - stringr
+  - Wordle
+  - tidyjs
+  - js4shiny
+description: |
+  Picking words to guess in Wordle.
+  It's only fun if you can solve it with R.
+twitterImage: feature.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/wordle-guessing/index.Rmd'
 keywords: rstats
 editor_options:
@@ -107,6 +115,15 @@ Let Wordle inspire you to practice
 [working with Twitter data with rtweet](https://www.rostrum.blog/2022/01/14/wordle/),
 or [making accessible plots with ggplot2](https://gist.github.com/thoughtfulbloke/ebfb1865acbc1bb5c7c482d6ebfef2b8).
 
+What follows here is a bit of a *journey*.
+It is not *the best strategy* for Wordle
+or even the best way to play.
+But along the way we’ll learn a few text processing tricks,
+we’ll write a few functions,
+and we’ll learn how to move seamlessly from R to the browser
+in the same document or blog post.
+(The R code and data I write below create the word data used in the table and app above!)
+
 ## Let’s look at some words
 
 Let’s dig in.
@@ -146,7 +163,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "chill" "rocky" "waist" "dimly" "often"
+    ## [1] "melee" "debit" "depot" "quoth" "smirk"
 
 and the other contains the
 10,657
@@ -156,7 +173,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "bewet" "scray" "voxel" "caped" "unman"
+    ## [1] "laxly" "kagus" "weans" "kelts" "unaus"
 
 Do the two word lists overlap?
 
@@ -2126,16 +2143,20 @@ Now that we have the data in a place where we can get it, let’s switch gears a
 
 Here’s the cool thing:
 from here on out, the actual computation of the rest of the blog post is done *in your browser*.
-
 To facilitate this, I’ll use an extension I built for knitr
 for [literate JavaScript programming](https://pkg.js4shiny.com/articles/literate-javascript.html)
 with the [js4shiny](https://pkg.js4shiny.com) package.
 
-Setting it up is pretty straight-forward:
+#### js4shiny
+
+Setting up literate JavaScript in blogdown is pretty straight-forward
+thanks to a little helper function from js4shiny.
 
 ``` r
 js4shiny::html_setup_blogdown(stylize = "none")
 ```
+
+#### tidyjs
 
 The other cool thing we’ll use is [tidyjs](https://pbeshai.github.io/tidy/).
 It’s a really neat JavaScript library
@@ -2169,10 +2190,12 @@ const { tidy, filter, sliceMax } = Tidy
 const { tidy, filter, sliceMax } = Tidy
 </script>
 
-The next step is to find the JSON data we just serialized and stashed in the browser.
-We use `document.getElementById()` to find the element with the ID we chose previously.
-Adding `.innerText` pulls out the inner text of that object.
-Finally, we take the JSON text and parse it into a JavaScript object with `JSON.parse()`.
+#### Load our data
+
+The next step is to find the JSON data that we just serialized and stashed in our page.
+We can use `document.getElementById()` to find the element with the `id` `'words-scored'`,
+and then grab the JSON text itself from the `.innerText` property of that object.
+Finally, we call `JSON.parse()` on the json text to parse it into a JavaScript object.
 
 ``` js
 wordsScored = JSON.parse(
@@ -2186,10 +2209,14 @@ wordsScored = JSON.parse(
 )
 </script>
 
+#### Preview the data
+
 Here’s a quick preview of the data.
 In tidyjs you wrap a pipeline in `tidy()`
-and then each statement is the next step in the pipe.
-To make it look a little more familiar, I’ve added the `%>%` in the comments.
+and then each additional argument to `tidy()`
+is the next step in the pipe.
+To make it look a little more familiar to R users,
+I’ve added the `%>%` in the comments.
 
 ``` js
 tidy(
@@ -2216,16 +2243,21 @@ log_out_unnamed_chunk_15(`tidy(
 
 ### Same song, different dance
 
-Next, we translate `summarize_guesses()` from R to `summarizeGuesses()` in JavaScript.
+#### Summarizing guesses
+
+Next, we translate [`summarize_guesses()` from R](#generalizing)
+to `summarizeGuesses()` in JavaScript.
 
 ``` js
 function summarizeGuesses ({ guesses, results }) {
+  // Check that all guesses and results have 5 characters
   const allComplete = [...guesses, ...results].every(s => s.length == 5)
   if (!allComplete) {
     console.error('All guesses and results must have 5 characters.')
     return
   }
 
+  // R: str_split(x, '')
   guesses = guesses.map(s => s.split(''))
   results = results.map(s => s.split(''))
 
@@ -2235,22 +2267,27 @@ function summarizeGuesses ({ guesses, results }) {
   let discard = []
 
   for (i = 0; i < guesses.length; i++) {
-    let g = guesses[i]
-    let r = results[i]
+    let g = guesses[i] // g: an array of 5 letters of a guess
+    let r = results[i] // r: an array of 5 letters of the result
 
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
+        // this letter is exactly right
         exact[j] = g[j]
         keep.push(g[j])
       } else if (r[j] == '-') {
+        // this letter is included, wrong place
         keep.push(g[j])
+        // so exclude it from this position
         exclude[j] += g[j]
       } else {
+        // this letter isn't in the solution
         discard.push(g[j])
       }
     }
   }
 
+  // build up the regex pattern blending `exact` and `exclude`
   const pattern = Array(5).fill('.')
   for (i = 0; i < 5; i++) {
     if (exact[i] != '') {
@@ -2267,12 +2304,14 @@ function summarizeGuesses ({ guesses, results }) {
 
 <script type="text/javascript">
 function summarizeGuesses ({ guesses, results }) {
+  // Check that all guesses and results have 5 characters
   const allComplete = [...guesses, ...results].every(s => s.length == 5)
   if (!allComplete) {
     console.error('All guesses and results must have 5 characters.')
     return
   }
 
+  // R: str_split(x, '')
   guesses = guesses.map(s => s.split(''))
   results = results.map(s => s.split(''))
 
@@ -2282,22 +2321,27 @@ function summarizeGuesses ({ guesses, results }) {
   let discard = []
 
   for (i = 0; i < guesses.length; i++) {
-    let g = guesses[i]
-    let r = results[i]
+    let g = guesses[i] // g: an array of 5 letters of a guess
+    let r = results[i] // r: an array of 5 letters of the result
 
     for (j = 0; j < r.length; j++) {
       if (r[j] == '+') {
+        // this letter is exactly right
         exact[j] = g[j]
         keep.push(g[j])
       } else if (r[j] == '-') {
+        // this letter is included, wrong place
         keep.push(g[j])
+        // so exclude it from this position
         exclude[j] += g[j]
       } else {
+        // this letter isn't in the solution
         discard.push(g[j])
       }
     }
   }
 
+  // build up the regex pattern blending `exact` and `exclude`
   const pattern = Array(5).fill('.')
   for (i = 0; i < 5; i++) {
     if (exact[i] != '') {
@@ -2312,7 +2356,37 @@ function summarizeGuesses ({ guesses, results }) {
 }
 </script>
 
-And then we need to do the same for `search_next_guess()`.
+Here’s a quick preview of `summarizeGuesses()`.
+
+``` js
+let summary = summarizeGuesses({
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+})
+console.log(summary)
+```
+
+<div id="out-unnamed-chunk-17">
+
+<pre></pre>
+
+</div>
+
+<script type="text/javascript">
+const log_out_unnamed_chunk_17 = redirectLogger(document.querySelector("#out-unnamed-chunk-17 > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_unnamed_chunk_17(`let summary = summarizeGuesses({
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+})
+console.log(summary)`)
+})
+</script>
+
+#### Searching for the next word
+
+And then we need to do the same for [`score_next_guess()`](#all-together-now).
+Of course, at this point I’m older and wiser and choose a better name: `searchNextGuess()`.
 
 ``` js
 function searchNextGuess ({ guesses, results }) {
@@ -2349,48 +2423,13 @@ function searchNextGuess ({ guesses, results }) {
 Let’s prove to ourselves that these functions work.
 
 ``` js
-const rounds = {
+let next = searchNextGuess({
   guesses: ["arose", "indol"],
   results: ["..-..", "+..+-"]
-}
-
-console.log(summarizeGuesses(rounds))
-
-const answer = searchNextGuess(rounds)
-console.table(answer[0])
-```
-
-<div id="out-unnamed-chunk-18">
-
-<pre></pre>
-
-</div>
-
-<script type="text/javascript">
-const log_out_unnamed_chunk_18 = redirectLogger(document.querySelector("#out-unnamed-chunk-18 > pre"))
-document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_18(`const rounds = {
-  guesses: ["arose", "indol"],
-  results: ["..-..", "+..+-"]
-}
-
-console.log(summarizeGuesses(rounds))
-
-const answer = searchNextGuess(rounds)
-console.table(answer[0])`)
 })
-</script>
 
-``` js
-const rounds = {
-  guesses: ["arose", "intro"],
-  results: [".--..", "..+--"]
-}
-
-console.log(summarizeGuesses(rounds))
-
-const answer = searchNextGuess(rounds)
-answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
+console.log(`There is ${next.length} word available for our next guess:`)
+console.table(next[0])
 ```
 
 <div id="out-unnamed-chunk-19">
@@ -2402,20 +2441,84 @@ answer.forEach(ans => console.log(`${ans.word} (${ans.score})`))
 <script type="text/javascript">
 const log_out_unnamed_chunk_19 = redirectLogger(document.querySelector("#out-unnamed-chunk-19 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_19(`const rounds = {
+log_out_unnamed_chunk_19(`let next = searchNextGuess({
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+})
+
+console.log(\`There is \${next.length} word available for our next guess:\`)
+console.table(next[0])`)
+})
+</script>
+
+Let’s try again.
+What if we chose a different second guess?
+
+``` js
+let rounds = {
   guesses: ["arose", "intro"],
   results: [".--..", "..+--"]
 }
+let next = searchNextGuess(rounds)
 
+console.log('Guess summary ----')
 console.log(summarizeGuesses(rounds))
 
-const answer = searchNextGuess(rounds)
-answer.forEach(ans => console.log(\`\${ans.word} (\${ans.score})\`))`)
+console.log('Next word choices ----')
+next.forEach(ws => console.log(`${ws.word} (${ws.score})`))
+```
+
+<div id="out-unnamed-chunk-20">
+
+<pre></pre>
+
+</div>
+
+<script type="text/javascript">
+const log_out_unnamed_chunk_20 = redirectLogger(document.querySelector("#out-unnamed-chunk-20 > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_unnamed_chunk_20(`let rounds = {
+  guesses: ["arose", "intro"],
+  results: [".--..", "..+--"]
+}
+let next = searchNextGuess(rounds)
+
+console.log('Guess summary ----')
+console.log(summarizeGuesses(rounds))
+
+console.log('Next word choices ----')
+next.forEach(ws => console.log(\`\${ws.word} (\${ws.score})\`))`)
 })
 </script>
+
+### Now build the rest of the owl
+
+Okay, this is the point where I confess
+that I went way off-track in building the little app
+at the top of this post.
+I fully intended to write about that part too,
+but honestly I’ve done a good job
+curing myself of the Wordle bug with this post.
+
+For the curious, all the JavaScript code for the guess helper
+lives in [wordle-component.js](wordle-component.js).
+Or, right click on this page and pick *Inspect Element*
+and find your way to the *Sources* or *Debugger* tab
+for a better look.
+It’s all vanilla JavaScript.
+
+Also a quick shout-out to [gridjs](https://gridjs.io/),
+which turned out to be a very easy way
+to create the table of sorted words.
+
+``` html
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+```
+
 <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
 <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 <link href="wordle-component.css" rel="stylesheet">
 <script src="wordle-component.js"></script>
 
-[^1]: rotch
+[^1]: What does *rotch* mean? Is it even a word? No, it is not. It’s a [surname](https://en.wikipedia.org/w/index.php?title=Rotch) for a few Americans: a meteorologist, an architect, a tennis player, two politicians and a pediatrician.
