@@ -1,7 +1,7 @@
 ---
 title: Wordle Guess Helper
 author: Garrick Aden-Buie
-date: '2022-01-15'
+date: '2022-02-21'
 slug: wordle-guess-helper
 categories:
   - Blog
@@ -10,6 +10,7 @@ tags:
   - JavaScript
   - dplyr
   - stringr
+  - purrr
   - Wordle
   - tidyjs
   - js4shiny
@@ -164,7 +165,7 @@ words used as solutions
 sample(wordle_words$answers, 5)
 ```
 
-    ## [1] "leapt" "skulk" "blimp" "dally" "wrist"
+    ## [1] "hippo" "hatch" "baggy" "tatty" "ratio"
 
 and the other contains the
 10,657
@@ -174,7 +175,7 @@ words that the game considers a valid guess.
 sample(wordle_words$words, 5)
 ```
 
-    ## [1] "torrs" "izars" "nitry" "hodja" "hilus"
+    ## [1] "pagod" "bandy" "teads" "cozed" "rifer"
 
 Do the two word lists overlap?
 
@@ -1285,7 +1286,7 @@ r
 ### Beginner’s Luck
 
 I wrapped up the `score_next_guess()` function on January 16th, 2022,
-which happened to be the easiest Wordle day of any day I’ve “played.”
+which happened to be the easiest Wordle day of any day I’ve “played”.
 But it was a nice motivator to feel like I had spent my Sunday tinkering time well.
 
 Opening with *arose* lead to a pleasant surprise.
@@ -2111,7 +2112,7 @@ I can do it all right here!
 The first thing we need to do is save our data
 in a way that it can be accessed by JavaScript in the browser.
 To do this, we’ll take our `words_scored` table and use
-[jsonlite::write\_json()](https://jeroen.cran.dev/jsonlite/reference/read_json.html)
+[jsonlite::write_json()](https://jeroen.cran.dev/jsonlite/reference/read_json.html)
 to save the data frame as JSON.
 
 ``` r

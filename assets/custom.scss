@@ -192,6 +192,19 @@ kbd {
   white-space: nowrap;
 }
 
+.measure-wide,
+form fieldset,
+.post-body ul:not(.panel-tabs),
+.post-body ol,
+.post-body dl,
+.page-body ul:not(.panel-tabs),
+.page-body ol,
+.page-body dl,
+.post-body blockquote,
+.page-body blockquote {
+  max-width: 90%;
+}
+
 :root {
   --scrollbarBgColor: var(--siteBgColorCustom);
   --scrollbarColor: var(--slate-70);
