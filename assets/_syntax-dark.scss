@@ -127,8 +127,8 @@
   .se, /* LiteralStringEscape */
   .si {
     /* LiteralStringInterpol */
-    color: var(--blue-20);
-    background-color: var(--blue-90);
+    color: var(--blue-60);
+    background-color: inherit;
   }
 
   .sx, /* LiteralStringOther */

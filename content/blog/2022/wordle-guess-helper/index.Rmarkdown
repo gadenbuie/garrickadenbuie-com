@@ -1,0 +1,1347 @@
+---
+title: Wordle Guess Helper
+author: Garrick Aden-Buie
+date: '2022-02-21'
+slug: wordle-guess-helper
+categories:
+  - Blog
+tags:
+  - R
+  - JavaScript
+  - dplyr
+  - stringr
+  - purrr
+  - Wordle
+  - tidyjs
+  - js4shiny
+description: |
+  Picking words to guess in Wordle.
+  It's only fun if you can solve it with R.
+twitterImage: feature.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/wordle-guessing/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+[wordle]: https://www.powerlanguage.co.uk/wordle/
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  cache = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+```
+
+```{r wordle-component, echo=FALSE, cahe = FALSE}
+wordle_component <- function(word, answer, large = TRUE) {
+  word <- stringr::str_split(word, "")[[1]]
+  answer <- stringr::str_split(answer, "")[[1]]
+  letters <- purrr::map2(word, answer, function(letter, ans) {
+    if (ans == ".") {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "absent"),
+        letter,
+        htmltools::span(class = "sr-only", "(absent)")
+      )
+    } else if (ans == "-") {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "present"),
+        letter,
+        htmltools::span(class = "sr-only", "(in solution, wrong position)")
+      )
+    } else {
+      htmltools::span(
+        class = c("letter", if (large) "letter-large", "correct"),
+        letter,
+        htmltools::span(class = "sr-only", "(correct)")
+      )
+    }
+  })
+  htmltools::div(class = "wordle-solo", letters)
+}
+```
+
+::: {.intro .center .mw6-l .mb3}
+Have you heard of [Wordle]?
+Who am I kidding, of course you've heard of Wordle!
+In fact, I'm pretty certain we're way past peak Wordle at this point.
+
+Here's a Wordle helper that doesn't completely take the fun out of the guessing,
+while also making sure you've got a good chance at winning every time.
+
+Type your guesses below and then use the buttons below each letter to report Wordle's response.
+Press <kbd>return</kbd> to start the next guess.
+Use <kbd>delete</kbd> to remove letters or words you've entered.
+
+As soon as you add the results for a new word, the table of next guess candidates will update! Pick wisely.
+:::
+
+```{=html}
+<div id="wordle" style="position:relative"><textarea style="height:0;width:0;position:absolute;left:-100vw;bottom:0"></textarea></div>
+<div id="words-stats"></div>
+<div id="words-table"></div>
+```
+
+## Intro
+
+I started this post about a month ago,
+roughly at the same time that
+every other person with a blog about doing things with computers
+also decided to start writing a post about Wordle.
+
+I've been tempted to just walk away from this post more than once.
+After all,
+since I've started writing this post
+Wordle [has been solved](https://jonathanolson.net/wordle-solver/)
+[more than once](https://youtu.be/fRed0Xmc2Wg),
+Winston Chang rewrote [Wordle in Shiny](https://youtu.be/quvz4xLbW88),
+roughly [70 other people wrote Wordle clones or helper apps and packages](https://github.com/search?q=language%3Ar+wordle) _in R alone_.
+Felienne Hermans wrote a Twitter bot to
+[guess the word from shared game emojis](https://twitter.com/Felienne/status/1482681664765636608).
+Someone else wrote a bot to
+[intentionally ruin everyone's day](https://twitter.com/dancow/status/1485660308622528513)
+by spoling the answer to the next day's Wordle.
+(Both bots were eventually suspended by Twitter.)
+Oh and Wordle was bought for
+[big money by the New York Times](https://www.thetimes.co.uk/article/wordle-sold-new-york-times-n0mqm3rl7)
+who fumbled the handoff and
+[lost more than a few player's word streaks](https://www.theverge.com/2022/2/10/22927898/wordle-new-york-times-version-website-statistics-cookies)
+in the transfer.
+
+I should admit up-front that I've never really _played_ Wordle.
+It's exactly the kind of task that immediately cries out to be automated:
+I'd apparently much rather spend a month's worth of after-hours tinkering time
+to think through and codify a decent strategy than to just think up some words on my own.
+
+And yet I love Wordle.
+I think it's awesome.
+The rules are simple, but deceptively ambiguous.
+The game play is so concise it can fit in a tweet
+(even though that's annoying for [accessibility reasons](https://slate.com/culture/2022/02/wordle-word-game-results-accessibility-twitter.html)).
+Still, the UI is simple, intuitive and fun
+without trying to hack your brain to be addictive.
+It's a [feel good game](https://uxdesign.cc/wordle-ux-sometimes-a-game-just-feels-good-8749b26834ef).
+
+Another reason to love Wordle: there are so many great programming tasks around Wordle.
+It's easy to describe the mechanics,
+to understand the game play,
+to look at the app and think: I can do that.
+Which is why, right now, programmers are hard at work tinkering over word lists
+or practicing web development in their favorite framework using Wordle.
+
+As an educator, it means you can tailor a Wordle-based programming challenge
+to be as simple or complicated as needed.
+Once you start to break down the game,
+it's more complicated than it appears at first glance,
+and there's so much to choose from.
+State management, data structures, browser storage, game theory, CSS, user interface design, accessibility.
+You can go deep on any of these topics.
+
+So if you have a Wordle idea you want to tinker with,
+I wholeheartedly encourage you to run with it.
+Let Wordle inspire you to practice
+[using regular expressions with stringr](https://gist.github.com/hadley/6db2217dff40cb56b524943492771227),
+[web scraping with httr](https://gist.github.com/scarpino/eb2f58745bab14417a6bca4955cf1f9c),
+[text processing with Python](https://gist.github.com/twjang/5d6118f80a1884d3759640a128d43c46),
+[working with Twitter data with rtweet](https://www.rostrum.blog/2022/01/14/wordle/),
+or [making accessible plots with ggplot2](https://gist.github.com/thoughtfulbloke/ebfb1865acbc1bb5c7c482d6ebfef2b8).
+
+What follows here is a bit of a _journey_.
+It is not _the best strategy_ for Wordle
+or even the best way to play.
+But along the way we'll learn a few text processing tricks,
+we'll write a few functions,
+and we'll learn how to move seamlessly from R to the browser
+in the same document or blog post.
+(The R code and data I write below create the word data used in the table and app above!)
+
+## Let's look at some words
+
+Let's dig in.
+To get started,
+I'm using a few of the usual suspects from the [tidyverse](https://tidyverse.org) package.
+Out of habit, I'll load the ones I want specifically.
+(I think I also used tidyr somewhere in here, too.)
+
+```{r load-packages}
+library(dplyr)
+library(purrr)
+library(stringr)
+```
+
+Now we're ready to load our word list.
+At first I started with Scrabble's word list,
+but it turns out that Wordle included the complete word list in its source code.
+(You could [call it a hack](https://screenrant.com/wordle-source-code-hack-every-word-revealed/)
+but only in the [state of Missouri](https://www.theverge.com/2021/12/31/22861188/missouri-governor-mike-parson-hack-website-source-code).)
+
+I used my elite hacker copy-and-paste skills
+to store [Wordle's word list as a JSON file](wordle.json) (`r format(fs::file_size("wordle.json"))`).
+
+```{r load-words}
+wordle_words <- jsonlite::fromJSON(
+  "wordle.json",
+  simplifyVector = TRUE
+)
+```
+
+It turns out that Wordle maintains two separate lists.
+One list contains the
+`r format(length(wordle_words$answers), big.mark = ",")`
+words used as solutions
+
+```{r}
+sample(wordle_words$answers, 5)
+```
+
+and the other contains the
+`r format(length(wordle_words$words), big.mark = ",")`
+words that the game considers a valid guess.
+
+```{r}
+sample(wordle_words$words, 5)
+```
+
+Do the two word lists overlap?
+
+```{r}
+wordle_words %>%
+  reduce(intersect) %>%
+  length()
+```
+
+No, they do not (the intersection of the two word lists is empty).
+We could make things super easy for ourselves
+by only considering the words on the solution list,
+but that would _really_ ruin the fun.
+So let's combine the two lists.
+
+```{r word-list}
+words <- unlist(wordle_words)
+```
+
+Now lets turn those words into data we can work with.
+
+## A letter popularity contest
+
+### Popularity by word
+
+My first thought
+(and I think it's many people first thought)
+was to consider the probability that a letter appears in a word.
+In other words: does [R]{.letter} appear in more words than [F]{.letter}?
+
+To answer this we can split each word into a vector of letters,
+take only the unique letters,
+and then count how many times each letter appears in a word.
+
+Splitting the word into a vector of letters is something we'll be doing a lot,
+and `stringr::str_split()` or `strsplit()` can help.
+The trick is to use an empty string as the split pattern
+to break apart each string character by character.
+
+```{r}
+str_split(c("unhip", "jeans"), "")
+```
+
+Note that this process takes our vector and gives us a list of vectors,
+which means we'll be seeing a lot of purrr's `map()` function in this post.
+
+```{r letter-freq}
+letter_freq <-
+  words %>%
+  # Split each word into a vector of letters
+  str_split("") %>%
+  # Keep one of each letter per word
+  map(unique) %>%
+  # Unlist into a big vector of letters
+  unlist() %>%
+  # Count the letters (each appearance in a word)
+  table() %>%
+  # Most popular letters first
+  sort(decreasing = TRUE) %>%
+  # Turn into frequency table
+  `/`(length(words)) %>%
+  # Remove attributes from table()
+  c()
+
+letter_freq
+```
+
+Note that we only counted each letter once per word,
+so we now know that [R]{.letter} appears in
+`r scales::percent(letter_freq["r"])`
+of the words in the word list,
+while [F]{.letter} appears in only
+`r scales::percent(letter_freq["f"])`.
+A first guess that includes [R]{.letter}
+would probably be better than one with an [F]{.letter}.
+
+### Popularity by position
+
+Another way to look at letter frequency
+would be to consider the position of the letter in the word.
+What if we know that [R]{.letter} and [F]{.letter} are in the word:
+which is a more likely choice as the fourth letter?
+
+To do this we...
+
+* First turn the word list into a tibble with one row per word.
+* Then, using `tidyr::separate_rows()`,
+  we can add a new column with the letters in each word.
+* Grouping by `word` and adding a `row_number()`
+  gives us the position of each letter in the word.
+* Then we can count the number of times each letter occurs in a given position
+  with a new `group_by()` and `summarize()`
+  (we could have used `count()` with another `ungroup()`, too).
+* Then, if we re-use our letter-word counts from the last step,
+   we can count the number of words that have a the letter in question
+  so that our frequency is effectively
+  _given the letter [R]{.letter}, how often does it appear as the fourth letter?_
+* Finally, `tidyr::pivot_wider()` moves the positions to the columns
+  so the table is easier to read.
+
+```{r letter-freq-pos}
+letter_freq_pos <-
+  tibble(word = words) %>%
+  select(word) %>%
+  mutate(letter = word) %>%
+  tidyr::separate_rows(letter, sep = "") %>%
+  filter(letter != "") %>%
+  group_by(word) %>%
+  mutate(position = row_number()) %>%
+  group_by(letter, position) %>%
+  summarize(n = n(), .groups = "drop") %>%
+  mutate(
+    words = letter_freq[letter] * length(!!words),
+    freq = n / words
+  ) %>%
+  select(-n, -words) %>%
+  tidyr::pivot_wider(
+    names_from = position,
+    values_from = freq,
+    values_fill = 0,
+    names_prefix = "p"
+  )
+
+letter_freq_pos
+```
+
+Now we can answer our question about
+[R]{.letter} and [F]{.letter} in the fourth position.
+
+```{r}
+letter_freq_pos %>%
+  filter(letter %in% c("r", 'f')) %>%
+  select(letter, p4)
+```
+
+So [R]{.letter} is the fourth letter in
+`r scales::percent(letter_freq_pos$p4[letter_freq_pos$letter == "r"])`
+of the words containing [R]{.letter} —
+but [F]{.letter} is the fourth letter in
+`r scales::percent(letter_freq_pos$p4[letter_freq_pos$letter == "f"])`
+of its words.
+
+Ideally this information will help us filter guesses
+when we know that a set of letters are in the solution,
+but we don't yet know where.
+
+## First Choice
+
+What word should we guess first?
+Ideally, we want a word whose answer gives us the most information.
+Intuitively, if we pick a word that has the most popular letters
+and each letter is different,
+we'll be able to discard or include the most words
+when Wordle tells us which letters are in or out.
+
+Formally,
+this calculation is called [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)).
+It measures how much information is contained in a particular instance of a random process.
+In this case, words with higher entropy give us more information
+because they encode more information.
+
+This is all a little hand-wavy,
+so I'll just duck the details and call this number a _score_.
+The higher the score, the better the word choice.
+
+To calculate the entropy score, we take a word, split it into it's letters,
+and then get the probability of each letter appearing in the word.
+Duplicated letters don't tell us much,
+so we set second appearances of a letter close to zero.
+And then we calculate entropy
+
+$$-\sum_{i=1}^{n} p_i \log_2 p_i$$
+
+ which in R code is
+
+```r
+- sum(p * log(p, base = 2))
+```
+
+where `p` is a vector of probabilities for a given outome.
+
+We can wrap all of that up into a function `score_entropy()`:
+
+```{r entropy}
+score_entropy <- function(word) {
+  chars <- str_split(word, "")[[1]]
+  p <- letter_freq[chars]
+  # we learn something but not much from duplicated letters
+  p[duplicated(chars)] <- min(letter_freq)
+  - sum(p * log(p, base = 2))
+}
+```
+
+Notice that `score_entropy()` isn't vectorized,
+so we'll have to use a `map()` function to call it over a vector of words.
+We can be even more specific and use `map_dbl()`
+since we know that `score_entropy()` returns a number.
+
+```{r}
+c("unhip", "jeans", "pools") %>%
+  set_names() %>%
+  map_dbl(score_entropy)
+```
+
+This tells us, broadly, that _unhip_ is a better choice than _jeans_
+and _pools_ is worse than either.
+(Intuitively: you don't learn much from the second [O]{.letter}.)
+
+Let's use this to create a table of words and their associated entropy scores.
+Taking a peek at the highest scoring words tells us...
+
+```{r words_first_choice}
+words_first_choice <-
+  tibble(word = words) %>%
+  mutate(score = map_dbl(word, score_entropy)) %>%
+  arrange(desc(score))
+
+words_first_choice
+```
+
+... that according to this measure, the best first-choice words are
+`r knitr::combine_words(words_first_choice$word[1:3])`.
+**arose** uses all five of the letters that most commonly appear in a word,
+and is also probably (okay, it _is_) on the answers list,
+so _hello new first word choice_!
+
+## Second Choice
+
+After your first choice, you know up to three pieces of additional information.
+Some of the letters in your guess
+
+1. [&nbsp;[dark square]{.clip}]{.letter .absent} **aren't** in the solution
+2. [&nbsp;[yellow square]{.clip}]{.letter .present} **are** in the solution but **not where** you guessed
+3. [&nbsp;[green square]{.clip}]{.letter .correct} **are** in the solution and **are where** you guessed
+
+### None of the letters are in the solution
+
+What if you guessed _arose_ and got five gray boxes
+telling you that none of those letters appear in the solution?
+
+`r wordle_component("arose", ".....")`
+
+We need to discard any words with
+`r map(c("a", "r", "o", "s"), ~ glue::glue("[{letter}]{{.letter}}", letter = .x))`,
+or [E]{.letter} in them.
+To do this, we'll write a small function `str_has_none_of()`
+that takes a vector of words and a vector of letters,
+and checks if any of the letters are in each of the words.
+Technically, we use our same `str_split()` trick to split each word into a vector of letters
+and then check that the intersection of word letters and unwanted letters is empty.
+
+```{r str_has_none_of}
+str_has_none_of <- function(words, letters) {
+  words <- str_split(words, "")
+  map_lgl(words, ~ length(intersect(letters, .x)) == 0)
+}
+```
+
+Using this function, we can quickly reduce our word list from
+`r format(length(words), big.mark = ",")`
+to
+`r words_first_choice %>% filter(str_has_none_of(word, c("a", "r", "o", "s", "e"))) %>% nrow()`
+words.
+
+```{r}
+words_first_choice %>%
+  filter(str_has_none_of(word, c("a", "r", "o", "s", "e")))
+```
+
+This new word list suggests that _unlit_ or _until_ would be a good next choice,
+so we'll go with _until_.
+And if none of the letters in **arose** and **until**
+appear in the solution...
+
+`r wordle_component("arose", ".....")`
+`r wordle_component("until", ".....")`
+
+```{r third-strike, echo=1:4}
+letters_guess <- str_split("arose until", "")[[1]]
+
+words_first_choice %>%
+  filter(str_has_none_of(word, letters_guess))
+```
+
+```{r echo=FALSE}
+arose_until <- words_first_choice %>%
+  filter(str_has_none_of(word, letters_guess))
+```
+
+then your answer is most definitely one of
+`r knitr::combine_words(arose_until$word, before = "_", and = " or ")`.
+
+### Right letter, wrong place
+
+If you learn something from the guess, though,
+you can filter the word list based on the information you just learned.
+
+<!-- arose, intro, motor -->
+
+Say we guess **arose** and wordle reveals that [R]{.letter} and [O]{.letter} appear in the solution.
+
+`r wordle_component("arose", ".--..")`
+
+We now know that the solution:
+
+1. Doesn't have [A]{.letter .absent}, [S]{.letter .absent} or [E]{.letter .absent}
+1. Does contain [R]{.letter .present} and [O]{.letter .present}
+1. Doesn't have [R]{.letter .present} as the 2^nd^ letter
+   or [O]{.letter .present} as the 3^rd^.
+
+We've already implemented this the first step by discarding words with `str_has_none_of()`.
+We also need a similar version called `str_has_all_of()`
+to keep only words that have letters we know are in the solution.
+
+```{r str-has-all-of}
+str_has_all_of <- function(words, letters) {
+  words <- str_split(words, "")
+  map_lgl(words, ~ length(setdiff(letters, .x)) == 0)
+}
+
+str_has_all_of("rhino", c("r", "o"))
+```
+
+And finally we can use [regular expressions](/project/regexplain)
+to keep track of the third piece of information:
+
+```
+.[^r][^o]..
+```
+
+A `.` means any letter at that spot in the word
+(other than the ones we've excluded).
+The `[]` indicate a set of options that could be present at a location in the string.
+The opening `^` negates the selection,
+so `[^r]` means _a character that isn't_ `r`.
+
+```{r}
+words_first_choice %>%
+  filter(
+    str_has_none_of(word, c("a", "s", "e")),
+    str_has_all_of(word, c("r", "o")),
+    str_detect(word, ".[^r][^o]..")
+  )
+```
+
+**lirot** is an unusual word, so let's choose the next word on the list: **intro**.
+
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
+
+Wordle thinks and tells us that we have [T]{.letter .correct} in the right spot!
+Also, we now know that [I]{.letter .absent} and [N]{.letter .absent} aren't in the solution,
+and we still haven't got [R]{.letter .present} and [O]{.letter .present} in the right place.
+
+### Right letter, right place
+
+We can repeat the step above, but using a new regular expression:
+
+```
+.[^r]t[^ro][^o]
+```
+
+Notice that we know a little more about where [R]{.letter .present} and [O]{.letter .present} _can't be_,
+but importantly the `t` in the middle letter ensures
+we find words with [T]{.letter .correct} in the right place.
+
+This leaves us with a few good choices:
+
+```{r}
+words_first_choice %>%
+  filter(
+    str_has_none_of(word, c("a", "s", "e", "i", "n")),
+    str_has_all_of(word, c("r", "o", "t")),
+    str_detect(word, ".[^r]t[^r][^o]")
+  )
+```
+
+**rotch** seems very unlikely,
+so we can pick from **tutor**, **motor** and **rotor**.
+But notice that the these include a small set of the same letters.
+In a sense, we might ask ourselves a new question —
+which is the more likely starting combination:
+**tu**, **mo** or **ro**?
+
+At this point, you could just guess.
+It is a game after all!
+But no, let's power forward and add more complexity to this blog post.
+
+What if we switched our scoring at this point
+and considered the position of the letters in the candidate words?
+Doing something medium-naive, let's frame this as:
+what's the probability of [T]{.letter} in the first position **and**
+[U]{.letter} in the second **and** so on...
+
+```{r}
+score_by_position <- function(word) {
+  chars <- str_split(word, "")[[1]]
+
+  res <- c()
+  for (i in seq_along(chars)) {
+    pos_alpha <- which(letters == chars[i])
+    p <- letter_freq_pos[[str_c("p", i)]][pos_alpha]
+    res <- c(res, p)
+  }
+
+  prod(res)
+}
+
+words_score_pos <-
+  tibble(word = words) %>%
+  mutate(
+    score_pos = map_dbl(word, score_by_position),
+    score_pos = score_pos / diff(range(score_pos))
+  ) %>%
+  arrange(desc(score_pos))
+
+words_score_pos
+```
+
+If we join this with our "new information" score, we now have to scores to choose from:
+
+```{r}
+words_first_choice %>%
+  filter(
+    str_has_none_of(word, c("a", "s", "e", "i", "n")),
+    str_has_all_of(word, c("r", "o", "t")),
+    str_detect(word, ".[^r]t[^r][^o]")
+  ) %>%
+  left_join(words_score_pos) %>%
+  arrange(desc(score_pos))
+```
+
+Now we see that **motor** and **tutor** are the most likely words based on their position.
+We guess **motor**... and we're right!
+
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
+`r wordle_component("motor", "+++++")`
+
+It only took three guesses!
+It's almost like I planned this example to work out just like I wanted.
+
+## Generalizing
+
+Okay, let's do this for any number of guesses.
+First, let's join our scored words into a single data frame.
+
+```{r words_scored}
+words_scored <-
+  left_join(
+    words_first_choice,
+    words_score_pos,
+    by = "word"
+  )
+```
+
+Then, we need a function that takes our guesses and results and generalizes them into the pieces of information our guesses reveal about the solution.
+This function is going to take a vector of `guesses` and a vector of `results`.
+The `guesses` are just the words we guessed,
+but we'll need to invent a syntax to concicesly report the results.
+Here's the syntax I decided to use:
+
+* [.]{.letter .code .absent} means the letter is absent
+* [-]{.letter .code .present} means the letter is present (wrong place)
+* [+]{.letter .code .correct} means the letter is correct (right place)
+
+In broad strokes, the function will take each guess
+and use the result
+
+* Pull out the correct letters and their positions in `exact`
+  so we can pick out words with letters in those spots.
+* Pull out present letters and their positions into `exclude`
+  so we can compose the regular expression to filter out words that have
+  these letters in those places.
+* Add the present by wrong place letters to `bucket_keep`,
+  a bucket of letters that we know are in the solution.
+* And add any absent letters to `bucket_dicard`
+  so we can filter out words that have any of these letters.
+* The last step is to compose the regular expression `pattern` from `exact` and `exclude`,
+  and then return the regexp and the letters to keep and discard.
+
+```{r regex-after-guess}
+#' @param guesses A vector of words that you have guessed
+#' @param result A vector of results for each guess using `.` for a miss, `-`
+#'   for a letter in the solution that isn't in the right place and `+` for a
+#'   letter that's in the right spot.
+summarize_guesses <- function(guesses, results) {
+  stopifnot(all(str_length(c(guesses, results)) == 5))
+
+  guesses <- str_split(guesses, "")
+  results <- str_split(results, "")
+
+  exclude <- character(5)
+  exact <- character(5)
+  bucket_keep <- c()
+  bucket_discard <- c()
+
+  for (i in seq_along(guesses)) {
+    g <- guesses[[i]]
+    r <- results[[i]]
+
+    if (any(r == "+")) {
+      exact[r == "+"] <- g[r == "+"]
+      bucket_keep <<- c(bucket_keep, g[r == "+"])
+    }
+    if (any(r == "-")) {
+      bucket_keep <- c(bucket_keep, g[r == "-"])
+      exclude[r == "-"] <- paste0(exclude[r == "-"], g[r == "-"])
+    }
+    if (any(r == ".")) {
+      bucket_discard <- c(bucket_discard, g[r == "."])
+    }
+  }
+
+  exclude[exclude != ""] <- paste0("[^", exclude[exclude != ""], "]")
+  exact[exact == ""] <- NA_character_
+  exclude[exclude == ""] <- NA_character_
+
+  pattern <- coalesce(coalesce(exact, exclude), ".")
+
+  # Say you guess a word with two Ts,
+  # but there's only one T in the solution.
+  # T will appear on keep and discard bucket,
+  # so we need to explicitly keep it.
+  # (we could use that info, though, e.g. at most 1 T)
+  bucket_discard <- setdiff(bucket_discard, bucket_keep)
+
+  list(
+    discard = unique(bucket_discard),
+    keep = unique(bucket_keep),
+    pattern = str_c(pattern, collapse = "")
+  )
+}
+```
+
+Remember when we guessed _arose_ and got this result?
+
+`r wordle_component("arose", ".--..")`
+
+Our new function summarizes the information we've learned from this guess.
+
+```{r regex-after-guess-ex}
+summarize_guesses(
+  guesses = "arose",
+  results = ".--.."
+)
+```
+
+Then we guessed _intro_ and got this result.
+
+`r wordle_component("arose", ".--..")`
+`r wordle_component("intro", "..+--")`
+
+And again we have this summary.
+
+```{r score-after-guess, eval=TRUE}
+guess_results <-
+  summarize_guesses(
+    guesses = c("arose", "intro"),
+    results = c(".--..", "..+--")
+  )
+
+guess_results
+```
+
+To get the remaining possible words,
+we can use this information to filter down to the words that
+
+1. have none of the `$discard` letters
+2. have all of the `$keep` letters
+3. match the regular expression `$pattern`.
+
+```{r words-after-guess}
+words_scored %>%
+  filter(
+    str_has_none_of(word, guess_results$discard),
+    str_has_all_of(word, guess_results$keep),
+    str_detect(word, guess_results$pattern)
+  )
+```
+
+### All together now
+
+Now that we know how to summarize and use the guess results to filter our next word choices,
+we can do this in one step with another small function, `score_next_guess()`.
+
+```{r score_next_guess}
+score_next_guess <- function(guesses, results) {
+  guess_results <- summarize_guesses(guesses, results)
+
+  words_scored %>%
+    filter(
+      str_has_none_of(word, guess_results$discard),
+      str_has_all_of(word, guess_results$keep),
+      str_detect(word, guess_results$pattern)
+    )
+}
+```
+
+Having guessed _arose_ and _intro_,
+what would happen if we guessed _rotch_[^rotch] next?
+
+[^rotch]: What does _rotch_ mean? Is it even a word? No, it is not. It's a [surname](https://en.wikipedia.org/w/index.php?title=Rotch) for a few Americans: a meteorologist, an architect, a tennis player, two politicians and a pediatrician.
+
+```{r replay-view, echo=FALSE}
+map2(
+  c("arose", "intro", "rotch"),
+  c(".--..", "..+--", "-++.."),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+```{r replay}
+score_next_guess(
+  guesses = c("arose", "intro", "rotch"),
+  results = c(".--..", "..+--", "-++..")
+)
+```
+
+From _rotch_ we learn that the first letter isn't [R]{.letter .present},
+but the second letter **is** [o]{.letter .correct},
+which leaves us just one choice: _motor_.
+
+`r wordle_component("motor", "+++++")`
+
+## Guessing Wordle words in real life
+
+### Beginner's Luck
+
+I wrapped up the `score_next_guess()` function on January 16th, 2022,
+which happened to be the easiest Wordle day of any day I've "played".
+But it was a nice motivator to feel like I had spent my Sunday tinkering time well.
+
+Opening with _arose_ lead to a pleasant surprise.
+
+`r wordle_component("arose", "----.")`
+
+From
+`r format(length(words), big.mark = ",")`
+words down to
+`r score_next_guess("arose", "----.") %>% nrow() %>% format(big.mark = ",")`
+words with our first guess. Nice!
+
+```{r live}
+# 2022-01-16
+score_next_guess(
+  guesses = c("arose"),
+  results = c("----.")
+)
+```
+
+Let's just pick the first word on the list: _solar_.
+
+```{r live-view, echo=FALSE}
+map2(
+  c("arose", "solar"),
+  c("----.", "+++++"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+Very nice!
+
+### Problematic words
+
+In working on this,
+I ran into more than a few posts that had trouble with a few more obscure words,
+like _igloo_ and _ferry_.
+
+#### igloo
+
+How many guesses would it take for us to get to _igloo_?
+
+::: {.panelset .panelset--bordered}
+::: panel
+[Round 1]{.panel-name}
+
+`r wordle_component("arose", "..-..")`
+
+Opening with _arose_ is helpfulish.
+
+```{r igloo-1}
+score_next_guess(
+  guesses = c("arose"),
+  results = c("..-..")
+)
+```
+
+Many of the words are obviously not the answer.
+_Pilot_ is the first reasonable word on the list,
+and its score is relatively similar to the other top word choices,
+so I'd go with _pilot_.
+:::
+
+::: panel
+[Round 2]{.panel-name}
+
+```{r igloo-2-view, echo=FALSE}
+map2(
+  c("arose", "pilot"),
+  c("..-..", ".-++."),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+Picking _pilot_ is a good choice!
+
+```{r igloo-2}
+score_next_guess(
+  guesses = c("arose", "pilot"),
+  results = c("..-..", ".-++.")
+)
+```
+
+:::
+
+::: {.panel .pb2}
+[Round 3]{.panel-name}
+
+```{r igloo-view, echo=FALSE}
+map2(
+  c("arose", "pilot", "igloo"),
+  c("..-..", ".-++.", "+++++"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+:tada: Great work!
+
+:::
+:::
+
+
+#### ferry
+
+Apparently there was a general furor about _ferry_
+when it was the Wordle solution of the day.
+Let's see how long it takes us to get to that word.
+
+::: {.panelset .panelset--bordered}
+::: panel
+[Round 1]{.panel-name}
+
+`r wordle_component("arose", ".-..-")`
+
+Opening with _arose_ narrows down our word choices to
+`r score_next_guess("arose", ".-..-") %>% nrow() %>% format(big.mark = ",")`
+words.
+
+```{r ferry-1}
+score_next_guess(
+  guesses = c("arose"),
+  results = c(".-..-")
+)
+```
+
+_liter_ is both a word **and** at the top of our list,
+so it's an easy next choice.
+
+:::
+
+::: panel
+[Round 2]{.panel-name}
+
+```{r ferry-2-view, echo=FALSE}
+map2(
+  c("arose", "liter"),
+  c(".-..-", "...--"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+The word list is now full of words with similar patterns,
+so let's sort by position score to help us choose.
+
+```{r ferry-2}
+score_next_guess(
+  guesses = c("arose", "liter"),
+  results = c(".-..-", "...--")
+) %>%
+  arrange(desc(score_pos))
+```
+
+:::
+
+::: panel
+[Round 3]{.panel-name}
+
+```{r ferry-3-view, echo=FALSE}
+map2(
+  c("arose", "liter", "jerky"),
+  c(".-..-", "...--", ".++.+"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+Now we're down to
+`r score_next_guess(c("arose", "liter", "jerky"), c(".-..-", "...--", ".++.+")) %>% nrow() %>% format(big.mark = ",")`
+words to choose from.
+Still complicated.
+But if we arrange by position score, our top two choices are _ferny_ and _ferry_.
+
+You can see where this is headed, but let's pretend we had no idea.
+Which would you pick?
+
+```{r ferry-3}
+score_next_guess(
+  guesses = c("arose", "liter", "jerky"),
+  results = c(".-..-", "...--", ".++.+")
+) %>%
+  arrange(desc(score_pos))
+```
+
+:::
+
+::: panel
+[Round 4]{.panel-name}
+
+```{r ferry-4-view, echo=FALSE}
+map2(
+  c("arose", "liter", "jerky", "ferny"),
+  c(".-..-", "...--", ".++.+", "+++.+"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+Now we're down to
+`r score_next_guess(c("arose", "liter", "jerky", "ferny"), c(".-..-", "...--", ".++.+", "+++.+")) %>% nrow() %>% format(big.mark = ",")`
+words to choose from.
+
+```{r ferry-4}
+score_next_guess(
+  guesses = c("arose", "liter", "jerky", "ferny"),
+  results = c(".-..-", "...--", ".++.+", "+++.+")
+) %>%
+  arrange(desc(score_pos))
+```
+
+:::
+
+::: panel
+[Round 5]{.panel-name}
+
+```{r ferry-5-view, echo=FALSE}
+map2(
+  c("arose", "liter", "jerky", "ferny", "ferry"),
+  c(".-..-", "...--", ".++.+", "+++.+", "+++++"),
+  wordle_component
+) %>%
+  htmltools::tagList()
+```
+
+:tada: We did it! 5 isn't bad,
+especially considering the terrible choices we had in round 3.
+:::
+:::::
+
+## Make it an app
+
+It's awesome being able to run R code to test things out,
+but it's also a little tedious.
+Since we've done the heavy lifting of prepping and scoring words,
+it'd be great if we could have a little web app that would help us
+
+* Input our guesses and results
+* Show us possible words after each round
+
+And since I'm writing this blog post in
+[R Markdown](https://rmarkdown.rstudio.com)
+via [blogdown](https://pkgs.rstudio.com/blogdown/),
+I can do it all right here!
+
+### Move the data from R to the web
+
+The first thing we need to do is save our data
+in a way that it can be accessed by JavaScript in the browser.
+To do this, we'll take our `words_scored` table and use
+[jsonlite::write_json()](https://jeroen.cran.dev/jsonlite/reference/read_json.html)
+to save the data frame as JSON.
+
+```{r save-words, echo=TRUE}
+words_scored %>%
+  mutate(across(starts_with("score"), round, digits = 2)) %>%
+  jsonlite::write_json("wordle-scored.json")
+```
+
+Now we have the data in a [JSON file (that you can download if you want)](wordle-scored.json).
+
+But to make life even easier,
+I'm going to use a trick I learned from [htmlwidgets](https://htmlwidgets.org).
+What we can do is embed in the JSON file,
+which is only `r format(fs::file_size("wordle-scored.json"))`,
+in a `<script type="application/json">` tag
+with a specific `id` that makes it easy to find later on.
+
+```{r embed-words, echo = TRUE}
+htmltools::tags$script(
+  id = "words-scored",
+  type = "application/json",
+  readLines("wordle-scored.json")
+)
+```
+
+Now that we have the data in a place where we can get it, let's switch gears and write some JavaScript!
+
+### Start working in JavaScript
+
+Here's the cool thing:
+from here on out, the actual computation of the rest of the blog post is done _in your browser_.
+To facilitate this, I'll use an extension I built for knitr
+for [literate JavaScript programming](https://pkg.js4shiny.com/articles/literate-javascript.html)
+with the [js4shiny](https://pkg.js4shiny.com) package.
+
+#### js4shiny
+
+Setting up literate JavaScript in blogdown is pretty straight-forward
+thanks to a little helper function from js4shiny.
+
+```{r js4shiny, echo=TRUE}
+js4shiny::html_setup_blogdown(stylize = "none")
+```
+
+#### tidyjs
+
+The other cool thing we'll use is [tidyjs](https://pbeshai.github.io/tidy/).
+It's a really neat JavaScript library
+that makes it easy to work with data frames in the browser.
+If you squint really hard,
+it's remarkably similar to the tidyverse,
+just with a JavaScript spin.
+
+I wrapped [tidyjs in an R package](https://pkg.garrickadenbuie.com/tidyjs-r/)
+that automatically stays up to date with the latest version of tidyjs.
+To use tidyjs, we just need to call `use_tidyjs()`.
+
+```{r tidy-js, echo=TRUE}
+tidyjs::use_tidyjs()
+```
+
+Now that we've included tidyjs in this page,
+we can finally switch to writing JavaScript instead of R.
+
+First, we need to import a couple of functions from tidyjs that we're going to want to use.
+With tidyjs,
+all transformations are wrapped in a call `tidy()`,
+so we have to import `tidy`.
+We also need `filter()` and `sliceMax()` for easy filtering.
+
+```{js js_redirect = FALSE}
+const { tidy, filter, sliceMax } = Tidy
+```
+
+#### Load our data
+
+The next step is to find the JSON data that we just serialized and stashed in our page.
+We can use `document.getElementById()` to find the element with the `id` `'words-scored'`,
+and then grab the JSON text itself from the `.innerText` property of that object.
+Finally, we call `JSON.parse()` on the json text to parse it into a JavaScript object.
+
+```{js js_redirect = FALSE}
+wordsScored = JSON.parse(
+  document.getElementById('words-scored').innerText
+)
+```
+
+#### Preview the data
+
+Here's a quick preview of the data.
+In tidyjs you wrap a pipeline in `tidy()`
+and then each additional argument to `tidy()`
+is the next step in the pipe.
+To make it look a little more familiar to R users,
+I've added the `%>%` in the comments.
+
+```{js}
+tidy(
+  wordsScored, // %>%
+  sliceMax(5, 'score')
+)
+```
+
+### Same song, different dance
+
+#### Summarizing guesses
+
+Next, we translate [`summarize_guesses()` from R](#generalizing)
+to `summarizeGuesses()` in JavaScript.
+
+```{js js_redirect = FALSE}
+function summarizeGuesses ({ guesses, results }) {
+  // Check that all guesses and results have 5 characters
+  const allComplete = [...guesses, ...results].every(s => s.length == 5)
+  if (!allComplete) {
+    console.error('All guesses and results must have 5 characters.')
+    return
+  }
+
+  // R: str_split(x, '')
+  guesses = guesses.map(s => s.split(''))
+  results = results.map(s => s.split(''))
+
+  let exclude = Array(5).fill('')
+  let exact = Array(5).fill('')
+  let keep = []
+  let discard = []
+
+  for (i = 0; i < guesses.length; i++) {
+    let g = guesses[i] // g: an array of 5 letters of a guess
+    let r = results[i] // r: an array of 5 letters of the result
+
+    for (j = 0; j < r.length; j++) {
+      if (r[j] == '+') {
+        // this letter is exactly right
+        exact[j] = g[j]
+        keep.push(g[j])
+      } else if (r[j] == '-') {
+        // this letter is included, wrong place
+        keep.push(g[j])
+        // so exclude it from this position
+        exclude[j] += g[j]
+      } else {
+        // this letter isn't in the solution
+        discard.push(g[j])
+      }
+    }
+  }
+
+  // build up the regex pattern blending `exact` and `exclude`
+  const pattern = Array(5).fill('.')
+  for (i = 0; i < 5; i++) {
+    if (exact[i] != '') {
+      pattern[i] = exact[i]
+    } else if (exclude[i] != '') {
+      pattern[i] = `[^${exclude[i]}]`
+    }
+  }
+
+  discard = discard.filter(x => !keep.includes(x))
+  return {discard, keep, pattern: pattern.join('')}
+}
+```
+
+Here's a quick preview of `summarizeGuesses()`.
+
+```{js}
+let summary = summarizeGuesses({
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+})
+console.log(summary)
+```
+
+#### Searching for the next word
+
+And then we need to do the same for [`score_next_guess()`](#all-together-now).
+Of course, at this point I'm older and wiser and choose a better name: `searchNextGuess()`.
+
+```{js js_redirect = FALSE}
+function searchNextGuess ({ guesses, results }) {
+  const guessResult = summarizeGuesses({guesses, results})
+
+  return tidy(
+    wordsScored,
+    // discard words that contain a letter in the discard pile
+    filter(d => !guessResult.discard.some(l => d.word.includes(l))),
+    // keep only words that have all letters in the keep pile
+    filter(d => guessResult.keep.every(l => d.word.includes(l))),
+    // keep words that are consistent with results to date
+    filter(d => RegExp(guessResult.pattern).test(d.word))
+  )
+}
+```
+
+Let's prove to ourselves that these functions work.
+
+```{js}
+let next = searchNextGuess({
+  guesses: ["arose", "indol"],
+  results: ["..-..", "+..+-"]
+})
+
+console.log(`There is ${next.length} word available for our next guess:`)
+console.table(next[0])
+```
+
+Let's try again.
+What if we chose a different second guess?
+
+```{js}
+let rounds = {
+  guesses: ["arose", "intro"],
+  results: [".--..", "..+--"]
+}
+let next = searchNextGuess(rounds)
+
+console.log('Guess summary ----')
+console.log(summarizeGuesses(rounds))
+
+console.log('Next word choices ----')
+next.forEach(ws => console.log(`${ws.word} (${ws.score})`))
+```
+
+### Now build the rest of the owl
+
+Okay, this is the point where I confess
+that I went way off-track in building the little app
+at the top of this post.
+I fully intended to write about that part too,
+but honestly I've done a good job
+curing myself of the Wordle bug with this post.
+
+For the curious, all the JavaScript code for the guess helper
+lives in [wordle-component.js](wordle-component.js).
+Or, right click on this page and pick _Inspect Element_
+and find your way to the _Sources_ or _Debugger_ tab
+for a better look.
+It's all vanilla JavaScript.
+
+Also a quick shout-out to [gridjs](https://gridjs.io/),
+which turned out to be a very easy way
+to create the table of sorted words.
+
+```html
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+```
+
+```{=html}
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+<link href="wordle-component.css" rel="stylesheet">
+<script src="wordle-component.js"></script>
+```
