@@ -38,10 +38,10 @@ i_am_here[c("lat", "lon", "timezone")]
 
 ```
 ## $lat
-## [1] 34.56547
+## [1] 34.34348
 ## 
 ## $lon
-## [1] -85.00208
+## [1] -84.57913
 ## 
 ## $timezone
 ## [1] "America/New_York"
@@ -55,7 +55,7 @@ sun_times <-
   suncalc::getSunlightTimes(
     date = seq(
       as.Date("2022-01-01"),
-      as.Date("2022-12-31"),
+      as.Date("2023-01-01"),
       by = "day"
     ),
     lat = i_am_here$lat,
