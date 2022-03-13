@@ -1,16 +1,31 @@
 asciiname,lat,lon,country,admin_code,tz,population,country_name,region,sub_region
 Cairo,30.06263,31.24967,EG,11,Africa/Cairo,7734614,Egypt,Africa,Northern Africa
+Alexandria,31.21564,29.95527,EG,06,Africa/Cairo,3811516,Egypt,Africa,Northern Africa
 Lagos,6.45306,3.39583,NG,05,Africa/Lagos,9000000,Nigeria,Africa,Sub-Saharan Africa
+Kinshasa,-4.32142,15.30807,CD,06,Africa/Kinshasa,7785965,"Congo, Democratic Republic of the",Africa,Sub-Saharan Africa
 Buenos Aires,-34.61315,-58.37723,AR,07,America/Argentina/Buenos_Aires,13076300,Argentina,Americas,Latin America and the Caribbean
+Mexico City,19.42847,-99.12766,MX,09,America/Mexico_City,12294193,Mexico,Americas,Latin America and the Caribbean
 New York City,40.71427,-74.00597,US,NY,America/New_York,8175133,United States of America,Americas,Northern America
+Toronto,43.70011,-79.4163,CA,08,America/Toronto,4612191,Canada,Americas,Northern America
 Almaty,43.25654,76.92848,KZ,02,Asia/Almaty,2000900,Kazakhstan,Asia,Central Asia
+Tashkent,41.26465,69.21627,UZ,13,Asia/Tashkent,1978028,Uzbekistan,Asia,Central Asia
 Shanghai,31.22222,121.45806,CN,23,Asia/Shanghai,14608512,China,Asia,Eastern Asia
+Seoul,37.56826,126.97783,KR,11,Asia/Seoul,10349312,"Korea, Republic of",Asia,Eastern Asia
 Manila,14.6042,120.9822,PH,NCR,Asia/Manila,10444527,Philippines,Asia,South-eastern Asia
+Jakarta,-6.21462,106.84513,ID,04,Asia/Jakarta,8540121,Indonesia,Asia,South-eastern Asia
 Mumbai,19.07283,72.88261,IN,16,Asia/Kolkata,12691836,India,Asia,Southern Asia
+Karachi,24.9056,67.0822,PK,05,Asia/Karachi,11624219,Pakistan,Asia,Southern Asia
 Istanbul,41.01384,28.94966,TR,34,Europe/Istanbul,11174257,Turkey,Asia,Western Asia
+Baghdad,33.34058,44.40088,IQ,07,Asia/Baghdad,5672513,Iraq,Asia,Western Asia
 Moscow,55.75222,37.61556,RU,48,Europe/Moscow,10381222,Russian Federation,Europe,Eastern Europe
+Saint Petersburg,59.93863,30.31413,RU,66,Europe/Moscow,5028000,Russian Federation,Europe,Eastern Europe
 London,51.50853,-0.12574,GB,ENG,Europe/London,7556900,United Kingdom of Great Britain and Northern Ireland,Europe,Northern Europe
+Stockholm,59.33258,18.0649,SE,26,Europe/Stockholm,1253309,Sweden,Europe,Northern Europe
 Madrid,40.4165,-3.70256,ES,29,Europe/Madrid,3255944,Spain,Europe,Southern Europe
+Rome,41.89474,12.4839,IT,07,Europe/Rome,2563241,Italy,Europe,Southern Europe
 Berlin,52.52437,13.41053,DE,16,Europe/Berlin,3426354,Germany,Europe,Western Europe
+Paris,48.85341,2.3488,FR,A8,Europe/Paris,2138551,France,Europe,Western Europe
 Sydney,-33.86785,151.20732,AU,02,Australia/Sydney,4627345,Australia,Oceania,Australia and New Zealand
+Melbourne,-37.814,144.96332,AU,07,Australia/Melbourne,4246375,Australia,Oceania,Australia and New Zealand
 Port Moresby,-9.44314,147.17972,PG,20,Pacific/Port_Moresby,283733,Papua New Guinea,Oceania,Melanesia
+Noumea,-22.27631,166.4572,NC,02,Pacific/Noumea,93060,New Caledonia,Oceania,Melanesia

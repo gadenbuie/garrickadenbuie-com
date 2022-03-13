@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.86639
+    ## [1] 33.68358
     ## 
     ## $lon
-    ## [1] -84.16808
+    ## [1] -84.74782
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -300,10 +300,26 @@ ggplot(tidier_sun_times) +
 
 ## Around the World
 
+``` r
+cities <- download_cities()
+
+cities %>%
+  filter(asciiname != "City of London", !is.na(country_name)) %>%
+  group_by(region, sub_region) %>%
+  slice_max(population, n = 2, with_ties = FALSE) %>%
+  write_csv("cities_largest.csv")
+```
+
 <div class="city-plots">
 
 <div class="city-plot">
+<img src="cities/alexandria_egypt.png"/>
+</div>
+<div class="city-plot">
 <img src="cities/almaty_kazakhstan.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/baghdad_iraq.png"/>
 </div>
 <div class="city-plot">
 <img src="cities/berlin_germany.png"/>
@@ -318,10 +334,19 @@ ggplot(tidier_sun_times) +
 <img src="cities/istanbul_turkey.png"/>
 </div>
 <div class="city-plot">
+<img src="cities/jakarta_indonesia.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/karachi_pakistan.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/kinshasa_drc.png"/>
+</div>
+<div class="city-plot">
 <img src="cities/lagos_nigeria.png"/>
 </div>
 <div class="city-plot">
-<img src="cities/london_united_kingdom_of_great_britain_and_northern_ireland.png"/>
+<img src="cities/london_gb.png"/>
 </div>
 <div class="city-plot">
 <img src="cities/madrid_spain.png"/>
@@ -330,7 +355,13 @@ ggplot(tidier_sun_times) +
 <img src="cities/manila_philippines.png"/>
 </div>
 <div class="city-plot">
-<img src="cities/moscow_russian_federation.png"/>
+<img src="cities/melbourne_australia.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/mexico_city_mexico.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/moscow_russia.png"/>
 </div>
 <div class="city-plot">
 <img src="cities/mumbai_india.png"/>
@@ -339,13 +370,45 @@ ggplot(tidier_sun_times) +
 <img src="cities/new_york_city_us.png"/>
 </div>
 <div class="city-plot">
+<img src="cities/noumea_new_caledonia.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/paris_france.png"/>
+</div>
+<div class="city-plot">
 <img src="cities/port_moresby_papua_new_guinea.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/rome_italy.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/saint_petersburg_russia.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/seoul_korea.png"/>
 </div>
 <div class="city-plot">
 <img src="cities/shanghai_china.png"/>
 </div>
 <div class="city-plot">
+<img src="cities/stockholm_sweden.png"/>
+</div>
+<div class="city-plot">
 <img src="cities/sydney_australia.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/tashkent_uzbekistan.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/toronto_canada.png"/>
 </div>
 
 </div>
+
+<style type="text/css">
+.city-plots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+}
+</style>

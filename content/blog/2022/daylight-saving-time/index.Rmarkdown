@@ -318,17 +318,30 @@ source("plot_daylight_hours.R")
 cities_largest <- readr::read_csv("cities_largest.csv")
 ```
 
+```{r eval=FALSE}
+cities <- download_cities()
+
+cities %>%
+  filter(asciiname != "City of London", !is.na(country_name)) %>%
+  group_by(region, sub_region) %>%
+  slice_max(population, n = 2, with_ties = FALSE) %>%
+  write_csv("cities_largest.csv")
+```
+
 ```{r echo = FALSE}
 plots_cities <-
   cities_largest %>%
   mutate(
     country_name = case_when(
-      country %in% c("US", "UK") ~ country,
+      country %in% c("US", "GB") ~ country,
+      country == "CD" ~ "DRC",
+      country == "KR" ~ "Korea",
+      country == "RU" ~ "Russia",
       TRUE ~ country_name
     ),
     title = glue::glue("{asciiname}, {country_name}")
   ) %>%
-  # filter(asciiname == "Moscow") %>% 
+  # filter(asciiname == "Melbourne") %>%
   select(lat, lon, timezone = tz, title) %>%
   split(.$title) %>%
   map(pmap, plot_sun_times) %>% 
@@ -360,3 +373,11 @@ htmltools::tagList(
 )
 ```
 :::
+
+```{css echo=FALSE}
+.city-plots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+}
+```

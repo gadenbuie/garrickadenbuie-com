@@ -89,9 +89,9 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_head(n = 1),
       aes(y = ends, label = tz),
-      hjust = 1,
+      hjust = max(sign(lat), 0),
       vjust = 1,
-      nudge_x = -21,
+      nudge_x = sign(lat) * -21,
       nudge_y = -60^2 * 1.5,
       lineheight = 0.8,
       color = color_text
@@ -101,19 +101,19 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         filter(label == "nauticalDawn") %>%
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_head(n = 1), 
-      aes(x = date - 17, xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
+      aes(x = date + (-sign(lat) * 17), xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
       arrow = arrow(length = unit(0.08, "inch")), 
       size = 0.5,
       color = color_text,
-      curvature = 0.4
+      curvature = sign(lat) * 0.4
     ) +
     geom_text(
       data = . %>% 
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_tail(n = 1),
       aes(y = starts, label = tz),
-      hjust = 1,
-      nudge_x = -21,
+      hjust = max(sign(lat), 0),
+      nudge_x = sign(lat) * -21,
       nudge_y = 60^2 * 1.5,
       lineheight = 0.8,
       color = color_text
@@ -123,11 +123,11 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         filter(label == "nauticalDawn") %>%
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_tail(n = 1),
-      aes(x = date - 17, xend = date, y = starts - 60^2, yend = starts - 500),
+      aes(x = date + (-sign(lat) * 17), xend = date, y = starts - 60^2, yend = starts - 500),
       arrow = arrow(length = unit(0.08, "inch")), 
       size = 0.5,
       color = color_text,
-      curvature = -0.4
+      curvature = sign(lat) * -0.4
     ) +
     ggrepel::geom_label_repel(
       data = . %>% filter(date == max(date)) %>% 
