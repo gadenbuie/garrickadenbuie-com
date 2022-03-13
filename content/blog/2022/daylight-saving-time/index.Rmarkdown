@@ -34,12 +34,12 @@ options(htmltools.dir.version = TRUE)
 
 ## Where are you?
 
-```{r i_am_here}
-i_am_here <- as.list(ipapi::geolocate(NA, .progress = FALSE))
-i_am_here$lat <- i_am_here$lat + runif(1, min = -1)
-i_am_here$lon <- i_am_here$lon + runif(1, min = -1)
+```{r location}
+location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
+location$lat <- location$lat + runif(1, min = -1)
+location$lon <- location$lon + runif(1, min = -1)
 
-i_am_here[c("lat", "lon", "timezone")]
+location[c("lat", "lon", "timezone")]
 ```
 
 ## Sunrise and Sunset Times
@@ -52,9 +52,9 @@ sun_times <-
       as.Date("2023-01-01"),
       by = "day"
     ),
-    lat = i_am_here$lat,
-    lon = i_am_here$lon,
-    tz = i_am_here$timezone,
+    lat = location$lat,
+    lon = location$lon,
+    tz = location$timezone,
     keep = c("dawn", "nauticalDawn", "dusk", "nauticalDusk", "sunrise", "sunset")
   )
 ```
@@ -295,10 +295,10 @@ ggplot(tidier_sun_times) +
 tidier_sun_times %>% 
   filter(label == "sunrise") %>%
   mutate(
-    starts = lubridate::ymd_hms(paste(date, starts), tz = i_am_here$tz),
-    ends = lubridate::ymd_hms(paste(date, ends), tz = i_am_here$tz),
-    morning = lubridate::ymd_hms(paste(date, "9:00:00"), tz = i_am_here$tz),
-    evening = lubridate::ymd_hms(paste(date, "17:00:00"), tz = i_am_here$tz),
+    starts = lubridate::ymd_hms(paste(date, starts), tz = location$tz),
+    ends = lubridate::ymd_hms(paste(date, ends), tz = location$tz),
+    morning = lubridate::ymd_hms(paste(date, "9:00:00"), tz = location$tz),
+    evening = lubridate::ymd_hms(paste(date, "17:00:00"), tz = location$tz),
     morning = as.numeric(difftime(morning, starts, units = "secs")),
     evening = as.numeric(difftime(ends, evening, units = "secs")),
     non_work_hours = (morning + evening) / 60
@@ -310,3 +310,53 @@ tidier_sun_times %>%
     labels = function(x) paste0(round(x / 60), "h")
   )
 ```
+
+## Around the World
+
+```{r echo = FALSE, include = FALSE}
+source("plot_daylight_hours.R")
+cities_largest <- readr::read_csv("cities_largest.csv")
+```
+
+```{r echo = FALSE}
+plots_cities <-
+  cities_largest %>%
+  mutate(
+    country_name = case_when(
+      country %in% c("US", "UK") ~ country,
+      TRUE ~ country_name
+    ),
+    title = glue::glue("{asciiname}, {country_name}")
+  ) %>%
+  # filter(asciiname == "Moscow") %>% 
+  select(lat, lon, timezone = tz, title) %>%
+  split(.$title) %>%
+  map(pmap, plot_sun_times) %>% 
+  flatten()
+
+names(plots_cities) <- snakecase::to_snake_case(names(plots_cities))
+fs::dir_create("cities")
+
+iwalk(plots_cities, function(g, name) {
+  ggsave(
+    fs::path("cities", name, ext = "png"),
+    plot = g,
+    width = 9,
+    height = 7,
+    dpi = 150
+  )
+})
+```
+
+
+::: city-plots
+```{r echo=FALSE}
+img_cities <- fs::dir_ls("cities", regexp = "png$")
+htmltools::tagList(
+  map(
+    img_cities,
+    ~ htmltools::withTags(div(class = "city-plot", img(src = .x)))
+  )
+)
+```
+:::

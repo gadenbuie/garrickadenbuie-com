@@ -17,8 +17,6 @@ editor_options:
 
 <!-- Links -->
 
-
-
 ## Inspiration
 
 [How long are the nights?](https://plotparade.com/gallery_sunrise.html)
@@ -27,30 +25,26 @@ editor_options:
 
 ## Where are you?
 
+``` r
+location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
+location$lat <- location$lat + runif(1, min = -1)
+location$lon <- location$lon + runif(1, min = -1)
 
-```r
-i_am_here <- as.list(ipapi::geolocate(NA, .progress = FALSE))
-i_am_here$lat <- i_am_here$lat + runif(1, min = -1)
-i_am_here$lon <- i_am_here$lon + runif(1, min = -1)
-
-i_am_here[c("lat", "lon", "timezone")]
+location[c("lat", "lon", "timezone")]
 ```
 
-```
-## $lat
-## [1] 34.34348
-## 
-## $lon
-## [1] -84.57913
-## 
-## $timezone
-## [1] "America/New_York"
-```
+    ## $lat
+    ## [1] 34.86639
+    ## 
+    ## $lon
+    ## [1] -84.16808
+    ## 
+    ## $timezone
+    ## [1] "America/New_York"
 
 ## Sunrise and Sunset Times
 
-
-```r
+``` r
 sun_times <- 
   suncalc::getSunlightTimes(
     date = seq(
@@ -58,17 +52,16 @@ sun_times <-
       as.Date("2023-01-01"),
       by = "day"
     ),
-    lat = i_am_here$lat,
-    lon = i_am_here$lon,
-    tz = i_am_here$timezone,
+    lat = location$lat,
+    lon = location$lon,
+    tz = location$timezone,
     keep = c("dawn", "nauticalDawn", "dusk", "nauticalDusk", "sunrise", "sunset")
   )
 ```
 
 ## Tidy Sun Times
 
-
-```r
+``` r
 library(tidyverse)
 
 tidy_sun_times <- 
@@ -81,11 +74,9 @@ tidy_sun_times <-
   )
 ```
 
-
 ## First Looks
 
-
-```r
+``` r
 ggplot(tidy_sun_times) + 
   aes(x = date, y = time, color = event) +
   geom_line()
@@ -95,8 +86,7 @@ ggplot(tidy_sun_times) +
 
 ## Paired Events (Start and End)
 
-
-```r
+``` r
 tidier_sun_times <- 
   tidy_sun_times %>%
   mutate(
@@ -128,8 +118,7 @@ tidier_sun_times <-
 
 ## Another plot
 
-
-```r
+``` r
 ggplot(tidier_sun_times) +
   aes(date, ymin = starts, ymax = ends, fill = label) +
   geom_ribbon()
@@ -139,8 +128,7 @@ ggplot(tidier_sun_times) +
 
 Reverse the time axes and provide our own labels
 
-
-```r
+``` r
 ggplot(tidier_sun_times) +
   aes(date, ymin = starts, ymax = ends, fill = label) +
   geom_ribbon() +
@@ -156,13 +144,11 @@ ggplot(tidier_sun_times) +
 
 ## Make it pretty
 
-
-```r
+``` r
 sysfonts::font_add_google("Outfit")
 ```
 
-
-```r
+``` r
 x_breaks <- seq(
   from = as.Date("2022-01-01"),
   to = as.Date("2023-01-01"),
@@ -312,4 +298,54 @@ ggplot(tidier_sun_times) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/daylight-hours-atlanta-1.png" width="864" />
 
+## Around the World
 
+<div class="city-plots">
+
+<div class="city-plot">
+<img src="cities/almaty_kazakhstan.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/berlin_germany.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/buenos_aires_argentina.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/cairo_egypt.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/istanbul_turkey.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/lagos_nigeria.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/london_united_kingdom_of_great_britain_and_northern_ireland.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/madrid_spain.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/manila_philippines.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/moscow_russian_federation.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/mumbai_india.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/new_york_city_us.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/port_moresby_papua_new_guinea.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/shanghai_china.png"/>
+</div>
+<div class="city-plot">
+<img src="cities/sydney_australia.png"/>
+</div>
+
+</div>
