@@ -84,13 +84,15 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       hjust = -0.25,
       vjust = c(2, -1)
     ) +
+    # First DST-related shift
     geom_text(
       data = . %>% 
+        filter(label == "nauticalDawn") %>% 
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_head(n = 1),
       aes(y = ends, label = tz),
       hjust = max(sign(lat), 0),
-      vjust = 1,
+      vjust = 0,
       nudge_x = sign(lat) * -21,
       nudge_y = -60^2 * 1.5,
       lineheight = 0.8,
@@ -101,18 +103,26 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         filter(label == "nauticalDawn") %>%
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_head(n = 1), 
-      aes(x = date + (-sign(lat) * 17), xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
+      aes(
+        x = date + (-sign(lat) * 17),
+        xend = date,
+        y = ends - (-60^2 * 1.2),
+        yend = ends + (2 - sign(lat)) * 500
+      ),
       arrow = arrow(length = unit(0.08, "inch")), 
       size = 0.5,
       color = color_text,
       curvature = sign(lat) * 0.4
     ) +
+    # Second DST-related shift
     geom_text(
       data = . %>% 
+        filter(label == "nauticalDawn") %>%
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_tail(n = 1),
       aes(y = starts, label = tz),
       hjust = max(sign(lat), 0),
+      vjust = (1 + sign(lat)) * 0.5,
       nudge_x = sign(lat) * -21,
       nudge_y = 60^2 * 1.5,
       lineheight = 0.8,
@@ -123,7 +133,12 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         filter(label == "nauticalDawn") %>%
         filter(tz != coalesce(lag(tz), first(tz))) %>% 
         slice_tail(n = 1),
-      aes(x = date + (-sign(lat) * 17), xend = date, y = starts - 60^2, yend = starts - 500),
+      aes(
+        x = date + (-sign(lat) * 17),
+        xend = date,
+        y = starts - (if (lat < 0) 2 else 1) * 60^2,
+        yend = starts - (2 - sign(lat)) * 500
+      ),
       arrow = arrow(length = unit(0.08, "inch")), 
       size = 0.5,
       color = color_text,
@@ -167,7 +182,8 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       expand = expansion()
     ) +
     scale_y_reverse(
-      limits = c(max(tidy_sun_times$ends + 60^2), min(tidy_sun_times$starts - 60^2)),
+      # limits = c(max(tidy_sun_times$ends + 60^2), min(tidy_sun_times$starts - 60^2)),
+      limits = c(max(tidy_sun_times$ends, 24 * 60^2), min(tidy_sun_times$starts, 0)),
       breaks = y_breaks,
       labels = paste0(seq(0, 24, by = 3), ":00"),
       expand = expansion()

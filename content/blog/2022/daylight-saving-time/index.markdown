@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.68358
+    ## [1] 34.30033
     ## 
     ## $lon
-    ## [1] -84.74782
+    ## [1] -83.63288
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -156,6 +156,7 @@ x_breaks <- seq(
 )
 y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
 color_text <- "#F2CDB9"
+color_bg <- "#39304a"
 
 ggplot(tidier_sun_times) +
   aes(date) +
@@ -171,7 +172,7 @@ ggplot(tidier_sun_times) +
   ) +
   geom_hline(
     yintercept = c(9, 17) * 60^2,
-    color = "#39304a",
+    color = color_bg,
     alpha = 0.5,
     linetype = 2
   ) +
@@ -180,7 +181,7 @@ ggplot(tidier_sun_times) +
     x = min(tidier_sun_times$date),
     y = c(9, 17) * 60^2,
     label = c("9am", "5pm"),
-    color = "#39304a",
+    color = color_bg,
     hjust = -0.25,
     vjust = c(2, -1)
   ) +
@@ -238,7 +239,7 @@ ggplot(tidier_sun_times) +
         events = snakecase::to_title_case(events)
       ),
     aes(y = time, fill = label, label = events),
-    color = "#39304a",
+    color = color_bg,
     fontface = "bold",
     show.legend = FALSE,
     direction = "y",
@@ -285,7 +286,7 @@ ggplot(tidier_sun_times) +
     plot.title = element_text(color = color_text, hjust = 0, size = 14),
     plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 6)),
     plot.title.position = "plot",
-    plot.background = element_rect(fill = "#39304a"),
+    plot.background = element_rect(fill = color_bg),
     plot.margin = margin(20, 0, 20, 10),
     # panel.border = element_rect(color = color_text, fill = NA),
     panel.grid = element_blank(),
