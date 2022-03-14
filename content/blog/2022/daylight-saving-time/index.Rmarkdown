@@ -389,7 +389,7 @@ htmltools::withTags(
       class = "mb2",
       select(
         id = "choose-city",
-        class = "input-reset bn pa2 select-dropdown-arrow custom-text-color br1 custom-bg-light",
+        class = "input-reset db di-ns mb2 pa2 ba br1 select-dropdown-arrow custom-text-color custom-bg-light",
         city_options
       ),
       button(

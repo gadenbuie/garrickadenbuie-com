@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.31573
+    ## [1] 33.60087
     ## 
     ## $lon
-    ## [1] -85.42272
+    ## [1] -84.00078
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -304,7 +304,7 @@ ggplot(tidier_sun_times) +
 <div class="pa">
 <label class="b db mb2" for="choose-city">Pick a city</label>
 <div class="mb2">
-<select id="choose-city" class="input-reset bn pa2 select-dropdown-arrow custom-text-color br1 custom-bg-light">
+<select id="choose-city" class="input-reset db di-ns mb2 pa2 ba br1 select-dropdown-arrow custom-text-color custom-bg-light">
 <option value="cities/saint_petersburg_russia.png" data-city="Saint Petersburg, Russia">Saint Petersburg, Russia</option>
 <option value="cities/moscow_russia.png" data-city="Moscow, Russia">Moscow, Russia</option>
 <option value="cities/berlin_germany.png" data-city="Berlin, Germany">Berlin, Germany</option>
