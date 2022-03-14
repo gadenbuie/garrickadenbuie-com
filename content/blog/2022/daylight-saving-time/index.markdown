@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.3103
+    ## [1] 33.79201
     ## 
     ## $lon
-    ## [1] -85.12855
+    ## [1] -84.45807
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -304,7 +304,7 @@ ggplot(tidier_sun_times) +
 <div class="pa">
 <label class="b db mb2" for="choose-city">Pick a city</label>
 <div class="mb2">
-<select id="choose-city" class="input-reset ba pa2 select-dropdown-arrow">
+<select id="choose-city" class="input-reset bn pa2 select-dropdown-arrow custom-text-color br1 custom-bg-light">
 <option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
 <option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
 <option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
@@ -336,11 +336,11 @@ ggplot(tidier_sun_times) +
 <option value="cities/port_moresby_papua_new_guinea.png" data-city="Port Moresby, Papua New Guinea">Port Moresby, Papua New Guinea</option>
 <option value="cities/noumea_new_caledonia.png" data-city="Noumea, New Caledonia">Noumea, New Caledonia</option>
 </select>
-<button id="choose-city-prev" class="link dim ph3 pv2 ba br1">
+<button id="choose-city-prev" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
 <i class="fa fa-arrow-left" role="presentation" aria-label="arrow-left icon"></i>
 <span class="clip">Previous city</span>
 </button>
-<button id="choose-city-next" class="link dim ph3 pv2 ba br1">
+<button id="choose-city-next" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
 <i class="fa fa-arrow-right" role="presentation" aria-label="arrow-right icon"></i>
 <span class="clip">Next city</span>
 </button>
@@ -356,13 +356,13 @@ ggplot(tidier_sun_times) +
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
-.select-dropdown-arrow::after {
-  content: "";
-  justify-self: end;
-  width: 0.8em;
-  height: 0.5em;
-  background-color: var(-sidebarTextColorCustom);
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+.custom-bg-light {
+  background-color: var(--slate-90);
+}
+@media (prefers-color-scheme: dark) {
+  .custom-bg-light {
+    background-color: var(--slate-20);
+  }
 }
 </style>
 <script type="text/javascript">

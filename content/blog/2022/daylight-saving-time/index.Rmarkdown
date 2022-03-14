@@ -384,18 +384,18 @@ htmltools::withTags(
       class = "mb2",
       select(
         id = "choose-city",
-        class = "input-reset ba pa2 select-dropdown-arrow",
+        class = "input-reset bn pa2 select-dropdown-arrow custom-text-color br1 custom-bg-light",
         city_options
       ),
       button(
         id = "choose-city-prev",
-        class = "link dim ph3 pv2 ba br1",
+        class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
         htmltools::HTML(format(shiny::icon("arrow-left"))),
         span(class = "clip", "Previous city")
       ),
       button(
         id = "choose-city-next",
-        class = "link dim ph3 pv2 ba br1",
+        class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
         htmltools::HTML(format(shiny::icon("arrow-right"))),
         span(class = "clip", "Next city")
       )
@@ -419,13 +419,13 @@ htmltools::tags$div(
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
-.select-dropdown-arrow::after {
-  content: "";
-  justify-self: end;
-  width: 0.8em;
-  height: 0.5em;
-  background-color: var(-sidebarTextColorCustom);
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+.custom-bg-light {
+  background-color: var(--slate-90);
+}
+@media (prefers-color-scheme: dark) {
+  .custom-bg-light {
+    background-color: var(--slate-20);
+  }
 }
 ```
 
