@@ -143,7 +143,7 @@ ggplot(tidier_sun_times) +
 sysfonts::font_add_google("Outfit")
 ```
 
-```{r daylight-hours-atlanta}
+```{r daylight-hours-atlanta, fig.height = 8, fig.width = 9}
 x_breaks <- seq(
   from = as.Date("2022-01-01"),
   to = as.Date("2023-01-01"),
@@ -319,18 +319,18 @@ source("plot_daylight_hours.R")
 cities_largest <- readr::read_csv("cities_largest.csv")
 ```
 
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 cities <- download_cities()
 
 cities %>%
-  filter(asciiname != "City of London", !is.na(country_name)) %>%
+  filter(city != "City of London", !is.na(country_name)) %>%
   group_by(region, sub_region) %>%
   slice_max(population, n = 2, with_ties = FALSE) %>%
   write_csv("cities_largest.csv")
 ```
 
 ```{r echo = FALSE}
-plots_cities <-
+city_plot_data <- 
   cities_largest %>%
   mutate(
     country_name = case_when(
@@ -340,40 +340,47 @@ plots_cities <-
       country == "RU" ~ "Russia",
       TRUE ~ country_name
     ),
-    title = glue::glue("{asciiname}, {country_name}")
+    title = glue::glue("{city}, {country_name}"),
+    file = fs::path("cities", snakecase::to_snake_case(title), ext = "png")
   ) %>%
-  # filter(asciiname == "Melbourne") %>%
-  select(lat, lon, timezone = tz, title) %>%
-  split(.$title) %>%
+  select(lat, lon, timezone = tz, title, file)
+  
+plots_cities <-
+  city_plot_data %>%
+  split(.$file) %>%
+  map(select, -file) %>%
   map(pmap, plot_sun_times) %>% 
   flatten()
 
-names(plots_cities) <- snakecase::to_snake_case(names(plots_cities))
 fs::dir_create("cities")
 
-iwalk(plots_cities, function(g, name) {
+iwalk(plots_cities, function(g, file) {
   ggsave(
-    fs::path("cities", name, ext = "png"),
+    file,
     plot = g,
     width = 9,
-    height = 7,
+    height = 8,
     dpi = 150
   )
 })
 ```
 
-
-::: city-plots
 ```{r echo=FALSE}
-img_cities <- fs::dir_ls("cities", regexp = "png$")
 htmltools::tagList(
-  map(
-    img_cities,
-    ~ htmltools::withTags(div(class = "city-plot", img(src = .x)))
+  htmltools::tags$label(`for` = "choose-city", "Pick a city"),
+  htmltools::tags$select(
+    id = "choose-city",
+    map(transpose(city_plot_data), ~ htmltools::tags$option(value = .x$file, `data-city` = .x$title, .x$title))
   )
 )
 ```
-:::
+
+```{r echo=FALSE}
+htmltools::tags$div(
+  id = "city-plot", 
+  htmltools::img(src = "cities/alexandria_egypt.png", alt = "Alexandria, Egypt")
+)
+```
 
 ```{css echo=FALSE}
 .city-plots {
@@ -381,4 +388,12 @@ htmltools::tagList(
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
+```
+
+```{js echo=FALSE}
+document.getElementById('choose-city').addEventListener('change', function(ev) {
+  const plot = document.querySelector('#city-plot > img')
+  plot.src = ev.target.value
+  plot.setAttribute('alt', ev.target.dataset.city)
+})
 ```

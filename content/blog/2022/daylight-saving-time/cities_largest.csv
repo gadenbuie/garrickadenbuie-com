@@ -1,4 +1,4 @@
-asciiname,lat,lon,country,admin_code,tz,population,country_name,region,sub_region
+city,lat,lon,country,admin_code,tz,population,country_name,region,sub_region
 Cairo,30.06263,31.24967,EG,11,Africa/Cairo,7734614,Egypt,Africa,Northern Africa
 Alexandria,31.21564,29.95527,EG,06,Africa/Cairo,3811516,Egypt,Africa,Northern Africa
 Lagos,6.45306,3.39583,NG,05,Africa/Lagos,9000000,Nigeria,Africa,Sub-Saharan Africa

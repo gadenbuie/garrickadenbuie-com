@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.30033
+    ## [1] 33.21315
     ## 
     ## $lon
-    ## [1] -83.63288
+    ## [1] -84.2918
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -301,111 +301,42 @@ ggplot(tidier_sun_times) +
 
 ## Around the World
 
-``` r
-cities <- download_cities()
-
-cities %>%
-  filter(asciiname != "City of London", !is.na(country_name)) %>%
-  group_by(region, sub_region) %>%
-  slice_max(population, n = 2, with_ties = FALSE) %>%
-  write_csv("cities_largest.csv")
-```
-
-<div class="city-plots">
-
-<div class="city-plot">
-<img src="cities/alexandria_egypt.png"/>
+<label for="choose-city">Pick a city</label>
+<select id="choose-city">
+<option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
+<option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
+<option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
+<option value="cities/kinshasa_drc.png" data-city="Kinshasa, DRC">Kinshasa, DRC</option>
+<option value="cities/buenos_aires_argentina.png" data-city="Buenos Aires, Argentina">Buenos Aires, Argentina</option>
+<option value="cities/mexico_city_mexico.png" data-city="Mexico City, Mexico">Mexico City, Mexico</option>
+<option value="cities/new_york_city_us.png" data-city="New York City, US">New York City, US</option>
+<option value="cities/toronto_canada.png" data-city="Toronto, Canada">Toronto, Canada</option>
+<option value="cities/almaty_kazakhstan.png" data-city="Almaty, Kazakhstan">Almaty, Kazakhstan</option>
+<option value="cities/tashkent_uzbekistan.png" data-city="Tashkent, Uzbekistan">Tashkent, Uzbekistan</option>
+<option value="cities/shanghai_china.png" data-city="Shanghai, China">Shanghai, China</option>
+<option value="cities/seoul_korea.png" data-city="Seoul, Korea">Seoul, Korea</option>
+<option value="cities/manila_philippines.png" data-city="Manila, Philippines">Manila, Philippines</option>
+<option value="cities/jakarta_indonesia.png" data-city="Jakarta, Indonesia">Jakarta, Indonesia</option>
+<option value="cities/mumbai_india.png" data-city="Mumbai, India">Mumbai, India</option>
+<option value="cities/karachi_pakistan.png" data-city="Karachi, Pakistan">Karachi, Pakistan</option>
+<option value="cities/istanbul_turkey.png" data-city="Istanbul, Turkey">Istanbul, Turkey</option>
+<option value="cities/baghdad_iraq.png" data-city="Baghdad, Iraq">Baghdad, Iraq</option>
+<option value="cities/moscow_russia.png" data-city="Moscow, Russia">Moscow, Russia</option>
+<option value="cities/saint_petersburg_russia.png" data-city="Saint Petersburg, Russia">Saint Petersburg, Russia</option>
+<option value="cities/london_gb.png" data-city="London, GB">London, GB</option>
+<option value="cities/stockholm_sweden.png" data-city="Stockholm, Sweden">Stockholm, Sweden</option>
+<option value="cities/madrid_spain.png" data-city="Madrid, Spain">Madrid, Spain</option>
+<option value="cities/rome_italy.png" data-city="Rome, Italy">Rome, Italy</option>
+<option value="cities/berlin_germany.png" data-city="Berlin, Germany">Berlin, Germany</option>
+<option value="cities/paris_france.png" data-city="Paris, France">Paris, France</option>
+<option value="cities/sydney_australia.png" data-city="Sydney, Australia">Sydney, Australia</option>
+<option value="cities/melbourne_australia.png" data-city="Melbourne, Australia">Melbourne, Australia</option>
+<option value="cities/port_moresby_papua_new_guinea.png" data-city="Port Moresby, Papua New Guinea">Port Moresby, Papua New Guinea</option>
+<option value="cities/noumea_new_caledonia.png" data-city="Noumea, New Caledonia">Noumea, New Caledonia</option>
+</select>
+<div id="city-plot">
+<img src="cities/alexandria_egypt.png" alt="Alexandria, Egypt"/>
 </div>
-<div class="city-plot">
-<img src="cities/almaty_kazakhstan.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/baghdad_iraq.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/berlin_germany.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/buenos_aires_argentina.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/cairo_egypt.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/istanbul_turkey.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/jakarta_indonesia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/karachi_pakistan.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/kinshasa_drc.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/lagos_nigeria.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/london_gb.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/madrid_spain.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/manila_philippines.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/melbourne_australia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/mexico_city_mexico.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/moscow_russia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/mumbai_india.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/new_york_city_us.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/noumea_new_caledonia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/paris_france.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/port_moresby_papua_new_guinea.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/rome_italy.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/saint_petersburg_russia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/seoul_korea.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/shanghai_china.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/stockholm_sweden.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/sydney_australia.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/tashkent_uzbekistan.png"/>
-</div>
-<div class="city-plot">
-<img src="cities/toronto_canada.png"/>
-</div>
-
-</div>
-
 <style type="text/css">
 .city-plots {
   display: grid;
@@ -413,3 +344,10 @@ cities %>%
   grid-gap: 1em;
 }
 </style>
+<script type="text/javascript">
+document.getElementById('choose-city').addEventListener('change', function(ev) {
+  const plot = document.querySelector('#city-plot > img')
+  plot.src = ev.target.value
+  plot.setAttribute('alt', ev.target.dataset.city)
+})
+</script>

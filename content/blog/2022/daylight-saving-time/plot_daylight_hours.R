@@ -39,15 +39,16 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       events = paste(event, collapse = ","),
       label = first(event),
       starts = starts[!is.na(starts)],
-      ends = ends[!is.na(ends)]
+      ends = ends[!is.na(ends)],
+      .groups = "drop"
     ) %>% 
-    ungroup() %>%
     mutate(
       across(c(starts, ends), as.numeric),
-      starts = if_else(starts > 12 * 60^2, 0 - starts, starts),
-      ends = if_else(ends < 12 * 60^2, 24 * 60^2 + ends, ends),
+      ends = if_else(ends < 60^2, 24 * 60^2, ends),
       label = factor(label, c("nauticalDawn", "dawn", "sunrise"))
-    )
+    ) %>% 
+    complete(nesting(date, tz), nesting(label, events)) %>%
+    replace_na(list(starts = 0, ends = 24 * 60^2))
   
   x_breaks <- seq(
     from = as.Date("2022-01-01"),
@@ -191,7 +192,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
     labs(
       x = NULL,
       y = NULL,
-      title = "How long are the days near me?",
+      title = "How long are the days in",
       subtitle = title,
       caption = "garrickadenbuie.com"
     ) +
@@ -199,11 +200,10 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
     theme_minimal(base_family = font_family, base_size = 16) +
     theme(
       plot.title = element_text(color = color_text, hjust = 0, size = 14),
-      plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 6)),
+      plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 24)),
       plot.title.position = "plot",
       plot.background = element_rect(fill = "#39304a"),
       plot.margin = margin(20, 0, 20, 10),
-      # panel.border = element_rect(color = color_text, fill = NA),
       panel.grid = element_blank(),
       axis.text = element_text(color = color_text),
       axis.title = element_text(color = color_text),
@@ -239,7 +239,7 @@ download_cities <- function() {
   ) %>% 
     janitor::clean_names() %>% 
     filter(population > 50000) %>% 
-    select(asciiname, lat, lon, country, admin_code, tz, population)
+    select(city = asciiname, lat, lon, country, admin_code, tz, population)
   
   country_codes <- readr::read_csv("https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/raw/master/all/all.csv") %>% 
     janitor::clean_names() %>% 
