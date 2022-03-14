@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.21315
+    ## [1] 33.3103
     ## 
     ## $lon
-    ## [1] -84.2918
+    ## [1] -85.12855
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -301,8 +301,10 @@ ggplot(tidier_sun_times) +
 
 ## Around the World
 
-<label for="choose-city">Pick a city</label>
-<select id="choose-city">
+<div class="pa">
+<label class="b db mb2" for="choose-city">Pick a city</label>
+<div class="mb2">
+<select id="choose-city" class="input-reset ba pa2 select-dropdown-arrow">
 <option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
 <option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
 <option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
@@ -334,20 +336,58 @@ ggplot(tidier_sun_times) +
 <option value="cities/port_moresby_papua_new_guinea.png" data-city="Port Moresby, Papua New Guinea">Port Moresby, Papua New Guinea</option>
 <option value="cities/noumea_new_caledonia.png" data-city="Noumea, New Caledonia">Noumea, New Caledonia</option>
 </select>
-<div id="city-plot">
+<button id="choose-city-prev" class="link dim ph3 pv2 ba br1">
+<i class="fa fa-arrow-left" role="presentation" aria-label="arrow-left icon"></i>
+<span class="clip">Previous city</span>
+</button>
+<button id="choose-city-next" class="link dim ph3 pv2 ba br1">
+<i class="fa fa-arrow-right" role="presentation" aria-label="arrow-right icon"></i>
+<span class="clip">Next city</span>
+</button>
+</div>
+</div>
+<div id="city-plot" aria-live="polite">
 <img src="cities/alexandria_egypt.png" alt="Alexandria, Egypt"/>
 </div>
+<!-- html_preserve -->
 <style type="text/css">
 .city-plots {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
+.select-dropdown-arrow::after {
+  content: "";
+  justify-self: end;
+  width: 0.8em;
+  height: 0.5em;
+  background-color: var(-sidebarTextColorCustom);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
 </style>
 <script type="text/javascript">
-document.getElementById('choose-city').addEventListener('change', function(ev) {
+function updatePlotSelectedCity() {
   const plot = document.querySelector('#city-plot > img')
-  plot.src = ev.target.value
-  plot.setAttribute('alt', ev.target.dataset.city)
-})
+  const inputCity = document.getElementById('choose-city')
+  plot.src = inputCity.value
+  plot.setAttribute('alt', inputCity.dataset.city)
+}
+document.addEventListener('DOMContentLoaded', updatePlotSelectedCity)
+document.getElementById('choose-city').addEventListener('change', updatePlotSelectedCity)
+Array.from(
+  document.getElementById('choose-city').parentElement.querySelectorAll('button')
+).map(btn => btn.addEventListener('click', function(ev) {
+    const inputCity = document.getElementById('choose-city')
+    const idxCurrent = Array.from(inputCity.options).findIndex(el => inputCity.value == el.value)
+    let idxNext = idxCurrent + (ev.target.matches('#choose-city-prev') ? -1 : 1)
+    if (idxNext < 0) {
+      idxNext = inputCity.options.length - 1
+    } else if (idxNext >= inputCity.options.length) {
+      idxNext = 0
+    }
+    inputCity.value = inputCity.options[idxNext].value
+    inputCity.dispatchEvent(new Event('change'))
+  })
+)
 </script>
+<!-- /html_preserve -->

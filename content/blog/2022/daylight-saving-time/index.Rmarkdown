@@ -329,7 +329,7 @@ cities %>%
   write_csv("cities_largest.csv")
 ```
 
-```{r echo = FALSE}
+```{r city_plot_data, echo = FALSE}
 city_plot_data <- 
   cities_largest %>%
   mutate(
@@ -344,7 +344,9 @@ city_plot_data <-
     file = fs::path("cities", snakecase::to_snake_case(title), ext = "png")
   ) %>%
   select(lat, lon, timezone = tz, title, file)
-  
+```
+
+```{r echo = FALSE, eval = FALSE}
 plots_cities <-
   city_plot_data %>%
   split(.$file) %>%
@@ -366,34 +368,90 @@ iwalk(plots_cities, function(g, file) {
 ```
 
 ```{r echo=FALSE}
-htmltools::tagList(
-  htmltools::tags$label(`for` = "choose-city", "Pick a city"),
-  htmltools::tags$select(
-    id = "choose-city",
-    map(transpose(city_plot_data), ~ htmltools::tags$option(value = .x$file, `data-city` = .x$title, .x$title))
+city_options <- map(transpose(city_plot_data), function(.x) {
+  htmltools::tags$option(value = .x$file, `data-city` = .x$title, .x$title)
+})
+
+htmltools::withTags(
+  div(
+    class = "pa",
+    label(
+      class = "b db mb2",
+      `for` = "choose-city",
+      "Pick a city"
+    ),
+    div(
+      class = "mb2",
+      select(
+        id = "choose-city",
+        class = "input-reset ba pa2 select-dropdown-arrow",
+        city_options
+      ),
+      button(
+        id = "choose-city-prev",
+        class = "link dim ph3 pv2 ba br1",
+        htmltools::HTML(format(shiny::icon("arrow-left"))),
+        span(class = "clip", "Previous city")
+      ),
+      button(
+        id = "choose-city-next",
+        class = "link dim ph3 pv2 ba br1",
+        htmltools::HTML(format(shiny::icon("arrow-right"))),
+        span(class = "clip", "Next city")
+      )
+    )
   )
 )
 ```
 
 ```{r echo=FALSE}
 htmltools::tags$div(
-  id = "city-plot", 
+  id = "city-plot",
+  `aria-live` = "polite",
   htmltools::img(src = "cities/alexandria_egypt.png", alt = "Alexandria, Egypt")
 )
 ```
 
+<!-- html_preserve -->
 ```{css echo=FALSE}
 .city-plots {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
+.select-dropdown-arrow::after {
+  content: "";
+  justify-self: end;
+  width: 0.8em;
+  height: 0.5em;
+  background-color: var(-sidebarTextColorCustom);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
 ```
 
 ```{js echo=FALSE}
-document.getElementById('choose-city').addEventListener('change', function(ev) {
+function updatePlotSelectedCity() {
   const plot = document.querySelector('#city-plot > img')
-  plot.src = ev.target.value
-  plot.setAttribute('alt', ev.target.dataset.city)
-})
+  const inputCity = document.getElementById('choose-city')
+  plot.src = inputCity.value
+  plot.setAttribute('alt', inputCity.dataset.city)
+}
+document.addEventListener('DOMContentLoaded', updatePlotSelectedCity)
+document.getElementById('choose-city').addEventListener('change', updatePlotSelectedCity)
+Array.from(
+  document.getElementById('choose-city').parentElement.querySelectorAll('button')
+).map(btn => btn.addEventListener('click', function(ev) {
+    const inputCity = document.getElementById('choose-city')
+    const idxCurrent = Array.from(inputCity.options).findIndex(el => inputCity.value == el.value)
+    let idxNext = idxCurrent + (ev.target.matches('#choose-city-prev') ? -1 : 1)
+    if (idxNext < 0) {
+      idxNext = inputCity.options.length - 1
+    } else if (idxNext >= inputCity.options.length) {
+      idxNext = 0
+    }
+    inputCity.value = inputCity.options[idxNext].value
+    inputCity.dispatchEvent(new Event('change'))
+  })
+)
 ```
+<!-- /html_preserve -->
