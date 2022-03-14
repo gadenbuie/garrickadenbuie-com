@@ -34,10 +34,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.79201
+    ## [1] 34.31573
     ## 
     ## $lon
-    ## [1] -84.45807
+    ## [1] -85.42272
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -305,36 +305,41 @@ ggplot(tidier_sun_times) +
 <label class="b db mb2" for="choose-city">Pick a city</label>
 <div class="mb2">
 <select id="choose-city" class="input-reset bn pa2 select-dropdown-arrow custom-text-color br1 custom-bg-light">
-<option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
-<option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
-<option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
-<option value="cities/kinshasa_drc.png" data-city="Kinshasa, DRC">Kinshasa, DRC</option>
-<option value="cities/buenos_aires_argentina.png" data-city="Buenos Aires, Argentina">Buenos Aires, Argentina</option>
-<option value="cities/mexico_city_mexico.png" data-city="Mexico City, Mexico">Mexico City, Mexico</option>
-<option value="cities/new_york_city_us.png" data-city="New York City, US">New York City, US</option>
-<option value="cities/toronto_canada.png" data-city="Toronto, Canada">Toronto, Canada</option>
-<option value="cities/almaty_kazakhstan.png" data-city="Almaty, Kazakhstan">Almaty, Kazakhstan</option>
-<option value="cities/tashkent_uzbekistan.png" data-city="Tashkent, Uzbekistan">Tashkent, Uzbekistan</option>
-<option value="cities/shanghai_china.png" data-city="Shanghai, China">Shanghai, China</option>
-<option value="cities/seoul_korea.png" data-city="Seoul, Korea">Seoul, Korea</option>
-<option value="cities/manila_philippines.png" data-city="Manila, Philippines">Manila, Philippines</option>
-<option value="cities/jakarta_indonesia.png" data-city="Jakarta, Indonesia">Jakarta, Indonesia</option>
-<option value="cities/mumbai_india.png" data-city="Mumbai, India">Mumbai, India</option>
-<option value="cities/karachi_pakistan.png" data-city="Karachi, Pakistan">Karachi, Pakistan</option>
-<option value="cities/istanbul_turkey.png" data-city="Istanbul, Turkey">Istanbul, Turkey</option>
-<option value="cities/baghdad_iraq.png" data-city="Baghdad, Iraq">Baghdad, Iraq</option>
-<option value="cities/moscow_russia.png" data-city="Moscow, Russia">Moscow, Russia</option>
 <option value="cities/saint_petersburg_russia.png" data-city="Saint Petersburg, Russia">Saint Petersburg, Russia</option>
-<option value="cities/london_gb.png" data-city="London, GB">London, GB</option>
-<option value="cities/stockholm_sweden.png" data-city="Stockholm, Sweden">Stockholm, Sweden</option>
-<option value="cities/madrid_spain.png" data-city="Madrid, Spain">Madrid, Spain</option>
-<option value="cities/rome_italy.png" data-city="Rome, Italy">Rome, Italy</option>
+<option value="cities/moscow_russia.png" data-city="Moscow, Russia">Moscow, Russia</option>
 <option value="cities/berlin_germany.png" data-city="Berlin, Germany">Berlin, Germany</option>
-<option value="cities/paris_france.png" data-city="Paris, France">Paris, France</option>
-<option value="cities/sydney_australia.png" data-city="Sydney, Australia">Sydney, Australia</option>
-<option value="cities/melbourne_australia.png" data-city="Melbourne, Australia">Melbourne, Australia</option>
+<option value="cities/london_gb.png" data-city="London, GB">London, GB</option>
+<option value="cities/kiev_ukraine.png" data-city="Kiev, Ukraine">Kiev, Ukraine</option>
+<option value="cities/rome_italy.png" data-city="Rome, Italy">Rome, Italy</option>
+<option value="cities/istanbul_turkey.png" data-city="Istanbul, Turkey">Istanbul, Turkey</option>
+<option value="cities/new_york_city_us.png" data-city="New York City, US">New York City, US</option>
+<option value="cities/madrid_spain.png" data-city="Madrid, Spain">Madrid, Spain</option>
+<option value="cities/shanghai_china.png" data-city="Shanghai, China">Shanghai, China</option>
+<option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
+<option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
+<option value="cities/delhi_india.png" data-city="Delhi, India">Delhi, India</option>
+<option value="cities/karachi_pakistan.png" data-city="Karachi, Pakistan">Karachi, Pakistan</option>
+<option value="cities/dhaka_bangladesh.png" data-city="Dhaka, Bangladesh">Dhaka, Bangladesh</option>
+<option value="cities/mexico_city_mexico.png" data-city="Mexico City, Mexico">Mexico City, Mexico</option>
+<option value="cities/mumbai_india.png" data-city="Mumbai, India">Mumbai, India</option>
+<option value="cities/manila_philippines.png" data-city="Manila, Philippines">Manila, Philippines</option>
+<option value="cities/kano_nigeria.png" data-city="Kano, Nigeria">Kano, Nigeria</option>
+<option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
+<option value="cities/abidjan_côte_d_ivoire.png" data-city="Abidjan, Côte d&#39;Ivoire">Abidjan, Côte d'Ivoire</option>
+<option value="cities/bogota_colombia.png" data-city="Bogota, Colombia">Bogota, Colombia</option>
+<option value="cities/kinshasa_drc.png" data-city="Kinshasa, DRC">Kinshasa, DRC</option>
 <option value="cities/port_moresby_papua_new_guinea.png" data-city="Port Moresby, Papua New Guinea">Port Moresby, Papua New Guinea</option>
+<option value="cities/lima_peru.png" data-city="Lima, Peru">Lima, Peru</option>
+<option value="cities/suva_fiji.png" data-city="Suva, Fiji">Suva, Fiji</option>
 <option value="cities/noumea_new_caledonia.png" data-city="Noumea, New Caledonia">Noumea, New Caledonia</option>
+<option value="cities/rio_de_janeiro_brazil.png" data-city="Rio de Janeiro, Brazil">Rio de Janeiro, Brazil</option>
+<option value="cities/sao_paulo_brazil.png" data-city="Sao Paulo, Brazil">Sao Paulo, Brazil</option>
+<option value="cities/sydney_australia.png" data-city="Sydney, Australia">Sydney, Australia</option>
+<option value="cities/cape_town_south_africa.png" data-city="Cape Town, South Africa">Cape Town, South Africa</option>
+<option value="cities/buenos_aires_argentina.png" data-city="Buenos Aires, Argentina">Buenos Aires, Argentina</option>
+<option value="cities/auckland_new_zealand.png" data-city="Auckland, New Zealand">Auckland, New Zealand</option>
+<option value="cities/melbourne_australia.png" data-city="Melbourne, Australia">Melbourne, Australia</option>
+<option value="cities/wellington_new_zealand.png" data-city="Wellington, New Zealand">Wellington, New Zealand</option>
 </select>
 <button id="choose-city-prev" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
 <i class="fa fa-arrow-left" role="presentation" aria-label="arrow-left icon"></i>
@@ -347,7 +352,7 @@ ggplot(tidier_sun_times) +
 </div>
 </div>
 <div id="city-plot" aria-live="polite">
-<img src="cities/alexandria_egypt.png" alt="Alexandria, Egypt"/>
+<img src="cities/saint_petersburg_russia.png" alt="Saint Petersburg, Russia"/>
 </div>
 <!-- html_preserve -->
 <style type="text/css">
@@ -379,7 +384,8 @@ Array.from(
 ).map(btn => btn.addEventListener('click', function(ev) {
     const inputCity = document.getElementById('choose-city')
     const idxCurrent = Array.from(inputCity.options).findIndex(el => inputCity.value == el.value)
-    let idxNext = idxCurrent + (ev.target.matches('#choose-city-prev') ? -1 : 1)
+    let idxNext = idxCurrent + (ev.currentTarget.id === 'choose-city-prev' ? -1 : 1)
+    console.log({idxCurrent, idxNext})
     if (idxNext < 0) {
       idxNext = inputCity.options.length - 1
     } else if (idxNext >= inputCity.options.length) {
