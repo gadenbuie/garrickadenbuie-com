@@ -21,6 +21,72 @@ editor_options:
 
 <!-- Links -->
 
+## Are we saving daylight in Atlanta, GA?
+
+<figure role="group">
+  <img src="{{< blogdown/postref >}}index_files/figure-html/daylight-hours-atlanta-1.png"
+    alt="Ribbon plot showing sunrise and sunset times in Atlanta, GA for 2022 and highlighting the shift from Daylight Saving Time that adjusts daylight hours to be later in the day from March to November.">
+  <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
+</figure>
+
+![]()
+
+## Around the World
+
+<div class="pa">
+<label class="b db mb2" for="choose-city">Pick a city</label>
+<div class="mb2">
+<select id="choose-city" class="input-reset db di-ns mb2 pa2 bn br1 w-100 mw5 select-dropdown-arrow custom-text-color custom-bg-light">
+<option value="cities/stockholm_sweden.png" data-city="Stockholm, Sweden">Stockholm, Sweden</option>
+<option value="cities/london_united_kingdom.png" data-city="London, United Kingdom">London, United Kingdom</option>
+<option value="cities/karagandy_kazakhstan.png" data-city="Karagandy, Kazakhstan">Karagandy, Kazakhstan</option>
+<option value="cities/vancouver_canada.png" data-city="Vancouver, Canada">Vancouver, Canada</option>
+<option value="cities/paris_france.png" data-city="Paris, France">Paris, France</option>
+<option value="cities/harbin_china.png" data-city="Harbin, China">Harbin, China</option>
+<option value="cities/toronto_canada.png" data-city="Toronto, Canada">Toronto, Canada</option>
+<option value="cities/istanbul_turkey.png" data-city="Istanbul, Turkey">Istanbul, Turkey</option>
+<option value="cities/new_york_city_usa.png" data-city="New York City, USA">New York City, USA</option>
+<option value="cities/madrid_spain.png" data-city="Madrid, Spain">Madrid, Spain</option>
+<option value="cities/seoul_korea.png" data-city="Seoul, Korea">Seoul, Korea</option>
+<option value="cities/san_jose_usa.png" data-city="San Jose, USA">San Jose, USA</option>
+<option value="cities/algiers_algeria.png" data-city="Algiers, Algeria">Algiers, Algeria</option>
+<option value="cities/los_angeles_usa.png" data-city="Los Angeles, USA">Los Angeles, USA</option>
+<option value="cities/shanghai_china.png" data-city="Shanghai, China">Shanghai, China</option>
+<option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
+<option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
+<option value="cities/houston_usa.png" data-city="Houston, USA">Houston, USA</option>
+<option value="cities/karachi_pakistan.png" data-city="Karachi, Pakistan">Karachi, Pakistan</option>
+<option value="cities/mexico_city_mexico.png" data-city="Mexico City, Mexico">Mexico City, Mexico</option>
+<option value="cities/mumbai_india.png" data-city="Mumbai, India">Mumbai, India</option>
+<option value="cities/nouakchott_mauritania.png" data-city="Nouakchott, Mauritania">Nouakchott, Mauritania</option>
+<option value="cities/manila_philippines.png" data-city="Manila, Philippines">Manila, Philippines</option>
+<option value="cities/kano_nigeria.png" data-city="Kano, Nigeria">Kano, Nigeria</option>
+<option value="cities/caracas_venezuela.png" data-city="Caracas, Venezuela">Caracas, Venezuela</option>
+<option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
+<option value="cities/bogota_colombia.png" data-city="Bogota, Colombia">Bogota, Colombia</option>
+<option value="cities/jakarta_indonesia.png" data-city="Jakarta, Indonesia">Jakarta, Indonesia</option>
+<option value="cities/sydney_australia.png" data-city="Sydney, Australia">Sydney, Australia</option>
+<option value="cities/cape_town_south_africa.png" data-city="Cape Town, South Africa">Cape Town, South Africa</option>
+<option value="cities/buenos_aires_argentina.png" data-city="Buenos Aires, Argentina">Buenos Aires, Argentina</option>
+<option value="cities/punta_arenas_chile.png" data-city="Punta Arenas, Chile">Punta Arenas, Chile</option>
+</select>
+<button id="choose-city-prev" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
+<i class="fa fa-arrow-left" role="presentation" aria-label="arrow-left icon"></i>
+<span class="clip">Previous city</span>
+</button>
+<button id="choose-city-next" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
+<i class="fa fa-arrow-right" role="presentation" aria-label="arrow-right icon"></i>
+<span class="clip">Next city</span>
+</button>
+</div>
+</div>
+<div aria-live="polite">
+<figure role="group">
+<img id="city-plot" src="cities/stockholm_sweden.png" alt="Stockholm, Sweden"/>
+<figcaption>TK: Sun times plot.</figcaption>
+</figure>
+</div>
+
 ## Inspiration
 
 [How long are the nights?](https://plotparade.com/gallery_sunrise.html)
@@ -38,10 +104,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.54518
+    ## [1] 33.93018
     ## 
     ## $lon
-    ## [1] -84.15202
+    ## [1] -83.87836
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -301,63 +367,7 @@ ggplot(tidier_sun_times) +
   )
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/daylight-hours-atlanta-1.png" width="864" />
-
-## Around the World
-
-<div class="pa">
-<label class="b db mb2" for="choose-city">Pick a city</label>
-<div class="mb2">
-<select id="choose-city" class="input-reset db di-ns mb2 pa2 bn br1 w-100 mw5 select-dropdown-arrow custom-text-color custom-bg-light">
-<option value="cities/stockholm_sweden.png" data-city="Stockholm, Sweden">Stockholm, Sweden</option>
-<option value="cities/london_united_kingdom.png" data-city="London, United Kingdom">London, United Kingdom</option>
-<option value="cities/karagandy_kazakhstan.png" data-city="Karagandy, Kazakhstan">Karagandy, Kazakhstan</option>
-<option value="cities/vancouver_canada.png" data-city="Vancouver, Canada">Vancouver, Canada</option>
-<option value="cities/paris_france.png" data-city="Paris, France">Paris, France</option>
-<option value="cities/harbin_china.png" data-city="Harbin, China">Harbin, China</option>
-<option value="cities/toronto_canada.png" data-city="Toronto, Canada">Toronto, Canada</option>
-<option value="cities/istanbul_turkey.png" data-city="Istanbul, Turkey">Istanbul, Turkey</option>
-<option value="cities/new_york_city_usa.png" data-city="New York City, USA">New York City, USA</option>
-<option value="cities/madrid_spain.png" data-city="Madrid, Spain">Madrid, Spain</option>
-<option value="cities/seoul_korea.png" data-city="Seoul, Korea">Seoul, Korea</option>
-<option value="cities/san_jose_usa.png" data-city="San Jose, USA">San Jose, USA</option>
-<option value="cities/algiers_algeria.png" data-city="Algiers, Algeria">Algiers, Algeria</option>
-<option value="cities/los_angeles_usa.png" data-city="Los Angeles, USA">Los Angeles, USA</option>
-<option value="cities/shanghai_china.png" data-city="Shanghai, China">Shanghai, China</option>
-<option value="cities/alexandria_egypt.png" data-city="Alexandria, Egypt">Alexandria, Egypt</option>
-<option value="cities/cairo_egypt.png" data-city="Cairo, Egypt">Cairo, Egypt</option>
-<option value="cities/houston_usa.png" data-city="Houston, USA">Houston, USA</option>
-<option value="cities/karachi_pakistan.png" data-city="Karachi, Pakistan">Karachi, Pakistan</option>
-<option value="cities/mexico_city_mexico.png" data-city="Mexico City, Mexico">Mexico City, Mexico</option>
-<option value="cities/mumbai_india.png" data-city="Mumbai, India">Mumbai, India</option>
-<option value="cities/nouakchott_mauritania.png" data-city="Nouakchott, Mauritania">Nouakchott, Mauritania</option>
-<option value="cities/manila_philippines.png" data-city="Manila, Philippines">Manila, Philippines</option>
-<option value="cities/kano_nigeria.png" data-city="Kano, Nigeria">Kano, Nigeria</option>
-<option value="cities/caracas_venezuela.png" data-city="Caracas, Venezuela">Caracas, Venezuela</option>
-<option value="cities/lagos_nigeria.png" data-city="Lagos, Nigeria">Lagos, Nigeria</option>
-<option value="cities/bogota_colombia.png" data-city="Bogota, Colombia">Bogota, Colombia</option>
-<option value="cities/jakarta_indonesia.png" data-city="Jakarta, Indonesia">Jakarta, Indonesia</option>
-<option value="cities/sydney_australia.png" data-city="Sydney, Australia">Sydney, Australia</option>
-<option value="cities/cape_town_south_africa.png" data-city="Cape Town, South Africa">Cape Town, South Africa</option>
-<option value="cities/buenos_aires_argentina.png" data-city="Buenos Aires, Argentina">Buenos Aires, Argentina</option>
-<option value="cities/punta_arenas_chile.png" data-city="Punta Arenas, Chile">Punta Arenas, Chile</option>
-</select>
-<button id="choose-city-prev" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
-<i class="fa fa-arrow-left" role="presentation" aria-label="arrow-left icon"></i>
-<span class="clip">Previous city</span>
-</button>
-<button id="choose-city-next" class="link dim ph3 pv2 bn br1 custom-text-color custom-bg-light">
-<i class="fa fa-arrow-right" role="presentation" aria-label="arrow-right icon"></i>
-<span class="clip">Next city</span>
-</button>
-</div>
-</div>
-<div aria-live="polite">
-<figure role="group">
-<img id="city-plot" src="cities/stockholm_sweden.png" alt="Stockholm, Sweden"/>
-<figcaption>TK: Sun times plot.</figcaption>
-</figure>
-</div>
+<!------------------ Left overs -------------------------->
 <!-- html_preserve -->
 <style type="text/css">
 .city-plots {
