@@ -38,10 +38,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.18746
+    ## [1] 34.54518
     ## 
     ## $lon
-    ## [1] -83.83705
+    ## [1] -84.15202
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -352,8 +352,11 @@ ggplot(tidier_sun_times) +
 </button>
 </div>
 </div>
-<div id="city-plot" aria-live="polite">
-<img src="cities/stockholm_sweden.png" alt="Stockholm, Sweden"/>
+<div aria-live="polite">
+<figure role="group">
+<img id="city-plot" src="cities/stockholm_sweden.png" alt="Stockholm, Sweden"/>
+<figcaption>TK: Sun times plot.</figcaption>
+</figure>
 </div>
 <!-- html_preserve -->
 <style type="text/css">
@@ -373,7 +376,7 @@ ggplot(tidier_sun_times) +
 </style>
 <script type="text/javascript">
 function updatePlotSelectedCity() {
-  const plot = document.querySelector('#city-plot > img')
+  const plot = document.getElementById('city-plot')
   const inputCity = document.getElementById('choose-city')
   plot.src = inputCity.value
   plot.setAttribute('alt', inputCity.dataset.city)
@@ -398,154 +401,3 @@ Array.from(
 )
 </script>
 <!-- /html_preserve -->
-
-``` r
-x_breaks <- seq(
-  from = as.Date("2022-01-01"),
-  to = as.Date("2023-01-01"),
-  by = "2 months"
-)
-y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
-color_text <- "#F2CDB9"
-color_bg <- "#39304a"
-
-ggplot(tidier_sun_times) +
-  aes(date) +
-  geom_text(
-    data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>% 
-      mutate(across(date, as.Date, origin = "1970-01-01")),
-    aes(label = label, y = time),
-    color = "#C29F5F"
-  ) +
-  geom_ribbon(
-    aes(ymin = starts, ymax = ends, fill = label, alpha = label),
-    show.legend = FALSE
-  ) +
-  geom_hline(
-    yintercept = c(9, 17) * 60^2,
-    color = color_bg,
-    alpha = 0.5,
-    linetype = 2
-  ) +
-  annotate(
-    geom = "text",
-    x = min(tidier_sun_times$date),
-    y = c(9, 17) * 60^2,
-    label = c("9am", "5pm"),
-    color = color_bg,
-    hjust = -0.25,
-    vjust = c(2, -1)
-  ) +
-  geom_text(
-    data = . %>% 
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
-      slice_head(n = 1),
-    aes(y = ends, label = tz),
-    hjust = 1,
-    vjust = 1,
-    nudge_x = -21,
-    nudge_y = -60^2 * 1.5,
-    lineheight = 0.8,
-    color = color_text
-  ) +
-  geom_curve(
-    data = . %>% 
-      filter(label == "nauticalDawn") %>%
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
-      slice_head(n = 1), 
-    aes(x = date - 17, xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
-    arrow = arrow(length = unit(0.08, "inch")), 
-    size = 0.5,
-    color = color_text,
-    curvature = 0.4
-  ) +
-  geom_text(
-    data = . %>% 
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
-      slice_tail(n = 1),
-    aes(y = starts, label = tz),
-    hjust = 1,
-    nudge_x = -21,
-    nudge_y = 60^2 * 1.5,
-    lineheight = 0.8,
-    color = color_text
-  ) +
-  geom_curve(
-    data = . %>% 
-      filter(label == "nauticalDawn") %>%
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
-      slice_tail(n = 1),
-    aes(x = date - 17, xend = date, y = starts - 60^2, yend = starts - 500),
-    arrow = arrow(length = unit(0.08, "inch")), 
-    size = 0.5,
-    color = color_text,
-    curvature = -0.4
-  ) +
-  ggrepel::geom_label_repel(
-    data = . %>% filter(date == max(date)) %>% 
-      separate_rows(events, sep = ",") %>% 
-      mutate(
-        date = date + 12,
-        time = if_else(events == label, starts, ends),
-        events = snakecase::to_title_case(events)
-      ),
-    aes(y = time, fill = label, label = events),
-    color = color_bg,
-    fontface = "bold",
-    show.legend = FALSE,
-    direction = "y",
-    min.segment.length = 20,
-    hjust = 0,
-    label.size = 0,
-    label.padding = 0.33,
-    box.padding = 0.25,
-    xlim = c(as.Date("2023-01-07"), NA)
-  ) +
-  scale_fill_manual(
-    values = c(
-      nauticalDawn = "#b56576",
-      dawn = "#eaac8b",
-      sunrise = "#ffd27d"
-    )
-  ) +
-  scale_alpha_discrete(range = c(0.5, 0.9)) +
-  scale_x_date(
-    breaks = x_breaks, 
-    date_labels = "%b", 
-    limits = c(
-      as.Date("2022-01-01"),
-      as.Date("2023-03-15")
-    ),
-    expand = expansion()
-  ) +
-  scale_y_reverse(
-    limits = c(max(tidier_sun_times$ends + 60^2), min(tidier_sun_times$starts - 60^2)),
-    breaks = y_breaks,
-    labels = paste0(seq(0, 24, by = 3), ":00"),
-    expand = expansion()
-  ) +
-  labs(
-    x = NULL,
-    y = NULL,
-    title = "How long are the days near me?",
-    subtitle = "Atlanta, GA",
-    caption = "garrickadenbuie.com"
-  ) +
-  coord_cartesian(clip = "off") +
-  theme_minimal(base_family = "Outfit", base_size = 16) +
-  theme(
-    plot.title = element_text(color = color_text, hjust = 0, size = 14),
-    plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 6)),
-    plot.title.position = "plot",
-    plot.background = element_rect(fill = color_bg),
-    plot.margin = margin(20, 0, 20, 10),
-    # panel.border = element_rect(color = color_text, fill = NA),
-    panel.grid = element_blank(),
-    axis.text = element_text(color = color_text),
-    axis.title = element_text(color = color_text),
-    plot.caption = element_text(color = "#726194", hjust = 0.97, vjust = -1),
-    plot.caption.position = "plot"
-  )
-```
-
-<img src="{{< blogdown/postref >}}index_files/figure-html/social-1.png" width="1216.32" />

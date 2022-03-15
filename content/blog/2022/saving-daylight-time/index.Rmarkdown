@@ -431,10 +431,19 @@ htmltools::withTags(
 ```
 
 ```{r echo=FALSE}
-htmltools::tags$div(
-  id = "city-plot",
-  `aria-live` = "polite",
-  htmltools::img(src = city_plot_data$file[[1]], alt = city_plot_data$title[[1]])
+htmltools::withTags(
+  div(
+    `aria-live` = "polite",
+    figure(
+      role = "group",
+      img(
+        id = "city-plot",
+        src = city_plot_data$file[[1]],
+        alt = city_plot_data$title[[1]]
+      ),
+      figcaption("TK: Sun times plot.")
+    )
+  )
 )
 ```
 
@@ -457,7 +466,7 @@ htmltools::tags$div(
 
 ```{js echo=FALSE}
 function updatePlotSelectedCity() {
-  const plot = document.querySelector('#city-plot > img')
+  const plot = document.getElementById('city-plot')
   const inputCity = document.getElementById('choose-city')
   plot.src = inputCity.value
   plot.setAttribute('alt', inputCity.dataset.city)
@@ -484,6 +493,6 @@ Array.from(
 <!-- /html_preserve -->
 
 
-```{r social, ref.label = "daylight-hours-atlanta", fig.width = 7 * 1.81, fig.height = 7}
+```{r social, ref.label = "daylight-hours-atlanta", fig.width = 7 * 1.81, fig.height = 7, echo = FALSE, fig.show = "hide"}
 # repeat atlanta plot sized for social
 ```
