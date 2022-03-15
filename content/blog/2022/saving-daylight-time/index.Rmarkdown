@@ -343,10 +343,6 @@ cities %>%
     cities %>% filter(population > 1e6, country != "RU") %>% slice_max(lat, n = 1),
     cities %>% filter(population > 1e5) %>% slice_min(lat, n = 1)
   ) %>%
-  # group_by(country_name) %>% 
-  # slice_max(population, n = 2, with_ties = FALSE) %>%
-  # group_by(region) %>%
-  # slice_max(population, n = 7, with_ties = FALSE) %>%
   write_csv("cities_largest.csv")
 ```
 
