@@ -104,10 +104,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.93018
+    ## [1] 33.19346
     ## 
     ## $lon
-    ## [1] -83.87836
+    ## [1] -83.82829
     ## 
     ## $timezone
     ## [1] "America/New_York"

@@ -56,7 +56,9 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
     by = "2 months"
   )
   y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
+  
   color_text <- "#F2CDB9"
+  color_caption <- "#726194"
   
   ggplot(tidy_sun_times) +
     aes(date) +
@@ -194,7 +196,14 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       y = NULL,
       title = "How long are the days in",
       subtitle = title,
-      caption = "garrickadenbuie.com"
+      caption = c(
+        glue::glue(
+          "{lat} {lon}",
+          lat = paste0(format(abs(lat), digits = 1, nsmall = 1), "\u00ba", if (lat >= 0) "N" else "S"),
+          lon = paste0(format(abs(lon), digits = 1, nsmall = 1), "\u00ba", if (lon >= 0) "E" else "W")
+        ),
+        "garrickadenbuie.com"
+      )
     ) +
     coord_cartesian(clip = "off") +
     theme_minimal(base_family = font_family, base_size = 16) +
@@ -207,7 +216,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       panel.grid = element_blank(),
       axis.text = element_text(color = color_text),
       axis.title = element_text(color = color_text),
-      plot.caption = element_text(color = "#726194", hjust = 0.97, vjust = -1),
+      plot.caption = element_text(color = color_caption, hjust = c(0, 0.97), vjust = -1),
       plot.caption.position = "plot"
     )
 }
