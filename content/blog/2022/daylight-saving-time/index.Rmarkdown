@@ -314,16 +314,36 @@ tidier_sun_times %>%
 
 ## Around the World
 
-```{r eval=FALSE, include=FALSE}
-source("plot_daylight_hours.R")
-cities <- download_cities()
+```{r include = FALSE}
+REBUILD <- FALSE
+```
 
+```{r eval=REBUILD, include=FALSE}
+source("plot_daylight_hours.R")
+if (fs::dir_exists("cities")) {
+  fs::dir_delete("cities")
+} 
+
+cities <- download_cities()
 cities %>% 
-  filter(city != "City of London", !is.na(country_name)) %>%
-  group_by(country_name) %>% 
-  slice_max(population, n = 2, with_ties = FALSE) %>%
-  group_by(region) %>%
-  slice_max(population, n = 7, with_ties = FALSE) %>%
+  filter(
+    city != "City of London", 
+    !is.na(country_name),
+    country != "RU"
+  ) %>%
+  mutate(lat_group = ggplot2::cut_number(lat, n = 10)) %>% 
+  group_by(lat_group, region) %>%
+  slice_max(population, n = 1, with_ties = FALSE) %>%
+  group_by(lat_group) %>% 
+  slice_max(population, n = 3, with_ties = FALSE) %>% 
+  bind_rows(
+    cities %>% filter(population > 1e6, country != "RU") %>% slice_max(lat, n = 1),
+    cities %>% filter(population > 1e5) %>% slice_min(lat, n = 1)
+  ) %>%
+  # group_by(country_name) %>% 
+  # slice_max(population, n = 2, with_ties = FALSE) %>%
+  # group_by(region) %>%
+  # slice_max(population, n = 7, with_ties = FALSE) %>%
   write_csv("cities_largest.csv")
 ```
 
@@ -338,10 +358,12 @@ city_plot_data <-
   arrange(desc(lat)) %>%
   mutate(
     country_name = case_when(
-      country %in% c("US", "GB") ~ country,
+      country == "US" ~ "USA",
+      country == "GB" ~ "United Kingdom",
       country == "CD" ~ "DRC",
       country == "KR" ~ "Korea",
       country == "RU" ~ "Russia",
+      country == "VE" ~ "Venezuela",
       TRUE ~ country_name
     ),
     title = glue::glue("{city}, {country_name}"),
@@ -350,7 +372,7 @@ city_plot_data <-
   select(lat, lon, timezone = tz, title, file)
 ```
 
-```{r echo = FALSE, eval = FALSE}
+```{r echo = FALSE, eval = REBUILD}
 plots_cities <-
   city_plot_data %>%
   split(.$file) %>%
@@ -389,7 +411,7 @@ htmltools::withTags(
       class = "mb2",
       select(
         id = "choose-city",
-        class = "input-reset db di-ns mb2 pa2 ba br1 select-dropdown-arrow custom-text-color custom-bg-light",
+        class = "input-reset db di-ns mb2 pa2 bn br1 w-100 mw5 select-dropdown-arrow custom-text-color custom-bg-light",
         city_options
       ),
       button(
