@@ -25,7 +25,7 @@ editor_options:
 
 <figure role="group">
   <img src="{{< blogdown/postref >}}index_files/figure-html/daylight-hours-atlanta-1.png"
-    alt="Ribbon plot showing sunrise and sunset times in Atlanta, GA for 2022 and highlighting the shift from Daylight Saving Time that adjusts daylight hours to be later in the day from March to November.">
+    alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
   <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
 </figure>
 
@@ -102,10 +102,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.27086
+    ## [1] 33.47009
     ## 
     ## $lon
-    ## [1] -85.32333
+    ## [1] -84.31423
     ## 
     ## $timezone
     ## [1] "America/New_York"

@@ -37,7 +37,7 @@ library(tidyverse)
 ```{=html}
 <figure role="group">
   <img src="`r knitr::fig_chunk("daylight-hours-atlanta", "png")`"
-    alt="Ribbon plot showing sunrise and sunset times in Atlanta, GA for 2022 and highlighting the shift from Daylight Saving Time that adjusts daylight hours to be later in the day from March to November.">
+    alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
   <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
 </figure>
 ```
