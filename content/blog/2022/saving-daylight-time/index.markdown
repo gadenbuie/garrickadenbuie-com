@@ -29,8 +29,6 @@ editor_options:
   <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
 </figure>
 
-![]()
-
 ## Around the World
 
 <div class="pa">
@@ -104,10 +102,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.19346
+    ## [1] 34.27086
     ## 
     ## $lon
-    ## [1] -83.82829
+    ## [1] -85.32333
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -367,7 +365,6 @@ ggplot(tidier_sun_times) +
   )
 ```
 
-<!------------------ Left overs -------------------------->
 <!-- html_preserve -->
 <style type="text/css">
 .city-plots {

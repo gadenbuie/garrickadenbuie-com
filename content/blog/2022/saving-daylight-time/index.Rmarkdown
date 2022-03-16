@@ -41,12 +41,11 @@ library(tidyverse)
   <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
 </figure>
 ```
-![]()
 
 ## Around the World
 
 ```{r include = FALSE}
-REBUILD <- FALSE
+REBUILD <- TRUE
 ```
 
 ```{r eval=REBUILD, include=FALSE}
@@ -460,8 +459,6 @@ tidier_sun_times %>%
     labels = function(x) paste0(round(x / 60), "h")
   )
 ```
-
-<!------------------ Left overs -------------------------->
 
 <!-- html_preserve -->
 ```{css echo=FALSE}

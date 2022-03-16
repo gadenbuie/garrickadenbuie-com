@@ -68,9 +68,38 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       aes(label = label, y = time),
       color = "#C29F5F"
     ) +
-    geom_ribbon(
-      aes(ymin = starts, ymax = ends, fill = label, alpha = label),
-      show.legend = FALSE
+    ggfx::with_shadow(
+      geom_ribbon(
+        data = . %>% filter(label == "nauticalDawn"),
+        aes(ymin = starts, ymax = ends, fill = label, alpha = label),
+        show.legend = FALSE
+      ),
+      colour = "#444444",
+      x_offset = 0,
+      y_offset = 0,
+      sigma = 1.66
+    ) +
+    ggfx::with_shadow(
+      geom_ribbon(
+        data = . %>% filter(label == "dawn"),
+        aes(ymin = starts, ymax = ends, fill = label, alpha = label),
+        show.legend = FALSE
+      ),
+      colour = "#444444",
+      x_offset = 0,
+      y_offset = 0,
+      sigma = 1.66
+    ) +
+    ggfx::with_shadow(
+      geom_ribbon(
+        data = . %>% filter(label == "sunrise"),
+        aes(ymin = starts, ymax = ends, fill = label, alpha = label),
+        show.legend = FALSE
+      ),
+      colour = "#444444",
+      x_offset = 0,
+      y_offset = 0,
+      sigma = 1.66
     ) +
     geom_hline(
       yintercept = c(9, 17) * 60^2,
