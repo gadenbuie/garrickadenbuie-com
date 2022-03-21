@@ -30,6 +30,7 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 
 library(tidyverse)
+source("plot_daylight_hours.R")
 ```
 
 ## Are we saving daylight in Atlanta, GA?
@@ -44,84 +45,12 @@ library(tidyverse)
 
 ## Around the World
 
-```{r include = FALSE}
-REBUILD <- TRUE
-```
-
-```{r eval=REBUILD, include=FALSE}
-source("plot_daylight_hours.R")
-if (fs::dir_exists("cities")) {
-  fs::dir_delete("cities")
-} 
-
-cities <- download_cities()
-cities %>% 
-  filter(
-    city != "City of London", 
-    !is.na(country_name),
-    country != "RU"
-  ) %>%
-  mutate(lat_group = ggplot2::cut_number(lat, n = 10)) %>% 
-  group_by(lat_group, region) %>%
-  slice_max(population, n = 1, with_ties = FALSE) %>%
-  group_by(lat_group) %>% 
-  slice_max(population, n = 3, with_ties = FALSE) %>% 
-  bind_rows(
-    cities %>% filter(population > 1e6, country != "RU") %>% slice_max(lat, n = 1),
-    cities %>% filter(population > 1e5) %>% slice_min(lat, n = 1)
-  ) %>%
-  write_csv("cities_largest.csv")
-```
-
 ```{r echo = FALSE, include = FALSE}
-source("plot_daylight_hours.R")
-cities_largest <- readr::read_csv("cities_largest.csv")
-```
-
-```{r city_plot_data, echo = FALSE}
-city_plot_data <- 
-  cities_largest %>%
-  arrange(desc(lat)) %>%
-  mutate(
-    country_name = case_when(
-      country == "US" ~ "USA",
-      country == "GB" ~ "United Kingdom",
-      country == "CD" ~ "DRC",
-      country == "KR" ~ "Korea",
-      country == "RU" ~ "Russia",
-      country == "VE" ~ "Venezuela",
-      TRUE ~ country_name
-    ),
-    title = glue::glue("{city}, {country_name}"),
-    file = fs::path("cities", snakecase::to_snake_case(title), ext = "png")
-  ) %>%
-  select(lat, lon, timezone = tz, title, file)
-```
-
-```{r echo = FALSE, eval = REBUILD}
-plots_cities <-
-  city_plot_data %>%
-  split(.$file) %>%
-  map(select, -file) %>%
-  map(pmap, plot_sun_times) %>% 
-  flatten()
-
-fs::dir_create("cities")
-
-iwalk(plots_cities, function(g, file) {
-  message(file)
-  ggsave(
-    file,
-    plot = g,
-    width = 9,
-    height = 8,
-    dpi = 150
-  )
-})
+cities_world <- readr::read_rds("cities_world.rds")
 ```
 
 ```{r echo=FALSE}
-city_options <- map(transpose(city_plot_data), function(.x) {
+city_options <- map(transpose(cities_world), function(.x) {
   htmltools::tags$option(value = .x$file, `data-city` = .x$title, .x$title)
 })
 
@@ -165,13 +94,61 @@ htmltools::withTags(
       role = "group",
       img(
         id = "city-plot",
-        src = city_plot_data$file[[1]],
-        alt = city_plot_data$title[[1]]
+        src = cities_world$file[[1]],
+        alt = cities_world$title[[1]]
       ),
       figcaption("TK: Sun times plot.")
     )
   )
 )
+```
+
+
+## Across the US
+
+```{r cities_us_json, echo=FALSE}
+cities_us <- read_rds("cities_us.rds")
+cities_us %>%
+  filter(!str_detect(city, "Metropolitan Government")) %>%
+  arrange(state, city) %>%
+  select(title, path) %>%
+  pmap(function(title, path) {
+    htmltools::tags$option(value = path, title)
+  }) %>% {
+    htmltools::withTags(
+      div(
+        class = "pa",
+        label(
+          class = "b db mb2",
+          `for` = "us-city",
+          "Pick a city in the United States"
+        ),
+        select(id = "us-city", .)
+      )
+    )
+  }
+```
+
+```{=html}
+<link href="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
+<div id="us-city-plot" aria-live="polite">
+<figure role="group">
+<img src="washington_d_c_normal.png" alt="Washington, D.C.">
+<figcaption>Sunrise and sunset times in Washington, D.C.</figcaption>
+</figure>
+</div>
+```
+
+```{js echo=FALSE}
+const selectr = new Selectr('#us-city')
+selectr.on('selectr.change', function(option) {
+  const plotDiv = document.getElementById('us-city-plot')
+  const plotImg = plotDiv.querySelector('img')
+  plotImg.src = option.value + '_normal.png'
+  plotImg.alt = option.innerText
+  plotDiv.querySelector('figcaption').innerText = `Sunrise and sunset times in ${option.innerText}`
+})
 ```
 
 

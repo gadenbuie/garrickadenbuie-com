@@ -1,4 +1,62 @@
-plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
+make_no_time_change <- function(tidy_sun_times, lon, keep = "dst") {
+  keep <- match.arg(keep, c("dst", "standard"))
+  times <- tidy_sun_times$time
+  
+  dst_offset <-
+    lubridate::force_tz(times, "UTC") %>% 
+    difftime(times, units = "secs") %>% 
+    as.numeric()
+  
+  times <- lubridate::force_tz(times, "UTC")
+
+  time_offsets <- 
+    if (keep == "dst") {
+      lubridate::seconds(max(dst_offset) - dst_offset)
+    } else (
+      lubridate::seconds(min(dst_offset) - dst_offset)
+    )
+  
+  tidy_sun_times$time <- times + as.integer(time_offsets)
+  tidy_sun_times$tz <- "UTC"
+  tidy_sun_times
+}
+
+hms_dbl <- function(x) {
+  lubridate::hour(x) * 60^2 +
+    lubridate::minute(x) * 60 +
+    lubridate::second(x)
+}
+
+hms_str <- function(x, hours_24 = FALSE, drop = 0) {
+  hours <- floor(x / 60^2)
+  x <- x - hours * 60^2
+  am_pm <- if (hours_24) "" else if (hours >= 12) " pm" else " am"
+  
+  hours <- if (hours_24 && hours != 24) {
+    sprintf("%02d", hours %% 12)
+  } else {
+    sprintf("%d", hours)
+  }
+  if (drop > 1) {
+    return(sprintf("%s%s", hours, am_pm))
+  }
+  mins <- floor(x / 60)
+  if (drop > 0) {
+    return(sprintf("%s:%02d%s", hours, mins, am_pm))
+  }
+  x <- x - mins * 60
+  secs <- floor(x)
+  sprintf("%s:%02d:%02d%s", hours, mins, secs, am_pm)
+}
+
+plot_sun_times <- function(
+  lat, 
+  lon, 
+  timezone, 
+  title, 
+  font_family = "Outfit", 
+  stay_in = c("no", "dst", "standard")
+) {
   sun_times <- 
     suncalc::getSunlightTimes(
       date = seq(
@@ -16,9 +74,16 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
     sun_times %>% 
     select(-lat, -lon) %>%
     pivot_longer(-date, names_to = "event", values_to = "time") %>% 
+    mutate(tz = strftime(time, "%Z", tz = timezone))
+  
+  if (stay_in %in% c("dst", "standard")) {
+    tidy_sun_times <- make_no_time_change(tidy_sun_times, lon, keep = stay_in)
+  }
+  
+  tidy_sun_times <- 
+    tidy_sun_times %>% 
     mutate(
-      tz = strftime(time, "%Z", tz = timezone),
-      time = hms::as_hms(time),
+      time = hms_dbl(time),
       period = case_when(
         str_detect(event, "[dD]awn|sunrise") ~ "starts",
         str_detect(event, "[dD]usk|sunset") ~ "ends"
@@ -74,7 +139,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         aes(ymin = starts, ymax = ends, fill = label, alpha = label),
         show.legend = FALSE
       ),
-      colour = "#444444",
+      colour = "#666666",
       x_offset = 0,
       y_offset = 0,
       sigma = 1.66
@@ -85,7 +150,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         aes(ymin = starts, ymax = ends, fill = label, alpha = label),
         show.legend = FALSE
       ),
-      colour = "#444444",
+      colour = "#666666",
       x_offset = 0,
       y_offset = 0,
       sigma = 1.66
@@ -96,7 +161,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
         aes(ymin = starts, ymax = ends, fill = label, alpha = label),
         show.legend = FALSE
       ),
-      colour = "#444444",
+      colour = "#666666",
       x_offset = 0,
       y_offset = 0,
       sigma = 1.66
@@ -114,7 +179,8 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       label = c("9am", "5pm"),
       color = "#39304a",
       hjust = -0.25,
-      vjust = c(2, -1)
+      vjust = c(2, -1),
+      family = font_family
     ) +
     # First DST-related shift
     geom_text(
@@ -128,6 +194,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       nudge_x = sign(lat) * -21,
       nudge_y = -60^2 * 1.5,
       lineheight = 0.8,
+      family = font_family,
       color = color_text
     ) +
     geom_curve(
@@ -158,6 +225,7 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
       nudge_x = sign(lat) * -21,
       nudge_y = 60^2 * 1.5,
       lineheight = 0.8,
+      family = font_family,
       color = color_text
     ) +
     geom_curve(
@@ -237,8 +305,8 @@ plot_sun_times <- function(lat, lon, timezone, title, font_family = "Outfit") {
     coord_cartesian(clip = "off") +
     theme_minimal(base_family = font_family, base_size = 16) +
     theme(
-      plot.title = element_text(color = color_text, hjust = 0, size = 14),
-      plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 24)),
+      plot.title = element_text(color = color_text, hjust = 0, size = 18),
+      plot.subtitle = element_text(color = color_text, hjust = 0, size = 32, margin = margin(b = 24)),
       plot.title.position = "plot",
       plot.background = element_rect(fill = "#39304a"),
       plot.margin = margin(20, 0, 20, 10),
@@ -288,4 +356,37 @@ download_cities <- function() {
     country_codes,
     by = c(country = "alpha_2")
   )
+}
+
+
+download_us_cities <- function() {
+  cities <- readr:::read_tsv(
+    "https://github.com/substack/cities1000/raw/master/cities1000.txt", 
+    col_names = c(
+      'id',
+      'name',
+      'asciiname',
+      'alternativeNames',
+      'lat',
+      'lon',
+      'featureClass',
+      'featureCode',
+      'country',
+      'altCountry',
+      'adminCode',
+      'countrySubdivision',
+      'municipality',
+      'municipalitySubdivision',
+      'population',
+      'elevation',
+      'dem',
+      'tz',
+      'lastModified'
+    )
+  ) %>% 
+    janitor::clean_names() %>% 
+    filter(country == "US", population > 1e5) %>% 
+    select(city = asciiname, lat, lon, country, state_short = admin_code, timezone = tz, population) %>% 
+    mutate(state = set_names(state.name, state.abb)[state_short]) %>%
+    replace_na(list(state = ""))
 }

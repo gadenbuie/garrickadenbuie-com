@@ -85,6 +85,295 @@ editor_options:
 </figure>
 </div>
 
+## Across the US
+
+<div class="pa">
+<label class="b db mb2" for="us-city">Pick a city in the United States</label>
+<select id="us-city">
+<option value="us-cities/washington_d_c">Washington, D. C.</option>
+<option value="us-cities/alabama_birmingham">Birmingham, AL</option>
+<option value="us-cities/alabama_huntsville">Huntsville, AL</option>
+<option value="us-cities/alabama_mobile">Mobile, AL</option>
+<option value="us-cities/alabama_montgomery">Montgomery, AL</option>
+<option value="us-cities/arizona_chandler">Chandler, AZ</option>
+<option value="us-cities/arizona_gilbert">Gilbert, AZ</option>
+<option value="us-cities/arizona_glendale">Glendale, AZ</option>
+<option value="us-cities/arizona_mesa">Mesa, AZ</option>
+<option value="us-cities/arizona_peoria">Peoria, AZ</option>
+<option value="us-cities/arizona_phoenix">Phoenix, AZ</option>
+<option value="us-cities/arizona_scottsdale">Scottsdale, AZ</option>
+<option value="us-cities/arizona_surprise">Surprise, AZ</option>
+<option value="us-cities/arizona_tempe">Tempe, AZ</option>
+<option value="us-cities/arizona_tempe_junction">Tempe Junction, AZ</option>
+<option value="us-cities/arizona_tucson">Tucson, AZ</option>
+<option value="us-cities/arkansas_little_rock">Little Rock, AR</option>
+<option value="us-cities/california_anaheim">Anaheim, CA</option>
+<option value="us-cities/california_antioch">Antioch, CA</option>
+<option value="us-cities/california_bakersfield">Bakersfield, CA</option>
+<option value="us-cities/california_berkeley">Berkeley, CA</option>
+<option value="us-cities/california_burbank">Burbank, CA</option>
+<option value="us-cities/california_carlsbad">Carlsbad, CA</option>
+<option value="us-cities/california_chula_vista">Chula Vista, CA</option>
+<option value="us-cities/california_concord">Concord, CA</option>
+<option value="us-cities/california_corona">Corona, CA</option>
+<option value="us-cities/california_costa_mesa">Costa Mesa, CA</option>
+<option value="us-cities/california_daly_city">Daly City, CA</option>
+<option value="us-cities/california_downey">Downey, CA</option>
+<option value="us-cities/california_east_los_angeles">East Los Angeles, CA</option>
+<option value="us-cities/california_el_monte">El Monte, CA</option>
+<option value="us-cities/california_elk_grove">Elk Grove, CA</option>
+<option value="us-cities/california_escondido">Escondido, CA</option>
+<option value="us-cities/california_fairfield">Fairfield, CA</option>
+<option value="us-cities/california_fontana">Fontana, CA</option>
+<option value="us-cities/california_fremont">Fremont, CA</option>
+<option value="us-cities/california_fresno">Fresno, CA</option>
+<option value="us-cities/california_fullerton">Fullerton, CA</option>
+<option value="us-cities/california_garden_grove">Garden Grove, CA</option>
+<option value="us-cities/california_glendale">Glendale, CA</option>
+<option value="us-cities/california_hayward">Hayward, CA</option>
+<option value="us-cities/california_hollywood">Hollywood, CA</option>
+<option value="us-cities/california_huntington_beach">Huntington Beach, CA</option>
+<option value="us-cities/california_inglewood">Inglewood, CA</option>
+<option value="us-cities/california_long_beach">Long Beach, CA</option>
+<option value="us-cities/california_los_angeles">Los Angeles, CA</option>
+<option value="us-cities/california_modesto">Modesto, CA</option>
+<option value="us-cities/california_moreno_valley">Moreno Valley, CA</option>
+<option value="us-cities/california_murrieta">Murrieta, CA</option>
+<option value="us-cities/california_north_glendale">North Glendale, CA</option>
+<option value="us-cities/california_norwalk">Norwalk, CA</option>
+<option value="us-cities/california_oakland">Oakland, CA</option>
+<option value="us-cities/california_oceanside">Oceanside, CA</option>
+<option value="us-cities/california_ontario">Ontario, CA</option>
+<option value="us-cities/california_orange">Orange, CA</option>
+<option value="us-cities/california_oxnard">Oxnard, CA</option>
+<option value="us-cities/california_oxnard_shores">Oxnard Shores, CA</option>
+<option value="us-cities/california_palmdale">Palmdale, CA</option>
+<option value="us-cities/california_pasadena">Pasadena, CA</option>
+<option value="us-cities/california_pomona">Pomona, CA</option>
+<option value="us-cities/california_rancho_cucamonga">Rancho Cucamonga, CA</option>
+<option value="us-cities/california_richmond">Richmond, CA</option>
+<option value="us-cities/california_riverside">Riverside, CA</option>
+<option value="us-cities/california_roseville">Roseville, CA</option>
+<option value="us-cities/california_sacramento">Sacramento, CA</option>
+<option value="us-cities/california_salinas">Salinas, CA</option>
+<option value="us-cities/california_san_bernardino">San Bernardino, CA</option>
+<option value="us-cities/california_san_diego">San Diego, CA</option>
+<option value="us-cities/california_san_francisco">San Francisco, CA</option>
+<option value="us-cities/california_san_jose">San Jose, CA</option>
+<option value="us-cities/california_santa_ana">Santa Ana, CA</option>
+<option value="us-cities/california_santa_clara">Santa Clara, CA</option>
+<option value="us-cities/california_santa_clarita">Santa Clarita, CA</option>
+<option value="us-cities/california_santa_rosa">Santa Rosa, CA</option>
+<option value="us-cities/california_simi_valley">Simi Valley, CA</option>
+<option value="us-cities/california_stockton">Stockton, CA</option>
+<option value="us-cities/california_sunnyvale">Sunnyvale, CA</option>
+<option value="us-cities/california_temecula">Temecula, CA</option>
+<option value="us-cities/california_thousand_oaks">Thousand Oaks, CA</option>
+<option value="us-cities/california_torrance">Torrance, CA</option>
+<option value="us-cities/california_universal_city">Universal City, CA</option>
+<option value="us-cities/california_valencia">Valencia, CA</option>
+<option value="us-cities/california_vallejo">Vallejo, CA</option>
+<option value="us-cities/california_van_nuys">Van Nuys, CA</option>
+<option value="us-cities/california_victorville">Victorville, CA</option>
+<option value="us-cities/california_visalia">Visalia, CA</option>
+<option value="us-cities/california_west_covina">West Covina, CA</option>
+<option value="us-cities/colorado_arvada">Arvada, CO</option>
+<option value="us-cities/colorado_aurora">Aurora, CO</option>
+<option value="us-cities/colorado_centennial">Centennial, CO</option>
+<option value="us-cities/colorado_colorado_springs">Colorado Springs, CO</option>
+<option value="us-cities/colorado_denver">Denver, CO</option>
+<option value="us-cities/colorado_fort_collins">Fort Collins, CO</option>
+<option value="us-cities/colorado_lakewood">Lakewood, CO</option>
+<option value="us-cities/colorado_pueblo">Pueblo, CO</option>
+<option value="us-cities/colorado_thornton">Thornton, CO</option>
+<option value="us-cities/colorado_westminster">Westminster, CO</option>
+<option value="us-cities/connecticut_bridgeport">Bridgeport, CT</option>
+<option value="us-cities/florida_brandon">Brandon, FL</option>
+<option value="us-cities/florida_cape_coral">Cape Coral, FL</option>
+<option value="us-cities/florida_clearwater">Clearwater, FL</option>
+<option value="us-cities/florida_coral_springs">Coral Springs, FL</option>
+<option value="us-cities/florida_fort_lauderdale">Fort Lauderdale, FL</option>
+<option value="us-cities/florida_gainesville">Gainesville, FL</option>
+<option value="us-cities/florida_hialeah">Hialeah, FL</option>
+<option value="us-cities/florida_hollywood">Hollywood, FL</option>
+<option value="us-cities/florida_jacksonville">Jacksonville, FL</option>
+<option value="us-cities/florida_miami">Miami, FL</option>
+<option value="us-cities/florida_miami_gardens">Miami Gardens, FL</option>
+<option value="us-cities/florida_miramar">Miramar, FL</option>
+<option value="us-cities/florida_orlando">Orlando, FL</option>
+<option value="us-cities/florida_palm_bay">Palm Bay, FL</option>
+<option value="us-cities/florida_pembroke_pines">Pembroke Pines, FL</option>
+<option value="us-cities/florida_port_saint_lucie">Port Saint Lucie, FL</option>
+<option value="us-cities/florida_saint_petersburg">Saint Petersburg, FL</option>
+<option value="us-cities/florida_tallahassee">Tallahassee, FL</option>
+<option value="us-cities/florida_tampa">Tampa, FL</option>
+<option value="us-cities/georgia_athens">Athens, GA</option>
+<option value="us-cities/georgia_atlanta">Atlanta, GA</option>
+<option value="us-cities/georgia_columbus">Columbus, GA</option>
+<option value="us-cities/georgia_savannah">Savannah, GA</option>
+<option value="us-cities/hawaii_honolulu">Honolulu, HI</option>
+<option value="us-cities/idaho_boise">Boise, ID</option>
+<option value="us-cities/illinois_springfield">Springfield, IL</option>
+<option value="us-cities/indiana_evansville">Evansville, IN</option>
+<option value="us-cities/indiana_indianapolis">Indianapolis, IN</option>
+<option value="us-cities/kansas_kansas_city">Kansas City, KS</option>
+<option value="us-cities/kansas_olathe">Olathe, KS</option>
+<option value="us-cities/kansas_overland_park">Overland Park, KS</option>
+<option value="us-cities/kansas_topeka">Topeka, KS</option>
+<option value="us-cities/kansas_wichita">Wichita, KS</option>
+<option value="us-cities/kentucky_ironville">Ironville, KY</option>
+<option value="us-cities/kentucky_lexington">Lexington, KY</option>
+<option value="us-cities/kentucky_lexington_fayette">Lexington-Fayette, KY</option>
+<option value="us-cities/kentucky_louisville">Louisville, KY</option>
+<option value="us-cities/kentucky_meads">Meads, KY</option>
+<option value="us-cities/louisiana_baton_rouge">Baton Rouge, LA</option>
+<option value="us-cities/louisiana_lafayette">Lafayette, LA</option>
+<option value="us-cities/louisiana_metairie">Metairie, LA</option>
+<option value="us-cities/louisiana_metairie_terrace">Metairie Terrace, LA</option>
+<option value="us-cities/louisiana_new_orleans">New Orleans, LA</option>
+<option value="us-cities/louisiana_shreveport">Shreveport, LA</option>
+<option value="us-cities/maryland_baltimore">Baltimore, MD</option>
+<option value="us-cities/massachusetts_worcester">Worcester, MA</option>
+<option value="us-cities/michigan_ann_arbor">Ann Arbor, MI</option>
+<option value="us-cities/michigan_detroit">Detroit, MI</option>
+<option value="us-cities/michigan_flint">Flint, MI</option>
+<option value="us-cities/michigan_grand_rapids">Grand Rapids, MI</option>
+<option value="us-cities/michigan_lansing">Lansing, MI</option>
+<option value="us-cities/michigan_sterling_heights">Sterling Heights, MI</option>
+<option value="us-cities/michigan_warren">Warren, MI</option>
+<option value="us-cities/minnesota_minneapolis">Minneapolis, MN</option>
+<option value="us-cities/minnesota_rochester">Rochester, MN</option>
+<option value="us-cities/minnesota_saint_paul">Saint Paul, MN</option>
+<option value="us-cities/mississippi_jackson">Jackson, MS</option>
+<option value="us-cities/missouri_columbia">Columbia, MO</option>
+<option value="us-cities/missouri_east_independence">East Independence, MO</option>
+<option value="us-cities/missouri_independence">Independence, MO</option>
+<option value="us-cities/missouri_kansas_city">Kansas City, MO</option>
+<option value="us-cities/missouri_springfield">Springfield, MO</option>
+<option value="us-cities/missouri_st_louis">St. Louis, MO</option>
+<option value="us-cities/montana_billings">Billings, MT</option>
+<option value="us-cities/nebraska_lincoln">Lincoln, NE</option>
+<option value="us-cities/nebraska_omaha">Omaha, NE</option>
+<option value="us-cities/nevada_enterprise">Enterprise, NV</option>
+<option value="us-cities/nevada_henderson">Henderson, NV</option>
+<option value="us-cities/nevada_las_vegas">Las Vegas, NV</option>
+<option value="us-cities/nevada_north_las_vegas">North Las Vegas, NV</option>
+<option value="us-cities/nevada_paradise">Paradise, NV</option>
+<option value="us-cities/nevada_reno">Reno, NV</option>
+<option value="us-cities/nevada_spring_valley">Spring Valley, NV</option>
+<option value="us-cities/nevada_sunrise_manor">Sunrise Manor, NV</option>
+<option value="us-cities/new_hampshire_manchester">Manchester, NH</option>
+<option value="us-cities/new_jersey_edison">Edison, NJ</option>
+<option value="us-cities/new_jersey_elizabeth">Elizabeth, NJ</option>
+<option value="us-cities/new_jersey_jersey_city">Jersey City, NJ</option>
+<option value="us-cities/new_jersey_newark">Newark, NJ</option>
+<option value="us-cities/new_jersey_paterson">Paterson, NJ</option>
+<option value="us-cities/new_mexico_albuquerque">Albuquerque, NM</option>
+<option value="us-cities/new_york_amherst">Amherst, NY</option>
+<option value="us-cities/new_york_borough_of_bronx">Borough of Bronx, NY</option>
+<option value="us-cities/new_york_borough_of_queens">Borough of Queens, NY</option>
+<option value="us-cities/new_york_brooklyn">Brooklyn, NY</option>
+<option value="us-cities/new_york_buffalo">Buffalo, NY</option>
+<option value="us-cities/new_york_east_new_york">East New York, NY</option>
+<option value="us-cities/new_york_jamaica">Jamaica, NY</option>
+<option value="us-cities/new_york_manhattan">Manhattan, NY</option>
+<option value="us-cities/new_york_new_york_city">New York City, NY</option>
+<option value="us-cities/new_york_rochester">Rochester, NY</option>
+<option value="us-cities/new_york_staten_island">Staten Island, NY</option>
+<option value="us-cities/new_york_syracuse">Syracuse, NY</option>
+<option value="us-cities/new_york_yonkers">Yonkers, NY</option>
+<option value="us-cities/north_carolina_cary">Cary, NC</option>
+<option value="us-cities/north_carolina_charlotte">Charlotte, NC</option>
+<option value="us-cities/north_carolina_durham">Durham, NC</option>
+<option value="us-cities/north_carolina_fayetteville">Fayetteville, NC</option>
+<option value="us-cities/north_carolina_greensboro">Greensboro, NC</option>
+<option value="us-cities/north_carolina_high_point">High Point, NC</option>
+<option value="us-cities/north_carolina_raleigh">Raleigh, NC</option>
+<option value="us-cities/north_carolina_west_raleigh">West Raleigh, NC</option>
+<option value="us-cities/north_carolina_wilmington">Wilmington, NC</option>
+<option value="us-cities/north_carolina_winston_salem">Winston-Salem, NC</option>
+<option value="us-cities/north_dakota_fargo">Fargo, ND</option>
+<option value="us-cities/ohio_akron">Akron, OH</option>
+<option value="us-cities/ohio_cincinnati">Cincinnati, OH</option>
+<option value="us-cities/ohio_cleveland">Cleveland, OH</option>
+<option value="us-cities/ohio_columbus">Columbus, OH</option>
+<option value="us-cities/ohio_dayton">Dayton, OH</option>
+<option value="us-cities/ohio_toledo">Toledo, OH</option>
+<option value="us-cities/oklahoma_norman">Norman, OK</option>
+<option value="us-cities/oklahoma_oklahoma_city">Oklahoma City, OK</option>
+<option value="us-cities/oklahoma_tulsa">Tulsa, OK</option>
+<option value="us-cities/oregon_eugene">Eugene, OR</option>
+<option value="us-cities/oregon_gresham">Gresham, OR</option>
+<option value="us-cities/oregon_portland">Portland, OR</option>
+<option value="us-cities/oregon_salem">Salem, OR</option>
+<option value="us-cities/pennsylvania_allentown">Allentown, PA</option>
+<option value="us-cities/pennsylvania_erie">Erie, PA</option>
+<option value="us-cities/pennsylvania_philadelphia">Philadelphia, PA</option>
+<option value="us-cities/pennsylvania_pittsburgh">Pittsburgh, PA</option>
+<option value="us-cities/rhode_island_providence">Providence, RI</option>
+<option value="us-cities/south_carolina_charleston">Charleston, SC</option>
+<option value="us-cities/south_carolina_columbia">Columbia, SC</option>
+<option value="us-cities/south_dakota_sioux_falls">Sioux Falls, SD</option>
+<option value="us-cities/tennessee_chattanooga">Chattanooga, TN</option>
+<option value="us-cities/tennessee_clarksville">Clarksville, TN</option>
+<option value="us-cities/tennessee_east_chattanooga">East Chattanooga, TN</option>
+<option value="us-cities/tennessee_knoxville">Knoxville, TN</option>
+<option value="us-cities/tennessee_memphis">Memphis, TN</option>
+<option value="us-cities/tennessee_murfreesboro">Murfreesboro, TN</option>
+<option value="us-cities/tennessee_nashville">Nashville, TN</option>
+<option value="us-cities/tennessee_new_south_memphis">New South Memphis, TN</option>
+<option value="us-cities/texas_abilene">Abilene, TX</option>
+<option value="us-cities/texas_amarillo">Amarillo, TX</option>
+<option value="us-cities/texas_arlington">Arlington, TX</option>
+<option value="us-cities/texas_austin">Austin, TX</option>
+<option value="us-cities/texas_beaumont">Beaumont, TX</option>
+<option value="us-cities/texas_brownsville">Brownsville, TX</option>
+<option value="us-cities/texas_carrollton">Carrollton, TX</option>
+<option value="us-cities/texas_corpus_christi">Corpus Christi, TX</option>
+<option value="us-cities/texas_dallas">Dallas, TX</option>
+<option value="us-cities/texas_denton">Denton, TX</option>
+<option value="us-cities/texas_el_paso">El Paso, TX</option>
+<option value="us-cities/texas_fort_worth">Fort Worth, TX</option>
+<option value="us-cities/texas_frisco">Frisco, TX</option>
+<option value="us-cities/texas_garland">Garland, TX</option>
+<option value="us-cities/texas_grand_prairie">Grand Prairie, TX</option>
+<option value="us-cities/texas_houston">Houston, TX</option>
+<option value="us-cities/texas_lubbock">Lubbock, TX</option>
+<option value="us-cities/texas_midland">Midland, TX</option>
+<option value="us-cities/utah_provo">Provo, UT</option>
+<option value="us-cities/utah_salt_lake_city">Salt Lake City, UT</option>
+<option value="us-cities/utah_west_jordan">West Jordan, UT</option>
+<option value="us-cities/utah_west_valley_city">West Valley City, UT</option>
+<option value="us-cities/washington_bellevue">Bellevue, WA</option>
+<option value="us-cities/washington_everett">Everett, WA</option>
+<option value="us-cities/washington_seattle">Seattle, WA</option>
+<option value="us-cities/washington_spokane">Spokane, WA</option>
+<option value="us-cities/washington_tacoma">Tacoma, WA</option>
+<option value="us-cities/washington_vancouver">Vancouver, WA</option>
+<option value="us-cities/wisconsin_green_bay">Green Bay, WI</option>
+<option value="us-cities/wisconsin_madison">Madison, WI</option>
+<option value="us-cities/wisconsin_milwaukee">Milwaukee, WI</option>
+</select>
+</div>
+<link href="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
+<div id="us-city-plot" aria-live="polite">
+<figure role="group">
+<img src="washington_d_c_normal.png" alt="Washington, D.C.">
+<figcaption>Sunrise and sunset times in Washington, D.C.</figcaption>
+</figure>
+</div>
+<script type="text/javascript">
+const selectr = new Selectr('#us-city')
+selectr.on('selectr.change', function(option) {
+  const plotDiv = document.getElementById('us-city-plot')
+  const plotImg = plotDiv.querySelector('img')
+  plotImg.src = option.value + '_normal.png'
+  plotImg.alt = option.innerText
+  plotDiv.querySelector('figcaption').innerText = `Sunrise and sunset times in ${option.innerText}`
+})
+</script>
+
 ## Inspiration
 
 [How long are the nights?](https://plotparade.com/gallery_sunrise.html)
@@ -102,10 +391,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 33.47009
+    ## [1] 34.16244
     ## 
     ## $lon
-    ## [1] -84.31423
+    ## [1] -84.57367
     ## 
     ## $timezone
     ## [1] "America/New_York"
