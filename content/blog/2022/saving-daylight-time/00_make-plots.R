@@ -1,6 +1,7 @@
 library(tidyverse)
 future::plan(future::multisession())
 progressr::handlers(global = TRUE)
+progressr::handlers("txtprogressbar")
 
 source("plot_daylight_hours.R")
 sysfonts::font_add_google("Outfit")
@@ -52,7 +53,7 @@ city_plot_data <-
 
 p <- progressr::progressor(steps = nrow(city_plot_data))
 
-progressr::with_progress({
+progressr::with_progress(enable = TRUE, {
   furrr::future_pwalk(city_plot_data, function(lat, lon, timezone, title, file) {
     sysfonts::font_add_google("Outfit")
     showtext::showtext_auto()
@@ -63,10 +64,11 @@ progressr::with_progress({
       file,
       plot = g,
       width = 9,
-      height = 8,
-      dpi = 150
+      height = 7,
+      dpi = 96
     )
-    xfun::optipng(files = file)
+    
+    xfun::optipng(files = file, wait = FALSE, stdout = NULL, stderr = NULL)
   })
 })
 
@@ -97,7 +99,7 @@ cities_us_full <-
   expand_grid(keep = c("normal", "dst", "standard"))
 
 p <- progressr::progressor(steps = nrow(cities_us_full))
-progressr::with_progress({
+progressr::with_progress(enable = TRUE, {
   cities_us_full %>% 
   furrr::future_pwalk(function(lat, lon, timezone, title, path, keep, ...) {
     g <- plot_sun_times(lat, lon, timezone, title = title, stay_in = keep)
@@ -111,7 +113,7 @@ progressr::with_progress({
         theme(plot.title = ggtext::element_markdown(family = "Outfit"))
     } else {
       g <- g +
-          labs(title = "How long are the days with the **status quo?**") +
+          labs(title = "How long are the days if we **keep the status quo?**") +
           theme(plot.title = ggtext::element_markdown(family = "Outfit"))
     }
     
@@ -121,9 +123,9 @@ progressr::with_progress({
       file,
       plot = g,
       width = 9,
-      height = 8,
-      dpi = 150
+      height = 7,
+      dpi = 96
     )
-    xfun::optipng(files = file)
+    xfun::optipng(files = file, wait = FALSE, stdout = NULL, stderr = NULL)
   })
 })
