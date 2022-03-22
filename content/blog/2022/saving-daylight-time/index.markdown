@@ -355,6 +355,18 @@ editor_options:
 <option value="us-cities/wisconsin_milwaukee">Milwaukee, WI</option>
 </select>
 </div>
+<div class="mv3" id="tz-variant-radio">
+<label for="tz-variant" class="b mb2 pr2 db dib-ns">Use timezone</label>
+<!-- standard -->
+<input type="radio" id="standard" name="tz-variant" value="standard">
+<label for="standard" class="pr2">Standard</label>
+<!-- normal -->
+<input type="radio" id="normal" name="tz-variant" value="normal" checked>
+<label for="normal" class="pr2">Both</label>
+<!-- dst -->
+<input type="radio" id="dst" name="tz-variant" value="dst">
+<label for="dst" class="pr2">DST</label>
+</div>
 <link href="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.css" rel="stylesheet" type="text/css">
 <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
 <div id="us-city-plot" aria-live="polite">
@@ -365,13 +377,18 @@ editor_options:
 </div>
 <script type="text/javascript">
 const selectr = new Selectr('#us-city')
-selectr.on('selectr.change', function(option) {
+function updateUSCityPlot () {
+  const option = selectr.getSelected()[0]
   const plotDiv = document.getElementById('us-city-plot')
   const plotImg = plotDiv.querySelector('img')
-  plotImg.src = option.value + '_normal.png'
+  const plotTz = document.querySelector('input[name="tz-variant"]:checked')
+  plotImg.src = `${option.value}_${plotTz.value}.png`
   plotImg.alt = option.innerText
   plotDiv.querySelector('figcaption').innerText = `Sunrise and sunset times in ${option.innerText}`
-})
+}
+updateUSCityPlot()
+selectr.on('selectr.change', updateUSCityPlot)
+document.getElementById('tz-variant-radio').addEventListener('change', updateUSCityPlot)
 </script>
 
 ## Inspiration
@@ -391,10 +408,10 @@ location[c("lat", "lon", "timezone")]
 ```
 
     ## $lat
-    ## [1] 34.16244
+    ## [1] 35.00361
     ## 
     ## $lon
-    ## [1] -84.57367
+    ## [1] -84.61931
     ## 
     ## $timezone
     ## [1] "America/New_York"
@@ -661,12 +678,47 @@ ggplot(tidier_sun_times) +
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1em;
 }
-.custom-bg-light {
+.selectr-selected {
+  border-width: 0;
+}
+.custom-bg-light,
+.selectr-selected {
   background-color: var(--slate-90);
 }
+.selectr-options-container,
+.selectr-input-container,
+.selectr-input {
+  background-color: var(--siteBgColorCustom);
+  border-color: var(--slate-90);
+  color: var(--textColorCustom);
+}
+.selectr-option.selected {
+  color: var(--textColorCustom);
+  background-color: var(--purple-90);
+}
+.selectr-option.active {
+  color: var(--textColorCustom);
+  background-color: var(--purple-80);
+}
 @media (prefers-color-scheme: dark) {
-  .custom-bg-light {
+  .custom-bg-light,
+  .selectr-selected {
     background-color: var(--slate-20);
+  }
+  .selectr-options-container,
+  .selectr-input-container,
+  .selectr-input {
+    background-color: var(--siteBgColorCustom);
+    border-color: var(--slate-20);
+    color: var(--textColorCustom);
+  }
+  .selectr-option.selected {
+    color: var(--textColorCustom);
+    background-color: var(--purple-10);
+  }
+  .selectr-option.active {
+    color: var(--textColorCustom);
+    background-color: var(--purple-20);
   }
 }
 </style>
