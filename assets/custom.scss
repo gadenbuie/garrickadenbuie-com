@@ -225,6 +225,27 @@ form fieldset,
   border: 3px solid var(--scrollbarBgColor);
 }
 
+/* --------------- inputs ------------------ */
+input[type="radio"] {
+  appearance: none;
+  outline: 2px solid var(--borderColorCustom);
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  transition: background-color 100ms ease-in-out;
+}
+
+input[type="radio"] + label {
+  padding-left: 1.4em;
+}
+
+input[type="radio"]:checked {
+  border: 3px solid var(--siteBgColorCustom);
+  outline: 2px solid var(--bodyLinkColorCustom);
+  background: var(--bodyLinkColorCustom);
+}
+
 @import '_dark', '_panelset-extras';
 
 @media (prefers-reduced-motion: no-preference) {
