@@ -1,3 +1,5 @@
+library(tidyverse)
+
 make_no_time_change <- function(tidy_sun_times, lon, keep = "dst") {
   keep <- match.arg(keep, c("dst", "standard"))
   times <- tidy_sun_times$time
@@ -32,8 +34,8 @@ hms_str <- function(x, hours_24 = FALSE, drop = 0) {
   x <- x - hours * 60^2
   am_pm <- if (hours_24) "" else if (hours >= 12) " pm" else " am"
   
-  hours <- if (hours_24 && hours != 24) {
-    sprintf("%02d", hours %% 12)
+  hours <- if (!hours_24 && hours != 24) {
+    sub("^0", "", sprintf("%02d", hours %% 12))
   } else {
     sprintf("%d", hours)
   }
@@ -49,14 +51,7 @@ hms_str <- function(x, hours_24 = FALSE, drop = 0) {
   sprintf("%s:%02d:%02d%s", hours, mins, secs, am_pm)
 }
 
-plot_sun_times <- function(
-  lat, 
-  lon, 
-  timezone, 
-  title, 
-  font_family = "Outfit", 
-  stay_in = c("no", "dst", "standard")
-) {
+tidy_sun_times <- function(lat, lon, timezone, stay_in = "normal") {
   sun_times <- 
     suncalc::getSunlightTimes(
       date = seq(
@@ -80,8 +75,7 @@ plot_sun_times <- function(
     tidy_sun_times <- make_no_time_change(tidy_sun_times, lon, keep = stay_in)
   }
   
-  tidy_sun_times <- 
-    tidy_sun_times %>% 
+  tidy_sun_times %>% 
     mutate(
       time = hms_dbl(time),
       period = case_when(
@@ -114,6 +108,80 @@ plot_sun_times <- function(
     ) %>% 
     complete(nesting(date, tz), nesting(label, events)) %>%
     replace_na(list(starts = 0, ends = 24 * 60^2))
+}
+
+describe_sun_times <- function(tst, title, stay_in = "normal") {
+  tst <- tst %>% 
+    filter(label == "sunrise") %>% 
+    mutate(
+      duration = ends - starts,
+      nine = map_dbl(starts, ~ max(9 * 60^2 - .x, 0)),
+      five = map_dbl(ends, ~ max(.x - 17 * 60^2, 0)),
+      non_work_sun = nine + five
+    )
+  
+  pretty_sec <- function(x) {
+    if (x == 0) return("0 minutes")
+    
+    hours <- floor(x / 60^2)
+    x <- x - hours * 60^2
+    mins <- floor(x / 60)
+    time <- c(
+      if (hours > 0) paste0(hours, plu::ral(" hour", n = hours)),
+      if (mins > 0) paste0(mins, plu::ral(" minute", n = mins))
+    )
+    knitr::combine_words(time)
+  }
+  
+  stay_in_desc <- switch(
+    stay_in,
+    dst = ", staying in DST all year long",
+    standard = ", keeping standard time all year long",
+    ""
+  )
+
+  shortest_day <-
+    tst %>% 
+    filter(label == "sunrise") %>% 
+    slice_min(duration, n = 1, with_ties = FALSE) %>%
+    mutate(
+      date = strftime(date, "%B %e")
+    ) %>% 
+    glue::glue_data(
+      "In {title}{stay_in_desc}, the shortest day of the year is <strong>{date}</strong>, ",
+      "when the sun rises at <strong>{hms_str(starts, drop = 1)}</strong> and ",
+      "sets at <strong>{hms_str(ends, drop = 1)}</strong>. ",
+      "The day is <strong>{pretty_sec(duration)}</strong> long with ",
+      "<strong>{pretty_sec(non_work_sun)}</strong> of sunlight outside of work hours."
+    )
+  
+  longest_day <-
+    tst %>% 
+    filter(label == "sunrise") %>% 
+    slice_max(duration, n = 1, with_ties = FALSE) %>%
+    mutate(
+      date = strftime(date, "%B %e")
+    ) %>% 
+    glue::glue_data(
+      "On the other hand, the longest day of the year is {date}, ",
+      "which starts at <strong>{hms_str(starts, drop = 1, )}</strong> and ",
+      "ends at <strong>{hms_str(ends, drop = 1)}</strong> ",
+      "for <strong>{pretty_sec(duration)}</strong> total hours of sunlight, ",
+      "<strong>{pretty_sec(non_work_sun)}</strong> of which are outside of work hours."
+    )
+  
+  paste(shortest_day, longest_day)
+}
+
+plot_sun_times <- function(
+  lat, 
+  lon, 
+  timezone, 
+  title, 
+  font_family = "Outfit", 
+  stay_in = c("no", "dst", "standard")
+) {
+  tidy_sun_times <- tidy_sun_times(lat, lon, timezone, stay_in)
   
   x_breaks <- seq(
     from = as.Date("2022-01-01"),

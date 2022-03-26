@@ -33,13 +33,19 @@ library(tidyverse)
 source("plot_daylight_hours.R")
 ```
 
+```{r location, echo=FALSE}
+location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
+location$lat <- location$lat + runif(1, min = -1)
+location$lon <- location$lon + runif(1, min = -1)
+```
+
 ## Are we saving daylight in Atlanta, GA?
 
 ```{=html}
 <figure role="group">
   <img src="`r knitr::fig_chunk("daylight-hours-atlanta", "png")`"
     alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
-  <figcaption>Daylight hours near Atlanta, GA for 2022.</figcaption>
+  <figcaption class="mt2 lh-copy ph5-l">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
 </figure>
 ```
 
@@ -51,7 +57,12 @@ cities_world <- readr::read_rds("cities_world.rds")
 
 ```{r echo=FALSE}
 city_options <- map(transpose(cities_world), function(.x) {
-  htmltools::tags$option(value = .x$file, `data-city` = .x$title, .x$title)
+  htmltools::tags$option(
+    value = .x$file,
+    `data-city` = .x$title,
+    `data-alt` = .x$alt,
+    .x$title,
+  )
 })
 
 htmltools::withTags(
@@ -97,7 +108,11 @@ htmltools::withTags(
         src = cities_world$file[[1]],
         alt = cities_world$title[[1]]
       ),
-      figcaption("TK: Sun times plot.")
+      figcaption(
+        id = "city-plot-desc",
+        class="mt2 lh-copy ph5-l",
+        "A sunrise/sunset time plot."
+      )
     )
   )
 )
@@ -111,9 +126,15 @@ cities_us <- read_rds("cities_us.rds")
 cities_us %>%
   filter(!str_detect(city, "Metropolitan Government")) %>%
   arrange(state, city) %>%
-  select(title, path) %>%
-  pmap(function(title, path) {
-    htmltools::tags$option(value = path, title)
+  select(title, path, starts_with("alt")) %>%
+  pmap(function(title, path, alt_normal, alt_standard, alt_dst) {
+    htmltools::tags$option(
+      value = path,
+      `data-descnormal` = alt_normal,
+      `data-descstandard` = alt_standard,
+      `data-descdst` = alt_dst,
+      title
+    )
   }) %>% {
     htmltools::withTags(
       div(
@@ -161,7 +182,7 @@ function updateUSCityPlot () {
   const plotTz = document.querySelector('input[name="tz-variant"]:checked')
   plotImg.src = `${option.value}_${plotTz.value}.png`
   plotImg.alt = option.innerText
-  plotDiv.querySelector('figcaption').innerText = `Sunrise and sunset times in ${option.innerText}`
+  plotDiv.querySelector('figcaption').innerHTML = option.dataset['desc' + plotTz.value]
 }
 updateUSCityPlot()
 selectr.on('selectr.change', updateUSCityPlot)
@@ -177,11 +198,9 @@ document.getElementById('tz-variant-radio').addEventListener('change', updateUSC
 
 ## Where are you?
 
-```{r location}
-location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
-location$lat <- location$lat + runif(1, min = -1)
-location$lon <- location$lon + runif(1, min = -1)
-
+```{r ref.label="location", eval = FALSE}
+```
+```{r}
 location[c("lat", "lon", "timezone")]
 ```
 
@@ -509,9 +528,13 @@ tidier_sun_times %>%
 ```{js echo=FALSE}
 function updatePlotSelectedCity() {
   const plot = document.getElementById('city-plot')
-  const inputCity = document.getElementById('choose-city')
+  const plotDesc = document.getElementById('city-plot-desc')
+  let inputCity = document.getElementById('choose-city')
+  inputCity = Array.from(inputCity.options).filter(el => el.value === inputCity.value)[0]
+  
   plot.src = inputCity.value
   plot.setAttribute('alt', inputCity.dataset.city)
+  plotDesc.innerHTML = inputCity.dataset.alt
 }
 document.addEventListener('DOMContentLoaded', updatePlotSelectedCity)
 document.getElementById('choose-city').addEventListener('change', updatePlotSelectedCity)

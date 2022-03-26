@@ -32,7 +32,7 @@ cities_largest <-
   ) %>% 
   ungroup()
 
-city_plot_data <- 
+city_plot_data <-
   cities_largest %>%
   arrange(desc(lat)) %>%
   mutate(
@@ -49,6 +49,10 @@ city_plot_data <-
     file = fs::path("cities", snakecase::to_snake_case(title), ext = "png")
   ) %>%
   select(lat, lon, timezone = tz, title, file) %>% 
+  mutate(
+    alt = pmap(., function(lat, lon, timezone, ...) tidy_sun_times(lat, lon, timezone)),
+    alt = map2_chr(alt, title, describe_sun_times)
+  ) %>% 
   write_rds("cities_world.rds")
 
 p <- progressr::progressor(steps = nrow(city_plot_data))
@@ -88,7 +92,15 @@ cities_us <-
     ),
     path = sprintf("us-cities/%s", snakecase::to_snake_case(id))
   ) %>% 
-  arrange(state, city) %>% 
+  arrange(state, city) %>%
+  mutate(
+    alt_normal = pmap(., function(lat, lon, timezone, ...) tidy_sun_times(lat, lon, timezone)),
+    alt_normal = map2_chr(alt_normal, title, describe_sun_times),
+    alt_standard = pmap(., function(lat, lon, timezone, ...) tidy_sun_times(lat, lon, timezone, stay_in = "standard")),
+    alt_standard = map2_chr(alt_standard, title, describe_sun_times, stay_in = "standard"),
+    alt_dst = pmap(., function(lat, lon, timezone, ...) tidy_sun_times(lat, lon, timezone, stay_in = "dst")),
+    alt_dst = map2_chr(alt_dst, title, describe_sun_times, stay_in = "dst")
+  ) %>% 
   write_rds("cities_us.rds")
 
 if (fs::dir_exists("us-cities")) fs::dir_delete("us-cities")
