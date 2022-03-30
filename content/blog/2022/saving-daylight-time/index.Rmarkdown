@@ -45,7 +45,7 @@ location$lon <- location$lon + runif(1, min = -1)
 <figure role="group">
   <img src="`r knitr::fig_chunk("daylight-hours-atlanta", "png")`"
     alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
-  <figcaption class="mt2 lh-copy ph5-l">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
+  <figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
 </figure>
 ```
 
@@ -110,7 +110,7 @@ htmltools::withTags(
       ),
       figcaption(
         id = "city-plot-desc",
-        class="mt2 lh-copy ph5-l",
+        class="mt2 lh-copy f6 f5-ns overflow-x-scroll",
         "A sunrise/sunset time plot."
       )
     )
@@ -168,7 +168,7 @@ cities_us %>%
 <div id="us-city-plot" aria-live="polite">
 <figure role="group">
 <img src="washington_d_c_normal.png" alt="Washington, D.C.">
-<figcaption>Sunrise and sunset times in Washington, D.C.</figcaption>
+<figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">Sunrise and sunset times in Washington, D.C.</figcaption>
 </figure>
 </div>
 ```

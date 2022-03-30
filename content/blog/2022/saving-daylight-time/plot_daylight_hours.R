@@ -127,50 +127,49 @@ describe_sun_times <- function(tst, title, stay_in = "normal") {
     x <- x - hours * 60^2
     mins <- floor(x / 60)
     time <- c(
-      if (hours > 0) paste0(hours, plu::ral(" hour", n = hours)),
-      if (mins > 0) paste0(mins, plu::ral(" minute", n = mins))
+      if (hours > 0) paste0(hours, "h"),
+      if (mins > 0) paste0(mins, "m")
     )
-    knitr::combine_words(time)
+    paste(time, collapse = " ")
   }
   
   stay_in_desc <- switch(
     stay_in,
-    dst = ", staying in DST all year long",
-    standard = ", keeping standard time all year long",
+    dst = ", with DST all year long",
+    standard = ", with standard time all year long",
     ""
   )
+  
+  opening <- glue::glue("<strong>{title}</strong>{stay_in_desc}.")
 
   shortest_day <-
     tst %>% 
     filter(label == "sunrise") %>% 
-    slice_min(duration, n = 1, with_ties = FALSE) %>%
-    mutate(
-      date = strftime(date, "%B %e")
-    ) %>% 
-    glue::glue_data(
-      "In {title}{stay_in_desc}, the shortest day of the year is <strong>{date}</strong>, ",
-      "when the sun rises at <strong>{hms_str(starts, drop = 1)}</strong> and ",
-      "sets at <strong>{hms_str(ends, drop = 1)}</strong>. ",
-      "The day is <strong>{pretty_sec(duration)}</strong> long with ",
-      "<strong>{pretty_sec(non_work_sun)}</strong> of sunlight outside of work hours."
-    )
+    slice_min(duration, n = 1, with_ties = FALSE)
   
   longest_day <-
     tst %>% 
     filter(label == "sunrise") %>% 
-    slice_max(duration, n = 1, with_ties = FALSE) %>%
+    slice_max(duration, n = 1, with_ties = FALSE)
+  
+  days <-
+    bind_rows(shortest_day, longest_day) %>%
+    mutate(day = c("<strong>Shortest Day</strong>", "<strong>Longest Day</strong>")) %>% 
+    select(day, date, starts, ends, duration, non_work_sun) %>%
     mutate(
-      date = strftime(date, "%B %e")
+      date = strftime(date, "%b %d"),
+      across(c(starts, ends), map_chr, hms_str, drop = 1),
+      across(c(duration, non_work_sun), map_chr, pretty_sec)
     ) %>% 
-    glue::glue_data(
-      "On the other hand, the longest day of the year is {date}, ",
-      "which starts at <strong>{hms_str(starts, drop = 1, )}</strong> and ",
-      "ends at <strong>{hms_str(ends, drop = 1)}</strong> ",
-      "for <strong>{pretty_sec(duration)}</strong> total hours of sunlight, ",
-      "<strong>{pretty_sec(non_work_sun)}</strong> of which are outside of work hours."
+    knitr::kable(
+      format = "html",
+      escape = FALSE,
+      col.names = c("", "Date", "Sunrise", "Sunset", "Daylight", "Non-Work"),
+      align = "llrrrr",
+      table.attr = 'style="min-width: 550px;"'
     )
   
-  paste(shortest_day, longest_day)
+  paste(opening, days)
 }
 
 plot_sun_times <- function(

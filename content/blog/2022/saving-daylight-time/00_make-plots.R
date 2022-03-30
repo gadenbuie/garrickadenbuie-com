@@ -78,7 +78,7 @@ progressr::with_progress(enable = TRUE, {
 
 # US Cities ---------------------------------------------------------------
 
-cities_us <- 
+cities_us <-
   download_us_cities() %>% 
   filter(city != "Anchorage") %>%
   mutate(
