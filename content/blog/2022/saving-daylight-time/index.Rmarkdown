@@ -83,12 +83,14 @@ htmltools::withTags(
       button(
         id = "choose-city-prev",
         class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
+        title = "Previous city",
         htmltools::HTML(format(shiny::icon("arrow-left"))),
         span(class = "clip", "Previous city")
       ),
       button(
         id = "choose-city-next",
         class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
+        title = "Next city",
         htmltools::HTML(format(shiny::icon("arrow-right"))),
         span(class = "clip", "Next city")
       )
@@ -142,7 +144,15 @@ cities_us %>%
         label(
           class = "b db mb2",
           `for` = "us-city",
-          "Pick a city in the United States"
+          "Pick a city in the United States (",
+          button(
+            id = "us-city-random",
+            class = "bg-inherit bn pointer ph0 custom-body-link-color",
+            title = "Choose a random city",
+            "random",
+            .noWS = "outside"
+          ),
+          ")"
         ),
         select(id = "us-city", .)
       )
@@ -187,6 +197,12 @@ function updateUSCityPlot () {
 updateUSCityPlot()
 selectr.on('selectr.change', updateUSCityPlot)
 document.getElementById('tz-variant-radio').addEventListener('change', updateUSCityPlot)
+document.getElementById('us-city-random').addEventListener('click', function(ev) {
+  const options = selectr.options
+  const optionNew = options[Math.floor(Math.random() * options.length)]
+  selectr.setValue(optionNew.value)
+  updateUSCityPlot()
+})
 ```
 
 
