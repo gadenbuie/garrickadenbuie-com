@@ -155,7 +155,7 @@ What about other cities in the world?
 ## Across the US
 
 It seems that every year we talk
-about \_finally doing something about daylight saving time,
+about *finally doing something* about daylight saving time,
 but this year the U.S. Senate actually went so far as to pass
 a [bill to make Daylight Saving Time permanent](https://www.washingtonpost.com/health/2022/03/15/senate-daylight-saving-permanent/).
 In a suprising-to-no-one twist,
@@ -485,14 +485,38 @@ document.getElementById('us-city-random').addEventListener('click', function(ev)
 
 ## Inspiration
 
-[How long are the nights?](https://plotparade.com/gallery_sunrise.html)
+The layout for this vizualization was heavily inspired by [a series by Kristina Szucs](https://plotparade.com/gallery_sunrise.html) that I discovered via [r/dataisbeautiful](https://www.reddit.com/r/dataisbeautiful/comments/rlfj1d/oc_how_long_are_the_nights_in_stockholm_new_york/).
+I loved the aesthetic of Kristina’s plot
+and the subtle gradients and shadows of the daylight/twilight hour regions.
+Her attention to little details such a the sunrise and sunset icon labels
+and the stars in the night region are just fantastic.
 
-![How long are the nights in New York City? by [Krisztina Szucs](https://krisztinaszucs.com/)](https://plotparade.com/chartimg/SUNRISE/c_NYC.jpg)
+<figure role="group">
+  <img src = "https://plotparade.com/chartimg/SUNRISE/c_NYC.jpg" alt="Night time hours plot for New York City, NY."
+  <figcaption class="mt2 lh-copy f6 f5-ns">How long are the nights in New York City? by <a href="https://krisztinaszucs.com/">Krisztina Szucs</a></figcaption>
+</figure>
+
+In my version I wanted to draw on a similar structure
+to apply the plot style to daylight rather than sunset hours.
+I also wanted to see how far I could go with my plot
+without leaving the comfort of ggplot2,
+so I stopped short of adding the sunrise and sunset icons.
+(I suppose *anything* is possible in ggplot2 but IMHO this is a reasonable line to draw.)
 
 ## Where are you?
 
+To get accurate sunrise and sunset time data,
+we first need to figure out where in the world we are.
+Fortunately,
+the [ipapi package](https://github.com/hrbrmstr/ipapi)
+makes it easy to grab key geolocation data from your IP address,
+like latitude, longitude and time zone.
+(I’m adding a little fuzz just to make ipapi a little less accurate.)
+
 ``` r
 location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
+
+# find a location nearby but not my actual house, lol
 location$lat <- location$lat + runif(1, min = -0.5, max = 0.5)
 location$lon <- location$lon + runif(1, min = -0.5, max = 0.5)
 ```
@@ -512,6 +536,9 @@ location[c("lat", "lon", "timezone")]
 
 ## Sunrise and Sunset Times
 
+Next, we take our latitude and longitude to [suncalc](https://github.com/datastorm-open/suncalc), an R package port of [suncalc.js](https://github.com/mourner/suncalc).
+We ask `getSunlightTimes()` for the dawn and dusk related times for every day in 2022.
+
 ``` r
 sun_times <-
   suncalc::getSunlightTimes(
@@ -525,9 +552,44 @@ sun_times <-
     tz = location$timezone,
     keep = c("dawn", "nauticalDawn", "dusk", "nauticalDusk", "sunrise", "sunset")
   )
+
+head(sun_times)
 ```
 
+    ##         date      lat       lon                dawn        nauticalDawn
+    ## 1 2022-01-01 33.34846 -85.17511 2022-01-01 07:18:23 2022-01-01 06:47:27
+    ## 2 2022-01-02 33.34846 -85.17511 2022-01-02 07:18:35 2022-01-02 06:47:41
+    ## 3 2022-01-03 33.34846 -85.17511 2022-01-03 07:18:45 2022-01-03 06:47:53
+    ## 4 2022-01-04 33.34846 -85.17511 2022-01-04 07:18:54 2022-01-04 06:48:03
+    ## 5 2022-01-05 33.34846 -85.17511 2022-01-05 07:19:02 2022-01-05 06:48:12
+    ## 6 2022-01-06 33.34846 -85.17511 2022-01-06 07:19:07 2022-01-06 06:48:20
+    ##                  dusk        nauticalDusk             sunrise
+    ## 1 2022-01-01 18:12:28 2022-01-01 18:43:24 2022-01-01 07:45:47
+    ## 2 2022-01-02 18:13:11 2022-01-02 18:44:05 2022-01-02 07:45:57
+    ## 3 2022-01-03 18:13:54 2022-01-03 18:44:47 2022-01-03 07:46:06
+    ## 4 2022-01-04 18:14:39 2022-01-04 18:45:30 2022-01-04 07:46:14
+    ## 5 2022-01-05 18:15:25 2022-01-05 18:46:14 2022-01-05 07:46:19
+    ## 6 2022-01-06 18:16:11 2022-01-06 18:46:59 2022-01-06 07:46:23
+    ##                sunset
+    ## 1 2022-01-01 17:45:04
+    ## 2 2022-01-02 17:45:48
+    ## 3 2022-01-03 17:46:33
+    ## 4 2022-01-04 17:47:20
+    ## 5 2022-01-05 17:48:07
+    ## 6 2022-01-06 17:48:55
+
+If you’re curious about the difference between (civil) dawn, nautical dawn and sunrise, take a stroll through [*Twilight* on Wikipedia](https://en.wikipedia.org/wiki/Twilight).
+
 ## Tidy Sun Times
+
+As cool as it is to so easily get to the point of having this data in hand,
+we need to do a little bit of tidying up to get it ready for ggplot2.
+In particular, we won’t need the `lat` and `lon` columns,
+and we can need to consolidate all of the timestamps into a single column
+that we can eventually group by `date`.
+I used [pivot\_longer()](https://tidyr.tidyverse.org/reference/pivot_longer.html)
+to move the column labels for `dawn` through `sunset` into an `event` column
+with the corresponding values from each row in an adjacent `time` column.
 
 ``` r
 library(tidyverse)
@@ -540,9 +602,36 @@ tidy_sun_times <-
     tz = strftime(time, "%Z"),
     time = hms::as_hms(time)
   )
+
+tidy_sun_times
 ```
 
+    ## # A tibble: 2,196 × 4
+    ##    date       event        time     tz   
+    ##    <date>     <chr>        <time>   <chr>
+    ##  1 2022-01-01 dawn         07:18:23 EST  
+    ##  2 2022-01-01 nauticalDawn 06:47:27 EST  
+    ##  3 2022-01-01 dusk         18:12:28 EST  
+    ##  4 2022-01-01 nauticalDusk 18:43:24 EST  
+    ##  5 2022-01-01 sunrise      07:45:47 EST  
+    ##  6 2022-01-01 sunset       17:45:04 EST  
+    ##  7 2022-01-02 dawn         07:18:35 EST  
+    ##  8 2022-01-02 nauticalDawn 06:47:41 EST  
+    ##  9 2022-01-02 dusk         18:13:11 EST  
+    ## 10 2022-01-02 nauticalDusk 18:44:05 EST  
+    ## # … with 2,186 more rows
+
+There’s also a small trick here to use `strftime()`
+to extract the short timezone label `%Z`, e.g. **EST** or **EDT**,
+for each day,
+which I’ll use later when calling out the time changes.
+And finally, I used `hms::as_hms()` to extract the time of day component from each sun event timestamp.
+This effectively turns the values in that column into an integer number of seconds from midnight of the `date` of that row.
+
 ## First Looks
+
+Now that we have tidy data ready for ggplot2, let’s plot it!
+This plot won’t look amazing, but it will help us get a sense of the data we have to work with.
 
 ``` r
 ggplot(tidy_sun_times) +
