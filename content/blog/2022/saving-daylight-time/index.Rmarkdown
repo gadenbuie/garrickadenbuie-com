@@ -11,7 +11,7 @@ description: |
   How much daylight do cities across the world get throughout the year?
   Does Daylight Saving Time really save any daylight?
   A visualization to explore these questions.
-images: 
+images:
   - blog/saving-daylight-time/index_files/figure-html/social-1.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/saving-daylight-time/index.Rmd'
 keywords: rstats
@@ -35,11 +35,47 @@ source("plot_daylight_hours.R")
 
 ```{r location, echo=FALSE}
 location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
-location$lat <- location$lat + runif(1, min = -1)
-location$lon <- location$lon + runif(1, min = -1)
+location$lat <- location$lat + runif(1, min = -0.5, max = 0.5)
+location$lon <- location$lon + runif(1, min = -0.5, max = 0.5)
 ```
 
+```{r location-for-real, echo=FALSE}
+location$lat <- 33.34846
+location$lon <- -85.17511
+location$timezone <- "America/New_York"
+```
+
+::: lead
+Remember Daylight Saving Time?
+You know, the two days each year that we all collectively complain
+about the ridiculousness of our biannual clock adjustment and loss of sleep?
+
+In this post, I engage in some self-soothing data visualization
+to plot day light hours in cities across the world and the United States,
+inspired by an [awesome night hours series](https://plotparade.com/gallery_sunrise.html)
+by [Krisztina Szucs](https://krisztinaszucs.com/).
+:::
+
 ## Are we saving daylight in Atlanta, GA?
+
+As a parent, I loathe daylight saving time.
+Nothing reveals the shared delusion of time
+like trying to explain to your children
+why we moved the clock forward an hour when it means
+they'll suddenly need to go to bed while it's light out
+or wake up and get ready for school while it's dark.
+
+So in this spirit, I started to wonder:
+what kind of returns are we getting on our daylight saving?
+Except, rather than try to answer that question —
+since that's way too hard —
+I decided I'd visualize day light hours
+to see how they align with the modern work day.
+
+The plot below shows the yearly day light schedule for 2022 in Atlanta, GA where I live.
+We'll also take a look at the day light schedule in [other cities around the world](#around-the-world)
+or [across the United States](#across-the-us).
+At the end of this post, I'll share the code I used to make the plot below.
 
 ```{=html}
 <figure role="group">
@@ -48,6 +84,12 @@ location$lon <- location$lon + runif(1, min = -1)
   <figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
 </figure>
 ```
+
+In Atlanta, GA,
+which is very much on the western edge of the US Eastern time zone,
+it's pretty clear from this visualization that year-round standard time
+is a decent way to live life.
+What about other cities in the world?
 
 ## Around the World
 
@@ -223,7 +265,7 @@ location[c("lat", "lon", "timezone")]
 ## Sunrise and Sunset Times
 
 ```{r sun_times}
-sun_times <- 
+sun_times <-
   suncalc::getSunlightTimes(
     date = seq(
       as.Date("2022-01-01"),
@@ -242,12 +284,12 @@ sun_times <-
 ```{r tidy-sun-times}
 library(tidyverse)
 
-tidy_sun_times <- 
-  sun_times %>% 
+tidy_sun_times <-
+  sun_times %>%
   select(-lat, -lon) %>%
-  pivot_longer(-date, names_to = "event", values_to = "time") %>% 
+  pivot_longer(-date, names_to = "event", values_to = "time") %>%
   mutate(
-    tz = strftime(time, "%Z"), 
+    tz = strftime(time, "%Z"),
     time = hms::as_hms(time)
   )
 ```
@@ -255,7 +297,7 @@ tidy_sun_times <-
 ## First Looks
 
 ```{r plot-first-looks}
-ggplot(tidy_sun_times) + 
+ggplot(tidy_sun_times) +
   aes(x = date, y = time, color = event) +
   geom_line()
 ```
@@ -263,7 +305,7 @@ ggplot(tidy_sun_times) +
 ## Paired Events (Start and End)
 
 ```{r tidier-sun-times}
-tidier_sun_times <- 
+tidier_sun_times <-
   tidy_sun_times %>%
   mutate(
     period = case_when(
@@ -276,19 +318,19 @@ tidier_sun_times <-
       sunset = "sunrise",
       dusk = "dawn"
     )
-  ) %>% 
+  ) %>%
   pivot_wider(
-    names_from = "period", 
+    names_from = "period",
     values_from = "time"
-  ) %>% 
-  group_by(date, tz, label) %>% 
+  ) %>%
+  group_by(date, tz, label) %>%
   summarize(
     events = paste(event, collapse = ","),
     label = first(event),
     starts = starts[!is.na(starts)],
     ends = ends[!is.na(ends)]
-  ) %>% 
-  ungroup() %>% 
+  ) %>%
+  ungroup() %>%
   mutate(label = factor(label, c("nauticalDawn", "dawn", "sunrise")))
 ```
 
@@ -320,7 +362,7 @@ ggplot(tidier_sun_times) +
 sysfonts::font_add_google("Outfit")
 ```
 
-```{r daylight-hours-atlanta, fig.height = 8, fig.width = 9, fig.show = 'hide'}
+```{r daylight-hours-atlanta, fig.height = 7, fig.width = 9, fig.show = 'hide'}
 x_breaks <- seq(
   from = as.Date("2022-01-01"),
   to = as.Date("2023-01-01"),
@@ -333,7 +375,7 @@ color_bg <- "#39304a"
 ggplot(tidier_sun_times) +
   aes(date) +
   geom_text(
-    data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>% 
+    data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>%
       mutate(across(date, as.Date, origin = "1970-01-01")),
     aes(label = label, y = time),
     color = "#C29F5F"
@@ -358,8 +400,8 @@ ggplot(tidier_sun_times) +
     vjust = c(2, -1)
   ) +
   geom_text(
-    data = . %>% 
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
+    data = . %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_head(n = 1),
     aes(y = ends, label = tz),
     hjust = 1,
@@ -370,19 +412,19 @@ ggplot(tidier_sun_times) +
     color = color_text
   ) +
   geom_curve(
-    data = . %>% 
+    data = . %>%
       filter(label == "nauticalDawn") %>%
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
-      slice_head(n = 1), 
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
+      slice_head(n = 1),
     aes(x = date - 17, xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
-    arrow = arrow(length = unit(0.08, "inch")), 
+    arrow = arrow(length = unit(0.08, "inch")),
     size = 0.5,
     color = color_text,
     curvature = 0.4
   ) +
   geom_text(
-    data = . %>% 
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
+    data = . %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_tail(n = 1),
     aes(y = starts, label = tz),
     hjust = 1,
@@ -392,19 +434,19 @@ ggplot(tidier_sun_times) +
     color = color_text
   ) +
   geom_curve(
-    data = . %>% 
+    data = . %>%
       filter(label == "nauticalDawn") %>%
-      filter(tz != coalesce(lag(tz), first(tz))) %>% 
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_tail(n = 1),
     aes(x = date - 17, xend = date, y = starts - 60^2, yend = starts - 500),
-    arrow = arrow(length = unit(0.08, "inch")), 
+    arrow = arrow(length = unit(0.08, "inch")),
     size = 0.5,
     color = color_text,
     curvature = -0.4
   ) +
   ggrepel::geom_label_repel(
-    data = . %>% filter(date == max(date)) %>% 
-      separate_rows(events, sep = ",") %>% 
+    data = . %>% filter(date == max(date)) %>%
+      separate_rows(events, sep = ",") %>%
       mutate(
         date = date + 12,
         time = if_else(events == label, starts, ends),
@@ -431,8 +473,8 @@ ggplot(tidier_sun_times) +
   ) +
   scale_alpha_discrete(range = c(0.5, 0.9)) +
   scale_x_date(
-    breaks = x_breaks, 
-    date_labels = "%b", 
+    breaks = x_breaks,
+    date_labels = "%b",
     limits = c(
       as.Date("2022-01-01"),
       as.Date("2023-03-15")
@@ -470,7 +512,7 @@ ggplot(tidier_sun_times) +
 ```
 
 ```{r eval=FALSE, echo=FALSE}
-tidier_sun_times %>% 
+tidier_sun_times %>%
   filter(label == "sunrise") %>%
   mutate(
     starts = lubridate::ymd_hms(paste(date, starts), tz = location$tz),
@@ -480,7 +522,7 @@ tidier_sun_times %>%
     morning = as.numeric(difftime(morning, starts, units = "secs")),
     evening = as.numeric(difftime(ends, evening, units = "secs")),
     non_work_hours = (morning + evening) / 60
-  ) %>% 
+  ) %>%
   ggplot() +
   aes(date, non_work_hours) +
   geom_col() +
@@ -547,7 +589,7 @@ function updatePlotSelectedCity() {
   const plotDesc = document.getElementById('city-plot-desc')
   let inputCity = document.getElementById('choose-city')
   inputCity = Array.from(inputCity.options).filter(el => el.value === inputCity.value)[0]
-  
+
   plot.src = inputCity.value
   plot.setAttribute('alt', inputCity.dataset.city)
   plotDesc.innerHTML = inputCity.dataset.alt

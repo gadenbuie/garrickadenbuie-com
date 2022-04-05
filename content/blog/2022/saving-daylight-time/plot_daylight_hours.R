@@ -135,8 +135,8 @@ describe_sun_times <- function(tst, title, stay_in = "normal") {
   
   stay_in_desc <- switch(
     stay_in,
-    dst = ", with DST all year long",
-    standard = ", with standard time all year long",
+    dst = " with DST all year long",
+    standard = " with standard time all year long",
     ""
   )
   
