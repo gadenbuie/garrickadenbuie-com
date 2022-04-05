@@ -3,21 +3,21 @@ library(tidyverse)
 make_no_time_change <- function(tidy_sun_times, lon, keep = "dst") {
   keep <- match.arg(keep, c("dst", "standard"))
   times <- tidy_sun_times$time
-  
+
   dst_offset <-
-    lubridate::force_tz(times, "UTC") %>% 
-    difftime(times, units = "secs") %>% 
+    lubridate::force_tz(times, "UTC") %>%
+    difftime(times, units = "secs") %>%
     as.numeric()
-  
+
   times <- lubridate::force_tz(times, "UTC")
 
-  time_offsets <- 
+  time_offsets <-
     if (keep == "dst") {
       lubridate::seconds(max(dst_offset) - dst_offset)
     } else (
       lubridate::seconds(min(dst_offset) - dst_offset)
     )
-  
+
   tidy_sun_times$time <- times + as.integer(time_offsets)
   tidy_sun_times$tz <- "UTC"
   tidy_sun_times
@@ -33,7 +33,7 @@ hms_str <- function(x, hours_24 = FALSE, drop = 0) {
   hours <- floor(x / 60^2)
   x <- x - hours * 60^2
   am_pm <- if (hours_24) "" else if (hours >= 12) " pm" else " am"
-  
+
   hours <- if (!hours_24 && hours != 24) {
     sub("^0", "", sprintf("%02d", hours %% 12))
   } else {
@@ -52,7 +52,7 @@ hms_str <- function(x, hours_24 = FALSE, drop = 0) {
 }
 
 tidy_sun_times <- function(lat, lon, timezone, stay_in = "normal") {
-  sun_times <- 
+  sun_times <-
     suncalc::getSunlightTimes(
       date = seq(
         as.Date("2022-01-01"),
@@ -64,18 +64,18 @@ tidy_sun_times <- function(lat, lon, timezone, stay_in = "normal") {
       tz = timezone,
       keep = c("dawn", "nauticalDawn", "dusk", "nauticalDusk", "sunrise", "sunset")
     )
-  
-  tidy_sun_times <- 
-    sun_times %>% 
+
+  tidy_sun_times <-
+    sun_times %>%
     select(-lat, -lon) %>%
-    pivot_longer(-date, names_to = "event", values_to = "time") %>% 
+    pivot_longer(-date, names_to = "event", values_to = "time") %>%
     mutate(tz = strftime(time, "%Z", tz = timezone))
-  
+
   if (stay_in %in% c("dst", "standard")) {
     tidy_sun_times <- make_no_time_change(tidy_sun_times, lon, keep = stay_in)
   }
-  
-  tidy_sun_times %>% 
+
+  tidy_sun_times %>%
     mutate(
       time = hms_dbl(time),
       period = case_when(
@@ -88,41 +88,41 @@ tidy_sun_times <- function(lat, lon, timezone, stay_in = "normal") {
         sunset = "sunrise",
         dusk = "dawn"
       )
-    ) %>% 
+    ) %>%
     pivot_wider(
-      names_from = "period", 
+      names_from = "period",
       values_from = "time"
-    ) %>% 
-    group_by(date, tz, label) %>% 
+    ) %>%
+    group_by(date, tz, label) %>%
     summarize(
       events = paste(event, collapse = ","),
       label = first(event),
       starts = starts[!is.na(starts)],
       ends = ends[!is.na(ends)],
       .groups = "drop"
-    ) %>% 
+    ) %>%
     mutate(
       across(c(starts, ends), as.numeric),
       ends = if_else(ends < 60^2, 24 * 60^2, ends),
       label = factor(label, c("nauticalDawn", "dawn", "sunrise"))
-    ) %>% 
+    ) %>%
     complete(nesting(date, tz), nesting(label, events)) %>%
     replace_na(list(starts = 0, ends = 24 * 60^2))
 }
 
 describe_sun_times <- function(tst, title, stay_in = "normal") {
-  tst <- tst %>% 
-    filter(label == "sunrise") %>% 
+  tst <- tst %>%
+    filter(label == "sunrise") %>%
     mutate(
       duration = ends - starts,
       nine = map_dbl(starts, ~ max(9 * 60^2 - .x, 0)),
       five = map_dbl(ends, ~ max(.x - 17 * 60^2, 0)),
       non_work_sun = nine + five
     )
-  
+
   pretty_sec <- function(x) {
     if (x == 0) return("0 minutes")
-    
+
     hours <- floor(x / 60^2)
     x <- x - hours * 60^2
     mins <- floor(x / 60)
@@ -132,70 +132,70 @@ describe_sun_times <- function(tst, title, stay_in = "normal") {
     )
     paste(time, collapse = " ")
   }
-  
+
   stay_in_desc <- switch(
     stay_in,
     dst = " with DST all year long",
     standard = " with standard time all year long",
     ""
   )
-  
+
   opening <- glue::glue("<strong>{title}</strong>{stay_in_desc}.")
 
   shortest_day <-
-    tst %>% 
-    filter(label == "sunrise") %>% 
+    tst %>%
+    filter(label == "sunrise") %>%
     slice_min(duration, n = 1, with_ties = FALSE)
-  
+
   longest_day <-
-    tst %>% 
-    filter(label == "sunrise") %>% 
+    tst %>%
+    filter(label == "sunrise") %>%
     slice_max(duration, n = 1, with_ties = FALSE)
-  
+
   days <-
     bind_rows(shortest_day, longest_day) %>%
-    mutate(day = c("<strong>Shortest Day</strong>", "<strong>Longest Day</strong>")) %>% 
+    mutate(day = c("<strong>Shortest Day</strong>", "<strong>Longest Day</strong>")) %>%
     select(day, date, starts, ends, duration, non_work_sun) %>%
     mutate(
       date = strftime(date, "%b %d"),
       across(c(starts, ends), map_chr, hms_str, drop = 1),
       across(c(duration, non_work_sun), map_chr, pretty_sec)
-    ) %>% 
+    ) %>%
     knitr::kable(
       format = "html",
       escape = FALSE,
       col.names = c("", "Date", "Sunrise", "Sunset", "Daylight", "Non-Work"),
       align = "llrrrr",
-      table.attr = 'style="min-width: 550px;"'
+      table.attr = 'class="center" style="min-width: 550px;"'
     )
-  
+
   paste(opening, days)
 }
 
 plot_sun_times <- function(
-  lat, 
-  lon, 
-  timezone, 
-  title, 
-  font_family = "Outfit", 
+  lat,
+  lon,
+  timezone,
+  title,
+  font_family = "Outfit",
   stay_in = c("no", "dst", "standard")
 ) {
   tidy_sun_times <- tidy_sun_times(lat, lon, timezone, stay_in)
-  
+
   x_breaks <- seq(
     from = as.Date("2022-01-01"),
     to = as.Date("2023-01-01"),
     by = "2 months"
   )
   y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
-  
+
   color_text <- "#F2CDB9"
   color_caption <- "#726194"
-  
+
   ggplot(tidy_sun_times) +
     aes(date) +
     geom_text(
-      data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>% 
+      data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>%
         mutate(across(date, as.Date, origin = "1970-01-01")),
       aes(label = label, y = time),
       color = "#C29F5F"
@@ -251,9 +251,9 @@ plot_sun_times <- function(
     ) +
     # First DST-related shift
     geom_text(
-      data = . %>% 
-        filter(label == "nauticalDawn") %>% 
-        filter(tz != coalesce(lag(tz), first(tz))) %>% 
+      data = . %>%
+        filter(label == "nauticalDawn") %>%
+        filter(tz != coalesce(lag(tz), first(tz))) %>%
         slice_head(n = 1),
       aes(y = ends, label = tz),
       hjust = max(sign(lat), 0),
@@ -265,26 +265,26 @@ plot_sun_times <- function(
       color = color_text
     ) +
     geom_curve(
-      data = . %>% 
+      data = . %>%
         filter(label == "nauticalDawn") %>%
-        filter(tz != coalesce(lag(tz), first(tz))) %>% 
-        slice_head(n = 1), 
+        filter(tz != coalesce(lag(tz), first(tz))) %>%
+        slice_head(n = 1),
       aes(
         x = date + (-sign(lat) * 17),
         xend = date,
         y = ends - (-60^2 * 1.2),
         yend = ends + (2 - sign(lat)) * 500
       ),
-      arrow = arrow(length = unit(0.08, "inch")), 
+      arrow = arrow(length = unit(0.08, "inch")),
       size = 0.5,
       color = color_text,
       curvature = sign(lat) * 0.4
     ) +
     # Second DST-related shift
     geom_text(
-      data = . %>% 
+      data = . %>%
         filter(label == "nauticalDawn") %>%
-        filter(tz != coalesce(lag(tz), first(tz))) %>% 
+        filter(tz != coalesce(lag(tz), first(tz))) %>%
         slice_tail(n = 1),
       aes(y = starts, label = tz),
       hjust = max(sign(lat), 0),
@@ -296,9 +296,9 @@ plot_sun_times <- function(
       color = color_text
     ) +
     geom_curve(
-      data = . %>% 
+      data = . %>%
         filter(label == "nauticalDawn") %>%
-        filter(tz != coalesce(lag(tz), first(tz))) %>% 
+        filter(tz != coalesce(lag(tz), first(tz))) %>%
         slice_tail(n = 1),
       aes(
         x = date + (-sign(lat) * 17),
@@ -306,14 +306,14 @@ plot_sun_times <- function(
         y = starts - (if (lat < 0) 2 else 1) * 60^2,
         yend = starts - (2 - sign(lat)) * 500
       ),
-      arrow = arrow(length = unit(0.08, "inch")), 
+      arrow = arrow(length = unit(0.08, "inch")),
       size = 0.5,
       color = color_text,
       curvature = sign(lat) * -0.4
     ) +
     ggrepel::geom_label_repel(
-      data = . %>% filter(date == max(date)) %>% 
-        separate_rows(events, sep = ",") %>% 
+      data = . %>% filter(date == max(date)) %>%
+        separate_rows(events, sep = ",") %>%
         mutate(
           date = date + 12,
           time = if_else(events == label, starts, ends),
@@ -340,8 +340,8 @@ plot_sun_times <- function(
     ) +
     scale_alpha_discrete(range = c(0.5, 0.9)) +
     scale_x_date(
-      breaks = x_breaks, 
-      date_labels = "%b", 
+      breaks = x_breaks,
+      date_labels = "%b",
       limits = c(
         as.Date("2022-01-01"),
         as.Date("2023-03-15")
@@ -387,7 +387,7 @@ plot_sun_times <- function(
 
 download_cities <- function() {
   cities <- readr:::read_tsv(
-    "https://github.com/substack/cities1000/raw/master/cities1000.txt", 
+    "https://github.com/substack/cities1000/raw/master/cities1000.txt",
     col_names = c(
       'id',
       'name',
@@ -409,15 +409,15 @@ download_cities <- function() {
       'tz',
       'lastModified'
     )
-  ) %>% 
-    janitor::clean_names() %>% 
-    filter(population > 50000) %>% 
+  ) %>%
+    janitor::clean_names() %>%
+    filter(population > 50000) %>%
     select(city = asciiname, lat, lon, country, admin_code, tz, population)
-  
-  country_codes <- readr::read_csv("https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/raw/master/all/all.csv") %>% 
-    janitor::clean_names() %>% 
+
+  country_codes <- readr::read_csv("https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/raw/master/all/all.csv") %>%
+    janitor::clean_names() %>%
     select(country_name = name, alpha_2, region, sub_region)
-  
+
   dplyr::left_join(
     cities,
     country_codes,
@@ -428,7 +428,7 @@ download_cities <- function() {
 
 download_us_cities <- function() {
   cities <- readr:::read_tsv(
-    "https://github.com/substack/cities1000/raw/master/cities1000.txt", 
+    "https://github.com/substack/cities1000/raw/master/cities1000.txt",
     col_names = c(
       'id',
       'name',
@@ -450,10 +450,10 @@ download_us_cities <- function() {
       'tz',
       'lastModified'
     )
-  ) %>% 
-    janitor::clean_names() %>% 
-    filter(country == "US", population > 1e5) %>% 
-    select(city = asciiname, lat, lon, country, state_short = admin_code, timezone = tz, population) %>% 
+  ) %>%
+    janitor::clean_names() %>%
+    filter(country == "US", population > 1e5) %>%
+    select(city = asciiname, lat, lon, country, state_short = admin_code, timezone = tz, population) %>%
     mutate(state = set_names(state.name, state.abb)[state_short]) %>%
     replace_na(list(state = ""))
 }

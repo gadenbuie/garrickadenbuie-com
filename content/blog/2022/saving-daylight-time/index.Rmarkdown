@@ -50,8 +50,8 @@ Remember Daylight Saving Time?
 You know, the two days each year that we all collectively complain
 about the ridiculousness of our biannual clock adjustment and loss of sleep?
 
-In this post, I engage in some self-soothing data visualization
-to plot day light hours in cities across the world and the United States,
+In this post, I engage in some self-care data visualization
+to explore day light hours in cities across the world and the United States,
 inspired by an [awesome night hours series](https://plotparade.com/gallery_sunrise.html)
 by [Krisztina Szucs](https://krisztinaszucs.com/).
 :::
@@ -79,7 +79,7 @@ At the end of this post, I'll share the code I used to make the plot below.
 
 ```{=html}
 <figure role="group">
-  <img src="`r knitr::fig_chunk("daylight-hours-atlanta", "png")`"
+  <img src="us-cities/georgia_atlanta_normal.png"
     alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
   <figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
 </figure>
@@ -164,6 +164,24 @@ htmltools::withTags(
 
 
 ## Across the US
+
+It seems that every year we talk
+about _finally doing something about daylight saving time,
+but this year the U.S. Senate actually went so far as to pass
+a [bill to make Daylight Saving Time permanent](https://www.washingtonpost.com/health/2022/03/15/senate-daylight-saving-permanent/).
+In a suprising-to-no-one twist,
+the bill is stalled in the House,
+where [representatives are arguing over which of standard or daylight saving time should be permanent](https://www.washingtonpost.com/health/2022/03/19/permanent-daylight-saving-time-house/).
+
+Would you prefer standard time or daylight saving time?
+If you're not sure,
+check out the [Daylight Saving Time Gripe Assistant Tool](https://observablehq.com/@awoodruff/daylight-saving-time-gripe-assistant-tool) by Andy Woodruff on Observable.
+
+I thought it'd be interesting to visualize day light hours for U.S. cities.
+You can use the dropdown below to choose your city or the nearest city with more than 100,000 residents (or just pick a random city!).
+Then, toggle between **Standard** or **DST** to see how either proposal would affect you.
+Or choose **Both** to see what will happen in the unimaginable case that the U.S. Congress desn't actually make DST permanent.
+
 
 ```{r cities_us_json, echo=FALSE}
 cities_us <- read_rds("cities_us.rds")
