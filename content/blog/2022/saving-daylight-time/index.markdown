@@ -666,7 +666,24 @@ letting `geom_ribbon()` fill in space between them.
 
 The plan of action is to create a new column that I’ll call `period`
 where we’ll choose which of these two new columns a timestamp will be moved to.
-We’ll send all of the
+We’ll identify each `pair` using the morning event label.
+
+Because we need `pivot_longer()` to create two new columns,
+`starts` and `ends`,
+from our single `period` column,
+we’ll first split the table into a list of two tables,
+one for each period,
+and *then* pivot the timestamp column into a new column.
+Because we’re operating on a list,
+we’ll use `purrr::map()` to coordinate this action.
+Then we can merge the two tables back together with `left_join()`,
+using `purrr::reduce()` to apply that action to the list of pivoted tables.
+
+After that,
+we’re back in single-table land,
+and can use `mutate()` and `select()` to tweak the final table output
+to make sure that the morning events are ordered correctly:
+*nautical dawn*, then *dawn*, then *sunrise*.
 
 ``` r
 tidier_sun_times <-
@@ -676,7 +693,7 @@ tidier_sun_times <-
       str_detect(event, "[dD]awn|sunrise") ~ "starts",
       str_detect(event, "[dD]usk|sunset") ~ "ends"
     ),
-    label = recode(
+    pair = recode(
       event,
       nauticalDusk = "nauticalDawn",
       sunset = "sunrise",
@@ -687,53 +704,70 @@ tidier_sun_times <-
   map(pivot_wider, names_from = "period", values_from = "time") %>%
   reduce(
     left_join,
-    by = c("date", "tz", "label"),
-    suffix = c("_starts", "_ends")
+    by = c("date", "tz", "pair"),
+    suffix = c("_ends", "_starts")
   ) %>%
   mutate(
-    label = factor(label, c("nauticalDawn", "dawn", "sunrise"))
+    pair = factor(pair, c("nauticalDawn", "dawn", "sunrise"))
   ) %>%
-  select(date, tz, label, contains("starts"), contains("ends"))
+  select(date, tz, pair, contains("starts"), contains("ends"))
 
 tidier_sun_times
 ```
 
     ## # A tibble: 1,098 × 7
-    ##    date       tz    label        event_starts starts   ends     event_ends  
-    ##    <date>     <chr> <fct>        <chr>        <time>   <time>   <chr>       
-    ##  1 2022-01-01 EST   dawn         dusk         07:18:23 18:12:28 dawn        
-    ##  2 2022-01-01 EST   nauticalDawn nauticalDusk 06:47:27 18:43:24 nauticalDawn
-    ##  3 2022-01-01 EST   sunrise      sunset       07:45:47 17:45:04 sunrise     
-    ##  4 2022-01-02 EST   dawn         dusk         07:18:35 18:13:11 dawn        
-    ##  5 2022-01-02 EST   nauticalDawn nauticalDusk 06:47:41 18:44:05 nauticalDawn
-    ##  6 2022-01-02 EST   sunrise      sunset       07:45:57 17:45:48 sunrise     
-    ##  7 2022-01-03 EST   dawn         dusk         07:18:45 18:13:54 dawn        
-    ##  8 2022-01-03 EST   nauticalDawn nauticalDusk 06:47:53 18:44:47 nauticalDawn
-    ##  9 2022-01-03 EST   sunrise      sunset       07:46:06 17:46:33 sunrise     
-    ## 10 2022-01-04 EST   dawn         dusk         07:18:54 18:14:39 dawn        
+    ##    date       tz    pair         event_starts starts   event_ends   ends    
+    ##    <date>     <chr> <fct>        <chr>        <time>   <chr>        <time>  
+    ##  1 2022-01-01 EST   dawn         dawn         07:18:23 dusk         18:12:28
+    ##  2 2022-01-01 EST   nauticalDawn nauticalDawn 06:47:27 nauticalDusk 18:43:24
+    ##  3 2022-01-01 EST   sunrise      sunrise      07:45:47 sunset       17:45:04
+    ##  4 2022-01-02 EST   dawn         dawn         07:18:35 dusk         18:13:11
+    ##  5 2022-01-02 EST   nauticalDawn nauticalDawn 06:47:41 nauticalDusk 18:44:05
+    ##  6 2022-01-02 EST   sunrise      sunrise      07:45:57 sunset       17:45:48
+    ##  7 2022-01-03 EST   dawn         dawn         07:18:45 dusk         18:13:54
+    ##  8 2022-01-03 EST   nauticalDawn nauticalDawn 06:47:53 nauticalDusk 18:44:47
+    ##  9 2022-01-03 EST   sunrise      sunrise      07:46:06 sunset       17:46:33
+    ## 10 2022-01-04 EST   dawn         dawn         07:18:54 dusk         18:14:39
     ## # … with 1,088 more rows
 
 ## Another plot
 
+Now we’re ready to try out our even tidier data set!
+Okay, it’s actually less tidy, but more ready for plotting.
+We’ll swap out `geom_line()` for
+[`geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html),
+and map `starts` to `ymin` and `ends` to `ymax`,
+filling in each region by `pair`.
+
 ``` r
 ggplot(tidier_sun_times) +
-  aes(date, ymin = starts, ymax = ends, fill = label) +
+  aes(date, ymin = starts, ymax = ends, fill = pair) +
   geom_ribbon()
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/plot-tidier-sun-times-1.png" width="864" />
 
-Reverse the time axes and provide our own labels
+Looks terrible, but it’s more or less what we want to see.
+The y-axis is a little confusing though
+because it reads from night at the top to day at the bottom.
+The trick is to recall that we used `hms::as_hms()`
+to turn the time of day into an integer number of seconds from midnight.
+So we can reverse the y-axis with [`scale_y_reverse()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+and then provide our own labels.
 
 ``` r
 ggplot(tidier_sun_times) +
-  aes(date, ymin = starts, ymax = ends, fill = label) +
+  aes(date, ymin = starts, ymax = ends, fill = pair) +
   geom_ribbon() +
   scale_y_reverse(
     limits = c(24*60^2, 0),
     breaks = seq(0, 24*60^2, by = 3 * 60^2),
-    labels = paste0(seq(0, 24, by = 3), ":00"),
+    label = paste0(seq(0, 24, by = 3), ":00"),
     expand = expansion()
+  ) +
+  scale_x_date(
+    breaks = "3 months",
+    date_labels = "%b"
   )
 ```
 
@@ -741,9 +775,32 @@ ggplot(tidier_sun_times) +
 
 ## Make it pretty
 
+Great!
+Now it’s time to [draw the rest of the owl](https://blog.evanburchard.com/the-rest-of-the-owl/)!
+Which means I’m now going to include roughly 150 lines of code
+that take the rough sketch above and make it a pretty ggplot.
+
+Of course I should mention that what you’ll find below
+isn’t even the full story of the plots you see in this post,
+it turned out to be the first sketch
+of the code that I actually used to create the plots.
+It also turns out that I’m pretty good at writing code
+that creates more problems that I need to solve with code.
+
+A few preliminaries:
+I’ll use the [Outfit font](https://fonts.google.com/specimen/Outfit?query=outfit)
+from Google Fonts with the help of the [sysfonts](https://github.com/yixuan/sysfonts) package.
+
 ``` r
 sysfonts::font_add_google("Outfit")
 ```
+
+We’ll need a grid for the x- and y-axis
+that will be used in a few places,
+so I’ll create them up front.
+We end up with a vector of dates from January 1, 2022 to January 1, 2023
+by 2 months for the x-axis
+and a vector of times from midnight to midnight by 3 hours for the y-axis.
 
 ``` r
 x_breaks <- seq(
@@ -752,27 +809,51 @@ x_breaks <- seq(
   by = "2 months"
 )
 y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
+```
+
+Finally, there are a couple of colors I used in more than one place
+for the foreground and background colors.
+There are a few other colors that I should have pulled into variables
+for clarity,
+but I’ve decided that it’s not worth the effort
+to think up variable names for them.
+
+``` r
 color_text <- "#F2CDB9"
 color_bg <- "#39304a"
+```
 
+Finally, as promised, the 150ish lines of ggplot2 code.
+Enjoy!
+
+``` r
 ggplot(tidier_sun_times) +
-  aes(date) +
+  # The x-axis is always the day of the year
+  aes(x = date) +
+  # Behind everything we add a grid of `+` characters
+  # in place of grid lines, to give a starry feel
   geom_text(
-    data = cross_df(list(date = x_breaks, time = y_breaks, label = "+")) %>%
+    # the data for this layer is our grid of x and y breaks
+    data = cross_df(
+      list(date = x_breaks, time = y_breaks, label = "+")
+    ) %>%
       mutate(across(date, as.Date, origin = "1970-01-01")),
     aes(label = label, y = time),
     color = "#C29F5F"
   ) +
+  # Here you'll recognize the outlines of our original plot sketch
   geom_ribbon(
-    aes(ymin = starts, ymax = ends, fill = label, alpha = label),
+    aes(ymin = starts, ymax = ends, fill = pair, alpha = pair),
     show.legend = FALSE
   ) +
+  # Add dotted horizontal lines at 9am and 5pm
   geom_hline(
     yintercept = c(9, 17) * 60^2,
     color = color_bg,
     alpha = 0.5,
     linetype = 2
   ) +
+  # And a little text to indicate the meaning of those lines
   annotate(
     geom = "text",
     x = min(tidier_sun_times$date),
@@ -782,7 +863,16 @@ ggplot(tidier_sun_times) +
     hjust = -0.25,
     vjust = c(2, -1)
   ) +
+  # If the timezone changes, it'll be due to daylight saving time
+  # so we'll add a little text to highlight that change
   geom_text(
+    # This combines my favorite magrittr pipe trick:
+    #   `. %>%` creates a function with a single argument
+    # with my favorite ggplot2 geom trik:
+    #   `data` takes a function with a single argument that
+    #   can be used to filter the global dataset to a smaller subset
+    # The net result here is that we take the global data
+    # and filter down to the two places where the timezone changes
     data = . %>%
       filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_head(n = 1),
@@ -794,17 +884,30 @@ ggplot(tidier_sun_times) +
     lineheight = 0.8,
     color = color_text
   ) +
+  # These add two little arrows to point from the timezone text
+  # to the notch in the plot where the timezone change happens
   geom_curve(
+    # Here's the `data = . %>%` trick again
     data = . %>%
-      filter(label == "nauticalDawn") %>%
+      filter(pair == "nauticalDawn") %>%
       filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_head(n = 1),
-    aes(x = date - 17, xend = date, y = ends - (-60^2 * 1.2), yend = ends + 500),
+    # This next bit took much fiddling.
+    aes(
+      x = date - 17,
+      xend = date,
+      y = ends - (-60^2 * 1.2),
+      yend = ends + 500
+    ),
+    # If you like it put an arrow on it
     arrow = arrow(length = unit(0.08, "inch")),
     size = 0.5,
     color = color_text,
     curvature = 0.4
   ) +
+  # The next two geoms highlight the second timezone change
+  # and are copies of the previous two layers but use
+  # `slice_tail()` instead of `slice_head()`.
   geom_text(
     data = . %>%
       filter(tz != coalesce(lag(tz), first(tz))) %>%
@@ -818,27 +921,41 @@ ggplot(tidier_sun_times) +
   ) +
   geom_curve(
     data = . %>%
-      filter(label == "nauticalDawn") %>%
+      filter(pair == "nauticalDawn") %>%
       filter(tz != coalesce(lag(tz), first(tz))) %>%
       slice_tail(n = 1),
-    aes(x = date - 17, xend = date, y = starts - 60^2, yend = starts - 500),
+    aes(
+      x = date - 17,
+      xend = date,
+      y = starts - 60^2,
+      yend = starts - 500
+    ),
     arrow = arrow(length = unit(0.08, "inch")),
     size = 0.5,
     color = color_text,
     curvature = -0.4
   ) +
+  # Finally, we add a little annotation in the left edge of the plot
+  # to serve as a legend for each layer and call out dawn, dusk,
+  # sunrise and sunset, etc. Here I used the `ggrepel` package to
+  # make sure the labels don't overlap, and in hopes that I wouldn't
+  # need to fiddle too much with positioning. Fiddling was required
+  # but I think the end result looks pretty good.
   ggrepel::geom_label_repel(
     data = . %>% filter(date == max(date)) %>%
       pivot_longer(contains("event")) %>%
       mutate(
         date = date + 12,
-        time = if_else(value == label, starts, ends),
+        time = if_else(value == pair, starts, ends),
         value = snakecase::to_title_case(value)
       ),
-    aes(y = time, fill = label, label = value),
+    aes(y = time, fill = pair, label = value),
     color = color_bg,
     fontface = "bold",
     show.legend = FALSE,
+    # Most of the next few lines are designed to keep the
+    # labels on the right side of the plot as close to the
+    # layers they're supposed to annotate as possible.
     direction = "y",
     min.segment.length = 20,
     hjust = 0,
@@ -847,6 +964,8 @@ ggplot(tidier_sun_times) +
     box.padding = 0.25,
     xlim = c(as.Date("2023-01-07"), NA)
   ) +
+  # Next up, deal with our scales.
+  # First up colors are the colors for the ribbon fill.
   scale_fill_manual(
     values = c(
       nauticalDawn = "#b56576",
@@ -854,7 +973,11 @@ ggplot(tidier_sun_times) +
       sunrise = "#ffd27d"
     )
   ) +
+  # Then add a little opacity, even though ggplot will warn us
+  # that using opacity with a discrete variable isn't a good idea.
+  # (I think it's a fine idea, thank you very much.)
   scale_alpha_discrete(range = c(0.5, 0.9)) +
+  # Here are the x- and y-axis scales from our original sketch
   scale_x_date(
     breaks = x_breaks,
     date_labels = "%b",
@@ -865,11 +988,15 @@ ggplot(tidier_sun_times) +
     expand = expansion()
   ) +
   scale_y_reverse(
-    limits = c(max(tidier_sun_times$ends + 60^2), min(tidier_sun_times$starts - 60^2)),
+    limits = c(
+      max(tidier_sun_times$ends + 60^2),
+      min(tidier_sun_times$starts - 60^2)
+    ),
     breaks = y_breaks,
     labels = paste0(seq(0, 24, by = 3), ":00"),
     expand = expansion()
   ) +
+  # Labels, obvs.
   labs(
     x = NULL,
     y = NULL,
@@ -877,19 +1004,34 @@ ggplot(tidier_sun_times) +
     subtitle = "Atlanta, GA",
     caption = "garrickadenbuie.com"
   ) +
+  # Make sure the sunrise/sunset labels aren't clipped by the plot area
   coord_cartesian(clip = "off") +
+  # Finally, make it pretty. We'll start with a minimal base theme
   theme_minimal(base_family = "Outfit", base_size = 16) +
+  # And then tweak a bunch of little things...
   theme(
-    plot.title = element_text(color = color_text, hjust = 0, size = 14),
-    plot.subtitle = element_text(color = color_text, hjust = 0, size = 24, margin = margin(b = 6)),
+    plot.title = element_text(
+      color = color_text,
+      hjust = 0,
+      size = 14
+    ),
+    plot.subtitle = element_text(
+      color = color_text,
+      hjust = 0,
+      size = 24,
+      margin = margin(b = 6)
+    ),
     plot.title.position = "plot",
     plot.background = element_rect(fill = color_bg),
     plot.margin = margin(20, 0, 20, 10),
-    # panel.border = element_rect(color = color_text, fill = NA),
     panel.grid = element_blank(),
     axis.text = element_text(color = color_text),
     axis.title = element_text(color = color_text),
-    plot.caption = element_text(color = "#726194", hjust = 0.97, vjust = -1),
+    plot.caption = element_text(
+      color = "#726194",
+      hjust = 0.97,
+      vjust = -1
+    ),
     plot.caption.position = "plot"
   )
 ```
