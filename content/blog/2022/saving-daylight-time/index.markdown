@@ -23,8 +23,8 @@ editor_options:
 
 <div class="lead">
 
-Remember Daylight Saving Time?
-You know, the two days each year that we all collectively complain
+Remember when Daylight Saving Time happened to us again?
+You know, that day that causes us all to grumble loudly
 about the ridiculousness of our biannual clock adjustment and loss of sleep?
 
 In this post, I engage in some self-care data visualization
@@ -45,9 +45,9 @@ or wake up and get ready for school while it’s dark.
 
 So in this spirit, I started to wonder:
 what kind of returns are we getting on our daylight saving?
-Except, rather than try to answer that question —
+Except, rather than try to directly answer that question —
 since that’s way too hard —
-I decided I’d visualize day light hours
+I chose to visualize day light hours
 to see how they align with the modern work day.
 
 The plot below shows the yearly day light schedule for 2022 in Atlanta, GA where I live.
@@ -90,9 +90,10 @@ At the end of this post, I’ll share the code I used to make the plot below.
 </table></figcaption>
 </figure>
 
-In Atlanta, GA,
-which is very much on the western edge of the US Eastern time zone,
-it’s pretty clear from this visualization that year-round standard time
+It’s pretty clear from this visualization that
+in Atlanta, GA,
+which is very much on the western edge of the U.S. Eastern time zone,
+year-round standard time
 is a decent way to live life.
 What about other cities in the world?
 
@@ -584,9 +585,9 @@ If you’re curious about the difference between (civil) dawn, nautical dawn and
 
 As cool as it is to so easily get to the point of having this data in hand,
 we need to do a little bit of tidying up to get it ready for ggplot2.
-In particular, we won’t need the `lat` and `lon` columns,
-and we can need to consolidate all of the timestamps into a single column
-that we can eventually group by `date`.
+In particular,
+we need to consolidate all of the timestamps into one column
+that we can index by `date` and `event` (such as *dawn*, *nautical dawn*, etc.).
 I used [pivot\_longer()](https://tidyr.tidyverse.org/reference/pivot_longer.html)
 to move the column labels for `dawn` through `sunset` into an `event` column
 with the corresponding values from each row in an adjacent `time` column.
@@ -625,13 +626,17 @@ There’s also a small trick here to use `strftime()`
 to extract the short timezone label `%Z`, e.g. **EST** or **EDT**,
 for each day,
 which I’ll use later when calling out the time changes.
-And finally, I used `hms::as_hms()` to extract the time of day component from each sun event timestamp.
-This effectively turns the values in that column into an integer number of seconds from midnight of the `date` of that row.
+And finally,
+I used `hms::as_hms()` to extract the time of day component
+from each sun event timestamp.
+This effectively turns the values in that column
+into an integer number of seconds from midnight of the `date` of that row.
 
 ## First Looks
 
 Now that we have tidy data ready for ggplot2, let’s plot it!
-This plot won’t look amazing, but it will help us get a sense of the data we have to work with.
+This plot won’t look amazing,
+but it will help us get a sense of the data we have to work with.
 
 ``` r
 ggplot(tidy_sun_times) +
@@ -641,7 +646,27 @@ ggplot(tidy_sun_times) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/plot-first-looks-1.png" width="864" />
 
-## Paired Events (Start and End)
+## Paired Daily Events
+
+The plot above reveals our next challenge:
+I used `geom_line()` to plot the time of each event as a line,
+but I want to be able to fill in the region between each pair of events:
+
+-   sunrise and sunset
+-   dawn and dusk
+-   nautical dawn and nautical dusk.
+
+We can use [`geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)
+to acheive this look,
+but it requires a little more transformation.
+We need the sunrise time in one column called `starts`
+and a second column with the sunset time in `ends`.
+Then we can map these new columns to the `ymin` and `ymax` aesthetics,
+letting `geom_ribbon()` fill in space between them.
+
+The plan of action is to create a new column that I’ll call `period`
+where we’ll choose which of these two new columns a timestamp will be moved to.
+We’ll send all of the
 
 ``` r
 tidier_sun_times <-
@@ -658,20 +683,35 @@ tidier_sun_times <-
       dusk = "dawn"
     )
   ) %>%
-  pivot_wider(
-    names_from = "period",
-    values_from = "time"
+  group_split(period) %>%
+  map(pivot_wider, names_from = "period", values_from = "time") %>%
+  reduce(
+    left_join,
+    by = c("date", "tz", "label"),
+    suffix = c("_starts", "_ends")
   ) %>%
-  group_by(date, tz, label) %>%
-  summarize(
-    events = paste(event, collapse = ","),
-    label = first(event),
-    starts = starts[!is.na(starts)],
-    ends = ends[!is.na(ends)]
+  mutate(
+    label = factor(label, c("nauticalDawn", "dawn", "sunrise"))
   ) %>%
-  ungroup() %>%
-  mutate(label = factor(label, c("nauticalDawn", "dawn", "sunrise")))
+  select(date, tz, label, contains("starts"), contains("ends"))
+
+tidier_sun_times
 ```
+
+    ## # A tibble: 1,098 × 7
+    ##    date       tz    label        event_starts starts   ends     event_ends  
+    ##    <date>     <chr> <fct>        <chr>        <time>   <time>   <chr>       
+    ##  1 2022-01-01 EST   dawn         dusk         07:18:23 18:12:28 dawn        
+    ##  2 2022-01-01 EST   nauticalDawn nauticalDusk 06:47:27 18:43:24 nauticalDawn
+    ##  3 2022-01-01 EST   sunrise      sunset       07:45:47 17:45:04 sunrise     
+    ##  4 2022-01-02 EST   dawn         dusk         07:18:35 18:13:11 dawn        
+    ##  5 2022-01-02 EST   nauticalDawn nauticalDusk 06:47:41 18:44:05 nauticalDawn
+    ##  6 2022-01-02 EST   sunrise      sunset       07:45:57 17:45:48 sunrise     
+    ##  7 2022-01-03 EST   dawn         dusk         07:18:45 18:13:54 dawn        
+    ##  8 2022-01-03 EST   nauticalDawn nauticalDusk 06:47:53 18:44:47 nauticalDawn
+    ##  9 2022-01-03 EST   sunrise      sunset       07:46:06 17:46:33 sunrise     
+    ## 10 2022-01-04 EST   dawn         dusk         07:18:54 18:14:39 dawn        
+    ## # … with 1,088 more rows
 
 ## Another plot
 
@@ -789,13 +829,13 @@ ggplot(tidier_sun_times) +
   ) +
   ggrepel::geom_label_repel(
     data = . %>% filter(date == max(date)) %>%
-      separate_rows(events, sep = ",") %>%
+      pivot_longer(contains("event")) %>%
       mutate(
         date = date + 12,
-        time = if_else(events == label, starts, ends),
-        events = snakecase::to_title_case(events)
+        time = if_else(value == label, starts, ends),
+        value = snakecase::to_title_case(value)
       ),
-    aes(y = time, fill = label, label = events),
+    aes(y = time, fill = label, label = value),
     color = color_bg,
     fontface = "bold",
     show.legend = FALSE,
