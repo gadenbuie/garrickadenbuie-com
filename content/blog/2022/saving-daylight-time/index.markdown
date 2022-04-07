@@ -168,9 +168,13 @@ If you’re not sure,
 check out the [Daylight Saving Time Gripe Assistant Tool](https://observablehq.com/@awoodruff/daylight-saving-time-gripe-assistant-tool) by Andy Woodruff on Observable.
 
 I thought it’d be interesting to visualize day light hours for U.S. cities.
-You can use the dropdown below to choose your city or the nearest city with more than 100,000 residents (or just pick a random city!).
-Then, toggle between **Standard** or **DST** to see how either proposal would affect you.
-Or choose **Both** to see what will happen in the unimaginable case that the U.S. Congress desn’t actually make DST permanent.
+You can use the dropdown below to choose your city
+or the nearest city with more than 100,000 residents
+(or just pick a random city!).
+Then, toggle between **Standard** or **DST**
+to see how either proposal would affect you.
+Or choose **Both** to see what will happen in the unimaginable case
+that the U.S. Congress doesn’t actually make DST permanent.
 
 <div class="pa">
 <label class="b db mb2" for="us-city">
@@ -497,8 +501,8 @@ and the stars in the night region are just fantastic.
   <figcaption class="mt2 lh-copy f6 f5-ns">How long are the nights in New York City? by <a href="https://krisztinaszucs.com/">Krisztina Szucs</a></figcaption>
 </figure>
 
-In my version I wanted to draw on a similar structure
-to apply the plot style to daylight rather than sunset hours.
+In my version I wanted to draw on a similar structure and style
+to visualize daylight rather than sunset hours.
 I also wanted to see how far I could go with my plot
 without leaving the comfort of ggplot2,
 so I stopped short of adding the sunrise and sunset icons.
@@ -629,8 +633,11 @@ which I’ll use later when calling out the time changes.
 And finally,
 I used `hms::as_hms()` to extract the time of day component
 from each sun event timestamp.
-This effectively turns the values in that column
-into an integer number of seconds from midnight of the `date` of that row.
+The neat thing about the *hms* class
+is that while it prints in a readable hours, minutes, seconds format,
+we can also treat it as
+an integer number of seconds from midnight.
+We’ll use this property in just a bit when working on the plot’s axis labels.
 
 ## First Looks
 
@@ -644,7 +651,7 @@ ggplot(tidy_sun_times) +
   geom_line()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-first-looks-1.png" width="864" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-first-looks-1.png" title="Basic unthemed ggplot2 line plot of sunrise and sunset times for Atlanta, GA. There are six lines, three in the morning for nautical dawn, dawn and sunrise, and three lines in the evening for their corresponding events. Each line has a different color." alt="Basic unthemed ggplot2 line plot of sunrise and sunset times for Atlanta, GA. There are six lines, three in the morning for nautical dawn, dawn and sunrise, and three lines in the evening for their corresponding events. Each line has a different color." width="864" />
 
 ## Paired Daily Events
 
@@ -745,9 +752,9 @@ ggplot(tidier_sun_times) +
   geom_ribbon()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-tidier-sun-times-1.png" width="864" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-tidier-sun-times-1.png" title="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times. Unlike the previous plot, this plot has three shaded regions stacked on top of each other with nautical dawn to dusk in the background and sunrise to sunset in the foreground. There are now three colors rather than six." alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times. Unlike the previous plot, this plot has three shaded regions stacked on top of each other with nautical dawn to dusk in the background and sunrise to sunset in the foreground. There are now three colors rather than six." width="864" />
 
-Looks terrible, but it’s more or less what we want to see.
+It looks terrible, but it’s more or less what we want to see.
 The y-axis is a little confusing though
 because it reads from night at the top to day at the bottom.
 The trick is to recall that we used `hms::as_hms()`
@@ -771,7 +778,7 @@ ggplot(tidier_sun_times) +
   )
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-tidier-sun-times-2-1.png" width="864" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-tidier-sun-times-2-1.png" title="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times, with better x- and y-axis labels. In this case, the y-axis is reversed and labelled &quot;hours:minutes&quot;. The x-axis labels include only the month abbreviation." alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times, with better x- and y-axis labels. In this case, the y-axis is reversed and labelled &quot;hours:minutes&quot;. The x-axis labels include only the month abbreviation." width="864" />
 
 ## Make it pretty
 
@@ -781,11 +788,11 @@ Which means I’m now going to include roughly 150 lines of code
 that take the rough sketch above and make it a pretty ggplot.
 
 Of course I should mention that what you’ll find below
-isn’t even the full story of the plots you see in this post,
-it turned out to be the first sketch
+isn’t even the full story of the plots you see in this post.
+It turned out to be an intermediate sketch
 of the code that I actually used to create the plots.
 It also turns out that I’m pretty good at writing code
-that creates more problems that I need to solve with code.
+that creates more problems that I need to solve with more code.
 
 A few preliminaries:
 I’ll use the [Outfit font](https://fonts.google.com/specimen/Outfit?query=outfit)
@@ -1035,6 +1042,8 @@ ggplot(tidier_sun_times) +
     plot.caption.position = "plot"
   )
 ```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/daylight-hours-atlanta-1.png" title="A heavily themed and customized ggplot2 plot of daylight hours in Atlanta. The colors are evocative of a sunrise, with dark violet background and soft sand-colored text and foreground colors. The plot highlights the change in timezone from EST to EDT with text labels and arrows pointing to the region where the sunlight hours shift one hour later in the day." alt="A heavily themed and customized ggplot2 plot of daylight hours in Atlanta. The colors are evocative of a sunrise, with dark violet background and soft sand-colored text and foreground colors. The plot highlights the change in timezone from EST to EDT with text labels and arrows pointing to the region where the sunlight hours shift one hour later in the day." width="864" />
 
 <!-- html_preserve -->
 <style type="text/css">
