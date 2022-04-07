@@ -33,10 +33,17 @@ code,
 
 pre {
   @extend .ph3, .pv2;
-  border-left: 4px solid var(--slate-80) !important;
+  border-left: 3px solid var(--slate-80) !important;
   border-radius: 0;
   background-color: var(--preBgColorCustom);
   line-height: 1.33;
+}
+
+.post-body > pre,
+.post-body > .highlight > pre {
+  position: relative;
+  left: calc(-1em - 3px);
+  width: calc(100% + 1em);
 }
 
 .post-body > p > code,
