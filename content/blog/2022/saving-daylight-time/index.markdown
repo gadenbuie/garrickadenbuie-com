@@ -19,8 +19,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-<!-- Links -->
-
 <div class="lead">
 
 Remember when Daylight Saving Time happened to us again?
@@ -528,16 +526,15 @@ location$lon <- location$lon + runif(1, min = -0.5, max = 0.5)
 
 ``` r
 location[c("lat", "lon", "timezone")]
+## $lat
+## [1] 33.34846
+## 
+## $lon
+## [1] -85.17511
+## 
+## $timezone
+## [1] "America/New_York"
 ```
-
-    ## $lat
-    ## [1] 33.34846
-    ## 
-    ## $lon
-    ## [1] -85.17511
-    ## 
-    ## $timezone
-    ## [1] "America/New_York"
 
 ## Sunrise and Sunset Times
 
@@ -559,29 +556,28 @@ sun_times <-
   )
 
 head(sun_times)
+##         date      lat       lon                dawn        nauticalDawn
+## 1 2022-01-01 33.34846 -85.17511 2022-01-01 07:18:23 2022-01-01 06:47:27
+## 2 2022-01-02 33.34846 -85.17511 2022-01-02 07:18:35 2022-01-02 06:47:41
+## 3 2022-01-03 33.34846 -85.17511 2022-01-03 07:18:45 2022-01-03 06:47:53
+## 4 2022-01-04 33.34846 -85.17511 2022-01-04 07:18:54 2022-01-04 06:48:03
+## 5 2022-01-05 33.34846 -85.17511 2022-01-05 07:19:02 2022-01-05 06:48:12
+## 6 2022-01-06 33.34846 -85.17511 2022-01-06 07:19:07 2022-01-06 06:48:20
+##                  dusk        nauticalDusk             sunrise
+## 1 2022-01-01 18:12:28 2022-01-01 18:43:24 2022-01-01 07:45:47
+## 2 2022-01-02 18:13:11 2022-01-02 18:44:05 2022-01-02 07:45:57
+## 3 2022-01-03 18:13:54 2022-01-03 18:44:47 2022-01-03 07:46:06
+## 4 2022-01-04 18:14:39 2022-01-04 18:45:30 2022-01-04 07:46:14
+## 5 2022-01-05 18:15:25 2022-01-05 18:46:14 2022-01-05 07:46:19
+## 6 2022-01-06 18:16:11 2022-01-06 18:46:59 2022-01-06 07:46:23
+##                sunset
+## 1 2022-01-01 17:45:04
+## 2 2022-01-02 17:45:48
+## 3 2022-01-03 17:46:33
+## 4 2022-01-04 17:47:20
+## 5 2022-01-05 17:48:07
+## 6 2022-01-06 17:48:55
 ```
-
-    ##         date      lat       lon                dawn        nauticalDawn
-    ## 1 2022-01-01 33.34846 -85.17511 2022-01-01 07:18:23 2022-01-01 06:47:27
-    ## 2 2022-01-02 33.34846 -85.17511 2022-01-02 07:18:35 2022-01-02 06:47:41
-    ## 3 2022-01-03 33.34846 -85.17511 2022-01-03 07:18:45 2022-01-03 06:47:53
-    ## 4 2022-01-04 33.34846 -85.17511 2022-01-04 07:18:54 2022-01-04 06:48:03
-    ## 5 2022-01-05 33.34846 -85.17511 2022-01-05 07:19:02 2022-01-05 06:48:12
-    ## 6 2022-01-06 33.34846 -85.17511 2022-01-06 07:19:07 2022-01-06 06:48:20
-    ##                  dusk        nauticalDusk             sunrise
-    ## 1 2022-01-01 18:12:28 2022-01-01 18:43:24 2022-01-01 07:45:47
-    ## 2 2022-01-02 18:13:11 2022-01-02 18:44:05 2022-01-02 07:45:57
-    ## 3 2022-01-03 18:13:54 2022-01-03 18:44:47 2022-01-03 07:46:06
-    ## 4 2022-01-04 18:14:39 2022-01-04 18:45:30 2022-01-04 07:46:14
-    ## 5 2022-01-05 18:15:25 2022-01-05 18:46:14 2022-01-05 07:46:19
-    ## 6 2022-01-06 18:16:11 2022-01-06 18:46:59 2022-01-06 07:46:23
-    ##                sunset
-    ## 1 2022-01-01 17:45:04
-    ## 2 2022-01-02 17:45:48
-    ## 3 2022-01-03 17:46:33
-    ## 4 2022-01-04 17:47:20
-    ## 5 2022-01-05 17:48:07
-    ## 6 2022-01-06 17:48:55
 
 If you’re curious about the difference between (civil) dawn, nautical dawn and sunrise, take a stroll through [*Twilight* on Wikipedia](https://en.wikipedia.org/wiki/Twilight).
 
@@ -609,22 +605,21 @@ tidy_sun_times <-
   )
 
 tidy_sun_times
+## # A tibble: 2,196 × 4
+##    date       event        time     tz   
+##    <date>     <chr>        <time>   <chr>
+##  1 2022-01-01 dawn         07:18:23 EST  
+##  2 2022-01-01 nauticalDawn 06:47:27 EST  
+##  3 2022-01-01 dusk         18:12:28 EST  
+##  4 2022-01-01 nauticalDusk 18:43:24 EST  
+##  5 2022-01-01 sunrise      07:45:47 EST  
+##  6 2022-01-01 sunset       17:45:04 EST  
+##  7 2022-01-02 dawn         07:18:35 EST  
+##  8 2022-01-02 nauticalDawn 06:47:41 EST  
+##  9 2022-01-02 dusk         18:13:11 EST  
+## 10 2022-01-02 nauticalDusk 18:44:05 EST  
+## # … with 2,186 more rows
 ```
-
-    ## # A tibble: 2,196 × 4
-    ##    date       event        time     tz   
-    ##    <date>     <chr>        <time>   <chr>
-    ##  1 2022-01-01 dawn         07:18:23 EST  
-    ##  2 2022-01-01 nauticalDawn 06:47:27 EST  
-    ##  3 2022-01-01 dusk         18:12:28 EST  
-    ##  4 2022-01-01 nauticalDusk 18:43:24 EST  
-    ##  5 2022-01-01 sunrise      07:45:47 EST  
-    ##  6 2022-01-01 sunset       17:45:04 EST  
-    ##  7 2022-01-02 dawn         07:18:35 EST  
-    ##  8 2022-01-02 nauticalDawn 06:47:41 EST  
-    ##  9 2022-01-02 dusk         18:13:11 EST  
-    ## 10 2022-01-02 nauticalDusk 18:44:05 EST  
-    ## # … with 2,186 more rows
 
 There’s also a small trick here to use `strftime()`
 to extract the short timezone label `%Z`, e.g. **EST** or **EDT**,
@@ -720,22 +715,21 @@ tidier_sun_times <-
   select(date, tz, pair, contains("starts"), contains("ends"))
 
 tidier_sun_times
+## # A tibble: 1,098 × 7
+##    date       tz    pair         event_starts starts   event_ends   ends    
+##    <date>     <chr> <fct>        <chr>        <time>   <chr>        <time>  
+##  1 2022-01-01 EST   dawn         dawn         07:18:23 dusk         18:12:28
+##  2 2022-01-01 EST   nauticalDawn nauticalDawn 06:47:27 nauticalDusk 18:43:24
+##  3 2022-01-01 EST   sunrise      sunrise      07:45:47 sunset       17:45:04
+##  4 2022-01-02 EST   dawn         dawn         07:18:35 dusk         18:13:11
+##  5 2022-01-02 EST   nauticalDawn nauticalDawn 06:47:41 nauticalDusk 18:44:05
+##  6 2022-01-02 EST   sunrise      sunrise      07:45:57 sunset       17:45:48
+##  7 2022-01-03 EST   dawn         dawn         07:18:45 dusk         18:13:54
+##  8 2022-01-03 EST   nauticalDawn nauticalDawn 06:47:53 nauticalDusk 18:44:47
+##  9 2022-01-03 EST   sunrise      sunrise      07:46:06 sunset       17:46:33
+## 10 2022-01-04 EST   dawn         dawn         07:18:54 dusk         18:14:39
+## # … with 1,088 more rows
 ```
-
-    ## # A tibble: 1,098 × 7
-    ##    date       tz    pair         event_starts starts   event_ends   ends    
-    ##    <date>     <chr> <fct>        <chr>        <time>   <chr>        <time>  
-    ##  1 2022-01-01 EST   dawn         dawn         07:18:23 dusk         18:12:28
-    ##  2 2022-01-01 EST   nauticalDawn nauticalDawn 06:47:27 nauticalDusk 18:43:24
-    ##  3 2022-01-01 EST   sunrise      sunrise      07:45:47 sunset       17:45:04
-    ##  4 2022-01-02 EST   dawn         dawn         07:18:35 dusk         18:13:11
-    ##  5 2022-01-02 EST   nauticalDawn nauticalDawn 06:47:41 nauticalDusk 18:44:05
-    ##  6 2022-01-02 EST   sunrise      sunrise      07:45:57 sunset       17:45:48
-    ##  7 2022-01-03 EST   dawn         dawn         07:18:45 dusk         18:13:54
-    ##  8 2022-01-03 EST   nauticalDawn nauticalDawn 06:47:53 nauticalDusk 18:44:47
-    ##  9 2022-01-03 EST   sunrise      sunrise      07:46:06 sunset       17:46:33
-    ## 10 2022-01-04 EST   dawn         dawn         07:18:54 dusk         18:14:39
-    ## # … with 1,088 more rows
 
 ## Another plot
 

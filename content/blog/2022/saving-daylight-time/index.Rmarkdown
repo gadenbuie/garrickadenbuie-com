@@ -19,11 +19,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-<!-- Links -->
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE,
+  collapse = TRUE,
   fig.width = 9, fig.height = 7,
   fig.showtext = TRUE
 )
