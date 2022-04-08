@@ -886,6 +886,6 @@ Array.from(
 <!-- /html_preserve -->
 
 
-```{r social, ref.label = "daylight-hours-atlanta", fig.width = 7 * 1.81, fig.height = 7, echo = FALSE, fig.show = "hide"}
+```{r social, ref.label = "daylight-hours-atlanta", fig.width = 7 * 1.91, fig.height = 7, echo = FALSE, fig.show = "hide"}
 # repeat atlanta plot sized for social
 ```
