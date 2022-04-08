@@ -13,7 +13,7 @@ hide_details: true
 [garrick-talks]: /tags/education/
 [moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
 
-<div class="f1 serif">:wave: Hey there!<br>I'm Garrick Aden-Buie.</div>
+<div class="f1 heading">:wave: Hey there!<br>I'm Garrick Aden-Buie.</div>
 
 <div class="lead">
 
