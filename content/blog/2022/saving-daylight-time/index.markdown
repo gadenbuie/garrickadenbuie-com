@@ -12,7 +12,7 @@ description: |
   Does Daylight Saving Time really save any daylight?
   A visualization to explore these questions.
 images:
-  - blog/saving-daylight-time/index_files/figure-html/social-1.png
+  - https://www.garrickadenbuie.com/blog/saving-daylight-time/index_files/figure-html/social-1.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/saving-daylight-time/index.Rmd'
 keywords: rstats
 editor_options:
