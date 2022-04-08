@@ -872,7 +872,7 @@ Array.from(
     const inputCity = document.getElementById('choose-city')
     const idxCurrent = Array.from(inputCity.options).findIndex(el => inputCity.value == el.value)
     let idxNext = idxCurrent + (ev.currentTarget.id === 'choose-city-prev' ? -1 : 1)
-    console.log({idxCurrent, idxNext})
+    // console.log({idxCurrent, idxNext})
     if (idxNext < 0) {
       idxNext = inputCity.options.length - 1
     } else if (idxNext >= inputCity.options.length) {
