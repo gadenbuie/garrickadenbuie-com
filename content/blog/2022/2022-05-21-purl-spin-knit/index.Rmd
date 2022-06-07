@@ -1,0 +1,58 @@
+---
+title: 'purl, spin, knit: Naming functions is hard'
+author: Garrick Aden-Buie
+date: '2022-05-21'
+slug: purl-spin-knit
+categories:
+  - Blog
+tags:
+  - knitr
+  - R
+  - Development
+  - R Markdown
+description: post description
+twitterImage: /path/to/image.png
+source_link: ''
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+library(ggplot2)
+```
+
+:::
+
+There's a function in a popular R package that turns an R script
+into an R Markdown document.
+What is that function's name?
+
+I [asked my twitter friends](https://twitter.com/grrrck/status/1527048719404830720)
+and they said..
+
+```{r}
+survey <- data.frame(
+  answer = c("spin()", "purl()", "rscript_to_rmd()", "🤔 I'm not sure"),
+  n = c(96, 55, 52, 283 - 96 - 55 - 52)
+)
+ggplot(survey) +
+  aes(n, answer) +
+  geom_col() +
+  theme_minimal(24, "Outfit")
+```
+
+:::
+
+
+- https://github.com/richfitz/sowsear
+  - sowsear: Make Silk (knitr files) from a sow's ear (an R script)
+- In knitr it was originally called [silk()](https://github.com/yihui/knitr/commit/20d691148d0fd7de4ccd2809a307429e78f68f17)
+  - `silk(input, knit = TRUE, format = "Rmd")`
