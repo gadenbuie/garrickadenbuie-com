@@ -1,0 +1,162 @@
+---
+title: xaringanExtra v0.6.0 — Now on CRAN!
+author: Garrick Aden-Buie
+date: '2022-06-07'
+slug: xaringanextra-v0.6.0
+categories:
+  - Blog
+tags:
+  - R
+  - R Package
+  - xaringan
+  - xaringanExtra
+  - Release
+  - CRAN
+  - Slides
+  - Announcement
+description: |
+  xaringanExtra v0.6.0 is now available on CRAN! Plus some new features.
+twitterImage: feature.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/xaringanExtra-v0-6-0/index.Rmd'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/fitvids-2.1.1/fitvids.min.js"></script>
+
+
+<!-- Links -->
+<div class="lead">
+<p>I’m <span class="superlative">delighted</span> to announce that <a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a> is now available on CRAN!
+Bring something extra to your <a href="https://slides.yihui.org/xaringan">xaringan</a> slides.</p>
+<p>This is the first release available via <code>install.packages()</code>
+and it includes <a href="#banner">a new extra</a>, plus some bug fixes.
+Read on to learn more!</p>
+</div>
+<style type="text/css">
+.superlative {
+  border-bottom: 1px dashed;
+  cursor: pointer;
+}
+.superlative:hover {
+  color: var(--red-60);
+}
+.slide-preview {
+  max-width: 480px;
+}
+</style>
+<script type="text/javascript">
+document.querySelector('.superlative').addEventListener('click', function(ev) {
+  const superlatives = [
+    'delighted', 'charmed', 'elated', 'excited', 'pleased', 'thrilled', 'chuffed',
+    'tickled pink', 'overjoyed', 'ecstatic', 'stoked', 'proud', 'fired up'
+  ]
+  const el = ev.target
+  const idx = Math.floor(Math.random() * superlatives.length)
+  el.innerText = superlatives[idx]
+})
+</script>
+<div id="what-is-xaringanextra" class="section level2">
+<h2>What is xaringanExtra?</h2>
+<p>What can xaringanExtra do for you and your xaringan slides?
+A whole lot!
+Here are all the things you can do with xaringanExtra:</p>
+<ul>
+<li>Add an overview of your presentation with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tile-view">tile view</a></li>
+<li>Make your slides <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/editable">editable</a></li>
+<li>Share your slides in style with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/share-again">share again</a></li>
+<li>Broadcast your slides in real time to viewers with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/broadcast">broadcast</a></li>
+<li>Scribble on your slides during your presentation with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/scribble">scribble</a></li>
+<li>Announce slide changes with a <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/slide-tone">subtle tone</a></li>
+<li>Animate slide transitions with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/animate-css">animate.css</a></li>
+<li>Add tabbed panels to slides with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/panelset">panelset</a></li>
+<li>Add a logo to all of your slides with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/logo">logo</a></li>
+<li>Add a top or bottom banner to all of your slides with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/banner">banner</a></li>
+<li>Add a search box to search through your slides with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/search">search</a></li>
+<li>Use the <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons">Tachyons CSS utility toolkit</a></li>
+<li>Add a live video feed of your <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/webcam">webcam</a></li>
+<li>Add one-click code copying with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/clipboard">clipboard</a></li>
+<li>Always play gifs from the start with <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/freezeframe">freezeframe</a></li>
+<li>Fit your slides to <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/fit-to-screen">fill the browser window</a></li>
+<li>Add <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/extra-styles">extra CSS styles</a></li>
+</ul>
+<p>But wait, there’s more!
+These features aren’t limited to just <a href="https://slides.yihui.org/xaringan">xaringan</a> slides.
+A bunch of the features can be used in regular R Markdown documents, in particular:
+<a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/panelset">panelset</a>,
+<a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/animate-css">animate.css</a>,
+<a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/tachyons">Tachyons</a>,
+and <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/clipboard">clipboard</a>.</p>
+</div>
+<div id="installing-xaringanextra" class="section level2">
+<h2>Installing xaringanExtra</h2>
+<p>Installing xaringanExtra is now a whole lot easier:</p>
+<pre class="r"><code>install.packages(&quot;xaringanExtra&quot;)</code></pre>
+<p>As always, you can still get the latest and greatest in-development versions
+from <a href="https://github.com/gadenbuie/xaringanExtra">GitHub</a></p>
+<pre class="r"><code># install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;gadenbuie/xaringanExtra&quot;)</code></pre>
+<p>or from <a href="https://gadenbuie.r-universe.dev/">gadenbuie.r-universe.dev</a>.</p>
+<pre class="r"><code>options(repos = c(
+  gadenbuie = &#39;https://gadenbuie.r-universe.dev&#39;,
+  CRAN = &#39;https://cloud.r-project.org&#39;
+))
+
+install.packages(&#39;xaringanExtra&#39;)</code></pre>
+</div>
+<div id="wait-its-on-cran-now" class="section level2">
+<h2>Wait, it’s on CRAN now?</h2>
+<p>Yeah, can you believe it?!</p>
+<p>When I <a href="https://github.com/gadenbuie/xaringanExtra/commit/636fbfd84221d70f899242fdd7bd651a497311cd">started working</a>
+on xaringanExtra (checks notes)
+943
+days ago — that’s 2 ½ years or 13 pandemic years ago —
+I never expected that xaringanExtra would ever be anything beyond
+a toy package I used for fun <del>procrastination</del> experiments
+while preparing slides for talks and workshops.</p>
+<p>I’m honored and grateful that so many other people have found the package helpful
+and have used it to make their presentations more engaging!
+I’m also humbled that when the Quarto team developed
+the <a href="https://quarto.org/docs/presentations/revealjs/">next generation of slide-building tools</a>,
+they made a point to ensure that
+Quarto presentations include, out-of-the-box,
+many of the features from xaringanExtra.</p>
+<p>I’d also like to thank the community of users and developers
+who have reported issues or
+shared xaringanExtra on social media or talked about it in workshops and talks.
+A big up-front thank you to <a href="https://mattwarkentin.github.io/">Matt Warkentin</a>
+for developing one of my favorite extras: <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/scribble?id=%f0%9f%91%a9%f0%9f%8e%a8-scribble">🧑‍🎨 Scribble</a>!</p>
+<p>Sincerely, thank you to the 54 awesome people who contributed issues, advice, fixes or features
+since I started working on xaringanExtra:</p>
+<p><a href="https://github.com/albert-ying">@albert-ying</a>, <a href="https://github.com/apreshill">@apreshill</a>, <a href="https://github.com/BerriJ">@BerriJ</a>, <a href="https://github.com/brianmsm">@brianmsm</a>, <a href="https://github.com/chainsawriot">@chainsawriot</a>, <a href="https://github.com/ColinConwell">@ColinConwell</a>, <a href="https://github.com/dataning">@dataning</a>, <a href="https://github.com/dmi3kno">@dmi3kno</a>, <a href="https://github.com/drfurtado">@drfurtado</a>, <a href="https://github.com/dunstone-a">@dunstone-a</a>, <a href="https://github.com/evanmorier">@evanmorier</a>, <a href="https://github.com/giabaio">@giabaio</a>, <a href="https://github.com/GitHunter0">@GitHunter0</a>, <a href="https://github.com/gpapageorgiou">@gpapageorgiou</a>, <a href="https://github.com/gtalckmin">@gtalckmin</a>, <a href="https://github.com/howardm">@howardm</a>, <a href="https://github.com/ignacio82">@ignacio82</a>, <a href="https://github.com/issactoast">@issactoast</a>, <a href="https://github.com/jhelvy">@jhelvy</a>, <a href="https://github.com/jmgirard">@jmgirard</a>, <a href="https://github.com/jooyoungseo">@jooyoungseo</a>, <a href="https://github.com/juandodyk">@juandodyk</a>, <a href="https://github.com/jvcasillas">@jvcasillas</a>, <a href="https://github.com/kim-soo-hwan">@kim-soo-hwan</a>, <a href="https://github.com/koliajaykr">@koliajaykr</a>, <a href="https://github.com/konstruktur">@konstruktur</a>, <a href="https://github.com/LauraRK">@LauraRK</a>, <a href="https://github.com/mattwarkentin">@mattwarkentin</a>, <a href="https://github.com/MayaGans">@MayaGans</a>, <a href="https://github.com/mchiapello">@mchiapello</a>, <a href="https://github.com/mfherman">@mfherman</a>, <a href="https://github.com/mine-cetinkaya-rundel">@mine-cetinkaya-rundel</a>, <a href="https://github.com/nithinmkp">@nithinmkp</a>, <a href="https://github.com/nucleic-acid">@nucleic-acid</a>, <a href="https://github.com/pat-s">@pat-s</a>, <a href="https://github.com/pomang-211">@pomang-211</a>, <a href="https://github.com/psads-git">@psads-git</a>, <a href="https://github.com/py9mrg">@py9mrg</a>, <a href="https://github.com/realauggieheschmeyer">@realauggieheschmeyer</a>, <a href="https://github.com/RRMaximiliano">@RRMaximiliano</a>, <a href="https://github.com/rsimonmd">@rsimonmd</a>, <a href="https://github.com/ryanstraight">@ryanstraight</a>, <a href="https://github.com/SchmidtPaul">@SchmidtPaul</a>, <a href="https://github.com/simonedu">@simonedu</a>, <a href="https://github.com/skamper1">@skamper1</a>, <a href="https://github.com/spcanelon">@spcanelon</a>, <a href="https://github.com/Sumidu">@Sumidu</a>, <a href="https://github.com/tgerke">@tgerke</a>, <a href="https://github.com/TuQmano">@TuQmano</a>, <a href="https://github.com/uriahf">@uriahf</a>, <a href="https://github.com/W-Mohammed">@W-Mohammed</a>, <a href="https://github.com/yonicd">@yonicd</a>, <a href="https://github.com/youngwoos">@youngwoos</a>, and <a href="https://github.com/yyzeng">@yyzeng</a>.</p>
+</div>
+<div id="banner" class="section level2">
+<h2>A new extra: banner!</h2>
+<p>One new feature made it into this release: <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/banner">📰 banner</a>!</p>
+<p>The idea behind banner is simple.
+Sometimes you want to have some text appear on <em>every slide in your presentation</em>
+(or at least most of the slides).</p>
+<p>You might want to show a short link to the slides being presented.
+Or you might want to add your name or talk title in the slide margin
+so that attendees who missed your intro
+or don’t have the conference schedule in front of them
+know who you are and what you’re talking about.</p>
+<p><code>xaringanExtra::use_banner()</code> solves this problem.
+Just add a chunk like the one below to your slides</p>
+<pre class="markdown"><code>```{r xaringan-banner, echo=FALSE}
+xaringanExtra::use_banner(
+  top_left = &quot;My Awesome Talk Title&quot;,
+  top_right = &quot;Mr. Fancy Pants&quot;,
+  bottom_left = &quot;bit.ly/my-awesome-talk&quot;,
+  exclude = &quot;title-slide&quot;
+)
+```</code></pre>
+<p>and you’ll get slides that look kind of like this!</p>
+<div class="center slide-preview">
+<div class="shareagain" style="min-width:300px;margin:1em auto;">
+<iframe src="https://pkg.garrickadenbuie.com/xaringanExtra/banner" width="400" height="300" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
