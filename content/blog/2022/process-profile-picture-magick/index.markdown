@@ -337,11 +337,15 @@ with their face prominently featured in it.
 Once we have the resized image,
 *then* we need to figure out where their face is located.
 
-    ## $x
-    ## [1] 579
-    ## 
-    ## $y
-    ## [1] 240.5
+``` r
+resized_profile |> 
+  find_face_center()
+## $x
+## [1] 579
+## 
+## $y
+## [1] 240.5
+```
 
 ## Cropping
 

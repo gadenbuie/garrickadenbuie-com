@@ -372,7 +372,7 @@ with their face prominently featured in it.
 Once we have the resized image,
 _then_ we need to figure out where their face is located.
 
-```{r}
+```{r echo=TRUE}
 resized_profile |> 
   find_face_center()
 ```
