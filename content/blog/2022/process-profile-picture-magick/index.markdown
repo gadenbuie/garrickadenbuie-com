@@ -329,13 +329,8 @@ Wait.
 I showed the face-center discovery step above
 because it’s the coolest part of this pipeline,
 but we don’t actually perform the facial detection first.
-We don’t need to know where the person’s face is located
-when we scale down their profile image —
-again, because we’re assuming they’ve given us an image
-with their face prominently featured in it.
-
-Once we have the resized image,
-*then* we need to figure out where their face is located.
+We need to know where the person’s face is located
+**after** we scale down their profile image.
 
 ``` r
 resized_profile |> 
