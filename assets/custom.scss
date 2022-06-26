@@ -23,6 +23,10 @@ code,
   font-weight: 400;
 }
 
+.post-body > p > code {
+  font-size: 0.95rem;
+}
+
 .highlight {
   font-size: 1em;
   pre {
