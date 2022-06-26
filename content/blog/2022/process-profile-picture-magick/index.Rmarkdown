@@ -517,10 +517,7 @@ fs::dir_create("profiles_cropped")
 
 profiles |>
   iwalk(function(image, path) {
-    new_path <- fs::path(
-      "profiles_cropped", 
-      fs::path_file(path)
-    )
+    new_path <- fs::path("profiles_cropped", fs::path_file(path))
     image_write(image, new_path)
   })
 ```
