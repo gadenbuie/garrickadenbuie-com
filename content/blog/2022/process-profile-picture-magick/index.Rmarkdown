@@ -1,7 +1,7 @@
 ---
 title: Process Profile Pictures with magick
 author: Garrick Aden-Buie
-date: '2022-06-12'
+date: '2022-07-12'
 slug: process-profile-picture-magick
 categories:
   - Blog
