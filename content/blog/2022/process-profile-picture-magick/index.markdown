@@ -228,7 +228,11 @@ plot(faces, all_profiles, only_box = TRUE)
 
 <div class="tc">
 
-![](index_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" title="The four profile images from the previous example. A red square outline
+marking the detected face regions has been overlaid over each face in the
+examples profile images." alt="The four profile images from the previous example. A red square outline
+marking the detected face regions has been overlaid over each face in the
+examples profile images."  />
 
 </div>
 
@@ -388,7 +392,10 @@ we only need to crop the image in one direction.
 The problem now is that
 we need to pick a 600px `width` region within the full 900px `range`.
 
-![](image-cropping-diagram.svg)
+               point
+    |------[=====*=====]---|
+           ^~~ width ~~^
+    ^......................^ range
 
 This isn’t too complicated.
 There are three cases:

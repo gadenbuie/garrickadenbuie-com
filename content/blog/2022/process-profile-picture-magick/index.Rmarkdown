@@ -263,6 +263,10 @@ plot(faces, all_profiles, only_box = TRUE)
 ```{r}
 #| ref.label: libfacedetection-example
 #| class.chunk: tc
+#| fig.alt: |
+#|   The four profile images from the previous example. A red square outline
+#|   marking the detected face regions has been overlaid over each face in the
+#|   examples profile images.
 ```
 
 `image_detect_faces()` returns some interesting data about the detected faces:
@@ -419,16 +423,12 @@ The problem now is that
 we need to pick a 600px `width` region within the full 900px `range`.
 
 
-````{comment}
 ```
            point
 |------[=====*=====]---|
        ^~~ width ~~^
 ^......................^ range
 ```
-````
-
-![](image-cropping-diagram.svg)
 
 This isn't too complicated.
 There are three cases:
