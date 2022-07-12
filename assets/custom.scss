@@ -23,6 +23,10 @@ code,
   font-weight: 400;
 }
 
+.post-body > p > code {
+  font-size: 0.95rem;
+}
+
 .highlight {
   font-size: 1em;
   pre {
@@ -142,6 +146,11 @@ a {
 
 .heading {
   font-family: var(--font-family-heading), var(--font-family-system);
+}
+
+.mh-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .figure {
