@@ -179,7 +179,7 @@ for (id in photo_ids) {
 I've put the photos in a `profiles/` directory
 so that I can list the them all at once:
 
-```{r fs-dir-ls-profiles, echo = FALSE}
+```{r fs-dir-ls-profiles, echo = TRUE}
 fs::dir_ls("profiles")
 ```
 

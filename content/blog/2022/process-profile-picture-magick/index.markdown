@@ -137,8 +137,11 @@ for (id in photo_ids) {
 I’ve put the photos in a `profiles/` directory
 so that I can list the them all at once:
 
-    ## profiles/3dqSZidOkvs.jpg profiles/6anudmpILw4.jpg profiles/DItYlc26zVI.jpg 
-    ## profiles/bpxgyD4YYt4.jpg
+``` r
+fs::dir_ls("profiles")
+## profiles/3dqSZidOkvs.jpg profiles/6anudmpILw4.jpg profiles/DItYlc26zVI.jpg 
+## profiles/bpxgyD4YYt4.jpg
+```
 
 ## Magick with R
 
