@@ -1,0 +1,81 @@
+---
+title: 'Follow up: make it an actual circle'
+author: Garrick Aden-Buie
+date: '2022-07-17'
+slug: follow-up-make-it-an-actual-circle
+categories:
+  - Blog
+tags:
+  - R
+  - magick
+  - Images
+  - Interesting Uses of R
+description: |
+  Process a directory full of profile pictures, resizing and cropping the images
+  to be centered around faces.
+twitterImage: feature.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/process-profile-picture-magick/index.Rmarkdown'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+references: ~
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+```
+
+Ah I should have made that a little clearer in the post. The presentation of the image as a circle is done with CSS in the post. 
+
+In this case, since they're profile pictures, I wouldn't actually want to apply the circle to the image itself; instead I'd leave that to whatever service is using the profile image. For example, in most places Twitter uses a circular profile image but sometimes it uses a square. Some social sites might use larger or smaller circles or apply their own cropping logic, etc.
+
+To modify the image directly to achieve the circle border, [this StackOverflow post seems to be a good place to start](https://stackoverflow.com/questions/41959355/how-can-i-combine-these-commands-to-achieve-circular-crop-in-imagemagick). I haven't tried it but I think you would use [image_draw()](https://docs.ropensci.org/magick/reference/device.html) to draw a circle and then use [image_composite()](https://docs.ropensci.org/magick/reference/composite.html) to overlay the circle on the image. Hope that helps!
+
+_Originally posted by @gadenbuie in https://github.com/gadenbuie/garrickadenbuie-com/discussions/121#discussioncomment-3138288_
+
+## Setup
+
+```{r setup-post}
+library(purrr)
+library(fs)
+library(magick)
+```
+
+## Read profile image
+
+```{r read-image}
+image <- 
+  image_read("profiles-cropped/bpxgyD4YYt4.jpg") |>
+  image_resize("300x")
+image
+```
+
+## Draw a circle
+
+```{r circle}
+circle <- 
+  image_blank(300, 300, color = "white") |>
+  image_draw()
+symbols(x = 150, y = 150, circles = 135, fg = "black", bg = "black", add = TRUE, inches = FALSE)
+invisible(dev.off)
+```
+
+```{r show-circle}
+circle
+```
+
+## Overlay the circle
+
+```{r overlay}
+image_circle <-
+  circle |> 
+  image_transparent("black", fuzz = 25) |> 
+  image_composite(image, operator = "Out")
+
+image_circle
+```

@@ -1,0 +1,63 @@
+---
+title: 'Follow up: make it an actual circle'
+author: Garrick Aden-Buie
+date: '2022-07-17'
+slug: follow-up-make-it-an-actual-circle
+categories:
+  - Blog
+tags:
+  - R
+  - magick
+  - Images
+  - Interesting Uses of R
+description: |
+  Process a directory full of profile pictures, resizing and cropping the images
+  to be centered around faces.
+twitterImage: feature.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/process-profile-picture-magick/index.Rmarkdown'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+references: ~
+---
+
+
+
+<p>Ah I should have made that a little clearer in the post. The presentation of the image as a circle is done with CSS in the post.</p>
+<p>In this case, since they’re profile pictures, I wouldn’t actually want to apply the circle to the image itself; instead I’d leave that to whatever service is using the profile image. For example, in most places Twitter uses a circular profile image but sometimes it uses a square. Some social sites might use larger or smaller circles or apply their own cropping logic, etc.</p>
+<p>To modify the image directly to achieve the circle border, <a href="https://stackoverflow.com/questions/41959355/how-can-i-combine-these-commands-to-achieve-circular-crop-in-imagemagick">this StackOverflow post seems to be a good place to start</a>. I haven’t tried it but I think you would use <a href="https://docs.ropensci.org/magick/reference/device.html">image_draw()</a> to draw a circle and then use <a href="https://docs.ropensci.org/magick/reference/composite.html">image_composite()</a> to overlay the circle on the image. Hope that helps!</p>
+<p>_Originally posted by <span class="citation">@gadenbuie</span> in <a href="https://github.com/gadenbuie/garrickadenbuie-com/discussions/121#discussioncomment-3138288_" class="uri">https://github.com/gadenbuie/garrickadenbuie-com/discussions/121#discussioncomment-3138288_</a></p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<pre class="r"><code>library(purrr)
+library(fs)
+library(magick)</code></pre>
+</div>
+<div id="read-profile-image" class="section level2">
+<h2>Read profile image</h2>
+<pre class="r"><code>image &lt;- 
+  image_read(&quot;profiles-cropped/bpxgyD4YYt4.jpg&quot;) |&gt;
+  image_resize(&quot;300x&quot;)
+image</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/read-image-1.png" /><!-- --></p>
+</div>
+<div id="draw-a-circle" class="section level2">
+<h2>Draw a circle</h2>
+<pre class="r"><code>circle &lt;- 
+  image_blank(300, 300, color = &quot;white&quot;) |&gt;
+  image_draw()
+symbols(x = 150, y = 150, circles = 135, fg = &quot;black&quot;, bg = &quot;black&quot;, add = TRUE, inches = FALSE)
+invisible(dev.off)</code></pre>
+<pre class="r"><code>circle</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/show-circle-1.png" /><!-- --></p>
+</div>
+<div id="overlay-the-circle" class="section level2">
+<h2>Overlay the circle</h2>
+<pre class="r"><code>image_circle &lt;-
+  circle |&gt; 
+  image_transparent(&quot;black&quot;, fuzz = 25) |&gt; 
+  image_composite(image, operator = &quot;Out&quot;)
+
+image_circle</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/overlay-1.png" /><!-- --></p>
+</div>
