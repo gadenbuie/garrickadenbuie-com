@@ -175,20 +175,22 @@ install.packages('countdown')
 
 ### rstudio::conf(2019)
 
-In 2019 I went to rstudio::conf in Austin TX
-and took an awesome workshop by Garrett Grolemund and Greg Wilson about teaching.
+In 2019 I went to [rstudio::conf](https://www.rstudio.com/resources/rstudioconf-2019/) in Austin, TX
+where a highlight of the conference, for me,
+was the [Train-the-Trainer: Tidyverse Track](https://github.com/rstudio-education/teach-tidy)
+workshop by Garrett Grolemund and Greg Wilson.
 That workshop specifically marked a turning point in my career
 and I left rstudio::conf very inspired to build and teach cool things in R.
 
-My other key takeaway from rstudio::conf(2019) was that it was time to learn JavaScript —
-an odd thing to take away from an R conference.
-(Although I don’t think I’m alone in this;
-this year many people walked away from rstudio::conf(2022) thinking that it was time to learn Python.)
+I also walked away from rstudio::conf(2019) with another key take away:
+it was time to learn JavaScript.
+An odd thing to take away from an R conference, yes.
+(Although I don’t think I’m alone in this kind of realization;
+this year many people left rstudio::conf(2022) thinking that
+[it’s time to learn Python](https://twitter.com/asmae_toumi/status/1552731475434430465).)
 
 These two inspirations came together in my first post-conf project:
-a countdown timer for xaringan slides.
-Garrett used these extensively to pace break out sessions
-and they worked surprisingly well to keep everyone on track.
+a countdown timer for [xaringan](https://slides.yihui.org/xaringan) slides.
 
 <div class="fr-ns ph4" style="max-width:22rem">
 
@@ -196,15 +198,17 @@ and they worked surprisingly well to keep everyone on track.
 
 </div>
 
+Garrett used timers extensively to pace break out sessions
+and they worked surprisingly well to keep everyone on track.
 One funny thing I noticed during our workshop session
 was that Garrett would frequently have to switch to slide-edit mode (in Keynote, I think)
 to fiddle with the timer as he adjusted the length of the “your turn” session.
-This isn’t abnormal;
+This is pretty normal;
 an instructor probably has a sense of approximately how long an activity will take
 and we’ll often will adjust the time spent on the activity
 based on how the audience is doing,
 how well the material is working,
-or how close to lunch or break we are in the session.
+or how close to lunch or a break we are in the session.
 
 So my idea was to build a countdown timer
 that you could drop into a slide
@@ -212,7 +216,8 @@ and easily use to time an event.
 I also wanted to make it easy to adjust the time,
 but my JavaScript skills were limited to what I could learn from StackOverflow,
 so I compromised and decided that you could only bump the timer up.
-If you had to move faster, you could just move on.
+After all it’s not like you *have* to end the timer,
+you can always just move on in your slides.
 
 ### It becomes an R package
 
@@ -227,15 +232,16 @@ and [soft-announced the package for me](https://twitter.com/dataandme/status/112
 
 Not long after that,
 and slightly to my horror (*please don’t go looking at my JavaScript code*),
-[Hadley submitted an issue](https://github.com/gadenbuie/countdown/issues/5).
-Actually, [two issues](https://github.com/gadenbuie/countdown/issues/6).
-Obviously, that was an exciting turn of events,
-and his suggestions were solid and helped improve the quality of the timer.
-(He suggested a “warning state” and a full-screen view/app.)
+[Hadley](https://twitter.com/hadleywickham) submitted an issue.
+Actually, two issues.
+Obviously, that was an exciting turn of events.
+His suggestions were solid and helped improve the quality of the timer:
+he suggested a [warning state](https://github.com/gadenbuie/countdown/issues/5)
+and a [full-screen view/app](https://github.com/gadenbuie/countdown/issues/6).
 
-Amazingly, it worked!
-People really seemed to like the package,
-it solved a silly but useful need that many people have when teaching,
+Amazingly, the package worked!
+People really seemed to like it,
+it solved a niche but useful need that many people have when teaching,
 and it let me learn a ton about how to build htmlwidgets in R.
 I’m proud of the R interface — it’s easy to use and configure —
 and I think the feature set hits the right balance of
@@ -244,10 +250,10 @@ without doing *too much*.
 
 ### But that JavaScript code…
 
-Since I wrote countdown,
+Since I wrote the first version of countdown,
 I’ve learned a whole lot more JavaScript
-and I know a whole lot more about how htmlwidgets can be built in R.
-countdown’s underlying code has always haunted me a little in the back of my mind,
+and I know a whole lot more about how to build *web things* in R.
+countdown’s underlying code has always haunted me a little,
 but on the other hand it was chugging away,
 still working fine for most people in most situations.
 
@@ -257,15 +263,44 @@ So I left it alone…
 
 …for almost 3 years.
 
-This year, [rstudio::conf](https://rstudio.com/conference),
-and wow, a lot has changed in those three years.
-Not only did I lead a workshop *about JavaScript* for Shiny users
-[\#js4shiny](https://js4shiny.com) at rstudio::conf(2020),
+And *wow how much has changed* in the three plus years since rstudio::conf(2019).
+Not only did I lead a workshop *about JavaScript* for Shiny users at rstudio::conf(2020)
+(hashtag [js4shiny](https://js4shiny.com)),
 and not only do I now work for RStudio,
 but I was also part of the program committee for conference planning.
 Which means I saw colleagues were still using my countdown timer in workshop slides.
 
 And that old franken-JavaScript code still haunted me.
+
+So this year,
+in part inspired by the return (and [final](https://www.rstudio.com/blog/rstudio-is-becoming-posit/))
+[rstudio::conf](https://rstudio.com/conference),
+I decided that finally rewriting that JavaScript
+would be the perfect conference side-hack project.
+
+Which lead to countdown v0.4.0 arriving on CRAN!
+
+## coundown v0.4.0
+
+### All new JavaScript
+
+Classes and methods, oh my.
+
+### New buttons and keyboard interactions
+
+-   Click to start/stop
+-   Double click to reset
+-   New bump up/down buttons
+-   Keyboard shortcuts (space/enter, esc, up/down arrows)
+
+### Shiny!
+
+-   You can now control the timer from Shiny with `countdown_action()`
+-   Receive timer events on the server
+-   These power `countdown_app()`, where I also added bookmarking
+    <https://apps.garrickadenbuie.com/countdown/?_inputs_&time=%2220%3A00%22&update_every=%2210%22&warn_time=%225%3A00%22>
+-   If your interested in learning more, check out `countdown_shiny_example()`
+    or <http://apps.garrickadenbuie.com/countdown-shiny-example>
 
 <style type="text/css">
 .superlative {
