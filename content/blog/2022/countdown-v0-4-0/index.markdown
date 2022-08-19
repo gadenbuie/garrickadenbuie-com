@@ -519,8 +519,10 @@ timerTwo.addEventListener('click', function({ target: el }) {
 </script>
 
 Run this timer by clicking the button above.
-Even though we used `setTimeout(code, 1000)` to schedule each tick for one second later,
-you can see that our timer isn’t perfectly running on the seconds.
+Even though we used the same `setTimeout(code, 1000)`
+to schedule each tick for one second later,
+with this version you can see that our timer is drifting a bit from
+*once per second*.
 
 Beyond the improved timer,
 using a class instead of a bunch of StackOverlow code
