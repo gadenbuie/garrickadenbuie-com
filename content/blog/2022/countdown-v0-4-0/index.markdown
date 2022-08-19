@@ -31,6 +31,10 @@ editor_options:
 <script src="{{< blogdown/postref >}}index_files/countdown-0.4.0/countdown.js"></script>
 <link href="{{< blogdown/postref >}}index_files/countdown-0.4.0/countdown.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/countdown-0.4.0/countdown.js"></script>
+<link href="{{< blogdown/postref >}}index_files/js4shiny-0.0.28/jsonview/jsonview.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/js4shiny-0.0.28/jsonview/jsonview.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/js4shiny-redirectConsoleLog-0.0.28/jslog.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/js4shiny-redirectConsoleLog-0.0.28/redirectConsoleLog.js"></script>
 <!-- Links -->
 
 <div class="lead">
@@ -278,13 +282,250 @@ in part inspired by the return (and [final](https://www.rstudio.com/blog/rstudio
 I decided that finally rewriting that JavaScript
 would be the perfect conference side-hack project.
 
-Which lead to countdown v0.4.0 arriving on CRAN!
+Which led to countdown v0.4.0 arriving on CRAN!
 
 ## coundown v0.4.0
 
-### All new JavaScript
+<style type="text/css">
+pre:empty {
+  border-left: none !important;
+}
+</style>
 
-Classes and methods, oh my.
+### The Old JavaScript
+
+My first implementation relied heavily on the JavaScript function
+[`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout),
+which takes a `function` and a `delay` in milliseconds:
+`setTimeout(function, delay)`
+When called, the browser will call the function after the delay is over.
+
+You can use `setTimeout` recursively inside a function
+to run that function repeatedly after calling it just once.
+Below I’ve defined a function `timerTick()`
+that, when called, uses `setTimeout` to schedule the next run of the function.
+If you use a delay of `1000` milliseconds,
+you can set up a function that runs once per second —
+just like a clock 😉.
+
+This is, essentially, how countdown worked before.
+For each run of `timerTick()`,
+I would decrement the number of remaining seconds by one
+and update the timer.
+If there’s still time left
+then I scheduled another update for 1 second later.
+If there isn’t any time left,
+we can stop the timer
+and stop scheduling more timer updates.
+
+``` js
+function timerTick() {
+  const timer = document.getElementById('timer')
+  timer.value -= 1
+  console.log(`${timer.value}s remaining...`)
+  if (timer.value > 0) {
+    setTimeout(timerTick, 1000)
+  } else {
+    console.log(`Time's up!`)
+    timer.classList.remove('running')
+    timer.innerText = 'Start Timer'
+  }
+}
+```
+
+And this works<sup>\*</sup>! Try it out by clicking the button below.
+
+<button id="timer" class="btn btn-default" value=5>Start Countdown</button>
+
+<div id="out-simple-timer">
+
+<pre></pre>
+
+</div>
+
+<script type="text/javascript">
+const log_out_simple_timer = redirectLogger(document.querySelector("#out-simple-timer > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_simple_timer(`function timerTick() {
+  const timer = document.getElementById('timer')
+  timer.value -= 1
+  console.log(\`\${timer.value}s remaining...\`)
+  if (timer.value > 0) {
+    setTimeout(timerTick, 1000)
+  } else {
+    console.log(\`Time's up!\`)
+    timer.classList.remove('running')
+    timer.innerText = 'Start Timer'
+  }
+}
+
+function timerClear() {
+  // Clear the console output
+  console.clear()
+  // Reset the timer's starting value
+  const timer = document.getElementById('timer')
+  timer.value = 5
+  console.log(\`\${timer.value}s remaining...\`)
+}
+
+document
+  .getElementById('timer')
+  .addEventListener('click', function({ target: timer }) {
+    if (timer.classList.contains('running')) {
+      // timer is running, do nothing
+      return
+    } else {
+      timer.classList.add('running')
+      timer.innerText = 'Timer is running...'
+    }
+    timerClear()
+    setTimeout(timerTick, 1000)
+  })`)
+})
+</script>
+
+<sup>\*</sup>Almost.
+This almost works.
+It works pretty well when you leave the browser window open to the tab with the timer.
+
+But it turns out that `setTimeout()` is more like `suggestThatThisRunsLater()`.
+There’s really no guarantee that the function you scheduled to run again
+in 1,000 milliseconds is actually going to run in 1,000 milliseconds.
+There are many things that can get in the way of that timer workin as expected.
+
+If you move to a different tab and come back, for example,
+there’s no guarantee that the background tab would keep chugging along,
+running my function every seconds.
+Browsers have better things to do
+and they’ll de-prioritize pages that aren’t being actively show to users.
+
+So how do we get around this?
+
+### All New JavaScript
+
+The all new JavaScript does something really simple.
+It doesn’t rely on `setTimeout()` for keeping track of the time.
+
+Instead, it schedules the next tick but doesn’t trust that exactly one second has passed.
+Now, when you start the timer,
+countdown will calulcate when the timer should end,
+and then whenever an update tick runs
+it figures out how many minutes and seconds are left
+and updates the timer accordingly.
+
+To bump the timer up or down,
+we can just move that end time later or earlier.
+To stop the timer, we just note how much time is left
+and to restart it we recalculate the end time as right now plus the remaining time.
+
+There’s a small amount of internal state to keep track of,
+which is the perfect use case for a countdown timer
+[class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class).
+Here’s a sketch of the class.
+There are three methods:
+
+1.  `tick()` runs the timer, like above, except this time we calculate the remaining number of seconds on each tick.
+    When there are less than 0 seconds left, we call the `finish()` method.
+
+2.  `start()` gets things started by calculating when the timer should end and kicking off the `tick()` method.
+
+3.  `finish()` wraps up by resetting the timer.
+
+``` js
+class Timer {
+  constructor(el, duration) {
+    this.element = el
+    this.duration = duration
+    this.end = null
+  }
+  
+  tick () {
+    const remaining = this.end - Date.now()
+    console.log(`${remaining / 1000}s remaining...`)
+    if (remaining > 0) {
+      setTimeout(this.tick.bind(this), 1000)
+    } else {
+      this.finish()
+    }
+  }
+  
+  start () {
+    if (this.end) return
+    
+    console.clear()
+    this.element.innerText = 'Timer is running...'
+    this.end = Date.now() + this.duration * 1000
+    this.tick()
+  }
+  
+  finish () {
+    this.end = null
+    this.element.innerText = 'Start Timer'
+    console.log(`Time's up!`)
+  }
+}
+```
+
+<button id="timer-two" class="btn btn-default">Start Countdown</button>
+
+<div id="out-timer-two">
+
+<pre></pre>
+
+</div>
+
+<script type="text/javascript">
+const log_out_timer_two = redirectLogger(document.querySelector("#out-timer-two > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_timer_two(`class Timer {
+  constructor(el, duration) {
+    this.element = el
+    this.duration = duration
+    this.end = null
+  }
+  
+  tick () {
+    const remaining = this.end - Date.now()
+    console.log(\`\${remaining / 1000}s remaining...\`)
+    if (remaining > 0) {
+      setTimeout(this.tick.bind(this), 1000)
+    } else {
+      this.finish()
+    }
+  }
+  
+  start () {
+    if (this.end) return
+    
+    console.clear()
+    this.element.innerText = 'Timer is running...'
+    this.end = Date.now() + this.duration * 1000
+    this.tick()
+  }
+  
+  finish () {
+    this.end = null
+    this.element.innerText = 'Start Timer'
+    console.log(\`Time's up!\`)
+  }
+}
+
+const timerTwo = document.getElementById('timer-two')
+timerTwo.timer = new Timer(timerTwo, 5)
+timerTwo.addEventListener('click', function({ target: el }) {
+  el.timer.start()
+})`)
+})
+</script>
+
+Run this timer by clicking the button above.
+Even though we used `setTimeout(code, 1000)` to schedule each tick for one second later,
+you can see that our timer isn’t perfectly running on the seconds.
+
+Beyond the improved timer,
+using a class instead of a bunch of StackOverlow code
+makes it a whole lot easier to add on additional features
+that need to build on the timer’s internal state.
 
 ### New buttons and keyboard interactions
 
@@ -314,8 +555,17 @@ Classes and methods, oh my.
   max-width: 480px;
 }
 </style>
+
+<div id="out-unnamed-chunk-4">
+
+<pre></pre>
+
+</div>
+
 <script type="text/javascript">
-document.querySelector('.superlative').addEventListener('click', function(ev) {
+const log_out_unnamed_chunk_4 = redirectLogger(document.querySelector("#out-unnamed-chunk-4 > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_unnamed_chunk_4(`document.querySelector('.superlative').addEventListener('click', function(ev) {
   const superlatives = [
     'delighted', 'charmed', 'elated', 'excited', 'pleased', 'thrilled', 'chuffed',
     'tickled pink', 'overjoyed', 'ecstatic', 'stoked', 'proud', 'fired up'
@@ -323,5 +573,6 @@ document.querySelector('.superlative').addEventListener('click', function(ev) {
   const el = ev.target
   const idx = Math.floor(Math.random() * superlatives.length)
   el.innerText = superlatives[idx]
+})`)
 })
 </script>

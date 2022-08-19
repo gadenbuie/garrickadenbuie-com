@@ -271,6 +271,20 @@ input[type="radio"]:checked {
   background: var(--bodyLinkColorCustom);
 }
 
+.btn {
+  @extend .link, .dim, .ph3, .pv2, .bn, .br1, .pointer;
+  .btn-default {
+    color: var(--textColorCustom); 
+    background-color: var(--slate-90);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn.btn-default {
+    background-color: var(--slate-20);
+  }
+}
+
 @import '_dark', '_panelset-extras';
 
 @media (prefers-reduced-motion: no-preference) {
