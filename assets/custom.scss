@@ -270,7 +270,7 @@ input[type="radio"]:checked {
 }
 
 .btn {
-  @extend .link, .dim, .ph3, .pv2, .bn, .br1, .pointer;
+  @extend .dim, .ph3, .pv2, .bn, .br1, .pointer;
   .btn-default {
     color: var(--textColorCustom); 
     background-color: var(--slate-90);
