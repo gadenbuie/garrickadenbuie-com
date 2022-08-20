@@ -297,38 +297,46 @@ pre:empty {
 My first implementation relied heavily on the JavaScript function
 [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout),
 which takes a `function` and a `delay` in milliseconds:
-`setTimeout(function, delay)`
-When called, the browser will call the function after the delay is over.
+`setTimeout(function, delay)`.
+When called, the browser waits until the delay is over and then calls the function.
 
-You can use `setTimeout` recursively inside a function
-to run that function repeatedly after calling it just once.
+A neat trick with `setTimeout`
+is that you can call it recursively inside a function
+as a way to run that function repeatedly.
 Below I’ve defined a function `timerTick()`
-that, when called, uses `setTimeout` to schedule the next run of the function.
-If you use a delay of `1000` milliseconds,
-you can set up a function that runs once per second —
+that moves the timer forward one tick.
+It also uses `setTimeout` to schedule the next tick of the timer.
+And by using a delay of `1000` milliseconds,
+I’ve set up a function that runs once per second —
 just like a clock 😉.
 
 This is, essentially, how countdown worked before.
 For each run of `timerTick()`,
 I would decrement the number of remaining seconds by one
 and update the timer.
-If there’s still time left
-then I scheduled another update for 1 second later.
+If there’s time left on the timer,
+then `timerTick()` shcedules another update for 1 second later.
 If there isn’t any time left,
 we can stop the timer
-and stop scheduling more timer updates.
+by simply not scheduling any more timer updates.
 
 ``` js
 function timerTick() {
   const timer = document.getElementById('timer')
+  
+  // update the timer
   timer.value -= 1
   console.log(`${timer.value}s remaining...`)
+  
   if (timer.value > 0) {
+    // there's time left, schedule next tick
     setTimeout(timerTick, 1000)
   } else {
+    // time is up, reset the timer
     console.log(`Time's up!`)
     timer.classList.remove('running')
     timer.innerText = 'Start Timer'
+    // notice we don't schedule another tick
   }
 }
 ```
@@ -348,14 +356,20 @@ const log_out_simple_timer = redirectLogger(document.querySelector("#out-simple-
 document.addEventListener("DOMContentLoaded", function() {
 log_out_simple_timer(`function timerTick() {
   const timer = document.getElementById('timer')
+  
+  // update the timer
   timer.value -= 1
   console.log(\`\${timer.value}s remaining...\`)
+  
   if (timer.value > 0) {
+    // there's time left, schedule next tick
     setTimeout(timerTick, 1000)
   } else {
+    // time is up, reset the timer
     console.log(\`Time's up!\`)
     timer.classList.remove('running')
     timer.innerText = 'Start Timer'
+    // notice we don't schedule another tick
   }
 }
 
@@ -385,44 +399,52 @@ document
 </script>
 
 <sup>\*</sup>Almost.
-This almost works.
-It works pretty well when you leave the browser window open to the tab with the timer.
+This *almost* works.
+It works pretty well if you start the timer
+and then leave the browser window open in the foreground
+(which is usually how slides are presented).
 
 But it turns out that `setTimeout()` is more like `suggestThatThisRunsLater()`.
-There’s really no guarantee that the function you scheduled to run again
-in 1,000 milliseconds is actually going to run in 1,000 milliseconds.
-There are many things that can get in the way of that timer workin as expected.
+There’s really no guarantee that the function you scheduled to run
+1,000 milliseconds from now is actually going to run in 1,000 milliseconds.
 
+There are many things that can get in the way of that function being run when you expect it.
 If you move to a different tab and come back, for example,
 there’s no guarantee that the background tab would keep chugging along,
 running my function every seconds.
 Browsers have better things to do
 and they’ll de-prioritize pages that aren’t being actively show to users.
+This means that sometimes `setTimeout(fn, 1000)` runs `fn` 1 second from now,
+but depending on what else the browser is doing it could be a lot longer than that.
 
-So how do we get around this?
+So how do we get around this? 🤔
 
 ### All New JavaScript
 
-The all new JavaScript does something really simple.
-It doesn’t rely on `setTimeout()` for keeping track of the time.
+The new JavaScript version of countdown does something really simple.
+It doesn’t rely on `setTimeout()` directly to keep track of the time.
 
-Instead, it schedules the next tick but doesn’t trust that exactly one second has passed.
-Now, when you start the timer,
-countdown will calulcate when the timer should end,
-and then whenever an update tick runs
-it figures out how many minutes and seconds are left
-and updates the timer accordingly.
+Yes, it still schedules the next tick on 1 second intervals,
+but it doesn’t trust that *exactly one second* has passed.
+Now, when the user starts the timer,
+countdown will note when the timer should end
+and recalculates the remaining time with each tick.
+This means the updates are always accurate,
+even if there happen to be 4 seconds between consecutive ticks.
 
-To bump the timer up or down,
-we can just move that end time later or earlier.
-To stop the timer, we just note how much time is left
-and to restart it we recalculate the end time as right now plus the remaining time.
+It also means that we can bump a running timer up or down
+by moving that end time later or earlier.
+To stop the timer,
+we just note how much time is left
+and to restart it again we recalculate the end time
+based on how much time was left when we paused.
 
 There’s a small amount of internal state to keep track of,
-which is the perfect use case for a countdown timer
-[class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class).
-Here’s a sketch of the class.
-There are three methods:
+which happens to basically cry out for a
+[JavaScript class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class).
+So the new countdown timer is implemented via a `CountdownTimer` class.
+
+Here’s a sketch of the class containing three core methods:
 
 1.  `tick()` runs the timer, like above, except this time we calculate the remaining number of seconds on each tick.
     When there are less than 0 seconds left, we call the `finish()` method.
@@ -434,14 +456,20 @@ There are three methods:
 ``` js
 class Timer {
   constructor(el, duration) {
+    // The timer's attached to a button
     this.element = el
+    // it has a duration that's set when initiated
     this.duration = duration
+    // and it will have an end when running
     this.end = null
   }
   
   tick () {
+    // decide and report how much time is left
     const remaining = this.end - Date.now()
     console.log(`${remaining / 1000}s remaining...`)
+    
+    // and then schedule the next tick or finish up
     if (remaining > 0) {
       setTimeout(this.tick.bind(this), 1000)
     } else {
@@ -454,6 +482,7 @@ class Timer {
     
     console.clear()
     this.element.innerText = 'Timer is running...'
+    // the timer ends duration (s) * 1000 (ms) from now
     this.end = Date.now() + this.duration * 1000
     this.tick()
   }
@@ -479,14 +508,20 @@ const log_out_timer_two = redirectLogger(document.querySelector("#out-timer-two 
 document.addEventListener("DOMContentLoaded", function() {
 log_out_timer_two(`class Timer {
   constructor(el, duration) {
+    // The timer's attached to a button
     this.element = el
+    // it has a duration that's set when initiated
     this.duration = duration
+    // and it will have an end when running
     this.end = null
   }
   
   tick () {
+    // decide and report how much time is left
     const remaining = this.end - Date.now()
     console.log(\`\${remaining / 1000}s remaining...\`)
+    
+    // and then schedule the next tick or finish up
     if (remaining > 0) {
       setTimeout(this.tick.bind(this), 1000)
     } else {
@@ -499,6 +534,7 @@ log_out_timer_two(`class Timer {
     
     console.clear()
     this.element.innerText = 'Timer is running...'
+    // the timer ends duration (s) * 1000 (ms) from now
     this.end = Date.now() + this.duration * 1000
     this.tick()
   }
@@ -518,23 +554,35 @@ timerTwo.addEventListener('click', function({ target: el }) {
 })
 </script>
 
-Run this timer by clicking the button above.
-Even though we used the same `setTimeout(code, 1000)`
+Run the 5-second timer by clicking the button above.
+Notice that even though we used the same `setTimeout(code, 1000)` as before
 to schedule each tick for one second later,
-with this version you can see that our timer is drifting a bit from
+because this version precisely reports how much time is left
+you can see that our timer drifts a bit away from running perfectly
 *once per second*.
+
+### New buttons and keyboard interactions
 
 Beyond the improved timer,
 using a class instead of a bunch of StackOverlow code
 makes it a whole lot easier to add on additional features
 that need to build on the timer’s internal state.
 
-### New buttons and keyboard interactions
+For example, you can now
 
--   Click to start/stop
+-   Click to start or stop the timer
+
 -   Double click to reset
--   New bump up/down buttons
--   Keyboard shortcuts (space/enter, esc, up/down arrows)
+
+-   Bump the timer up or down using the **+** and **−** buttons
+
+-   Do all of the above with keyboard shortcus:
+
+    -   <kbd>Space</kbd> or <kbd>Enter</kbd> to start or stop the timer
+
+    -   <kbd>Esc</kbd> to reset
+
+    -   <kbd>↑</kbd> or <kbd>↓</kbd> to bump up or down
 
 ### Shiny!
 
@@ -544,6 +592,10 @@ that need to build on the timer’s internal state.
     <https://apps.garrickadenbuie.com/countdown/?_inputs_&time=%2220%3A00%22&update_every=%2210%22&warn_time=%225%3A00%22>
 -   If your interested in learning more, check out `countdown_shiny_example()`
     or <http://apps.garrickadenbuie.com/countdown-shiny-example>
+
+### New Options
+
+countdown also gains two new options
 
 <style type="text/css">
 .superlative {
