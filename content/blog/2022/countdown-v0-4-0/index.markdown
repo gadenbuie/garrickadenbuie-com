@@ -659,11 +659,30 @@ I was really happy to see that [Emil](https://twitter.com/Emil_Hvitfeldt)
 added [`best_contrast()`](https://emilhvitfeldt.github.io/prismatic/reference/best_contrast.html)
 and switching to use that function cleaned up a lot of internal code for me!
 
-------------------------------------------------------------------------
+## Thank you!
+
+Huge thanks to the many people who opened issues or contributed code to countdown
+over these years. You all rock 🧡
+
+[@andrewpbray](https://github.com/andrewpbray),
+[@apreshill](https://github.com/apreshill),
+[@ConnorJPSmith](https://github.com/ConnorJPSmith),
+[@csgillespie](https://github.com/csgillespie),
+[@Dr-Joe-Roberts](https://github.com/Dr-Joe-Roberts),
+[@fvitalini](https://github.com/fvitalini),
+[@hadley](https://github.com/hadley),
+[@HaoZeke](https://github.com/HaoZeke),
+[@jhelvy](https://github.com/jhelvy),
+[@jvcasillas](https://github.com/jvcasillas),
+[@moshpirit](https://github.com/moshpirit),
+[@rtheodoro](https://github.com/rtheodoro),
+[@sje30](https://github.com/sje30),
+[@spcanelon](https://github.com/spcanelon),and
+[@thiyangt](https://github.com/thiyangt).
 
 If you’ve read this far, thank you!
 Thanks for using countdown and making developing R packages fun.
-Reach out below or on Twitter (I’m [@grrrck](https://twitter.com/grrrck))
+Reach out in the comments or on Twitter (I’m [@grrrck](https://twitter.com/grrrck))
 with any questions or thoughts ☺️
 
 <style type="text/css">
