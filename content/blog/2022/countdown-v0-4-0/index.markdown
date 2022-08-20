@@ -42,9 +42,9 @@ editor_options:
 I’m <span class="superlative">stoked</span> to announce that [countdown](https://pkg.garrickadenbuie.com/countdown) is now available on CRAN!
 Countdown to something awesome in [xaringan](https://slides.yihui.org/xaringan), [Quarto](https://quarto.org), [R Markdown](https://rmarkdown.rstudio.com), or [Shiny](https://shiny.rstudio.com).
 
-This is the first release available via `install.packages()`
-and it includes a whole bunch of new features.
-Read on to learn more!
+In this post,
+I [reflect](#reflection) a bit on the development of [countdown](https://pkg.garrickadenbuie.com/countdown),
+but you can also skip straight to the [release notes](#release)!
 
 </div>
 
@@ -177,12 +177,17 @@ install.packages('countdown')
 
 ## A brief history of countdown
 
+Before we talk about [all the new things in countdown](#release),
+I want to take a small minute to get nostalgic.
+I hope you don’t mind indulging me
+(or [skip ahead](#release) if you’d rather get right to business).
+
 ### rstudio::conf(2019)
 
 In 2019 I went to [rstudio::conf](https://www.rstudio.com/resources/rstudioconf-2019/) in Austin, TX
 where a highlight of the conference, for me,
 was the [Train-the-Trainer: Tidyverse Track](https://github.com/rstudio-education/teach-tidy)
-workshop by Garrett Grolemund and Greg Wilson.
+workshop by Garrett Grolemund and [Greg Wilson](https://third-bit.com/).
 That workshop specifically marked a turning point in my career
 and I left rstudio::conf very inspired to build and teach cool things in R.
 
@@ -226,16 +231,18 @@ you can always just move on in your slides.
 ### It becomes an R package
 
 I cobbled together an R package
-that was basically a decent R interface
+that was a fairly decent R interface
 around a collection of lines of JavaScript that I barely understood,
 that somehow assembled into an actual working timer.
 I made a cool [intro-slash-docs presentation](https://pkg.garrickadenbuie.com/countdown)
 and would probably have sat on it for a while longer
-if Mara Averick hadn’t spotted my GitHub activity
+if it weren’t for [Mara Averick](https://twitter.com/dataandme)
+who spotted my GitHub activity
 and [soft-announced the package for me](https://twitter.com/dataandme/status/1125747630489911297).
 
 Not long after that,
-and slightly to my horror (*please don’t go looking at my JavaScript code*),
+and slightly to my horror
+(*please don’t go looking at my JavaScript code*),
 [Hadley](https://twitter.com/hadleywickham) submitted an issue.
 Actually, two issues.
 Obviously, that was an exciting turn of events.
@@ -270,14 +277,15 @@ So I left it alone…
 And *wow how much has changed* in the three plus years since rstudio::conf(2019).
 Not only did I lead a workshop *about JavaScript* for Shiny users at rstudio::conf(2020)
 (hashtag [js4shiny](https://js4shiny.com)),
-and not only do I now work for RStudio,
+and not only do I now work for RStudio[^1],
 but I was also part of the program committee for conference planning.
 Which means I saw colleagues were still using my countdown timer in workshop slides.
 
 And that old franken-JavaScript code still haunted me.
 
 So this year,
-in part inspired by the return (and [final](https://www.rstudio.com/blog/rstudio-is-becoming-posit/))
+in part inspired by the return of
+*[the final](https://www.rstudio.com/blog/rstudio-is-becoming-posit/)*
 [rstudio::conf](https://rstudio.com/conference),
 I decided that finally rewriting that JavaScript
 would be the perfect conference side-hack project.
@@ -401,8 +409,8 @@ document
 <sup>\*</sup>Almost.
 This *almost* works.
 It works pretty well if you start the timer
-and then leave the browser window open in the foreground
-(which is usually how slides are presented).
+and then don’t touch the browser window or switch to another tab.
+So it does usually work fine when you’re presenting slides.
 
 But it turns out that `setTimeout()` is more like `suggestThatThisRunsLater()`.
 There’s really no guarantee that the function you scheduled to run
@@ -413,7 +421,7 @@ If you move to a different tab and come back, for example,
 there’s no guarantee that the background tab would keep chugging along,
 running my function every seconds.
 Browsers have better things to do
-and they’ll de-prioritize pages that aren’t being actively show to users.
+and they’ll de-prioritize pages that aren’t being actively shown to users.
 This means that sometimes `setTimeout(fn, 1000)` runs `fn` 1 second from now,
 but depending on what else the browser is doing it could be a lot longer than that.
 
@@ -564,8 +572,8 @@ you can see that our timer drifts a bit away from running perfectly
 ### New buttons and keyboard interactions
 
 Beyond the improved timer,
-using a class instead of a bunch of StackOverlow code
-makes it a whole lot easier to add on additional features
+the new `CountdownTimer` class
+makes it a whole lot easier to add additional features
 that need to build on the timer’s internal state.
 
 For example, you can now
@@ -586,16 +594,77 @@ For example, you can now
 
 ### Shiny!
 
--   You can now control the timer from Shiny with `countdown_action()`
--   Receive timer events on the server
--   These power `countdown_app()`, where I also added bookmarking
-    <https://apps.garrickadenbuie.com/countdown/?_inputs_&time=%2220%3A00%22&update_every=%2210%22&warn_time=%225%3A00%22>
--   If your interested in learning more, check out `countdown_shiny_example()`
-    or <http://apps.garrickadenbuie.com/countdown-shiny-example>
+The shiny new countdown package also has plenty of Shiny features.
+Countdown timers can be controlled directly from Shiny
+with `countdown_action()` or `countdown_update()`
+and timers are now also inputs that report their state!
+
+You can find an example Shiny app with a timer,
+plus an explanation of how it all works,
+by running
+
+to launch an example app.
+The example app is also available on my website at
+[apps.garrickadenbuie.com/countdown-shiny-example](https://apps.garrickadenbuie.com/countdown-shiny-example).
+
+In a nutshell,
+the timer will report its state using its input `id`.
+For example,
+`countdown(id = "timer")` will report its state to Shiny
+via `input$timer`.
+The input reports the `event` that caused the state to change
+and the state of the `timer`:
+
+Here’s another small app that demonstrate how you could use a button
+to toggle the state of the timer.
+
+### Improved countdown App
+
+<div class="fr-ns ph4" style="max-width:22rem">
+
+![A screenshot of the full screen countdown timer app.](https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png)
+
+</div>
+
+All of the Shiny updates mentioned above are used to power `countdown_app()`,
+a full screen Shiny app for running timers.
+These work really well for timing speakers at conferences
+or for a quick way to keep track of a break out session in workshops or meetings.
+
+The app itself received a few upgrades,
+most importantly is the ability to share a timer
+with the settings you want
+using the URL.
+This uses Shiny’s [Bookmarking state](https://shiny.rstudio.com/articles/bookmarking-state.html)
+features to save your settings in the URL
+and restore them when you load that link.
+
+For example,
+[this timer is a 20 minute timer with a warning at 5 minutes that updates every 10 seconds](https://apps.garrickadenbuie.com/countdown/?_inputs_&time=%2220%3A00%22&update_every=%2210%22&warn_time=%225%3A00%22).
 
 ### New Options
 
-countdown also gains two new options
+Finally, countdown gained a new option.
+You can now start the timer as soon as it is visible
+by setting `start_immediately = TRUE`.
+The “as as soon as it’s visible” works pretty well:
+in xaringan and Quarto slides it starts when you land on the slide
+and in regular HTML documents the timer starts when you
+scroll the timer into view.
+
+It’s also worth mentioning that countdown now uses
+[prismatic](https://emilhvitfeldt.github.io/prismatic/)
+for color calculations.
+I was really happy to see that [Emil](https://twitter.com/Emil_Hvitfeldt)
+added [`best_contrast()`](https://emilhvitfeldt.github.io/prismatic/reference/best_contrast.html)
+and switching to use that function cleaned up a lot of internal code for me!
+
+------------------------------------------------------------------------
+
+If you’ve read this far, thank you!
+Thanks for using countdown and making developing R packages fun.
+Reach out below or on Twitter (I’m [@grrrck](https://twitter.com/grrrck))
+with any questions or thoughts ☺️
 
 <style type="text/css">
 .superlative {
@@ -610,16 +679,16 @@ countdown also gains two new options
 }
 </style>
 
-<div id="out-unnamed-chunk-4">
+<div id="out-unnamed-chunk-6">
 
 <pre></pre>
 
 </div>
 
 <script type="text/javascript">
-const log_out_unnamed_chunk_4 = redirectLogger(document.querySelector("#out-unnamed-chunk-4 > pre"))
+const log_out_unnamed_chunk_6 = redirectLogger(document.querySelector("#out-unnamed-chunk-6 > pre"))
 document.addEventListener("DOMContentLoaded", function() {
-log_out_unnamed_chunk_4(`document.querySelector('.superlative').addEventListener('click', function(ev) {
+log_out_unnamed_chunk_6(`document.querySelector('.superlative').addEventListener('click', function(ev) {
   const superlatives = [
     'delighted', 'charmed', 'elated', 'excited', 'pleased', 'thrilled', 'chuffed',
     'tickled pink', 'overjoyed', 'ecstatic', 'stoked', 'proud', 'fired up'
@@ -630,3 +699,5 @@ log_out_unnamed_chunk_4(`document.querySelector('.superlative').addEventListener
 })`)
 })
 </script>
+
+[^1]: At least until October: [RStudio is becoming Posit](https://www.rstudio.com/blog/rstudio-is-becoming-posit/).
