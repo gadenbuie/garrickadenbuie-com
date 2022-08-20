@@ -10,10 +10,8 @@ body {
   font-family: var(--font-family-system);
 }
 
-@media screen and (min-width: 56em) {
-  html {
-    font-size: 1.1em;
-  }
+html {
+  font-size: 1.1em;
 }
 
 code,
