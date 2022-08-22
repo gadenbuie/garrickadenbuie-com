@@ -140,9 +140,31 @@ for (frag_url in fragments) {
   position: absolute;
   left: 12px;
 }
+
+/* glightbox styles */
 ```
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+```{css echo=FALSE}
+.gdesc-inner,
+.glightbox-clean .gslide-description {
+	background: transparent;
+}
+
+.glightbox-clean .gslide-title {
+  color: var(--blue-100);
+  font-size: 1.25em;
+  text-align: center;
+}
+
+.gslide-media.gslide-image img {
+  opacity: 1;
+}
+```
 
 <div id="rsthemes-buttons" style="display:none;">
 <button class="rsthemes-button-active" id="rsthemes-light" value="rsthemes-is-light">Light</button>
@@ -154,21 +176,27 @@ for (frag_url in fragments) {
 
 ```{js echo=FALSE}
 const rsthemesOpts = {
-  valueNames: [
-    'name',
-    'style',
-    { name: 'image', attr: 'src' },
-    { name: 'imageLink', attr: 'href' }
-  ],
-  // <a href="{url}" data-featherlight="image">
-  item: `<li>
-    <div class="rstheme-name"><span class="name"></span><div class="style"></div></div>
+  // valueNames: [
+  //   'name',
+  //   'style',
+  //   { name: 'image', attr: 'src' },
+  //   { name: 'glightbox', attr: 'href' }
+  // ],
+  item: function(values) {
+    return `<li>
+      <div class="rstheme-name"><div class="name">${values.name}</div><div class="style">${values.style}</div></div>
 
-    <div class="rstheme-image"><a class="imageLink" data-featherlight="image" href="#"><img class="image" src="#" /></a></div>
+      <div class="rstheme-image">
+        <a class="glightbox" href="${values.image}" data-title="${values.name}">
+          <img src="${values.image}"  alt="${values.name} {rsthemes} (${values.style})"/>
+        </a>
+      </div>
     </li>`
+  }
 }
 
 let rsthemesList = undefined
+let lightbox = undefined
 const btns = document.getElementById('rsthemes-buttons')
 
 function filterRsthemesList() {
@@ -195,6 +223,7 @@ function filterRsthemesList() {
     }
     return false
   })
+  lightbox.setElements(document.querySelectorAll('.glightbox'))
 }
 
 const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.json")
@@ -209,6 +238,15 @@ const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/ass
     sort(t => t.isBase16 ? 1 : -1)
 
     rsthemesList = new List('rsthemes-list', rsthemesOpts, json)
+    lightbox = GLightbox({
+      touchNavigation: true,
+      descPosition: 'top'
+    });
+    
+    lightbox.on('open', (target) => {
+      debugger
+      console.log('lightbox opened', {target});
+    });
     btns.style.display = 'block'
     filterRsthemesList()
   })

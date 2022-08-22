@@ -130,9 +130,31 @@ links:
   position: absolute;
   left: 12px;
 }
+
+/* glightbox styles */
 </style>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+<style type="text/css">
+.gdesc-inner,
+.glightbox-clean .gslide-description {
+	background: transparent;
+}
+
+.glightbox-clean .gslide-title {
+  color: var(--blue-100);
+  font-size: 1.25em;
+  text-align: center;
+}
+
+.gslide-media.gslide-image img {
+  opacity: 1;
+}
+</style>
 
 <div id="rsthemes-buttons" style="display:none;">
 <button class="rsthemes-button-active" id="rsthemes-light" value="rsthemes-is-light">Light</button>
@@ -144,21 +166,27 @@ links:
 
 <script type="text/javascript">
 const rsthemesOpts = {
-  valueNames: [
-    'name',
-    'style',
-    { name: 'image', attr: 'src' },
-    { name: 'imageLink', attr: 'href' }
-  ],
-  // <a href="{url}" data-featherlight="image">
-  item: `<li>
-    <div class="rstheme-name"><span class="name"></span><div class="style"></div></div>
+  // valueNames: [
+  //   'name',
+  //   'style',
+  //   { name: 'image', attr: 'src' },
+  //   { name: 'glightbox', attr: 'href' }
+  // ],
+  item: function(values) {
+    return `<li>
+      <div class="rstheme-name"><div class="name">${values.name}</div><div class="style">${values.style}</div></div>
 
-    <div class="rstheme-image"><a class="imageLink" data-featherlight="image" href="#"><img class="image" src="#" /></a></div>
+      <div class="rstheme-image">
+        <a class="glightbox" href="${values.image}" data-title="${values.name}">
+          <img src="${values.image}"  alt="${values.name} {rsthemes} (${values.style})"/>
+        </a>
+      </div>
     </li>`
+  }
 }
 
 let rsthemesList = undefined
+let lightbox = undefined
 const btns = document.getElementById('rsthemes-buttons')
 
 function filterRsthemesList() {
@@ -185,6 +213,7 @@ function filterRsthemesList() {
     }
     return false
   })
+  lightbox.setElements(document.querySelectorAll('.glightbox'))
 }
 
 const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.json")
@@ -199,6 +228,15 @@ const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/ass
     sort(t => t.isBase16 ? 1 : -1)
 
     rsthemesList = new List('rsthemes-list', rsthemesOpts, json)
+    lightbox = GLightbox({
+      touchNavigation: true,
+      descPosition: 'top'
+    });
+    
+    lightbox.on('open', (target) => {
+      debugger
+      console.log('lightbox opened', {target});
+    });
     btns.style.display = 'block'
     filterRsthemesList()
   })
@@ -215,7 +253,16 @@ btns.querySelectorAll('button').forEach(function(btn) {
 ## Installation
 
 
-You can install rsthemes from GitHub with:
+You can install rsthemes from my [r-universe](https://gadenbuie.r-universe.dev) with:
+
+``` r
+install.packages(
+  "rsthemes",
+  repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption("repos"))
+)
+```
+
+Or you can install rsthemes from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -267,6 +314,8 @@ rstudioapi::applyTheme("One Dark {rsthemes}")
 - &#x1F303; **Auto Dark Mode**<br>Automatically choose a dark or light theme by time of day
 
 - &#x2764;&#xFE0F; **Favorite Themes**<br>Switch between a few of your favorite themes
+
+- &#x1F971; **Use Default RStudio Theme**<br>Switch back to RStudio's default theme
 
 #### Choose Your Preferred Themes
 
@@ -349,6 +398,12 @@ if (interactive() && requireNamespace("rsthemes", quietly = TRUE)) {
 }
 ```
 
+### Go Back to the Default
+
+Sometimes when you're teaching or demonstrating RStudio features, you'd like to have your IDE match the appearance of your learners, or at least the basic theme that everyone starts out with when they install RStudio for the first time.
+
+Use the **Use Default RStudio Theme** to quickly switch back to RStudio's default theme, Textmate. Or, you can use `rsthemes::use_default_rstudio_theme()` to initiate the switch, perhaps from within the `.Rprofile` file of your teaching project.
+
 ## Uninstall
 
 
@@ -379,7 +434,13 @@ rsthemes::remove_rsthemes("base16")
 - [Night Owl][night-owl] ([Sarah Drasner](https://sarah.dev/))
   - with huge thanks to original [Night Owlish][night-owlish] 
     implementation in RStudio by [Mara Averick](https://maraaverick.rbind.io/)
-    
+- Yule RStudio
+  - Based on the [Yule tmTheme](https://tmtheme-editor.herokuapp.com/#!/editor/theme/Yule)
+  - Ported from [gadenbuie/yule-rstudio](https://github.com/gadenbuie/yule-rstudio)
+  - Featuring a background image by [Joanna Kosinska](https://unsplash.com/@joannakosinska)
+- [Material Theme][material]
+  - Contributed to rsthemes by [Zac de Lusignan](https://www.zacdelusignan.com/)
+- [Serendipity][serendipity] ([wickedtemplates](https://www.wickedtemplates.com/))
 
 [base16]: https://github.com/chriskempson/base16
 [fairyfloss]: https://github.com/sailorhg/fairyfloss
@@ -393,4 +454,6 @@ rsthemes::remove_rsthemes("base16")
 [a11y-syntax]: https://github.com/ericwbailey/a11y-syntax-highlighting
 [night-owl]: https://github.com/sdras/night-owl-vscode-theme
 [night-owlish]: https://github.com/batpigandme/night-owlish
+[material]: https://material-theme.site/
+[serendipity]: https://wvsc.dev/
 
