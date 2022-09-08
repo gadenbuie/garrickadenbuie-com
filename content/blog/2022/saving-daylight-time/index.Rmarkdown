@@ -13,7 +13,7 @@ description: |
   A visualization to explore these questions.
 images:
   - https://www.garrickadenbuie.com/blog/saving-daylight-time/index_files/figure-html/social-1.png
-source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/saving-daylight-time/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/saving-daylight-time/index.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console
