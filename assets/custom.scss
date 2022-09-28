@@ -21,6 +21,11 @@ code,
   font-weight: 400;
 }
 
+p code:not(.sourceCode) {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 .post-body > p > code {
   font-size: 0.95rem;
 }
