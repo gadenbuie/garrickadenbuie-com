@@ -200,7 +200,7 @@ tidy_tweets <-
 
 ```{r set-theme}
 blog_theme <-
-  theme_minimal(18, base_family = "Code New Roman") +
+  theme_minimal(18, base_family = "IBM Plex Mono") +
   theme(
     plot.background = element_rect(fill = "#f9fafa", color = NA),
     plot.title.position = "plot",
