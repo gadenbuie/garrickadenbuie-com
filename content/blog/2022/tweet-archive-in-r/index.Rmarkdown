@@ -504,8 +504,7 @@ ggiraph::girafe(
   padding-left: 0;
 }
 @media (max-width: 48rem) {
-  #plot-time-of-day [class^="tooltip_svg_"],
-  #plot-popular-tweets [class^="tooltip_svg_"] {
+  #plot-time-of-day [class^="tooltip_svg_"] {
     margin-left; auto;
     margin-right: auto;
     position:   static !important;
