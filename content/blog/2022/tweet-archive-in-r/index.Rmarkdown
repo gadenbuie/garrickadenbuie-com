@@ -1,0 +1,539 @@
+---
+title: Reading your Twitter tweet archive in R
+author: Garrick Aden-Buie
+date: '2022-11-12'
+slug: tweet-archive-in-r
+categories:
+  - Blog
+tags:
+  - R
+  - Twitter
+  - Personal Data
+description: post description
+twitterImage: /path/to/image.png
+source_link: ''
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+```
+
+Go to [Settings and Privacy](https://twitter.com/settings/account) and
+click [Download an archive of your data](https://twitter.com/settings/download_your_data).
+
+```{r}
+library(tidyverse)
+library(glue)
+```
+
+```{r}
+v8 <- V8::v8()
+v8$eval("window = {}")
+v8$source("data/manifest.js")
+manifest <- v8$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
+```
+
+```{r}
+manifest$dataTypes |>
+  keep(~ "files" %in% names(.x)) |>
+  map("files") |>
+  map(map_dfr, identity, .id = "index") |>
+  map_dfr(identity, .id = "item") |>
+  mutate(across(count, as.integer)) |>
+  slice_max(count, n = 15) |>
+  knitr::kable()
+```
+
+```{r}
+manifest$dataTypes$account |> str()
+```
+
+```{js file=manifest$dataTypes$account$files[[1]]$fileName, eval = FALSE}
+
+```
+
+```{r}
+v8$eval("
+function ensureKey (obj, path) {
+  const keys = path.split('.')
+  keys.pop() // ignore last key
+  if (keys.length == 0) return
+  let lastObj = obj
+  for (key of keys) {
+    lastObj[key] = lastObj[key] || {}
+    lastObj = lastObj[key]
+  }
+}
+")
+```
+
+```{r}
+globalName <- "YTD.account.part0"
+v8$eval(glue("ensureKey(window, '{globalName}')"))
+v8$source("data/account.js")
+v8$get(glue("window.{globalName}"), simplifyDataFrame = FALSE)
+```
+
+```{r}
+read_twitter_data <- function(manifest, item) {
+  manifest$dataTypes[[item]]$files |> 
+    purrr::transpose() |>
+    purrr::pmap(read_twitter_data_file)
+}
+
+read_twitter_data_file <- function(fileName, globalName, ...) {
+  v8$eval(glue("ensureKey(window, '{globalName}')"))
+  v8$source(fileName)
+  v8$get(glue("window.{globalName}"), simplifyDataFrame = FALSE)
+}
+
+simplify_twitter_data <- function(x) {
+   x <- purrr::flatten(x)
+   item_names <- x |> purrr::map(names) |> purrr::reduce(union)
+   if (length(item_names) > 1) return(x)
+   
+   x |>
+    purrr::map(item_names) |>
+    purrr::map_dfr(identity)
+}
+```
+
+
+```{r}
+manifest |> 
+  read_twitter_data("listsSubscribed") |> 
+  pluck(1) |>
+  str()
+```
+
+Finding followers who have been around the longest
+
+```{r}
+early_followers <- 
+  read_twitter_data(manifest, "follower") |>
+  pluck(1) |>
+  map_dfr("follower") |>
+  mutate(across(accountId, as.numeric)) |>
+  arrange(accountId) |>
+  slice_head(n = 11)
+
+early_followers_accounts <- 
+  early_followers |>
+  pull(accountId) |>
+  rtweet::lookup_users()
+
+early_followers_accounts |>
+  select(id, name, screen_name, created_at, followers_count, description)
+```
+
+## My likes
+
+```{r label, options}
+likes <-
+  read_twitter_data(manifest, "like") |> 
+  simplify_twitter_data()
+
+likes |> 
+  arrange(as.numeric(tweetId))
+```
+
+## My tweets
+
+```{r tweets}
+tweet_tidy_raw <- function(tweet) {
+  basic_items <- c(
+    "created_at",
+    "favorite_count",
+    "retweet_count",
+    "full_text",
+    "id",
+    "lang",
+    "source"
+  )
+  
+  res <- tweet[basic_items]
+  res$created_at <- strptime(res$created_at, "%a %b %d %T %z %Y")
+  res$retweet <- grepl("^RT @", res$full_text)
+  res$reply <- grepl("^@", res$full_text)
+  res$user_mentions <- tweet |> 
+    purrr::pluck("entities", "user_mentions") |>
+    purrr::map_chr("screen_name") |>
+    paste(collapse = ",")
+  res$hashtags <- tweet |> 
+    purrr::pluck("entities", "hashtags") |>
+    purrr::map_chr("text") |>
+    paste(collapse = ",")
+  res
+}
+
+tidy_tweets <- 
+  read_twitter_data(manifest, "tweets") |> 
+  flatten() |>
+  map("tweet") |>
+  map_dfr(tweet_tidy_raw) |> 
+  mutate(
+    across(contains("_count"), as.integer),
+    type = case_when(
+      retweet ~ "retweet",
+      reply ~ "reply",
+      TRUE ~ "tweet"
+    ),
+    hour = lubridate::hour(created_at),
+    day = lubridate::wday(created_at, label = TRUE, abbr = TRUE, week_start = 1),
+    month = lubridate::month(created_at, label = TRUE, abbr = FALSE),
+    day_of_month = lubridate::day(created_at),
+    year = lubridate::year(created_at)
+  ) |> 
+  filter(!id %in% c("2954171516", "2930539208"))
+```
+
+## Monthly tweets, replies and retweets
+
+```{r set-theme}
+blog_theme <-
+  theme_minimal(18, base_family = "Code New Roman") +
+  theme(
+    plot.background = element_rect(fill = "#f9fafa", color = NA),
+    plot.title.position = "plot",
+    legend.position = c(0, 1),
+    legend.direction = "horizontal",
+    legend.justification = c(0, 1),
+    legend.title.align = 1,
+    axis.title.y = element_text(hjust = 0),
+    axis.title.x = element_text(hjust = 0),
+    panel.grid.major = element_line(color = "#d3d9db"),
+    panel.grid.minor = element_line(color = "#e7eaeb")
+  )
+
+theme_set(blog_theme)
+```
+
+```{r}
+type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
+
+plot_monthly <-
+  tidy_tweets |>
+  mutate(dt_month = lubridate::floor_date(created_at, "month")) |>
+  group_nest(dt_month, month, year, type) |>
+  mutate(
+    n = map_int(data, nrow),
+    top = data |>
+      map(
+        slice_max,
+        n = 5,
+        order_by = retweet_count * 2 + favorite_count,
+        with_ties = FALSE
+      ) |>
+      map(pull, full_text) |>
+      map(str_trunc, width = 120)
+  ) |>
+  select(-data) |>
+  rowwise() |>
+  mutate(
+    type_pl = plu::ral(type, n = n),
+    tooltip = glue::glue(
+      "<p><strong>{month} {year}: ", 
+      "<span style=\"color:{type_colors[type]}\">{n} {type_pl}</span></strong></p>",
+      "<ol>{tweets}</ol>",
+      tweets = paste(sprintf("<li>%s</li>", top), collapse = "")
+    ),
+    tooltip = htmltools::HTML(tooltip)
+  ) |> 
+  ungroup() |>
+  mutate(type = factor(type, rev(c("tweet", "reply", "retweet")))) |>
+  arrange(dt_month, type) |>
+  ggplot() +
+  aes(x = dt_month, y = n, fill = type, group = type) +
+  ggiraph::geom_col_interactive(
+    width = 31 * 24 * 60 * 60,
+    aes(tooltip = tooltip)
+  ) +
+  scale_fill_manual(values = type_colors) +
+  scale_x_datetime(
+    date_breaks = "1 year", 
+    date_labels = "%Y",
+    expand = expansion()
+  ) +
+  scale_y_continuous(expand = expansion(add = c(1, 1))) +
+  labs(
+    title = "Tweets per month",
+    x = "Month Tweeted →",
+    y = "Count →",
+    fill = NULL
+  )
+
+ggiraph::girafe(ggobj = plot_monthly, width_svg = 14, height_svg = 6)
+```
+
+## Popular tweets, likes & retweets
+
+```{r tweets-likes-retweets-bubble, include = FALSE}
+ggplot(tidy_tweets) +
+  aes(created_at, retweet_count, size = retweet_count) +
+  geom_point()
+```
+
+::: {#plot-popular-tweets}
+```{r}
+plot_bubble <- 
+  tidy_tweets |>
+  filter(retweet_count >= 10, favorite_count >= 5) |>
+  mutate(
+    age = as.numeric(difftime(Sys.time(), created_at, units = "days")) / 365.25,
+    created_at = strftime(created_at, '%a %b %e, %Y'),
+    tooltip = glue(
+      "<p>{full_text}</p>",
+      "<dl><dt>&#9842;</dt><dd>{retweet_count}</dd>", 
+      "<dt>&#9829;</dt><dd>{favorite_count}</dt>", 
+      "<dt>&#9998;</dt><dd>{created_at}</dd></dl>"
+    )
+  ) |>
+  ggplot() +
+  aes(
+    x = favorite_count,
+    y = retweet_count,
+    color = age,
+    size = 5 * retweet_count + favorite_count,
+    tooltip = tooltip
+  ) +
+  ggiraph::geom_point_interactive() +
+  scale_color_viridis_c(option = "C", direction = -1) +
+  scale_y_continuous(trans = scales::log1p_trans(), breaks = c(25, 50, 100, 200, 400)) +
+  scale_x_continuous(trans = scales::log1p_trans(), breaks = c(25, 50, 100, 200, 400, 800, 1600)) +
+  guides(size = "none") +
+  labs(
+    title = "Popular tweets",
+    x = "Favorites →",
+    y = "Retweets →",
+    color = "Tweet age\nin years"
+  ) +
+  theme(
+    legend.title = element_text(size = 12, vjust = 1),
+    legend.position = c(1.0125, 1.08),
+    legend.justification = c(1, 1)
+  )
+
+ggiraph::girafe(
+  ggobj = plot_bubble, 
+  width_svg = 12, 
+  height_svg = 8
+)
+```
+:::
+
+## Hashtags
+
+```{r plot-hashtags}
+plot_hashtags <-
+  tidy_tweets |> 
+  filter(nzchar(hashtags)) |>
+  select(created_at, month, year, hashtag = hashtags) |>
+  separate_rows(hashtag, sep = ",") |>
+  count(month = strftime(created_at, "%Y-%m"), hashtag) |>
+  mutate(
+    hashtag = recode(
+      hashtag, 
+      rstats = "RStats", 
+      rstudioconf = "RStudioConf", 
+      datascience = "DataScience",
+      dataviz = "DataViz"
+    )
+  ) |>
+  group_by(hashtag) |>
+  mutate(n_months = n(), total = sum(n)) |> 
+  ungroup() |>
+  mutate(
+    hashtag = if_else(n_months <= 6 | total < 10, "other", hashtag),
+    hashtag = fct_infreq(hashtag),
+    hashtag = fct_rev(hashtag),
+    hashtag = fct_relevel(hashtag, "other", after = 0)
+  ) |>
+  filter(month >= "2018-01-01") |>
+  group_by(month, hashtag) |>
+  summarize(n = sum(n), .groups = "drop") |>
+  filter(month >= "2019-02-01") |> 
+  ggplot() +
+  aes(month, n, fill = hashtag, color = hashtag, data_id = hashtag) +
+  ggiraph::geom_col_interactive(position = "fill", width = 1) +
+  scale_fill_viridis_d(direction = -1, guide = ggiraph::guide_legend_interactive()) +
+  scale_color_viridis_d(direction = -1) +
+  # scale_x_datetime(date_breaks = "1 year", date_labels = "%Y", expand = expansion()) +
+  scale_x_discrete(
+    breaks = paste0(2006:2022, "-01"), 
+    labels = 2006:2022
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), expand = expansion()) +
+  theme(
+    plot.margin = margin(unit = "line", t = 4),
+    legend.position = c(0.45, 1.125),
+    legend.justification = c(0.5, 1)
+  )
+
+ggiraph::girafe(
+  ggobj = plot_hashtags, 
+  width_svg = 12, 
+  height_svg = 8,
+  options = list(
+    ggiraph::opts_hover_key(css = "stroke: var(--textCustomColor, \"#ffffff\")"),
+    ggiraph::opts_hover(css = ""),
+    ggiraph::opts_hover_inv(css = "filter: saturate(30%) brightness(110%);")
+  )
+)
+```
+
+## Tweets by time of day
+
+```{r}
+tweet_count_by_hour <- 
+  tidy_tweets |>
+  count(day, hour) |>
+  mutate(
+    hour_label = case_when(
+      hour == 12 ~ "12pm",
+      hour == 0 ~ "12am",
+      hour > 12 ~ paste0(hour - 12, "pm"),
+      hour < 12 ~ paste0(hour, "am")
+    ),
+    pct = n / sum(n)
+  )
+
+tooltip_hour <- function(day, hour_label, ...) {
+  count_hour <- 
+    tweet_count_by_hour |> 
+    filter(hour_label == !!hour_label) |> 
+    mutate(
+      across(pct, scales::percent_format(0.1)),
+      across(n, format, big.mark = ","),
+      across(n, trimws),
+      text = glue("{day}: {pct} ({n})"),
+      text = if_else(day == !!day, glue("<strong>{text}</strong>"), text)
+    ) |> 
+    glue_data("<li>{text}</li>") |>
+    glue_collapse()
+  
+  glue::glue("<p><strong>{hour_label}</strong></p><ul>{count_hour}</ul>")
+}
+
+tweet_count_by_hour$tooltip <- pmap_chr(tweet_count_by_hour, tooltip_hour)
+
+plot_by_tod <-
+  ggplot(tweet_count_by_hour ) +
+  aes(y = n, fill = day, x = hour, data_id = hour, tooltip = tooltip) +
+  geom_area(
+    data = function(d) {
+      # Shade from midnight-6am and 6pm-midnight, kinda like geom_step_area()
+      max_count <- max(d$n)
+      tibble(
+        day = sort(rep(unique(d$day), 6)),
+        hour = rep(c(0, 6, 6.01, 18, 18.01, 24), 7),
+        n = rep(c(max_count, max_count, 0, 0, max_count, max_count), 7),
+        tooltip = ""
+      )
+    },
+    fill = "#aaaaaa30",
+  ) +
+  ggiraph::geom_col_interactive(show.legend = FALSE, width = 1) +
+  facet_wrap(vars(day), nrow = 2) +
+  coord_polar(start = pi) +
+  scale_x_continuous(
+    breaks = seq(0, 23, 3),
+    minor_breaks = 0:23,
+    labels = c("12am", paste0(seq(3, 9, 3), "am"), "12pm", paste0(seq(3, 9, 3), "pm")),
+    limits = c(0, 24),
+    expand = expansion()
+  ) +
+  scale_y_continuous(expand = expansion(), breaks = seq(0, 100, 25)) +
+  scale_fill_discrete() +
+  labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 10),
+    panel.grid.major.y = element_blank()
+  )
+
+ggiraph::girafe(
+  ggobj = plot_by_tod,
+  width_svg = 12, 
+  height_svg = 8,
+  options = list(
+    ggiraph::opts_hover_inv("filter: saturate(30%) brightness(125%)"),
+    ggiraph::opts_hover(css = "opacity:1"),
+    ggiraph::opts_tooltip(
+      offx = 600,
+      offy = 250,
+      use_cursor_pos = FALSE
+    )
+  )
+)
+```
+
+
+
+```{css echo=FALSE}
+[class^="tooltip_svg_"] {
+  background: var(--siteBgColorCustom);
+  color: var(--textColorCustom);
+  font-size: 0.75rem;
+  padding: 1rem;
+  max-width: 48rem;
+  border-radius: 3px;
+  box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36), 0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36), 2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36), 5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-color: 180deg 3% 61%;
+}
+[class^="tooltip_svg_"] + [class^="tooltip_svg_"] {
+  max-width: 32rem;
+}
+[class^="tooltip_svg_"] ul, [class^="tooltip_svg_"] ol {
+  padding-left: 1rem;
+}
+[class^="tooltip_svg_"] li {
+  line-height: 1.5;
+}
+[class^="tooltip_svg_"] > :first-child {
+  margin-top: 0;
+}
+[class^="tooltip_svg_"] > :last-child {
+  margin-bottom: 0;
+}
+[class^="tooltip_svg_"] dd, [class^="tooltip_svg_"] dt {
+  display: inline-block;
+}
+[class^="tooltip_svg_"] dd + dt {
+  margin-left: 1em;
+}
+[class^="tooltip_svg_"] dd {
+  margin-left: 0.25em;
+  font-weight: bold;
+}
+[class^="tooltip_svg_"] p {
+  font-size: 1rem;
+}
+.girafe_container_std g > g > rect:first-child:last-child,
+.girafe_container_std g > g > rect[fill="#F9FAFA"] {
+  fill: var(--siteBgColorCustom);
+  stroke: var(--siteBgColorCustom);
+}
+.girafe_container_std text {
+  fill: var(--textColorCustom);
+}
+@media (prefers-color-scheme: dark) {  
+  .girafe_container_std polyline[stroke="#E7EAEB"] {
+    stroke: var(--slate-10)
+  }
+  .girafe_container_std polyline[stroke="#D3D9DB"] {
+    stroke: var(--slate-20)
+  }
+  [class^="tooltip_svg_"] {
+    --shadow-color: 203deg 60% 1%;
+  }
+}
+```
