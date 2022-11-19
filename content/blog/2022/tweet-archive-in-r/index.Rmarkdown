@@ -330,66 +330,6 @@ ggiraph::girafe(
 ```
 :::
 
-## Hashtags
-
-```{r plot-hashtags}
-plot_hashtags <-
-  tidy_tweets |> 
-  filter(nzchar(hashtags)) |>
-  select(created_at, month, year, hashtag = hashtags) |>
-  separate_rows(hashtag, sep = ",") |>
-  count(month = strftime(created_at, "%Y-%m"), hashtag) |>
-  mutate(
-    hashtag = recode(
-      hashtag, 
-      rstats = "RStats", 
-      rstudioconf = "RStudioConf", 
-      datascience = "DataScience",
-      dataviz = "DataViz"
-    )
-  ) |>
-  group_by(hashtag) |>
-  mutate(n_months = n(), total = sum(n)) |> 
-  ungroup() |>
-  mutate(
-    hashtag = if_else(n_months <= 6 | total < 10, "other", hashtag),
-    hashtag = fct_infreq(hashtag),
-    hashtag = fct_rev(hashtag),
-    hashtag = fct_relevel(hashtag, "other", after = 0)
-  ) |>
-  filter(month >= "2018-01-01") |>
-  group_by(month, hashtag) |>
-  summarize(n = sum(n), .groups = "drop") |>
-  filter(month >= "2019-02-01") |> 
-  ggplot() +
-  aes(month, n, fill = hashtag, color = hashtag, data_id = hashtag) +
-  ggiraph::geom_col_interactive(position = "fill", width = 1) +
-  scale_fill_viridis_d(direction = -1, guide = ggiraph::guide_legend_interactive()) +
-  scale_color_viridis_d(direction = -1) +
-  # scale_x_datetime(date_breaks = "1 year", date_labels = "%Y", expand = expansion()) +
-  scale_x_discrete(
-    breaks = paste0(2006:2022, "-01"), 
-    labels = 2006:2022
-  ) +
-  scale_y_continuous(labels = scales::percent_format(), expand = expansion()) +
-  theme(
-    plot.margin = margin(unit = "line", t = 4),
-    legend.position = c(0.45, 1.125),
-    legend.justification = c(0.5, 1)
-  )
-
-ggiraph::girafe(
-  ggobj = plot_hashtags, 
-  width_svg = 12, 
-  height_svg = 8,
-  options = list(
-    ggiraph::opts_hover_key(css = "stroke: var(--textCustomColor, \"#ffffff\")"),
-    ggiraph::opts_hover(css = ""),
-    ggiraph::opts_hover_inv(css = "filter: saturate(30%) brightness(110%);")
-  )
-)
-```
-
 ## Tweets by time of day
 
 ```{r}
