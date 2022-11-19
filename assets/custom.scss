@@ -58,6 +58,11 @@ pre {
   background-color: unset;
 }
 
+.post-body > table, .page-body > table {
+	overflow-x: auto;
+	display: block;
+}
+
 hr {
   border-color: var(--slate-50);
 }
@@ -102,6 +107,23 @@ a {
 
   a {
     color: var(--textColorCustom);
+  }
+}
+
+.site-header {
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+
+@media (max-width: 36rem) {
+  .site-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .site-header .site-brand {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
   }
 }
 
