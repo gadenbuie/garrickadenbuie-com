@@ -271,19 +271,16 @@ plot_monthly <-
     fill = NULL
   )
 
-ggiraph::girafe(ggobj = plot_monthly, width_svg = 14, height_svg = 6)
+ggiraph::girafe(
+  ggobj = plot_monthly, 
+  width_svg = 14, 
+  height_svg = 6,
+)
 ```
 
 ## Popular tweets, likes & retweets
 
-```{r tweets-likes-retweets-bubble, include = FALSE}
-ggplot(tidy_tweets) +
-  aes(created_at, retweet_count, size = retweet_count) +
-  geom_point()
-```
-
-::: {#plot-popular-tweets}
-```{r}
+```{r plot-popular-tweets, echo = TRUE, eval = FALSE}
 plot_bubble <- 
   tidy_tweets |>
   filter(retweet_count >= 10, favorite_count >= 5) |>
@@ -325,8 +322,14 @@ plot_bubble <-
 ggiraph::girafe(
   ggobj = plot_bubble, 
   width_svg = 12, 
-  height_svg = 8
+  height_svg = 8,
+  options = ggiraph::opts_tooltip(placement = "container")
 )
+```
+
+::: {#plot-popular-tweets}
+```{r ref_label="plot-popular-tweets", echo = FALSE}
+
 ```
 :::
 
