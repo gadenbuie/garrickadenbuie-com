@@ -332,7 +332,7 @@ ggiraph::girafe(
 
 ## Tweets by time of day
 
-```{r}
+```{r plot-time-of-day, eval = FALSE}
 tweet_count_by_hour <- 
   tidy_tweets |>
   count(day, hour) |>
@@ -347,9 +347,16 @@ tweet_count_by_hour <-
   )
 
 tooltip_hour <- function(day, hour_label, ...) {
-  count_hour <- 
+  this_hour_count <- 
     tweet_count_by_hour |> 
-    filter(hour_label == !!hour_label) |> 
+    filter(hour_label == !!hour_label)
+  
+  this_hour_total <- sum(this_hour_count$n)
+  this_hour_pct <- scales::percent(this_hour_total / sum(tweet_count_by_hour$n), 0.1)
+  this_hour_total <- trimws(format(this_hour_total, big.mark = ","))
+  
+  this_hour_days <- 
+    this_hour_count |> 
     mutate(
       across(pct, scales::percent_format(0.1)),
       across(n, format, big.mark = ","),
@@ -360,7 +367,10 @@ tooltip_hour <- function(day, hour_label, ...) {
     glue_data("<li>{text}</li>") |>
     glue_collapse()
   
-  glue::glue("<p><strong>{hour_label}</strong></p><ul>{count_hour}</ul>")
+  glue::glue(
+    "<p><strong>{hour_label}</strong><br><small>{this_hour_pct} of total ({this_hour_total})</small></p>", 
+    "<ul>{this_hour_days}</ul>"
+  )
 }
 
 tweet_count_by_hour$tooltip <- pmap_chr(tweet_count_by_hour, tooltip_hour)
@@ -408,13 +418,21 @@ ggiraph::girafe(
     ggiraph::opts_hover_inv("filter: saturate(30%) brightness(125%)"),
     ggiraph::opts_hover(css = "opacity:1"),
     ggiraph::opts_tooltip(
-      offx = 600,
+      placement = "container",
+      css = "width: 12rem; font-family: var(--font-monospace, \"monospace\");",
+      offx = 625,
       offy = 250,
       use_cursor_pos = FALSE
     )
   )
 )
 ```
+
+
+::: {#plot-time-of-day}
+```{r ref.label = "plot-time-of-day", echo = FALSE}
+```
+:::
 
 
 
@@ -464,6 +482,31 @@ ggiraph::girafe(
 }
 .girafe_container_std text {
   fill: var(--textColorCustom);
+}
+#plot-time-of-day [class^="tooltip_svg_"] {
+  box-shadow: none;
+  text-align: left;
+  opacity: 1!important;
+  left: unset !important;
+  top: unset !important;
+  right: -4vw;
+  bottom: 2.6rem;
+  background: unset;
+}
+#plot-time-of-day [class^="tooltip_svg_"] p {
+  margin-bottom: 0;
+}
+#plot-time-of-day [class^="tooltip_svg_"] ul {
+  list-style: none;
+  padding-left: 0;
+}
+@media (max-width: 48rem) {
+  #plot-time-of-day [class^="tooltip_svg_"] {
+    margin-left; auto;
+    margin-right: auto;
+    position:   static !important;
+    margin-left: auto;
+  }
 }
 @media (prefers-color-scheme: dark) {  
   .girafe_container_std polyline[stroke="#E7EAEB"] {
