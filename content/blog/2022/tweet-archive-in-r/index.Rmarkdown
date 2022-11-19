@@ -211,7 +211,8 @@ blog_theme <-
     axis.title.y = element_text(hjust = 0),
     axis.title.x = element_text(hjust = 0),
     panel.grid.major = element_line(color = "#d3d9db"),
-    panel.grid.minor = element_line(color = "#e7eaeb")
+    # panel.grid.minor = element_line(color = "#e7eaeb")
+    panel.grid.minor = element_blank()
   )
 
 theme_set(blog_theme)
@@ -281,7 +282,7 @@ ggiraph::girafe(
 ## Popular tweets, likes & retweets
 
 ```{r plot-popular-tweets, echo = TRUE, eval = FALSE}
-plot_bubble <- 
+plot_popular_tweets <- 
   tidy_tweets |>
   filter(retweet_count >= 10, favorite_count >= 5) |>
   mutate(
@@ -291,7 +292,7 @@ plot_bubble <-
       "<p>{full_text}</p>",
       "<dl><dt>&#9842;</dt><dd>{retweet_count}</dd>", 
       "<dt>&#9829;</dt><dd>{favorite_count}</dt>", 
-      "<dt>&#9998;</dt><dd>{created_at}</dd></dl>"
+      "<dt>&#9998;</dt><dd><a href=\"https://twitter.com/grrrck/status/{id}\">{created_at}</a></dd></dl>"
     )
   ) |>
   ggplot() +
@@ -320,10 +321,14 @@ plot_bubble <-
   )
 
 ggiraph::girafe(
-  ggobj = plot_bubble, 
+  ggobj = plot_popular_tweets, 
   width_svg = 12, 
   height_svg = 8,
-  options = ggiraph::opts_tooltip(placement = "container")
+  options = list(
+    ggiraph::opts_toolbar(position = "bottomright"),
+    ggiraph::opts_tooltip(placement = "container"),
+    ggiraph::opts_hover_inv("color:var(--borderColorCustom, #cfd5d8)")
+  )
 )
 ```
 
@@ -332,6 +337,18 @@ ggiraph::girafe(
 
 ```
 :::
+
+```{js echo = FALSE}
+function addPlotPopularTweetPlaceholderText () {
+  const el = document.querySelector('#plot-popular-tweets [class^="tooltip_svg_"]')
+  if (!el) {
+    setTimeout(addPlotPopularTweetPlaceholderText, 500)
+    return;
+  }
+  el.innerHTML = '<p class="silver i">Hover over a point above to see the original tweet.</p>'
+}
+document.addEventListener('DOMContentLoaded', addPlotPopularTweetPlaceholderText)
+```
 
 ## Tweets by time of day
 
@@ -422,7 +439,7 @@ ggiraph::girafe(
     ggiraph::opts_hover(css = "opacity:1"),
     ggiraph::opts_tooltip(
       placement = "container",
-      css = "width: 12rem; font-family: var(--font-monospace, \"monospace\");",
+      css = "width: 12rem; font-family: var(--font-monospace, 'IBM Plex Mono');",
       offx = 625,
       offy = 250,
       use_cursor_pos = FALSE
@@ -437,7 +454,48 @@ ggiraph::girafe(
 ```
 :::
 
+## Tweet Source
 
+```{r tweet-source}
+plot_tweet_source <- 
+  tidy_tweets |>
+  extract(source, into = c("source_href", "source"), regex = '<a href="([^"]+)"[^>]+>([^<]+)</a>') |> 
+  mutate(
+    source = fct_lump_min(source, min = 10),
+    source = fct_rev(fct_infreq(source))
+  ) |>
+  count(source, type, sort = TRUE) |> 
+  ggplot() +
+  aes(x = n, y = type, fill = source, tooltip = source, data_id = source) +
+  ggiraph::geom_col_interactive(show.legend = FALSE, position = "fill") +
+  scale_x_continuous(
+    expand = expansion(add = c(0, 0.01)),
+    labels = scales::percent_format(5)
+  ) +
+  scale_y_discrete(
+    expand = expansion(),
+    labels = function(x) str_to_title(plu::ral(x, n = 2))
+  ) +
+  labs(
+    title = "What app did I use to tweet?",
+    x = "Percent of tweeting →",
+    y = NULL
+  )
+
+ggiraph::girafe(
+  ggobj = plot_tweet_source,
+  width_svg = 12, 
+  height_svg = 8,
+  options = list(
+    ggiraph::opts_hover_inv("filter: saturate(30%) brightness(125%)"),
+    ggiraph::opts_hover(css = "opacity:1"),
+    ggiraph::opts_tooltip(
+      placement = "container",
+      css = "width: 12rem; font-family: var(--font-monospace, 'IBM Plex Mono');"
+    )
+  )
+)
+```
 
 ```{css echo=FALSE}
 [class^="tooltip_svg_"] {
@@ -486,6 +544,14 @@ ggiraph::girafe(
 .girafe_container_std text {
   fill: var(--textColorCustom);
 }
+#plot-popular-tweets [class^="tooltip_svg_"] {
+  opacity: 1 !important;
+  margin-left: auto;
+  margin-right: auto;
+  position: static !important;
+  max-width: 32rem;
+  pointer-events: visible;
+}
 #plot-time-of-day [class^="tooltip_svg_"] {
   box-shadow: none;
   text-align: left;
@@ -504,7 +570,8 @@ ggiraph::girafe(
   padding-left: 0;
 }
 @media (max-width: 48rem) {
-  #plot-time-of-day [class^="tooltip_svg_"] {
+  #plot-time-of-day [class^="tooltip_svg_"],
+  #plot-popular-tweets [class^="tooltip_svg_"] {
     margin-left; auto;
     margin-right: auto;
     position:   static !important;
