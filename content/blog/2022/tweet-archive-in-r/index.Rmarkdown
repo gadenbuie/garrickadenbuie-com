@@ -21,8 +21,12 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE, warning = FALSE, message = FALSE,
-  fig.width = 9, fig.height = 10
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  collapse = TRUE,
+  fig.width = 9, 
+  fig.height = 10
 )
 options(htmltools.dir.version = TRUE, crayon.enabled = TRUE, crayon.colors = 256)
 ```
@@ -31,8 +35,29 @@ options(htmltools.dir.version = TRUE, crayon.enabled = TRUE, crayon.colors = 256
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 ```
 
-Go to [Settings and Privacy](https://twitter.com/settings/account) and
+## Reading your Twitter archive
+
+### Get your Twitter data archive
+
+First things first, you need to have your Twitter data archive.
+If you don't have it yet,
+go to [Settings and Privacy](https://twitter.com/settings/account) and
 click [Download an archive of your data](https://twitter.com/settings/download_your_data).
+After you submit the request,
+it takes about a day or so for an email to show up in your inbox.
+
+> \@grrrck your Twitter data is ready
+>
+> Your Twitter archive is ready for you to download and view using your desktop browser. Make sure you download it before Nov 12, 2022, 9:46:31 PM
+
+The data is packaged as a zip file containing a `Your archive.html` file for exploring your data,
+which is stored in a `data/` folder as a bunch of `.js` files.
+I've copied that `data/` directory into my working directory for this post.
+
+### Setup
+
+On the R side,
+we'll need the usual suspects: tidyverse, lubridate, and glue.
 
 ```{r setup-r}
 library(tidyverse)
@@ -40,11 +65,40 @@ library(lubridate)
 library(glue)
 ```
 
+I'm also going to make heavy use of [V8](https://github.com/jeroen/v8)
+for evaluting JavaScript code without leaving R,
+and [ggiraph](https://davidgohel.github.io/ggiraph/)
+for turning static ggplot2 plots into fun, interactive plots.
+
+### Read the manifest
+
+The `data/` folder is suprisingly well structured!
+There are two key files to help you find your way around the archive.
+First, the `README.txt` file explains the structure and layout of the files,
+and includes descriptions of the data contained in all of the files.
+
+Here's how the README describes the `account.js` data file:
+
+```
+account.js
+- email: Email address currently associated with the account if an email address has been provided.
+- createdVia: Client application used when the account was created. For example: “web” if the  account was created from a browser.
+- username: The account’s current @username. Note that the @username may change but the account ID will remain the same for the lifetime of the account.
+- accountId: Unique identifier for the account.
+- createdAt: Date and time when the account was created.
+- accountDisplayName: The account’s name as displayed on the profile.
+```
+
+The `data/` folder also contains a `manifest.js` file
+that can be used to help read the data included in the archive.
+
+Let's start by reading this file.
+
 ```{r setup-js}
-v8 <- V8::v8()
-v8$eval("window = {}")
-v8$source("data/manifest.js")
-manifest <- v8$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
+js <- V8::v8()
+js$eval("window = {}")
+js$source("data/manifest.js")
+manifest <- js$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
 ```
 
 ```{r}
@@ -58,16 +112,105 @@ manifest$dataTypes |>
   knitr::kable()
 ```
 
+
+### Reading the account data file
+
+For a first example, let's read the `data/account.js` archive file.
+Looking in `manifest$dataTypes$account`
+tells us which files hold the account data
+and how many records are in each.
+
 ```{r}
 manifest$dataTypes$account |> str()
 ```
+
+Here there's only one file containing a single account record: `data/account.js`.
+Inside _that_ file is a small bit of JavaScript.
+It's _almost_ JSON, 
+except that it assigns the JavaScript object to `window.YTD.account.part0`.
 
 ```{js file=manifest$dataTypes$account$files[[1]]$fileName, eval = FALSE}
 
 ```
 
-```{r}
-v8$eval("
+We could probably just remove the assignment
+and treat the archive `.js` files like JSON files,
+but there are subtle ways that JavaScript object notation
+might not be valid JSON.
+Also, my archive might not be as large as yours
+and I'm not sure how the data structure changes
+if an item is split into separate files.
+So the safest thing seems to be to try to evaluate the `.js` code 
+and retrieve the object.
+
+But if we just source `data/account.js` in our JavaScript context,
+we'll get an error.
+
+```{r error = TRUE}
+js$source("data/account.js")
+```
+
+From the `manifest`,
+we know the `globalName` will be `YTD.account.part0` —
+or really `window.YTD.account.part0`.
+While R will happily expand an empty list to accommodate new data...
+```{r collapse = TRUE}
+window <- list()
+window$YTD$account$part0 <- "account data"
+str(window)
+```
+JavaScript will complain if one of the intermediate keys doesn't exist yet.
+
+In order to assign to `window.YTD.account.part0`,
+we have to ensure that there's a `window` object (we did that earlier)
+with a `YTD` object (not yet),
+with an `account` object (also not yet).
+Only the `part0` component can be brand new.
+
+```{r collapse = TRUE}
+js$eval("window.YTD = {}")
+js$eval("window.YTD.account = {}")
+```
+
+Now that `window.YTD.account` is ready to accept data,
+we can source `data/account.js`
+and read the resulting data.
+
+```{r collapse = TRUE}
+js$source("data/account.js")
+account <- js$get("window.YTD.account.part0", simplifyDataFrame = FALSE)
+str(account)
+```
+
+```{r joined-stats, echo = FALSE}
+joined <- ymd_hms(account[[1]]$account$createdAt)
+
+joined_duration <- 
+  interval(start = joined, end = now()) |> 
+  as.duration()
+```
+
+Here's our first fun fact:
+I created my Twitter account on
+`r strftime(joined, "%B %d, %Y")`, 
+which means that I've been using Twitter (on and off) for
+`r sprintf("%0.1f", joined_duration / dyears())` years.
+That's `r format(floor(joined_duration / ddays()), big.mark = ",")` days of twittering!
+
+### Read any archive item
+
+Let's generalize what we learned into a few helper functions we can reuse.
+
+```{r collapse = TRUE}
+# Start up a JavaScript session in V8
+js <- V8::v8()
+
+# Ensure that the `window` object exists...
+js$eval("window = {}")
+
+# and add a function that ensures we can source
+# the twitter archive data files
+js$eval("
 function ensureKey (obj, path) {
   const keys = path.split('.')
   keys.pop() // ignore last key
@@ -79,28 +222,37 @@ function ensureKey (obj, path) {
   }
 }
 ")
-```
 
-```{r}
-globalName <- "YTD.account.part0"
-v8$eval(glue("ensureKey(window, '{globalName}')"))
-v8$source("data/account.js")
-v8$get(glue("window.{globalName}"), simplifyDataFrame = FALSE)
-```
+# Read in the manifest file
+manifest <- {
+  js$source("data/manifest.js")
+  js$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
+}
 
-```{r}
+#' Read an twitter archive data item
+#' 
+#' @param manifest The list from `manifest.js`
+#' @param item The name of an item in the manifest
 read_twitter_data <- function(manifest, item) {
   manifest$dataTypes[[item]]$files |> 
     purrr::transpose() |>
     purrr::pmap(read_twitter_data_file)
 }
 
+#' Read a single twitter archive data file
+#' 
+#' @param fileName Path to the file (from manifest)
+#' @param globalName Variable name of the returned data (also from manifest)
 read_twitter_data_file <- function(fileName, globalName, ...) {
-  v8$eval(glue("ensureKey(window, '{globalName}')"))
-  v8$source(fileName)
-  v8$get(glue("window.{globalName}"), simplifyDataFrame = FALSE)
+  # Ensure that we'll be able to assign to the global object name
+  js$eval(glue("ensureKey(window, '{globalName}')"))
+  js$source(fileName)
+  js$get(paste0("window.", globalName), simplifyDataFrame = FALSE)
 }
 
+#' Simplify the data, if possible and easy
+#' 
+#' @param x A list of lists as returned from `read_twitter_data()`
 simplify_twitter_data <- function(x) {
    x <- purrr::flatten(x)
    item_names <- x |> purrr::map(names) |> purrr::reduce(union)
@@ -114,10 +266,7 @@ simplify_twitter_data <- function(x) {
 
 
 ```{r}
-manifest |> 
-  read_twitter_data("listsSubscribed") |> 
-  pluck(1) |>
-  str()
+read_twitter_data(manifest, "listsSubscribed") |> str()
 ```
 
 Finding followers who have been around the longest
@@ -578,6 +727,10 @@ ggiraph::girafe(
 
 
 <!-- CSS Post Customizations -->
+
+```{r echo = FALSE}
+xaringanExtra::use_clipboard()
+```
 
 ```{css echo=FALSE}
 [class^="tooltip_svg_"] {
