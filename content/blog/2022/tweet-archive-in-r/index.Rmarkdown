@@ -24,18 +24,23 @@ knitr::opts_chunk$set(
   echo = TRUE, warning = FALSE, message = FALSE,
   fig.width = 9, fig.height = 10
 )
-options(htmltools.dir.version = TRUE)
+options(htmltools.dir.version = TRUE, crayon.enabled = TRUE, crayon.colors = 256)
+```
+
+```{r setup-fansi, comment="", results="asis", echo = FALSE}
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 ```
 
 Go to [Settings and Privacy](https://twitter.com/settings/account) and
 click [Download an archive of your data](https://twitter.com/settings/download_your_data).
 
-```{r}
+```{r setup-r}
 library(tidyverse)
+library(lubridate)
 library(glue)
 ```
 
-```{r}
+```{r setup-js}
 v8 <- V8::v8()
 v8$eval("window = {}")
 v8$source("data/manifest.js")
@@ -117,7 +122,10 @@ manifest |>
 
 Finding followers who have been around the longest
 
-```{r}
+```{r early_followers}
+# These tables are wide, you may need to scroll to see the preview
+options(width = 120)
+
 early_followers <- 
   read_twitter_data(manifest, "follower") |>
   pluck(1) |>
@@ -135,16 +143,6 @@ early_followers_accounts |>
   select(id, name, screen_name, created_at, followers_count, description)
 ```
 
-## My likes
-
-```{r label, options}
-likes <-
-  read_twitter_data(manifest, "like") |> 
-  simplify_twitter_data()
-
-likes |> 
-  arrange(as.numeric(tweetId))
-```
 
 ## My tweets
 
@@ -187,16 +185,17 @@ tidy_tweets <-
       reply ~ "reply",
       TRUE ~ "tweet"
     ),
-    hour = lubridate::hour(created_at),
-    day = lubridate::wday(created_at, label = TRUE, abbr = TRUE, week_start = 1),
-    month = lubridate::month(created_at, label = TRUE, abbr = FALSE),
-    day_of_month = lubridate::day(created_at),
-    year = lubridate::year(created_at)
+    hour = hour(created_at),
+    day = wday(created_at, label = TRUE, abbr = TRUE, week_start = 1),
+    month = month(created_at, label = TRUE, abbr = FALSE),
+    day_of_month = day(created_at),
+    year = year(created_at)
   ) |> 
   filter(!id %in% c("2954171516", "2930539208"))
 ```
 
 ## Monthly tweets, replies and retweets
+
 
 ```{r set-theme}
 blog_theme <-
@@ -218,12 +217,13 @@ blog_theme <-
 theme_set(blog_theme)
 ```
 
+
 ```{r}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
 
 plot_monthly <-
   tidy_tweets |>
-  mutate(dt_month = lubridate::floor_date(created_at, "month")) |>
+  mutate(dt_month = floor_date(created_at, "month")) |>
   group_nest(dt_month, month, year, type) |>
   mutate(
     n = map_int(data, nrow),
@@ -516,6 +516,69 @@ ggiraph::girafe(
 ```
 :::
 
+
+## My likes
+
+```{r likes-extract, width = 120}
+likes <-
+  read_twitter_data(manifest, "like") |> 
+  simplify_twitter_data()
+
+likes |> 
+  arrange(as.numeric(tweetId))
+```
+
+While the likes archive includes the full text of each tweet,
+we can use the 
+[`lookup_tweets()` function](https://docs.ropensci.org/rtweet/reference/lookup_tweets.html)
+from the
+[rtweet](https://docs.ropensci.org/rtweet/) package
+to download complete information about each tweet.
+
+```{r hydrate-likes, eval = FALSE}
+likes_full <- 
+  rtweet::lookup_tweets(likes$tweetId) |>
+  write_rds("data/likes.rds")
+```
+
+Getting all `r format(nrow(likes), big.mark = ",")` tweets takes a few minutes,
+so I highly recommend saving the data to disk as soon as you've collected it.
+
+```{r likes_full}
+likes_full <- read_rds("data/likes.rds")
+likes_full
+```
+
+```{r likes_full_time}
+plot_liked_tweets <-
+  likes_full |>
+  count(year = year(created_at)) |>
+  mutate(
+    noun = map_chr(n, \(n) plu::ral("tweet", n = n)),
+    tooltip = paste(format(n, big.mark = ","), "liked", noun)
+  ) |>
+  ggplot() +
+  aes(year, n, tooltip = tooltip, group = 1) +
+  geom_line(color = "#595959", size = 1.5) +
+  ggiraph::geom_point_interactive(color = "#595959", size = 4) +
+  scale_x_continuous(breaks = seq(2008, 2022, 2), expand = expansion(add = 0.25)) +
+  labs(
+    title = "Tweets I've Liked",
+    x = "Year →",
+    y = "Liked Tweets →"
+  )
+
+ggiraph::girafe(
+  ggobj = plot_liked_tweets,
+  width_svg = 12,
+  height_svg = 4,
+  options = list(ggiraph::opts_tooltip())
+)
+```
+
+
+<!-- CSS Post Customizations -->
+
 ```{css echo=FALSE}
 [class^="tooltip_svg_"] {
   background: var(--siteBgColorCustom);
@@ -565,6 +628,13 @@ ggiraph::girafe(
 }
 .girafe_container_std rect[fill="#595959"] { /* default bar color */
 	fill: var(--blue-40);
+}
+.girafe_container_std polyline[stroke="#595959"] { /* geom_line */
+	stroke: var(--blue-40);
+}
+.girafe_container_std circle[fill="#595959"] {  /* geom_circle */
+	fill: var(--blue-50);
+	stroke: var(--blue-50);
 }
 #plot-popular-tweets [class^="tooltip_svg_"] {
   opacity: 1 !important;
