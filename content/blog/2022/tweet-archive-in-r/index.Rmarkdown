@@ -595,6 +595,8 @@ ggiraph::girafe(
   display: inline-block;
 }
 #plot-tweet-source [class^="tooltip_svg_"] progress {
+  -webkit-appearance: none;
+  appearance: none;
   height: 0.66rem;
   border-radius: 0;
   border: none;
@@ -602,8 +604,12 @@ ggiraph::girafe(
   background: none;
   margin-top: 5px;
 }
-#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-bar,
-#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-value,
+#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-bar {
+  background: none;
+}
+#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-value {
+  background: var(--pink-40);
+}
 #plot-tweet-source [class^="tooltip_svg_"] progress::-moz-progress-bar {
   background: var(--pink-40);
 }
