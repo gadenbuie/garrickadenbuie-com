@@ -456,29 +456,39 @@ ggiraph::girafe(
 
 ## Tweet Source
 
-```{r tweet-source}
-plot_tweet_source <- 
+```{r plot-tweet-source, echo = TRUE, eval = FALSE}
+plot_tweet_source <-
   tidy_tweets |>
   extract(source, into = c("source_href", "source"), regex = '<a href="([^"]+)"[^>]+>([^<]+)</a>') |> 
   mutate(
-    source = fct_lump_min(source, min = 10),
+    source = fct_lump_n(source, n = 15),
     source = fct_rev(fct_infreq(source))
   ) |>
   count(source, type, sort = TRUE) |> 
+  pivot_wider(names_from = type, values_from = n, values_fill = 0) |>
+  mutate(
+    total = reply + retweet + tweet,
+    tooltip = pmap_chr(
+      list(reply, retweet, tweet, total),
+      function(reply, retweet, tweet, total) {
+        x <- glue(
+          '<label for="{tolower(label)}">{label}</label>',
+          '<progress id="{tolower(label)}" max="{total}" value="{value}">{value}</progress>',
+          label = c("Tweets", "Replies", "Retweets"),
+          value = c(tweet, reply, retweet)
+        )
+        glue_collapse(x)
+      }
+    )
+  ) |> 
   ggplot() +
-  aes(x = n, y = type, fill = source, tooltip = source, data_id = source) +
-  ggiraph::geom_col_interactive(show.legend = FALSE, position = "fill") +
-  scale_x_continuous(
-    expand = expansion(add = c(0, 0.01)),
-    labels = scales::percent_format(5)
-  ) +
-  scale_y_discrete(
-    expand = expansion(),
-    labels = function(x) str_to_title(plu::ral(x, n = 2))
-  ) +
+  aes(x = total, y = source, tooltip = tooltip) +
+  ggiraph::geom_col_interactive(show.legend = FALSE) +
+  scale_x_continuous(expand = expansion(add = c(0, 0.01))) +
+  scale_y_discrete(expand = expansion()) +
   labs(
     title = "What app did I use to tweet?",
-    x = "Percent of tweeting →",
+    x = "Tweets →",
     y = NULL
   )
 
@@ -496,6 +506,11 @@ ggiraph::girafe(
   )
 )
 ```
+
+::: {#plot-tweet-source}
+```{r ref.label="plot-tweet-source", eval = TRUE, echo = FALSE}
+```
+:::
 
 ```{css echo=FALSE}
 [class^="tooltip_svg_"] {
@@ -544,6 +559,9 @@ ggiraph::girafe(
 .girafe_container_std text {
   fill: var(--textColorCustom);
 }
+.girafe_container_std rect[fill="#595959"] { /* default bar color */
+	fill: var(--blue-40);
+}
 #plot-popular-tweets [class^="tooltip_svg_"] {
   opacity: 1 !important;
   margin-left: auto;
@@ -568,6 +586,26 @@ ggiraph::girafe(
 #plot-time-of-day [class^="tooltip_svg_"] ul {
   list-style: none;
   padding-left: 0;
+}
+#plot-tweet-source [class^="tooltip_svg_"] {
+  text-align: left;
+}
+#plot-tweet-source [class^="tooltip_svg_"] progress + label {
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+#plot-tweet-source [class^="tooltip_svg_"] progress {
+  height: 0.66rem;
+  border-radius: 0;
+  border: none;
+  width: 100%;
+  background: none;
+  margin-top: 5px;
+}
+#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-bar,
+#plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-value,
+#plot-tweet-source [class^="tooltip_svg_"] progress::-moz-progress-bar {
+  background: var(--pink-40);
 }
 @media (max-width: 48rem) {
   #plot-time-of-day [class^="tooltip_svg_"],
