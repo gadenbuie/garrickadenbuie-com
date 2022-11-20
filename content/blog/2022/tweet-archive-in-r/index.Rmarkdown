@@ -395,7 +395,7 @@ tooltip_hour <- function(day, hour_label, ...) {
 
 tweet_count_by_hour$tooltip <- pmap_chr(tweet_count_by_hour, tooltip_hour)
 
-plot_by_tod <-
+plot_time_of_day <-
   ggplot(tweet_count_by_hour ) +
   aes(y = n, fill = day, x = hour, data_id = hour, tooltip = tooltip) +
   geom_area(
@@ -423,7 +423,11 @@ plot_by_tod <-
   ) +
   scale_y_continuous(expand = expansion(), breaks = seq(0, 100, 25)) +
   scale_fill_discrete() +
-  labs(x = NULL, y = NULL) +
+  labs(
+    title = "When do I do my tweeting?",
+    x = NULL,
+    y = NULL
+  ) +
   theme(
     axis.text.y = element_blank(),
     axis.text.x = element_text(size = 10),
@@ -431,7 +435,7 @@ plot_by_tod <-
   )
 
 ggiraph::girafe(
-  ggobj = plot_by_tod,
+  ggobj = plot_time_of_day,
   width_svg = 12, 
   height_svg = 8,
   options = list(
