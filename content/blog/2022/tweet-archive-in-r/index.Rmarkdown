@@ -9,7 +9,7 @@ tags:
   - R
   - Twitter
   - Personal Data
-description: post description
+description: Read and visualize your Twitter archive data in R.
 twitterImage: /path/to/image.png
 source_link: ''
 keywords: rstats
