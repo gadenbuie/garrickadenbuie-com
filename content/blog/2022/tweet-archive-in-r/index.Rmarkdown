@@ -1,5 +1,5 @@
 ---
-title: Reading your Twitter tweet archive in R
+title: Read and Visualize your Twitter Archive
 author: Garrick Aden-Buie
 date: '2022-11-12'
 slug: tweet-archive-in-r
@@ -9,9 +9,10 @@ tags:
   - R
   - Twitter
   - Personal Data
-description: Read and visualize your Twitter archive data in R.
-twitterImage: /path/to/image.png
-source_link: ''
+description: |
+  Using R to read and visualize your Twitter archive data. Featuring {ggiraph},
+  {ggplot2}, {jsonlite}, {dplyr} and more...
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/tweet-archive-in-r/index.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console

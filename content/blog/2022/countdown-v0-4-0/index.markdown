@@ -21,7 +21,7 @@ tags:
 description: |
   countdown v0.4.0 is now available on CRAN with a ton of new features!
 twitterImage: feature.png
-source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/countdown-v0-4-0/index.Rmd'
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/countdown-v0-4-0/index.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -578,19 +578,19 @@ that need to build on the timer’s internal state.
 
 For example, you can now
 
--   Click to start or stop the timer
+- Click to start or stop the timer
 
--   Double click to reset
+- Double click to reset
 
--   Bump the timer up or down using the **+** and **−** buttons
+- Bump the timer up or down using the **+** and **−** buttons
 
--   Do all of the above with keyboard shortcus:
+- Do all of the above with keyboard shortcus:
 
-    -   <kbd>Space</kbd> or <kbd>Enter</kbd> to start or stop the timer
+  - <kbd>Space</kbd> or <kbd>Enter</kbd> to start or stop the timer
 
-    -   <kbd>Esc</kbd> to reset
+  - <kbd>Esc</kbd> to reset
 
-    -   <kbd>↑</kbd> or <kbd>↓</kbd> to bump up or down
+  - <kbd>↑</kbd> or <kbd>↓</kbd> to bump up or down
 
 ### Shiny!
 
