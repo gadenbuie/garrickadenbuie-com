@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   collapse = TRUE,
+  comment = "#>",
   fig.width = 9, 
   fig.height = 10
 )
@@ -285,14 +286,16 @@ read_twitter_data <- function(manifest, item) {
 #' Simplify the data, if possible and easy
 #' 
 #' @param x A list of lists as returned from `read_twitter_data()`
-simplify_twitter_data <- function(x) {
+#' @param simplifier A function that's applied to each item in the list of lists
+#'   and that can be used to simplify the output data.
+simplify_twitter_data <- function(x, simplifier = identity) {
    x <- purrr::flatten(x)
    item_names <- x |> purrr::map(names) |> purrr::reduce(union)
    if (length(item_names) > 1) return(x)
    
    x |>
     purrr::map(item_names) |>
-    purrr::map_dfr(identity)
+    purrr::map_dfr(simplifier)
 }
 ```
 
@@ -347,8 +350,14 @@ early_followers_accounts |>
 
 ## My tweets
 
-```{r tweets}
-tweet_tidy_raw <- function(tweet) {
+```{r tweets_raw}
+# Tweets are a list of a list of tweets...
+tweet <- read_twitter_data(manifest, "tweets")[[1]][[105]]$tweet
+str(tweet, max.level = 2)
+```
+
+```{r tweet_tidy_raw}
+tweet_tidy_raw <- function(tweet_raw) {
   basic_items <- c(
     "created_at",
     "favorite_count",
@@ -359,26 +368,31 @@ tweet_tidy_raw <- function(tweet) {
     "source"
   )
   
-  res <- tweet[basic_items]
-  res$created_at <- strptime(res$created_at, "%a %b %d %T %z %Y")
-  res$retweet <- grepl("^RT @", res$full_text)
-  res$reply <- grepl("^@", res$full_text)
-  res$user_mentions <- tweet |> 
+  tweet <- tweet_raw[basic_items]
+  tweet$created_at <- strptime(tweet$created_at, "%a %b %d %T %z %Y")
+  tweet$retweet <- grepl("^RT @", tweet$full_text)
+  tweet$reply <- grepl("^@", tweet$full_text)
+  tweet$user_mentions <- tweet_raw |> 
     purrr::pluck("entities", "user_mentions") |>
     purrr::map_chr("screen_name") |>
     paste(collapse = ",")
-  res$hashtags <- tweet |> 
+  tweet$hashtags <- tweet_raw |> 
     purrr::pluck("entities", "hashtags") |>
     purrr::map_chr("text") |>
     paste(collapse = ",")
-  res
+  tweet
 }
+```
 
+```{r}
+tweet_tidy_raw(tweet) |> str()
+```
+
+
+```{r tweets}
 tidy_tweets <- 
   read_twitter_data(manifest, "tweets") |> 
-  flatten() |>
-  map("tweet") |>
-  map_dfr(tweet_tidy_raw) |> 
+  simplify_twitter_data(tweet_tidy_raw) |> 
   mutate(
     across(contains("_count"), as.integer),
     type = case_when(
@@ -398,6 +412,8 @@ tidy_tweets <-
 ## Monthly tweets, replies and retweets
 
 
+````{=html}
+<details class="pv1 ph2 ph4-ns mw6 center cf tc"><summary class="bg-blue link relative button-reset pv3 white db tc ba b--transparent bg-animate pointer w-100 br2 fw8">Code: Set Blog Theme</summary>
 ```{r set-theme}
 blog_theme <-
   theme_minimal(18, base_family = "IBM Plex Mono") +
@@ -417,9 +433,13 @@ blog_theme <-
 
 theme_set(blog_theme)
 ```
+</details>
+````
 
 
-```{r}
+````{=html}
+<details><summary>Code: Plot Monthly Tweets</summary>
+```{r plot-monthly, eval = FALSE, echo = TRUE}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
 
 plot_monthly <-
@@ -479,6 +499,14 @@ ggiraph::girafe(
   height_svg = 6,
 )
 ```
+</details>
+````
+
+::: {#plot-monthly}
+```{r ref.label="plot-monthly", echo = FALSE, eval = TRUE}
+
+```
+:::
 
 ## Popular tweets, likes & retweets
 
