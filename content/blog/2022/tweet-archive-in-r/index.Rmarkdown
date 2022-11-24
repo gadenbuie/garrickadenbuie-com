@@ -18,6 +18,7 @@ editor_options:
 ---
 
 <!-- Links -->
+[rtweet]: https://docs.ropensci.org/rtweet
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -50,25 +51,40 @@ it takes about a day or so for an email to show up in your inbox.
 >
 > Your Twitter archive is ready for you to download and view using your desktop browser. Make sure you download it before Nov 12, 2022, 9:46:31 PM
 
-The data is packaged as a zip file containing a `Your archive.html` file for exploring your data,
-which is stored in a `data/` folder as a bunch of `.js` files.
+The archive downloads as a zip file containing a standalone web page —
+called `Your archive.html` —
+for exploring your data.
+But the real archive lives in the included `data/` folder as a bunch of `.js` files.
 I've copied that `data/` directory into my working directory for this post.
 
 ### Setup
 
 On the R side,
-we'll need the usual suspects: tidyverse, lubridate, and glue.
+we'll need the usual suspects: tidyverse and glue.
 
-```{r setup-r}
+```{r setup-r, message = TRUE}
 library(tidyverse)
-library(lubridate)
 library(glue)
 ```
 
-I'm also going to make heavy use of [V8](https://github.com/jeroen/v8)
-for evaluting JavaScript code without leaving R,
-and [ggiraph](https://davidgohel.github.io/ggiraph/)
-for turning static ggplot2 plots into fun, interactive plots.
+(I'm using the dev version of [tidyverse]{.pkg} (1.3.2.9000),
+which loads [lubridate]{.pkg} automatically,
+and the dev version of [purrr]{.pkg} to test out the new features.)
+
+To read in the data files,
+I'll use [jsonlite](https://github.com/jeroen/jsonlite) to read the archive JSON data,
+with a small assist from [brio](https://brio.r-lib.org)
+for fast file reading.
+
+I'm also going to have some fun with
+[ggiraph](https://davidgohel.github.io/ggiraph/)
+for turning static ggplot2 plots into interactive plots.
+
+Finally, the Twitter archive doesn't _require_ API access to Twitter,
+but you can use it to augment the data in the archive.
+The [rtweet] package is excellent for this,
+even though it takes a little effort to 
+[get it set up](https://docs.ropensci.org/rtweet/articles/rtweet.html).
 
 ### Read the manifest
 
@@ -92,21 +108,96 @@ account.js
 The `data/` folder also contains a `manifest.js` file
 that can be used to help read the data included in the archive.
 
-Let's start by reading this file.
+Let's start by assuming this file is JSON and reading it in.
 
-```{r setup-js}
-js <- V8::v8()
-js$eval("window = {}")
-js$source("data/manifest.js")
-manifest <- js$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
+```{r try, error = TRUE}
+jsonlite::fromJSON("data/manifest.js")
 ```
+
+The archive files are packages as JSON,
+but they're not strictly compliant JSON files;
+they include some JavaScript to assign objects
+to a `YTD` object in the global namespace
+(called `window` in the browser).
+
+```{r manifest-lines}
+lines <- brio::read_lines("data/manifest.js")
+writeLines(c(
+  lines[1], 
+  "  // ... data ...", 
+  lines[length(lines)]
+))
+```
+
+If we just take the last character of the first line —
+the `{` or sometimes `[` —
+we can turn the data into valid JSON.
+
+```{r manifest-read-first}
+lines[1] <- substring(lines[1], nchar(lines[1]))
+manifest <- jsonlite::fromJSON(lines)
+```
+
+This worked!
+But I'm not happy with the structure.
+[jsonlite]{.pkg} was designed for statistical work,
+so it transforms the data structure a bit while reading in the data.
+Sometimes that's helpful,
+but more frequently I find that I want to keep the data structure in R
+as close to the original JSON data structure as possible.
+My solution is to suppress matrix and data.frame simplifications
+and only allow [jsonlite]{.pkg}
+to simplify vectors.
+While I'm at it,
+I'll put both the JSON parsing and the first line substitution
+into the same helper function.
+
+```{r read_archive_json}
+read_archive_json <- function(path) {
+  lines <- brio::read_lines(path)
+  lines[1] <- substring(lines[1], nchar(lines[1]))
+  
+  jsonlite::fromJSON(
+    txt = lines, 
+    simplifyVector = TRUE, 
+    simplifyDataFrame = FALSE,
+    simplifyMatrix = FALSE
+  )
+}
+```
+
+Now we're ready to read the manifest again.
+```{r manifest-1}
+manifest <- read_archive_json("data/manifest.js")
+names(manifest)
+```
+The manifest file contains some information about the user and the archive,
+```{r manifest-2}
+str(manifest$userInfo)
+```
+plus details about all of the various data included in the archive,
+like the data about my `account`.
+```{r manifest-3}
+str(manifest$dataTypes$account)
+```
+Each `dataType` in the manifest
+points us to a file (or files) in the archive
+and helpfully tells us how many records are included.
+
+Here are the data files with the most records.
 
 ```{r}
 manifest$dataTypes |>
+  # All data types we can read have a "files" item
   keep(~ "files" %in% names(.x)) |>
+  # We keep the files objects but still as a list of lists within a list
   map("files") |>
-  map(map_dfr, identity, .id = "index") |>
-  map_dfr(identity, .id = "item") |>
+  # Turn the files into tibbles (list of tibbles within a list)
+  map_depth(2, as_tibble) |>
+  # Then combine the files tables for each item keeping track of the file index
+  map(list_rbind, names_to = "index") |> 
+  # And finally combine files for all items
+  list_rbind(names_to = "item") |>
   mutate(across(count, as.integer)) |>
   slice_max(count, n = 15) |>
   knitr::kable()
@@ -133,52 +224,12 @@ except that it assigns the JavaScript object to `window.YTD.account.part0`.
 
 ```
 
-We could probably just remove the assignment
-and treat the archive `.js` files like JSON files,
-but there are subtle ways that JavaScript object notation
-might not be valid JSON.
-Also, my archive might not be as large as yours
-and I'm not sure how the data structure changes
-if an item is split into separate files.
-So the safest thing seems to be to try to evaluate the `.js` code 
-and retrieve the object.
-
-But if we just source `data/account.js` in our JavaScript context,
-we'll get an error.
-
-```{r error = TRUE}
-js$source("data/account.js")
-```
-
-From the `manifest`,
-we know the `globalName` will be `YTD.account.part0` —
-or really `window.YTD.account.part0`.
-While R will happily expand an empty list to accommodate new data...
-```{r collapse = TRUE}
-window <- list()
-window$YTD$account$part0 <- "account data"
-str(window)
-```
-JavaScript will complain if one of the intermediate keys doesn't exist yet.
-
-In order to assign to `window.YTD.account.part0`,
-we have to ensure that there's a `window` object (we did that earlier)
-with a `YTD` object (not yet),
-with an `account` object (also not yet).
-Only the `part0` component can be brand new.
+As we saw before,
+if we clean up the first line,
+this is valid JSON that we can read in directly with [jsonlite]{.pkg}.
 
 ```{r collapse = TRUE}
-js$eval("window.YTD = {}")
-js$eval("window.YTD.account = {}")
-```
-
-Now that `window.YTD.account` is ready to accept data,
-we can source `data/account.js`
-and read the resulting data.
-
-```{r collapse = TRUE}
-js$source("data/account.js")
-account <- js$get("window.YTD.account.part0", simplifyDataFrame = FALSE)
+account <- read_archive_json("data/account.js")
 str(account)
 ```
 
@@ -190,7 +241,7 @@ joined_duration <-
   as.duration()
 ```
 
-Here's our first fun fact:
+This leads us to our first fun fact:
 I created my Twitter account on
 `r strftime(joined, "%B %d, %Y")`, 
 which means that I've been using Twitter (on and off) for
@@ -200,33 +251,24 @@ That's `r format(floor(joined_duration / ddays()), big.mark = ",")` days of twit
 ### Read any archive item
 
 Let's generalize what we learned into a few helper functions we can reuse.
+I've placed everything into a single code block
+so that you can copy and paste it into your R session or script
+to use it right away.
 
 ```{r collapse = TRUE}
-# Start up a JavaScript session in V8
-js <- V8::v8()
-
-# Ensure that the `window` object exists...
-js$eval("window = {}")
-
-# and add a function that ensures we can source
-# the twitter archive data files
-js$eval("
-function ensureKey (obj, path) {
-  const keys = path.split('.')
-  keys.pop() // ignore last key
-  if (keys.length == 0) return
-  let lastObj = obj
-  for (key of keys) {
-    lastObj[key] = lastObj[key] || {}
-    lastObj = lastObj[key]
-  }
-}
-")
-
-# Read in the manifest file
-manifest <- {
-  js$source("data/manifest.js")
-  js$get("window.__THAR_CONFIG", simplifyDataFrame = FALSE)
+#' Read the Twitter Archive JSON 
+#' 
+#' @param path Path to a Twitter archve `.js` file
+read_archive_json <- function(path) {
+  lines <- brio::read_lines(path)
+  lines[1] <- substring(lines[1], nchar(lines[1]))
+  
+  jsonlite::fromJSON(
+    txt = lines, 
+    simplifyVector = TRUE, 
+    simplifyDataFrame = FALSE,
+    simplifyMatrix = FALSE
+  )
 }
 
 #' Read an twitter archive data item
@@ -236,18 +278,7 @@ manifest <- {
 read_twitter_data <- function(manifest, item) {
   manifest$dataTypes[[item]]$files |> 
     purrr::transpose() |>
-    purrr::pmap(read_twitter_data_file)
-}
-
-#' Read a single twitter archive data file
-#' 
-#' @param fileName Path to the file (from manifest)
-#' @param globalName Variable name of the returned data (also from manifest)
-read_twitter_data_file <- function(fileName, globalName, ...) {
-  # Ensure that we'll be able to assign to the global object name
-  js$eval(glue("ensureKey(window, '{globalName}')"))
-  js$source(fileName)
-  js$get(paste0("window.", globalName), simplifyDataFrame = FALSE)
+    purrr::pmap(\(fileName, ...) read_archive_json(fileName))
 }
 
 #' Simplify the data, if possible and easy
@@ -264,25 +295,45 @@ simplify_twitter_data <- function(x) {
 }
 ```
 
-
-```{r}
-read_twitter_data(manifest, "listsSubscribed") |> str()
-```
-
-Finding followers who have been around the longest
+Let's use this on another archive item
+to find the earliest Twitter adopters among my followers.
+First we read in the `"follower"` item
+and use the `simplify_twitter_data()` function
+to get the results in a nice, rectangular table.
+(`simplify_twitter_data()` is an optional step because it's an 80/20 function:
+it's 20% of the code that does the right thing 80% of the time.)
 
 ```{r early_followers}
 # These tables are wide, you may need to scroll to see the preview
 options(width = 120)
 
-early_followers <- 
+followers <- 
   read_twitter_data(manifest, "follower") |>
-  pluck(1) |>
-  map_dfr("follower") |>
+  simplify_twitter_data()
+
+early_followers <- 
+  followers |>
+  ## The above line is basically the following two lines
+  # pluck(1) |>
+  # map_dfr("follower") |>
   mutate(across(accountId, as.numeric)) |>
   arrange(accountId) |>
   slice_head(n = 11)
 
+# Top 11 earliest followers
+early_followers
+```
+
+As you can see,
+the archive often includes the barest minimum amount of data.
+Thankfully, we can still use [rtweet] to gather additional data about these users.
+I'm looking at a small subset of my 
+`r format(nrow(followers), big.mark = ",")`
+here,
+but you might want to do this for all your followers
+and save the collected user data in your archive.
+
+```{r early_followers_full}
 early_followers_accounts <- 
   early_followers |>
   pull(accountId) |>
