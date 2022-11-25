@@ -413,7 +413,7 @@ tidy_tweets <-
 
 
 ````{=html}
-<details class="pv1 ph2 ph4-ns mw6 center cf tc"><summary class="bg-blue link relative button-reset pv3 white db tc ba b--transparent bg-animate pointer w-100 br2 fw8">Code: Set Blog Theme</summary>
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Set Blog Theme</summary>
 ```{r set-theme}
 blog_theme <-
   theme_minimal(18, base_family = "IBM Plex Mono") +
@@ -438,7 +438,7 @@ theme_set(blog_theme)
 
 
 ````{=html}
-<details><summary>Code: Plot Monthly Tweets</summary>
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Monthly Tweets</summary>
 ```{r plot-monthly, eval = FALSE, echo = TRUE}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
 
@@ -510,6 +510,8 @@ ggiraph::girafe(
 
 ## Popular tweets, likes & retweets
 
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Popular Tweets</summary>
 ```{r plot-popular-tweets, echo = TRUE, eval = FALSE}
 plot_popular_tweets <- 
   tidy_tweets |>
@@ -560,6 +562,8 @@ ggiraph::girafe(
   )
 )
 ```
+</details>
+````
 
 ::: {#plot-popular-tweets}
 ```{r ref.label="plot-popular-tweets", echo = FALSE, eval = TRUE}
@@ -581,6 +585,8 @@ document.addEventListener('DOMContentLoaded', addPlotPopularTweetPlaceholderText
 
 ## Tweets by time of day
 
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweets by Time of Day</summary>
 ```{r plot-time-of-day, eval = FALSE}
 tweet_count_by_hour <- 
   tidy_tweets |>
@@ -680,7 +686,8 @@ ggiraph::girafe(
   )
 )
 ```
-
+</details>
+````
 
 ::: {#plot-time-of-day}
 ```{r ref.label = "plot-time-of-day", echo = FALSE}
@@ -689,6 +696,8 @@ ggiraph::girafe(
 
 ## Tweet Source
 
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweet Source</summary>
 ```{r plot-tweet-source, echo = TRUE, eval = FALSE}
 plot_tweet_source <-
   tidy_tweets |>
@@ -739,6 +748,8 @@ ggiraph::girafe(
   )
 )
 ```
+</details>
+````
 
 ::: {#plot-tweet-source}
 ```{r ref.label="plot-tweet-source", eval = TRUE, echo = FALSE}

@@ -115,6 +115,15 @@ a {
   padding-right: 8rem;
 }
 
+.b--custom {
+  color: var(--borderColorCustom);
+}
+
+.post-body details, .page-body details {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 @media (max-width: 36rem) {
   .site-header {
     padding-left: 1rem;
