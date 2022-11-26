@@ -909,6 +909,67 @@ ggiraph::girafe(
 )
 ```
 
+### Who Advertized to Me?
+
+```{r plot-advertisers}
+ads_advertiser_counts <- 
+  ads |>
+  count(advertiserName, type, sort = TRUE) |>
+  pivot_wider(names_from = type, values_from = n) |>
+  slice_max(n = 25, engagement + impression) |>
+  pivot_longer(-1, names_to = "type")
+
+ads_tweet_examples <-
+  ads |> 
+  filter(!is.na(tweetText)) |>
+  semi_join(ads_advertiser_counts) |>
+  group_by(advertiserName, type) |>
+  mutate(tweetText = str_trunc(tweetText, width = 80)) |>
+  summarize(
+    n = n(),
+    tweets = glue_collapse(glue(
+      "<li>{sample(unique(tweetText), min(5, length(unique(tweetText))))}</li>"
+    )),
+    .groups = "drop"
+  ) |>
+  mutate(
+    tweets = glue('<ul>{tweets}</ul>'),
+    tweets = glue('<p><strong>{n}</strong> promoted tweet <strong>{type}s</strong></p>{tweets}')
+  )
+  
+plot_advertisers <- 
+  ads_advertiser_counts |>
+  left_join(ads_tweet_examples) |> 
+  mutate(advertiserName = fct_reorder(advertiserName, value, sum)) |> 
+  ggplot() +
+  aes(value, advertiserName, fill = type, tooltip = tweets) +
+  ggiraph::geom_col_interactive() +
+  scale_x_continuous(expand = expansion()) +
+  scale_fill_manual(
+    values = c("#97c4ca", "#1c7d8b"),
+    labels = c("Engagement", "Impression")
+  ) +
+  labs(
+    title = "Ad Interactions by Advertiser",
+    x = "Interactions with Promoted Tweets →",
+    y = NULL,
+    fill = NULL
+  ) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    legend.direction = "vertical",
+    legend.position = c(0.99, 0.1),
+    legend.justification = c(1, 0)
+  )
+
+ggiraph::girafe(
+  ggobj = plot_advertisers,
+  width_svg = 12,
+  height_svg = 8,
+  options = list(ggiraph::opts_tooltip())
+)
+```
+
 
 <!-- CSS Post Customizations -->
 
