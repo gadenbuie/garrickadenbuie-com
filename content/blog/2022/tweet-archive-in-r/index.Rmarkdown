@@ -711,15 +711,16 @@ plot_tweet_source <-
   mutate(
     total = reply + retweet + tweet,
     tooltip = pmap_chr(
-      list(reply, retweet, tweet, total),
-      function(reply, retweet, tweet, total) {
+      list(source, reply, retweet, tweet, total),
+      function(source, reply, retweet, tweet, total) {
         x <- glue(
           '<label for="{tolower(label)}">{label}</label>',
           '<progress id="{tolower(label)}" max="{total}" value="{value}">{value}</progress>',
           label = c("Tweets", "Replies", "Retweets"),
           value = c(tweet, reply, retweet)
         )
-        glue_collapse(x)
+        x <- glue_collapse(x)
+        paste0('<p class="b">', source, "</p>", x)
       }
     )
   ) |> 
@@ -743,7 +744,7 @@ ggiraph::girafe(
     ggiraph::opts_hover(css = "opacity:1"),
     ggiraph::opts_tooltip(
       placement = "container",
-      css = "width: 12rem; font-family: var(--font-monospace, 'IBM Plex Mono');"
+      css = "width: 15rem; font-family: var(--font-monospace, 'IBM Plex Mono');"
     )
   )
 )
@@ -799,7 +800,7 @@ plot_liked_tweets <-
   ) |>
   ggplot() +
   aes(year, n, tooltip = tooltip, group = 1) +
-  geom_line(color = "#595959", size = 1.5) +
+  geom_line(color = "#595959", linewidth = 1.5) +
   ggiraph::geom_point_interactive(color = "#595959", size = 4) +
   scale_x_continuous(breaks = seq(2008, 2022, 2), expand = expansion(add = 0.25)) +
   labs(
@@ -810,6 +811,98 @@ plot_liked_tweets <-
 
 ggiraph::girafe(
   ggobj = plot_liked_tweets,
+  width_svg = 12,
+  height_svg = 4,
+  options = list(ggiraph::opts_tooltip())
+)
+```
+
+## Advertising Info
+
+
+> `ad-impressions.js`
+> - `ad`: Promoted Tweets the account has viewed and any associated metadata.
+> - `deviceInfo`: Information about the device where the impression was viewed such as its ID and operating system.
+> - `displayLocation`: Location where the ad was viewed on Twitter.
+> - `promotedTweetInfo`: Information about the associated tweet such as unique identifier, text, URLs and media when applicable.
+> - `advertiserInfo`: Advertiser name and screen name.
+> - `matchedTargetingCriteria`: Targeting criteria that were used to run the campaign.
+> - `impressionTime`: Date and time when the ad was viewed.
+
+```{r ad_impressions, cache = TRUE}
+ad_impressions <- 
+  read_twitter_data(manifest, "adImpressions") |>
+  simplify_twitter_data() |>
+  unnest(adsUserData) |>
+  unnest(adsUserData) |>
+  unnest_wider(adsUserData) |> 
+  unnest_wider(c(deviceInfo, promotedTweetInfo, advertiserInfo)) |>
+  mutate(
+    matchedTargetingCriteria = map(matchedTargetingCriteria, map_dfr, identity),
+    across(impressionTime, ymd_hms)
+  )
+```
+
+> `ad-engagements.js`
+> - ad: Promoted Tweets the account has engaged with and any associated metadata.
+> - engagementAttributes: Type of engagement as well as date and time when it occurred.
+
+
+```{r ad_engagements, cache = TRUE}
+ad_engagements <-
+  read_twitter_data(manifest, "adEngagements") |>
+  simplify_twitter_data() |>
+  unnest(adsUserData) |>
+  unnest(adsUserData) |>
+  unnest_wider(adsUserData) |> 
+  mutate(across(engagementAttributes, map, map_dfr, identity)) |> 
+  unnest_wider(impressionAttributes) |>
+  # now the same as the impressions
+  unnest_wider(c(deviceInfo, promotedTweetInfo, advertiserInfo)) |>
+  mutate(
+    matchedTargetingCriteria = map(matchedTargetingCriteria, map_dfr, identity),
+    across(impressionTime, ymd_hms)
+  )
+```
+
+```{r}
+ads <- 
+  list(
+    impression = ad_impressions,
+    engagement = ad_engagements
+  ) |>
+  list_rbind(names_to = "type")
+```
+
+```{r}
+plot_ads_interactions <-
+  ads |> 
+  count(type, month = floor_date(impressionTime, "month")) |>
+  mutate(tooltip = map2_chr(type, n, \(type, n) 
+    paste(format(n, big.mark = ","), plu::ral(type, n = n))
+  )) |> 
+  ggplot() +
+  aes(month, n, fill = type, tooltip = tooltip) +
+  ggiraph::geom_col_interactive() +
+  scale_fill_manual(
+    values = c("#97c4ca", "#1c7d8b"),
+    labels = c("Engagement", "Impression")
+  ) +
+  labs(
+    title = "Ad Interactions by Month",
+    x = NULL,
+    y = "Promoted Tweets →",
+    fill = NULL
+  ) +
+  theme(
+    panel.grid.major.x = element_blank(),
+    legend.direction = "vertical",
+    legend.position = c(0.95, 0.9),
+    legend.justification = c(1, 1)
+  )
+
+ggiraph::girafe(
+  ggobj = plot_ads_interactions,
   width_svg = 12,
   height_svg = 4,
   options = list(ggiraph::opts_tooltip())
