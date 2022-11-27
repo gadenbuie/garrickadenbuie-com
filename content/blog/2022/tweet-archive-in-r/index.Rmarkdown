@@ -411,10 +411,7 @@ tidy_tweets <-
 
 ## Monthly tweets, replies and retweets
 
-
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Set Blog Theme</summary>
-```{r set-theme}
+```{r set-theme, echo = FALSE}
 blog_theme <-
   theme_minimal(18, base_family = "IBM Plex Mono") +
   theme(
@@ -433,13 +430,15 @@ blog_theme <-
 
 theme_set(blog_theme)
 ```
+
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Set Blog Theme</summary>
+```{r ref.label="set-theme", echo = TRUE, eval = FALSE}
+```
 </details>
 ````
 
-
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Monthly Tweets</summary>
-```{r plot-monthly, eval = FALSE, echo = TRUE}
+```{r plot-monthly, eval = FALSE, echo = FALSE}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
 
 plot_monthly <-
@@ -499,6 +498,11 @@ ggiraph::girafe(
   height_svg = 6,
 )
 ```
+
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Monthly Tweets</summary>
+```{r ref.label="plot-monthly", echo = TRUE, eval = FALSE}
+```
 </details>
 ````
 
@@ -510,15 +514,15 @@ ggiraph::girafe(
 
 ## Popular tweets, likes & retweets
 
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Popular Tweets</summary>
-```{r plot-popular-tweets, echo = TRUE, eval = FALSE}
+```{r plot-popular-tweets, echo = FALSE, eval = FALSE}
 plot_popular_tweets <- 
   tidy_tweets |>
   filter(retweet_count >= 10, favorite_count >= 5) |>
   mutate(
     age = as.numeric(difftime(Sys.time(), created_at, units = "days")) / 365.25,
     created_at = strftime(created_at, '%a %b %e, %Y'),
+    full_text = str_replace_all(full_text, "\n\n", "</p><p>"),
+    full_text = str_replace_all(full_text, "\n", "<br>"),
     tooltip = glue(
       "<p>{full_text}</p>",
       "<dl><dt>&#9842;</dt><dd>{retweet_count}</dd>", 
@@ -562,6 +566,11 @@ ggiraph::girafe(
   )
 )
 ```
+
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Popular Tweets</summary>
+```{r ref.label = "plot-popular-tweets", eval = TRUE, echo = TRUE}
+```
 </details>
 ````
 
@@ -585,9 +594,7 @@ document.addEventListener('DOMContentLoaded', addPlotPopularTweetPlaceholderText
 
 ## Tweets by time of day
 
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweets by Time of Day</summary>
-```{r plot-time-of-day, eval = FALSE}
+```{r plot-time-of-day, eval = FALSE, echo = FALSE}
 tweet_count_by_hour <- 
   tidy_tweets |>
   count(day, hour) |>
@@ -686,6 +693,11 @@ ggiraph::girafe(
   )
 )
 ```
+
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweets by Time of Day</summary>
+```{r ref.label="plot-time-of-day", eval = TRUE, echo = TRUE}
+```
 </details>
 ````
 
@@ -696,9 +708,7 @@ ggiraph::girafe(
 
 ## Tweet Source
 
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweet Source</summary>
-```{r plot-tweet-source, echo = TRUE, eval = FALSE}
+```{r plot-tweet-source, echo = FALSE, eval = FALSE}
 plot_tweet_source <-
   tidy_tweets |>
   extract(source, into = c("source_href", "source"), regex = '<a href="([^"]+)"[^>]+>([^<]+)</a>') |> 
@@ -748,6 +758,11 @@ ggiraph::girafe(
     )
   )
 )
+```
+
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweet Source</summary>
+```{r ref.label="plot-tweet-source", echo = TRUE, eval = TRUE}
 ```
 </details>
 ````
