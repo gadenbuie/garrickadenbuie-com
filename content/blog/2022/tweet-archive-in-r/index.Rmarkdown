@@ -10,7 +10,7 @@ tags:
   - Twitter
   - Personal Data
 description: |
-  Using R to read and visualize your Twitter archive data. Featuring {ggiraph},
+  Using R to read and visualize my Twitter archive data. Featuring {ggiraph},
   {ggplot2}, {jsonlite}, {dplyr} and more...
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/tweet-archive-in-r/index.Rmarkdown'
 keywords: rstats
@@ -20,9 +20,11 @@ editor_options:
 
 <!-- Links -->
 [rtweet]: https://docs.ropensci.org/rtweet
+[ojs-nb]: https://observablehq.com/@observablehq/save-and-analyze-your-twitter-archive
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
+  cache = TRUE,
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
@@ -31,12 +33,43 @@ knitr::opts_chunk$set(
   fig.width = 9, 
   fig.height = 10
 )
-options(htmltools.dir.version = TRUE, crayon.enabled = TRUE, crayon.colors = 256)
+options(htmltools.dir.version = TRUE, crayon.enabled = TRUE, crayon.colors = 16)
 ```
 
-```{r setup-fansi, comment="", results="asis", echo = FALSE}
-old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+```{r setup-fansi, comment="", results="asis", echo = FALSE, cache = FALSE}
+old.hooks <- fansi::set_knit_hooks(
+  hooks = knitr::knit_hooks, 
+  which = c("output", "message"),
+  proc.fun = function(x, class) {
+    fansi::html_code_block(
+      fansi::to_html(fansi::html_esc(x), classes = TRUE),
+      class = class
+    )
+  }
+)
 ```
+
+::: lead
+
+Twitter finds itself in an... interesting... transition period.
+Whether or not you're considering jumping ship to another service ---
+you can find me lurking on [Mastdon](https://fosstodon.org/@grrrck) ---
+you should [download an archive of your Twitter data](#get-your-twitter-data-archive).
+Not only does the archive include all of your tweets,
+it also contains a variety of other interesting data about your account:
+who you followed and who followed you;
+the tweets you liked;
+the ads you were served;
+and much more.
+
+This post,
+very much inspired by the awesome 
+Observable notebook,
+[Planning to leave Twitter?][ojs-nb],
+shows you how to use R to read and explore your archive,
+using my own archive as an example.
+
+:::
 
 ## Reading your Twitter archive
 
@@ -64,20 +97,19 @@ I've copied that `data/` directory into my working directory for this post.
 On the R side,
 we'll need the usual suspects: tidyverse and glue.
 
-```{r setup-r, message = TRUE}
+```{r setup-r, message = TRUE, cache = FALSE}
 library(tidyverse)
 library(glue)
 ```
 
 (I'm using the dev version of [tidyverse]{.pkg} (1.3.2.9000),
 which loads [lubridate]{.pkg} automatically,
-and the dev version of [purrr]{.pkg} to test out the new features.)
+and the dev version of [purrr]{.pkg} that is slated to become version 1.0.0.)
 
 To read in the data files,
 I'll use [jsonlite](https://github.com/jeroen/jsonlite) to read the archive JSON data,
 with a small assist from [brio](https://brio.r-lib.org)
 for fast file reading.
-
 I'm also going to have some fun with
 [ggiraph](https://davidgohel.github.io/ggiraph/)
 for turning static ggplot2 plots into interactive plots.
@@ -90,7 +122,7 @@ even though it takes a little effort to
 
 ### Read the manifest
 
-The `data/` folder is suprisingly well structured!
+The `data/` folder is surprisingly well structured!
 There are two key files to help you find your way around the archive.
 First, the `README.txt` file explains the structure and layout of the files,
 and includes descriptions of the data contained in all of the files.
@@ -109,13 +141,13 @@ account.js
 
 The `data/` folder also contains a `manifest.js` file
 that can be used to help read the data included in the archive.
-
 Let's start by assuming this file is JSON and reading it in.
 
 ```{r try, error = TRUE}
 jsonlite::fromJSON("data/manifest.js")
 ```
 
+Here we hit our first snag.
 The archive files are packages as JSON,
 but they're not strictly compliant JSON files;
 they include some JavaScript to assign objects
@@ -136,28 +168,37 @@ the `{` or sometimes `[` —
 we can turn the data into valid JSON.
 
 ```{r manifest-read-first}
-lines[1] <- substring(lines[1], nchar(lines[1]))
+lines[1] <- sub("^[^{[]+([{[])", "\\1", lines[1])
 manifest <- jsonlite::fromJSON(lines)
 ```
 
-This worked!
-But I'm not happy with the structure.
+This worked, but...
 [jsonlite]{.pkg} was designed for statistical work,
-so it transforms the data structure a bit while reading in the data.
-Sometimes that's helpful,
-but more frequently I find that I want to keep the data structure in R
-as close to the original JSON data structure as possible.
-My solution is to suppress matrix and data.frame simplifications
+so it transforms the data structure when reading in the JSON.
+For example, 
+by default it converts arrays that look like JSON-ified data frames
+into actual `data.frame`s.
+
+```{r manifest-data-frame-example}
+manifest$dataTypes[1:2] |> str()
+```
+
+That's often quite helpful!
+But I find it's safer,
+when trying to generalize data reading,
+to disable the simplification and know for certain
+that the data strcutre matches the original JSON.
+For that reason, I tend to disable the matrix and data.frame simplifications
 and only allow [jsonlite]{.pkg}
 to simplify vectors.
-While I'm at it,
-I'll put both the JSON parsing and the first line substitution
-into the same helper function.
+Here's a quick helper function that includes those setting changes
+and the first line substitution
+needed to read the archive JSON files.
 
 ```{r read_archive_json}
 read_archive_json <- function(path) {
   lines <- brio::read_lines(path)
-  lines[1] <- substring(lines[1], nchar(lines[1]))
+  lines[1] <- sub("^[^{[]+([{[])", "\\1", lines[1])
   
   jsonlite::fromJSON(
     txt = lines, 
@@ -188,7 +229,14 @@ and helpfully tells us how many records are included.
 
 Here are the data files with the most records.
 
-```{r}
+````{=html}
+<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Manifest, Top Records</summary>
+```{r ref.label="table-manifest", echo = TRUE, eval = FALSE}
+```
+</details>
+````
+
+```{r table-manifest, echo = FALSE, eval = TRUE}
 manifest$dataTypes |>
   # All data types we can read have a "files" item
   keep(~ "files" %in% names(.x)) |>
@@ -201,6 +249,7 @@ manifest$dataTypes |>
   # And finally combine files for all items
   list_rbind(names_to = "item") |>
   mutate(across(count, as.integer)) |>
+  select(-globalName) |>
   slice_max(count, n = 15) |>
   knitr::kable()
 ```
@@ -209,7 +258,8 @@ manifest$dataTypes |>
 ### Reading the account data file
 
 For a first example, let's read the `data/account.js` archive file.
-Looking in `manifest$dataTypes$account`
+We start by inspecting the `manifest`,
+where `manifest$dataTypes$account`
 tells us which files hold the account data
 and how many records are in each.
 
@@ -219,14 +269,14 @@ manifest$dataTypes$account |> str()
 
 Here there's only one file containing a single account record: `data/account.js`.
 Inside _that_ file is a small bit of JavaScript.
-It's _almost_ JSON, 
+Like the manifest, it's _almost_ JSON, 
 except that it assigns the JavaScript object to `window.YTD.account.part0`.
 
 ```{js file=manifest$dataTypes$account$files[[1]]$fileName, eval = FALSE}
 
 ```
 
-As we saw before,
+And again,
 if we clean up the first line,
 this is valid JSON that we can read in directly with [jsonlite]{.pkg}.
 
@@ -257,13 +307,13 @@ I've placed everything into a single code block
 so that you can copy and paste it into your R session or script
 to use it right away.
 
-```{r collapse = TRUE}
+```{r fn-read-twitter-data, collapse = TRUE}
 #' Read the Twitter Archive JSON 
 #' 
 #' @param path Path to a Twitter archve `.js` file
 read_archive_json <- function(path) {
   lines <- brio::read_lines(path)
-  lines[1] <- substring(lines[1], nchar(lines[1]))
+  lines[1] <- sub("^[^{[]+([{[])", "\\1", lines[1])
   
   jsonlite::fromJSON(
     txt = lines, 
@@ -286,8 +336,8 @@ read_twitter_data <- function(manifest, item) {
 #' Simplify the data, if possible and easy
 #' 
 #' @param x A list of lists as returned from `read_twitter_data()`
-#' @param simplifier A function that's applied to each item in the list of lists
-#'   and that can be used to simplify the output data.
+#' @param simplifier A function that's applied to each item in the
+#'   list of lists and that can be used to simplify the output data.
 simplify_twitter_data <- function(x, simplifier = identity) {
    x <- purrr::flatten(x)
    item_names <- x |> purrr::map(names) |> purrr::reduce(union)
@@ -299,29 +349,45 @@ simplify_twitter_data <- function(x, simplifier = identity) {
 }
 ```
 
+Quick recap:
+to use the functions above,
+load your archive manifest with `read_archive_json()`
+and then pass it to `read_twitter_data()`
+along with an item name from the archive.
+If the data in the archive item is reasonably structured,
+you can call `simplify_twitter_data()`
+to get a tidy tibble[^simplify-twitter-data].
+
+```{r funciton-example}
+manifest <- read_archive_json("data/manifest.js")
+account <- read_twitter_data(manifest, "account")
+
+simplify_twitter_data(account)
+```
+
+[^simplify-twitter-data]: `simplify_twitter_data()` is an optional and separate function because it's an 80/20 function: it's 20% of the code that does the right thing 80% of the time.
+
+## My Followers
+
 Let's use this on another archive item
 to find the earliest Twitter adopters among my followers.
-First we read in the `"follower"` item
-and use the `simplify_twitter_data()` function
-to get the results in a nice, rectangular table.
-(`simplify_twitter_data()` is an optional step because it's an 80/20 function:
-it's 20% of the code that does the right thing 80% of the time.)
 
-```{r early_followers}
+```{r followers}
 # These tables are wide, you may need to scroll to see the preview
 options(width = 120)
 
 followers <- 
   read_twitter_data(manifest, "follower") |>
   simplify_twitter_data()
+```
 
+Then we can arrange the rows of `followers` by `accountId`
+as a proxy for date of account creation.
+
+```{r early_followers}
 early_followers <- 
   followers |>
-  ## The above line is basically the following two lines
-  # pluck(1) |>
-  # map_dfr("follower") |>
-  mutate(across(accountId, as.numeric)) |>
-  arrange(accountId) |>
+  arrange(as.numeric(accountId)) |>
   slice_head(n = 11)
 
 # Top 11 earliest followers
@@ -329,7 +395,7 @@ early_followers
 ```
 
 As you can see,
-the archive often includes the barest minimum amount of data.
+some parts of the Twitter archive include the barest minimum amount of data.
 Thankfully, we can still use [rtweet] to gather additional data about these users.
 I'm looking at a small subset of my 
 `r format(nrow(followers), big.mark = ",")`
@@ -350,11 +416,27 @@ early_followers_accounts |>
 
 ## My tweets
 
+Now we get to the main course: the tweets themselves.
+We can read them in the same way that we imported `accounts` and `followers`
+with `read_twitter_data()`,
+but we aren't going to try to simplify them.
+
+Let's take a look at a single tweet, to see why.
+The file of tweets (outer list, `[[1]]`)
+contains an array (inner list, e.g. `[[105]]`)
+of tweets (named item, `$tweet`).
+Here's that example tweet:
+
 ```{r tweets_raw}
 # Tweets are a list of a list of tweets...
 tweet <- read_twitter_data(manifest, "tweets")[[1]][[105]]$tweet
 str(tweet, max.level = 2)
 ```
+
+There's quite a bit of data in each `tweet`,
+so we'll pause here and figure out how we want to
+transform the nested list into a flat last
+that will rectangle nicely.
 
 ```{r tweet_tidy_raw}
 tweet_tidy_raw <- function(tweet_raw) {
@@ -368,26 +450,39 @@ tweet_tidy_raw <- function(tweet_raw) {
     "source"
   )
   
+  # start with a few basic items
   tweet <- tweet_raw[basic_items]
-  tweet$created_at <- strptime(tweet$created_at, "%a %b %d %T %z %Y")
-  tweet$retweet <- grepl("^RT @", tweet$full_text)
-  tweet$reply <- grepl("^@", tweet$full_text)
+
+  # and collapse a few nested items into a single string
   tweet$user_mentions <- tweet_raw |> 
     purrr::pluck("entities", "user_mentions") |>
     purrr::map_chr("screen_name") |>
     paste(collapse = ",")
+  
   tweet$hashtags <- tweet_raw |> 
     purrr::pluck("entities", "hashtags") |>
     purrr::map_chr("text") |>
     paste(collapse = ",")
+  
   tweet
 }
 ```
+
+When we apply this function to the example tweet,
+we get a nice, flat list.
 
 ```{r}
 tweet_tidy_raw(tweet) |> str()
 ```
 
+This will end up becoming a row in a tidy table of tweets.
+To achieve this we pass our tweet-simplifying function
+to `simplify_twitter_data()`
+where it's used to flatten the list of tweets
+into a tibble.
+Then, we use our good friends `dplyr`, `lubridate` and `stringr`,
+to convert columns to their correct format
+and to extract some features.
 
 ```{r tweets}
 tidy_tweets <- 
@@ -395,23 +490,36 @@ tidy_tweets <-
   simplify_twitter_data(tweet_tidy_raw) |> 
   mutate(
     across(contains("_count"), as.integer),
+    retweet = str_detect(full_text, "^RT @"),
+    reply = str_detect(full_text, "^@"),
     type = case_when(
       retweet ~ "retweet",
       reply ~ "reply",
       TRUE ~ "tweet"
     ),
+    created_at = lubridate::parse_date_time(created_at, "m d HMS z Y"),
     hour = hour(created_at),
     day = wday(created_at, label = TRUE, abbr = TRUE, week_start = 1),
     month = month(created_at, label = TRUE, abbr = FALSE),
     day_of_month = day(created_at),
     year = year(created_at)
-  ) |> 
-  filter(!id %in% c("2954171516", "2930539208"))
+  )
 ```
+
+The result... a nice tidy table of tweets!
+
+```{r preview-tidy-tweets}
+tidy_tweets
+```
+
+If you've seen the [Observable notebook that inspired this post][ojs-nb],
+you'll notice that I've mostly recreated their data structure, but in R.
+Next, let's recreate some of the plots in that notebook, too!
 
 ## Monthly tweets, replies and retweets
 
-```{r set-theme, echo = FALSE}
+
+```{r set-theme, echo = FALSE, cache = FALSE}
 blog_theme <-
   theme_minimal(18, base_family = "IBM Plex Mono") +
   theme(
@@ -424,19 +532,22 @@ blog_theme <-
     axis.title.y = element_text(hjust = 0),
     axis.title.x = element_text(hjust = 0),
     panel.grid.major = element_line(color = "#d3d9db"),
-    # panel.grid.minor = element_line(color = "#e7eaeb")
     panel.grid.minor = element_blank()
   )
 
 theme_set(blog_theme)
 ```
 
-````{=html}
+
 <details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Set Blog Theme</summary>
+
+Yeah, so real quick, I'm going to set up a plot theme for the rest of this post.
+Here it is, if you're interested in this kind of thing!
+
 ```{r ref.label="set-theme", echo = TRUE, eval = FALSE}
 ```
 </details>
-````
+
 
 ```{r plot-monthly, eval = FALSE, echo = FALSE}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
@@ -499,18 +610,43 @@ ggiraph::girafe(
 )
 ```
 
-````{=html}
+The first chart shows
+the number of tweets, replies and mentions
+sent in each month from 2009 to 2022.
+From 2009 to 2015,
+I sent about 25 total tweets per month, 
+with one large spike in January 2014
+when a grad school course I was taking decided to do a "Twitter seminar."
+My Twitter usage dropped off considerably between 2015 and 2018:
+the result of a mix of grad school grinding,
+and then when my son was born in 2016 tweeting practically stopped altogether.
+
+My Twitter usage picks up significantly in 2018,
+which also coincides with my realization that academia wasn't my ideal future.
+In 2018 and 2019 you can see my baseline usage pick up considerably
+at the start of the year —
+the effects of a lot of tweeting and networking during rstudio::conf.
+Since 2019, my usage has been fairly stable;
+I typically send between 50 and 100 tweets a month.
+Finally, there's a noticeable recent drop in activity:
+since Twitter changed ownership I still read Twitter but only occasionally tweet.
+
+Hover or tap on a bar below to see the top 5 tweets in each segment.
+
+::: {#plot-monthly}
+```{r ref.label="plot-monthly", echo = FALSE, eval = TRUE}
+#| fig.alt: |
+#|   A stacked bar chart showing the number of tweets, replies and mentions
+#|   sent each month. Trends and observations are described in the
+#|   preceeding paragraph.
+```
+:::
+
 <details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Monthly Tweets</summary>
 ```{r ref.label="plot-monthly", echo = TRUE, eval = FALSE}
 ```
 </details>
-````
 
-::: {#plot-monthly}
-```{r ref.label="plot-monthly", echo = FALSE, eval = TRUE}
-
-```
-:::
 
 ## Popular tweets, likes & retweets
 
