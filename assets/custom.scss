@@ -15,6 +15,11 @@ html {
   font-size: 1.1em;
 }
 
+pre {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 code,
 .code {
   font-family: var(--font-monospace);
@@ -41,16 +46,18 @@ p code:not(.sourceCode) {
 
 pre {
   @extend .ph3, .pv2;
+  /*
   border-left: 3px solid var(--slate-80) !important;
   border-radius: 0;
   background-color: var(--preBgColorCustom);
+  */
   line-height: 1.33;
 }
 
 .post-body > pre,
 .post-body > .highlight > pre {
   position: relative;
-  left: calc(-1em - 3px);
+  left: calc(-1em);
   width: calc(100% + 1em);
 }
 
@@ -61,7 +68,6 @@ pre {
 
 .post-body > table, .page-body > table {
 	overflow-x: auto;
-	display: block;
 }
 
 hr {
