@@ -399,7 +399,7 @@ some parts of the Twitter archive include the barest minimum amount of data.
 Thankfully, we can still use [rtweet] to gather additional data about these users.
 I'm looking at a small subset of my 
 `r format(nrow(followers), big.mark = ",")`
-here,
+followers here,
 but you might want to do this for all your followers
 and save the collected user data in your archive.
 
@@ -475,14 +475,15 @@ we get a nice, flat list.
 tweet_tidy_raw(tweet) |> str()
 ```
 
-This will end up becoming a row in a tidy table of tweets.
-To achieve this we pass our tweet-simplifying function
-to `simplify_twitter_data()`
-where it's used to flatten the list of tweets
+This flattened tweet list
+will end up becoming a row in a tidy table of tweets
+thanks to `simplify_twitter_data()`,
+which is used to flatten the list of all of the tweets
 into a tibble.
-Then, we use our good friends `dplyr`, `lubridate` and `stringr`,
+Once combined into a single table,
+we use our good friends `dplyr`, `lubridate` and `stringr`
 to convert columns to their correct format
-and to extract some features.
+and to extract a few features.
 
 ```{r tweets}
 tidy_tweets <- 
@@ -497,7 +498,7 @@ tidy_tweets <-
       reply ~ "reply",
       TRUE ~ "tweet"
     ),
-    created_at = lubridate::parse_date_time(created_at, "m d HMS z Y"),
+    created_at = strptime(created_at, "%a %b %d %T %z %Y"),
     hour = hour(created_at),
     day = wday(created_at, label = TRUE, abbr = TRUE, week_start = 1),
     month = month(created_at, label = TRUE, abbr = FALSE),
@@ -525,6 +526,7 @@ blog_theme <-
   theme(
     plot.background = element_rect(fill = "#f9fafa", color = NA),
     plot.title.position = "plot",
+    plot.title = element_text(size = 24, margin = margin(b = 1, unit = "line")),
     legend.position = c(0, 1),
     legend.direction = "horizontal",
     legend.justification = c(0, 1),
@@ -539,7 +541,7 @@ theme_set(blog_theme)
 ```
 
 
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Set Blog Theme</summary>
+<details class="code-details"><summary>Code: Set Blog Theme</summary>
 
 Yeah, so real quick, I'm going to set up a plot theme for the rest of this post.
 Here it is, if you're interested in this kind of thing!
@@ -552,23 +554,30 @@ Here it is, if you're interested in this kind of thing!
 ```{r plot-monthly, eval = FALSE, echo = FALSE}
 type_colors <- c(reply = "#5e5b7f", tweet = "#ef8c02", retweet = "#7ab26f")
 
+top_5_tweets_text <- function(data) {
+  slice_max(
+    data,
+    n = 5,
+    order_by = retweet_count * 2 + favorite_count,
+    with_ties = FALSE
+  ) |>
+    pull(full_text) |>
+    str_trunc(width = 120)
+}
+
 plot_monthly <-
   tidy_tweets |>
-  mutate(dt_month = floor_date(created_at, "month")) |>
+  # Group nest by month and tweet type ---
+  mutate(dt_month = sprintf("%d-%02d", year, month(created_at))) |>
   group_nest(dt_month, month, year, type) |>
   mutate(
+    # Calculate number of tweets per month/type
     n = map_int(data, nrow),
-    top = data |>
-      map(
-        slice_max,
-        n = 5,
-        order_by = retweet_count * 2 + favorite_count,
-        with_ties = FALSE
-      ) |>
-      map(pull, full_text) |>
-      map(str_trunc, width = 120)
+    # and extract the top 5 tweets
+    top = map(data, top_5_tweets_text)
   ) |>
   select(-data) |>
+  # Then build the tooltip (one row per month/type)
   rowwise() |>
   mutate(
     type_pl = plu::ral(type, n = n),
@@ -581,26 +590,36 @@ plot_monthly <-
     tooltip = htmltools::HTML(tooltip)
   ) |> 
   ungroup() |>
+  # Finally ensure the order of factors (including month!)
   mutate(type = factor(type, rev(c("tweet", "reply", "retweet")))) |>
   arrange(dt_month, type) |>
+  mutate(dt_month = fct_inorder(dt_month)) |>
+  # Plot time! ----
   ggplot() +
-  aes(x = dt_month, y = n, fill = type, group = type) +
+  aes(x = dt_month, y = n, fill = type, color = type, group = type) +
   ggiraph::geom_col_interactive(
-    width = 31 * 24 * 60 * 60,
+    width = 1,
     aes(tooltip = tooltip)
   ) +
   scale_fill_manual(values = type_colors) +
-  scale_x_datetime(
-    date_breaks = "1 year", 
-    date_labels = "%Y",
-    expand = expansion()
+  scale_color_manual(values = type_colors) +
+  # The x-axis is factors for each month,
+  # we need labels for each year, e.g. 2010-01 => 2010
+  scale_x_discrete(
+    breaks = paste0(seq(2008, 2022, by = 1), "-01"),
+    labels = seq(2008, 2022, by = 1)
   ) +
   scale_y_continuous(expand = expansion(add = c(1, 1))) +
   labs(
     title = "Tweets per month",
     x = "Month Tweeted →",
     y = "Count →",
-    fill = NULL
+    fill = NULL,
+    color = NULL
+  ) +
+  theme(
+    plot.title = element_text(size = 24, margin = margin(b = 2, unit = "line")),
+    legend.position = c(0, 1.14)
   )
 
 ggiraph::girafe(
@@ -621,8 +640,8 @@ My Twitter usage dropped off considerably between 2015 and 2018:
 the result of a mix of grad school grinding,
 and then when my son was born in 2016 tweeting practically stopped altogether.
 
-My Twitter usage picks up significantly in 2018,
-which also coincides with my realization that academia wasn't my ideal future.
+My Twitter usage picked up significantly in 2018,
+which also coincided with my realization that academia wasn't my ideal future.
 In 2018 and 2019 you can see my baseline usage pick up considerably
 at the start of the year —
 the effects of a lot of tweeting and networking during rstudio::conf.
@@ -631,18 +650,20 @@ I typically send between 50 and 100 tweets a month.
 Finally, there's a noticeable recent drop in activity:
 since Twitter changed ownership I still read Twitter but only occasionally tweet.
 
-Hover or tap on a bar below to see the top 5 tweets in each segment.
-
 ::: {#plot-monthly}
 ```{r ref.label="plot-monthly", echo = FALSE, eval = TRUE}
 #| fig.alt: |
 #|   A stacked bar chart showing the number of tweets, replies and mentions
 #|   sent each month. Trends and observations are described in the
-#|   preceeding paragraph.
+#|   preceeding paragraphs.
 ```
 :::
 
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Monthly Tweets</summary>
+::: {.o-80 .i}
+Hover or tap on a bar above to see the top 5 tweets in each segment.
+:::
+
+<details class="code-details"><summary>Code: Plot Monthly Tweets</summary>
 ```{r ref.label="plot-monthly", echo = TRUE, eval = FALSE}
 ```
 </details>
@@ -651,21 +672,32 @@ Hover or tap on a bar below to see the top 5 tweets in each segment.
 ## Popular tweets, likes & retweets
 
 ```{r plot-popular-tweets, echo = FALSE, eval = FALSE}
-plot_popular_tweets <- 
+jitter <- function(x) {
+  spread <- min(1, x * 0.2)
+  x + runif(1, -spread, spread)
+}
+
+plot_popular_tweets <-
   tidy_tweets |>
-  filter(retweet_count >= 10, favorite_count >= 5) |>
+  filter(retweet_count >= 5 | favorite_count >= 5) |>
   mutate(
-    age = as.numeric(difftime(Sys.time(), created_at, units = "days")) / 365.25,
+    age = difftime(Sys.time(), created_at, units = "days"),
+    age = as.numeric(age) / 365.25,
     created_at = strftime(created_at, '%a %b %e, %Y'),
     full_text = str_replace_all(full_text, "\n\n", "</p><p>"),
     full_text = str_replace_all(full_text, "\n", "<br>"),
     tooltip = glue(
-      "<p>{full_text}</p>",
-      "<dl><dt>&#9842;</dt><dd>{retweet_count}</dd>", 
-      "<dt>&#9829;</dt><dd>{favorite_count}</dt>", 
-      "<dt>&#9998;</dt><dd><a href=\"https://twitter.com/grrrck/status/{id}\">{created_at}</a></dd></dl>"
+      "<p>{full_text}</p><dl>",
+      "<dt>&#9842;</dt><dd>{retweet_count}</dd>",  # recycling icon
+      "<dt>&#9829;</dt><dd>{favorite_count}</dt>", # heart icon
+      "<dt>&#9998;</dt><dd>", # pencil icon
+      "<a href=\"https://twitter.com/grrrck/status/{id}\">{created_at}</a>", 
+      "</dd></dl>"
     )
   ) |>
+  rowwise() |> 
+  mutate(across(c(retweet_count, favorite_count), jitter)) |>
+  ungroup() |>
   ggplot() +
   aes(
     x = favorite_count,
@@ -676,8 +708,14 @@ plot_popular_tweets <-
   ) +
   ggiraph::geom_point_interactive() +
   scale_color_viridis_c(option = "C", direction = -1) +
-  scale_y_continuous(trans = scales::log1p_trans(), breaks = c(25, 50, 100, 200, 400)) +
-  scale_x_continuous(trans = scales::log1p_trans(), breaks = c(25, 50, 100, 200, 400, 800, 1600)) +
+  scale_y_continuous(
+    trans = scales::log1p_trans(), 
+    breaks = c(10, 25, 50, 100, 200, 400),
+  ) +
+  scale_x_continuous(
+    trans = scales::log1p_trans(), 
+    breaks = c(10, 25, 50, 100, 200, 400, 800, 1600)
+  ) +
   guides(size = "none") +
   labs(
     title = "Popular tweets",
@@ -699,22 +737,45 @@ ggiraph::girafe(
     ggiraph::opts_toolbar(position = "bottomright"),
     ggiraph::opts_tooltip(placement = "container"),
     ggiraph::opts_hover_inv("color:var(--borderColorCustom, #cfd5d8)")
-  )
+  ),
+  desc = knitr::opts_current$get("fig.alt")
 )
 ```
 
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Popular Tweets</summary>
-```{r ref.label = "plot-popular-tweets", eval = TRUE, echo = TRUE}
-```
-</details>
-````
+Which tweets earned the most internet points?
+The next plot displays tweets that had
+at least 5 retweets or 5 favorites
+Note that I've fiddled with the axis scales;
+both are log-scales and each break shows (roughly)
+a doubling of internet points in each direction.
+Interestingly,
+for "popular" tweets (please note the air-quotes)
+retweets and favorites appear to be log-linear:
+a doubling of one generally corresponds to a doubling of the other,
+although my tweets tended to receive about 4 times as many likes as retweets.
+
+There's also some pretty interesting stuff going on
+in the low-retweets but high-favorites area.
+Popular tweets are cool,
+but the tweets that got lots of likes without being retweeted
+are the feel-good tweets that made me feel like I was part of a community online.
 
 ::: {#plot-popular-tweets}
 ```{r ref.label="plot-popular-tweets", echo = FALSE, eval = TRUE}
-
+#| fig.alt: >
+#|   A scatter plot. Each tweet is a point comparing the number of favorites
+#|   the tweet received (x-axis) to the number of retweets (y-axis). Points are
+#|   colored according to their age (darker points are older). The relationship
+#|   between favorites and retweets appears to be log-linear: a doubling of
+#|   favorites corresponds to a similar doubling of rewteets. There's no
+#|   apparent relationship between tweet popularity and age.
 ```
 :::
+
+<details class="code-details"><summary>Code: Plot Popular Tweets</summary>
+```{r ref.label = "plot-popular-tweets", eval = TRUE, echo = TRUE}
+```
+</details>
 
 ```{js echo = FALSE}
 function addPlotPopularTweetPlaceholderText () {
@@ -830,17 +891,18 @@ ggiraph::girafe(
 )
 ```
 
-````{=html}
-<details class="pa2 ba br2 b--custom-border-color"><summary class="pa2 pointer">Code: Plot Tweets by Time of Day</summary>
-```{r ref.label="plot-time-of-day", eval = TRUE, echo = TRUE}
-```
-</details>
-````
 
 ::: {#plot-time-of-day}
 ```{r ref.label = "plot-time-of-day", echo = FALSE}
+#| fig.alt: |
+#|   
 ```
 :::
+
+<details class="code-details"><summary>Code: Plot Tweets by Time of Day</summary>
+```{r ref.label="plot-time-of-day", eval = TRUE, echo = TRUE}
+```
+</details>
 
 ## Tweet Source
 

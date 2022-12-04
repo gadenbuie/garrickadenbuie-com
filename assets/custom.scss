@@ -54,8 +54,8 @@ pre {
   line-height: 1.33;
 }
 
-.post-body > pre,
-.post-body > .highlight > pre {
+/* .post-body > .highlight > pre { */
+.post-body pre {
   position: relative;
   left: calc(-1em);
   width: calc(100% + 1em);
@@ -129,6 +129,14 @@ a {
 .post-body details, .page-body details {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+details.code-details {
+  @extend .pa2, .ba, .br2, .b--custom-border-color;
+  & > * { @extend .ph2; }
+  summary {
+    @extend .pa2, .pointer;
+  }
 }
 
 @media (max-width: 36rem) {
