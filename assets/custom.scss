@@ -15,11 +15,6 @@ html {
   font-size: 1.1em;
 }
 
-pre {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 code,
 .code {
   font-family: var(--font-monospace);
@@ -37,21 +32,21 @@ p code:not(.sourceCode) {
 }
 
 .highlight {
+  @extend .mv2;
   font-size: 1em;
-  pre {
-    @extend .br0;
+  & > pre {
+    @extend .br0, .mv0;
     background-color: var(--preBgColorCustom) !important;
   }
 }
 
 pre {
   @extend .ph3, .pv2;
-  /*
-  border-left: 3px solid var(--slate-80) !important;
-  border-radius: 0;
-  background-color: var(--preBgColorCustom);
-  */
-  line-height: 1.33;
+  line-height: 1.1;
+}
+
+pre code {
+  font-size: 0.85em;
 }
 
 /* .post-body > .highlight > pre { */
@@ -277,6 +272,14 @@ form fieldset,
 .post-body blockquote,
 .page-body blockquote {
   max-width: 90%;
+}
+
+.table {
+  @extend .w-100, .dit;
+  tr > td, tr > th {
+    @extend .pa2;
+    border: none;
+  }
 }
 
 :root {
