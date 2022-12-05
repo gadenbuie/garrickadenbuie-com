@@ -1104,7 +1104,7 @@ plot_liked_tweets <-
   ggplot() +
   aes(year, n, tooltip = tooltip, group = 1) +
   geom_line(color = "#595959", linewidth = 1.5) +
-  ggiraph::geom_point_interactive(color = "#595959", size = 4) +
+  ggiraph::geom_point_interactive(color = "#595959", size = 7) +
   scale_x_continuous(breaks = seq(2008, 2022, 2), expand = expansion(add = 0.25)) +
   labs(
     title = "Tweets I've Liked",
@@ -1132,9 +1132,11 @@ The last thing I want to dive into is a part of the archive
 that includes information about Twitter's perception of _you_.
 Or more importantly how they see you in terms of advertising.
 
+### Impressions and Engagements
+
 There are two key items in the archive: ad impressions and engagements.
-All ads on Twitter are actually tweets that are promoted into your view.
-The advertiser pays for Twitter to show you tweets you wouldn't otherwise see.
+All ads on Twitter are actually tweets that are promoted into your view
+because an advertiser has paid for Twitter to show you a tweet you wouldn't otherwise see.
 
 An impression is a promoted tweet you see in your timeline or in tweet replies,
 but you don't interact with the tweet.
@@ -1229,9 +1231,18 @@ Here are my impressions and engagements for August through early November of 202
 plot_ads_interactions <-
   ads |> 
   count(type, month = floor_date(impressionTime, "month")) |>
-  mutate(tooltip = pmap_chr(list(type, n, month), \(type, n, month) 
-    paste(format(n, big.mark = ","), plu::ral(type, n = n), "in", month)
-  )) |> 
+  mutate(
+    n_str = format(n, big.mark = ","),
+    tooltip = pmap_chr(
+      list(type, n, n_str, month), 
+      \(type, n, n_str, month) {
+        glue(
+          "{n} {type} in {month}",
+          type = plu::ral(type, n = n), 
+          month = month(month, label = TRUE, abbr = FALSE)
+        )
+      })
+  ) |> 
   ggplot() +
   aes(month, n, fill = type, tooltip = tooltip) +
   ggiraph::geom_col_interactive() +
