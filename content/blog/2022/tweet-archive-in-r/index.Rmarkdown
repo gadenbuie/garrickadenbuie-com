@@ -66,6 +66,7 @@ who you followed and who followed you;
 the tweets you liked;
 the ads you were served;
 and much more.
+:::
 
 This post,
 very much inspired by the awesome 
@@ -74,7 +75,18 @@ Observable notebook,
 shows you how to use R to read and explore your archive,
 using my own archive as an example.
 
-:::
+Read on to learn how to [read your Twitter archive into R](#reading-your-twitter-archive),
+or how to [tidy your tweets](#my-tweets).
+The second half of the post showcases a collection of plots about
+[monthy tweet volume](#monthly-tweets-replies-and-retweets-monthly-tweets),
+[popular tweets](#popular-tweets-likes--retweets),
+the [time of day when tweets were sent](#tweets-by-time-of-day),
+and the [app used to send the tweet](#tweet-source).
+
+I've also included a section on using [rtweet]
+to collect a full dataset about [the tweets you've liked](#my-likes)
+and another section about
+the [advertising data in your Twitter archive](#advertising-info)
 
 ## Reading your Twitter archive
 
@@ -153,18 +165,20 @@ jsonlite::fromJSON("data/manifest.js")
 ```
 
 Here we hit our first snag.
-The archive files are packages as JSON,
+The archive files are packaged as JSON,
 but they're not strictly compliant JSON files;
-they include some JavaScript to assign objects
-to a `YTD` object in the global namespace
-(called `window` in the browser).
+they include some JavaScript to assign JSON objects
+to the global namespace (called `window` in the browser).
+Here's the `data/manifest.js` file as an example.
 
-```{r manifest-lines}
+```{r manifest-lines, echo = FALSE, results = "asis"}
 lines <- brio::read_lines("data/manifest.js")
 writeLines(c(
+  "```js",
   lines[1], 
   "  // ... data ...", 
-  lines[length(lines)]
+  lines[length(lines)],
+  "```"
 ))
 ```
 
@@ -235,7 +249,7 @@ and helpfully tells us how many records are included.
 
 Here are the data files with the most records.
 
-<details class="details-code"><summary>Code: Manifest, Top Records</summary>
+<details class="code-details"><summary>Code: Manifest, Top Records</summary>
 ```{r ref.label="table-manifest", echo = TRUE, eval = FALSE}
 ```
 </details>
@@ -376,7 +390,7 @@ simplify_twitter_data(account)
 
 [^simplify-twitter-data]: `simplify_twitter_data()` is an optional and separate function because it's an 80/20 function: it's 20% of the code that does the right thing 80% of the time.
 
-## My Followers
+### Example: my followers
 
 Let's use this on another archive item
 to find the earliest Twitter adopters among my followers.
@@ -428,9 +442,9 @@ early_followers_accounts |>
 Now we get to the main course: the tweets themselves.
 We can read them in the same way that we imported `accounts` and `followers`
 with `read_twitter_data()`,
-but we aren't going to try to simplify them.
+but for now we won't simplify them.
 
-Let's take a look at a single tweet, to see why.
+To see why, let's take a look at a single tweet.
 The file of tweets (outer list, `[[1]]`)
 contains an array (inner list, e.g. `[[105]]`)
 of tweets (named item, `$tweet`).
@@ -447,8 +461,8 @@ so we'll pause here and figure out how we want to
 transform the nested list into a flat last
 that will rectangle nicely.
 
-```{r tweet_tidy_raw}
-tweet_tidy_raw <- function(tweet_raw) {
+```{r tidy_tweet_raw}
+tidy_tweet_raw <- function(tweet_raw) {
   basic_items <- c(
     "created_at",
     "favorite_count",
@@ -481,7 +495,7 @@ When we apply this function to the example tweet,
 we get a nice, flat list.
 
 ```{r}
-tweet_tidy_raw(tweet) |> str()
+tidy_tweet_raw(tweet) |> str()
 ```
 
 This flattened tweet list
@@ -497,7 +511,7 @@ and to extract a few features.
 ```{r tweets}
 tidy_tweets <- 
   read_twitter_data(manifest, "tweets") |> 
-  simplify_twitter_data(tweet_tidy_raw) |> 
+  simplify_twitter_data(tidy_tweet_raw) |> 
   mutate(
     across(contains("_count"), as.integer),
     retweet = str_detect(full_text, "^RT @"),
@@ -650,7 +664,7 @@ My Twitter usage dropped off considerably between 2015 and 2018:
 the result of a mix of grad school grinding,
 and then when my son was born in 2016 tweeting practically stopped altogether.
 
-My Twitter usage picked up significantly in 2018,
+My Twitter usage picked up again in 2018,
 which also coincided with my realization that academia wasn't my ideal future.
 In 2018 and 2019 you can see my baseline usage pick up considerably
 at the start of the year —
@@ -670,7 +684,7 @@ since Twitter changed ownership I still read Twitter but only occasionally tweet
 :::
 
 ::: {.o-80 .i}
-Hover or tap on a bar above to see the top 5 tweets in each segment.
+Hover or tap[^tap] on a bar above to see the top 5 tweets in each segment.
 :::
 
 <details class="code-details"><summary>Code: Plot Monthly Tweets</summary>
@@ -678,6 +692,7 @@ Hover or tap on a bar above to see the top 5 tweets in each segment.
 ```
 </details>
 
+[^tap]: On mobile devices, tapping on a bar _kind of_ works. But to change focus from one plot element to another, you might need to tap outside of the plot area before tapping on the new element. Sorry! The hover interactions work a whole lot better on desktop.
 
 ## Popular tweets, likes & retweets
 
@@ -754,7 +769,7 @@ ggiraph::girafe(
 
 Which tweets earned the most internet points?
 The next plot displays tweets that had
-at least 5 retweets or 5 favorites
+at least 5 retweets or 5 favorites.
 Note that I've fiddled with the axis scales;
 both are log-scales and each break shows (roughly)
 a doubling of internet points in each direction.
@@ -895,7 +910,7 @@ ggiraph::girafe(
       placement = "container",
       css = "width: 12rem; font-family: var(--font-monospace, 'IBM Plex Mono');",
       offx = 625,
-      offy = 230,
+      offy = 210,
       use_cursor_pos = FALSE
     )
   ),
@@ -905,7 +920,8 @@ ggiraph::girafe(
 
 The next plot highlights the time of day at which I sent tweets.
 Each bar show the total number of tweets I've written within a given hour of the day.
-Morning hours are at the top of plot, evening hours at the bottom.
+Morning hours are in the top half of each day's circular panel
+and evening hours are in the bottom half.
 Tuesday at noon seems to be my favorite time to tweet
 — I sent
 `r tweet_count_by_hour |> filter(day == "Tue", hour == 12) |> pull(n)`
@@ -936,7 +952,7 @@ Hover or tap on a bar to compare a given time across all days.
 ```
 </details>
 
-## Tweet Source
+## Tweet source
 
 ```{r data-tweet-source, echo = FALSE, eval = TRUE}
 tweet_source <- 
@@ -1126,13 +1142,13 @@ ggiraph::girafe(
 ```
 </details>
 
-## Advertising Info
+## Advertising info
 
 The last thing I want to dive into is a part of the archive
 that includes information about Twitter's perception of _you_.
 Or more importantly how they see you in terms of advertising.
 
-### Impressions and Engagements
+### Impressions and engagements
 
 There are two key items in the archive: ad impressions and engagements.
 All ads on Twitter are actually tweets that are promoted into your view
@@ -1266,7 +1282,7 @@ plot_ads_interactions <-
 ggiraph::girafe(
   ggobj = plot_ads_interactions,
   width_svg = 12,
-  height_svg = 4,
+  height_svg = 6,
   options = list(ggiraph::opts_tooltip()),
   desc = knitr::opts_current$get("fig.alt")
 )
@@ -1278,7 +1294,7 @@ ggiraph::girafe(
 ```
 </details>
 
-### Who Advertized to Me?
+### Who advertized to me?
 
 Finally, I wanted to know who was advertising to me
 and which tweets I was seeing.
@@ -1351,7 +1367,7 @@ plot_advertisers <-
 ggiraph::girafe(
   ggobj = plot_advertisers,
   width_svg = 12,
-  height_svg = 8,
+  height_svg = 10,
   options = list(ggiraph::opts_tooltip()),
   desc = knitr::opts_current$get("fig.alt")
 )
