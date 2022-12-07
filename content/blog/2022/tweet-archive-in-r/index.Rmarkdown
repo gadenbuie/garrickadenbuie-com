@@ -1,7 +1,7 @@
 ---
 title: Read and Visualize your Twitter Archive
 author: Garrick Aden-Buie
-date: '2022-11-12'
+date: '2022-12-07'
 slug: tweet-archive-in-r
 categories:
   - Blog
@@ -1496,7 +1496,7 @@ xaringanExtra::use_clipboard()
 @media (max-width: 48rem) {
   #plot-time-of-day [class^="tooltip_svg_"],
   #plot-popular-tweets [class^="tooltip_svg_"] {
-    margin-left; auto;
+    margin-left: auto;
     margin-right: auto;
     position:   static !important;
     margin-left: auto;
