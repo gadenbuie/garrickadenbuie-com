@@ -909,8 +909,9 @@ ggiraph::girafe(
     ggiraph::opts_tooltip(
       placement = "container",
       css = "width: 12rem; font-family: var(--font-monospace, 'IBM Plex Mono');",
-      offx = 625,
-      offy = 210,
+      # These don't matter, position is set by CSS rules below
+      offx = 600,
+      offy = 260,
       use_cursor_pos = FALSE
     )
   ),
@@ -1456,7 +1457,7 @@ xaringanExtra::use_clipboard()
   left: unset !important;
   top: unset !important;
   right: -4vw;
-  bottom: 2.6rem;
+  bottom: 1rem;
   background: unset;
 }
 #plot-time-of-day [class^="tooltip_svg_"] p {
