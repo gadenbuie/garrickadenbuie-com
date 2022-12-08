@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,300;1,500&family=Outfit:wght@400;500;700&display=swap');
 @import '_syntax';
+@import '_fansi';
 
 :root {
   --font-family-system: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
@@ -31,31 +32,37 @@ p code:not(.sourceCode) {
 }
 
 .highlight {
+  @extend .mv2;
   font-size: 1em;
-  pre {
-    @extend .br0;
+  & > pre {
+    @extend .br0, .mv0;
     background-color: var(--preBgColorCustom) !important;
   }
 }
 
 pre {
   @extend .ph3, .pv2;
-  border-left: 3px solid var(--slate-80) !important;
-  border-radius: 0;
-  background-color: var(--preBgColorCustom);
-  line-height: 1.33;
+  line-height: 1.1;
 }
 
-.post-body > pre,
-.post-body > .highlight > pre {
+pre code {
+  font-size: 0.85em;
+}
+
+/* .post-body > .highlight > pre { */
+.post-body pre {
   position: relative;
-  left: calc(-1em - 3px);
+  left: calc(-1em);
   width: calc(100% + 1em);
 }
 
 .post-body > p > code,
 .page-body > p > code {
   background-color: unset;
+}
+
+.post-body > table, .page-body > table {
+	overflow-x: auto;
 }
 
 hr {
@@ -102,6 +109,40 @@ a {
 
   a {
     color: var(--textColorCustom);
+  }
+}
+
+.site-header {
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+
+.b--custom {
+  color: var(--borderColorCustom);
+}
+
+.post-body details, .page-body details {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+details.code-details {
+  @extend .pa2, .ba, .br2, .b--custom-border-color;
+  & > * { @extend .ph2; }
+  summary {
+    @extend .pa2, .pointer;
+  }
+}
+
+@media (max-width: 36rem) {
+  .site-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .site-header .site-brand {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
   }
 }
 
@@ -231,6 +272,14 @@ form fieldset,
 .post-body blockquote,
 .page-body blockquote {
   max-width: 90%;
+}
+
+.table {
+  @extend .w-100, .dit;
+  tr > td, tr > th {
+    @extend .pa2;
+    border: none;
+  }
 }
 
 :root {
