@@ -9,9 +9,23 @@ tags:
   - R
   - Twitter
   - Personal Data
-description: |
+description: >
   Using R to read and visualize my Twitter archive data. Featuring {ggiraph},
   {ggplot2}, {jsonlite}, {dplyr} and more...
+excerpt: >
+  Using R to read and visualize my Twitter archive data. Featuring {ggiraph},
+  {ggplot2}, {jsonlite}, {dplyr} and more...
+summary: >
+  Twitter finds itself in an… interesting… transition period. Whether or not
+  you’re considering jumping ship to another service — you can find me lurking
+  on Mastdon — you should download an archive of your Twitter data. Not only
+  does the archive include all of your tweets, it also contains a variety of
+  other interesting data about your account: who you followed and who followed
+  you; the tweets you liked; the ads you were served; and much more.
+  
+  This post, very much inspired by the awesome Observable notebook, Planning
+  to leave Twitter?, shows you how to use R to read and explore your archive,
+  using my own archive as an example.
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/tweet-archive-in-r/index.Rmarkdown'
 keywords: rstats
 editor_options:
@@ -86,7 +100,7 @@ and the [app used to send the tweet](#tweet-source).
 I've also included a section on using [rtweet]
 to collect a full dataset about [the tweets you've liked](#my-likes)
 and another section about
-the [advertising data in your Twitter archive](#advertising-info)
+the [advertising data in your Twitter archive](#advertising-info).
 
 ## Reading your Twitter archive
 
