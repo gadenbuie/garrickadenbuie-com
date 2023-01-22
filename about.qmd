@@ -1,0 +1,60 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com
+    - icon: github
+      text: Github
+      href: https://github.com
+
+---
+
+
+[moffitt]: https://moffitt.org
+[gerkelab]: https://www.gerkelab.com
+[usf]: https://usf.edu
+[usf-imse]: https://imse.eng.usf.edu/
+[garrick-apps]: https://apps.garrickadenbuie.com
+[garrick-projects]: /project/
+[garrick-talks]: /tags/education/
+[moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
+
+<div class="f1 heading">:wave: Hey there!<br>I'm Garrick Aden-Buie.</div>
+
+<div class="lead">
+
+I'm a **Data Science Educator** and R developer at [RStudio](https://rstudio.com).
+I use R, R Markdown, Shiny, and the tools of data science to help you to teach and learn data science with R.
+
+</div>
+
+Prior to working at RStudio, I was a data scientist at the [Moffitt Cancer Center][moffitt] where I work in the [Collaborative Data Services Core][moffitt-cdsc].
+Previously, I was a Ph.D. candidate at the [University of South Florida][usf] in Tampa, FL in the [Department of Industrial and Management Sciences Engineering][usf-imse] where I helped develop a [smart home sensor technology system to enable healthy aging in-place](https://usfweb.usf.edu/usf-news-archive/News/article/7974).
+
+I'm a passionate R user and educator.
+I build [web apps][garrick-apps] using [Shiny](https://shiny.rstudio.com/), [tools and packages][garrick-projects] for [R](https://r-project.org), and dynamic, interactive, reproducible reports using [R Markdown](https://rmarkdown.rstudio.com).
+Browse my [list of projects][garrick-projects] for examples of my work, a [selection of educational presentations][garrick-talks], or review my [full curriculum vitae (resume)](https://www.garrickadenbuie.com/resume/).
+
+### Let's do something awesome together!
+
+If you're interested in working with me, please drop me a line at [garrick@adenbuie.com](mailto:garrick@adenbuie.com)!
+
+### A little bit more about me...
+
+As an undergrad, I studied at [Lehigh University](https://lehigh.edu/),
+in [Bethlehem, PA](https://en.wikipedia.org/wiki/Allentown_(song)), only
+twenty minutes from where I grew up. There, I received a B.S in Applied
+Mathematics. I also spent a year living and studying in Madrid, Spain,
+which helped me earn a B.A. in Spanish at Lehigh.
+
+I am a [Returned Peace Corps Volunteer](https://peacecorps.gov/).
+I lived in small town outside of Cuenca, Ecuador where I taught Math, English and life and parenting skills.
+
+I also [write songs and play acoustic guitar](https://garrickadebuie.bandcamp.com/), sometimes [in public](http://www.songkick.com/artists/6913204-garrick-adenbuie) (though not as much as I would like to).
