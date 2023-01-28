@@ -2,7 +2,8 @@
 title: Pandoc Syntax Highlighting Examples
 date: "2018-07-06"
 slug: pandoc-syntax-highlighting-examples
-aliases: /blog/2018/07/06/pandoc-syntax-highlighting-examples
+aliases:
+  - /blog/2018/07/06/pandoc-syntax-highlighting-examples
 ---
 
 The R Markdown book lists [many syntax highlighting color schemes](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style):

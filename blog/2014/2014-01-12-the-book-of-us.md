@@ -1,7 +1,8 @@
 ---
 title: "The Book of Us"
 slug: the-book-of-us
-aliases: /blog/2014/01/12//the-book-of-us
+aliases:
+  - /blog/2014/01/12//the-book-of-us
 date: 2014-01-12T23:02:00+00:00
 categories:
   - Music

@@ -1,7 +1,8 @@
 ---
 date: 2013-05-30T16:34:08+00:00
 slug: up-and-running
-aliases: /blog/2013/05/30/up-and-running
+aliases:
+  - /blog/2013/05/30/up-and-running
 title: Up and running...
 wordpress_id: 120
 categories: [Blog]

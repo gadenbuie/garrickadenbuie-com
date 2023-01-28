@@ -1,7 +1,8 @@
 ---
 date: 2013-05-30T16:02:06+00:00
 slug: the-end-of-stanford
-aliases: /blog/2013/05/30/the-end-of-stanford
+aliases:
+  - /blog/2013/05/30/the-end-of-stanford
 title: The End of Stanford?
 tags:
 - Interesting Articles

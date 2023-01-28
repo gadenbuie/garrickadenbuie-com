@@ -5,7 +5,8 @@ description: >
   Use knitr's "child chunks" to reuse bits of documentation.
 date: '2018-03-05'
 slug: dry-vignette-and-readme
-aliases: /blog/2018/03/05/dry-vignette-and-readme
+aliases:
+  - /blog/2018/03/05/dry-vignette-and-readme
 categories:
   - Blog
 tags:

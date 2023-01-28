@@ -3,7 +3,8 @@ title: Add a Generated Table of Contents Anywhere in RMarkdown
 author: ~
 date: '2018-02-28'
 slug: add-a-generated-table-of-contents-anywhere-in-rmarkdown
-aliases: /blog/2018/02/28/add-a-generated-table-of-contents-anywhere-in-rmarkdown
+aliases:
+  - /blog/2018/02/28/add-a-generated-table-of-contents-anywhere-in-rmarkdown
 categories:
   - Blog
 tags:

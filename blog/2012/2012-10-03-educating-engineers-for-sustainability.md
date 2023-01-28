@@ -1,7 +1,8 @@
 ---
 date: 2012-10-03T16:05:04+00:00
 slug: educating-engineers-for-sustainability
-aliases: /blog/2012/10/03/educating-engineers-for-sustainability
+aliases:
+  - /blog/2012/10/03/educating-engineers-for-sustainability
 title: Educating Engineers for Sustainability
 categories: [Blog]
 ---

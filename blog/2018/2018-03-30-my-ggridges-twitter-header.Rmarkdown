@@ -3,7 +3,8 @@ title: My ggridges Twitter Header
 author: ''
 date: '2018-03-30'
 slug: my-ggridges-twitter-header
-aliases: /blog/2018/03/30/my-ggridges-twitter-header
+aliases:
+  - /blog/2018/03/30/my-ggridges-twitter-header
 categories: ["Blog"]
 tags: ["R", "ggplot2", "Visualization", "Scripts", "Note to Self"]
 ---

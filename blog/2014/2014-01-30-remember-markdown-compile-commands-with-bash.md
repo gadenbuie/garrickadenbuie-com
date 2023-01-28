@@ -2,7 +2,8 @@
 title: "Remember markdown compile commands with bash"
 date: 2014-01-30T18:32:00+00:00
 slug: remember-markdown-compile-commands-with-bash
-aliases: /blog/2014/01/30/remember-markdown-compile-commands-with-bash
+aliases:
+  - /blog/2014/01/30/remember-markdown-compile-commands-with-bash
 categories: [Blog]
 tags: [Scripts, Tricks, pandoc, Markdown]
 ---

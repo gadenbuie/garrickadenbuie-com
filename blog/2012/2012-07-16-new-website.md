@@ -1,7 +1,8 @@
 ---
 date: 2012-07-16T17:52:33+00:00
 slug: new-website
-aliases: /blog/2012/07/16/new-website
+aliases:
+  - /blog/2012/07/16/new-website
 title: New Website
 categories: [Blog]
 ---

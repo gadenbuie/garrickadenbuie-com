@@ -3,7 +3,8 @@ title: Highlight lines without breaking the code in Xaringan
 author: Garrick Aden-Buie
 date: '2018-01-23'
 slug: highlight-lines-without-breaking-the-code-in-xaringan
-aliases: /blog/2018/01/23/highlight-lines-without-breaking-the-code-in-xaringan
+aliases:
+  - /blog/2018/01/23/highlight-lines-without-breaking-the-code-in-xaringan
 categories:
   - Blog
 tags:

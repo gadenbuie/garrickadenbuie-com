@@ -1,7 +1,8 @@
 ---
 date: 2013-07-24T11:00:43+00:00
 slug: use-google-forms-and-r-to-track-data-easily
-aliases: /blog/2013/07/24/use-google-forms-and-r-to-track-data-easily
+aliases:
+  - /blog/2013/07/24/use-google-forms-and-r-to-track-data-easily
 title: Use Google Forms and R to track data easily
 categories:
 - Blog

@@ -4,7 +4,8 @@ twitterTitle: "President's Day"
 author: Garrick Aden-Buie
 date: '2019-02-27'
 slug: presidents-day
-aliases: /blog/2019/02/27/presidents-day
+aliases:
+  - /blog/2019/02/27/presidents-day
 categories:
   - Blog
 tags:

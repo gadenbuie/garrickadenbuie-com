@@ -1,7 +1,8 @@
 ---
 date: 2013-07-31T17:45:36+00:00
 slug: the-pandoc-markdown-rabbit-hole
-aliases: /blog/2013/07/31/the-pandoc-markdown-rabbit-hole
+aliases:
+  - /blog/2013/07/31/the-pandoc-markdown-rabbit-hole
 title: The Pandoc Markdown rabbit hole
 categories:
 - Blog

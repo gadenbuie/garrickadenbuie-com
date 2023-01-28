@@ -3,7 +3,8 @@ title: Decouple Code and Output in xaringan slides
 author: Garrick Aden-Buie
 date: '2018-08-16'
 slug: decouple-code-and-output-in-xaringan-slides
-aliases: /blog/2018/08/16/decouple-code-and-output-in-xaringan-slides
+aliases:
+  - /blog/2018/08/16/decouple-code-and-output-in-xaringan-slides
 categories:
   - Blog
 tags:
