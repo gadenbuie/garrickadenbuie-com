@@ -439,8 +439,8 @@ n_are_replies <- tweets %>% filter(!is.na(reply_to_status_id) | is_quote) %>% nr
 
 There were
 `r format(n_tweets, big.mark = ',')`
-reponses to the poll and
-`r format(n_are_replies/n_tweets * 100, digits = 0)`%
+responses to the poll and
+`r format(floor(n_are_replies/n_tweets * 100))`%
 or
 `r format(n_are_replies, big.mark = ',')`
 of them are

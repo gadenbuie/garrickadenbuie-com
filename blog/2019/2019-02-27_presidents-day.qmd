@@ -92,8 +92,8 @@ filter_workday <- function(
   df %>%
     filter(
       date(!!start_var) == date(!!end_var),
-      hms::as.hms(!!start_var) >= start,
-      hms::as.hms(!!end_var) <= end
+      hms::as_hms(!!start_var) >= start,
+      hms::as_hms(!!end_var) <= end
     )
 }
 ```
@@ -193,7 +193,7 @@ djt_simple <-
 
 djt_joined_all <-
   exec_time %>%
-  unnest() %>%
+  unnest(cols = time_inc) %>%
   filter(time_end != time_inc) %>%
   full_join(djt_simple, by = "time_inc") %>%
   select(
@@ -251,11 +251,10 @@ c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
 
   name <- paste(a$name, b$name, sep = "-")
 
-  trans <- function(x) a$trans(b$trans(x))
+  trans <- function(x) a$transform(b$transform(x))
   inv <- function(x) b$inverse(a$inverse(x))
 
-  trans_new(name, trans, inverse = inv, breaks = breaks, format=format)
-
+  trans_new(name, trans, inverse = inv, breaks = breaks, format = format)
 }
 
 rev_date <- c_trans("reverse", "time")
@@ -305,7 +304,7 @@ theme_set(
     panel.background = element_blank(),
     legend.position  = "bottom",
     legend.key       = element_rect(
-      fill = "white", color = "white", size = 4),
+      fill = "white", color = "white", linewidth = 4),
     legend.key.width = unit(2, "cm"),
     legend.text      = element_text(size = 9),
     plot.caption     = element_text(
@@ -318,7 +317,11 @@ theme_set(
 plot_date_breaks <- seq(
   from = ymd_h("2018-11-12 0", tz = "America/New_York"),
   to   = max(exec_time$time_start),
-  by   = "7 day")
+  by   = "7 day"
+)
+
+plot_date_breaks_labels <- strftime(plot_date_breaks, "%b %e")
+plot_date_breaks <- as.integer(plot_date_breaks)
 
 event_type_colors <- c(
   "Executive Time" = "#445566",
@@ -363,10 +366,13 @@ Here, I recreate the same visualization, with each activity colored according to
 Hover over any time slot to view more details about the activity at that time.
 You can also toggle activity categories --- try removing everything except **Meeting**s, **Lunch**es, and **Event**s, it's unbelievable.
 
-```{r plot-daily-schedule, fig.show = "show", out.width="115%"}
+```{r plot-daily-schedule-data, include = FALSE}
 g <-
   exec_time %>%
-  mutate(date = floor_date(time_start, "day")) %>%
+  mutate(
+    date = floor_date(time_start, "day"),
+    date = as.integer(date)
+  ) %>%
   filter_workday() %>%
   mutate_at(vars(time_start, time_end), in_hours) %>%
   ggplot() +
@@ -375,20 +381,21 @@ g <-
         xmax = time_end,
         ymin = date - 3600 * 12,
         ymax = date + 3600 * 12,
-        fill = top_category)
+        fill = top_category
+    )
   ) +
   scale_x_continuous(
     breaks   = seq(8, 17, 3),
     limits   = c(8, 17),
     position = "top",
     labels   = am_pm(seq(8, 17, 3)),
-    expand   = expand_scale(c(0.025, 0), 0)
+    expand   = expansion(c(0.025, 0), 0)
   ) +
-  scale_y_continuous(
-    trans  = rev_date,
+  scale_y_reverse(
+    # trans  = rev_date,
     breaks = plot_date_breaks,
-    labels = strftime(plot_date_breaks, "%b %e"),
-    expand = expand_scale(c(0.025, 0), 0)
+    labels = plot_date_breaks_labels,
+    expand = expansion(c(0.025, 0), 0)
   ) +
   scale_fill_manual(
     values = event_type_colors,
@@ -405,12 +412,15 @@ g <-
     axis.text.y = element_text(family = "PT Mono", size = 10),
     plot.margin = margin(3, 0, 0, 0, unit = "line")
   )
+```
 
+
+```{r plot-daily-schedule, fig.show = "show", out.width="115%"}
 plotly::ggplotly(g + aes(text = label), tooltip = "label") %>%
   plotly::layout(xaxis = list(side = "top", title = ""))
 ```
 
-```{r plot-daily-schedule-static, dependson="plot-daily-schedule"}
+```{r plot-daily-schedule-static}
 g +
   theme(plot.margin = margin(0, 15, 0, 15))
 ```
@@ -530,6 +540,7 @@ scales::show_col(event_type_colors)
 Finally, I pulled the schedule data and all of the above pieces together to build the interactive plot.
 
 ```{r view-plot-daily-schedule, eval=FALSE, echo=TRUE}
+<<plot-daily-schedule-data>>
 <<plot-daily-schedule>>
 ```
 
@@ -618,7 +629,7 @@ g_subdued <-
   ggtitle("President Trump's Daily Tweeting") +
   geom_point(
     data = djt_workday,
-    aes(x = hour, y = date + 3600, text = label),
+    aes(x = hour, y = as.integer(date + 3600), text = label),
     color = "#2c3741",
     size = 0.8
   )
@@ -825,11 +836,11 @@ ggplot(exec_time_hours) +
     guide = FALSE
   ) +
   scale_x_continuous(
-    expand = expand_scale(0, c(0.2, 0))
+    expand = expansion(0, c(0.2, 0))
   ) +
   scale_y_continuous(
     labels = scales::percent_format(accuracy = 10),
-    expand = expand_scale(0, 0),
+    expand = expansion(0, 0),
     position = "bottom"
   ) +
   coord_flip() +
@@ -909,8 +920,10 @@ When the above time-use summary is expanded into his daily schedule, it's clear 
 <div class="js-to_expand">
 
 ```{r plot-time-category-pct-daily, echo=TRUE}
-ggplot(exec_time_total) +
-  aes(date + 3600*12, pct, fill = top_category) +
+exec_time_total %>%
+  mutate(date = as.integer(date + 3600*12)) %>%
+  ggplot() +
+  aes(date, pct, fill = top_category) +
   geom_col(width = 3600*24) +
   scale_fill_manual(
     values = event_type_colors,
@@ -920,13 +933,13 @@ ggplot(exec_time_total) +
     breaks   = seq(0, 1, .25),
     labels   = scales::percent_format(accuracy = 25),
     position = "bottom",
-    expand   = expand_scale(c(0.025, 0), 0)
+    expand   = expansion(c(0.025, 0), 0)
   ) +
-  scale_x_continuous(
-    trans  = rev_date,
+  scale_x_reverse(
+    # trans  = rev_date,
     breaks = plot_date_breaks,
-    labels = strftime(plot_date_breaks, "%b %e"),
-    expand = expand_scale(c(0.025, 0), 0)
+    labels = plot_date_breaks_labels,
+    expand = expansion(c(0.025, 0), 0)
   ) +
   coord_flip() +
   labs(
@@ -1135,7 +1148,7 @@ ggplot(djt_joined_work_non_work) +
     breaks   = seq(0, 24, 4),
     limits   = c(0, 24),
     labels   = am_pm(seq(0, 24, 4)),
-    expand   = expand_scale(c(0.025, 0), 0)
+    expand   = expansion(c(0.025, 0), 0)
   ) +
   scale_color_manual(
     values = event_type_colors_extra,
@@ -1187,7 +1200,7 @@ djt_joined_work_non_work %>%
     breaks   = seq(0, 24, 2),
     limits   = c(4, 12),
     labels   = am_pm(seq(0, 24, 2)),
-    expand   = expand_scale(c(0.025, 0), 0)
+    expand   = expansion(c(0.025, 0), 0)
   ) +
   scale_color_manual(
     values = event_type_colors_extra,
