@@ -1,0 +1,173 @@
+---
+title: Add a Generated Table of Contents Anywhere in RMarkdown
+date: '2018-02-28'
+slug: add-a-generated-table-of-contents-anywhere-in-rmarkdown
+aliases:
+  - /blog/2018/02/28/add-a-generated-table-of-contents-anywhere-in-rmarkdown
+categories:
+  - Blog
+tags:
+  - Markdown
+  - pandoc
+  - R
+  - Tricks
+  - blogdown
+  - R Markdown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, cache=TRUE)
+this_post <- here::here("blog/add-a-generated-table-of-contents-anywhere-in-rmarkdown/index.qmd")
+```
+
+<!-- Links -->
+[render-toc-gist]: https://gist.github.com/gadenbuie/c83e078bf8c81b035e32c3fc0cf04ee8
+[blogdown-gh]: https://github.com/rstudio/blogdown
+[blogdown-issue]: https://github.com/rstudio/blogdown/issues/267
+[stanstrup-gh]: https://github.com/stanstrup
+[hugo-academic]: https://github.com/gcushen/hugo-academic
+[my-theme]: https://github.com/gadenbuie/hyde
+
+**Links:** [Github Gist][render-toc-gist]
+
+GitHub user [\@stanstrup][stanstrup-gh] posted [a question][blogdown-issue] today on the [blogdown GitHub repo][blogdown-gh] about manually positioning a table of contents in blogdown:
+
+> When I use `toc: true` in a post the toc is inserted at the very top of the post.
+> ... If you could specify the position of the toc with some keyword you could work around it.
+
+I don't use the [academic theme for Hugo][hugo-academic] (I use a modified version of [hyde][my-theme]), so I'm not entirely sure if I can completely solve stanstrup's problems, but I know I've run into something similar recently.
+
+And while Yihui is probably right that [the effort isn't worth it](https://github.com/rstudio/blogdown/issues/267#issuecomment-369272039) when fiddling with trivial aesthetics, I use R Markdown in enough places and have run into this a few times.
+Knowing that someone else out there felt the same pain was enough to push me to code up a quick solution.
+
+The function I've worked up is called `render_toc()` and it allows you to drop in a table of contents anywhere inside an R Markdown document.
+This means you can use it to manually position a table of contents in:
+
+- A README file for your package repo
+- In a long blogdown post
+- In an overview slide in xaringan
+
+and many more places.
+
+## Get It
+
+I've posted [the function and an example document as a GitHub Gist][render-toc-gist].
+To use it in your document, choose one of the following:
+
+1. Download `render_toc.R` and `source("render_toc.R")` in your project or script
+
+2. Copy the function code into your RMarkdown document
+
+3. Source the function from GitHub using `devtools`:
+
+    ```r
+    devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8", 
+                          filename = 'render_toc.R')
+    ```
+    
+## Use It
+
+I included an example file in the [GitHub Gist][render-toc-gist].
+Essentially, you just need to source `render_toc.R` somewhere (such as a setup chunk) and then call it in the document where you want to render the table of contents.
+
+The output will just be a markdown list, so if you want to give the table of contents it's own header, you'll have to include that in the document.
+
+Here's what a simple R Markdown document would look like.
+
+````
+```{r setup, include=FALSE} `r ''`
+knitr::opts_chunk$set(echo = TRUE)
+devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8", 
+                      filename = 'render_toc.R')
+```
+
+## Table of Contents
+
+```{r toc, echo=FALSE} `r ''`
+render_toc("blogdown-toc-example.Rmd")
+```
+
+# Writing
+
+## R Markdown
+
+This is an R Markdown document...
+
+```{r cars} `r ''`
+# This is not a header
+summary(cars)
+```
+
+## Regular Code
+
+```r
+# Regular markdown code (not run)
+plot(pressure)
+```
+
+# Plots
+
+## Including Plots {#plots-are-here .class-foo}
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE} `r ''`
+plot(pressure)
+```
+````
+
+which outputs as 
+<a href="/images/2018/2018-02-28-blogdown-toc-example.png" data-featherlight="image">this document (click to view image)</a>.
+
+## Behind the Scenes
+
+The function simply reads through the lines of the RMarkdown document and strips out any code blocks.
+The supported code fencing style is three or more &grave; characters in a row.
+
+Then I extract the headers, which must be in the hashtag-style to work.
+In other words headers like this
+
+```
+## A Nice Header
+```
+
+work well, while headers like these won't be processed
+
+```
+A Not So Nice Header
+====================
+```
+
+The function creates the header anchor if not manually specified -- see the [pandoc header identifiers](http://pandoc.org/MANUAL.html#header-identifiers) help page for more information -- or uses the identifier if it is included.
+
+The example above would link to `#a-nice-header` and the example below links to `#my-shortcut`
+
+```
+## An Overly Wordy Header Title {#my-shortcut}
+```
+
+Any headers with a higher depth than the `toc_depth` parameter (default is `3`) are discarded.
+Also any initial headers prior to the first base level header with higher levels (say `###` when the base level is `##`) are discarded as well.
+
+Finally, if `toc_header_name` is set, the header with that name is discarded so that the TOC itself isn't included in the TOC.
+
+The end result is a simple markdown list that can be rendered anywhere!
+
+```{r echo=TRUE}
+devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8", 
+                      filename = 'render_toc.R')
+
+# `this_post` is set in the setup chunk, 
+# points to the Rmd file for this post
+render_toc(this_post)
+```
+
+Which, underneath, is just markdown.
+
+```{r echo=FALSE, results='markup', comment=''}
+cat(render_toc(this_post))
+```
+
+---
+
+Let me know on twitter [\@grrrck](https://twitter.com/grrrck) if you found this helpful or run into any issues!

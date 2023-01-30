@@ -1,0 +1,201 @@
+---
+title: The Colors of xcolor
+author: Garrick Aden-Buie
+date: '2019-08-07'
+slug: colors-of-xcolor
+categories:
+  - Blog
+tags:
+  - R
+  - Scripts
+  - dplyr
+  - color
+description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
+images:
+  - /blog/colors-of-xcolor/colors-of-xcolor.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmarkdown'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+options(htmltools.dir.version = TRUE)
+
+# If using lightbox for plots, set `fig.show = FALSE`
+# Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
+lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+  if (preview) {
+    glue::glue(
+      '<a href="{url}" data-featherlight="image">
+      <div class="figure">
+      <img src="{url}" alt="{alt}">
+      <p class="caption">{caption}</p>
+      </div>
+      </a>
+      '
+    )
+  } else {
+    if (alt == "") alt <- "static image of the plot"
+    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+  }
+}
+```
+
+[shinydag]: https://gerkelab.com/project/shinydag
+[texpreview]: https://github.com/metrumresearchgroup/texPreview
+[tikz]: https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ
+[xcolor]: http://www.ukern.de/tex/xcolor.html
+
+Today I'm working on the final touches of a Shiny app called [ShinyDAG].
+The goal of the app is to help users create DAGs for causal inference
+with a drag-and-drop interface.
+Way down deep underneath the hood,
+the DAG is rendered using TikZ and LaTeX
+(via the <span class="pkg">[texPreview]</span> package),
+and the app allows the user to tweak the appearance of the DAG
+without having to learn TikZ.
+
+One of the appearance changes that the user can make is to
+change the color of the graph's edges or nodes,
+using the colors defined in the [xcolor] LaTeX package.
+Rather than provide an open-ended text box,
+I wanted to give the user a dropdown menu containing the available colors.
+
+It turned out to be just a few lines of code to grab the `.def` files from the [xcolor] package page,
+strip out the non-color related TeX lines,
+and create a simple tibble of the provided colors.
+
+Quick sidenote: the `.def` files are actually `.def.gz` (or gzipped files),
+but we can read these directly into R using `url()` inside `gzcon()`,
+which is then passed to `readLines()` to read the uncompressed text.
+I wrapped this up into a simple helper function, `read_gz()`.
+
+```{r read_gz, eval=FALSE}
+read_gz <- function(x) readLines(gzcon(url(x)))
+```
+
+Now we can grab those files and extract the color definitions.
+
+```{r get-xcolor}
+library(dplyr)
+library(purrr)
+library(readr)
+library(stringr)
+
+read_gz <- function(x) readLines(gzcon(url(x)))
+
+xcolor <-
+  list(
+    svg = "http://www.ukern.de/tex/xcolor/tex/svgnam.def.gz",
+    x11 = "http://www.ukern.de/tex/xcolor/tex/x11nam.def.gz"
+  ) %>%
+  map(read_gz) %>%
+  flatten_chr() %>%
+  str_subset("^(%%|\\\\| )", negate = TRUE) %>%
+  str_remove("(;%|\\})$") %>%
+  paste(collapse = "\n") %>%
+  read_csv(col_names = c("color", "r", "g", "b")) %>%
+  arrange(color)
+
+head(xcolor)
+```
+
+```{r echo=FALSE}
+post_static_dir <- here::here("static", "blog", "colors-of-xcolor")
+fs::dir_create(post_static_dir)
+readr::write_csv(xcolor, fs::path(post_static_dir, "xcolors", ext = "csv"))
+```
+
+## A Shiny fixed-color picker
+
+I haven't finished incorporating this into the app yet,
+but this is the how the color selector will look when I do.
+
+<center>
+<img src="xcolors-selector.gif" style="max-width: 300px">
+</center>
+
+## All of the `xcolor` colors
+
+Here are all of the
+**`r nrow(xcolor)`**
+colors in the [xcolor] package.
+(And man, it's [hard to sort colors](https://www.alanzucconi.com/2015/09/30/colour-sorting/).)
+If you're interested, you can download the
+[final list as a csv file](xcolors.csv).
+
+```{r, echo=FALSE}
+div_template <- function(color, r, g, b, ...) {
+  htmltools::HTML(glue::glue(
+    '<div class="xcolor-color"',
+    'style="background-color:rgb({r*255},{g*255},{b*255})"',
+    'data-color="{color}"',
+    '>',
+    '<div class="xcolor-text">{color}</div>',
+    '</div>'
+  ))
+}
+
+sorted_xcolor <-
+  xcolor %>%
+  mutate(
+    hsv = pmap(., function(r, g, b, ...) rgb2hsv(r, g, b, maxColorValue = 1)),
+    h = map_dbl(hsv, ~ .[1, ]),
+    s = map_dbl(hsv, ~ .[2, ]),
+    v = map_dbl(hsv, ~ .[3, ]),
+    hc = ggplot2::cut_number(h, 4),
+    sc = ggplot2::cut_number(s, 2)
+  ) %>%
+  arrange(desc(sc), hc, h, v)
+
+htmltools::tagList(
+  htmltools::tags$div(
+    id = "xcolors",
+    style = "display: flex; flex-wrap: wrap; width: 100%; justify-content: center;",
+    sorted_xcolor %>% pmap(div_template)
+  )
+)
+```
+
+```{css, echo=FALSE}
+.xcolor-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+}
+.xcolor-text {
+  display: none;
+  margin: auto;
+  background: var(--siteBgColorCustom);
+  color: var(--textColorCustom);
+  padding: 10px;
+}
+.xcolor-color:hover .xcolor-text,
+.xcolor-color:active .xcolor-text {
+  display: block;
+}
+
+@media (max-width: 500px) {
+  .xcolor-color {
+    width: 75px!important;
+    height: 75px!important;
+  }
+  .xcolor-text {
+    font-size: 50%;
+  }
+}
+```
+
+<script>
+  /* https://stackoverflow.com/a/18655059 */
+  document.body.addEventListener('touchstart',function(){},false);
+</script>

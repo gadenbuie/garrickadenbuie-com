@@ -25,29 +25,29 @@ knitr::opts_chunk$set(
 )
 options(htmltools.dir.version = TRUE)
 
-# If using lightbox for plots, set `fig.show = FALSE`
-# Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
-lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
-  if (preview) {
-    glue::glue(
-      '<a href="{url}" data-featherlight="image">
-      <div class="figure">
-      <img src="{url}" alt="{alt}">
-      <p class="caption">{caption}</p>
-      </div>
-      </a>
-      '
-    )
-  } else {
-    if (alt == "") alt <- "static image of the plot"
-    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
-  }
-}
+# # If using lightbox for plots, set `fig.show = FALSE`
+# # Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
+# lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
+#   if (preview) {
+#     glue::glue(
+#       '<a href="{url}" data-featherlight="image">
+#       <div class="figure">
+#       <img src="{url}" alt="{alt}">
+#       <p class="caption">{caption}</p>
+#       </div>
+#       </a>
+#       '
+#     )
+#   } else {
+#     if (alt == "") alt <- "static image of the plot"
+#     glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+#   }
+# }
 
-xaringanExtra::use_clipboard()
+# xaringanExtra::use_clipboard()
 ```
 
-`r tweetrmd::tweet_embed("https://twitter.com/sharlagelfand/status/1370426706952126465")`
+`r tweetrmd::tweet_markdown("https://twitter.com/sharlagelfand/status/1370426706952126465")`
 
 ## Color Boxes with R
 
@@ -123,8 +123,15 @@ color_preview_dep <- function() {
 
 One of my favorite color resources [coolors.co](https://coolors.co).
 It gives you a palette of random colors, 
-like `r color_preview("#414073")` or `r color_preview("#70a37F")`.
-Press the space bar to get new colors,
+like 
+```{r} 
+color_preview("#414073")
+```
+or 
+```{r}
+color_preview("#70a37F")
+```
+. Press the space bar to get new colors,
 or you can lock in colors you like to find new ones that work
 with colors you've already picked out.
 
