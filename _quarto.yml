@@ -1,6 +1,6 @@
 project:
   type: website
-  resources: 
+  resources:
     - "static"
   render:
     - "*.qmd"
@@ -10,11 +10,18 @@ project:
     - "project/**/*.qmd"
 
 website:
-  title: "Garrick Aden-Buie"
+  title: "garrick"
   site-url: https://garrickadenbuie.com
   navbar:
     right:
-      - about.qmd
+      - text: blog
+        href: blog/index.qmd
+      - text: projects
+        href: project/index.qmd
+      - text: talks
+        href: talk/index.qmd
+      - text: about
+        href: about.qmd
       - icon: github
         href: https://github.com/
       - icon: twitter
