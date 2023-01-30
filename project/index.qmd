@@ -1,0 +1,17 @@
+---
+title: Projects
+description: |
+  All (or most, or at least some) of my projects.
+listing:
+  contents: "**/*.qmd"
+  sort: "date desc"
+  type: grid
+  categories: false
+  sort-ui: true
+  filter-ui: true
+  fields: [date, title, description, image, categories]
+  feed: true
+  grid-columns: 2
+page-layout: full
+title-block-banner: false
+---
