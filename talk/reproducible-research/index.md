@@ -1,6 +1,5 @@
 ---
 title: "Reporting Reproducible Research with R and Markdown"
-author: ~
 date: '2014-04-11'
 slug: reproducible-research
 

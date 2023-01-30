@@ -1,6 +1,5 @@
 ---
 title: "Occupant Activity Profiles from Smart Home Sensor Event Streams"
-author: ~
 date: '2017-10-25'
 slug: informs-2017
 images: [ informs2017.png ]
