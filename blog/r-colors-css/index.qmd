@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-09-14'
 slug: r-colors-css
 categories:
-  - Blog
-tags:
   - xaringan
   - xaringan Tip
   - CSS

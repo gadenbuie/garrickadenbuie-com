@@ -5,11 +5,9 @@ date: '2018-02-19'
 params:
   last_update: "2018-03-05 10:00"
 slug: gun-control-google-trends
-aliases: 
+aliases:
   - /blog/2018/02/19/gun-control-google-trends
 categories:
-  - Blog
-tags:
   - Data Analysis
   - Visualization
   - Google Trends
@@ -414,19 +412,19 @@ library(gtrendsR)
 
 get_trends_for_event &lt;- function(day) {
   gtrends(
-      keyword = c(&quot;gun control&quot;, &quot;baseline&quot;), 
-      geo = &quot;US&quot;, 
+      keyword = c(&quot;gun control&quot;, &quot;baseline&quot;),
+      geo = &quot;US&quot;,
       time = paste(glue::glue(&quot;{day - 7} {day + 21}&quot;))
     )
 }
 
-guntrends &lt;- selected_dates %&gt;% 
+guntrends &lt;- selected_dates %&gt;%
     mutate(gtrends = map(Date, get_trends_for_event))
 
-all_guntrends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;), 
+all_guntrends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;),
                          geo = &quot;US&quot;, time = &quot;all&quot;)
-  
-parkland_trends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;), 
+
+parkland_trends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;),
                            geo = &quot;US&quot;, time = &quot;now 7-d&quot;)</code></pre>
 <!--
   <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1308_RC02/embed_loader.js"></script>

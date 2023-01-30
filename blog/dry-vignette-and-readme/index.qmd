@@ -8,8 +8,6 @@ slug: dry-vignette-and-readme
 aliases:
   - /blog/2018/03/05/dry-vignette-and-readme
 categories:
-  - Blog
-tags:
   - R
   - Tips
   - Tricks

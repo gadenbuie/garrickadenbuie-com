@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-09-01'
 slug: sharing-xaringan-slides
 categories:
-  - Blog
-tags:
   - R
   - xaringan
   - xaringanExtra

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-10-07'
 slug: pull-request-flow-usethis
 categories:
-  - Blog
-tags:
   - R
   - usethis
   - Pull Requests

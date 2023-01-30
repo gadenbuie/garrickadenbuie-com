@@ -5,8 +5,6 @@ date: '2021-11-02'
 slug: branchmover
 featured: true
 categories:
-  - Blog
-tags:
   - R
   - usethis
   - GitHub

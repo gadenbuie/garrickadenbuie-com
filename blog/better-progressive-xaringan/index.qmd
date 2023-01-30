@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-05-20'
 slug: better-progressive-xaringan
 categories:
-  - Blog
-tags:
   - R
   - xaringan
   - xaringan Tip

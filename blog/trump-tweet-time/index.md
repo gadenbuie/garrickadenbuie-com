@@ -8,8 +8,6 @@ aliases:
   - /blog/2019/02/09/trump-tweet-time
 twitterImage: /images/2019/trump-tweet-time-01.png
 categories:
-  - Blog
-tags:
   - R
   - rtweet
   - Shiny
@@ -39,7 +37,7 @@ Axios helpfully released [a Google Spreadsheet][axios-spreadsheet] to accompany 
 
 I started to pull together an analysis for an upcoming blog post, and here's a little sneak peak.
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s something simple, using tweets from the <a href="https://twitter.com/hashtag/trumptwitterarchive?src=hash&amp;ref_src=twsrc%5Etfw">#trumptwitterarchive</a> so limited to midterms to end of 2018. <a href="https://t.co/CdRxUNwyq2">pic.twitter.com/CdRxUNwyq2</a></p>&mdash; Garrick Aden-Buie (@grrrck) <a href="https://twitter.com/grrrck/status/1092538573730000899?ref_src=twsrc%5Etfw">February 4, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s something simple, using tweets from the <a href="https://twitter.com/hashtag/trumptwitterarchive?src=hash&amp;ref_src=twsrc%5Etfw">#trumptwitterarchive</a> so limited to midterms to end of 2018. <a href="https://t.co/CdRxUNwyq2">pic.twitter.com/CdRxUNwyq2</a></p>&mdash; Garrick Aden-Buie (@grrrck) <a href="https://twitter.com/grrrck/status/1092538573730000899?ref_src=twsrc%5Etfw">February 4, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## An 8-bit Distraction
 

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-07-20'
 slug: video-debug-js-from-r
 categories:
-  - Blog
-tags:
   - R
   - RStudio
   - JavaScript

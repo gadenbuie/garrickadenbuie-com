@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2022-03-12'
 slug: saving-daylight-time
 categories:
-  - Blog
-tags:
   - Visualization
 description: |
   How much daylight do cities across the world get throughout the year?

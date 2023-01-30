@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2022-06-07'
 slug: xaringanextra-v0.6.0
 categories:
-  - Blog
-tags:
   - R
   - R Package
   - xaringan
@@ -114,7 +112,7 @@ install.packages("xaringanExtra")
 ```
 
 As always, you can still get the latest and greatest in-development versions
-from [GitHub][xe-gh] 
+from [GitHub][xe-gh]
 
 ``` r
 # install.packages("remotes")
@@ -138,7 +136,7 @@ Yeah, can you believe it?!
 
 When I [started working](https://github.com/gadenbuie/xaringanExtra/commit/636fbfd84221d70f899242fdd7bd651a497311cd)
 on xaringanExtra (checks notes)
-`r difftime(as.Date("2022-06-07"), as.Date("2019-11-07"), units = "days")` 
+`r difftime(as.Date("2022-06-07"), as.Date("2019-11-07"), units = "days")`
 days ago — that's 2 &#189; years or 13 pandemic years ago —
 I never expected that xaringanExtra would ever be anything beyond
 a toy package I used for fun ~~procrastination~~ experiments

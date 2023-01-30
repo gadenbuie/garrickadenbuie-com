@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2019-08-15'
 slug: custom-discrete-color-scales-for-ggplot2
 categories:
-  - Blog
-tags:
   - R
   - ggplot2
   - Visualization

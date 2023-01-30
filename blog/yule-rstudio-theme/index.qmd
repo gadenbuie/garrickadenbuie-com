@@ -9,8 +9,6 @@ aliases:
 images:
   - /images/2018/holiday-rstudio-theme/mockup-rstudio.png
 categories:
-  - Blog
-tags:
   - R
   - RStudio
 ---

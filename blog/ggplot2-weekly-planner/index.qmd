@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2019-06-22'
 slug: ggplot2-weekly-planner
 categories:
-  - Blog
-tags:
   - R
   - ggplot2
   - Productivity

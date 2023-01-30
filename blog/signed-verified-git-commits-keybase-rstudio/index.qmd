@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-09-13'
 slug: signed-verified-git-commits-keybase-rstudio
 categories:
-  - Blog
-tags:
   - R
   - git
   - GitHub

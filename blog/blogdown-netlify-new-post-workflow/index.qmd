@@ -6,8 +6,6 @@ date: '2019-03-18'
 slug: blogdown-netlify-new-post-workflow
 image: new-post_dropdown_crop.png
 categories:
-  - Blog
-tags:
   - blogdown
   - R
   - netlify

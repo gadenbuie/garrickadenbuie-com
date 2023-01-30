@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-09-03'
 slug: shrtcts-reprex-to-issue
 categories:
-  - Blog
-tags:
   - R
   - Addin
   - Shortcuts

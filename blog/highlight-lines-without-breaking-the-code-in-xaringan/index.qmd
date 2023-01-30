@@ -6,8 +6,6 @@ slug: highlight-lines-without-breaking-the-code-in-xaringan
 aliases:
   - /blog/2018/01/23/highlight-lines-without-breaking-the-code-in-xaringan
 categories:
-  - Blog
-tags:
   - R
   - Presentation
   - xaringan
@@ -85,7 +83,7 @@ Basically, any lines in the source code with the `#<<` mark at the end of the li
 
 
 ```{r, comment=""}
-lines <- c('paste("This looks",', 
+lines <- c('paste("This looks",',
            '      "kinda normal", #<<',
            '      "and it is")')
 

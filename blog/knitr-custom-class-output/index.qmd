@@ -9,8 +9,6 @@ author: Garrick Aden-Buie
 date: '2019-03-05'
 slug: knitr-custom-class-output
 categories:
-  - Blog
-tags:
   - R
   - knitr
   - R Markdown

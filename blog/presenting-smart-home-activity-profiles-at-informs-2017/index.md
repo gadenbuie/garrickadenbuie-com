@@ -6,8 +6,6 @@ slug: presenting-smart-home-activity-profiles-at-informs-2017
 aliases:
   - /blog/2017/10/26/presenting-smart-home-activity-profiles-at-informs-2017
 categories:
-  - Blog
-tags:
   - Academia
   - INFORMS
   - Presentation

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2018-04-29'
 slug: find-blogdown-tags
 categories:
-  - Blog
-tags:
   - Note to Self
   - blogdown
   - Scripts
@@ -23,13 +21,13 @@ library(tidyverse)
 blogdown_content_path <- here::here("content")
 
 # Scan yaml of all posts (run at root of blogdown project)
-blogdown:::scan_yaml(blogdown_content_path) %>% 
+blogdown:::scan_yaml(blogdown_content_path) %>%
   # Pull out the tags
-  map("tags") %>% 
+  map("tags") %>%
   # Drop results without any tags
-  discard(is.null) %>% 
+  discard(is.null) %>%
   # Turn into a nice tibble (can stop here if you want tags + files)
-  map_df(~ tibble::data_frame(tag = .), .id = "file") %>% 
+  map_df(~ tibble::data_frame(tag = .), .id = "file") %>%
   # Summarize (group and count)
   group_by(tag) %>%
   count(sort = TRUE) %>%

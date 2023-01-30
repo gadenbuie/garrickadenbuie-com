@@ -3,8 +3,6 @@ title: Setting up a new MacBook Pro
 author: Garrick Aden-Buie
 date: '2020-12-01'
 categories:
-  - Blog
-tags:
   - R
   - Tips
   - Programming

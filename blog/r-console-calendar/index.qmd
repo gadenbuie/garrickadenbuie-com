@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-09-21'
 slug: r-console-calendar
 categories:
-  - Blog
-tags:
   - R
   - lubridate
 description: >

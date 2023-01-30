@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-03-16'
 slug: questions-answers-and-reprexes
 categories:
-  - Blog
-tags:
   - Teaching
   - Learning
   - CSS
@@ -16,7 +14,7 @@ description: A "CSS Battle" YouTube video made me ponder metacognition in progra
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/2021-03-16-questions-answers-and-reprexes.Rmarkdown'
 editor_options:
   chunk_output_type: console
-  
+
 engine: markdown
 ---
 

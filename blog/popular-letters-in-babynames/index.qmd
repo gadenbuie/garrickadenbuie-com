@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2019-05-17'
 slug: popular-letters-in-babynames
 categories:
-  - Blog
-tags:
   - R
   - gganimate
   - ggplot2

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2022-02-21'
 slug: wordle-guess-helper
 categories:
-  - Blog
-tags:
   - R
   - JavaScript
   - dplyr

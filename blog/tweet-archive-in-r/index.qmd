@@ -3,9 +3,8 @@ title: Read and Visualize your Twitter Archive
 author: Garrick Aden-Buie
 date: '2022-12-07'
 slug: tweet-archive-in-r
+image: feature.png
 categories:
-  - Blog
-tags:
   - R
   - Twitter
   - Personal Data
@@ -22,7 +21,7 @@ summary: >
   does the archive include all of your tweets, it also contains a variety of
   other interesting data about your account: who you followed and who followed
   you; the tweets you liked; the ads you were served; and much more.
-  
+
   This post, very much inspired by the awesome Observable notebook, Planning
   to leave Twitter?, shows you how to use R to read and explore your archive,
   using my own archive as an example.
@@ -44,7 +43,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
   comment = "#>",
-  fig.width = 9, 
+  fig.width = 9,
   fig.height = 10
 )
 options(
@@ -57,7 +56,7 @@ options(
 
 ```{r setup-fansi, comment="", results="asis", echo = FALSE, cache = FALSE}
 old.hooks <- fansi::set_knit_hooks(
-  hooks = knitr::knit_hooks, 
+  hooks = knitr::knit_hooks,
   which = c("output", "message"),
   proc.fun = function(x, class) {
     fansi::html_code_block(
@@ -83,7 +82,7 @@ and much more.
 :::
 
 This post,
-very much inspired by the awesome 
+very much inspired by the awesome
 Observable notebook,
 [Planning to leave Twitter?][ojs-nb],
 shows you how to use R to read and explore your archive,
@@ -148,7 +147,7 @@ for turning static ggplot2 plots into interactive plots.
 Finally, the Twitter archive doesn't _require_ API access to Twitter,
 but you can use it to augment the data in the archive.
 The [rtweet] package is excellent for this,
-even though it takes a little effort to 
+even though it takes a little effort to
 [get it set up](https://docs.ropensci.org/rtweet/articles/rtweet.html).
 
 ### Read the manifest
@@ -189,8 +188,8 @@ Here's the `data/manifest.js` file as an example.
 lines <- brio::read_lines("data/manifest.js")
 writeLines(c(
   "```js",
-  lines[1], 
-  "  // ... data ...", 
+  lines[1],
+  "  // ... data ...",
   lines[length(lines)],
   "```"
 ))
@@ -208,7 +207,7 @@ manifest <- jsonlite::fromJSON(lines)
 This worked, but...
 [jsonlite]{.pkg} was designed for statistical work,
 so it transforms the data structure when reading in the JSON.
-For example, 
+For example,
 by default it converts arrays that look like JSON-ified data frames
 into actual `data.frame`s.
 
@@ -233,10 +232,10 @@ needed to read the archive JSON files.
 read_archive_json <- function(path) {
   lines <- brio::read_lines(path)
   lines[1] <- sub("^[^{[]+([{[])", "\\1", lines[1])
-  
+
   jsonlite::fromJSON(
-    txt = lines, 
-    simplifyVector = TRUE, 
+    txt = lines,
+    simplifyVector = TRUE,
     simplifyDataFrame = FALSE,
     simplifyMatrix = FALSE
   )
@@ -306,7 +305,7 @@ manifest$dataTypes$account |> str()
 
 Here there's only one file containing a single account record: `data/account.js`.
 Inside _that_ file is a small bit of JavaScript.
-Like the manifest, it's _almost_ JSON, 
+Like the manifest, it's _almost_ JSON,
 except that it assigns the JavaScript object to `window.YTD.account.part0`.
 
 ```{js file=manifest$dataTypes$account$files[[1]]$fileName, eval = FALSE}
@@ -325,14 +324,14 @@ str(account)
 ```{r joined-stats, echo = FALSE}
 joined <- ymd_hms(account[[1]]$account$createdAt)
 
-joined_duration <- 
-  interval(start = joined, end = now()) |> 
+joined_duration <-
+  interval(start = joined, end = now()) |>
   as.duration()
 ```
 
 This leads us to our first fun fact:
 I created my Twitter account on
-`r strftime(joined, "%B %d, %Y")`, 
+`r strftime(joined, "%B %d, %Y")`,
 which means that I've been using Twitter (on and off) for
 `r sprintf("%0.1f", joined_duration / dyears())` years.
 That's `r format(floor(joined_duration / ddays()), big.mark = ",")` days of twittering!
@@ -345,33 +344,33 @@ so that you can copy and paste it into your R session or script
 to use it right away.
 
 ```{r fn-read-twitter-data, collapse = TRUE}
-#' Read the Twitter Archive JSON 
-#' 
+#' Read the Twitter Archive JSON
+#'
 #' @param path Path to a Twitter archve `.js` file
 read_archive_json <- function(path) {
   lines <- brio::read_lines(path)
   lines[1] <- sub("^[^{[]+([{[])", "\\1", lines[1])
-  
+
   jsonlite::fromJSON(
-    txt = lines, 
-    simplifyVector = TRUE, 
+    txt = lines,
+    simplifyVector = TRUE,
     simplifyDataFrame = FALSE,
     simplifyMatrix = FALSE
   )
 }
 
 #' Read an twitter archive data item
-#' 
+#'
 #' @param manifest The list from `manifest.js`
 #' @param item The name of an item in the manifest
 read_twitter_data <- function(manifest, item) {
-  manifest$dataTypes[[item]]$files |> 
+  manifest$dataTypes[[item]]$files |>
     purrr::transpose() |>
     purrr::pmap(\(fileName, ...) read_archive_json(fileName))
 }
 
 #' Simplify the data, if possible and easy
-#' 
+#'
 #' @param x A list of lists as returned from `read_twitter_data()`
 #' @param simplifier A function that's applied to each item in the
 #'   list of lists and that can be used to simplify the output data.
@@ -379,7 +378,7 @@ simplify_twitter_data <- function(x, simplifier = identity) {
    x <- purrr::flatten(x)
    item_names <- x |> purrr::map(names) |> purrr::reduce(union)
    if (length(item_names) > 1) return(x)
-   
+
    x |>
     purrr::map(item_names) |>
     purrr::map_dfr(simplifier)
@@ -413,7 +412,7 @@ to find the earliest Twitter adopters among my followers.
 # These tables are wide, you may need to scroll to see the preview
 options(width = 120)
 
-followers <- 
+followers <-
   read_twitter_data(manifest, "follower") |>
   simplify_twitter_data()
 ```
@@ -422,7 +421,7 @@ Then we can arrange the rows of `followers` by `accountId`
 as a proxy for date of account creation.
 
 ```{r early_followers}
-early_followers <- 
+early_followers <-
   followers |>
   arrange(as.numeric(accountId)) |>
   slice_head(n = 11)
@@ -434,14 +433,14 @@ early_followers
 As you can see,
 some parts of the Twitter archive include the barest minimum amount of data.
 Thankfully, we can still use [rtweet] to gather additional data about these users.
-I'm looking at a small subset of my 
+I'm looking at a small subset of my
 `r format(nrow(followers), big.mark = ",")`
 followers here,
 but you might want to do this for all your followers
 and save the collected user data in your archive.
 
 ```{r early_followers_full}
-early_followers_accounts <- 
+early_followers_accounts <-
   early_followers |>
   pull(accountId) |>
   rtweet::lookup_users()
@@ -486,21 +485,21 @@ tidy_tweet_raw <- function(tweet_raw) {
     "lang",
     "source"
   )
-  
+
   # start with a few basic items
   tweet <- tweet_raw[basic_items]
 
   # and collapse a few nested items into a single string
-  tweet$user_mentions <- tweet_raw |> 
+  tweet$user_mentions <- tweet_raw |>
     purrr::pluck("entities", "user_mentions") |>
     purrr::map_chr("screen_name") |>
     paste(collapse = ",")
-  
-  tweet$hashtags <- tweet_raw |> 
+
+  tweet$hashtags <- tweet_raw |>
     purrr::pluck("entities", "hashtags") |>
     purrr::map_chr("text") |>
     paste(collapse = ",")
-  
+
   tweet
 }
 ```
@@ -523,9 +522,9 @@ to convert columns to their correct format
 and to extract a few features.
 
 ```{r tweets}
-tidy_tweets <- 
-  read_twitter_data(manifest, "tweets") |> 
-  simplify_twitter_data(tidy_tweet_raw) |> 
+tidy_tweets <-
+  read_twitter_data(manifest, "tweets") |>
+  simplify_twitter_data(tidy_tweet_raw) |>
   mutate(
     across(contains("_count"), as.integer),
     retweet = str_detect(full_text, "^RT @"),
@@ -619,13 +618,13 @@ plot_monthly <-
   mutate(
     type_pl = plu::ral(type, n = n),
     tooltip = glue::glue(
-      "<p><strong>{month} {year}: ", 
+      "<p><strong>{month} {year}: ",
       "<span style=\"color:{type_colors[type]}\">{n} {type_pl}</span></strong></p>",
       "<ol>{tweets}</ol>",
       tweets = paste(sprintf("<li>%s</li>", top), collapse = "")
     ),
     tooltip = htmltools::HTML(tooltip)
-  ) |> 
+  ) |>
   ungroup() |>
   # Finally ensure the order of factors (including month!)
   mutate(type = factor(type, rev(c("tweet", "reply", "retweet")))) |>
@@ -660,8 +659,8 @@ plot_monthly <-
   )
 
 ggiraph::girafe(
-  ggobj = plot_monthly, 
-  width_svg = 14, 
+  ggobj = plot_monthly,
+  width_svg = 14,
   height_svg = 6,
   desc = knitr::opts_current$get("fig.alt")
 )
@@ -671,7 +670,7 @@ The first chart shows
 the number of tweets, replies and mentions
 sent in each month from 2009 to 2022.
 From 2009 to 2015,
-I sent about 25 total tweets per month, 
+I sent about 25 total tweets per month,
 with one large spike in January 2014
 when a grad school course I was taking decided to do a "Twitter seminar."
 My Twitter usage dropped off considerably between 2015 and 2018:
@@ -730,11 +729,11 @@ plot_popular_tweets <-
       "<dt>&#9842;</dt><dd>{retweet_count}</dd>",  # recycling icon
       "<dt>&#9829;</dt><dd>{favorite_count}</dt>", # heart icon
       "<dt>&#9998;</dt><dd>", # pencil icon
-      "<a href=\"https://twitter.com/grrrck/status/{id}\">{created_at}</a>", 
+      "<a href=\"https://twitter.com/grrrck/status/{id}\">{created_at}</a>",
       "</dd></dl>"
     )
   ) |>
-  rowwise() |> 
+  rowwise() |>
   mutate(across(c(retweet_count, favorite_count), jitter)) |>
   ungroup() |>
   ggplot() +
@@ -748,11 +747,11 @@ plot_popular_tweets <-
   ggiraph::geom_point_interactive() +
   scale_color_viridis_c(option = "C", direction = -1) +
   scale_y_continuous(
-    trans = scales::log1p_trans(), 
+    trans = scales::log1p_trans(),
     breaks = c(10, 25, 50, 100, 200, 400),
   ) +
   scale_x_continuous(
-    trans = scales::log1p_trans(), 
+    trans = scales::log1p_trans(),
     breaks = c(10, 25, 50, 100, 200, 400, 800, 1600)
   ) +
   guides(size = "none") +
@@ -769,8 +768,8 @@ plot_popular_tweets <-
   )
 
 ggiraph::girafe(
-  ggobj = plot_popular_tweets, 
-  width_svg = 12, 
+  ggobj = plot_popular_tweets,
+  width_svg = 12,
   height_svg = 8,
   options = list(
     ggiraph::opts_toolbar(position = "bottomright"),
@@ -831,7 +830,7 @@ document.addEventListener('DOMContentLoaded', addPlotPopularTweetPlaceholderText
 ## Tweets by time of day
 
 ```{r data-time-of-day, echo = FALSE}
-tweet_count_by_hour <- 
+tweet_count_by_hour <-
   tidy_tweets |>
   count(day, hour) |>
   mutate(
@@ -846,28 +845,28 @@ tweet_count_by_hour <-
 ```
 ```{r plot-time-of-day, eval = FALSE, echo = FALSE}
 tooltip_hour <- function(day, hour_label, ...) {
-  this_hour_count <- 
-    tweet_count_by_hour |> 
+  this_hour_count <-
+    tweet_count_by_hour |>
     filter(hour_label == !!hour_label)
-  
+
   this_hour_total <- sum(this_hour_count$n)
   this_hour_pct <- scales::percent(this_hour_total / sum(tweet_count_by_hour$n), 0.1)
   this_hour_total <- trimws(format(this_hour_total, big.mark = ","))
-  
-  this_hour_days <- 
-    this_hour_count |> 
+
+  this_hour_days <-
+    this_hour_count |>
     mutate(
       across(pct, scales::percent_format(0.1)),
       across(n, format, big.mark = ","),
       across(n, trimws),
       text = glue("{day}: {pct} ({n})"),
       text = if_else(day == !!day, glue("<strong>{text}</strong>"), text)
-    ) |> 
+    ) |>
     glue_data("<li>{text}</li>") |>
     glue_collapse()
-  
+
   glue::glue(
-    "<p><strong>{hour_label}</strong><br><small>{this_hour_pct} of total ({this_hour_total})</small></p>", 
+    "<p><strong>{hour_label}</strong><br><small>{this_hour_pct} of total ({this_hour_total})</small></p>",
     "<ul>{this_hour_days}</ul>"
   )
 }
@@ -915,7 +914,7 @@ plot_time_of_day <-
 
 ggiraph::girafe(
   ggobj = plot_time_of_day,
-  width_svg = 12, 
+  width_svg = 12,
   height_svg = 8,
   options = list(
     ggiraph::opts_hover_inv("filter: saturate(30%) brightness(125%)"),
@@ -941,7 +940,7 @@ Tuesday at noon seems to be my favorite time to tweet
 — I sent
 `r tweet_count_by_hour |> filter(day == "Tue", hour == 12) |> pull(n)`
 tweets between 12pm and 1pm on Tuesday —
-followed by Friday at 1pm 
+followed by Friday at 1pm
 (`r tweet_count_by_hour |> filter(day == "Fri", hour == 13) |> pull(n)` tweets)
 or at 11am
 (`r tweet_count_by_hour |> filter(day == "Fri", hour == 11) |> pull(n)` tweets).
@@ -970,7 +969,7 @@ Hover or tap on a bar to compare a given time across all days.
 ## Tweet source
 
 ```{r data-tweet-source, echo = FALSE, eval = TRUE}
-tweet_source <- 
+tweet_source <-
   tidy_tweets |>
   extract(
     source,
@@ -978,18 +977,18 @@ tweet_source <-
     regex = '<a href="([^"]+)"[^>]+>([^<]+)</a>'
   )
 
-tweet_source_count <- tweet_source |> 
-  count(source) |> 
+tweet_source_count <- tweet_source |>
+  count(source) |>
   mutate(pct = n / sum(n))
 ```
 ```{r plot-tweet-source, echo = FALSE, eval = FALSE}
 plot_tweet_source <-
-  tweet_source |> 
+  tweet_source |>
   mutate(
     source = fct_lump_n(source, n = 15),
     source = fct_rev(fct_infreq(source))
   ) |>
-  count(source, type, sort = TRUE) |> 
+  count(source, type, sort = TRUE) |>
   pivot_wider(names_from = type, values_from = n, values_fill = 0) |>
   mutate(
     total = reply + retweet + tweet,
@@ -1006,7 +1005,7 @@ plot_tweet_source <-
         paste0('<p class="b">', source, "</p>", x)
       }
     )
-  ) |> 
+  ) |>
   ggplot() +
   aes(x = total, y = source, tooltip = tooltip) +
   ggiraph::geom_col_interactive(show.legend = FALSE) +
@@ -1023,7 +1022,7 @@ plot_tweet_source <-
 
 ggiraph::girafe(
   ggobj = plot_tweet_source,
-  width_svg = 10, 
+  width_svg = 10,
   height_svg = 8,
   options = list(
     ggiraph::opts_hover_inv("filter: saturate(30%) brightness(125%)"),
@@ -1063,7 +1062,7 @@ I wrote tweets from the web app or my phone.
 #| fig.alt: >
 #|   A horizontal bar chart where each bar is the number of tweets sent from
 #|   a particular source app. There are 17 sources listed. "Twitter for iPhone"
-#|   accounts for about 2500 tweets, "Twitter Web App" for 1500, 
+#|   accounts for about 2500 tweets, "Twitter Web App" for 1500,
 #|   and "Twitter Web Client" for about 1000 tweets. The remaning sources are
 #|   all less than 250.
 ```
@@ -1086,22 +1085,22 @@ is to collect a copy of your liked tweets.
 
 ```{r likes-extract}
 likes <-
-  read_twitter_data(manifest, "like") |> 
+  read_twitter_data(manifest, "like") |>
   simplify_twitter_data()
 
-likes |> 
+likes |>
   arrange(as.numeric(tweetId))
 ```
 
 While the likes archive includes the full text of each tweet,
-we can use the 
+we can use the
 [`lookup_tweets()` function](https://docs.ropensci.org/rtweet/reference/lookup_tweets.html)
 from the
 [rtweet](https://docs.ropensci.org/rtweet/) package
 to download complete information about each tweet.
 
 ```{r hydrate-likes, eval = FALSE}
-likes_full <- 
+likes_full <-
   rtweet::lookup_tweets(likes$tweetId) |>
   write_rds("data/likes.rds")
 ```
@@ -1197,12 +1196,12 @@ and my newest favorite function,
 > - `impressionTime`: Date and time when the ad was viewed.
 
 ```{r ad_impressions, cache = TRUE}
-ad_impressions <- 
+ad_impressions <-
   read_twitter_data(manifest, "adImpressions") |>
   simplify_twitter_data() |>
   unnest(adsUserData) |>
   unnest(adsUserData) |>
-  unnest_wider(adsUserData) |> 
+  unnest_wider(adsUserData) |>
   unnest_wider(c(deviceInfo, promotedTweetInfo, advertiserInfo)) |>
   mutate(
     matchedTargetingCriteria = map(matchedTargetingCriteria, map_dfr, identity),
@@ -1223,8 +1222,8 @@ ad_engagements <-
   simplify_twitter_data() |>
   unnest(adsUserData) |>
   unnest(adsUserData) |>
-  unnest_wider(adsUserData) |> 
-  mutate(across(engagementAttributes, map, map_dfr, identity)) |> 
+  unnest_wider(adsUserData) |>
+  mutate(across(engagementAttributes, map, map_dfr, identity)) |>
   unnest_wider(impressionAttributes) |>
   # now the same as the impressions
   unnest_wider(c(deviceInfo, promotedTweetInfo, advertiserInfo)) |>
@@ -1240,7 +1239,7 @@ you can combine them together with
 [`purrr::list_rbind`](https://purrr.tidyverse.org/reference/list_c.html).
 
 ```{r}
-ads <- 
+ads <-
   list(
     impression = ad_impressions,
     engagement = ad_engagements
@@ -1260,20 +1259,20 @@ Here are my impressions and engagements for August through early November of 202
 #|   tweets and are roughly split in half: half are impressions and half are
 #|   engagements.
 plot_ads_interactions <-
-  ads |> 
+  ads |>
   count(type, month = floor_date(impressionTime, "month")) |>
   mutate(
     n_str = format(n, big.mark = ","),
     tooltip = pmap_chr(
-      list(type, n, n_str, month), 
+      list(type, n, n_str, month),
       \(type, n, n_str, month) {
         glue(
           "{n} {type} in {month}",
-          type = plu::ral(type, n = n), 
+          type = plu::ral(type, n = n),
           month = month(month, label = TRUE, abbr = FALSE)
         )
       })
-  ) |> 
+  ) |>
   ggplot() +
   aes(month, n, fill = type, tooltip = tooltip) +
   ggiraph::geom_col_interactive() +
@@ -1322,9 +1321,9 @@ over the last few months.
 
 ```{r plot-advertisers, eval = TRUE, echo = FALSE}
 #| fig.alt: >
-#|   A bar chart with the number of tweet interactions (impressions 
+#|   A bar chart with the number of tweet interactions (impressions
 #|   and engagements) by advertiser.
-ads_advertiser_counts <- 
+ads_advertiser_counts <-
   ads |>
   count(advertiserName, type, sort = TRUE) |>
   pivot_wider(names_from = type, values_from = n) |>
@@ -1332,7 +1331,7 @@ ads_advertiser_counts <-
   pivot_longer(-1, names_to = "type")
 
 ads_tweet_examples <-
-  ads |> 
+  ads |>
   filter(!is.na(tweetText)) |>
   semi_join(ads_advertiser_counts) |>
   group_by(advertiserName, type) |>
@@ -1347,17 +1346,17 @@ ads_tweet_examples <-
   mutate(
     tweets = glue('<ul>{tweets}</ul>'),
     tweets = glue(
-      '<p><strong>{n}</strong> promoted tweet ', 
-      '<strong>{type}s</strong> ', 
-      'by <strong>{advertiserName}</strong></p>', 
+      '<p><strong>{n}</strong> promoted tweet ',
+      '<strong>{type}s</strong> ',
+      'by <strong>{advertiserName}</strong></p>',
       '{tweets}'
     )
   )
-  
-plot_advertisers <- 
+
+plot_advertisers <-
   ads_advertiser_counts |>
-  left_join(ads_tweet_examples) |> 
-  mutate(advertiserName = fct_reorder(advertiserName, value, sum)) |> 
+  left_join(ads_tweet_examples) |>
+  mutate(advertiserName = fct_reorder(advertiserName, value, sum)) |>
   ggplot() +
   aes(value, advertiserName, fill = type, tooltip = tweets) +
   ggiraph::geom_col_interactive() +
@@ -1516,7 +1515,7 @@ xaringanExtra::use_clipboard()
     margin-left: auto;
   }
 }
-@media (prefers-color-scheme: dark) {  
+@media (prefers-color-scheme: dark) {
   .girafe_container_std polyline[stroke="#E7EAEB"] {
     stroke: var(--slate-10)
   }

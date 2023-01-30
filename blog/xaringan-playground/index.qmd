@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-01-21'
 slug: xaringan-playground
 categories:
-  - Blog
-tags:
   - R
   - xaringan
   - Presentation

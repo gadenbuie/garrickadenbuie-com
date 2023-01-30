@@ -5,8 +5,6 @@ date: '2019-10-16'
 slug: xaringan-tip-logo-all-slides
 image: xaringan-logo-all-slides_twitter.png
 categories:
-  - Blog
-tags:
   - R
   - Tips
   - xaringan

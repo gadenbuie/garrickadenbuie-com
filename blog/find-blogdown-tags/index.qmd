@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2018-04-29'
 slug: find-blogdown-tags
 categories:
-  - Blog
-tags:
   - Note to Self
   - blogdown
   - Scripts
@@ -17,15 +15,15 @@ I’ve been using [blogdown](https://bookdown.org/yihui/blogdown) for a while no
 
     library(tidyverse)
     blogdown_content_path <- here::here("content")
-    
+
     # Scan yaml of all posts (run at root of blogdown project)
-    blogdown:::scan_yaml(blogdown_content_path) %>% 
+    blogdown:::scan_yaml(blogdown_content_path) %>%
       # Pull out the tags
-      map("tags") %>% 
+      map("tags") %>%
       # Drop results without any tags
-      discard(is.null) %>% 
+      discard(is.null) %>%
       # Turn into a nice tibble (can stop here if you want tags + files)
-      map_df(~ tibble::data_frame(tag = .), .id = "file") %>% 
+      map_df(~ tibble::data_frame(tag = .), .id = "file") %>%
       # Summarize (group and count)
       group_by(tag) %>%
       count(sort = TRUE) %>%
@@ -35,17 +33,17 @@ I’ve been using [blogdown](https://bookdown.org/yihui/blogdown) for a while no
     ## # A tibble: 50 x 3
     ## # Groups:   tag [50]
     ##    tag               n starts_upper
-    ##    <chr>         <int> <lgl>       
-    ##  1 R                19 TRUE        
-    ##  2 Data Analysis     6 TRUE        
-    ##  3 Markdown          6 TRUE        
-    ##  4 Research          6 TRUE        
-    ##  5 Visualization     6 TRUE        
-    ##  6 R Package         5 TRUE        
-    ##  7 Scripts           5 TRUE        
-    ##  8 pandoc            4 FALSE       
-    ##  9 ggplot2           3 FALSE       
-    ## 10 INFORMS           3 TRUE        
+    ##    <chr>         <int> <lgl>
+    ##  1 R                19 TRUE
+    ##  2 Data Analysis     6 TRUE
+    ##  3 Markdown          6 TRUE
+    ##  4 Research          6 TRUE
+    ##  5 Visualization     6 TRUE
+    ##  6 R Package         5 TRUE
+    ##  7 Scripts           5 TRUE
+    ##  8 pandoc            4 FALSE
+    ##  9 ggplot2           3 FALSE
+    ## 10 INFORMS           3 TRUE
     ## # ... with 40 more rows
 
 Note that you can stop at the `map_df()` line and get a list of tags with the associated files in which they appear.
@@ -56,32 +54,32 @@ At this point, I decided I’d write this quick post to remind future me when I 
 
     ## $categories
     ## [1] "Blog"    "Music"   "Photos"  "Project"
-    ## 
+    ##
     ## $tags
-    ##  [1] "Academia"                "Addin"                  
-    ##  [3] "Ambient Assisted Living" "Ambient Intelligence"   
-    ##  [5] "Apps"                    "blogdown"               
-    ##  [7] "Data Analysis"           "Differential Equations" 
-    ##  [9] "Dynamic Systems"         "emoji"                  
-    ## [11] "Gadget"                  "Gerontechnology"        
-    ## [13] "ggplot2"                 "git"                    
-    ## [15] "Google Trends"           "Gun Control"            
-    ## [17] "Healthcare"              "IIE"                    
-    ## [19] "INFORMS"                 "Interesting Articles"   
-    ## [21] "ISERC"                   "LaTeX"                  
-    ## [23] "Markdown"                "Math"                   
-    ## [25] "MySQL"                   "Note to Self"           
-    ## [27] "pandoc"                  "Personal Data"          
-    ## [29] "Predictive Analytics"    "Presentation"           
-    ## [31] "Productivity"            "Quotes"                 
-    ## [33] "R"                       "R Markdown"             
-    ## [35] "R Package"               "Research"               
-    ## [37] "RStudio"                 "Scripts"                
-    ## [39] "Shiny"                   "Smart Home"             
-    ## [41] "SQL"                     "Status"                 
-    ## [43] "Test Theory"             "Tips"                   
-    ## [45] "Tricks"                  "Tutorials"              
-    ## [47] "Visualization"           "Workflow"               
+    ##  [1] "Academia"                "Addin"
+    ##  [3] "Ambient Assisted Living" "Ambient Intelligence"
+    ##  [5] "Apps"                    "blogdown"
+    ##  [7] "Data Analysis"           "Differential Equations"
+    ##  [9] "Dynamic Systems"         "emoji"
+    ## [11] "Gadget"                  "Gerontechnology"
+    ## [13] "ggplot2"                 "git"
+    ## [15] "Google Trends"           "Gun Control"
+    ## [17] "Healthcare"              "IIE"
+    ## [19] "INFORMS"                 "Interesting Articles"
+    ## [21] "ISERC"                   "LaTeX"
+    ## [23] "Markdown"                "Math"
+    ## [25] "MySQL"                   "Note to Self"
+    ## [27] "pandoc"                  "Personal Data"
+    ## [29] "Predictive Analytics"    "Presentation"
+    ## [31] "Productivity"            "Quotes"
+    ## [33] "R"                       "R Markdown"
+    ## [35] "R Package"               "Research"
+    ## [37] "RStudio"                 "Scripts"
+    ## [39] "Shiny"                   "Smart Home"
+    ## [41] "SQL"                     "Status"
+    ## [43] "Test Theory"             "Tips"
+    ## [45] "Tricks"                  "Tutorials"
+    ## [47] "Visualization"           "Workflow"
     ## [49] "Writing"                 "xaringan"
 
 Finally, when you want to open the files containing a particular tag, you can use blogdown’s `find_tags()` function with the option `open = TRUE`.

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2021-01-25'
 slug: print-xaringan-chromote
 categories:
-  - Blog
-tags:
   - R
   - xaringan
   - xaringanExtra

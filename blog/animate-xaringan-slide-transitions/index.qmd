@@ -9,8 +9,6 @@ aliases:
 images:
   - /images/2018/animated-xaringan-slides/xaringan-animated.gif
 categories:
-  - Blog
-tags:
   - xaringan
   - Tips
   - R

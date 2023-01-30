@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2022-08-15'
 slug: countdown-v0.4.0
 categories:
-  - Blog
-tags:
   - R
   - R Package
   - Slides
@@ -49,7 +47,7 @@ options(htmltools.dir.version = TRUE)
 I'm [stoked]{.superlative} to announce that [countdown] is now available on CRAN!
 Countdown to something awesome in [xaringan], [Quarto], [R Markdown][rmarkdown], or [Shiny].
 
-In this post, 
+In this post,
 I [reflect](#reflection) a bit on the development of [countdown],
 but you can also skip straight to the [release notes](#release)!
 
@@ -78,7 +76,7 @@ countdown::countdown(
 )
 ```
 
-::: 
+:::
 
 ::: {.w-two-thirds-l .w-50-m .w-100}
 `countdown()` is a simple timer you can use in presentations, documents and Shiny apps.
@@ -86,7 +84,7 @@ It's great for teaching or breakout sessions!
 
 [&#x1F448;]{.di-ns .dn}[&#x261D;&#xFE0F;]{.di .dn-ns}
 **Click** the timer to start it.
-**Click** again to pause. 
+**Click** again to pause.
 **Double click** to reset it.
 Adjust the timer on the fly with the **&plus;** and **&minus;** buttons.
 :::
@@ -175,7 +173,7 @@ install.packages("countdown")
 ```
 
 As always, you can still get the latest and greatest in-development versions
-from [GitHub][gh] 
+from [GitHub][gh]
 
 ``` r
 # install.packages("remotes")
@@ -198,7 +196,7 @@ install.packages('countdown')
 
 Before we talk about [all the new things in countdown](#release),
 I want to take a small minute to get nostalgic.
-I hope you don't mind indulging me 
+I hope you don't mind indulging me
 (or [skip ahead](#release) if you'd rather get right to business).
 
 ### rstudio::conf(2019)
@@ -258,7 +256,7 @@ who spotted my GitHub activity
 and [soft-announced the package for me](https://twitter.com/dataandme/status/1125747630489911297).
 
 Not long after that,
-and slightly to my horror 
+and slightly to my horror
 (_please don't go looking at my JavaScript code_),
 [Hadley](https://twitter.com/hadleywickham) submitted an issue.
 Actually, two issues.
@@ -272,7 +270,7 @@ People really seemed to like it,
 it solved a niche but useful need that many people have when teaching,
 and it let me learn a ton about how to build htmlwidgets in R.
 I'm proud of the R interface — it's easy to use and configure —
-and I think the feature set hits the right balance of 
+and I think the feature set hits the right balance of
 looking good right out of the box
 without doing _too much_.
 
@@ -331,7 +329,7 @@ which takes a `function` and a `delay` in milliseconds:
 `setTimeout(function, delay)`.
 When called, the browser waits until the delay is over and then calls the function.
 
-A neat trick with `setTimeout` 
+A neat trick with `setTimeout`
 is that you can call it recursively inside a function
 as a way to run that function repeatedly.
 Below I've defined a function `timerTick()`
@@ -354,11 +352,11 @@ by simply not scheduling any more timer updates.
 ```{js timerTick, eval = FALSE, echo = TRUE}
 function timerTick() {
   const timer = document.getElementById('timer')
-  
+
   // update the timer
   timer.value -= 1
   console.log(`${timer.value}s remaining...`)
-  
+
   if (timer.value > 0) {
     // there's time left, schedule next tick
     setTimeout(timerTick, 1000)
@@ -441,7 +439,7 @@ even if there happen to be 4 seconds between consecutive ticks.
 
 It also means that we can bump a running timer up or down
 by moving that end time later or earlier.
-To stop the timer, 
+To stop the timer,
 we just note how much time is left
 and to restart it again we recalculate the end time
 based on how much time was left when we paused.
@@ -470,12 +468,12 @@ class Timer {
     // and it will have an end when running
     this.end = null
   }
-  
+
   tick () {
     // decide and report how much time is left
     const remaining = this.end - Date.now()
     console.log(`${remaining / 1000}s remaining...`)
-    
+
     // and then schedule the next tick or finish up
     if (remaining > 0) {
       setTimeout(this.tick.bind(this), 1000)
@@ -483,17 +481,17 @@ class Timer {
       this.finish()
     }
   }
-  
+
   start () {
     if (this.end) return
-    
+
     console.clear()
     this.element.innerText = 'Timer is running...'
     // the timer ends duration (s) * 1000 (ms) from now
     this.end = Date.now() + this.duration * 1000
     this.tick()
   }
-  
+
   finish () {
     this.end = null
     this.element.innerText = 'Start Timer'
@@ -538,9 +536,9 @@ For example, you can now
 * Do all of the above with keyboard shortcus:
 
     * <kbd>Space</kbd> or <kbd>Enter</kbd> to start or stop the timer
-    
+
     * <kbd>Esc</kbd> to reset
-    
+
     * <kbd>&uarr;</kbd> or <kbd>&darr;</kbd> to bump up or down
 
 ### Shiny!
@@ -564,7 +562,7 @@ The example app is also available on my website at
 
 In a nutshell,
 the timer will report its state using its input `id`.
-For example, 
+For example,
 `countdown(id = "timer")` will report its state to Shiny
 via `input$timer`.
 The input reports the `event` that caused the state to change
@@ -602,7 +600,7 @@ server <- function(input, output, session) {
     if (is.null(input$timer)) return(FALSE)
     input$timer$timer$is_running
   })
-  
+
   observeEvent(input$toggle, {
     if (is_running()) {
       countdown_action("timer", "stop")
@@ -610,7 +608,7 @@ server <- function(input, output, session) {
       countdown_action("timer", "start")
     }
   })
-  
+
   observe({
     if (is_running()) {
       updateActionButton(label = "Stop Timer", session, "toggle")
@@ -655,7 +653,7 @@ in xaringan and Quarto slides it starts when you land on the slide
 and in regular HTML documents the timer starts when you
 scroll the timer into view.
 
-It's also worth mentioning that countdown now uses 
+It's also worth mentioning that countdown now uses
 [prismatic](https://emilhvitfeldt.github.io/prismatic/)
 for color calculations.
 I was really happy to see that [Emil](https://twitter.com/Emil_Hvitfeldt)
@@ -667,11 +665,11 @@ and switching to use that function cleaned up a lot of internal code for me!
 Huge thanks to the many people who opened issues or contributed code to countdown
 over these years. You all rock &#x1F9E1;
 
-[&#x0040;andrewpbray](https://github.com/andrewpbray), 
-[&#x0040;apreshill](https://github.com/apreshill), 
-[&#x0040;ConnorJPSmith](https://github.com/ConnorJPSmith), 
-[&#x0040;csgillespie](https://github.com/csgillespie), 
-[&#x0040;Dr-Joe-Roberts](https://github.com/Dr-Joe-Roberts), 
+[&#x0040;andrewpbray](https://github.com/andrewpbray),
+[&#x0040;apreshill](https://github.com/apreshill),
+[&#x0040;ConnorJPSmith](https://github.com/ConnorJPSmith),
+[&#x0040;csgillespie](https://github.com/csgillespie),
+[&#x0040;Dr-Joe-Roberts](https://github.com/Dr-Joe-Roberts),
 [&#x0040;fvitalini](https://github.com/fvitalini),
 [&#x0040;hadley](https://github.com/hadley),
 [&#x0040;HaoZeke](https://github.com/HaoZeke),

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2020-06-09'
 slug: lets-move-on-from-iris
 categories:
-  - Blog
-tags:
   - R
   - Scripts
 description: About iris and how to move on.

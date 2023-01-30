@@ -3,8 +3,6 @@ title: Little Inline Color Boxes
 author: Garrick Aden-Buie
 date: '2021-03-12'
 categories:
-  - Blog
-tags:
   - R
   - Tips
   - color
@@ -69,7 +67,7 @@ color_preview <- function(color) {
 
 <div class="js-to_expand">
 
-You'll need to copy this function too, 
+You'll need to copy this function too,
 and feel free to tweak it if you want.
 For example, remove the `border-radius` line to get squares instead of circles.
 Or remove the `.color-preview:hover` rule to have static previews.
@@ -122,12 +120,12 @@ color_preview_dep <- function() {
 ```
 
 One of my favorite color resources [coolors.co](https://coolors.co).
-It gives you a palette of random colors, 
-like 
-```{r} 
+It gives you a palette of random colors,
+like
+```{r}
 color_preview("#414073")
 ```
-or 
+or
 ```{r}
 color_preview("#70a37F")
 ```

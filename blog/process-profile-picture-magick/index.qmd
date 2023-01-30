@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2022-07-12'
 slug: process-profile-picture-magick
 categories:
-  - Blog
-tags:
   - R
   - magick
   - Images
@@ -54,8 +52,8 @@ purrr::walk(photos, function(photo) {
 
 credit_link <- function(id, credit) {
   htmltools::tags$a(
-    href = fs::path("https://unsplash.com/photos", id), 
-    credit, 
+    href = fs::path("https://unsplash.com/photos", id),
+    credit,
     .noWS = "outside"
   )
 }
@@ -147,7 +145,7 @@ Obviously, we'd rather not clip half of the person out of their profile image,
 so we'll need to edit this photo.
 But there are hundreds of them and most of them will need _some_ adjustment.
 
-Good news! You have access to R, 
+Good news! You have access to R,
 where we can use tools like magick to read and process the images,
 or face detection with neural networks.
 So with a few hours of work you can save yourself
@@ -156,7 +154,7 @@ Let's do this!
 
 ## Collect the Profile Pictures
 
-To see how this all works, 
+To see how this all works,
 I've downloaded four example profile pictures from [unsplash](https://unsplash.com)[^1].
 
 ```{r include=FALSE}
@@ -191,7 +189,7 @@ The first step is to use the magick package to read in our profile pictures.
 library(magick)
 library(purrr)
 
-profiles <- 
+profiles <-
   fs::dir_ls("profiles") |>
   map(image_read)
 
@@ -211,13 +209,13 @@ and the person in the frame is rarely centered.
 #|   gray background; a mid-20s woman in a blue shirt against a tan background;
 #|   an early-30s male with curly hair and a floral print shirt on a light gray
 #|   background.
-all_profiles <- 
+all_profiles <-
   profiles |>
   map(image_border, geometry = "10x10", color = "transparent") |>
   reduce(c) |>
   image_montage(
-    tile = "2x2", 
-    geometry = geometry_area(width = 250), 
+    tile = "2x2",
+    geometry = geometry_area(width = 250),
     bg = "transparent"
   )
 
@@ -236,7 +234,7 @@ and it worked out so well that I didn't have to look any further on the list.
 
 As it says on the CRAN page, image.libfacedetection is
 
-> An open source library for face detection in images. 
+> An open source library for face detection in images.
 > Provides a pretrained convolutional neural network based on
 > <https://github.com/ShiqiYu/libfacedetection> which can be used
 > to detect faces which have size greater than 10x10 pixels.
@@ -271,10 +269,10 @@ plot(faces, all_profiles, only_box = TRUE)
 
 `image_detect_faces()` returns some interesting data about the detected faces:
 
-> The data frame detections indicates the locations of these. 
+> The data frame detections indicates the locations of these.
 > This data.frame has columns `x`, `y`, `width` and `height`
-> as well as a column called `confidence`. 
-> The values of `x` and `y` are the top left of the start of the box. 
+> as well as a column called `confidence`.
+> The values of `x` and `y` are the top left of the start of the box.
 
 ```{r libfacedetection-example-2, echo = TRUE}
 faces
@@ -389,13 +387,13 @@ we end up with a 900px &times; 600px image.
 
 ```{r echo = TRUE}
 resized_profile <-
-  profiles[[3]] |> 
+  profiles[[3]] |>
   resize_fit()
 
 resized_profile |> image_info()
 ```
 
-In the next step, 
+In the next step,
 we'll figure out which 600px horizontal region
 best covers the person's face.
 
@@ -409,7 +407,7 @@ We need to know where the person's face is located
 **after** we scale down their profile image.
 
 ```{r echo=TRUE}
-resized_profile |> 
+resized_profile |>
   find_face_center()
 ```
 
@@ -443,14 +441,14 @@ There are three cases:
    so it should start at `point - width/2`.
 1. Oh, and there's an edge case: if the `width` is greater than or equal to
    the full `range`, then the offset is 0, too.
-   
+
 This logic gives us the following `crop_offset()` function:
 
 ```{r crop-offset, echo = TRUE}
 crop_offset <- function(point, range, width) {
   # 4. Catch the edge case first
   if (width >= range) return(0)
-  
+
   if ((point - width / 2) < 0) {
     # 1. must start at left edge
     return(0)
@@ -517,7 +515,7 @@ And here's that function.
 resize_crop_to_face <- function(image, size = 600) {
   image <- resize_fit(image, size)
   info <- image_info(image)
-  
+
   # size may have changed after refit
   size <- min(info$height, info$width)
 
@@ -546,9 +544,9 @@ and resize and crop them around the subject's face
 in just a few lines
 
 ```{r final, echo = TRUE}
-profiles <- 
+profiles <-
   fs::dir_ls("profiles") |>
-  map(image_read) |> 
+  map(image_read) |>
   map(resize_crop_to_face)
 ```
 

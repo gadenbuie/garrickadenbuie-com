@@ -9,8 +9,6 @@ description: |
   In which I investigate a very cool thing that someone claims
   to have done on Twitter. Using R and the rtweet package.
 categories:
-  - Blog
-tags:
   - R
   - Twitter
   - rtweet

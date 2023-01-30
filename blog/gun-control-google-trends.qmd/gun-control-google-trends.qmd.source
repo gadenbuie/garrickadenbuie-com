@@ -6,8 +6,6 @@ params:
   last_update: "2018-03-05 10:00"
 slug: gun-control-google-trends
 categories:
-  - Blog
-tags:
   - Data Analysis
   - Visualization
   - Google Trends
@@ -77,8 +75,8 @@ It breaks my heart that the "adults" in our society can't get our shit together.
 It breaks my heart that they have to fight so hard to be heard and protected, that we need them to keep fighting, that we need them to stand up and speak out when we should be comforting them, when we should have done something sooner.
 
 <span style="font-size: 1.25rem; font-weight: bold; font-style: italic;">
-In their darkest hours, we are asking too much of them. 
-And yet we need them. 
+In their darkest hours, we are asking too much of them.
+And yet we need them.
 How else will this ever change?
 </span>
 
@@ -90,13 +88,13 @@ My first thought was *how do you know?*.
 What does the "fade" look like?
 Clearly, I wasn't alone as a lot of other people pointed this out in replies.
 
-I did a quick search and found the [gtrendsR] package on Github. 
+I did a quick search and found the [gtrendsR] package on Github.
 (Thank you Philippe Massicotte and Dirk Eddelbuettel.)
 What follows is an analysis of Google Search trends for the term "gun control" before and after other mass shooting events.
 
 ## Source Code
 
-A quick note. 
+A quick note.
 All of the source code for this post can be found in my [Github repo for this website][this-post-source].
 I didn't include it here in part because it's a mess and also in part because I used caching and some unusual data types to store the Google Trends results.
 
@@ -111,7 +109,7 @@ For historical comparison, I selected the 15 most deadly shootings since 2004 (e
 Note that total victims include casualties and injuries.
 
 ```{r get-kaggle-mass-shooting-data, include=FALSE}
-event_dates <- 
+event_dates <-
   read_csv(
     here::here("_data/gun-control/mass-shootings-dataset-v5.csv"),
     col_types = cols(
@@ -142,17 +140,17 @@ event_dates <-
 
 
 ```{r event-dates, results="asis"}
-selected_dates <- 
-  event_dates %>% 
-  arrange(desc(`Total victims`)) %>% 
+selected_dates <-
+  event_dates %>%
+  arrange(desc(`Total victims`)) %>%
   # Google Trends only goes back to 2004
   filter(
     Date > "2004-01-01",
     Title != "San Bernardino mass shooting", # duplicated
     Title != "Hesston, Kansas" # duplicated
-  ) %>% 
+  ) %>%
   select(Date, Title, Location, `Incident Area`, Fatalities:`Total victims`,
-         Latitude, Longitude) %>% 
+         Latitude, Longitude) %>%
   slice(1:15)
 
 weapon_used <- tribble(
@@ -172,19 +170,19 @@ weapon_used <- tribble(
   , "2009-04-03", "binghamton", FALSE, FALSE, "https://en.wikipedia.org/wiki/Binghamton_shootings"
   , "2016-02-25", "excel", FALSE, TRUE, "https://en.wikipedia.org/wiki/Hesston_shooting"
   , "2016-07-07", "dallas", FALSE, TRUE, "https://en.wikipedia.org/wiki/2016_shooting_of_Dallas_police_officers"
-) %>% 
+) %>%
   mutate_at(1, as.Date)
 
 selected_dates <- left_join(selected_dates, weapon_used, by = "Date")
 
-selected_dates %>% 
-  mutate(Title = glue::glue("<a href=\"{link}\">{Title}</a>")) %>% 
-  mutate_if(is.logical, function(x) ifelse(x, 'Yes', "No")) %>% 
-  select(1:3, `Total victims`, ar15:semi_automatic) %>% 
+selected_dates %>%
+  mutate(Title = glue::glue("<a href=\"{link}\">{Title}</a>")) %>%
+  mutate_if(is.logical, function(x) ifelse(x, 'Yes', "No")) %>%
+  select(1:3, `Total victims`, ar15:semi_automatic) %>%
   knitr::kable(
     format = "html",
     col.names = c("Date", "Title", "Location", "Victims", "AR-15<br>(or&nbsp;sim.)", "Semi-Automatic"),
-    escape = FALSE, 
+    escape = FALSE,
     align = "lllrcc"
   )
 ```
@@ -219,19 +217,19 @@ library(gtrendsR)
 
 get_trends_for_event <- function(day) {
   gtrends(
-      keyword = c("gun control", "`r baseline_term`"), 
-      geo = "US", 
+      keyword = c("gun control", "`r baseline_term`"),
+      geo = "US",
       time = paste(glue::glue("{day - 7} {day + 21}"))
     )
 }
 
-guntrends <- selected_dates %>% 
+guntrends <- selected_dates %>%
     mutate(gtrends = map(Date, get_trends_for_event))
 
-all_guntrends <- gtrends(c("gun control", "`r baseline_term`"), 
+all_guntrends <- gtrends(c("gun control", "`r baseline_term`"),
                          geo = "US", time = "all")
-  
-parkland_trends <- gtrends(c("gun control", "`r baseline_term`"), 
+
+parkland_trends <- gtrends(c("gun control", "`r baseline_term`"),
                            geo = "US", time = "now 7-d")
 ```
 
@@ -245,14 +243,14 @@ parkland_trends <- gtrends(c("gun control", "`r baseline_term`"),
 ```{r get-data, include=FALSE}
 get_trends_for_event <- function(day) {
   gtrends(
-      keyword = c("gun control", baseline_term), 
-      geo = "US", 
+      keyword = c("gun control", baseline_term),
+      geo = "US",
       time = paste(glue::glue("{day - 7} {day + 21}"))
     )
 }
 
 simpleCache("guntrends", {
-  selected_dates %>% 
+  selected_dates %>%
     mutate(gtrends = map(Date, get_trends_for_event))
 })
 
@@ -263,26 +261,26 @@ simpleCache("all_guntrends", {
 if (file.exists(here::here('_data/gun-control/parkland_trends.RData'))) {
   simpleCache("parkland_trends")
   parkland_trends_previous <- parkland_trends; rm("parkland_trends")
-} else { 
-  parkland_trends_previous <- gtrends(c("gun control", baseline_term), 
-                                      geo = "US", time = "2018-02-07 2018-02-13") %>% 
+} else {
+  parkland_trends_previous <- gtrends(c("gun control", baseline_term),
+                                      geo = "US", time = "2018-02-07 2018-02-13") %>%
     purrr::map(function(x) {
       if (is.null(x)) return(NULL)
       if (!'hits' %in% names(x)) return(NULL)
-      mutate(x, 
-             hits = gsub("<", "", hits), 
+      mutate(x,
+             hits = gsub("<", "", hits),
              hits = as.double(hits) * 7/92) #scaled to match hourly
     })
 }
 
 simpleCache("parkland_trends", {
-  x <- gtrends(c("gun control", baseline_term), geo = "US", time = "now 7-d")  %>% 
+  x <- gtrends(c("gun control", baseline_term), geo = "US", time = "now 7-d")  %>%
     purrr::map(function(x) {
       if (is.null(x)) return(NULL)
       if (!'hits' %in% names(x)) return(NULL)
-      mutate(x, 
-             hits = gsub("<", "", hits), 
-             hits = as.double(hits)) 
+      mutate(x,
+             hits = gsub("<", "", hits),
+             hits = as.double(hits))
     })
   y <- x
   for (name in names(x)) {
@@ -295,21 +293,21 @@ simpleCache("parkland_trends", {
 ```{r normalize-trend, dependson="get-data"}
 normalize_trend <- function(iot) {
   iot <- split(iot, iot$keyword)
-  dates <- iot[["gun control"]] %>% 
+  dates <- iot[["gun control"]] %>%
     summarize(min = min(date), max = max(date))
-  
-  all_trends_hits <- 
-    all_guntrends$interest_over_time %>% 
+
+  all_trends_hits <-
+    all_guntrends$interest_over_time %>%
     filter(
-      between(date, 
+      between(date,
               as.Date(lubridate::floor_date(dates$min, 'month')),
               as.Date(lubridate::ceiling_date(dates$min, 'month'))
       ),
       keyword == "gun control"
-    ) %>% 
+    ) %>%
     pull(hits)
-  
-  iot[['gun control']] %>% 
+
+  iot[['gun control']] %>%
     mutate(
       hits.baseline = median(iot[[baseline_term]]$hits, na.rm = TRUE),
       hits.all_trends_max = max(all_trends_hits),
@@ -322,15 +320,15 @@ normalize_trend <- function(iot) {
 
 guntrends <- mutate(
   guntrends,
-  gtrends = map(gtrends, 
+  gtrends = map(gtrends,
                 ~ modify_at(., 'interest_over_time', normalize_trend))
 )
 
-parkland_trends$interest_over_time <- 
-  parkland_trends$interest_over_time %>% 
-  group_by(date, keyword) %>% 
-  summarize(hits = median(hits)) %>% 
-  tidyr::spread(keyword, hits) %>% 
+parkland_trends$interest_over_time <-
+  parkland_trends$interest_over_time %>%
+  group_by(date, keyword) %>%
+  summarize(hits = median(hits)) %>%
+  tidyr::spread(keyword, hits) %>%
   mutate(
     hits.norm.baseline = `gun control`/baseline,
     hits.orig = `gun control`,
@@ -346,15 +344,15 @@ The plot below shows search interest in "gun control" since 2004, with the large
 
 <a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-gun-control-trends-1.png" data-featherlight="image">
 ```{r plot-gun-control-trends, dependson='normalize-trend'}
-selected_points <- selected_dates %>% 
-  mutate(date = lubridate::floor_date(Date, "month")) %>% 
+selected_points <- selected_dates %>%
+  mutate(date = lubridate::floor_date(Date, "month")) %>%
   left_join(
-    filter(all_guntrends$interest_over_time, keyword == "gun control"), 
-    by = 'date') %>% 
-  arrange(date) 
+    filter(all_guntrends$interest_over_time, keyword == "gun control"),
+    by = 'date') %>%
+  arrange(date)
 
-overall_guntrends <- 
-  all_guntrends$interest_over_time %>% 
+overall_guntrends <-
+  all_guntrends$interest_over_time %>%
   filter(keyword == "gun control")
 
 gg_overall <- ggplot(all_guntrends$interest_over_time) +
@@ -364,7 +362,7 @@ gg_overall <- ggplot(all_guntrends$interest_over_time) +
   geom_point(data = selected_points, color = "#c03728") +
   scale_x_date(expand = expand_scale(c(0.01, 0.04))) +
   labs(x = "", y = "Relative Search Popularity",
-       title = 'Google Search Trends for "Gun Control"', 
+       title = 'Google Search Trends for "Gun Control"',
        color = "Search Term",
        caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
@@ -375,21 +373,21 @@ gg_overall <- ggplot(all_guntrends$interest_over_time) +
   )
 
 gg_overall +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(14)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(14)),
                             aes(label = Title), size = 3, ylim = 70) +
-  # ggrepel::geom_label_repel(data = slice(selected_points, c(13)), 
+  # ggrepel::geom_label_repel(data = slice(selected_points, c(13)),
   #                           aes(label = Title), size = 3, ylim = 57, hjust = 0.3) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(7)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(7)),
                             aes(label = Title), size = 3, ylim = 65, hjust = 1.1) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(12)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(12)),
                             aes(label = Title), size = 3, ylim = 57) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(10)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(10)),
                             aes(label = Title), size = 3, ylim = 50) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(1, 5)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(1, 5)),
                             aes(label = Title), size = 3, ylim = 35) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(3, 6)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(3, 6)),
                             aes(label = Title), size = 3, ylim = 25) +
-  ggrepel::geom_label_repel(data = slice(selected_points, c(15)), 
+  ggrepel::geom_label_repel(data = slice(selected_points, c(15)),
                             aes(label = Title), size = 3, ylim = -3)
 ```
 </a>
@@ -403,12 +401,12 @@ guntrends <- mutate(guntrends,
                             ~ mutate(.y, Title = .x))
 )
 
-guntrends2 <- 
+guntrends2 <-
   left_join(
     selected_dates,
     map_dfr(guntrends$interest_over_time, ~ .),
     by = "Title"
-  ) %>% 
+  ) %>%
   mutate(Date = lubridate::as_datetime(Date))
 
 parkland_trends2 <- mutate(parkland_trends$interest_over_time,
@@ -416,7 +414,7 @@ parkland_trends2 <- mutate(parkland_trends$interest_over_time,
   Date = lubridate::ymd_h("2018-02-14 02", tz = 'America/New_York'),
   Location = "Parkland, FL",
   `Incident Area` = "Marjory Stoneman Douglas High School",
-  Fatalities = 17L, 
+  Fatalities = 17L,
   Injured = 14L,
   `Total victims` = 31L,
   ar51 = TRUE,
@@ -427,8 +425,8 @@ parkland_trends2 <- mutate(parkland_trends$interest_over_time,
 ```
 
 ```{r prep-for-plot, dependson='normalize-trend'}
-guntrends_over_time <- 
-  bind_rows(guntrends2, parkland_trends2) %>% 
+guntrends_over_time <-
+  bind_rows(guntrends2, parkland_trends2) %>%
   mutate(
     parkland = Location == "Parkland, FL",
     since_event = difftime(date, Date, unit = 'hours'),
@@ -446,16 +444,16 @@ Other events, such as the [Fort Hood Army Base][wiki-event-fh2009] attack seemed
 
 <a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-relative-1.png" data-featherlight="image">
 ```{r plot-relative, fig.height=7, dependson='normalize-trend'}
-type_labels <- selected_dates %>% 
-  filter(ar15 | semi_automatic) %>% 
-  select(Title, ar15, semi_automatic) %>% 
+type_labels <- selected_dates %>%
+  filter(ar15 | semi_automatic) %>%
+  select(Title, ar15, semi_automatic) %>%
   bind_rows(data_frame(
     Title = "Marjory Stoneman Douglas",
     ar15 = TRUE,
     semi_automatic = TRUE
-  )) %>% 
+  )) %>%
   mutate(
-    since_event = 21, 
+    since_event = 21,
     label = ifelse(semi_automatic, "Semi-Auto", NA),
     label = ifelse(!is.na(label), paste0(label, "\n"), ""),
     label = ifelse(ar15, paste0(label, "AR-15"), label),
@@ -465,7 +463,7 @@ type_labels <- selected_dates %>%
 ggplot(guntrends_over_time) +
   aes(x = since_event, y = hits.orig, group = Title, color = parkland) +
   geom_line() +
-  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,  
+  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,
              color = ggpomological:::pomological_base$darker_line) +
   guides(color = FALSE) +
   facet_wrap(~ Title) +
@@ -475,7 +473,7 @@ ggplot(guntrends_over_time) +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
   scale_x_continuous(breaks = seq(-7, 21, 7)) +
-  geom_text(data = type_labels, aes(y = 90, label = label), 
+  geom_text(data = type_labels, aes(y = 90, label = label),
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 0.6)
 ```
@@ -496,7 +494,7 @@ A value of 10 means there are 10 times more search for `"gun control"`, whereas 
 ggplot(guntrends_over_time) +
   aes(x = since_event, y = hits.norm.baseline, group = Title, color = parkland) +
   geom_line() +
-  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,  
+  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,
              color = ggpomological:::pomological_base$darker_line) +
   guides(color = FALSE) +
   facet_wrap(~ Title) +
@@ -505,10 +503,10 @@ ggplot(guntrends_over_time) +
        caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
-  scale_y_log10(breaks = c(0.1, 1, 10, 100), 
+  scale_y_log10(breaks = c(0.1, 1, 10, 100),
                 labels =  paste0(c(0.1, 1, 10, 100), "x")) +
   scale_x_continuous(breaks = seq(-7, 21, 7)) +
-  geom_text(data = type_labels, aes(y = 90, label = label), 
+  geom_text(data = type_labels, aes(y = 90, label = label),
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 1) +
   theme(
@@ -521,7 +519,7 @@ ggplot(guntrends_over_time) +
 ggplot(guntrends_over_time) +
   aes(x = since_event, y = hits, group = Title, color = parkland) +
   geom_line() +
-  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,  
+  geom_vline(xintercept = 0, linetype = 'dotted', size = 0.5,
              color = ggpomological:::pomological_base$darker_line) +
   guides(color = FALSE) +
   facet_wrap(~ Title) +
@@ -530,7 +528,7 @@ ggplot(guntrends_over_time) +
   ggpomological::theme_pomological_plain("PT Sans") +
   scale_color_manual(values = c("#828585", "#c03728")) +
   scale_x_continuous(breaks = seq(-7, 21, 7)) +
-  geom_text(data = type_labels, aes(y = 90, label = label), 
+  geom_text(data = type_labels, aes(y = 90, label = label),
             color = "#c03728", alpha = 0.8,
             size = 3, family = "PT Sans", hjust = 0.9, vjust = 0.6)
 ```
@@ -547,47 +545,47 @@ For more ideas, take a look at [Everytown's Action Plan][everytown-action-plan] 
 
 <a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-similar-1.png" data-featherlight="image">
 ```{r plot-similar, dependson='normalize-trend'}
-guntrends_similar <- guntrends_over_time %>% 
+guntrends_similar <- guntrends_over_time %>%
   filter(Title %in% levels(Title)[c(1:5, 7:9)])
 
 ggplot(guntrends_similar) +
   aes(
-    x = since_event, 
-    y = hits.norm.baseline, 
-    group = Title, 
+    x = since_event,
+    y = hits.norm.baseline,
+    group = Title,
     size = `Total victims`,
     color = Title
   ) +
   geom_line(
-    data = filter(guntrends_similar, Location != "Parkland, FL"), 
+    data = filter(guntrends_similar, Location != "Parkland, FL"),
     # color = "#828585",
     alpha = 0.3) +
   geom_line(
-    data = filter(guntrends_similar, Location == "Parkland, FL"), 
-    # color = "#c03728", 
+    data = filter(guntrends_similar, Location == "Parkland, FL"),
+    # color = "#c03728",
     size = 1.1) +
   geom_vline(
-    xintercept = 0, 
-    linetype = 'dotted', 
-    size = 0.5,  
+    xintercept = 0,
+    linetype = 'dotted',
+    size = 0.5,
     color = ggpomological:::pomological_base$darker_line) +
   guides(alpha = FALSE) +
   labs(
-    x = "Days Since Event", 
+    x = "Days Since Event",
     y = "Search Popularity\nRelative to a Baseline Search",
     color = "",
-    title = 'Searching for "gun control" after a mass shooting', 
+    title = 'Searching for "gun control" after a mass shooting',
     caption = "Source: Google Trends\ngarrickadenbuie.com") +
   ggpomological::theme_pomological_plain("PT Sans") +
   # ggpomological::scale_color_pomological() +
   hrbrthemes::scale_color_ipsum() +
-  annotate('text', 
-           x = 19, y = 0.05, 
+  annotate('text',
+           x = 19, y = 0.05,
            label = paste("Updated:", file.mtime(here::here('_data/gun-control/parkland_trends.RData'))),
-           family = "PT Sans", 
-           size = 3, 
+           family = "PT Sans",
+           size = 3,
            color = "grey40") +
-  scale_y_log10(breaks = c(0.1, 1, 10), 
+  scale_y_log10(breaks = c(0.1, 1, 10),
                 labels =  paste0(c(0.1, 1, 10), "x")) +
   scale_x_continuous(breaks = seq(-7, 21, 7)) +
   theme(
@@ -602,7 +600,7 @@ But first, to the victims in Parkland, Florida and the victims of gun violence a
 
 `r blogdown::shortcode("tweet", "965077119968489472")`
 
-#### Edits 
+#### Edits
 
 **2018-02-20:** I changed the comparison term from `"difficult"` to `"baseline"`.
 Also updated the scripts to gather data from the week prior to Feb 14, 2018.

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2019-08-07'
 slug: colors-of-xcolor
 categories:
-  - Blog
-tags:
   - R
   - Scripts
   - dplyr

@@ -5,8 +5,6 @@ date: "2019-11-05"
 description: "It's like programming Crossfit but with less sweating."
 source_link: "ihttps://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-11-05-xml-the-recursive-programming-workout.Rmarkdown"
 categories:
-  - Blog
-tags:
   - R
   - Tips
   - XML
