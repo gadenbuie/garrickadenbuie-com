@@ -1,5 +1,13 @@
 project:
   type: website
+  resources: 
+    - "static"
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "blog/**/*.qmd"
+    - "talk/**/*.qmd"
+    - "project/**/*.qmd"
 
 website:
   title: "Garrick Aden-Buie"
@@ -11,6 +19,7 @@ website:
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+
 format:
   html:
     theme: cosmo
