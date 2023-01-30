@@ -11,12 +11,13 @@ tags:
   - dplyr
   - color
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
-images:
-  - /blog/colors-of-xcolor/colors-of-xcolor.png
+image: colors-of-xcolor.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmarkdown'
 keywords: rstats
 editor_options:
   chunk_output_type: console
+resources:
+  - "xcolors.csv"
 ---
 
 <!-- Links -->
@@ -108,9 +109,7 @@ head(xcolor)
 ```
 
 ```{r echo=FALSE}
-post_static_dir <- here::here("static", "blog", "colors-of-xcolor")
-fs::dir_create(post_static_dir)
-readr::write_csv(xcolor, fs::path(post_static_dir, "xcolors", ext = "csv"))
+readr::write_csv(xcolor, "xcolors.csv")
 ```
 
 ## A Shiny fixed-color picker
@@ -175,8 +174,8 @@ htmltools::tagList(
 .xcolor-text {
   display: none;
   margin: auto;
-  background: var(--siteBgColorCustom);
-  color: var(--textColorCustom);
+  background: rgba(var(--bs-light-rgb), 0.66);
+  color: var(--bs-dark);
   padding: 10px;
 }
 .xcolor-color:hover .xcolor-text,

@@ -4,8 +4,6 @@ author: Garrick Aden-Buie
 date: '2019-10-08'
 slug: tweet-poll-programming-languages
 categories:
-  - Blog
-tags:
   - R
   - rtweet
   - Data Analysis
@@ -13,8 +11,7 @@ tags:
   - Programming
   - Poll
 description: A deep dive into an informal, free-form survey about experiences with programming languages.
-images:
-  - /blog/2019/2019-10-08-tweet-poll-programming-languages_files/figure-html/votes-love-hate-twitter-1.png
+image: index_files/figure-html/votes-love-hate-twitter-1.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-10-08-tweet-poll-programming-languages.Rmarkdown'
 keywords:
   - rstats
@@ -24,6 +21,8 @@ keywords:
   - R
 editor_options:
   chunk_output_type: console
+resources:
+  - tweets-first-lang.csv
 ---
 
 <!-- Links -->
@@ -805,5 +804,5 @@ feedback, thoughts, or questions with me on Twitter at
 ```{r}
 tweets_lang_poll %>%
   select(status_id, created_at, text, category, category2, answer) %>%
-  write_csv(here::here("static/blog/tweet-poll-programming-languages/tweets-first-lang.csv"))
+  write_csv("tweets-first-lang.csv")
 ```

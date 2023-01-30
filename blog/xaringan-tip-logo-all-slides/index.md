@@ -3,6 +3,7 @@ title: 'xaringan Tip: Add A Logo to All of Your Slides'
 author: Garrick Aden-Buie
 date: '2019-10-16'
 slug: xaringan-tip-logo-all-slides
+image: xaringan-logo-all-slides_twitter.png
 categories:
   - Blog
 tags:
@@ -11,7 +12,6 @@ tags:
   - xaringan
   - xaringan Tip
 description: Add a logo to all of your xaringan slides without using a background image.
-twitterImage: /blog/xaringan-tip-logo-all-slides/xaringan-logo-all-slides_twitter.png
 keywords: [rstats, xaringan, logo, slides, 'logo all slides']
 editor_options:
   chunk_output_type: console
@@ -25,10 +25,10 @@ editor_options:
 Here's a quick tip to help solve a common <span class="pkg">[xaringan]</span> problem: **adding a logo to all of your slides**.
 
 The slightly problematic and somewhat annoying way to solve this problem
-is to add a logo to a series of slides using 
+is to add a logo to a series of slides using
 remarkjs'
 [background-image](https://github.com/gnab/remark/wiki/Markdown#background-image)
-and 
+and
 [layout syntax](https://github.com/gnab/remark/wiki/Markdown#layout).
 
 ```
@@ -53,9 +53,9 @@ layout: false
 ## This one doesn't have a logo :(
 ```
 
-It works... as long as 
-you don't change your slide format 
-or if you don't mind repeating those 4 lines 
+It works... as long as
+you don't change your slide format
+or if you don't mind repeating those 4 lines
 every time you need to reset your layout.
 
 ## A logo for all the slides
@@ -64,27 +64,27 @@ every time you need to reset your layout.
 
 &#x1F4FA; **[Demo Slides][xaringan-logo-demo]**
 
-Instead, 
-with a little bit of JavaScript and CSS, 
+Instead,
+with a little bit of JavaScript and CSS,
 we can automatically insert a logo on all the slides in the presentation.
-Of course, 
+Of course,
 we might not _want_ a logo an all the slides,
 so we won't add the logo to the `.title-slide`
 or any slide with `class: hide-logo`.
 
 If you just want to jump straight to the solution,
 I've created a [template repository on GitHub][xaringan-logo]
-that you can use to bootstrap your next set of 
+that you can use to bootstrap your next set of
 <span class="pkg">xaringan</span> slides.
 
 To set everything up manually takes just a few steps.
 
-- Download your logo and save it in your slides directory. 
+- Download your logo and save it in your slides directory.
    I've used the <span class="pkg">xaringan</span> hex logo:
    [xaringan.png](https://github.com/rstudio/hex-stickers/blob/master/PNG/xaringan.png).
 
-- Download 
-   [insert-logo.html](https://github.com/gadenbuie/xaringan-logo/blob/master/insert-logo.html) 
+- Download
+   [insert-logo.html](https://github.com/gadenbuie/xaringan-logo/blob/master/insert-logo.html)
    into your slide directory, or [copy the html described below](#inside-insert-logo-html)
    into `insert-logo.html`.
 
@@ -98,26 +98,26 @@ To set everything up manually takes just a few steps.
   ```
 
 - Edit the `.logo` class in the CSS in `insert-logo.html` to use your logo image,
-   and adjust the `width`, `height` 
-   and position (`top`, `bottom`, `left`, and/or `right`) 
+   and adjust the `width`, `height`
+   and position (`top`, `bottom`, `left`, and/or `right`)
    as needed.
-   
+
 - Use `class: hide-logo` to hide your logo on individual slides.
    (The title slide is automatically excluded.)
-   
+
    ```
    ---
-   
+
    # This slide has a logo
-   
+
    ---
    class: inverse, hide-logo
-   
+
    # This slide doesn't have a logo!
-   
+
    And it's an inverse slide, too.
    ```
-   
+
 - Have fun looking &#x1F60E; during your presentation!
 
 ## Inside insert-logo.html
@@ -158,5 +158,5 @@ document
 
 If you'd like to automatically keep the logo off certain slides,
 like the `inverse` slides,
-you can add additional `:not(.class-to-exclude)` 
+you can add additional `:not(.class-to-exclude)`
 to the CSS selector in the `.querySelectorAll()`.

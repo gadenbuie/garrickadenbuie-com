@@ -15,8 +15,7 @@ tags:
   - Shiny
   - color
 description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
-images:
-  - https://www.garrickadenbuie.com/blog/r-colors-css/social-card.png
+image: social-card.png
 source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-12-r-colors-css.Rmarkdown
 keywords: rstats
 head_custom: |
@@ -217,7 +216,7 @@ If I want to create a simple box with...
 ...I can use those classes on the same element.
 Here are four markdown syntax variations that use those classes.
 
-:::: {.panelset}
+:::: {.panelset .sideways}
 
 ::: panel
 <h3 class="panel-name">xaringan</h3>
@@ -350,7 +349,7 @@ let's update the box example above with some color from R.
 I used the [color picker table in the documentation][r-colors-css]
 to pick out an interesting color combination.
 
-:::: {.panelset}
+:::: {.panelset .sideways}
 
 ::: panel
 <h3 class="panel-name">CSS</h3>
@@ -450,3 +449,9 @@ Anything that you're willing to practice, you can do.
 
 —Bob Ross
 :::
+
+
+```{r}
+#| echo: false
+xaringanExtra::use_panelset()
+```

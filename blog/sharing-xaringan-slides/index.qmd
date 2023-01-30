@@ -12,8 +12,7 @@ tags:
   - Slides
   - xaringan Tip
 description: How to share your xaringan slides in style, on social media sites and embedded in your web page.
-images:
-  - /blog/sharing-xaringan-slides/sharing-xaringan-social-card.jpg
+image: sharing-xaringan-social-card.jpg
 keywords: rstats
 editor_options:
   chunk_output_type: console
@@ -120,7 +119,7 @@ info <- function(slug) {
       href = paste0("#", slug),
       title = "Jump to section",
       class = "ml1 no-underline",
-      i(class = "fa fa-info-circle", 
+      i(class = "fa fa-info-circle",
         span(class = "sr-only", "jump to section")
       )
     )

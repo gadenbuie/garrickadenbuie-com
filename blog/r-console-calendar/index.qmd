@@ -10,8 +10,7 @@ tags:
   - lubridate
 description: >
   Print a nicely-formatted calendar in your R console.
-images:
-  - /blog/r-console-calendar/social-card.png
+image: social-card.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmarkdown'
 keywords: rstats
 editor_options:
@@ -28,10 +27,6 @@ knitr::opts_chunk$set(
 )
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 options(htmltools.dir.version = TRUE)
-```
-
-```{r}
-xaringanExtra::use_clipboard()
 ```
 
 Today I was [nerd sniped](https://xkcd.com/356/)
@@ -58,10 +53,9 @@ system("cal")
 Here's Mike's [original tweet](https://twitter.com/coolbutuseless/status/1308163906674790402).
 
 ```{r include=FALSE, eval=FALSE}
-fs::dir_create(here::here("static", "blog", "r-console-calendar"))
 tweetrmd::tweet_screenshot(
   "https://twitter.com/coolbutuseless/status/1308163906674790402",
-  file = here::here("static", "blog", "r-console-calendar", "coolbutuseless-tweet.png")
+  file = "coolbutuseless-tweet.png"
 )
 ```
 

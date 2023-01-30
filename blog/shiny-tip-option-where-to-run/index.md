@@ -3,6 +3,7 @@ title: "Shiny Tip: Choose Where to Run App with an Option"
 author: Garrick Aden-Buie
 date: "2019-10-13"
 slug: shiny-tip-option-where-to-run
+image: "shiny-rstudio-run-in.png"
 categories:
   - Blog
 tags:

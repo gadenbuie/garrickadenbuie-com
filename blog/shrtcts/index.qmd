@@ -3,6 +3,7 @@ title: Make A Shortcut for Anything in RStudio with shrtcts
 author: Garrick Aden-Buie
 date: '2020-05-02'
 slug: shrtcts
+image: shrtcts-addin-nice.png
 categories:
   - Blog
 tags:
