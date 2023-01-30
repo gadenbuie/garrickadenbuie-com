@@ -2,8 +2,7 @@
 title: "🤹 tidyexplain"
 date: '2018-08-27'
 description: Animations of tidyverse verbs using R, the tidyverse, and gganimate.
-images:
-  - /project/tidyexplain/images/static/png/original-dfs.png
+image: images/static/png/original-dfs.png
 slug: tidyexplain
 categories: ["Project"]
 tags:

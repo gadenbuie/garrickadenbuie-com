@@ -3,15 +3,17 @@ title: Projects
 description: |
   All (or most, or at least some) of my projects.
 listing:
-  contents: "**/*.qmd"
+  contents:
+    - "**/*.qmd"
   sort: "date desc"
   type: grid
   categories: false
   sort-ui: true
   filter-ui: true
-  fields: [date, title, description, image, categories]
+  fields: [date, title, description, image]
   feed: true
   grid-columns: 2
+  image-height: 33vmin
 page-layout: full
 title-block-banner: false
 ---

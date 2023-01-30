@@ -2,8 +2,7 @@
 title: "🍰 shrtcts"
 date: '2020-09-13'
 description: Make anything an RStudio shortcut!
-images:
-  - https://pkg.garrickadenbuie.com/shrtcts/reference/figures/shrtcts-card.png
+image: https://pkg.garrickadenbuie.com/shrtcts/reference/figures/shrtcts-card.png
 summary: |
   An easily customizable method for creating RStudio
   addins from arbitrary R code. Use your own functions or call functions

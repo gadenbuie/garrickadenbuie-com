@@ -4,8 +4,7 @@ description: "Clean Class-Less R Markdown HTML Documents"
 summary: "Clean Class-Less R Markdown HTML Documents"
 date: '2022-06-13'
 slug: cleanrmd
-images:
-  - /project/cleanrmd/cleanrmd-social.png
+image: cleanrmd-social.png
 tags:
   - RStudio
   - R Markdown

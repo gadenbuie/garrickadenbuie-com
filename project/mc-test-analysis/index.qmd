@@ -1,7 +1,7 @@
 ---
 title: "📚 MC Test Analysis"
 description: "Apps and reports for multiple-choice test analysis in R with Shiny"
-images: [ /project/2017-07-06-mc-test-analysis_files/explore-03-irt.png ]
+image: explore-03-irt.png
 date: "2017-07-06"
 slug: "mc-test-analysis"
 tags: ["R", "R Package"]
@@ -81,39 +81,39 @@ From this app, the user uploads their answer key and test data and then can view
 Click on the image thumbnails below to view examples of the various screens of the MCTestAnalysis `explore()` app.
 
 <div>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-01-import.png" data-featherlight="image">
+<a href="explore-01-import.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-01-import.png" alt="Load Data" width="200px">
+  <img src="explore-01-import.png" alt="Load Data" width="200px">
   <p class="caption">Load Data</p>
   </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-02-ctt.png" data-featherlight="image">
+<a href="explore-02-ctt.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-02-ctt.png" alt="Classic Test Theory" width="200px">
+  <img src="explore-02-ctt.png" alt="Classic Test Theory" width="200px">
   <p class="caption">Classic Test Theory</p>
   </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-03-irt.png" data-featherlight="image">
+<a href="explore-03-irt.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-03-irt.png" alt="Item Response Theory" width="200px">
+  <img src="explore-03-irt.png" alt="Item Response Theory" width="200px">
   <p class="caption">Item Response Theory</p>
   </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-04-factor_analysis.png" data-featherlight="image">
+<a href="explore-04-factor_analysis.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-04-factor_analysis.png" alt="Factor Analysis" width="200px">
+  <img src="explore-04-factor_analysis.png" alt="Factor Analysis" width="200px">
   <p class="caption">Factor Analysis</p>
   </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-05-distractor.png" data-featherlight="image">
+<a href="explore-05-distractor.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-05-distractor.png" alt="Distractor Analysis" width="200px">
+  <img src="explore-05-distractor.png" alt="Distractor Analysis" width="200px">
   <p class="caption">Distractor Analysis</p>
   </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/explore-06-report.png" data-featherlight="image">
+<a href="explore-06-report.png" data-featherlight="image">
   <div class="figure thumbnail">
-  <img src="/project/2017-07-06-mc-test-analysis_files/explore-06-report.png" alt="Export Report" width="200px"/>
+  <img src="explore-06-report.png" alt="Export Report" width="200px"/>
   <p class="caption">Export Report</p>
   </div>
 </a>
@@ -125,24 +125,24 @@ Click on the image thumbnails below to view examples of the various screens of t
 The `report()` function opens a window in RStudio that allows the user to import their answer key and test results and quickly generate a custom multiple-choice test analysis as a PDF or HTML file.
 This report includes all of the information in the `explore()` app, in addition to helpful background information on the various statistics and visualizations in the report.
 
-[Click here to view an example report](/project/2017-07-06-mc-test-analysis_files/MCTestAnalysis_Example-Report.pdf) (from synthetic data) or click the thumbnails below to view the `report()` app screens.
+[Click here to view an example report](MCTestAnalysis_Example-Report.pdf) (from synthetic data) or click the thumbnails below to view the `report()` app screens.
 
 <div>
-<a href="/project/2017-07-06-mc-test-analysis_files/report-01-settings.png" data-featherlight="image">
+<a href="report-01-settings.png" data-featherlight="image">
 <div class="figure thumbnail">
-<img src="/project/2017-07-06-mc-test-analysis_files/report-01-settings.png" alt="Import Settings" width="200px"/>
+<img src="report-01-settings.png" alt="Import Settings" width="200px"/>
 <p class="caption">Import Settings</p>
 </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/report-02-load.png" data-featherlight="image">
+<a href="report-02-load.png" data-featherlight="image">
 <div class="figure thumbnail">
-<img src="/project/2017-07-06-mc-test-analysis_files/report-02-load.png" alt="Load Data" width="200px"/>
+<img src="report-02-load.png" alt="Load Data" width="200px"/>
 <p class="caption">Load Data</p>
 </div>
 </a>
-<a href="/project/2017-07-06-mc-test-analysis_files/report-03-generate.png" data-featherlight="image">
+<a href="report-03-generate.png" data-featherlight="image">
 <div class="figure thumbnail">
-<img src="/project/2017-07-06-mc-test-analysis_files/report-03-generate.png" alt="Generate Report" width="200px"/>
+<img src="report-03-generate.png" alt="Generate Report" width="200px"/>
 <p class="caption">Generate Report</p>
 </div>
 </a>

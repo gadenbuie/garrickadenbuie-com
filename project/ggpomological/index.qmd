@@ -4,8 +4,7 @@ author: Garrick Aden-Buie
 date: '2018-02-16'
 slug: ggpomological
 description: "A ggplot2 theme based on the USDA Pomological Watercolor Collection"
-images:
-  - /images/project/ggpomological/ggpomological.png
+image: ggpomological.png
 type: page
 categories:
   - Project
@@ -22,8 +21,8 @@ require(ggpomological)
 require(dplyr)
 set_filename <- function(fname, rel = FALSE) {
   file.path(
-    if (rel) "/images/project/ggpomological"
-    else here::here("static/images/project/ggpomological"),
+    if (rel) "./"
+    else here::here("project", "ggpomological"),
     fname
   )
 }

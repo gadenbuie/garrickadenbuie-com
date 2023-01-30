@@ -2,7 +2,7 @@
 title: "🕵️‍♂️ RegExplain"
 slug: "regexplain"
 description: "An RStudio addin slash utility belt for regular expressions"
-images: [ "/images/project/regexplain/regexplain-gadget-tabs.png" ]
+image: regexplain-gadget-tabs.png
 date: 2018-04-04T00:00:00+00:00
 type: project
 categories:
@@ -85,15 +85,15 @@ Reload this page to restart the app.
 
 #### Overview
 
-![RegExplain Selection](/images/project/regexplain/regexplain-selection.gif)
+![RegExplain Selection](regexplain-selection.gif)
 
 #### Regular Expressions Library
 
-![RegExplain Library](/images/project/regexplain/regexplain-library.gif)
+![RegExplain Library](regexplain-library.gif)
 
 #### Try the Built-In Examples
 
-![RegExplain Examples](/images/project/regexplain/regexplain-try-this.gif)
+![RegExplain Examples](regexplain-try-this.gif)
 
 ## RStudio Addin
 
@@ -103,7 +103,7 @@ variable name of a vector or a data.frame column) and run **RegExplain
 Selection** from the RStudio Addins
 dropdown.
 
-<img src="/images/project/regexplain/rstudio-addin-list.png" width = "250px;" alt="regexplain in the Rstudio Addins dropdown">
+<img src="rstudio-addin-list.png" width = "250px;" alt="regexplain in the Rstudio Addins dropdown">
 
 The addin will open an interface with 4 panes where you can
 
@@ -114,7 +114,7 @@ The addin will open an interface with 4 panes where you can
     functions from `base` and `stringr`
   - and refer to a **help**ful cheatsheet
 
-`r featherlight_image("/images/project/regexplain/regexplain-gadget-tabs.png", "The panes of regexplain")`
+`r featherlight_image("regexplain-gadget-tabs.png", "The panes of regexplain")`
 
 When you’re done, click on the **Send Regex to Console** to send your
 regex expression to… the
@@ -136,7 +136,7 @@ The **Help** tab is full of resources, guides, and R packages and
 includes an easy-to-navigate reference of commonly used regular
 expression syntax.
 
-`r featherlight_image("/images/project/regexplain/regexplain-gadget-help.png", "regexplain help windows")`
+`r featherlight_image("regexplain-gadget-help.png", "regexplain help windows")`
 
 Open **RegExplain Cheatsheet** from the RStudio Addins drop down to open
 the regex reference page in the Viewer pane without blocking your
@@ -153,7 +153,7 @@ process with regular expressions.
 When importing text, *RegExplain* automatically reduces the text to the
 unique entries and limits the number of lines.
 
-`r featherlight_image("/images/project/regexplain/addin-screenshots.png", "regexplain addins")`
+`r featherlight_image("addin-screenshots.png", "regexplain addins")`
 
 ### Regular Expressions Library
 
@@ -168,7 +168,7 @@ The full library is stored as a JSON file in
 contribute patterns you find useful or use regularly via pull
 request.
 
-`r featherlight_image("/images/project/regexplain/regexplain-gadget-library.png", "regexplain library modal", 'height="400px"')`
+`r featherlight_image("regexplain-gadget-library.png", "regexplain library modal", 'height="400px"')`
 
 ## View Static Regex Results
 
@@ -186,7 +186,7 @@ pattern <- "((\\w+)=)(\\w+).+(ch=s?p)"
 view_regex(text, pattern)
 ```
 
-`r featherlight_image("/images/project/regexplain/view-regex.png", "Example view_regex(text, pattern).")`
+`r featherlight_image("view-regex.png", "Example view_regex(text, pattern).")`
 
 ``` r
 t_nested <- "anestedgroupwithingroupexample"
@@ -194,7 +194,7 @@ r_nested <- "(a(nested)(group(within(group))(example)))"
 view_regex(t_nested, r_nested)
 ```
 
-`r featherlight_image("/images/project/regexplain/view-nested.png", "Example of nested groups")`
+`r featherlight_image("view-nested.png", "Example of nested groups")`
 
 ## Notes
 

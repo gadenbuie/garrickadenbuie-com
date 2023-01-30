@@ -3,7 +3,7 @@ title: "🔮 rsthemes"
 description: "Full RStudio IDE and Syntax Themes"
 author: Garrick Aden-Buie
 date: '2020-10-01'
-images: [ /project/rsthemes/social-card.png ]
+image: social-card.png
 categories: ["Project"]
 tags:
   - RStudio Theme
@@ -242,7 +242,7 @@ const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/ass
       touchNavigation: true,
       descPosition: 'top'
     });
-    
+
     lightbox.on('open', (target) => {
       debugger
       console.log('lightbox opened', {target});

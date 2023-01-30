@@ -4,7 +4,7 @@ description: "Give your xaringan slides some style without (much) CSS"
 author: Garrick Aden-Buie
 date: '2018-05-12'
 slug: xaringanthemer
-images: [/images/project/xaringanthemer/examples.gif]
+image: examples.gif
 categories: ["Project"]
 tags:
   - xaringan
@@ -29,7 +29,7 @@ tags:
 
 Give your [xaringan] slides some style with **xaringanthemer** within your `slides.Rmd` file without (much) CSS.
 
-![](/images/project/xaringanthemer/examples.gif)
+![](examples.gif)
 
 ## Installation
 
@@ -72,21 +72,21 @@ mono_light(
 ```
 ````
 
-![xaringanthemer example with mono_light theme](/images/project/xaringanthemer/example_mono_light_1c5253.png)
+![xaringanthemer example with mono_light theme](example_mono_light_1c5253.png)
 
 
 ### Tab Completion
 
 **xaringanthemer** is <kbd>Tab</kbd> friendly -- [use autocomplete to explore][theme-settings] the [template variables][template-variables] that you can adjust in each of the themes!
 
-![xaringanthemer rstudio autocompletion example](/images/project/xaringanthemer/xaringanthemer-rstudio-help.gif)
+![xaringanthemer rstudio autocompletion example](xaringanthemer-rstudio-help.gif)
 
 ### R Markdown Template in RStudio
 
 You can also skip the above and just create a *Ninja Themed Presentation* from the New R Markdown Document menu in RStudio.
 
 <center>
-![rstudio xaringanthemer rmarkdown template](/images/project/xaringanthemer/rmarkdown-template-screenshot.png){width=350px}
+![rstudio xaringanthemer rmarkdown template](rmarkdown-template-screenshot.png){width=350px}
 </center>
 
 
