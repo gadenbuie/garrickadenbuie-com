@@ -1,1 +1,4 @@
 /* css styles */
+main.content img {
+  max-width: 100%;
+}
