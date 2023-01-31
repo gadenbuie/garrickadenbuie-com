@@ -12,6 +12,11 @@ project:
 website:
   title: "garrick"
   site-url: https://garrickadenbuie.com
+  twitter-card:
+    creator: "@grrrck"
+    site: "@grrrck"
+    card-style: summary_large_image
+  open-graph: true
   navbar:
     right:
       - text: blog
