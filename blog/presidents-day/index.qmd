@@ -261,18 +261,15 @@ rev_date <- c_trans("reverse", "time")
 ```{r functions-lightbox-img}
 lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
   if (preview) {
-    glue::glue(
-      '<a href="{url}" data-featherlight="image">
-      <div class="figure">
-      <img src="{url}" alt="{alt}">
-      <p class="caption">{caption}</p>
-      </div>
-      </a>
-      '
-    )
+    description <- ""
+    if (nzchar(caption)) {
+      description <- glue::glue(' description="{caption}"')
+    }
+    glue::glue('![{alt}]({url}){{.lightbox{description}}}')
   } else {
     if (alt == "") alt <- "static image of the plot"
-    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
+    if (nzchar(caption)) caption <- glue::glue(' data-description="{caption}"')
+    glue::glue('<a href="{url}" class="lightbox"{caption}>{alt}</a>')
   }
 }
 ```
@@ -427,7 +424,8 @@ View `r lightbox_img(knitr::fig_chunk("plot-daily-schedule-static", "png"), prev
 Expand the section below for a behind-the-scenes look at this visualization.
 
 
-### How This Was Made... {.js-expandmore}
+::: {.callout collapse="true"}
+### How This Was Made...
 
 <div class="js-to_expand">
 The pipeline for building this visualization is a fairly standard loading and transformation of the source data with `readr` and `dplyr`, followed by building the visualization in `ggplot2` and passing off to `plotly` for the interactive parts.
@@ -547,6 +545,8 @@ And that's it!
 
 </div>
 
+:::
+
 ## The President's Daily Tweeting Schedule
 
 ```{r djt-workday}
@@ -656,9 +656,9 @@ Expand the section below to learn more about how I gathered tweets from &commat;
 
 Also, if you're interested in exploring the timeline of tweets rendered as they appear on Twitter, Jonathan Sidi created an awesome Shiny app for [exploring Trump's tweets by category][yonicd-app].
 
-### How This Was Made... {.js-expandmore}
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### How This Was Made...
 
 This visualization required the President's tweets, which I downloaded using the excellent [rtweet] package.
 After matching the tweets with their corresponding activity, I modified the previous plot to soften the coloring of the presidential activities and added the tweets to the chart.
@@ -743,16 +743,16 @@ To disable the tooltip, I have to save the plotly object and change the `$hoveri
 
 Head [back to the visualization](#the-presidents-daily-tweeting-schedule) to view the final product and explore Trump's ~~delusional ranting~~ tweets.
 
-</div>
+:::
 
 ## How much time is spent in Executive Time?
 
 Looking at the above plots, it's really striking how much time is unstructured _Executive Time_ in Trump's schedule.
 But how much of the day is spent in each activity group?
 
-##### R code... {#code-time-summary .js-expandmore .expand-for-code}
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### R code... {#code-time-summary}
 
 The first step is to calculate the total time as a percentage of the 8am to 5pm workday spent in each time category.
 This data frame will be used for several plots.
@@ -858,7 +858,7 @@ ggplot(exec_time_hours) +
   )
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("plot-time-category-total-pct", "png"))`
 
@@ -913,13 +913,15 @@ work weeks where executive time was not the dominant activity.
 
 When the above time-use summary is expanded into his daily schedule, it's clear how unusual it is for Trump to spend a significant portion of his day in structured events.
 
-##### R code... {#code-time-category-pct-daily .js-expandmore .expand-for-code}
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### R code... {#code-time-category-pct-daily}
 
 ```{r plot-time-category-pct-daily, echo=TRUE}
 exec_time_total %>%
-  mutate(date = as.integer(date + 3600*12)) %>%
+  mutate(
+    date = as.integer(date + 3600*12),
+  ) %>%
   ggplot() +
   aes(date, pct, fill = top_category) +
   geom_col(width = 3600*24) +
@@ -930,7 +932,7 @@ exec_time_total %>%
   scale_y_continuous(
     breaks   = seq(0, 1, .25),
     labels   = scales::percent_format(accuracy = 25),
-    position = "bottom",
+    position = "right",
     expand   = expansion(c(0.025, 0), 0)
   ) +
   scale_x_reverse(
@@ -956,7 +958,7 @@ exec_time_total %>%
   labs(caption = credit_caption(FALSE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("plot-time-category-pct-daily", "png"))`
 
@@ -964,9 +966,8 @@ In fact, the largest non-executive time block for the
 `r exec_time_n_weekdays - exec_time_gt_half`
 days where executive time isn't more than half of Trump's workday are almost entirely travel related.
 
-##### R code... {#code-table-not-full-on-exec-time-day .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-table-not-full-on-exec-time-day}
 
 ```{r table-not-full-on-exec-time-day, results="asis", echo=TRUE, eval=FALSE}
 exec_time_summary %>%
@@ -986,7 +987,7 @@ exec_time_summary %>%
   kableExtra::column_spec(1:2, width = "6.5em")
 ```
 
-</div>
+:::
 
 ```{r table-not-full-on-exec-time-day-out, results="asis"}
 <<table-not-full-on-exec-time-day>>
@@ -995,9 +996,8 @@ exec_time_summary %>%
 Travel seems to be the only activity capable of substantially affecting the amount of time the president spends on his executive time.
 My (completely speculative) guess is that this is in part due to travel being the only activity with a duration long enough to displace executive time, and also in part that travel probably most resembles executive time.
 
-##### R code... {#code-plot-exec-time-vs-others .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-plot-exec-time-vs-others}
 
 ```{r plot-exec-time-vs-others, fig.width=8, fig.height=3, echo=TRUE}
 exec_time_total %>%
@@ -1041,7 +1041,7 @@ exec_time_total %>%
   )
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("plot-exec-time-vs-others", "png"))`
 
@@ -1051,9 +1051,8 @@ At the point, I was very interested in exploring how Trump's tweeting relates to
 The first question to answer is _When does he send most of his tweets?_
 And the answer is: primarily on the weekends, during executive time, or before or after work hours.
 
-##### R code... {#code-plot-tweet-counts-by-activity .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-plot-tweet-counts-by-activity}
 
 ```{r plot-tweet-counts-by-activity, fig.height = 5, echo=TRUE}
 # Start and end dates of Axios-pubslished schedules
@@ -1103,16 +1102,15 @@ exec_time %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("plot-tweet-counts-by-activity", "png"))`
 
 We can get a sense of the timing of Trump's tweeting activities by looking at the time of day of each tweet and the scheduled activity that's going on at the time.
 The following plot shows each tweet as a vertical line and considers only workday tweeting and only for days covered by the Axios schedules.
 
-##### R code... {#code-djt-tweets-timeline .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-djt-tweets-timeline}
 
 ```{r djt-tweets-with-non-work, echo=TRUE}
 event_type_colors_extra <- c(event_type_colors, "Non-Work Hours" = "#828486")
@@ -1162,9 +1160,11 @@ ggplot(djt_joined_work_non_work) +
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    strip.text.y = element_text(angle = 180,
-                                margin = margin(r = 5, l = 25),
-                                hjust = 1),
+    strip.text.y.left = element_text(
+      angle = 0,
+      margin = margin(r = 5, l = 25),
+      hjust = 1
+    ),
     panel.spacing.y = unit(0, "pt")
   ) +
   ggtitle(
@@ -1174,15 +1174,14 @@ ggplot(djt_joined_work_non_work) +
   labs(caption = credit_caption(rtweet = TRUE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("djt-tweets-timeline", "png"))`
 
 Most of Trump's tweeting happens betewen 7 and 9 am, but what's striking is that it's nearly impossible to tell the difference between early morning tweeting and the start of President Trump's official workday at 8am.
 
-##### R code... {#code-plot-tweets-work-non-work-same-timeline .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-plot-tweets-work-non-work-same-timeline}
 
 ```{r plot-tweets-work-non-work-same-timeline, fig.height=7, echo=TRUE}
 djt_joined_work_non_work %>%
@@ -1213,7 +1212,7 @@ djt_joined_work_non_work %>%
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    strip.text.y = element_text(angle = 180, margin = margin(r = 25)),
+    strip.text.y.left = element_text(angle = 0, margin = margin(r = 25)),
     panel.spacing.y = unit(0, "pt")
   ) +
   ggtitle(
@@ -1222,7 +1221,7 @@ djt_joined_work_non_work %>%
   )
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("plot-tweets-work-non-work-same-timeline", "png"))`
 
@@ -1235,10 +1234,8 @@ Similarly does he tweet less when he has more strucured time, i.e. metings, even
 Somewhat unsurprisingly, the number of tweets sent during the workday in only very slightly correlated with the amount of unstructured time on Trump's calendar.
 This makes sense: there is very little variation in the amount of the day spent in structured events -- it's never more than half the day.
 
-
-##### R code... {#code-tweets-by-exec-time .js-expandmore .expand-for-code}
-
-<div class="js-to_expand">
+::: {.callout collapse="true"}
+### R code... {#code-tweets-by-exec-time}
 
 ```{r tweets-by-exec-time, fig.height=5, echo=TRUE}
 djt_joined %>%
@@ -1267,13 +1264,13 @@ djt_joined %>%
     caption = credit_caption(rtweet = TRUE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("tweets-by-exec-time", "png"))`
 
-##### R code... {#code-tweets-by-not-meeting-event .js-expandmore .expand-for-code}
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### R code... {#code-tweets-by-not-meeting-event}
 
 ```{r tweets-by-not-meeting-event, fig.height=5, echo=TRUE}
 djt_simple %>%
@@ -1301,7 +1298,7 @@ djt_simple %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("tweets-by-not-meeting-event", "png"))`
 
@@ -1312,9 +1309,9 @@ Are his event-related tweets more positive?
 To this end, I ran Trump's tweet text through the NRC sentiment dictionary using `get_nrc_sentiment()` from the `syuzhet` package.
 This function returns an integer score from 0 to 10 for a range of positive and negative emotions.
 
-##### R code... {#code-tweet-emotion-by-event .js-expandmore .expand-for-code}
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### R code... {#code-tweet-emotion-by-event}
 
 ```{r djt-tweet-sentiment, echo=TRUE}
 djt_sentiment <-
@@ -1357,7 +1354,7 @@ djt_sentiment %>%
        caption = credit_caption(rtweet = TRUE))
 ```
 
-</div>
+:::
 
 `r lightbox_img(knitr::fig_chunk("tweet-emotion-by-event", "png"))`
 
