@@ -116,7 +116,7 @@ ggplot(iris) +
 ]
 ````
 
-![](/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/pull-left-right.png)
+![](pull-left-right.png)
 
 This works pretty well, but the plots ended up being somewhat squished, so I created two CSS classess for the left and right columns.
 
@@ -165,7 +165,7 @@ ggplot(iris) +
 ]
 ````
 
-![](/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/left-code-right-plot.png)
+![](left-code-right-plot.png)
 
 For best results, notice that I set the figure dimentions to 4.8 x 4.5 -- and aspect ratio of approximately `9 / (16 * 0.6)` -- to match the `.right-plot` width in the CSS.
 I also added `out.width="100%"` so that the image is automatically scaled to fill the column width.
@@ -243,7 +243,7 @@ And then finally, I used the following CSS to place the callout in the bottom ri
 }
 ```
 
-![](/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/plot-callout.png)
+![](plot-callout.png)
 
 Then the final plot is revealed on the next slide using `fig.callout=TRUE` but without wrapping the result chunk in side `.plot-callout[]`.
 
@@ -252,7 +252,7 @@ Then the final plot is revealed on the next slide using `fig.callout=TRUE` but w
 ```
 ````
 
-![](/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/large-plot-full-slide.png)
+![](large-plot-full-slide.png)
 
 ## Using knitr's fig_chunk() {#using-knitr-fig-chunk}
 
@@ -284,7 +284,7 @@ ggplot(iris) +
 ]
 </code></pre>
 
-![](/blog/2018/2018-08-14-decouple-code-and-output-in-xaringan-slides_files/knitr-fig_chunk.png)
+![](knitr-fig_chunk.png)
 
 ## Wrap Up
 
