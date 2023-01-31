@@ -1,13 +1,13 @@
 project:
   type: website
-  resources:
-    - "static"
   render:
     - "*.qmd"
     - "*.md"
     - "blog/**/*.qmd"
     - "talk/**/*.qmd"
     - "project/**/*.qmd"
+  post-render:
+    - "rsync --recursive --prune-empty-dirs --copy-links --safe-links static/. _site/"
 
 website:
   title: "garrick"
