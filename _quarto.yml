@@ -29,7 +29,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: zephyr
     css: styles.css
 
 execute:
