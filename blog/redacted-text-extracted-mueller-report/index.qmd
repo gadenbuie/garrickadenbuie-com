@@ -27,23 +27,6 @@ categories:
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(message = FALSE, cache = TRUE)
-
-lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
-  if (preview) {
-    glue::glue(
-      '<a href="{url}" data-featherlight="image">
-      <div class="figure">
-      <img src="{url}" alt="{alt}">
-      <p class="caption">{caption}</p>
-      </div>
-      </a>
-      '
-    )
-  } else {
-    if (alt == "") alt <- "static image of the plot"
-    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
-  }
-}
 ```
 
 Earlier today, the redacted Mueller report was [released to the public][report-released].

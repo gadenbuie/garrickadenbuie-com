@@ -258,22 +258,6 @@ c_trans <- function(a, b, breaks = b$breaks, format = b$format) {
 rev_date <- c_trans("reverse", "time")
 ```
 
-```{r functions-lightbox-img}
-lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
-  if (preview) {
-    description <- ""
-    if (nzchar(caption)) {
-      description <- glue::glue(' description="{caption}"')
-    }
-    glue::glue('![{alt}]({url}){{.lightbox{description}}}')
-  } else {
-    if (alt == "") alt <- "static image of the plot"
-    if (nzchar(caption)) caption <- glue::glue(' data-description="{caption}"')
-    glue::glue('<a href="{url}" class="lightbox"{caption}>{alt}</a>')
-  }
-}
-```
-
 ```{r plot-theme-fonts}
 sysfonts::font_add_google("PT Sans")
 sysfonts::font_add_google("PT Sans Narrow")

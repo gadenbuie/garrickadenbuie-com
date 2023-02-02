@@ -34,25 +34,6 @@ knitr::opts_chunk$set(
 
 options(htmltools.dir.version = TRUE)
 
-# If using lightbox for plots, set `fig.show = FALSE`
-# Usage: lightbox_img(knitr::fig_chunk("chunk-name", "png"))
-lightbox_img <- function(url, alt = "", caption = "", preview = TRUE) {
-  if (preview) {
-    glue::glue(
-      '<div class="figure">
-      <a href="{url}" data-featherlight="image">
-      <img src="{url}" alt="{alt}">
-      </a>
-      <p class="caption">{caption}</p>
-      </div>
-      '
-    )
-  } else {
-    if (alt == "") alt <- "static image of the plot"
-    glue::glue('<a href="{url}" data-featherlight="image">{alt}</a>')
-  }
-}
-
 way_point <- function(add_class = TRUE) {
   glue::glue(
     '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>',
