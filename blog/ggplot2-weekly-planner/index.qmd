@@ -9,8 +9,7 @@ categories:
   - Productivity
   - Scripts
 description: "Use ggplot2 to organize your life."
-images:
-  - "/blog/2019/2019-06-22-ggplot2-weekly-planner_files/figure-html/gcal-final-1.png"
+image: "index_files/figure-html/gcal-final-1.png"
 source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-06-22-ggplot2-weekly-planner.Rmarkdown
 keywords: rstats
 editor_options:
@@ -40,11 +39,9 @@ Important dates can be highlighted, for holidays or other days relevant to your 
 
 I doubt it's bullet journal certified, but it worked for me and maybe it will for you too.
 
-<center>
-<a href="`r knitr::fig_chunk("gcal-final", "png")`">
-<img src="`r knitr::fig_chunk("gcal-final", "png")`" style="max-width: 400px">
-</a>
-</center>
+::: text-center
+![](`r knitr::fig_chunk("gcal-final", "png")`){style="max-width:500px"}
+:::
 
 I'll break down the pieces that went into the calendar, but if you just want to make your own you can ~~jump to the end~~ use the [ggweekly] package I shared on GitHub and get straight to calendar printing and project planning.
 
@@ -195,7 +192,9 @@ Finally, we arrive at the main event, the actual creation of the calendar with <
 Here I use `geom_tile()` for each day, and then overlay tiles for the start-of-the-month days and the highlighted holiday and project-specific days.
 I also used `geom_text()` to add annotations to the special days, which I pushed to the top or bottom left corner of the day box.
 
-```{r gcal, fig.height=9, fig.width=7, fig.show="hide"}
+```{r gcal, fig.height=9, fig.width=7}
+#| code-fold: true
+#| code-summary: Code to produce the calendar
 gcal <-
   dates %>%
   mutate(
@@ -210,7 +209,9 @@ gcal <-
   geom_tile(
     data = day_one,
     fill = "#f78154",
-    alpha = 0.25
+    alpha = 0.25,
+    width = 1,
+    height = 1
   ) +
   # add name of month to the first day
   geom_text(
@@ -260,10 +261,6 @@ gcal <-
 gcal
 ```
 
-<center>
-`r lightbox_img(knitr::fig_chunk("gcal", "png"), img_extra = 'height="400px"')`
-</center>
-
 ### Calculate month boundaries
 
 For a final touch, I wanted stronger differentiation between months.
@@ -309,7 +306,8 @@ month_boundaries
 
 Then, I use a quick for loop to add each of these segments to the calendar plot.
 
-```{r gcal-final, fig.height=9, fig.width=7, fig.show="hide"}
+```{r gcal-final, fig.height=9, fig.width=7}
+#| out-extra: 'style="max-width:500px"'
 for (boundary in c("left", "up", "right")) {
   gcal <- gcal +
     geom_segment(
@@ -322,10 +320,6 @@ for (boundary in c("left", "up", "right")) {
 
 gcal
 ```
-
-<center>
-`r lightbox_img(knitr::fig_chunk("gcal-final", "png"), img_extra = 'height="400px"')`
-</center>
 
 
 ## A Weekly Planner Package {#ggweek_planner}
