@@ -173,7 +173,7 @@ that I probably wouldn't use in real life
 Here's the complete code chunk
 that I used in my `slides.Rmd` file to create the example above.
 
-````
+````{.markdown}
 ```{r xaringan-themer, include=FALSE}`r ''`
 style_duo_accent(
   primary_color = "#035AA6",        # blue
@@ -611,4 +611,4 @@ is no longer officially included in Google Fonts.
 Thanks to everyone who sumbitted pull requests, issues, or comments:
 [&#x0040;Btibert3](https://github.com/Btibert3), [&#x0040;Northbreeze](https://github.com/Northbreeze), [&#x0040;pat-s](https://github.com/pat-s), [&#x0040;PMassicotte](https://github.com/PMassicotte), [&#x0040;techisdead](https://github.com/techisdead), and [&#x0040;TrashBirdEcology](https://github.com/TrashBirdEcology)
 
-Thanks to <span class="pkg">Aubrey Aden-Buie][aubrey] for help designing the [xaringanthemer</span> hex logo!
+Thanks to [Aubrey Aden-Buie][aubrey] for help designing the [xaringanthemer]{.pkg} hex logo!
