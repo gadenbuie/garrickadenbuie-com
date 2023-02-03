@@ -18,7 +18,7 @@ categories:
   - Quarto
 description: |
   countdown v0.4.0 is now available on CRAN with a ton of new features!
-twitterImage: feature.png
+image: feature.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/countdown-v0-4-0/index.Rmarkdown'
 keywords: rstats
 editor_options:

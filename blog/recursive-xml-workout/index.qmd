@@ -36,9 +36,7 @@ options(htmltools.dir.version = TRUE)
 I had no choice today but to work with raw XML data
 and let me just say: it's been a workout.
 
-<center>
-`r blogdown::shortcode("tweet", "1191792162909949952")`
-</center>
+{{< tweet grrrck 1191792162909949952 >}}
 
 ## An example XML file
 

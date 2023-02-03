@@ -15,7 +15,7 @@ categories:
 description: |
   Picking words to guess in Wordle.
   It's only fun if you can solve it with R.
-twitterImage: feature.png
+image: feature.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/wordle-guessing/index.Rmarkdown'
 keywords: rstats
 editor_options:

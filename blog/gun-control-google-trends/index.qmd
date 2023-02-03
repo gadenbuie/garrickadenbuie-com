@@ -2,8 +2,7 @@
 title: 'Searching for "gun control" after a mass shooting'
 author: Garrick Aden-Buie
 date: '2018-02-19'
-params:
-  last_update: "2018-03-05 10:00"
+image: figures/plot-gun-control-trends-1.png
 slug: gun-control-google-trends
 aliases:
   - /blog/2018/02/19/gun-control-google-trends
@@ -12,480 +11,279 @@ categories:
   - Visualization
   - Google Trends
   - Gun Control
+resources: figures
 ---
 
+**Last updated:** 2018-03-05 10:00
+
+**tl;dr:** Google searches for "gun control" after the shooting in
+Parkland, Florida seem to be [similar to search trends after other
+shootings](#this-time), although it could be different this time.
+
+A civilized, modern society should be able to function nearly entirely
+without guns. We should be able to go about our lives without ever
+thinking about guns. We should be able to go the school, to go to
+church, to go to the grocery store, to leave our house and move about in
+the world without ever thinking about guns. Without ever having to worry
+about a gun, by accident or intention, ending your life or the lives of
+your loved ones.
+
+We face a [public health crisis unique to our country
+alone](https://www.vox.com/policy-and-politics/2017/10/2/16399418/us-gun-violence-statistics-maps-charts)
+with respect to gun violence. We are inflicting pain and economic burden
+on ourselves at [a yearly cost of \$229
+billion](https://www.motherjones.com/politics/2015/04/true-cost-of-gun-violence-in-america/)
+-- equivalent to the size of Portgual's economy. It is pointless,
+devastating, entirely unnecessary and utterly heart breaking.
+
+::: figure
+![Source: [Mother Jones](https://www.motherjones.com/politics/2015/04/true-cost-of-gun-violence-in-america/)](https://assets.motherjones.com/politics/2015/04/graybubble.jpg)
+:::
+
+I very clearly remember Columbine as an inflection point in education in
+my childhood, bomb threats and fire drills replacing class time like
+DVDs replacing VHS. Columbine happened 1,700 miles away from my middle
+school, but we felt it, even within the bubble of privelege that
+surrounded my community. I cannot even begin to fathom how today's
+children feel the gun violence they see around them.
+
+It absolutely breaks my heart that they have to go through this. It
+breaks my heart that the "adults" in our society can't get our shit
+together. It breaks my heart that they have to fight so hard to be heard
+and protected, that we need them to keep fighting, that we need them to
+stand up and speak out when we should be comforting them, when we should
+have done something sooner.
+
+[ In their darkest hours, we are asking too much of them. And yet we
+need them. How else will this ever change?
+]{style="font-size: 1.25rem; font-weight: bold; font-style: italic;"}
+
+Yesterday, [Nate Silver](https://twitter.com/NateSilver538) put words to
+our collective hope that this time something is different, that we're
+getting closer to [#NeverAgain](https://twitter.com/NeverAgainMSD).
+
+{{< tweet NateSilver538 965352547383959552 >}}
+
+My first thought was *how do you know?*. What does the "fade" look like?
+Clearly, I wasn't alone as a lot of other people pointed this out in
+replies.
+
+I did a quick search and found the
+[gtrendsR](https://github.com/PMassicotte/gtrendsR) package on Github.
+(Thank you Philippe Massicotte and Dirk Eddelbuettel.) What follows is
+an analysis of Google Search trends for the term "gun control" before
+and after other mass shooting events.
+
+## Source Code
+
+A quick note. All of the source code for this post can be found in my
+[Github repo for this
+website](https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2018/2018-02-18-gun-control-google-trends.Rmd_source).
+I didn't include it here in part because it's a mess and also in part
+because I used caching and some unusual data types to store the Google
+Trends results.
 
 
-<!-- LINKS -->
-<p><strong>Last updated:</strong> 2018-03-05 10:00</p>
-<p><strong>tl;dr:</strong> Google searches for “gun control” after the shooting in Parkland, Florida seem to be <a href="#this-time">similar to search trends after other shootings</a>, although it could be different this time.</p>
-<p>A civilized, modern society should be able to function nearly entirely without guns.
-We should be able to go about our lives without ever thinking about guns.
-We should be able to go the school, to go to church, to go to the grocery store, to leave our house and move about in the world without ever thinking about guns.
-Without ever having to worry about a gun, by accident or intention, ending your life or the lives of your loved ones.</p>
-<p>We face a <a href="https://www.vox.com/policy-and-politics/2017/10/2/16399418/us-gun-violence-statistics-maps-charts">public health crisis unique to our country alone</a> with respect to gun violence.
-We are inflicting pain and economic burden on ourselves at <a href="https://www.motherjones.com/politics/2015/04/true-cost-of-gun-violence-in-america/">a yearly cost of $229 billion</a> – equivalent to the size of Portgual’s economy.
-It is pointless, devastating, entirely unnecessary and utterly heart breaking.</p>
-<div class="figure">
-<img src="https://assets.motherjones.com/politics/2015/04/graybubble.jpg" alt="Source: Mother Jones" />
-<p class="caption">Source: <a href="https://www.motherjones.com/politics/2015/04/true-cost-of-gun-violence-in-america/">Mother Jones</a></p>
-</div>
-<p>I very clearly remember Columbine as an inflection point in education in my childhood, bomb threats and fire drills replacing class time like DVDs replacing VHS.
-Columbine happened 1,700 miles away from my middle school, but we felt it, even within the bubble of privelege that surrounded my community.
-I cannot even begin to fathom how today’s children feel the gun violence they see around them.</p>
-<p>It absolutely breaks my heart that they have to go through this.
-It breaks my heart that the “adults” in our society can’t get our shit together.
-It breaks my heart that they have to fight so hard to be heard and protected, that we need them to keep fighting, that we need them to stand up and speak out when we should be comforting them, when we should have done something sooner.</p>
-<p><span style="font-size: 1.25rem; font-weight: bold; font-style: italic;">
-In their darkest hours, we are asking too much of them.
-And yet we need them.
-How else will this ever change?
-</span></p>
-<p>Yesterday, <a href="https://twitter.com/NateSilver538">Nate Silver</a> put words to our collective hope that this time something is different, that we’re getting closer to <a href="https://twitter.com/NeverAgainMSD">#NeverAgain</a>.</p>
-{{% tweet "965352547383959552" %}}
-<p>My first thought was <em>how do you know?</em>.
-What does the “fade” look like?
-Clearly, I wasn’t alone as a lot of other people pointed this out in replies.</p>
-<p>I did a quick search and found the <a href="https://github.com/PMassicotte/gtrendsR">gtrendsR</a> package on Github.
-(Thank you Philippe Massicotte and Dirk Eddelbuettel.)
-What follows is an analysis of Google Search trends for the term “gun control” before and after other mass shooting events.</p>
-<div id="source-code" class="section level2">
-<h2>Source Code</h2>
-<p>A quick note.
-All of the source code for this post can be found in my <a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2018/2018-02-18-gun-control-google-trends.Rmd_source">Github repo for this website</a>.
-I didn’t include it here in part because it’s a mess and also in part because I used caching and some unusual data types to store the Google Trends results.</p>
-</div>
-<div id="mass-shootings-database" class="section level2">
-<h2>Mass Shootings Database</h2>
-<p>A dataset on mass shootings in the U.S. is available thanks to the hard work of Kaggle user <a href="https://www.kaggle.com/zusmani">zusmani</a>.
-They compiled a list of mass shootings in the U.S. since 1966, using public datasets and webpages including <a href="https://en.wikipedia.org/wiki/Category:Mass_shootings_in_the_United_States_by_year">Wikipedia</a>, <a href="http://www.motherjones.com/politics/2012/12/mass-shootings-mother-jones-full-data/">Mother Jones</a>, <a href="https://library.stanford.edu/projects/mass-shootings-america">Stanford</a>, and <a href="http://www.gannett-cdn.com/GDContent/mass-killings/index.html#title">USA Today</a>.</p>
-<p>The data is available on Kaggle at <a href="https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years/" class="uri">https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years/</a> and includes a variety of variables.</p>
-<p>For historical comparison, I selected the 15 most deadly shootings since 2004 (earliest available dates in Google Trends).
-Note that total victims include casualties and injuries.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-Date
-</th>
-<th style="text-align:left;">
-Title
-</th>
-<th style="text-align:left;">
-Location
-</th>
-<th style="text-align:right;">
-Victims
-</th>
-<th style="text-align:center;">
-AR-15<br>(or sim.)
-</th>
-<th style="text-align:center;">
-Semi-Automatic
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-2017-10-01
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2017_Las_Vegas_shooting">Las Vegas Strip mass shooting</a>
-</td>
-<td style="text-align:left;">
-Las Vegas, NV
-</td>
-<td style="text-align:right;">
-585
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2016-06-12
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Orlando_nightclub_shooting">Orlando nightclub massacre</a>
-</td>
-<td style="text-align:left;">
-Orlando, Florida
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2012-07-20
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2012_Aurora_shooting">Aurora theater shooting</a>
-</td>
-<td style="text-align:left;">
-Aurora, Colorado
-</td>
-<td style="text-align:right;">
-82
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2007-04-16
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Virginia_Tech_shooting">Virginia Tech massacre</a>
-</td>
-<td style="text-align:left;">
-Blacksburg, Virginia
-</td>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2017-11-05
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Sutherland_Springs_church_shooting">Texas church mass shooting</a>
-</td>
-<td style="text-align:left;">
-Sutherland Springs, TX
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2009-11-05
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2009_Fort_Hood_shooting">Fort Hood Army Base</a>
-</td>
-<td style="text-align:left;">
-Fort Hood, Texas
-</td>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2015-12-02
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2015_San_Bernardino_attack">San Bernardino, California</a>
-</td>
-<td style="text-align:left;">
-San Bernardino, California
-</td>
-<td style="text-align:right;">
-35
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2012-12-14
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Sandy_Hook_Elementary_School_shooting">Sandy Hook Elementary School</a>
-</td>
-<td style="text-align:left;">
-Newtown, Connecticut
-</td>
-<td style="text-align:right;">
-29
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2008-02-14
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Northern_Illinois_University_shooting">Northern Illinois University shooting</a>
-</td>
-<td style="text-align:left;">
-DeKalb, Illinois
-</td>
-<td style="text-align:right;">
-26
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2014-05-23
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2014_Isla_Vista_killings">Isla Vista mass murder</a>
-</td>
-<td style="text-align:left;">
-Santa Barbara, California
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2014-04-02
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2014_Fort_Hood_shooting">Fort Hood</a>
-</td>
-<td style="text-align:left;">
-Killeen, Texas
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-No
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2011-01-08
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2014_Fort_Hood_shooting">Tucson shooting</a>
-</td>
-<td style="text-align:left;">
-Tucson, Arizona
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-No
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2009-04-03
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Binghamton_shootings">Binghamton shootings</a>
-</td>
-<td style="text-align:left;">
-Binghamton, New York
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-No
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2016-02-25
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/Hesston_shooting">Excel Industries mass shooting</a>
-</td>
-<td style="text-align:left;">
-Hesston, Kansas
-</td>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2016-07-07
-</td>
-<td style="text-align:left;">
-<a href="https://en.wikipedia.org/wiki/2016_shooting_of_Dallas_police_officers">Dallas police shooting</a>
-</td>
-<td style="text-align:left;">
-Dallas, Texas
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:center;">
-No
-</td>
-<td style="text-align:center;">
-Yes
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="query-google-trends" class="section level2">
-<h2>Query Google Trends from R with gtrendsR</h2>
-<p>Then I queried Google Trends via <a href="https://github.com/PMassicotte/gtrendsR">gtrendsR</a> for the search terms <code>&quot;gun control&quot;</code> and a reference term for</p>
-<ul>
-<li>The last 7 days (capturing Parkland, FL shooting)</li>
-<li>One week before and 3 weeks after each of the above events</li>
-<li>All search interest since 2004.</li>
-</ul>
-<p>There are two points to note when working with data from Google Trends.</p>
-<p><strong>First</strong>, Google Trends returns search trends relative to the time period queried, so it can be hard to determine the scale of interest when looking at a smaller time period, such as a month.
-For comparison, I included the reference term <code>&quot;baseline&quot;</code> because this is relatively stable at ~10% from 2004 through present day<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.
-<strong>Edit 2018-02-20:</strong> I replaced <code>&quot;difficult&quot;</code> with <code>&quot;baseline&quot;</code> as the comparison search term.</p>
-<p><strong>Second</strong>, the data returned by Google Trends is aggregated according to the time window specified.
-In my tinkering I noticed that hourly trends are only available for the last 7 days.
-Earlier data is always aggregated at least by day.
-Longterm trends (such as the all time trend) are aggregated by month.</p>
-<p>The code below isn’t exactly the code I used to gather the data, but it should give you an idea for how easy it is to use gtrendsR.</p>
-<pre class="r"><code>library(dplyr)
+## Mass Shootings Database
+
+A dataset on mass shootings in the U.S. is available thanks to the hard
+work of Kaggle user [zusmani](https://www.kaggle.com/zusmani). They
+compiled a list of mass shootings in the U.S. since 1966, using public
+datasets and webpages including
+[Wikipedia](https://en.wikipedia.org/wiki/Category:Mass_shootings_in_the_United_States_by_year),
+[Mother
+Jones](http://www.motherjones.com/politics/2012/12/mass-shootings-mother-jones-full-data/),
+[Stanford](https://library.stanford.edu/projects/mass-shootings-america),
+and [USA
+Today](http://www.gannett-cdn.com/GDContent/mass-killings/index.html#title).
+
+The data is available on Kaggle at
+<https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years/> and
+includes a variety of variables.
+
+For historical comparison, I selected the 15 most deadly shootings since
+2004 (earliest available dates in Google Trends). Note that total
+victims include casualties and injuries.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  Date         Title                                                                              Location          Victims   AR-15\     Semi-Automatic
+                                                                                                                             (or sim.)
+  ------------ ---------------------------------------------------------------------------------- ------------- ----------- ----------- ----------------
+  2017-10-01   [Las Vegas Strip mass                                                              Las Vegas, NV         585     Yes           Yes
+               shooting](https://en.wikipedia.org/wiki/2017_Las_Vegas_shooting)
+
+  2016-06-12   [Orlando nightclub                                                                 Orlando,              102     No            Yes
+               massacre](https://en.wikipedia.org/wiki/Orlando_nightclub_shooting)                Florida
+
+  2012-07-20   [Aurora theater shooting](https://en.wikipedia.org/wiki/2012_Aurora_shooting)      Aurora,                82     Yes           Yes
+                                                                                                  Colorado
+
+  2007-04-16   [Virginia Tech massacre](https://en.wikipedia.org/wiki/Virginia_Tech_shooting)     Blacksburg,            55     No            Yes
+                                                                                                  Virginia
+
+  2017-11-05   [Texas church mass                                                                 Sutherland             46     Yes           Yes
+               shooting](https://en.wikipedia.org/wiki/Sutherland_Springs_church_shooting)        Springs, TX
+
+  2009-11-05   [Fort Hood Army Base](https://en.wikipedia.org/wiki/2009_Fort_Hood_shooting)       Fort Hood,             45     No            Yes
+                                                                                                  Texas
+
+  2015-12-02   [San Bernardino,                                                                   San                    35     No            Yes
+               California](https://en.wikipedia.org/wiki/2015_San_Bernardino_attack)              Bernardino,
+                                                                                                  California
+
+  2012-12-14   [Sandy Hook Elementary                                                             Newtown,               29     Yes           Yes
+               School](https://en.wikipedia.org/wiki/Sandy_Hook_Elementary_School_shooting)       Connecticut
+
+  2008-02-14   [Northern Illinois University                                                      DeKalb,                26     No            Yes
+               shooting](https://en.wikipedia.org/wiki/Northern_Illinois_University_shooting)     Illinois
+
+  2014-05-23   [Isla Vista mass murder](https://en.wikipedia.org/wiki/2014_Isla_Vista_killings)   Santa                  19     No            Yes
+                                                                                                  Barbara,
+                                                                                                  California
+
+  2014-04-02   [Fort Hood](https://en.wikipedia.org/wiki/2014_Fort_Hood_shooting)                 Killeen,               19     No             No
+                                                                                                  Texas
+
+  2011-01-08   [Tucson shooting](https://en.wikipedia.org/wiki/2014_Fort_Hood_shooting)           Tucson,                19     No             No
+                                                                                                  Arizona
+
+  2009-04-03   [Binghamton shootings](https://en.wikipedia.org/wiki/Binghamton_shootings)         Binghamton,            18     No             No
+                                                                                                  New York
+
+  2016-02-25   [Excel Industries mass shooting](https://en.wikipedia.org/wiki/Hesston_shooting)   Hesston,               17     No            Yes
+                                                                                                  Kansas
+
+  2016-07-07   [Dallas police                                                                     Dallas, Texas          16     No            Yes
+               shooting](https://en.wikipedia.org/wiki/2016_shooting_of_Dallas_police_officers)
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## Query Google Trends from R with gtrendsR {#query-google-trends}
+
+Then I queried Google Trends via
+[gtrendsR](https://github.com/PMassicotte/gtrendsR) for the search terms
+`"gun control"` and a reference term for
+
+-   The last 7 days (capturing Parkland, FL shooting)
+-   One week before and 3 weeks after each of the above events
+-   All search interest since 2004.
+
+There are two points to note when working with data from Google Trends.
+
+**First**, Google Trends returns search trends relative to the time
+period queried, so it can be hard to determine the scale of interest
+when looking at a smaller time period, such as a month. For comparison,
+I included the reference term `"baseline"` because this is relatively
+stable at \~10% from 2004 through present day[^1].
+ **Edit 2018-02-20:** I replaced `"difficult"` with `"baseline"` as the comparison search term.
+
+**Second**, the data returned by Google Trends is aggregated according
+to the time window specified. In my tinkering I noticed that hourly
+trends are only available for the last 7 days. Earlier data is always
+aggregated at least by day. Longterm trends (such as the all time trend)
+are aggregated by month.
+
+The code below isn't exactly the code I used to gather the data, but it
+should give you an idea for how easy it is to use gtrendsR.
+
+``` r
+library(dplyr)
 library(purrr)
 library(gtrendsR)
 
-get_trends_for_event &lt;- function(day) {
+get_trends_for_event <- function(day) {
   gtrends(
-      keyword = c(&quot;gun control&quot;, &quot;baseline&quot;),
-      geo = &quot;US&quot;,
-      time = paste(glue::glue(&quot;{day - 7} {day + 21}&quot;))
+      keyword = c("gun control", "baseline"),
+      geo = "US",
+      time = paste(glue::glue("{day - 7} {day + 21}"))
     )
 }
 
-guntrends &lt;- selected_dates %&gt;%
+guntrends <- selected_dates %>%
     mutate(gtrends = map(Date, get_trends_for_event))
 
-all_guntrends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;),
-                         geo = &quot;US&quot;, time = &quot;all&quot;)
+all_guntrends <- gtrends(c("gun control", "baseline"),
+                         geo = "US", time = "all")
 
-parkland_trends &lt;- gtrends(c(&quot;gun control&quot;, &quot;baseline&quot;),
-                           geo = &quot;US&quot;, time = &quot;now 7-d&quot;)</code></pre>
-<!--
-  <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1308_RC02/embed_loader.js"></script>
-  <script type="text/javascript">
-    trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"gun control","geo":"US","time":"2004-01-01 2018-02-19"}],"category":0,"property":""}, {"exploreQuery":"date=all&geo=US&q=gun%20control","guestPath":"https://trends.google.com:443/trends/embed/"});
-  </script>
--->
-</div>
-<div id="all-time" class="section level2">
-<h2>All time search interest in “gun control”</h2>
-<p>Google searches for “gun control” are relatively low-volume in the United States,
-with a clear increase around any mass shooting event.
-The plot below shows search interest in “gun control” since 2004, with the largest peak occurring after the Sandy Hook Elementary School mass shooting.</p>
-<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-gun-control-trends-1.png" data-featherlight="image">
-<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-gun-control-trends-1.png" width="960" />
-</a></p>
-</div>
-<div id="searching-for-gun-control-after-a-mass-shooting" class="section level2">
-<h2>Searching for “gun control” after a mass shooting</h2>
-<p>To examine Google search trends around individual mass shooting events, I looked at searches for “gun control” within a one month window around the shooting.</p>
-<p>Each subplot shows search trends as reported by Google Trends on a “scale” from 0 to 100.
-The scale of searching is relative to the time period queried.
-Events such as the <a href="https://en.wikipedia.org/wiki/2017_Las_Vegas_shooting">Las Vegas Strip</a>, <a href="https://en.wikipedia.org/wiki/Orlando_nightclub_shooting">Orlando Night Club</a>, <a href="https://en.wikipedia.org/wiki/2012_Aurora_shooting">Aurora Theater</a> shootings show how the events caught the attention of the public and led to questions about our gun laws.
-Other events, such as the <a href="https://en.wikipedia.org/wiki/2009_Fort_Hood_shooting">Fort Hood Army Base</a> attack seemed not to have caught public or media attention in the same way.</p>
-<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-relative-1.png" data-featherlight="image">
-<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-relative-1.png" width="960" />
-</a></p>
-<p>The above plot highlights search trends around individual mass shooting events, but it’s difficult to assess how strong the response to a particular event is relative to previous events.</p>
-<p>The approach that I worked out is to use a baseline search term that is relatively constant across the entire period.
-As I discussed above, I picked <code>&quot;baseline&quot;</code> for this role, as it nicely fits the bill.
-For each query of Google Trends, I also requested search trends for <code>&quot;baseline&quot;</code>.
-Then I scaled the <code>&quot;gun control&quot;</code> search trends relative to the hits on the baseline search.</p>
-<p>What this means is that in the following plot, the search volume for <code>&quot;gun control&quot;</code> is shown in “units” of searches for <code>&quot;baseline&quot;</code>.
-A value of 10 means there are 10 times more search for <code>&quot;gun control&quot;</code>, whereas a value of 1 means that the search volumen is roughly equivalent.</p>
-<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-baseline-1.png" data-featherlight="image">
-<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-normed-baseline-1.png" width="960" />
-</a></p>
-</div>
-<div id="this-time" class="section level2">
-<h2>Is this time different?</h2>
-<p>I certainly hope so.
-If we isolate other events with a similar profile in terms of public perception, it seems possible that this time will be different.
-But it also seems too early to tell.</p>
-<p>In the mean time, just remember that Google searches aren’t real things.
-If you want to make a difference or a change, support a local politician, donate to gun violence research, and register your friends to vote.
-For more ideas, take a look at <a href="https://everytown.org/throwthemout/">Everytown’s Action Plan</a> at <a href="https://everytown.org/throwthemout/" class="uri">https://everytown.org/throwthemout/</a>.</p>
-<p><a href="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-similar-1.png" data-featherlight="image">
-<img src="/blog/2018/2018-02-18-gun-control-google-trends_files/figure-html/plot-similar-1.png" width="960" />
-</a></p>
-<p>I’ll close with this tweet from <a href="https://twitter.com/davepell">@davepell</a>.</p>
-<p>But first, to the victims in Parkland, Florida and the victims of gun violence across the United States, I want you to know that <strong>I hear you, and I stand with you.</strong></p>
-{{% tweet "965077119968489472" %}}
-<div id="edits" class="section level4">
-<h4>Edits</h4>
-<p><strong>2018-02-20:</strong> I changed the comparison term from <code>&quot;difficult&quot;</code> to <code>&quot;baseline&quot;</code>.
-Also updated the scripts to gather data from the week prior to Feb 14, 2018.</p>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>It turns out that it’s actually rather tough to find a “stable” search term within the same general order of magnitude of searches as “gun control”. The term <code>&quot;difficult&quot;</code> was not selected un-ironically (initally). Later I decided there was too much variation in the search trends for <code>&quot;difficult&quot;</code> and thought that following the irony was a good idea. So I changed the term to <code>&quot;baseline&quot;</code>. Anyway, try it for yourself – go to <a href="https://trends.google.com/trends/explore?date=all&amp;geo=US&amp;q=gun%20control,difficult">Google Trends</a> and see if you can find another non-seasonal, nearly zero-growth search term.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
+parkland_trends <- gtrends(c("gun control", "baseline"),
+                           geo = "US", time = "now 7-d")
+```
+
+## All time search interest in "gun control" {#all-time}
+
+Google searches for "gun control" are relatively low-volume in the
+United States, with a clear increase around any mass shooting event. The
+plot below shows search interest in "gun control" since 2004, with the
+largest peak occurring after the Sandy Hook Elementary School mass
+shooting.
+
+![](figures/plot-gun-control-trends-1.png)
+
+## Searching for "gun control" after a mass shooting
+
+To examine Google search trends around individual mass shooting events,
+I looked at searches for "gun control" within a one month window around
+the shooting.
+
+Each subplot shows search trends as reported by Google Trends on a
+"scale" from 0 to 100. The scale of searching is relative to the time
+period queried. Events such as the [Las Vegas
+Strip](https://en.wikipedia.org/wiki/2017_Las_Vegas_shooting), [Orlando
+Night Club](https://en.wikipedia.org/wiki/Orlando_nightclub_shooting),
+[Aurora Theater](https://en.wikipedia.org/wiki/2012_Aurora_shooting)
+shootings show how the events caught the attention of the public and led
+to questions about our gun laws. Other events, such as the [Fort Hood
+Army Base](https://en.wikipedia.org/wiki/2009_Fort_Hood_shooting) attack
+seemed not to have caught public or media attention in the same way.
+
+![](figures/plot-relative-1.png)
+
+The above plot highlights search trends around individual mass shooting
+events, but it's difficult to assess how strong the response to a
+particular event is relative to previous events.
+
+The approach that I worked out is to use a baseline search term that is
+relatively constant across the entire period. As I discussed above, I
+picked `"baseline"` for this role, as it nicely fits the bill. For each
+query of Google Trends, I also requested search trends for `"baseline"`.
+Then I scaled the `"gun control"` search trends relative to the hits on
+the baseline search.
+
+What this means is that in the following plot, the search volume for
+`"gun control"` is shown in "units" of searches for `"baseline"`. A
+value of 10 means there are 10 times more search for `"gun control"`,
+whereas a value of 1 means that the search volumen is roughly
+equivalent.
+
+![](figures/plot-normed-baseline-1.png)
+
+## Is this time different? {#this-time}
+
+I certainly hope so. If we isolate other events with a similar profile
+in terms of public perception, it seems possible that this time will be
+different. But it also seems too early to tell.
+
+In the mean time, just remember that Google searches aren't real things.
+If you want to make a difference or a change, support a local
+politician, donate to gun violence research, and register your friends
+to vote. For more ideas, take a look at [Everytown's Action
+Plan](https://everytown.org/throwthemout/) at
+<https://everytown.org/throwthemout/>.
+
+![](figures/plot-similar-1.png)
+
+I'll close with this tweet from [\@davepell](https://twitter.com/davepell).
+
+But first, to the victims in Parkland, Florida and the victims of gun
+violence across the United States, I want you to know that **I hear you,
+and I stand with you.**
+
+{{< tweet davepell 965077119968489472 >}}
+
+#### Edits
+
+**2018-02-20:** I changed the comparison term from `"difficult"` to
+`"baseline"`. Also updated the scripts to gather data from the week
+prior to Feb 14, 2018.
+
+[^1]: It turns out that it's actually rather tough to find a "stable" search term within the same general order of magnitude of searches as "gun control". The term `"difficult"` was not selected un-ironically (initally). Later I decided there was too much variation in the search trends for `"difficult"` and thought that following the irony was a good idea. So I changed the term to `"baseline"`. Anyway, try it for yourself -- go to [Google Trends](https://trends.google.com/trends/explore?date=all&geo=US&q=gun%20control,difficult) and see if you can find another non-seasonal, nearly zero-growth search term.

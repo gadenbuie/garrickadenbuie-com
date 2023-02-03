@@ -24,7 +24,12 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-`r tweetrmd::tweet_markdown("https://twitter.com/sharlagelfand/status/1370426706952126465")`
+<figure class="text-center">
+![](tweet-1370426706952126465.png){style="max-width:400px" alt="please someone know what I'm talking about? to explain better...i feel like i've seen blog posts where someone types a hex code for a colour and it shows it inline, as a little circle??? but obviously google is not helping me rn"}
+
+<caption>Sharla Gelfand (@sharlagelfand) [March 12, 2021](https://twitter.com/sharlagelfand/status/1370426706952126465)</caption>
+</figure>
+
 
 ## Color Boxes with R
 
@@ -42,9 +47,9 @@ color_preview <- function(color) {
 }
 ```
 
-<h4 id="code-cal" class="js-expandmore expand-for-code">CSS Dependency</h4>
+::: {.callout collapse="true"}
 
-<div class="js-to_expand">
+### CSS Dependency
 
 You'll need to copy this function too,
 and feel free to tweak it if you want.
@@ -78,7 +83,7 @@ color_preview_dep <- function() {
 }
 ```
 
-</div>
+:::
 
 ```{css, echo=FALSE, eval=FALSE}
 .color-preview {
@@ -101,14 +106,10 @@ color_preview_dep <- function() {
 One of my favorite color resources [coolors.co](https://coolors.co).
 It gives you a palette of random colors,
 like
-```{r}
-color_preview("#414073")
-```
+`r format(color_preview("#414073"))`
 or
-```{r}
-color_preview("#70a37F")
-```
-. Press the space bar to get new colors,
+`r format(color_preview("#70a37F"))`.
+You can press the space bar to get new colors,
 or you can lock in colors you like to find new ones that work
 with colors you've already picked out.
 

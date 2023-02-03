@@ -11,7 +11,7 @@ categories:
 description: |
   Process a directory full of profile pictures, resizing and cropping the images
   to be centered around faces.
-twitterImage: feature.png
+image: feature.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/process-profile-picture-magick/index.Rmarkdown'
 keywords: rstats
 editor_options:
@@ -27,6 +27,9 @@ post_data:
       credit: Foto Sushi
     - id: 3dqSZidOkvs
       credit: Eye for Ebony
+resources:
+  - profiles
+  - profiles_cropped
 ---
 
 <!-- Links -->
@@ -61,7 +64,8 @@ credit_link <- function(id, credit) {
 profile_preview <- function(.photo, .alt, .caption) {
   htmltools::withTags(
     figure(
-      class = "mh-auto mw6",
+      class = "mx-auto",
+      style = "width: 66vw; max-width: 100%",
       img(alt = .alt, src = fs::path("profiles", .photo$id, ext = "jpg")),
       figcaption(
         .caption,
@@ -137,8 +141,8 @@ centered on the person's face as much as possible.
 If we took the image above and simply centered it inside a circle,
 we would get something like this:
 
-<div class="pa4 tc br-100 h4 w4 mh-auto shadow-4" style="background-size: cover; background-image: url(profiles/`r photos[[1]]$id`.jpg)">
-<div class="clip">The example profile image clipped to fit a circular avatar image. The subject appears at the right edge of the circle. About 40% of their face is clipped.</div>
+<div class="p-3 text-center rounded-circle mx-auto shadow-lg" style="background-size: cover; background-image: url(profiles/`r photos[[1]]$id`.jpg); width: 200px; height: 200px">
+<div class="visually-hidden">The example profile image clipped to fit a circular avatar image. The subject appears at the right edge of the circle. About 40% of their face is clipped.</div>
 </div>
 
 Obviously, we'd rather not clip half of the person out of their profile image,
@@ -200,7 +204,7 @@ Here are the four profiles.
 As you can see, they come in a variety of sizes
 and the person in the frame is rarely centered.
 
-::: tc
+::: text-center
 ```{r}
 #| fig.alt: |
 #|   Four profile pictures of irregular sizes in a 2 by 2 grid. None of the
@@ -311,7 +315,7 @@ we find that our subject's face is centered at
 ```{r find-face-center-image, echo = FALSE}
 #| message: false
 #| out.width: 75%
-#| class.chunk: tc
+#| class.chunk: text-center
 #| fig.alt: |
 #|   The primary example profile image, with a medium yellow dot placed on the
 #|   man's nose marking the center of his face as detected by the algorithm.
@@ -488,7 +492,7 @@ image_crop(
 )
 ```
 
-::: tc
+::: text-center
 ```{r out.width="50%"}
 #| fig.alt: |
 #|   The example profile image, cropped to a square
@@ -500,8 +504,8 @@ knitr::include_graphics(knitr::fig_chunk("resized-cropped", "png"))
 When this image is used as a profile or avatar picture,
 it ends up looking much better than the uncropped and uncentered version!
 
-<div class="pa4 tc br-100 h4 w4 mh-auto shadow-4" style="background-size: cover; background-image: url(`r knitr::fig_chunk("resized-cropped", "png")`)">
-<div class="clip">The example profile image cropped and centered to fit a circular avatar image. The subject appears directly in the middle of the circle.</div>
+<div class="p-4 text-center rounded-circle mx-auto shadow-lg" style="background-size: cover; background-image: url(`r knitr::fig_chunk("resized-cropped", "png")`); width: 200px; height: 200px">
+<div class="visually-hidden">The example profile image cropped and centered to fit a circular avatar image. The subject appears directly in the middle of the circle.</div>
 </div>
 
 ## Put it all together
@@ -566,8 +570,8 @@ The end result is four perfect profile pictures!
 
 ```{r}
 profile_circle_preview <- '
-<div class="pa4 tc br-100 h4 w4 ma2 shadow-4" style="background-size: cover; background-image: url({image})">
-<div class="clip">{alt}</div>
+<div class="p-3 text-center rounded-circle m-3 shadow-lg" style="background-size: cover; background-image: url({image}); width: 250px; height: 250px">
+<div class="visually-hidden">{alt}</div>
 </div>'
 
 
@@ -585,7 +589,7 @@ profiles_cropped_html <- glue::glue_data(profiles_cropped, profile_circle_previe
 profiles_cropped_html <- htmltools::HTML(profiles_cropped_html)
 ```
 
-::: {.flex .flex-row .flex-wrap}
+::: {.d-flex .flex-row .flex-wrap}
 `r profiles_cropped_html`
 :::
 

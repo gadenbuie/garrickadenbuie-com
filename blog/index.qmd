@@ -5,7 +5,9 @@ description: >
   Or remember later. Or things I wrote about because I wanted
   to learn something new. Occasional ramblings, sometimes thoughts.
 listing:
-  contents: "**/*.qmd"
+  contents:
+    - "**/*.qmd"
+    - "**/*.md"
   sort: "date desc"
   type: default
   categories: true

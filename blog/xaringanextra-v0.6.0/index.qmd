@@ -14,7 +14,7 @@ categories:
   - Announcement
 description: |
   xaringanExtra v0.6.0 is now available on CRAN! Plus some new features.
-twitterImage: feature.png
+image: feature.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/xaringanExtra-v0-6-0/index.Rmd'
 keywords: rstats
 editor_options:
