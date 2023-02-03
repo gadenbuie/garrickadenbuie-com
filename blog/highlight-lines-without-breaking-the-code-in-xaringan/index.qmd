@@ -22,7 +22,7 @@ Check out the [demo/intro slides][demo-slides]!
 It's built on [remark.js] with few extra features, and one of my favorite features is the ability to highlight specific lines of code.
 In presentations, this draws attention to the most important part of the code demonstration, but doesn't break the reproducibility.
 
-![The line highlighting example from the [xaringan demo slides][demo-slides].](/images/2018/highlight-xaringan/highlight-demo-slides.png)
+![The line highlighting example from the [xaringan demo slides][demo-slides].](highlight-demo-slides.png)
 
 Basically, if you wrap a line in your code with `{{..code..}}`, that line will be highlighted in the slides.
 This works because `{{x}}` is a valid expression in R that just returns `x`, so the source code in the chunk runs correctly and an output hook cleans up the line.
@@ -103,12 +103,12 @@ ggplot(tips) +
 ```
 ````
 
-![](/images/2018/highlight-xaringan/highlight-demo-out.png)
+![](highlight-demo-out.png)
 
 Notice that the code in the source chunk and the output are both lined up!
 Here's a full slide with a few more examples.
 
-![](/images/2018/highlight-xaringan/highlight-more-examples.png)
+![](highlight-more-examples.png)
 
 [xaringan]: https://github.com/yihui/xaringan
 [remark.js]: http://remarkjs.com/

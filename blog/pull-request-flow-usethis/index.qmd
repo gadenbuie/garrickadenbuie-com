@@ -9,8 +9,7 @@ categories:
   - Pull Requests
   - Workflow
 description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
-images:
-  - /blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg
+image: usethis-pr-flow-social.jpg
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
 head_custom: |

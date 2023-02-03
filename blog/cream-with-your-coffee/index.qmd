@@ -6,7 +6,7 @@ aliases:
   - /blog/2014/03/05/cream-with-your-coffee
 enable_mathjax: true
 categories: [Blog]
-tags:  
+tags:
   - Dynamic Systems
   - R
   - Differential Equations
@@ -15,7 +15,7 @@ tags:
 
 ## Imagine this scenario
 
-![Good morning coffee by mrmatt on flickr](/images/2014/CoffeeCreamCoffee.jpg)
+![Good morning coffee by mrmatt on flickr](CoffeeCreamCoffee.jpg)
 
 You receive an excessively hot cup of coffee at your local coffee shop.
 As it's the first cup of the day, your main objective is to consume the caffeine as quickly as possible.
@@ -39,13 +39,13 @@ You can use [Newton's law of cooling](http://en.wikipedia.org/wiki/Newton_law_of
 
 $$\dot{T}(t) = -k (T(t) - T_R)$$
 
-This tells you that the change in surface temperature of an object is proportional to difference between the object's temperature and the surrounding environment. 
+This tells you that the change in surface temperature of an object is proportional to difference between the object's temperature and the surrounding environment.
 
 From this you know that the temperature of the coffee at time $t$ is given by the following solution to the above differential equation:
 
 $$T(t) = T_R + \left(T_0 - T_R \right)e^{-kt}$$
 
-Where $T_0$ represents the initial temperature of an object and $T_R$ the temperature of the surrounding environment. 
+Where $T_0$ represents the initial temperature of an object and $T_R$ the temperature of the surrounding environment.
 
 Two strategies come to mind: immediately add the cream to the coffee, or wait until adding the cream will reduce the temperature just enough to achieve the desired temperature. But which will bring you your caffeine fix fastest?
 <!-- more -->
@@ -66,7 +66,7 @@ If the cream is added immediately, then the effective initial temperature of the
 
 $$T_D = T_R + \left(rT_{Cof}+(1-r)T_{Cr} - T_R \right)e^{-k\tau_1}$$
 
-![](/images/2014/CoffeeCreamImmediate.png)
+![](CoffeeCreamImmediate.png)
 
 
 
@@ -76,7 +76,7 @@ If instead the cream is added at just the right time so that, when the coffee is
 
 $$T_D = \left[ T_R + \left( T_{Cof} - T_R \right) e^{-k\tau_2} \right] r + (1-r)T_{Cr}$$
 
-![](/images/2014/CoffeeCreamDelayed.png)
+![](CoffeeCreamDelayed.png)
 
 
 

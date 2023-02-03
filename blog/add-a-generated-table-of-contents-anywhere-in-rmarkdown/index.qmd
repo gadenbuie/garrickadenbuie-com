@@ -2,6 +2,7 @@
 title: Add a Generated Table of Contents Anywhere in RMarkdown
 date: '2018-02-28'
 slug: add-a-generated-table-of-contents-anywhere-in-rmarkdown
+image: 2018-02-28-blogdown-toc-example.png
 aliases:
   - /blog/2018/02/28/add-a-generated-table-of-contents-anywhere-in-rmarkdown
 categories:
@@ -115,7 +116,7 @@ plot(pressure)
 ````
 
 which outputs as
-<a href="/images/2018/2018-02-28-blogdown-toc-example.png" data-featherlight="image">this document (click to view image)</a>.
+<a href="2018-02-28-blogdown-toc-example.png" class="lightbox">this document (click to view image)</a>.
 
 ## Behind the Scenes
 

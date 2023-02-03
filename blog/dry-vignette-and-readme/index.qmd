@@ -31,7 +31,10 @@ that will most likely satisfy R CMD check.
 
 Jonathan Carroll ([&commat;carroll_jono](https://twitter.com/carroll_jono)) posted a twitter poll that turned out to be quite interesting this weekend:
 
-`r blogdown::shortcode("tweet", "969442252610191361")`
+<figure>
+![](tweet_969442252610191361.png)
+<caption>Jonathan Carroll (@carroll_jono) [March 2, 2018](https://twitter.com/carroll_jono/status/969442252610191361)</caption>
+</figure>
 
 ## What I love to see in a README
 
@@ -53,7 +56,7 @@ And considering that a good package also has vignettes, a README, a related (<sp
 
 ## Don't Repeat Yourself, Clone Yourself
 
-![](/images/2018/the-simpsons-s01e02-Bart-the-Genius.jpg)
+![](the-simpsons-s01e02-Bart-the-Genius.jpg)
 
 In the spirit of Don't Repeat Yourself and maximizing the potential of <span class="pkg">[knitr]</span> and [R Markdown][r-markdown] -- and the fact that you can use R Markdown for all of the above pieces -- I remembered recently reading about child documents in knitr.
 

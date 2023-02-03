@@ -27,7 +27,7 @@ Thus, in exploring the data set, it may be useful at times to visually see the i
 
 This post will help you learn to run R code that produce graphs like this. (_Note: learn to run, not learn to write... that's a much longer post and maybe I'll get to it later._)
 
-![](/images/2013/139942.png)
+![](139942.png)
 
 The image shows all of the time-series variables available for patients in Set A, ordered alphabetically, with a fixed time scale in minutes after arrival in the ICU. Descriptive variables, including some calculated variables, are printed at the top of the plot.
 
@@ -41,13 +41,13 @@ First, [download and install RStudio](http://rstudio.com). This should be relati
 
 Extract [plotByID.zip](https://dl.dropboxusercontent.com/u/1877578/plotByID.zip) somewhere where you'll find it and fire up RStudio. You should see a screen that looks a lot like this:
 
-![](/images/2013/RStudio-Blank1.png)
+![](RStudio-Blank1.png)
 
 You've got the Console on the left, Workspace and Files on the right. This code uses Hadley Wickham's excellent plotting package [ggplot2](https://ggplot2.tidyverse.org/), which isn't installed by default. To install it, click on **Install packages** under the **Tools **menu, type ggplot2 in the text box and hit enter. Everything should install fine.
 
 To load the code, click on the **...** in the Files pane and open the folder where you extracted the data set. To make sure everything runs within this directory, click "_Set working directory_" under the _More_ button. Open **plotByID.R**. Now you should see this:
 
-![](/images/2013/RStudio2.png)
+![](RStudio2.png)
 
 The code to load and plot the data is now open in the upper left window. Take a look at it and read through it if you want. To load it up, simply select everything (Ctrl/⌘+A) and then click _Run_ or hit Ctrl/⌘+Enter. The data set and necessary functions will load, and the demo plot above will appear, like magic.
 
@@ -59,31 +59,31 @@ The plotting function is pretty self-explanatory. It takes a primary argument of
 
 To plot input patient data to the screen you only have to enter one RecordID, by simply typing
 
-    
+
     plotByID(133966)
 
 
 in the console and hitting enter. To plot multiple patients, use a vector, which in R is denoted by the command c(). Thus,
 
-    
+
     plotByID( c(133966, 140334) )
 
 
 will plot the input data for two patients. To plot a random sample of 10 patients use the sample() function:
 
-    
+
     plotByID( sample(seta$RecordID, 10 )
 
 
 If you want the images to save to the working directory, use
 
-    
+
     plotByID(133966, save=TRUE, path=path)
 
 
 You don't have to manually specify the path variable, it's been set to the working directory. If you want to change the saving path, set
 
-    
+
     path="~/Your/Directory/Here"
 
 

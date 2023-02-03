@@ -6,8 +6,7 @@ date: '2018-12-03'
 slug: animate-xaringan-slide-transitions
 aliases:
   - /blog/2018/12/03/animate-xaringan-slide-transitions
-images:
-  - /images/2018/animated-xaringan-slides/xaringan-animated.gif
+image: xaringan-animated.gif
 categories:
   - xaringan
   - Tips
@@ -84,7 +83,7 @@ class: inverse, center, middle, animated, bounceInDown
 
 The end result will look something like this. Have fun! &#x1F60E;
 
-![Animated xaringan slides](/images/2018/animated-xaringan-slides/xaringan-animated.gif)
+![Animated xaringan slides](xaringan-animated.gif)
 
 ## More xaringan fun
 

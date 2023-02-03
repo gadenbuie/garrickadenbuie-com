@@ -5,12 +5,12 @@ aliases:
   - /blog/2014/04/04/upcoming-code-and-data-boot-camp
 date: 2014-04-04T17:03:00+00:00
 categories: [Blog]
-tags: 
+tags:
   - Data Analysis
   - R
 ---
 
-![](/images/2014/AhmedSIP.jpeg)
+![](AhmedSIP.jpeg)
 
 Today, [Dr. Shabbir Ahmed](http://www2.isye.gatech.edu/~sahmed/) spoke at USF at our lecture series on Stochastic Integer Programming methods. It was high-level and broad and unfortunately he didn't get into many of the "nitty-gritty" details, but it was still fascinating. Clearly integer programming -- and SIP more specifically -- is going to be an even more important area in OR and optimization in the very near future.
 

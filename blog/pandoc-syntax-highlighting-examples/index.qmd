@@ -2,6 +2,7 @@
 title: Pandoc Syntax Highlighting Examples
 date: "2018-07-06"
 slug: pandoc-syntax-highlighting-examples
+image: highlights_kate.png
 aliases:
   - /blog/2018/07/06/pandoc-syntax-highlighting-examples
 ---
@@ -17,7 +18,7 @@ Which is the same as running `pandoc --list-highlight-styles` (see [Syntax Highl
 But I couldn't find a gallery for choosing among these syntax styles, so here's a quick comparison.
 
 ```{r echo=FALSE, results='asis'}
-highlight_imgs <- dir(here::here("static/images/2018/pandoc-highlights"), full.names = TRUE, pattern = "\\.png")
+highlight_imgs <- dir(full.names = TRUE, pattern = "highlights.+\\.png")
 idx_breezedark <- which(grepl("breezedark", highlight_imgs))
 highlight_imgs <- c(highlight_imgs[-idx_breezedark], highlight_imgs[idx_breezedark])
 for (hl_img in highlight_imgs) {
@@ -32,7 +33,7 @@ for (hl_img in highlight_imgs) {
 
 ```yaml
 ---
-output: 
+output:
   pdf_document:
     pandoc_args: "--highlight=breezedark"
 ---

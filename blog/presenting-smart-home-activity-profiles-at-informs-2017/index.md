@@ -24,13 +24,13 @@ Some of the highlights from this INFORMS include:
 
 - Dr. Baraniuk's talk on Deep Learning, especially his take on how we learn to train deep neural networks.
 
-    {{< tweet 923204113797656577 >}}
+    {{< tweet grrrck 923204113797656577 >}}
 
 - The INFORMS Chapter of USF winning *Summa Cum Laude* by continuing events and programs that I worked on as President of the INFORMS chapter several years ago.
 
-    {{< tweet 923703348313731072 >}}
+    {{< tweet JulieLHammett 923703348313731072 >}}
 
-    ![](/images/2017/INFORMS-awards-ceremony.jpg)
+    ![](INFORMS-awards-ceremony.jpg)
 
 - Spending a night out in Houston on my birthday, reconnecting with friends who have graduated.
 

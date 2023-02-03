@@ -7,7 +7,7 @@ title: Educating Engineers for Sustainability
 categories: [Blog]
 ---
 
-![](/images/2012/richard-fenner-patel-talk.jpg)
+![](richard-fenner-patel-talk.jpg)
 
 I had the great pleasure of spending some time with [Dr. Richard Fenner](http://www.csap.cam.ac.uk/network/richard-fenner/), of the [University of Cambridge](http://www.cam.ac.uk/), who is in the process of writing a new book on educating engineers for sustainability.
 

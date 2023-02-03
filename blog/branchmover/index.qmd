@@ -15,8 +15,7 @@ categories:
 description: >
   Introducing branchMover, a Shiny app slash RStudio addin for coordinated
   default branch changes across your GitHub repositories.
-images:
-  - "https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png"
+image: https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png
 source_link: "https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/branchmover/index.Rmarkdown"
 keywords: "rstats"
 references: ~

@@ -6,7 +6,7 @@ date: '2019-02-09'
 slug: trump-tweet-time
 aliases:
   - /blog/2019/02/09/trump-tweet-time
-twitterImage: /images/2019/trump-tweet-time-01.png
+image: trump-tweet-time-01.png
 categories:
   - R
   - rtweet
@@ -54,15 +54,14 @@ Why not put your intuition to the test?
 So I built a simple Shiny game called [Trump Tweet Time][app] that you can [play right now][app].
 An 8-bit Trump shouts a tweet at you and you have to guess what was on his schedule while he was tweeting.
 
-<div>
-<a href="/images/2019/trump-tweet-time-01.png" data-featherlight="image">
-<img src="/images/2019/trump-tweet-time-01.png" style="max-height: 300px; margin:auto; display:inline;">
-</a>
-
-<a href="/images/2019/trump-tweet-time-02.png" data-featherlight="image">
-<img src="/images/2019/trump-tweet-time-02.png" style="max-height: 300px; margin:auto; display:inline;">
-</a>
-</div>
+::: grid
+::: {.g-col-sm-12 .g-col-md-6}
+![A screenshot of a SuperNES-styled Donald Trump with a speach bubble containing a random tweet. Three buttons offer the options for "meeting", "travel" or "executive time"](trump-tweet-time-01.png)
+:::
+::: {.g-col-sm-12 .g-col-md-6}
+![A screenshot after the user has clicked "executive time" revealing that Trump tweeted during Executive Time.](trump-tweet-time-02.png)
+:::
+:::
 
 Thanks to Colin Fay for [nessy] and Mike Kearney for [rtweet]!
 Your packages made this fun and easy.

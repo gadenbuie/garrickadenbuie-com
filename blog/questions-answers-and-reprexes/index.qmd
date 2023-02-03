@@ -10,7 +10,6 @@ categories:
   - Programming
   - reprex
 description: A "CSS Battle" YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.
-# images: [ /path/to/image.png ]
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/2021-03-16-questions-answers-and-reprexes.Rmarkdown'
 editor_options:
   chunk_output_type: console
@@ -39,8 +38,8 @@ and the answers we get when we reprex.
 
 ## CSS Battle with The CSS King
 
-<figure>
-`r blogdown::shortcode("youtube", "-QgJgZCJvo4")`
+<figure style="width:100%">
+{{< video https://www.youtube.com/embed/-QgJgZCJvo4 >}}
 <caption><em>I challenged The CSS King to a CSS Battle</em> on
 <a href="https://youtu.be/-QgJgZCJvo4" target="_blank" rel="noopener">YouTube</a></caption>
 </figure>
@@ -184,7 +183,7 @@ choosing where to draw the boxes around your code
 is a skill that comes with time and experience.
 
 <figure class="figure-left-third">
-<img src="/images/2020/pexels-karolina-grabowska-4219520.jpg" alt="Two hands, one holding a pencil and the other holding a right-angled ruler, preparing to draw a line." />
+<img src="pexels-karolina-grabowska-4219520.jpg" alt="Two hands, one holding a pencil and the other holding a right-angled ruler, preparing to draw a line." />
 <figcaption>Photo by <a href="https://www.pexels.com/@karolina-grabowska?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels">Karolina Grabowska</a></figcaption>
 </figure>
 

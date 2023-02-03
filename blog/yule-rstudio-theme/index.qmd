@@ -6,8 +6,7 @@ date: '2018-12-05'
 slug: yule-rstudio-theme
 aliases:
   - /blog/2018/12/05/holiday-rstudio-theme
-images:
-  - /images/2018/holiday-rstudio-theme/mockup-rstudio.png
+image: mockup-rstudio.png
 categories:
   - R
   - RStudio
@@ -22,17 +21,17 @@ categories:
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow me</a>&nbsp;
 <a class="github-button" href="https://github.com/gadenbuie/yule-rstudio" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/yule-rstudio on GitHub">Star yule-rstudio</a>&nbsp;
 
-![](/images/2018/holiday-rstudio-theme/mockup-rstudio.png)
+![](mockup-rstudio.png)
 
 ## &#x1F385; &#x1F936; 'Tis the season to be jolly!
 
 Bring yuletide cheer and seasons greetings to your [favorite R IDE](https://rstudio.com). Based on the [Yule tmTheme][yule-base] and modified to fit in well with RStudio Dark Mode. It's surprisingly pleasant and merrily festive!
 
-![](/images/2018/holiday-rstudio-theme/floating-rstudio.png)
+![](floating-rstudio.png)
 
 Featuring magical additions such as a candy cane style line highlight and a blinking Christmas-light cursor:
 
-<p align="center"><img src="/images/2018/holiday-rstudio-theme/blinking-cursor.gif"/></p>
+<p align="center"><img src="blinking-cursor.gif"/></p>
 
 ## Installation
 
