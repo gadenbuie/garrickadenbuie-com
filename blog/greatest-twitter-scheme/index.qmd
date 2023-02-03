@@ -32,7 +32,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = TRUE)
 
 I found this tweet today and I was intrigued.
 
-`r blogdown::shortcode("tweet", "1032699857117605888")`
+{{< tweet CostcoRiceBag 1032699857117605888 >}}
 
 What exactly had this person pulled off?
 What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?
@@ -151,7 +151,7 @@ What's really impressive is that, except for a few [Bismillah](https://twitter.c
 [tweeting](https://twitter.com/CostcoRiceBag/status/1023396608426303489).
 I'd love to get into a textual analysis, but it's late so I'll leave you with this:
 
-`r blogdown::shortcode("tweet", "997437696476934144")`
+{{< tweet CostcoRiceBag 997437696476934144 >}}
 
 Rock on! &#x1F918;
 

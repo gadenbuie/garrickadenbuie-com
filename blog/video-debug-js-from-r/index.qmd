@@ -30,9 +30,7 @@ editor_options:
 <span class="pkg">[htmlwidgets]</span> makes it easy to create awesome web things from R and R Markdown, but sometimes you have to write your own JavaScript code... in strings... in R. What do you do if it doesn't work? How can you write JavaScript interactively?
 :::
 
-<p>
-`r blogdown::shortcode("youtube", "aNxT4IOZPtc")`
-</p>
+{{< video https://www.youtube.com/embed/aNxT4IOZPtc >}}
 
 I "live streamed" my process
 as I worked through debugging

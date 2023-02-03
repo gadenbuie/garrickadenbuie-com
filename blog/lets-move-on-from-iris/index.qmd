@@ -64,7 +64,7 @@ wrote a long and insightful
 [Twitter thread][fisher-thread]
 about the origins of an often-used and completely boring dataset: `iris`.
 
-`r blogdown::shortcode("twitter", "1268392721275744256")`
+{{< tweet daniela_witten 1268392721275744256 >}}
 
 I've long known about Ronald Fisher's eugenicist past,
 but I admit that I have often thoughtlessly turned to `iris`

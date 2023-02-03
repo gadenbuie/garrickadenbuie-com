@@ -72,7 +72,9 @@ readr::read_tsv("https://cs.joensuu.fi/sipu/datasets/Compound.txt", col_names = 
 Aron Atkins ([\@aronatkins][t-aronatkins]) gave a great talk at [rstudio::conf 2018][rstudioconf] about a subject near and dear to my heart: parameterized RMarkdown.
 And apples.
 
-`r blogdown::shortcode('tweet', "959919533820583936&hide_media=1")`
+> I did not know about R Markdown parameterized reports...just params in the YAML and boom! Repeated analyses without messing with the original report code. Also, [@aronatkins](https://twitter.com/aronatkins?ref_src=twsrc%5Etfw) really likes 🍎 [#rstudioconf](https://twitter.com/hashtag/rstudioconf?src=hash&ref_src=twsrc%5Etfw) [pic.twitter.com/g2OC2lTnJc](https://t.co/g2OC2lTnJc)
+>
+> — Larie (@lariebyrd) [February 3, 2018](https://twitter.com/lariebyrd/status/959919533820583936?ref_src=twsrc%5Etfw)
 
 In his talk, he designed a parameterized RMarkdown report that would provide the user with a customized report for their selected fruit and pulling in images from the [USDA Pomological Watercolor Collection][usda-pom].
 I had never heard of the pomological watercolors -- or the fan club twitter account [\@pomological][t-pomological] -- until watching his talk.

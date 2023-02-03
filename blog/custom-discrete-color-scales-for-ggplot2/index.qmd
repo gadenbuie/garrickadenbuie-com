@@ -325,7 +325,7 @@ And thanks to
 [Benjamin Wolfe](https://twitter.com/BenjaminWolfe)
 for inspiring this post!
 
-`r blogdown::shortcode("twitter", "1161844769624137728")`
+{{< tweet BenjaminWolfe 1161844769624137728 >}}
 
 ```{r title-card, fig.show="hide", include=FALSE, fig.width=8, fig.height=4.5}
 library(magick)
