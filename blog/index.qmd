@@ -14,7 +14,8 @@ listing:
   sort-ui: true
   filter-ui: true
   fields: [date, title, reading-time, image, description, categories]
-  feed: true
+  feed:
+    categories: [R]
   image-align: left
 page-layout: full
 title-block-banner: false
