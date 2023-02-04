@@ -95,7 +95,7 @@ prepend_status_url <- function(text_markdown, status_url, created_at) {
   paste0(
     '<span class="tweet-timestamp">',
     '<a class="tweet-link" href="', status_url, '" title="', created_at, '" target="_blank" rel="noopener noreferrer">',
-    '<i class="fab fa-twitter fa-fw"></i>',
+    '<i class="bi bi-twitter"></i>',
     '<span class="tweet-timestamp__text">',
     strftime(ts, "%I:%M%P", tz = "America/New_York"),
     '</span></a></span>',
@@ -197,7 +197,6 @@ thread_markdown <- stringr::str_replace_all(
 	display: inline-block;
 	position: absolute;
   left: -1.5em;
-  top: 3px;
 }
 ```
 
