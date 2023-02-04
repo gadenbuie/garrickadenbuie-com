@@ -528,3 +528,8 @@ shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)
 <img src="shrtcts-reprex.gif" alt="A demonstration of the reprex shortcut: highlight code in RStudio editor, run the 'reprex to issue' shortcut, and create a new github issue" >
 <p class="caption">The reprex to GitHub issue shortcut in action.</p>
 </div>
+
+```{r}
+#| echo: false
+xaringanExtra::use_panelset()
+```
