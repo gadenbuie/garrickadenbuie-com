@@ -153,16 +153,17 @@ function updateGuesses (wordle) {
     .join(' ')
   discard = Tidy.distinct()([...discard, ...impossibleLetters])
     .sort((x, y) => x > y)
-    .map(l => `<code${impossibleLetters.includes(l) ? ' class="o-60"' : ''}>${l}</code>`)
+    .map(l => `<code${impossibleLetters.includes(l) ? ' style="opacity:0.6"' : ''}>${l}</code>`)
     .join(' ')
 
   const stats = document.getElementById('words-stats')
   stats.innerHTML = `<p>
     <strong>${nextGuess.length.toLocaleString()}</strong> word choices</p>
-  <table class="center mb3"><tr><td class="tr b pr2">Pattern</td><td class="tl b"><code>${pattern}</code></td></tr>
-    <tr><td class="tr b pr2">Yes</td><td class="tl">${keep}</td></tr>
-    <tr><td class="tr b pr2">No</td><td class="tl">${discard}</td></tr>
-    <tr><td class="tr b pr2">Maybe</td><td class="tl">${describeUniqueLetters(remainingLetters)}</td></tr>
+  <table class="table table-sm">
+    <tr><td class="fw-bold pe-3" align="left">Pattern</td><td align="left"><code>${pattern}</code></td></tr>
+    <tr><td class="fw-bold pe-3" align="left">Yes</td><td align="left">${keep}</td></tr>
+    <tr><td class="fw-bold pe-3" align="left">No</td><td align="left">${discard}</td></tr>
+    <tr><td class="fw-bold pe-3" align="left">Maybe</td><td align="left">${describeUniqueLetters(remainingLetters)}</td></tr>
   </table>`
 
   return wordle.state

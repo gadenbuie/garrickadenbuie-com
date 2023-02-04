@@ -66,16 +66,16 @@
   outline-offset: -2px;
 }
 .letter.letter-focus,
-.letter.letter-focus:hover, 
+.letter.letter-focus:hover,
 .letter.letter-focus:focus {
-  outline: 2px solid var(--red-50);
+  outline: 2px solid var(--bs-warning);
 }
 .btn-row-action {
   display: block;
   padding: 0;
-  border: 1px solid var(--slate-80);
-  color: var(--slate-20);
-  background-color: var(--slate-80);
+  border: 1px solid var(--bs-gary);
+  color: var(--quarto-text-color);
+  background-color: var(--bs-gray);
   font-size: 1.25em;
   border-radius: 5px;
   height: 1.5em;
@@ -103,41 +103,14 @@
   width: 1.5em;
 }
 .absent {
-  color: var(--slate-20);
-  background-color: var(--slate-80);
+  color: var(--bs-white);
+  background-color: var(--bs-gray);
 }
 .correct {
-  color: var(--green-20);
-  background-color: var(--green-80);
+  color: var(--bs-white);
+  background-color: var(--bs-success);
 }
 .present {
-  color: var(--orange-20);
-  background-color: var(--orange-80);
-}
-@media (prefers-color-scheme: dark) {
-  .absent {
-    color: var(--slate-80);
-    background-color: var(--slate-30);
-  }
-  .correct {
-    color: var(--green-80);
-    background-color: var(--green-40);
-  }
-  .present {
-    color: var(--orange-80);
-    background-color: var(--orange-40);
-  }
-  .letter:hover,
-  .letter:focus,
-  .btn-letter-action:hover,
-  .btn-letter-action:focus,
-  .btn-row-action:hover,
-  .btn-row-action:focus {
-    outline: 2px #aaaaaa80 solid;
-  }
-  .btn-row-action {
-    background-color: var(--slate-20);
-    color: var(--slate-80);
-    border-color: var(--slate-40);
-  }
+  color: var(--bs-white);
+  background-color: var(--bs-danger);
 }

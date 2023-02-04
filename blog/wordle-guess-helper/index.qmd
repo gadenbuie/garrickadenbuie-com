@@ -43,19 +43,19 @@ wordle_component <- function(word, answer, large = TRUE) {
       htmltools::span(
         class = c("letter", if (large) "letter-large", "absent"),
         letter,
-        htmltools::span(class = "sr-only", "(absent)")
+        htmltools::span(class = "visually-hidden", "(absent)")
       )
     } else if (ans == "-") {
       htmltools::span(
         class = c("letter", if (large) "letter-large", "present"),
         letter,
-        htmltools::span(class = "sr-only", "(in solution, wrong position)")
+        htmltools::span(class = "visually-hidden", "(in solution, wrong position)")
       )
     } else {
       htmltools::span(
         class = c("letter", if (large) "letter-large", "correct"),
         letter,
-        htmltools::span(class = "sr-only", "(correct)")
+        htmltools::span(class = "visually-hidden", "(correct)")
       )
     }
   })
@@ -434,9 +434,9 @@ so _hello new first word choice_!
 After your first choice, you know up to three pieces of additional information.
 Some of the letters in your guess
 
-1. [&nbsp;[dark square]{.clip}]{.letter .absent} **aren't** in the solution
-2. [&nbsp;[yellow square]{.clip}]{.letter .present} **are** in the solution but **not where** you guessed
-3. [&nbsp;[green square]{.clip}]{.letter .correct} **are** in the solution and **are where** you guessed
+1. [&nbsp;[dark square]{.visually-hidden}]{.letter .absent} **aren't** in the solution
+2. [&nbsp;[yellow square]{.visually-hidden}]{.letter .present} **are** in the solution but **not where** you guessed
+3. [&nbsp;[green square]{.visually-hidden}]{.letter .correct} **are** in the solution and **are where** you guessed
 
 ### None of the letters are in the solution
 
