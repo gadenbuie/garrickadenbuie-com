@@ -689,6 +689,7 @@ since Twitter changed ownership I still read Twitter but only occasionally tweet
 
 ::: {#plot-monthly}
 ```{r ref.label="plot-monthly", echo = FALSE, eval = TRUE}
+#| column: page
 #| fig.alt: |
 #|   A stacked bar chart showing the number of tweets, replies and mentions
 #|   sent each month. Trends and observations are described in the
@@ -696,7 +697,7 @@ since Twitter changed ownership I still read Twitter but only occasionally tweet
 ```
 :::
 
-::: {.o-80 .i}
+::: {class="fst-italic text-muted mt-3"}
 Hover or tap[^tap] on a bar above to see the top 5 tweets in each segment.
 :::
 
@@ -955,7 +956,7 @@ or at 11am
 ```
 :::
 
-::: {.o-80 .i}
+::: {class="fst-italic text-muted mt-3"}
 Hover or tap on a bar to compare a given time across all days.
 :::
 
@@ -1394,14 +1395,10 @@ ggiraph::girafe(
 
 <!-- CSS Post Customizations -->
 
-```{r echo = FALSE}
-xaringanExtra::use_clipboard()
-```
-
 ```{css echo=FALSE}
 [class^="tooltip_svg_"] {
-  background: var(--siteBgColorCustom);
-  color: var(--textColorCustom);
+  background: var(--quarto-body-bg);
+  color: var(--quarto-body-color);
   font-size: 0.75rem;
   padding: 1rem;
   max-width: 48rem;
@@ -1439,29 +1436,31 @@ xaringanExtra::use_clipboard()
 }
 .girafe_container_std g > g > rect:first-child:last-child,
 .girafe_container_std g > g > rect[fill="#F9FAFA"] {
-  fill: var(--siteBgColorCustom);
-  stroke: var(--siteBgColorCustom);
+  fill: var(--quarto-body-bg);
+}
+.ggiraph-svg .ggiraph-svg-rootg polyline:not([id]) {
+  stroke: var(--quarto-border-color);
 }
 .girafe_container_std text {
-  fill: var(--textColorCustom);
+  fill: var(--quarto-body-color);
 }
 .girafe_container_std rect[fill="#595959"] { /* default bar color */
-	fill: var(--blue-40);
+	fill: #1c7d8b;
 }
 .girafe_container_std polyline[stroke="#595959"] { /* geom_line */
-	stroke: var(--blue-40);
+	stroke: #1c7d8b;
 }
 .girafe_container_std circle[fill="#595959"] {  /* geom_circle */
-	fill: var(--blue-50);
-	stroke: var(--blue-50);
+	fill: #4896a1;
+	stroke: #4896a1;
 }
 #plot-popular-tweets [class^="tooltip_svg_"] {
   opacity: 1 !important;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1rem auto;
   position: static !important;
   max-width: 32rem;
   pointer-events: visible;
+  border: 2px solid var(--quarto-border-color);
 }
 #plot-time-of-day [class^="tooltip_svg_"] {
   box-shadow: none;
@@ -1501,10 +1500,10 @@ xaringanExtra::use_clipboard()
   background: none;
 }
 #plot-tweet-source [class^="tooltip_svg_"] progress::-webkit-progress-value {
-  background: var(--pink-40);
+  background: #b0508a;
 }
 #plot-tweet-source [class^="tooltip_svg_"] progress::-moz-progress-bar {
-  background: var(--pink-40);
+  background: #b0508a;
 }
 @media (max-width: 48rem) {
   #plot-time-of-day [class^="tooltip_svg_"],
@@ -1513,17 +1512,6 @@ xaringanExtra::use_clipboard()
     margin-right: auto;
     position:   static !important;
     margin-left: auto;
-  }
-}
-@media (prefers-color-scheme: dark) {
-  .girafe_container_std polyline[stroke="#E7EAEB"] {
-    stroke: var(--slate-10)
-  }
-  .girafe_container_std polyline[stroke="#D3D9DB"] {
-    stroke: var(--slate-20)
-  }
-  [class^="tooltip_svg_"] {
-    --shadow-color: 203deg 60% 1%;
   }
 }
 ```
