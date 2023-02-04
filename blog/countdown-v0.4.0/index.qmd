@@ -56,9 +56,9 @@ but you can also skip straight to the [release notes](#release)!
 
 ## What is countdown?
 
-::: {.flex-m .flex-l .flex-row}
+::: {.d-flex}
 
-::: {.w-third-l .w-50-m .w-100 .flex .justify-center}
+::: {.justify-content-center}
 ```{r countdown-example, eval = FALSE}
 countdown::countdown(
   minutes = 1,
@@ -75,10 +75,9 @@ countdown::countdown(
   style = "position: relative;width: max-content; max-width: 100%"
 )
 ```
-
 :::
 
-::: {.w-two-thirds-l .w-50-m .w-100}
+::: {.justify-content-start}
 `countdown()` is a simple timer you can use in presentations, documents and Shiny apps.
 It's great for teaching or breakout sessions!
 
@@ -218,7 +217,7 @@ this year many people left rstudio::conf(2022) thinking that
 These two inspirations came together in my first post-conf project:
 a countdown timer for [xaringan] slides.
 
-::: {.fr-ns .ph4 style="max-width:22rem"}
+::: {.float-md-end .ps-md-4 .mx-sm-auto style="max-width:22rem"}
 ![A slide from Garrett's workshop materials with a 4-minute timer in the lower right corner.](https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png)
 :::
 
@@ -373,7 +372,7 @@ function timerTick() {
 And this works<sup>*</sup>! Try it out by clicking the button below.
 
 ```{=html}
-<button id="timer" class="btn btn-default" value=5>Start Countdown</button>
+<button id="timer" class="btn btn-primary" value=5>Start Countdown</button>
 ```
 
 ```{js simple-timer, echo = FALSE}
@@ -501,7 +500,7 @@ class Timer {
 ```
 
 ```{=html}
-<button id="timer-two" class="btn btn-default">Start Countdown</button>
+<button id="timer-two" class="btn btn-primary">Start Countdown</button>
 ```
 
 ```{js timer-two, echo = FALSE}
@@ -623,7 +622,7 @@ shinyApp(ui, server)
 
 ### Improved countdown App
 
-::: {.fr-ns .ph4 style="max-width:22rem"}
+::: {.float-md-end .ps-md-4 .mx-sm-auto style="max-width:22rem"}
 ![A screenshot of the full screen countdown timer app.](https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png)
 :::
 

@@ -2,3 +2,9 @@
 main.content img {
   max-width: 100%;
 }
+
+/* allow category tags to wrap with a little breathing room */
+.quarto-title .quarto-categories {
+	flex-wrap: wrap;
+	gap: 0.4em;
+}
