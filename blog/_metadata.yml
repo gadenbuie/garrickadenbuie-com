@@ -1,4 +1,6 @@
 title-block-banner: true
+toc: true
+toc-location: right
 
 filters:
   - lightbox
