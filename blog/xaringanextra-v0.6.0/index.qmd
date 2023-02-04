@@ -52,7 +52,7 @@ Read on to learn more!
   cursor: pointer;
 }
 .superlative:hover {
-  color: var(--red-60);
+  color: var(--bs-warning);
 }
 .slide-preview {
   max-width: 480px;

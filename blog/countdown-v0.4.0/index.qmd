@@ -692,7 +692,7 @@ with any questions or thoughts &#x263A;&#xFE0F;
   cursor: pointer;
 }
 .superlative:hover {
-  color: var(--red-60);
+  color: var(--bs-warning);
 }
 .slide-preview {
   max-width: 480px;
