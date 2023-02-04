@@ -36,7 +36,7 @@ Honestly, if I had known about this function before, it would have been the cent
 
 A recent tweet by [Gina Reynolds](https://twitter.com/EvaMaeRey) reminded me that I've been sitting on this blog post for a while.
 
-`r blogdown::shortcode("tweet", "1029104656763572226")`
+{{ tweet EvaMaeRey 1029104656763572226 >}}
 
 I learned a few [xaringan] tricks[^rmd] when creating
 [my presentation](https://www.garrickadenbuie.com/talk/trug-ggplot2/)
