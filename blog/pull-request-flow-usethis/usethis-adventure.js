@@ -5,15 +5,21 @@
   const introOptions = document.getElementById('intro-options')
 
   if (!isInteractive) {
-    document.querySelector('main  article .post-body').classList.add('non-interactive')
+    document.querySelector('main.content').classList.add('non-interactive')
     introOptions.innerHTML += '<li><p>Yes, but I\'d like you to <a href="index.html?interactive=1#intro">walk me through my adventure</a>.</p></li>'
     return
   }
 
   document.getElementById('instructions').innerText = 'It\'s a little bit unusual, but don\'t worry, I\'ll walk you through it.'
 
-  introOptions.innerHTML = `<li><p>Yes, <a href="#get-started">walk me through my adventure</a>.</p></li>
+  introOptions.innerHTML = `<li><p>Yes, <a href="#get-started" data-step-id="get-started">walk me through my adventure</a>.</p></li>
     <li><p>Yes, but I'd prefer to <a href="index.html?interactive=0#intro">read and navigate on my own</a>.</p></li>`
+
+
+  // Remove full url from internal decision links (thanks quarto)
+  document.querySelectorAll('.decision a').forEach(l => {
+    l.dataset.stepId = l.getAttribute('href').replace(/^.*#/, '')
+  })
 
   const story = document.getElementById('story')
   const staging = document.getElementById('step-list')
@@ -145,7 +151,7 @@
   }
 
   function markDecision (step, stepId) {
-    const link = step.querySelector(`.decision a[href="#${stepId}"]`)
+    const link = step.querySelector(`.decision a[data-step-id="${stepId}"]`)
     const decisionList = step.querySelector('.decision')
     link.classList.add('picked')
     decisionList.classList.add('decided')
@@ -155,6 +161,7 @@
       const span = document.createElement('span')
       span.classList = 'path-untaken'
       span.dataset.href = link.getAttribute('href')
+      span.dataset.stepId = link.dataset.stepId
       span.dataset.classes = Array.from(link.classList).join(' ')
       span.innerHTML = link.innerHTML
       link.insertAdjacentElement('afterend', span)
@@ -175,6 +182,7 @@
       const link = document.createElement('a')
       link.classList = el.dataset.classes
       link.href = el.dataset.href
+      link.dataset.stepId = el.dataset.stepId
       link.innerHTML = el.innerHTML
       el.insertAdjacentElement('afterend', link)
       el.parentElement.removeChild(el)
@@ -211,14 +219,15 @@
     }
   })
 
+  // Watch decision link clicks
   document
-    .querySelector('main article .post-body')
+    .querySelector('main.content')
     .addEventListener('click', function (ev) {
       if (ev.target.tagName !== 'A') {
         return
       }
 
-      const stepId = ev.target.getAttribute('href').replace(/^#/, '')
+      const stepId = ev.target.dataset.stepId
 
       if (stepId === 'intro' && currentStory.length) {
         resetStory()
@@ -240,15 +249,15 @@
     })
 
   // remove the toc sidebar since it doesn't make sense here
-  function removeTOC () {
-    const toc = document.querySelector('.table-of-contents')
-    if (toc) {
-      toc.remove()
-    } else {
-      setTimeout(removeTOC, 10)
-    }
-  }
-  document.addEventListener('DOMContentLoaded', removeTOC)
+  // function removeTOC () {
+  //   const toc = document.querySelector('.table-of-contents')
+  //   if (toc) {
+  //     toc.remove()
+  //   } else {
+  //     setTimeout(removeTOC, 10)
+  //   }
+  // }
+  // document.addEventListener('DOMContentLoaded', removeTOC)
 
   // debugging
   // Array.from(document.querySelectorAll('.section.step'))

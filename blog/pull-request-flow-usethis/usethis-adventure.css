@@ -5,14 +5,8 @@ html {
 
 .cc-box {
   padding: 1em 1em;
-  border: 2px solid #514961;
+  border: 2px solid var(--quarto-border-color);
   border-radius: 3px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .cc-box {
-    color: #dbd7e3;
-  }
 }
 
 .cc-box :first-child {
@@ -23,9 +17,9 @@ html {
   margin-bottom: 0;
 }
 
-.fas.fa-map-signs,
-.fas.fa-arrow-alt-circle-left {
-  color: var(--bodyLinkColorCustom);
+.bi.bi-signpost-fill,
+.bi.bi-arrow-left-circle-fill {
+  color: var(--bs-info);
 }
 
 .decision {
@@ -38,15 +32,15 @@ html {
 }
 
 .decision.decided a {
-  color: var(--textColorCustom);
+  color: var(--bs-purple);
 }
 
 .decision.decided a.picked {
-  color: var(--purple-50);
+  color: var(--bs-red);
 }
 
 .decision.decided .way-point.fas.fa-map-signs {
-  color: var(--purple-50);
+  color: var(--bs-secondary);
 }
 
 #story-reset {
@@ -54,7 +48,7 @@ html {
 }
 
 #download {
-  border-top: 1px solid var(--bodyLinkColorCustom);
+  border-top: 1px solid var(--quarto-border-color);
   margin-top: 1.5em;
 }
 

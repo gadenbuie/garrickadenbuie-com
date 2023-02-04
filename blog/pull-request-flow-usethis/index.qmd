@@ -12,12 +12,17 @@ description: Choose your own adventure and get in the 'usethis' pull request flo
 image: usethis-pr-flow-social.jpg
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/tree/main/content/blog/2021/pull-request-flow-usethis/index.Rmd'
 keywords: rstats
-head_custom: |
-  <link href="usethis-adventure.css" rel="stylesheet">
-  <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
+include-in-header:
+  text: |
+    <link href="usethis-adventure.css" rel="stylesheet">
+    <script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
 editor_options:
   chunk_output_type: console
 references: ~
+toc: false
+resources:
+  - usethis-adventure.css
+  - usethis-adventure.js
 ---
 
 [usethis]: https://usethis.r-lib.org
@@ -35,7 +40,8 @@ options(htmltools.dir.version = TRUE)
 
 way_point <- function(add_class = TRUE) {
   glue::glue(
-    '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>',
+    # '<i class="{cls}fas fa-map-signs" aria-hidden="true" title="Decision Time"></i>',
+    '<i class="{cls}bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i>',
     '<span class="sr-only">Decision time:</span>',
     cls = if (add_class) "way-point " else ""
   )
@@ -43,7 +49,7 @@ way_point <- function(add_class = TRUE) {
 
 back_button <- function() {
   glue::glue(
-    '<i class="fas fa-arrow-alt-circle-left" aria-hidden="true" title="Back"></i>',
+    '<i class="bi bi-arrow-left-circle-fill" aria-hidden="true" title="Back"></i>',
     '<span class="sr-only">back</span>'
   )
 }
