@@ -166,7 +166,7 @@ describe_sun_times <- function(tst, title, stay_in = "normal") {
       escape = FALSE,
       col.names = c("", "Date", "Sunrise", "Sunset", "Daylight", "Non-Work"),
       align = "llrrrr",
-      table.attr = 'class="center" style="min-width: 550px;"'
+      table.attr = 'class="table table-sm" style="min-width: 550px;"'
     )
 
   paste(opening, days)
@@ -178,8 +178,9 @@ plot_sun_times <- function(
   timezone,
   title,
   font_family = "Outfit",
-  stay_in = c("no", "dst", "standard")
+  stay_in = c("normal", "dst", "standard")
 ) {
+  stay_in <- match.arg(stay_in)
   tidy_sun_times <- tidy_sun_times(lat, lon, timezone, stay_in)
 
   x_breaks <- seq(
@@ -386,8 +387,17 @@ plot_sun_times <- function(
 }
 
 download_cities <- function() {
+  if (!fs::file_exists("cities1000.txt")) {
+    download.file(
+      "http://download.geonames.org/export/dump/cities1000.zip",
+      "cities1000.zip"
+    )
+    zip::unzip("cities1000.zip")
+    withr::defer(unlink("cities1000.zip"))
+  }
+
   cities <- readr:::read_tsv(
-    "https://github.com/substack/cities1000/raw/master/cities1000.txt",
+    "cities1000.txt",
     col_names = c(
       'id',
       'name',
@@ -427,8 +437,17 @@ download_cities <- function() {
 
 
 download_us_cities <- function() {
+  if (!fs::file_exists("cities1000.txt")) {
+    download.file(
+      "http://download.geonames.org/export/dump/cities1000.zip",
+      "cities1000.zip"
+    )
+    zip::unzip("cities1000.zip")
+    withr::defer(unlink("cities1000.zip"))
+  }
+
   cities <- readr:::read_tsv(
-    "https://github.com/substack/cities1000/raw/master/cities1000.txt",
+    "cities1000.txt",
     col_names = c(
       'id',
       'name',

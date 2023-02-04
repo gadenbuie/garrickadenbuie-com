@@ -4,7 +4,9 @@ author: Garrick Aden-Buie
 date: '2022-03-12'
 slug: saving-daylight-time
 categories:
+  - R
   - Visualization
+  - ggplot2
 description: |
   How much daylight do cities across the world get throughout the year?
   Does Daylight Saving Time really save any daylight?
@@ -14,6 +16,9 @@ source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content
 keywords: rstats
 editor_options:
   chunk_output_type: console
+resources:
+  - cities
+  - us-cities
 ---
 
 ```{r setup, include=FALSE}
@@ -111,30 +116,28 @@ htmltools::withTags(
   div(
     class = "pa",
     label(
-      class = "b db mb2",
+      class = "form-label",
       `for` = "choose-city",
       "Pick a city"
     ),
     div(
-      class = "mb2",
+      class = "mb-3",
       select(
         id = "choose-city",
-        class = "input-reset db di-ns mb2 pa2 bn br1 w-100 mw5 select-dropdown-arrow custom-text-color custom-bg-light",
+        class = "form-select mb-2",
         city_options
       ),
       button(
         id = "choose-city-prev",
-        class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
+        class = "btn btn-light",
         title = "Previous city",
-        htmltools::HTML(format(shiny::icon("arrow-left"))),
-        span(class = "clip", "Previous city")
+        "Previous city"
       ),
       button(
         id = "choose-city-next",
-        class = "link dim ph3 pv2 bn br1 custom-text-color custom-bg-light",
+        class = "btn btn-light",
         title = "Next city",
-        htmltools::HTML(format(shiny::icon("arrow-right"))),
-        span(class = "clip", "Next city")
+        "Next city"
       )
     )
   )
@@ -154,7 +157,7 @@ htmltools::withTags(
       ),
       figcaption(
         id = "city-plot-desc",
-        class="mt2 lh-copy f6 f5-ns overflow-x-scroll",
+        class="mt-2 lh-sm fs-6 overflow-x-scroll",
         "A sunrise/sunset time plot."
       )
     )
@@ -205,43 +208,51 @@ cities_us %>%
       div(
         class = "pa",
         label(
-          class = "b db mb2",
+          class = "form-label",
           `for` = "us-city",
           "Pick a city in the United States (",
           button(
             id = "us-city-random",
-            class = "bg-inherit bn pointer ph0 custom-body-link-color",
+            class = "btn btn-link px-1",
             title = "Choose a random city",
             "random",
             .noWS = "outside"
           ),
           ")"
         ),
-        select(id = "us-city", .)
+        select(id = "us-city", class = "form-select", .)
       )
     )
   }
 ```
 
 ```{=html}
-<div class="mv3" id="tz-variant-radio">
-<label for="tz-variant" class="b mb2 pr2 db dib-ns">Use timezone</label>
+<div class="row form-check my-3" id="tz-variant-radio">
+<div class="col-sm-3 form-check-inline">
+<label for="tz-variant" class="form-check-label">Use timezone</label>
+</div>
+<div class="col-sm-3 form-check-inline">
 <!-- standard -->
-<input type="radio" id="standard" name="tz-variant" value="standard">
-<label for="standard" class="pr2">Standard</label>
+<input type="radio" id="standard" class = "form-check-input me-2" name="tz-variant" value="standard">
+<label for="standard" class="form-check-label">Standard</label>
+</div>
+<div class="col-sm-3 form-check-inline">
 <!-- normal -->
-<input type="radio" id="normal" name="tz-variant" value="normal" checked>
-<label for="normal" class="pr2">Both</label>
+<input type="radio" id="normal" class = "form-check-input me-2" name="tz-variant" value="normal" checked>
+<label for="normal" class="form-check-label">Both</label>
+</div>
+<div class="col-sm-3 form-check-inline">
 <!-- dst -->
-<input type="radio" id="dst" name="tz-variant" value="dst">
-<label for="dst" class="pr2">DST</label>
+<input type="radio" id="dst" class = "form-check-input me-2" name="tz-variant" value="dst">
+<label for="dst" class="form-check-label">DST</label>
+</div>
 </div>
 <link href="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.css" rel="stylesheet" type="text/css">
 <script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
 <div id="us-city-plot" aria-live="polite">
 <figure role="group">
-<img src="washington_d_c_normal.png" alt="Washington, D.C.">
-<figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">Sunrise and sunset times in Washington, D.C.</figcaption>
+<img src="us-cities/washington_d_c_normal.png" alt="Washington, D.C.">
+<figcaption class="mt-2 lh-sm fs-6 overflow-x-scroll">Sunrise and sunset times in Washington, D.C.</figcaption>
 </figure>
 </div>
 ```
@@ -810,44 +821,44 @@ tidier_sun_times %>%
 }
 .custom-bg-light,
 .selectr-selected {
-  background-color: var(--slate-90);
+  background-color: var(--quarto-border-color);
 }
 .selectr-options-container,
 .selectr-input-container,
 .selectr-input {
-  background-color: var(--siteBgColorCustom);
-  border-color: var(--slate-90);
-  color: var(--textColorCustom);
+  background-color: var(--quarto-body-bg);
+  border-color: var(--quarto-border-color);
+  color: var(--quarto-body-color);
 }
 .selectr-option.selected {
-  color: var(--textColorCustom);
-  background-color: var(--purple-90);
+  color: var(--bs-primary);
+  background-color: rgba(var(--bs-primary-rgb), 0.1)
 }
 .selectr-option.active {
-  color: var(--textColorCustom);
-  background-color: var(--purple-80);
+  color: var(--bs-primary);
+  background-color: rgba(var(--bs-primary-rgb), 0.2)
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .custom-bg-light,
   .selectr-selected {
-    background-color: var(--slate-20);
+    background-color: var(--quarto-border-color);
   }
   .selectr-options-container,
   .selectr-input-container,
   .selectr-input {
-    background-color: var(--siteBgColorCustom);
-    border-color: var(--slate-20);
-    color: var(--textColorCustom);
+    background-color: var(--quarto-body-bg);
+    border-color: var(--quarto-border-color);
+    color: var(--quarto-body-color);
   }
   .selectr-option.selected {
-    color: var(--textColorCustom);
+    color: var(--bs-primary);
     background-color: var(--purple-10);
   }
   .selectr-option.active {
-    color: var(--textColorCustom);
+    color: var(--bs-primary);
     background-color: var(--purple-20);
   }
-}
+} */
 ```
 
 ```{js echo=FALSE}
