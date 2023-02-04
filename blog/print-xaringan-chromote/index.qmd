@@ -34,10 +34,6 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r xe}
-xaringanExtra::use_clipboard(selector = "pre.r")
-```
-
 ```{r gist, cache = TRUE}
 url <- "https://gist.github.com/gadenbuie/f6b8ec0335bdd45ed5a68bead60ef4fa/raw/xaringan-chromote-print.R"
 code <- readLines(url, warn = FALSE)

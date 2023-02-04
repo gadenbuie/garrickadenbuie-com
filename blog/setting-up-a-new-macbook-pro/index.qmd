@@ -181,11 +181,6 @@ thread_markdown <- stringr::str_replace_all(
 )
 ```
 
-```{r}
-xaringanExtra::use_clipboard()
-```
-
-
 ```{css echo=FALSE}
 .tweet-timestamp {
   display: block;

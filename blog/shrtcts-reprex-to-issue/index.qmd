@@ -35,11 +35,6 @@ Here's a quick way to get there using an RStudio addin and <span class="pkg">[sh
 
 :::
 
-
-```{r setup, echo=FALSE}
-xaringanExtra::use_clipboard(selector = "pre.r")
-```
-
 ## `reprex` is awesome
 
 The <span class="pkg">[reprex]</span> package is **awesome**.

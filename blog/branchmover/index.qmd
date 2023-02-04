@@ -38,10 +38,6 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r extras, echo=FALSE}
-xaringanExtra::use_clipboard()
-```
-
 <div class="figure">
 <img src="https://raw.githubusercontent.com/gadenbuie/branchMover/main/man/figures/app.png" alt="The 'Branch Mover' shiny app on the main 'Repos' screen, showing an interactive table of repositories associated with a GitHub user. The table shows the default branch, language of the repo, number of forks and stars, and a button that can be clicked to initiate moving the repo's default branch." >
 <p class="caption">Branch Mover</p>

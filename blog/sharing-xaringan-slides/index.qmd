@@ -31,11 +31,6 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = TRUE)
 ```
 
-```{r}
-xaringanExtra::use_clipboard()
-```
-
-
 ::: {.lead}
 Showcase your presentations in style
 with great-looking social media cards

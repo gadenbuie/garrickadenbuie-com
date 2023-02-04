@@ -48,10 +48,6 @@ Along the way, we'll also make sure everything is set up in a way that plays nic
 ![A verified commit on GitHub with the green _Verified_ badge.](verified.png)
 :::
 
-```{r use-clipboard, echo=FALSE}
-xaringanExtra::use_clipboard(selector = 'pre[class]')
-```
-
 ## Overview
 
 Did you know it's incredibly easy to
