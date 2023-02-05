@@ -4,8 +4,7 @@ slug: upcoming-code-and-data-boot-camp
 aliases:
   - /blog/2014/04/04/upcoming-code-and-data-boot-camp
 date: 2014-04-04T17:03:00+00:00
-categories: [Blog]
-tags:
+categories:
   - Data Analysis
   - R
 ---

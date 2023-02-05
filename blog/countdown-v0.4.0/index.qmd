@@ -5,15 +5,13 @@ date: '2022-08-15'
 slug: countdown-v0.4.0
 categories:
   - R
-  - R Package
+  - My Projects
   - Slides
   - countdown
   - Shiny
   - JavaScript
   - Apps
-  - CRAN
   - Announcement
-  - Presentations
   - xaringan
   - Quarto
 description: |

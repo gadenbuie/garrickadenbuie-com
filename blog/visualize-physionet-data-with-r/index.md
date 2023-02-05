@@ -4,11 +4,8 @@ date: "2013-04-11T23:04:29+00:00"
 slug: visualize-physionet-data-with-r
 aliases:
   - /blog/2013/04/11/visualize-physionet-data-with-r
-categories: [Blog]
-tags:
+categories:
 - Data Analysis
-- Healthcare
-- Predictive Analytics
 - R
 - Visualization
 ---

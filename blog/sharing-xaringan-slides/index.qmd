@@ -8,7 +8,6 @@ categories:
   - xaringan
   - xaringanExtra
   - Slides
-  - xaringan Tip
 description: How to share your xaringan slides in style, on social media sites and embedded in your web page.
 image: sharing-xaringan-social-card.jpg
 keywords: rstats

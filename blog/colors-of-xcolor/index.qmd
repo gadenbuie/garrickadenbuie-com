@@ -6,8 +6,8 @@ slug: colors-of-xcolor
 categories:
   - R
   - Scripts
-  - dplyr
-  - color
+
+  - Color
 description: Using the tidyverse to gather the colors defined in the LaTeX package xcolor
 image: colors-of-xcolor.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-08-07-the-colors-of-xcolor.Rmarkdown'

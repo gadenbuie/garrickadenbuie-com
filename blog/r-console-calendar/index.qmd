@@ -5,7 +5,9 @@ date: '2020-09-21'
 slug: r-console-calendar
 categories:
   - R
-  - lubridate
+  - Scripts
+  - Productivity
+  - Interesting Uses of R
 description: >
   Print a nicely-formatted calendar in your R console.
 image: social-card.png

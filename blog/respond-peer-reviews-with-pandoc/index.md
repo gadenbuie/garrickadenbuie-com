@@ -5,19 +5,14 @@ aliases:
   - /blog/2013/08/09/respond-peer-reviews-with-pandoc
 title: Responding to peer reviewers with Pandoc
 categories:
-- Blog
-tags:
-- Academia
 - git
-- LaTeX
 - Markdown
 - pandoc
 - Productivity
 - Workflow
-- Writing
 ---
 
-I'm in the process of responding to the second round of peer reviews of a paper I've spent considerable time working on over the past year. Of course, this time around I've learned a few new tricks that make the whole process easier to manage... 
+I'm in the process of responding to the second round of peer reviews of a paper I've spent considerable time working on over the past year. Of course, this time around I've learned a few new tricks that make the whole process easier to manage...
 
 1. I spent an entire weekend converting the paper from Word to LaTeX. By hand. But it's now worth it.
 
@@ -43,8 +38,8 @@ We were fortunate in that one reviewer offered a list of polite, meticulously de
 
 After far too many hours digging through LaTeX and pandoc discussion forums and a long process of trial and error, I finally came up with the right commands to alter the quote environment. Simply include these lines at the beginning of your markdown file, and pandoc will apply the LaTeX code when converting to pdf.
 
-    
-```latex 
+
+```latex
 \let\quoteOld\quote
 \let\endquoteOld\endquote
 \renewenvironment{quote}{\quoteOld\itshape}{\endquoteOld}

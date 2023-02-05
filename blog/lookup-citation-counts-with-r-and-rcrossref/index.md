@@ -5,8 +5,7 @@ date: 2014-10-21T14:30:00+00:00
 slug: lookup-citation-counts-with-r-and-rcrossref
 aliases:
   - /blog/2014/10/21/lookup-citation-counts-with-r-and-rcrossref
-categories: [Blog]
-tags:
+categories:
   - R
   - Scripts
   - Research

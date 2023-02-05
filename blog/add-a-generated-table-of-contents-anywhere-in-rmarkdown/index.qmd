@@ -6,12 +6,13 @@ image: 2018-02-28-blogdown-toc-example.png
 aliases:
   - /blog/2018/02/28/add-a-generated-table-of-contents-anywhere-in-rmarkdown
 categories:
-  - Markdown
-  - pandoc
-  - R
-  - Tricks
-  - blogdown
   - R Markdown
+  - pandoc
+  - knitr
+  - R
+  - Tips
+  - blogdown
+  - Writing
 ---
 
 ```{r setup, include=FALSE}

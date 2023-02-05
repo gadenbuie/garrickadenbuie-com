@@ -12,7 +12,6 @@ categories:
   - rtweet
   - Shiny
   - Apps
-  - Game
 ---
 
 [axios-article]: https://www.axios.com/donald-trump-private-schedules-leak-executive-time-34e67fbb-3af6-48df-aefb-52e02c334255.html

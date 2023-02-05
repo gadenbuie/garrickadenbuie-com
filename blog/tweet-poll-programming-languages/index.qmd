@@ -9,7 +9,6 @@ categories:
   - Data Analysis
   - Visualization
   - Programming
-  - Poll
 description: A deep dive into an informal, free-form survey about experiences with programming languages.
 image: index_files/figure-html/votes-love-hate-twitter-1.png
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-10-08-tweet-poll-programming-languages.Rmarkdown'

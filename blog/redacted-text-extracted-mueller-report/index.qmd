@@ -7,8 +7,7 @@ date: '2019-04-18'
 slug: redacted-text-extracted-mueller-report
 categories:
   - R
-  - pdftools
-  - ggpage
+  - Text
   - Visualization
 ---
 

@@ -9,8 +9,6 @@ aliases:
 categories:
   - Data Analysis
   - Visualization
-  - Google Trends
-  - Gun Control
 resources: figures
 ---
 

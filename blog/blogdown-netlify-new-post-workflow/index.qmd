@@ -8,8 +8,7 @@ image: new-post_dropdown_crop.png
 categories:
   - blogdown
   - R
-  - netlify
-  - hugo
+  - Writing
 editor_options:
   chunk_output_type: console
 ---

@@ -5,6 +5,11 @@ slug: pandoc-syntax-highlighting-examples
 image: highlights_kate.png
 aliases:
   - /blog/2018/07/06/pandoc-syntax-highlighting-examples
+categories:
+  - pandoc
+  - Writing
+  - Color
+  - Themes
 ---
 
 The R Markdown book lists [many syntax highlighting color schemes](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style):

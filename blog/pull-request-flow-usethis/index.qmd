@@ -6,7 +6,7 @@ slug: pull-request-flow-usethis
 categories:
   - R
   - usethis
-  - Pull Requests
+  - Productivity
   - Workflow
 description: Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.
 image: usethis-pr-flow-social.jpg

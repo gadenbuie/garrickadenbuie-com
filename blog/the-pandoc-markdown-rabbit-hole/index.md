@@ -5,8 +5,6 @@ aliases:
   - /blog/2013/07/31/the-pandoc-markdown-rabbit-hole
 title: The Pandoc Markdown rabbit hole
 categories:
-- Blog
-tags:
 - Apps
 - Markdown
 - Productivity
@@ -81,7 +79,7 @@ This is as far as I've needed to go to date. There's a lot more to learn, but th
 Big thanks go to [kjhealy](https://github.com/kjhealy) for posting [this shell script (and templates)](https://github.com/kjhealy/pandoc-templates) to use Pandoc to render HTML in [Marked.app](http://markedapp.com).
 
 While I haven't figured out how to use the [pandoc templates](https://github.com/kjhealy/pandoc-templates/tree/master/templates) he has developed, the shell script is phenomenal and works very well within Marked. I did make some changes to point pandoc to my Papers library bibtex file and to specify the citation style in advance.
-	
+
 1. [Download and unzip the pandoc-templates package](https://github.com/kjhealy/pandoc-templates/archive/master.zip).
 
 2. Open the preferences panel in Marked, and under the **Styles** tab add the .css files included in kjhealy's package.

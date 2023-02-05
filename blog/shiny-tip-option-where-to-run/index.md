@@ -8,7 +8,6 @@ categories:
   - R
   - Shiny
   - Tips
-  - Tricks
 description: |
   Quick Shiny Tip: How to use the `shiny.launch.browser` option to choose where RStudio runs your app.
 keywords: [rstats, shiny, tip, trick, option, "shiny.launch.browser"]

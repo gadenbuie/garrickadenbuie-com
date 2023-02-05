@@ -10,9 +10,8 @@ aliases:
 categories:
   - R
   - Tips
-  - Tricks
-  - R Package
   - R Markdown
+  - Writing
 ---
 
 [gh-vetr]: https://github.com/brodieG/vetr

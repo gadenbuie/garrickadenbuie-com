@@ -8,7 +8,6 @@ categories:
   - gganimate
   - ggplot2
   - Visualization
-  - Baby Names
 description: "An animation of letter popularity in baby names"
 image: index_files/figure-html/babynames-any-letter-1.gif
 source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2019/2019-05-13-popular-letters-in-baby-names-animated.Rmarkdown

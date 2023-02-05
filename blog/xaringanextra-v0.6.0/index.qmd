@@ -5,11 +5,9 @@ date: '2022-06-07'
 slug: xaringanextra-v0.6.0
 categories:
   - R
-  - R Package
+  - My Projects
   - xaringan
   - xaringanExtra
-  - Release
-  - CRAN
   - Slides
   - Announcement
 description: |

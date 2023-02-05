@@ -5,9 +5,6 @@ aliases:
   - /blog/2013/05/30/up-and-running
 title: Up and running...
 wordpress_id: 120
-categories: [Blog]
-tags:
-- Status
 ---
 
 *__Update:__ No more Wordpress! It's all [Octopress](http://octopress.org/) up in here now.*

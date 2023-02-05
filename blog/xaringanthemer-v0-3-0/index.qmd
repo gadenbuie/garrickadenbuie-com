@@ -5,10 +5,11 @@ date: '2020-05-08'
 slug: xaringanthemer-v0-3-0
 image: announcing-xaringanthemer-card.png
 categories:
-  - R Package
+  - My Projects
   - Announcement
   - xaringanthemer
   - xaringan
+  - Themes
 description: xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.
 rmd_source: ''
 keywords: rstats

@@ -9,7 +9,6 @@ categories:
   - JavaScript
   - Debugging
   - Web Development
-  - reactable
   - htmlwidgets
   - Video
 description: A pseudo-live-streamed walkthrough as I debug some buggy JavaScript written in R for a {reactable} htmlwidget.

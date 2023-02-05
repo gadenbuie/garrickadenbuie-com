@@ -4,7 +4,6 @@ author: Garrick Aden-Buie
 date: '2018-04-29'
 slug: find-blogdown-tags
 categories:
-  - Note to Self
   - blogdown
   - Scripts
   - R

@@ -7,7 +7,7 @@ image: shrtcts-addin-nice.png
 categories:
   - RStudio
   - R
-  - R Package
+  - My Projects
   - Addin
   - Shortcuts
 description: Quickly turn any R function or code into an RStudio addin with {shrtcts}

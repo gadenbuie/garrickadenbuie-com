@@ -6,11 +6,6 @@ slug: wordle-guess-helper
 categories:
   - R
   - JavaScript
-  - dplyr
-  - stringr
-  - purrr
-  - Wordle
-  - tidyjs
   - js4shiny
 description: |
   Picking words to guess in Wordle.

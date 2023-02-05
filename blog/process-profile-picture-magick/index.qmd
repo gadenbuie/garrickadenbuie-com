@@ -5,7 +5,7 @@ date: '2022-07-12'
 slug: process-profile-picture-magick
 categories:
   - R
-  - magick
+
   - Images
   - Interesting Uses of R
 description: |

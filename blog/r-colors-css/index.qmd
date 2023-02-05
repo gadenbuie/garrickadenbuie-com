@@ -4,14 +4,15 @@ author: Garrick Aden-Buie
 date: '2020-09-14'
 slug: r-colors-css
 categories:
+  - Color
   - xaringan
-  - xaringan Tip
+  - Tips
   - CSS
   - R Markdown
   - R
   - Web Development
   - Shiny
-  - color
+  - htmltools
 description: Use R's colors in HTML R Markdown documents, slides and Shiny apps with this set of CSS stylesheets.
 image: social-card.png
 source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-12-r-colors-css.Rmarkdown

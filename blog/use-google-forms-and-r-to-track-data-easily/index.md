@@ -5,8 +5,6 @@ aliases:
   - /blog/2013/07/24/use-google-forms-and-r-to-track-data-easily
 title: Use Google Forms and R to track data easily
 categories:
-- Blog
-tags:
 - Apps
 - Data Analysis
 - Personal Data

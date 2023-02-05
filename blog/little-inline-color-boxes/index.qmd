@@ -5,8 +5,9 @@ date: '2021-03-12'
 categories:
   - R
   - Tips
-  - color
+  - Color
   - Web Development
+  - htmltools
 description: Little cirlces with color previews, with R.
 rmd_source: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/little-inline-color-boxes'
 keywords: rstats

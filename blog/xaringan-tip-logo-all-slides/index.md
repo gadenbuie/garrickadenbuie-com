@@ -8,7 +8,6 @@ categories:
   - R
   - Tips
   - xaringan
-  - xaringan Tip
 description: Add a logo to all of your xaringan slides without using a background image.
 keywords: [rstats, xaringan, logo, slides, 'logo all slides']
 editor_options:

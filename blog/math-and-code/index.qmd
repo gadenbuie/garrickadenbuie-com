@@ -4,8 +4,7 @@ date: 2014-01-11T16:35:00+00:00
 slug: math-and-code
 aliases:
   - /blog/2014/01/11/math-and-code
-categories: [Blog]
-tags: [Math, R, Data Analysis, Test Theory]
+categories: [R, Writing]
 enable_mathjax: true
 references:
   - id: Cronbach1951
@@ -44,7 +43,7 @@ items <- scaleMC(items)
 ital <- list()
 ital.mpgpa <- list()
 for(level in levels(items$Format)){
-  # Calculate format-level test reliability 
+  # Calculate format-level test reliability
   # (ex: across all 'MC+PC' students)
   ital[[level]] <- reliability(items[items$Format == level, -1:-2])
 }
@@ -59,7 +58,7 @@ for(name in names(ital)){
 t.alpha <- data.frame(
   c("Partial Credit", "", "Dichotomous",""),
   names(ital),
-  c('Spring 2013', 'Spring 2012', 'Spring 2012', 'Summer 2013'), 
+  c('Spring 2013', 'Spring 2012', 'Spring 2012', 'Summer 2013'),
   ital.alpha
 )
 colnames(t.alpha) <- c("Scoring",'Format', 'Semester', "Cronbach's Alpha")

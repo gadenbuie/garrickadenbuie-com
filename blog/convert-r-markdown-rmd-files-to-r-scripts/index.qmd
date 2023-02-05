@@ -10,7 +10,7 @@ categories:
   - R
   - Scripts
   - Workflow
-  - Markdown
+  - R Markdown
 ---
 
 ```{r setup, include = FALSE}

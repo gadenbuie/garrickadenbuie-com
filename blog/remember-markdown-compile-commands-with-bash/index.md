@@ -4,8 +4,7 @@ date: 2014-01-30T18:32:00+00:00
 slug: remember-markdown-compile-commands-with-bash
 aliases:
   - /blog/2014/01/30/remember-markdown-compile-commands-with-bash
-categories: [Blog]
-tags: [Scripts, Tricks, pandoc, Markdown]
+categories: [Scripts, Tips, pandoc, Markdown]
 ---
 
 I write everything in [markdown] and use [pandoc] nearly daily.

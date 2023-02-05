@@ -10,6 +10,9 @@ image: mockup-rstudio.png
 categories:
   - R
   - RStudio
+  - Color
+  - Themes
+
 ---
 
 [yule-base]: https://tmtheme-editor.herokuapp.com/#!/editor/theme/Yule

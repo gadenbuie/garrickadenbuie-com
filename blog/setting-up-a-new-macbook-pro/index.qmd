@@ -6,7 +6,6 @@ categories:
   - R
   - Tips
   - Programming
-  - Tricks
   - Twitter
 description: A big post with all the Mac apps and command line utilities I use everyday.
 image: img/EoLPlKhXUAAVThW.jpg

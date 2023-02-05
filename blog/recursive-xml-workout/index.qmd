@@ -8,9 +8,6 @@ categories:
   - R
   - Tips
   - XML
-  - xml2
-  - purrr
-  - recursive programming
 keywords:
   - rstats
   - R
