@@ -29,9 +29,9 @@ website:
       - text: about
         href: about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/gadenbuie
+      - icon: mastodon
+        href: https://fosstodon.org/grrrck
 
 format:
   html:
