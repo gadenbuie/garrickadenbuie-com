@@ -4,7 +4,7 @@ author: Garrick Aden-Buie
 description: |
   An intruction to data visualization with ggplot2 presented at the "Workshop
   on Data Analysis Using R" hosted by the ASA student chapter at USF.
-images: [ /images/2018/gentle-ggplot2/gentle-ggplot2-usf-asu.png ]
+image: gentle-ggplot2-usf-asu.png
 date: '2018-11-06'
 slug: gentle-ggplot2-usf-asu
 

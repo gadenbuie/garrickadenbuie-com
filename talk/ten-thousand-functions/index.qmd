@@ -5,7 +5,7 @@ author:
 description: |
   A presentation writing and benefiting from programming with functions.
 date: '2020-05-15'
-images: [ "https://garrickadenbuie.com/talk/ten-thousand-functions.png" ]
+image: ten-thousand-functions.png
 slug: ten-thousand-functions
 
 tags:

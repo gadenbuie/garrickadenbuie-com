@@ -2,7 +2,7 @@
 title: "Occupant Activity Profiles from Smart Home Sensor Event Streams"
 date: '2017-10-25'
 slug: informs-2017
-images: [ informs2017.png ]
+image: informs2017.png
 
 tags:
   - Research
@@ -15,7 +15,7 @@ talk_author:
   - Garrick Aden-Buie
   - Ali Yalcin, Ph.D.
   - Carla VandeWeerd, Ph.D.
-categories: [ "Conference Presentation" ]
+categories: [ "Conference" ]
 event: "INFORMS Annual Meeting"
 event_url: http://meetings2.informs.org/wordpress/houston2017/
 location: "Houston, TX"

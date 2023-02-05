@@ -3,7 +3,7 @@ title: "Reproducible Data Workflows With Drake"
 author: Garrick Aden-Buie
 description: |
   A gentle introduction to reproducible data workflows with the {drake} package.
-images: [ "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg" ]
+image: "https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg"
 date: '2019-07-19'
 slug: drake-intro-biodataclub
 

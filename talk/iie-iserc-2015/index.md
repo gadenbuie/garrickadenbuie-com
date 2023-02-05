@@ -22,7 +22,7 @@ talk_author:
   - J. Hammett
   - E. Yetisener
   - C. Radwan
-categories: [ "Conference Presentation" ]
+categories: [ "Conference" ]
 event: "ISERC at IIE Annual Conference & Expo"
 event_url: http://www.iise.org/Annual/default.aspx
 # talk_venue:

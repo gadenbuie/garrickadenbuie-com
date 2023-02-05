@@ -6,7 +6,7 @@ description: |
   An introduction to data visualization using ggplot2 presented at the Tampa
   R Users Group on 2018-01-23.
 slug: trug-ggplot2
-images: [ /images/2018/trug-ggplot2/trug-ggplot2-first-slide.png ]
+image: trug-ggplot2-first-slide.png
 
 tags:
   - R

@@ -13,7 +13,7 @@ author:
   - Gina Romero
   - Rashad Kayal
   - Hui Yang, Ph.D.
-categories: [ "Conference Presentation" ]
+categories: [ "Conference" ]
 event: "INFORMS Annual Meeting"
 # event_url:
 # talk_venue:

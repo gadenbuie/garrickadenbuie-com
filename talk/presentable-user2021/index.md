@@ -2,11 +2,14 @@
 title: "Professional, Polished, Presentable"
 subtitle: "Making great slides with xaringan"
 author: Garrick Aden-Buie and Silvia Canelón
-show_author_byline: true
+image: feature.png
 description: |
   A [useR!2021](https://user2021.r-project.org/) tutorial about making great slides with [xaringan](https://slides.yihui.org/xaringan).
 date: '2021-07-07 16:00:00'
 date_end: '2021-07-07 19:00:00'
+categories: [ Workshop ]
+
+show_author_byline: true
 tags:
   - R
   - Presentations
@@ -14,7 +17,6 @@ tags:
   - Accessibility
   - xaringanExtra
   - xaringanThemer
-categories: [ Workshop ]
 event: "useR!2021 Conference"
 event_url: https://user2021.r-project.org/
 location: Virtual Workshop

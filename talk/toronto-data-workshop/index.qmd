@@ -5,8 +5,7 @@ author:
 description: |
   An incomplete history of the literate programming origins of R Markdown.
   Plus some cool things I'm tinkering with: {epoxy} and {shinyComponents}.
-images:
-  - "https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png"
+image: "https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png"
 date: '2021-02-11'
 slug: toronto-data-workshop
 tags:

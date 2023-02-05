@@ -11,7 +11,7 @@ listing:
   categories: true
   sort-ui: true
   filter-ui: true
-  fields: [date, title, description, categories]
+  fields: [date, image, title, description, categories]
   feed: true
 page-layout: full
 title-block-banner: false

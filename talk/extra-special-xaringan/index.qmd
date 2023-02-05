@@ -6,7 +6,7 @@ author:
 description: |
   A presentation writing and benefiting from programming with functions.
 date: '2020-07-08'
-images: [ "https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png" ]
+image: "https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png"
 slug: extra-special-xaringan
 
 tags:

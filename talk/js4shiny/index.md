@@ -3,6 +3,7 @@ title: "JavaScript for Shiny Users"
 author: Garrick Aden-Buie
 description: |
   A two-day workshop to get you up and running with JavaScript in Shiny and interactive R Markdown documents.
+image: feature.jpg
 date: '2020-01-27 9:00:00'
 date_end: '2020-01-28 17:00:00'
 tags:

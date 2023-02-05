@@ -5,7 +5,7 @@ author:
 description: |
   A brief introduction to the {xaringan} package and how you can make your
   slides look great with {xaringanthemer} and stand out with {xaringanExtra}.
-images: [ "https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg" ]
+image: "https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg"
 date: '2020-02-25'
 slug: trug-extra-awesome-xaringan
 tags:
