@@ -7,11 +7,12 @@ project:
     - "talk/**/*.qmd"
     - "project/**/*.qmd"
   post-render:
-    - "rsync --recursive --prune-empty-dirs --copy-links --safe-links static/. _site/"
+    # - "rsync --recursive --prune-empty-dirs --copy-links --safe-links static/. _site/"
+    - "cp -rn static/. _site/"
 
 website:
   title: "garrick"
-  site-url: https://garrickadenbuie.com
+  site-url: https://www.garrickadenbuie.com
   twitter-card:
     creator: "@grrrck"
     site: "@grrrck"
@@ -34,7 +35,9 @@ website:
 
 format:
   html:
-    theme: zephyr
+    theme:
+      light: zephyr
+      dark: cyborg
     css: styles.css
 
 execute:

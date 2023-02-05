@@ -8,3 +8,7 @@ main.content img {
 	flex-wrap: wrap;
 	gap: 0.4em;
 }
+
+.lead {
+	margin-bottom: 2rem;
+}
