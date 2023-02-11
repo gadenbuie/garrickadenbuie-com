@@ -19,6 +19,7 @@ website:
     card-style: summary_large_image
   open-graph: true
   navbar:
+    background: light
     right:
       - text: blog
         href: blog/index.qmd
@@ -36,9 +37,19 @@ website:
 format:
   html:
     theme:
-      light: zephyr
-      dark: cyborg
+      dark:
+        - _assets/zephyr-dark.scss
+        - _assets/styles-elm-dark.scss
+        - _assets/styles-elm-base.scss
+        - _assets/colors.scss
+      light:
+        - zephyr
+        - _assets/styles-elm-light.scss
+        - _assets/styles-elm-base.scss
+        - _assets/colors.scss
     css: styles.css
+    highlight-style: atom-one
+    code-block-bg: false
 
 execute:
   freeze: auto

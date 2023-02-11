@@ -13,6 +13,7 @@ content/blog/2021/print-xaringan-chromote/index_cache/*
 _*/
 /_*.*md
 !_extensions/
+!_assets/
 /.quarto/
 
 /.luarc.json
