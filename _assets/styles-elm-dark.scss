@@ -37,6 +37,8 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
 
+$headings-color: $blue-80;
+
 // Quarto variables
 $navbar-bg: $black;
 $link-color: $blue-50;
@@ -81,12 +83,40 @@ $dropdown-link-hover-bg: $blue-20;
   }
 }
 
-.navbar-dark .navbar-nav .nav-link.active {
-	background-color: $black;
-}
-
 h2 {
   border-bottom: 2px solid (var(--bs-dark));
+}
+
+div.quarto-post .listing-categories .listing-category {
+  color: $slate-50;
+	border: solid 1px $slate-30;
+}
+
+.input-group-text, .form-control, .form-select {
+  border:1px solid $slate-30;
+}
+
+.quarto-listing-default div.quarto-post {
+  border-bottom: 1px solid $slate-30;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  background-color: $black;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: $black;
+}
+
+// about page - trestles template
+@media(min-width: 992px) {
+  div.quarto-about-trestles .about-contents {
+   border-left-color: $slate-30;
+  }
+}
+
+div.quarto-about-trestles .about-entity .about-link {
+	color: $blue-70;
 }
 
 /* Bootstrap Fixups */

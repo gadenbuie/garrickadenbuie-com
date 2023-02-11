@@ -14,3 +14,29 @@ h2, h3, h4, h5, h6 {
   margin-top: 1.66em;
   margin-bottom: 0.66em;
 }
+
+#quarto-header .navbar .nav-link .menu-text {
+  position: relative;
+}
+
+#quarto-header .navbar .nav-link .menu-text::after {
+  height: 0.1rem;
+  width: 0%;
+  display: inline-block;
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0px;
+  transition: width 200ms ease-in-out;
+}
+
+#quarto-header .navbar .nav-link.active .menu-text::after {
+  background-color: var(--red-50);
+  width: 100%;
+}
+
+// body * {
+//   transition: color 150ms ease-in,
+//               background-color 150ms ease-in,
+//               border-color 150ms ease-in;
+// }
