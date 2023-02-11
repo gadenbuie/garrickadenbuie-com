@@ -81,6 +81,10 @@ $dropdown-link-hover-bg: $blue-20;
   }
 }
 
+.navbar-dark .navbar-nav .nav-link.active {
+	background-color: $black;
+}
+
 h2 {
   border-bottom: 2px solid (var(--bs-dark));
 }

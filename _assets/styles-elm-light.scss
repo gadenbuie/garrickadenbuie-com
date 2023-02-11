@@ -60,6 +60,10 @@ $code-bg: $white;
   }
 }
 
+.navbar-dark .navbar-nav .nav-link.active {
+	background-color: $white;
+}
+
 h2 {
   border-bottom: 2px solid (var(--bs-light));
 }
