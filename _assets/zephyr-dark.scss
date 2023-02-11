@@ -114,11 +114,15 @@ $navbar-light-active-color:         $white !default;
 
 // Dropdowns
 
+$dropdown-color:                    $white;
+$dropdown-bg:                       mix($black, $gray-900, 50%);
+
 $dropdown-font-size:                $font-size-sm !default;
 $dropdown-border-color:             $gray-700 !default;
 $dropdown-divider-bg:               $gray-800 !default;
 
-$dropdown-link-hover-color:         $dark !default;
+$dropdown-link-color:               $light;
+$dropdown-link-hover-color:         $white !default;
 $dropdown-link-hover-bg:            $primary !default;
 
 $dropdown-item-padding-y:           .5rem !default;
@@ -130,16 +134,32 @@ $pagination-padding-y:              .5rem !default;
 $pagination-padding-x:              1rem !default;
 
 $pagination-color:                  $gray-300 !default;
+$pagination-bg:                     $gray-900;
+$pagination-border-color:           $gray-700;
 
 $pagination-focus-color:            $pagination-color !default;
+$pagination-focus-background:       $gray-700;
 
 $pagination-hover-color:            $pagination-color !default;
-$pagination-hover-bg:               $gray-900 !default;
+$pagination-hover-bg:               $gray-800 !default;
+
+$pagination-disabled-color:         $gray-600;
+$pagination-disabled-bg:            $gray-900;
 
 // Cards
 $card-spacer-x:                     1.5rem !default;
 $card-cap-padding-y:                1rem !default;
 $card-cap-padding-x:                1.5rem !default;
+$card-border-color:                 rgba($white, .125);
+$card-cap-bg:                       rgba($white, .03);
+$card-cap-color:                    null;
+$card-color:                        null;
+$card-bg:                           $black;
+
+// Accordions
+$accordion-button-bg:               mix($black, $gray-900, 50%);
+$accordion-button-active-bg:        $gray-900;
+$accordion-button-active-color:     $white;
 
 // Toasts
 
@@ -147,6 +167,7 @@ $toast-header-color:                $headings-color !default;
 
 // Modals
 
+$modal-content-bg:                  $black;
 $modal-content-border-color:        $gray-700 !default;
 $modal-header-border-width:         0 !default;
 
@@ -161,6 +182,20 @@ $breadcrumb-padding-x:              1rem !default;
 
 $breadcrumb-divider:                quote(">") !default;
 
+// Progress Bars
+
+$progress-bg:                       $gray-900;
+$progress-bar-color:                $gray-800;
+
+// Toasts
+
+$toast-color:                       null;
+$toast-background-color:            rgba($black, .85);
+$toast-border-color:                rgba($white, .1);
+
+$toast-header-color:                $gray-100;
+$toast-header-background-color:     rgba($black, .85);
+$toast-header-border-color:         rgba($white, .05);
 
 
 /*-- scss:rules --*/
