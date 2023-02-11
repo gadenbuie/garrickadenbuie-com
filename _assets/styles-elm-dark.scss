@@ -29,7 +29,7 @@ $teal:    $blue-40;
 $cyan:    $blue-60;
 
 $primary:       $blue !default;
-$secondary:     $purple !default;
+$secondary:     $blue-10 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -48,6 +48,8 @@ $alert-bg-scale: 66%;
 $alert-border-scale: 50%;
 $alert-color-scale: -30%;
 $alert-link-scale: 5%;
+
+$dropdown-link-hover-bg: $blue-20;
 
 /*-- scss:mixins --*/
 @mixin alert-variant($background, $border, $color) {
@@ -82,3 +84,9 @@ $alert-link-scale: 5%;
 h2 {
   border-bottom: 2px solid (var(--bs-dark));
 }
+
+/* Bootstrap Fixups */
+.btn-secondary, .btn-outline-secondary {
+	color: $blue-80;
+}
+
