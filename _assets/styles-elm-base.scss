@@ -35,6 +35,12 @@ h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+.social-icon-links [class^="link"] {
+  &, &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
 // body * {
 //   transition: color 150ms ease-in,
 //               background-color 150ms ease-in,

@@ -33,6 +33,16 @@ website:
         href: https://github.com/gadenbuie
       - icon: mastodon
         href: https://fosstodon.org/grrrck
+  page-footer:
+    border: false
+    center: >-
+      <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener">{{< fa brands mastodon >}}</a>
+      <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener">{{< fa brands github >}}</a>
+      <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener">{{< fa brands r-project >}}</a>
+      <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener">{{< fa brands twitter >}}</a>
+      <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener">{{< fa brands keybase >}}</a>
+      <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener">{{< fa brands bandcamp >}}</a>
+      <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener">{{< ai orcid >}}</a>
 
 format:
   html:
