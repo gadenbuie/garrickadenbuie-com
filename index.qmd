@@ -1,14 +1,57 @@
 ---
-title: "garrickadenbuie-quarto"
+pagetitle: "Garrick Aden-Buie"
 listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
+  - id: recent-blog-listing
+    contents:
+      - "blog/*/*.qmd"
+      - "blog/*/*.md"
+    sort: "date desc"
+    type: grid
+    max-items: 9
+    page-size: 3
+    categories: false
+    sort-ui: false
+    filter-ui: false
+  - id: recent-project-listing
+    contents:
+      - "project/*/*.qmd"
+      - "project/*/*.md"
+    sort: "date desc"
+    type: grid
+    max-items: 9
+    page-size: 3
+    categories: false
+    sort-ui: false
+    filter-ui: false
+  - id: recent-talk-listing
+    contents:
+      - "talk/*/*.qmd"
+      - "talk/*/*.md"
+    sort: "date desc"
+    type: grid
+    max-items: 9
+    page-size: 3
+    categories: false
+    sort-ui: false
+    filter-ui: false
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 ---
 
 
+
+
+## Recent Posts
+
+::: {#recent-blog-listing}
+:::
+
+## Latest Projects
+
+::: {#recent-project-listing}
+:::
+
+## Recent talks
+
+::: {#recent-talk-listing}
+:::
