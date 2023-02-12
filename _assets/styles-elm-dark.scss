@@ -136,3 +136,11 @@ div.quarto-about-trestles .about-entity .about-link {
     }
   }
 }
+
+div.quarto-post .listing-categories .listing-category,
+.quarto-title .quarto-categories .quarto-category {
+  border-color: $pink-60;
+  color: $pink-80;
+  background-color: $pink-10;
+  opacity: 0.6
+}
