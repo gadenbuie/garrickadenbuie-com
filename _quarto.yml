@@ -35,6 +35,7 @@ website:
         href: https://fosstodon.org/grrrck
   page-footer:
     border: false
+    background: light
     center: >-
       <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener">{{< fa brands mastodon >}}</a>
       <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener">{{< fa brands github >}}</a>
