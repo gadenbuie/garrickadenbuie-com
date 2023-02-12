@@ -7,7 +7,7 @@ about:
   links:
     - icon: mastodon
       text: Fosstodon
-      href: https://fosstodon.org/grrrck
+      href: https://fosstodon.org/@grrrck
     - icon: twitter
       text: Twitter
       href: https://twitter.com/grrrck
@@ -30,6 +30,7 @@ about:
 [posit]: https://posit.co
 [rstudio-is-posit]: https://posit.co/blog/rstudio-is-becoming-posit/
 [r]: https://r-project.org
+[academy]: https://posit.co/products/enterprise/academy/
 
 ::: {#hero-heading}
 <div class="h1">👋 Hey there!</div>
@@ -40,6 +41,9 @@ I'm Garrick Aden-Buie.
 I'm a **Software Engineer** for [Shiny] at [Posit]
 (the company formerly known as [RStudio][rstudio-is-posit]).
 I build tools in [R], [R Markdown][rmarkdown], [Shiny] to help you do data science with R.
+
+Before Shiny, I helped build [Posit Academy][academy],
+an online, immersive, data science apprenticeship for professional teams.
 
 </div>
 :::

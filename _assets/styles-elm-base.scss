@@ -47,6 +47,14 @@ h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+div.quarto-about-trestles {
+  align-items: center;
+
+  .about-entity {
+    padding-right: 1.5em;
+  }
+}
+
 .nowrap {
 	white-space: nowrap;
 }
