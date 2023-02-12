@@ -11,14 +11,20 @@ project:
     - "cp -rn static/. _site/"
 
 website:
-  title: "garrick"
+  title: "Garrick Aden-Buie"
   site-url: https://www.garrickadenbuie.com
+  repo-url: https://github.com/gadenbuie/garrickadenbuie-com
+  repo-actions:
+    - source
+    - edit
+    - issue
   twitter-card:
     creator: "@grrrck"
     site: "@grrrck"
     card-style: summary_large_image
   open-graph: true
   navbar:
+    title: garrick
     background: light
     right:
       - text: blog
