@@ -1,6 +1,6 @@
 ---
 title: ""
-image: static/images/_DSC3616.JPEG
+image: garrick-profile.jpg
 about:
   template: trestles
   id: hero-heading
@@ -26,7 +26,10 @@ about:
 [garrick-talks]: /tags/education/
 [moffitt-cdsc]: https://moffitt.org/research-science/shared-resources/collaborative-data-services/
 [shiny]: https://shiny.rstudio.com/
+[rmarkdown]: https://rmarkdown.rstudio.com
 [posit]: https://posit.co
+[rstudio-is-posit]: https://posit.co/blog/rstudio-is-becoming-posit/
+[r]: https://r-project.org
 
 ::: {#hero-heading}
 <div class="h1">👋 Hey there!</div>
@@ -34,8 +37,9 @@ about:
 <div class="lead">
 
 I'm Garrick Aden-Buie.
-I'm a **Software Engineer** for [Shiny] at [Posit] (formerly known as RStudio).
-I build tools in R, R Markdown, Shiny to help you do data science with R.
+I'm a **Software Engineer** for [Shiny] at [Posit]
+(the company formerly known as [RStudio][rstudio-is-posit]).
+I build tools in [R], [R Markdown][rmarkdown], [Shiny] to help you do data science with R.
 
 </div>
 :::

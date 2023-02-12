@@ -28,7 +28,7 @@ website:
       - text: talks
         href: talk/index.qmd
       - text: about
-        href: about.qmd
+        href: about/index.qmd
       - icon: github
         href: https://github.com/gadenbuie
       - icon: mastodon
