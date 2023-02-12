@@ -42,6 +42,11 @@ website:
   page-footer:
     border: false
     background: light
+    left: >-
+       © 2023 Garrick Aden-Buie
+    right: >-
+      <a class="link-dark ma-2" href="/colophon">Made with 🧡</a>
+      <a class="link-dark" href="/blog/index.xml" title = "RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a>
     center: >-
       <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener">{{< fa brands mastodon >}}</a>
       <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener">{{< fa brands github >}}</a>
