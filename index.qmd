@@ -15,6 +15,7 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
+    fields: [title, image, description, date]
   - id: recent-project-listing
     contents:
       - "project/*/*.qmd"
@@ -26,6 +27,7 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
+    fields: [title, image, description, date]
   - id: recent-talk-listing
     contents:
       - "talk/*/*.qmd"
@@ -37,6 +39,7 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
+    fields: [title, image, description, date]
 
 header-includes: >
   <link rel="stylesheet" href="_assets/index.css">
@@ -159,7 +162,7 @@ resources:
 </div>
 ```
 
-## Recent Posts
+## Latest Posts
 
 ::: {#recent-blog-listing}
 :::
@@ -169,7 +172,7 @@ resources:
 ::: {#recent-project-listing}
 :::
 
-## Recent talks
+## Latest talks
 
 ::: {#recent-talk-listing}
 :::
