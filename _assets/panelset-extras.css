@@ -1,4 +1,4 @@
-.post-body .panelset {
+.content .panelset {
   --panel-tabs-border-bottom: var(--slate-80);
   --panel-tabs-sideways-max-width: 25%;
   --panel-tab-foreground: currentColor;
@@ -11,15 +11,15 @@
   --panel-tab-hover-border-color: var(--red-50);
   --panel-tab-inactive-opacity: 0.5;
   --panel-tab-font-family: inherit;
+}
 
-  &.sideways {
-    --panel-tab-active-background: unset;
-  }
+.content .panelset.sideways {
+  --panel-tab-active-background: unset;
+}
 
-  .panel-tabs .panel-tab.panel-tab-active {
-    border-top-color: transparent;
-    border-bottom-color: var(--panel-tab-active-border-color);
-  }
+.content .panelset .panel-tabs .panel-tab.panel-tab-active {
+  border-top-color: transparent;
+  border-bottom-color: var(--panel-tab-active-border-color);
 }
 
 .panelset.panelset--bordered:not(.sideways) .panel {
@@ -31,7 +31,9 @@
   margin-bottom: 1rem;
 }
 .panelset.panelset--bordered .panel {
-  @extend .ph3, .mb2;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 1rem;
   max-height: 50vh;
   box-sizing: border-box;
   overflow-y: auto;
@@ -43,19 +45,17 @@
   padding-left: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  .post-body .panelset {
-    --panel-tabs-border-bottom: var(--slate-10);
-    --panel-tab-foreground: var(--slate-30);
-    --panel-tab-active-foreground: var(--blue-60);
-    --panel-tab-active-background: mix(#71aeb7, #0e181e, $weight: 100%);
-    --panel-tab-active-background: #132026;
-    --panel-tab-hover-foreground: var(--slate-60);
-    --panel-tab-hover-border-color: var(--red-50);
-    --panel-tab-inactive-opacity: 0.66;
+.quarto-dark .content .panelset {
+  --panel-tabs-border-bottom: var(--slate-10);
+  --panel-tab-foreground: var(--slate-30);
+  --panel-tab-active-foreground: var(--blue-60);
+  --panel-tab-active-background: #0e181e;
+  --panel-tab-active-background: #132026;
+  --panel-tab-hover-foreground: var(--slate-60);
+  --panel-tab-hover-border-color: var(--red-50);
+  --panel-tab-inactive-opacity: 0.66;
+}
 
-    &.panelset--bordered .panel {
-      border-color: var(--panel-tabs-border-bottom);
-    }
-  }
+.quarto-dark .content .panelset.panelset--bordered .panel {
+  border-color: var(--panel-tabs-border-bottom);
 }

@@ -71,7 +71,9 @@ format:
         - _assets/styles-elm-light.scss
         - _assets/styles-elm-base.scss
         - _assets/colors.scss
-    css: styles.css
+    css:
+      - styles.css
+      - _assets/panelset-extras.css
     highlight-style: atom-one
     code-block-bg: false
 

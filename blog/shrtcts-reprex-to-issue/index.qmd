@@ -13,7 +13,6 @@ description: |
   Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.
 source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2021/shrtcts-reprex-to-issue/index.Rmarkdown'
 keywords: rstats
-references: ~
 ---
 
 [reprex]: https://reprex.tidyverse.org/
