@@ -1,5 +1,8 @@
 ---
 pagetitle: "Garrick Aden-Buie"
+page-layout: full
+title-block-banner: false
+
 listing:
   - id: recent-blog-listing
     contents:
@@ -34,125 +37,126 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
-page-layout: full
-title-block-banner: false
+
+header-includes: >
+  <link rel="stylesheet" href="_assets/index.css">
+resources:
+  - _assets/index.css
 ---
 
 ```{=html}
-<div class="container">
-  <div class="row">
-    <div class="col site-logo tr w-25 w-third-l center order-2 mr4">
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 128 128"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+<div class="site-hero mb-5">
+  <div class="site-intro">
+    <h1 class="site-title text-primary mt-0 fw-lighter text-center text-sm-start">
+      Garrick
+      <span class="nowrap">Aden-Buie</span>
+    </h1>
+
+    <div class="social-icon-links my-3" aria-hidden="true">
+      <a
+        class="link-primary"
+        href="https://fosstodon.org/@grrrck"
+        title="fosstodon"
+        target="_blank"
+        rel="noopener"
       >
-        <title>Go to Home</title>
-        <g id="letter-g">
-          <path
-            id="g"
-            d="M50.8792 58.1936L50.276 57.892L49.7704 58.3382C47.2594 60.5537 44.968 63.1107 44.968 67.44C44.968 69.9137 45.7844 72.1657 48.0184 73.7463C50.178 75.2743 53.525 76.072 58.352 76.072H71.888C79.9575 76.072 85.8368 77.3287 89.6761 79.8826C93.4342 82.3825 95.368 86.2149 95.368 91.776C95.368 103.907 82.4612 114.968 60.944 114.968C52.4879 114.968 45.4586 113.295 40.5784 110.226C35.7393 107.182 33 102.768 33 97.104C33 91.6616 36.5948 86.3124 42.7873 82.0902L43.224 81.7925V81.264V80.688V80.1338L42.754 79.84C39.5542 77.8402 37.032 74.3986 37.032 69.312C37.032 63.8746 40.7648 59.5327 44.2263 57.1789L44.664 56.8813V56.352V55.776V55.3L44.2946 54.9999C39.8705 51.4053 35.592 44.9041 35.592 36.912C35.592 22.2979 47.1373 13 60.944 13C64.7144 13 68.0469 13.6992 70.5176 14.66L70.6924 14.728H70.88H94.216V21.8H80.816H78.3238L80.1248 23.5226C83.2297 26.4925 85.576 31.5549 85.576 37.2C85.576 44.4186 82.8419 50.2301 78.4328 54.2446C74.0135 58.2683 67.8554 60.536 60.944 60.536C57.6353 60.536 53.9014 59.7047 50.8792 58.1936ZM49.8427 82.7505L49.3791 82.618L48.9868 82.8983C43.7539 86.636 41.368 91.0877 41.368 95.52C41.368 99.6654 43.5056 103.026 47.2483 105.302C50.9524 107.555 56.2309 108.76 62.672 108.76C69.5328 108.76 75.2823 106.99 79.3464 104.212C83.4026 101.438 85.848 97.5987 85.848 93.504C85.848 91.7541 85.5072 90.2297 84.7944 88.9373C84.0789 87.64 83.0216 86.6366 81.6852 85.883C79.0561 84.4004 75.3087 83.864 70.736 83.864H58.64C55.9628 83.864 52.7496 83.581 49.8427 82.7505ZM45.112 36.912C45.112 47.6205 52.2622 54.616 60.944 54.616C69.6258 54.616 76.776 47.6205 76.776 36.912C76.776 31.5789 75.0443 27.2505 72.1589 24.249C69.2746 21.2485 65.2994 19.64 60.944 19.64C56.5886 19.64 52.6135 21.2485 49.7291 24.249C46.8437 27.2505 45.112 31.5789 45.112 36.912Z"
-            fill="currentColor"
-            stroke="currentColor"
-            stroke-width="2"
-            class="site-brand-letter-g-1"
-          ></path>
-        </g>
-      </svg>
+        <i class="fab fa-mastodon fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="https://github.com/gadenbuie"
+        title="github"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-github fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="https://gadenbuie.r-universe.dev"
+        title="r-project"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-r-project fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="https://twitter.com/grrrck"
+        title="twitter"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-twitter fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="https://keybase.io/grrrck"
+        title="keybase"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-keybase fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="https://garrickadenbuie.bandcamp.com"
+        title="bandcamp"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-bandcamp fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
+        href="http://orcid.org/0000-0002-7111-0077"
+        title="orcid"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="ai ai-orcid fa-lg fa-fw"></i>
+      </a>
     </div>
 
-    <div class="col mh4 w-two-thirds-l">
-      <h1 class="f2 f1-m f-subheadline-l fw5-ns mv4 lh-solid">
-        Garrick Aden-Buie
-      </h1>
+    <p class="site-into fs-5">
+      I’m a <strong>Software Engineer</strong> for
+      <a href="https://shiny.rstudio.com/">Shiny</a> at
+      <a href="https://posit.co">Posit</a> (formerly RStudio). I build tools
+      that help everyone do data science in <a href="https://r-project.org">R</a>
+      with <a href="https://rmarkdown.rstudio.com">R Markdown</a> and
+      <a href="https://shiny.rstudio.com">Shiny</a>.
+    </p>
+    <a class="mt4 action text" href="/about">About Me →</a>
+  </div>
 
-      <div class="social-icon-links" aria-hidden="true">
-        <a
-          class="link-primary"
-          href="https://fosstodon.org/@grrrck"
-          title="fosstodon"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-mastodon fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="https://github.com/gadenbuie"
-          title="github"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-github fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="https://gadenbuie.r-universe.dev"
-          title="r-project"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-r-project fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="https://twitter.com/grrrck"
-          title="twitter"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-twitter fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="https://keybase.io/grrrck"
-          title="keybase"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-keybase fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="https://garrickadenbuie.bandcamp.com"
-          title="bandcamp"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fab fa-bandcamp fa-lg fa-fw"></i>
-        </a>
-
-        <a
-          class="link-primary"
-          href="http://orcid.org/0000-0002-7111-0077"
-          title="orcid"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="ai ai-orcid fa-lg fa-fw"></i>
-        </a>
-      </div>
-
-      <p class="f4 mt4 lh-copy">
-        I’m a <strong>Data Science Educator</strong> and R developer at
-        <a href="https://rstudio.com/">RStudio</a>. I use
-        <a href="https://r-project.org">R</a>,
-        <a href="https://rmarkdown.rstudio.com">R Markdown</a>,
-        <a href="https://shiny.rstudio.com">Shiny</a>, and the tools of data
-        science to help you teach and learn data science with R.
-      </p>
-      <a class="mt4 action text" href="/about">About Me →</a>
-    </div>
+  <div class="site-logo order-first order-sm-last text-primary">
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 128 128"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Go to Home</title>
+      <g id="letter-g">
+        <path
+          id="g"
+          d="M50.8792 58.1936L50.276 57.892L49.7704 58.3382C47.2594 60.5537 44.968 63.1107 44.968 67.44C44.968 69.9137 45.7844 72.1657 48.0184 73.7463C50.178 75.2743 53.525 76.072 58.352 76.072H71.888C79.9575 76.072 85.8368 77.3287 89.6761 79.8826C93.4342 82.3825 95.368 86.2149 95.368 91.776C95.368 103.907 82.4612 114.968 60.944 114.968C52.4879 114.968 45.4586 113.295 40.5784 110.226C35.7393 107.182 33 102.768 33 97.104C33 91.6616 36.5948 86.3124 42.7873 82.0902L43.224 81.7925V81.264V80.688V80.1338L42.754 79.84C39.5542 77.8402 37.032 74.3986 37.032 69.312C37.032 63.8746 40.7648 59.5327 44.2263 57.1789L44.664 56.8813V56.352V55.776V55.3L44.2946 54.9999C39.8705 51.4053 35.592 44.9041 35.592 36.912C35.592 22.2979 47.1373 13 60.944 13C64.7144 13 68.0469 13.6992 70.5176 14.66L70.6924 14.728H70.88H94.216V21.8H80.816H78.3238L80.1248 23.5226C83.2297 26.4925 85.576 31.5549 85.576 37.2C85.576 44.4186 82.8419 50.2301 78.4328 54.2446C74.0135 58.2683 67.8554 60.536 60.944 60.536C57.6353 60.536 53.9014 59.7047 50.8792 58.1936ZM49.8427 82.7505L49.3791 82.618L48.9868 82.8983C43.7539 86.636 41.368 91.0877 41.368 95.52C41.368 99.6654 43.5056 103.026 47.2483 105.302C50.9524 107.555 56.2309 108.76 62.672 108.76C69.5328 108.76 75.2823 106.99 79.3464 104.212C83.4026 101.438 85.848 97.5987 85.848 93.504C85.848 91.7541 85.5072 90.2297 84.7944 88.9373C84.0789 87.64 83.0216 86.6366 81.6852 85.883C79.0561 84.4004 75.3087 83.864 70.736 83.864H58.64C55.9628 83.864 52.7496 83.581 49.8427 82.7505ZM45.112 36.912C45.112 47.6205 52.2622 54.616 60.944 54.616C69.6258 54.616 76.776 47.6205 76.776 36.912C76.776 31.5789 75.0443 27.2505 72.1589 24.249C69.2746 21.2485 65.2994 19.64 60.944 19.64C56.5886 19.64 52.6135 21.2485 49.7291 24.249C46.8437 27.2505 45.112 31.5789 45.112 36.912Z"
+          fill="currentColor"
+          stroke="currentColor"
+          stroke-width="2"
+          class="site-brand-letter-g-1"
+        ></path>
+      </g>
+    </svg>
   </div>
 </div>
-
 ```
 
 ## Recent Posts

@@ -124,3 +124,14 @@ div.quarto-about-trestles .about-entity .about-link {
 	color: $blue-80;
 }
 
+/* index.html */
+.social-icon-links .link-primary {
+  color: $pink-40;
+  &:hover, &:focus {
+    color: $pink-50;
+    i {
+      transform: scale(1.25);
+      transform-origin: center center;
+    }
+  }
+}

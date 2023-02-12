@@ -67,3 +67,14 @@ $code-bg: $white;
 h2 {
   border-bottom: 2px solid (var(--bs-light));
 }
+
+.social-icon-links .link-primary {
+  color: $pink-30;
+  &:hover, &:focus {
+    color: $pink-20;
+    i {
+      transform: scale(1.25);
+      transform-origin: center center;
+    }
+  }
+}
