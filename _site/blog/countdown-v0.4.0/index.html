@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2022-08-15">
+<meta name="keywords" content="rstats">
+<meta name="description" content="countdown v0.4.0 is now available on CRAN with a ton of new features!">
+
+<title>Garrick Aden-Buie - countdown v0.4.0 – Now on CRAN!</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<link href="../../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+<script src="../../site_libs/countdown-0.4.0/countdown.js"></script>
+<link href="../../site_libs/js4shiny-0.0.28/jsonview/jsonview.css" rel="stylesheet">
+<script src="../../site_libs/js4shiny-0.0.28/jsonview/jsonview.min.js"></script>
+<link href="../../site_libs/js4shiny-redirectConsoleLog-0.0.28/jslog.css" rel="stylesheet">
+<script src="../../site_libs/js4shiny-redirectConsoleLog-0.0.28/redirectConsoleLog.js"></script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - countdown v0.4.0 – Now on CRAN!">
+<meta property="og:description" content="countdown v0.4.0 is now available on CRAN with a ton of new features!">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/countdown-v0.4.0/feature.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="411">
+<meta property="og:image:width" content="800">
+<meta name="twitter:title" content="Garrick Aden-Buie - countdown v0.4.0 – Now on CRAN!">
+<meta name="twitter:description" content="countdown v0.4.0 is now available on CRAN with a ton of new features!">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/countdown-v0.4.0/feature.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="411">
+<meta name="twitter:image-width" content="800">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">countdown v0.4.0 – Now on CRAN!</h1>
+                  <div>
+        <div class="description">
+          <p>countdown v0.4.0 is now available on CRAN with a ton of new features!</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">My Projects</div>
+                <div class="quarto-category">Slides</div>
+                <div class="quarto-category">countdown</div>
+                <div class="quarto-category">Shiny</div>
+                <div class="quarto-category">JavaScript</div>
+                <div class="quarto-category">Apps</div>
+                <div class="quarto-category">Announcement</div>
+                <div class="quarto-category">xaringan</div>
+                <div class="quarto-category">Quarto</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 15, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-countdown" id="toc-what-is-countdown" class="nav-link active" data-scroll-target="#what-is-countdown">What is countdown?</a></li>
+  <li><a href="#installing-countdown" id="toc-installing-countdown" class="nav-link" data-scroll-target="#installing-countdown">Installing countdown</a></li>
+  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">A brief history of countdown</a>
+  <ul class="collapse">
+  <li><a href="#rstudioconf2019" id="toc-rstudioconf2019" class="nav-link" data-scroll-target="#rstudioconf2019">rstudio::conf(2019)</a></li>
+  <li><a href="#it-becomes-an-r-package" id="toc-it-becomes-an-r-package" class="nav-link" data-scroll-target="#it-becomes-an-r-package">It becomes an R package</a></li>
+  <li><a href="#but-that-javascript-code" id="toc-but-that-javascript-code" class="nav-link" data-scroll-target="#but-that-javascript-code">But that JavaScript code…</a></li>
+  </ul></li>
+  <li><a href="#release" id="toc-release" class="nav-link" data-scroll-target="#release">coundown v0.4.0</a>
+  <ul class="collapse">
+  <li><a href="#the-old-javascript" id="toc-the-old-javascript" class="nav-link" data-scroll-target="#the-old-javascript">The Old JavaScript</a></li>
+  <li><a href="#all-new-javascript" id="toc-all-new-javascript" class="nav-link" data-scroll-target="#all-new-javascript">All New JavaScript</a></li>
+  <li><a href="#new-buttons-and-keyboard-interactions" id="toc-new-buttons-and-keyboard-interactions" class="nav-link" data-scroll-target="#new-buttons-and-keyboard-interactions">New buttons and keyboard interactions</a></li>
+  <li><a href="#shiny" id="toc-shiny" class="nav-link" data-scroll-target="#shiny">Shiny!</a></li>
+  <li><a href="#improved-countdown-app" id="toc-improved-countdown-app" class="nav-link" data-scroll-target="#improved-countdown-app">Improved countdown App</a></li>
+  <li><a href="#new-options" id="toc-new-options" class="nav-link" data-scroll-target="#new-options">New Options</a></li>
+  </ul></li>
+  <li><a href="#thank-you" id="toc-thank-you" class="nav-link" data-scroll-target="#thank-you">Thank you!</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/countdown-v0.4.0/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/countdown-v0.4.0/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<div class="lead">
+<p>I’m <span class="superlative">stoked</span> to announce that <a href="https://pkg.garrickadenbuie.com/countdown">countdown</a> is now available on CRAN! Countdown to something awesome in <a href="https://slides.yihui.org/xaringan">xaringan</a>, <a href="https://quarto.org">Quarto</a>, <a href="https://rmarkdown.rstudio.com">R Markdown</a>, or <a href="https://shiny.rstudio.com">Shiny</a>.</p>
+<p>In this post, I <a href="#reflection">reflect</a> a bit on the development of <a href="https://pkg.garrickadenbuie.com/countdown">countdown</a>, but you can also skip straight to the <a href="#release">release notes</a>!</p>
+</div>
+<section id="what-is-countdown" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-countdown">What is countdown?</h2>
+<div class="d-flex">
+<div class="justify-content-center">
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="first-example" data-warn-when="30" data-update-every="1" tabindex="0" style="right:0;bottom:0;position: relative;width: max-content; max-width: 100%">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+</div>
+</div>
+</div>
+<div class="justify-content-start">
+<p><code>countdown()</code> is a simple timer you can use in presentations, documents and Shiny apps. It’s great for teaching or breakout sessions!</p>
+<p><span class="di-ns dn">👈</span><span class="di dn-ns">☝️</span> <strong>Click</strong> the timer to start it. <strong>Click</strong> again to pause. <strong>Double click</strong> to reset it. Adjust the timer on the fly with the <strong>+</strong> and <strong>−</strong> buttons.</p>
+</div>
+</div>
+<p>Everything you need to know about countdown, you can learn from the docs-slash-presentation at <a href="https://pkg.garrickadenbuie.com/countdown">pkg.garrickadenbuie.com/countdown</a>.</p>
+<div class="feature">
+<div class="feature-row">
+<div class="feature-timer">
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="feature" data-warn-when="30" data-update-every="1" tabindex="0" style="right:0;bottom:0;position: relative;width: max-content; max-width: 100%">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+</div>
+</div>
+</div>
+<div class="feature-code">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>countdown<span class="sc">::</span><span class="fu">countdown</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">minutes =</span> <span class="dv">1</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">seconds =</span> <span class="dv">30</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">warn_when =</span> <span class="dv">30</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="feature-footer">
+<p><code><span class="o-60">pkg.garrickadenbuie.com/</span>countdown</code></p>
+</div>
+</div>
+<div class="cell">
+<style type="text/css">
+.feature {
+  width: 800px;
+  height: calc(800px / 1.945);
+  display: flex;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.feature-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.5rem;
+  padding-bottom: 2em;
+}
+.feature-row > .feature-code {
+  margin-left: 2em;
+}
+.feature-footer {
+  position: absolute;
+  bottom: 0em;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: var(--font-monospace);
+}
+</style>
+</div>
+</section>
+<section id="installing-countdown" class="level2">
+<h2 class="anchored" data-anchor-id="installing-countdown">Installing countdown</h2>
+<p>Installing countdown is now a whole lot easier:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"countdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As always, you can still get the latest and greatest in-development versions from <a href="https://github.com/gadenbuie/countdown">GitHub</a></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"gadenbuie/countdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or from <a href="https://gadenbuie.r-universe.dev/">gadenbuie.r-universe.dev</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">gadenbuie =</span> <span class="st">'https://gadenbuie.r-universe.dev'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">CRAN =</span> <span class="st">'https://cloud.r-project.org'</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'countdown'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reflection" class="level2">
+<h2 class="anchored" data-anchor-id="reflection">A brief history of countdown</h2>
+<p>Before we talk about <a href="#release">all the new things in countdown</a>, I want to take a small minute to get nostalgic. I hope you don’t mind indulging me (or <a href="#release">skip ahead</a> if you’d rather get right to business).</p>
+<section id="rstudioconf2019" class="level3">
+<h3 class="anchored" data-anchor-id="rstudioconf2019">rstudio::conf(2019)</h3>
+<p>In 2019 I went to <a href="https://www.rstudio.com/resources/rstudioconf-2019/">rstudio::conf</a> in Austin, TX where a highlight of the conference, for me, was the <a href="https://github.com/rstudio-education/teach-tidy">Train-the-Trainer: Tidyverse Track</a> workshop by Garrett Grolemund and <a href="https://third-bit.com/">Greg Wilson</a>. That workshop specifically marked a turning point in my career and I left rstudio::conf very inspired to build and teach cool things in R.</p>
+<p>I also walked away from rstudio::conf(2019) with another key take away: it was time to learn JavaScript. An odd thing to take away from an R conference, yes. (Although I don’t think I’m alone in this kind of realization; this year many people left rstudio::conf(2022) thinking that <a href="https://twitter.com/asmae_toumi/status/1552731475434430465">it’s time to learn Python</a>.)</p>
+<p>These two inspirations came together in my first post-conf project: a countdown timer for <a href="https://slides.yihui.org/xaringan">xaringan</a> slides.</p>
+<div class="float-md-end ps-md-4 mx-sm-auto" style="max-width:22rem">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="A slide from Garrett’s workshop materials with a 4-minute timer in the lower right corner."><img src="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A slide from Garrett’s workshop materials with a 4-minute timer in the lower right corner.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>Garrett used timers extensively to pace break out sessions and they worked surprisingly well to keep everyone on track. One funny thing I noticed during our workshop session was that Garrett would frequently have to switch to slide-edit mode (in Keynote, I think) to fiddle with the timer as he adjusted the length of the “your turn” session. This is pretty normal; an instructor probably has a sense of approximately how long an activity will take and we’ll often will adjust the time spent on the activity based on how the audience is doing, how well the material is working, or how close to lunch or a break we are in the session.</p>
+<p>So my idea was to build a countdown timer that you could drop into a slide and easily use to time an event. I also wanted to make it easy to adjust the time, but my JavaScript skills were limited to what I could learn from StackOverflow, so I compromised and decided that you could only bump the timer up. After all it’s not like you <em>have</em> to end the timer, you can always just move on in your slides.</p>
+</section>
+<section id="it-becomes-an-r-package" class="level3">
+<h3 class="anchored" data-anchor-id="it-becomes-an-r-package">It becomes an R package</h3>
+<p>I cobbled together an R package that was a fairly decent R interface around a collection of lines of JavaScript that I barely understood, that somehow assembled into an actual working timer. I made a cool <a href="https://pkg.garrickadenbuie.com/countdown">intro-slash-docs presentation</a> and would probably have sat on it for a while longer if it weren’t for <a href="https://twitter.com/dataandme">Mara Averick</a> who spotted my GitHub activity and <a href="https://twitter.com/dataandme/status/1125747630489911297">soft-announced the package for me</a>.</p>
+<p>Not long after that, and slightly to my horror (<em>please don’t go looking at my JavaScript code</em>), <a href="https://twitter.com/hadleywickham">Hadley</a> submitted an issue. Actually, two issues. Obviously, that was an exciting turn of events. His suggestions were solid and helped improve the quality of the timer: he suggested a <a href="https://github.com/gadenbuie/countdown/issues/5">warning state</a> and a <a href="https://github.com/gadenbuie/countdown/issues/6">full-screen view/app</a>.</p>
+<p>Amazingly, the package worked! People really seemed to like it, it solved a niche but useful need that many people have when teaching, and it let me learn a ton about how to build htmlwidgets in R. I’m proud of the R interface — it’s easy to use and configure — and I think the feature set hits the right balance of looking good right out of the box without doing <em>too much</em>.</p>
+</section>
+<section id="but-that-javascript-code" class="level3">
+<h3 class="anchored" data-anchor-id="but-that-javascript-code">But that JavaScript code…</h3>
+<p>Since I wrote the first version of countdown, I’ve learned a whole lot more JavaScript and I know a whole lot more about how to build <em>web things</em> in R. countdown’s underlying code has always haunted me a little, but on the other hand it was chugging away, still working fine for most people in most situations.</p>
+<p>So I left it alone…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="countdown-history-3-years.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Screenshot of the countdown GitHub repository page where the phrase “3 years ago” is highlighted. That is GitHub’s summary of the last time I updated countdown."><img src="countdown-history-3-years.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Screenshot of the countdown GitHub repository page where the phrase “3 years ago” is highlighted. That is GitHub’s summary of the last time I updated countdown.</figcaption><p></p>
+</figure>
+</div>
+<p>…for almost 3 years.</p>
+<p>And <em>wow how much has changed</em> in the three plus years since rstudio::conf(2019). Not only did I lead a workshop <em>about JavaScript</em> for Shiny users at rstudio::conf(2020) (hashtag <a href="https://js4shiny.com">js4shiny</a>), and not only do I now work for RStudio<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but I was also part of the program committee for conference planning. Which means I saw colleagues were still using my countdown timer in workshop slides.</p>
+<p>And that old franken-JavaScript code still haunted me.</p>
+<p>So this year, in part inspired by the return of <em><a href="https://www.rstudio.com/blog/rstudio-is-becoming-posit/">the final</a></em> <a href="https://rstudio.com/conference">rstudio::conf</a>, I decided that finally rewriting that JavaScript would be the perfect conference side-hack project.</p>
+<p>Which led to countdown v0.4.0 arriving on CRAN!</p>
+</section>
+</section>
+<section id="release" class="level2">
+<h2 class="anchored" data-anchor-id="release">coundown v0.4.0</h2>
+<div class="cell">
+<style type="text/css">
+pre:empty {
+  border-left: none !important;
+}
+</style>
+</div>
+<section id="the-old-javascript" class="level3">
+<h3 class="anchored" data-anchor-id="the-old-javascript">The Old JavaScript</h3>
+<p>My first implementation relied heavily on the JavaScript function <a href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout"><code>setTimeout</code></a>, which takes a <code>function</code> and a <code>delay</code> in milliseconds: <code>setTimeout(function, delay)</code>. When called, the browser waits until the delay is over and then calls the function.</p>
+<p>A neat trick with <code>setTimeout</code> is that you can call it recursively inside a function as a way to run that function repeatedly. Below I’ve defined a function <code>timerTick()</code> that moves the timer forward one tick. It also uses <code>setTimeout</code> to schedule the next tick of the timer. And by using a delay of <code>1000</code> milliseconds, I’ve set up a function that runs once per second — just like a clock 😉.</p>
+<p>This is, essentially, how countdown worked before. For each run of <code>timerTick()</code>, I would decrement the number of remaining seconds by one and update the timer. If there’s time left on the timer, then <code>timerTick()</code> shcedules another update for 1 second later. If there isn’t any time left, we can stop the timer by simply not scheduling any more timer updates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">timerTick</span>() {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> timer <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">'timer'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// update the timer</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  timer<span class="op">.</span><span class="at">value</span> <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>timer<span class="op">.</span><span class="at">value</span><span class="sc">}</span><span class="vs">s remaining...`</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (timer<span class="op">.</span><span class="at">value</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// there's time left, schedule next tick</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="pp">setTimeout</span>(timerTick<span class="op">,</span> <span class="dv">1000</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// time is up, reset the timer</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Time's up!`</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    timer<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">remove</span>(<span class="st">'running'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    timer<span class="op">.</span><span class="at">innerText</span> <span class="op">=</span> <span class="st">'Start Timer'</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// notice we don't schedule another tick</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And this works<sup>*</sup>! Try it out by clicking the button below.</p>
+<button id="timer" class="btn btn-primary" value="5">Start Countdown</button>
+<div class="cell">
+<div id="out-simple-timer">
+<pre></pre>
+</div>
+<script type="text/javascript">
+const log_out_simple_timer = redirectLogger(document.querySelector("#out-simple-timer > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_simple_timer(`function timerTick() {
+  const timer = document.getElementById('timer')
+
+  // update the timer
+  timer.value -= 1
+  console.log(\`\${timer.value}s remaining...\`)
+
+  if (timer.value > 0) {
+    // there's time left, schedule next tick
+    setTimeout(timerTick, 1000)
+  } else {
+    // time is up, reset the timer
+    console.log(\`Time's up!\`)
+    timer.classList.remove('running')
+    timer.innerText = 'Start Timer'
+    // notice we don't schedule another tick
+  }
+}
+
+function timerClear() {
+  // Clear the console output
+  console.clear()
+  // Reset the timer's starting value
+  const timer = document.getElementById('timer')
+  timer.value = 5
+  console.log(\`\${timer.value}s remaining...\`)
+}
+
+document
+  .getElementById('timer')
+  .addEventListener('click', function({ target: timer }) {
+    if (timer.classList.contains('running')) {
+      // timer is running, do nothing
+      return
+    } else {
+      timer.classList.add('running')
+      timer.innerText = 'Timer is running...'
+    }
+    timerClear()
+    setTimeout(timerTick, 1000)
+  })`)
+})
+</script>
+</div>
+<p><sup>*</sup>Almost. This <em>almost</em> works. It works pretty well if you start the timer and then don’t touch the browser window or switch to another tab. So it does usually work fine when you’re presenting slides.</p>
+<p>But it turns out that <code>setTimeout()</code> is more like <code>suggestThatThisRunsLater()</code>. There’s really no guarantee that the function you scheduled to run 1,000 milliseconds from now is actually going to run in 1,000 milliseconds.</p>
+<p>There are many things that can get in the way of that function being run when you expect it. If you move to a different tab and come back, for example, there’s no guarantee that the background tab would keep chugging along, running my function every seconds. Browsers have better things to do and they’ll de-prioritize pages that aren’t being actively shown to users. This means that sometimes <code>setTimeout(fn, 1000)</code> runs <code>fn</code> 1 second from now, but depending on what else the browser is doing it could be a lot longer than that.</p>
+<p>So how do we get around this? 🤔</p>
+</section>
+<section id="all-new-javascript" class="level3">
+<h3 class="anchored" data-anchor-id="all-new-javascript">All New JavaScript</h3>
+<p>The new JavaScript version of countdown does something really simple. It doesn’t rely on <code>setTimeout()</code> directly to keep track of the time.</p>
+<p>Yes, it still schedules the next tick on 1 second intervals, but it doesn’t trust that <em>exactly one second</em> has passed. Now, when the user starts the timer, countdown will note when the timer should end and recalculates the remaining time with each tick. This means the updates are always accurate, even if there happen to be 4 seconds between consecutive ticks.</p>
+<p>It also means that we can bump a running timer up or down by moving that end time later or earlier. To stop the timer, we just note how much time is left and to restart it again we recalculate the end time based on how much time was left when we paused.</p>
+<p>There’s a small amount of internal state to keep track of, which happens to basically cry out for a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class">JavaScript class</a>. So the new countdown timer is implemented via a <code>CountdownTimer</code> class.</p>
+<p>Here’s a sketch of the class containing three core methods:</p>
+<ol type="1">
+<li><p><code>tick()</code> runs the timer, like above, except this time we calculate the remaining number of seconds on each tick. When there are less than 0 seconds left, we call the <code>finish()</code> method.</p></li>
+<li><p><code>start()</code> gets things started by calculating when the timer should end and kicking off the <code>tick()</code> method.</p></li>
+<li><p><code>finish()</code> wraps up by resetting the timer.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Timer {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">constructor</span>(el<span class="op">,</span> duration) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The timer's attached to a button</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">element</span> <span class="op">=</span> el</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// it has a duration that's set when initiated</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">duration</span> <span class="op">=</span> duration</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and it will have an end when running</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">end</span> <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tick</span> () {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// decide and report how much time is left</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> remaining <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">end</span> <span class="op">-</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`</span><span class="sc">${</span>remaining <span class="op">/</span> <span class="dv">1000</span><span class="sc">}</span><span class="vs">s remaining...`</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// and then schedule the next tick or finish up</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (remaining <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>      <span class="pp">setTimeout</span>(<span class="kw">this</span><span class="op">.</span><span class="at">tick</span><span class="op">.</span><span class="fu">bind</span>(<span class="kw">this</span>)<span class="op">,</span> <span class="dv">1000</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>      <span class="kw">this</span><span class="op">.</span><span class="fu">finish</span>()</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">start</span> () {</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="kw">this</span><span class="op">.</span><span class="at">end</span>) <span class="cf">return</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">clear</span>()</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">element</span><span class="op">.</span><span class="at">innerText</span> <span class="op">=</span> <span class="st">'Timer is running...'</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// the timer ends duration (s) * 1000 (ms) from now</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">end</span> <span class="op">=</span> <span class="bu">Date</span><span class="op">.</span><span class="fu">now</span>() <span class="op">+</span> <span class="kw">this</span><span class="op">.</span><span class="at">duration</span> <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">tick</span>()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finish</span> () {</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">end</span> <span class="op">=</span> <span class="kw">null</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">element</span><span class="op">.</span><span class="at">innerText</span> <span class="op">=</span> <span class="st">'Start Timer'</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="vs">`Time's up!`</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<button id="timer-two" class="btn btn-primary">Start Countdown</button>
+<div class="cell">
+<div id="out-timer-two">
+<pre></pre>
+</div>
+<script type="text/javascript">
+const log_out_timer_two = redirectLogger(document.querySelector("#out-timer-two > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_timer_two(`class Timer {
+  constructor(el, duration) {
+    // The timer's attached to a button
+    this.element = el
+    // it has a duration that's set when initiated
+    this.duration = duration
+    // and it will have an end when running
+    this.end = null
+  }
+
+  tick () {
+    // decide and report how much time is left
+    const remaining = this.end - Date.now()
+    console.log(\`\${remaining / 1000}s remaining...\`)
+
+    // and then schedule the next tick or finish up
+    if (remaining > 0) {
+      setTimeout(this.tick.bind(this), 1000)
+    } else {
+      this.finish()
+    }
+  }
+
+  start () {
+    if (this.end) return
+
+    console.clear()
+    this.element.innerText = 'Timer is running...'
+    // the timer ends duration (s) * 1000 (ms) from now
+    this.end = Date.now() + this.duration * 1000
+    this.tick()
+  }
+
+  finish () {
+    this.end = null
+    this.element.innerText = 'Start Timer'
+    console.log(\`Time's up!\`)
+  }
+}
+
+const timerTwo = document.getElementById('timer-two')
+timerTwo.timer = new Timer(timerTwo, 5)
+timerTwo.addEventListener('click', function({ target: el }) {
+  el.timer.start()
+})`)
+})
+</script>
+</div>
+<p>Run the 5-second timer by clicking the button above. Notice that even though we used the same <code>setTimeout(code, 1000)</code> as before to schedule each tick for one second later, because this version precisely reports how much time is left you can see that our timer drifts a bit away from running perfectly <em>once per second</em>.</p>
+</section>
+<section id="new-buttons-and-keyboard-interactions" class="level3">
+<h3 class="anchored" data-anchor-id="new-buttons-and-keyboard-interactions">New buttons and keyboard interactions</h3>
+<p>Beyond the improved timer, the new <code>CountdownTimer</code> class makes it a whole lot easier to add additional features that need to build on the timer’s internal state.</p>
+<p>For example, you can now</p>
+<ul>
+<li><p>Click to start or stop the timer</p></li>
+<li><p>Double click to reset</p></li>
+<li><p>Bump the timer up or down using the <strong>+</strong> and <strong>−</strong> buttons</p></li>
+<li><p>Do all of the above with keyboard shortcus:</p>
+<ul>
+<li><p><kbd>Space</kbd> or <kbd>Enter</kbd> to start or stop the timer</p></li>
+<li><p><kbd>Esc</kbd> to reset</p></li>
+<li><p><kbd>↑</kbd> or <kbd>↓</kbd> to bump up or down</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="shiny" class="level3">
+<h3 class="anchored" data-anchor-id="shiny">Shiny!</h3>
+<p>The shiny new countdown package also has plenty of Shiny features. Countdown timers can be controlled directly from Shiny with <code>countdown_action()</code> or <code>countdown_update()</code> and timers are now also inputs that report their state!</p>
+<p>You can find an example Shiny app with a timer, plus an explanation of how it all works, by running</p>
+<div class="cell">
+
+</div>
+<p>to launch an example app. The example app is also available on my website at <a href="https://apps.garrickadenbuie.com/countdown-shiny-example">apps.garrickadenbuie.com/countdown-shiny-example</a>.</p>
+<p>In a nutshell, the timer will report its state using its input <code>id</code>. For example, <code>countdown(id = "timer")</code> will report its state to Shiny via <code>input$timer</code>. The input reports the <code>event</code> that caused the state to change and the state of the <code>timer</code>:</p>
+<div class="cell">
+
+</div>
+<p>Here’s another small app that demonstrate how you could use a button to toggle the state of the timer.</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="improved-countdown-app" class="level3">
+<h3 class="anchored" data-anchor-id="improved-countdown-app">Improved countdown App</h3>
+<div class="float-md-end ps-md-4 mx-sm-auto" style="max-width:22rem">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A screenshot of the full screen countdown timer app."><img src="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A screenshot of the full screen countdown timer app.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>All of the Shiny updates mentioned above are used to power <code>countdown_app()</code>, a full screen Shiny app for running timers. These work really well for timing speakers at conferences or for a quick way to keep track of a break out session in workshops or meetings.</p>
+<p>The app itself received a few upgrades, most importantly is the ability to share a timer with the settings you want using the URL. This uses Shiny’s <a href="https://shiny.rstudio.com/articles/bookmarking-state.html">Bookmarking state</a> features to save your settings in the URL and restore them when you load that link.</p>
+<p>For example, <a href="https://apps.garrickadenbuie.com/countdown/?_inputs_&amp;time=%2220%3A00%22&amp;update_every=%2210%22&amp;warn_time=%225%3A00%22">this timer is a 20 minute timer with a warning at 5 minutes that updates every 10 seconds</a>.</p>
+</section>
+<section id="new-options" class="level3">
+<h3 class="anchored" data-anchor-id="new-options">New Options</h3>
+<p>Finally, countdown gained a new option. You can now start the timer as soon as it is visible by setting <code>start_immediately = TRUE</code>. The “as as soon as it’s visible” works pretty well: in xaringan and Quarto slides it starts when you land on the slide and in regular HTML documents the timer starts when you scroll the timer into view.</p>
+<p>It’s also worth mentioning that countdown now uses <a href="https://emilhvitfeldt.github.io/prismatic/">prismatic</a> for color calculations. I was really happy to see that <a href="https://twitter.com/Emil_Hvitfeldt">Emil</a> added <a href="https://emilhvitfeldt.github.io/prismatic/reference/best_contrast.html"><code>best_contrast()</code></a> and switching to use that function cleaned up a lot of internal code for me!</p>
+</section>
+</section>
+<section id="thank-you" class="level2">
+<h2 class="anchored" data-anchor-id="thank-you">Thank you!</h2>
+<p>Huge thanks to the many people who opened issues or contributed code to countdown over these years. You all rock 🧡</p>
+<p><a href="https://github.com/andrewpbray">@andrewpbray</a>, <a href="https://github.com/apreshill">@apreshill</a>, <a href="https://github.com/ConnorJPSmith">@ConnorJPSmith</a>, <a href="https://github.com/csgillespie">@csgillespie</a>, <a href="https://github.com/Dr-Joe-Roberts">@Dr-Joe-Roberts</a>, <a href="https://github.com/fvitalini">@fvitalini</a>, <a href="https://github.com/hadley">@hadley</a>, <a href="https://github.com/HaoZeke">@HaoZeke</a>, <a href="https://github.com/jhelvy">@jhelvy</a>, <a href="https://github.com/jvcasillas">@jvcasillas</a>, <a href="https://github.com/moshpirit">@moshpirit</a>, <a href="https://github.com/rtheodoro">@rtheodoro</a>, <a href="https://github.com/sje30">@sje30</a>, <a href="https://github.com/spcanelon">@spcanelon</a>,and <a href="https://github.com/thiyangt">@thiyangt</a>.</p>
+<p>If you’ve read this far, thank you! Thanks for using countdown and making developing R packages fun. Reach out in the comments or on Twitter (I’m <a href="https://twitter.com/grrrck">@grrrck</a>) with any questions or thoughts ☺️</p>
+<div class="cell">
+<style type="text/css">
+.superlative {
+  border-bottom: 1px dashed;
+  cursor: pointer;
+}
+.superlative:hover {
+  color: var(--bs-warning);
+}
+.slide-preview {
+  max-width: 480px;
+}
+</style>
+</div>
+<div class="cell">
+<div id="out-unnamed-chunk-6">
+<pre></pre>
+</div>
+<script type="text/javascript">
+const log_out_unnamed_chunk_6 = redirectLogger(document.querySelector("#out-unnamed-chunk-6 > pre"))
+document.addEventListener("DOMContentLoaded", function() {
+log_out_unnamed_chunk_6(`document.querySelector('.superlative').addEventListener('click', function(ev) {
+  const superlatives = [
+    'delighted', 'charmed', 'elated', 'excited', 'pleased', 'thrilled', 'chuffed',
+    'tickled pink', 'overjoyed', 'ecstatic', 'stoked', 'proud', 'fired up'
+  ]
+  const el = ev.target
+  const idx = Math.floor(Math.random() * superlatives.length)
+  el.innerText = superlatives[idx]
+})`)
+})
+</script>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>At least until October: <a href="https://www.rstudio.com/blog/rstudio-is-becoming-posit/">RStudio is becoming Posit</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","loop":true,"closeEffect":"zoom"});</script>
+
+
+
+</body></html>

@@ -1,0 +1,45 @@
+---
+title: "xaringan Playground"
+author:
+  - Garrick Aden-Buie
+description: |
+  Making slides with xaringan is a great way to learn more about CSS
+  and web development.
+image: "../../blog/xaringan-playground/xaringan-playground-social.png"
+date: '2021-01-21'
+slug: xaringan-playground
+tags:
+  - R
+  - xaringan
+  - Presentation
+  - CSS
+  - Web Development
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "rstudio::global"
+event_url: https://global.rstudio.com
+location: Virtual Conference
+links:
+  - icon: chalkboard-teacher
+    icon_pack: fas
+    name: Slides
+    url: https://slides.garrickadenbuie.com/xaringan-playground
+  - icon: github
+    icon_pack: fab
+    name: Code
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground
+  - icon: play
+    icon_pack: fas
+    name: Video
+    url: https://rstudio.com/resources/rstudioglobal-2021/xaringan-playground-using-xaringan-to-learn-web-development/
+---
+
+```{r echo=FALSE}
+options(htmltools.dir.version = TRUE)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+```
+
+## Abstract
+
+> xaringan is a quirky package that extends R Markdown to create beautiful web-based HTML slides. Some of xaringan’s quirks come from the JavaScript library it uses, remarkjs, and some of it from the unusual naming scheme xaringan uses for its functions. But under this quirky exterior lies a powerful tool for learning and practicing web development, especially when combined with infinite_moon_reader() for immediate feedback. In this talk I'll cover some basic web concepts that illustrate how fun and rewarding it can to learn HTML, CSS and JavaScript while building awesome slides in R Markdown.

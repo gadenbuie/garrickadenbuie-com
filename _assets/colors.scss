@@ -1,0 +1,215 @@
+/*-- scss:defaults --*/
+$red-100: #fff8f9;
+$red-90: #fee8eb;
+$red-80: #fdc7cd;
+$red-70: #fca4ae;
+$red-60: #fb7e8c;
+$red-50: #f54f61;
+$red-40: #c94150;
+$red-30: #a83643;
+$red-20: #852b35;
+$red-10: #6a222a;
+$orange-100: #fef9f2;
+$orange-90: #fdebd3;
+$orange-80: #f9cd91;
+$orange-70: #f5ae4b;
+$orange-60: #ef8c02;
+$orange-50: #cb7702;
+$orange-40: #a76101;
+$orange-30: #8b5101;
+$orange-20: #6e4001;
+$orange-10: #573301;
+$green-100: #f6fbf7;
+$green-90: #e2f2e3;
+$green-80: #b9deb9;
+$green-70: #93ca8d;
+$green-60: #7ab26f;
+$green-50: #69965d;
+$green-40: #587b4b;
+$green-30: #4b663d;
+$green-20: #3c5130;
+$green-10: #304025;
+$blue-100: #f7fafb;
+$blue-90: #e4f0f1;
+$blue-80: #bed9de;
+$blue-70: #97c4ca;
+$blue-60: #71aeb7;
+$blue-50: #4896a1;
+$blue-40: #1c7d8b;
+$blue-30: #0e6876;
+$blue-20: #0b535d;
+$blue-10: #09414a;
+$purple-100: #fafafb;
+$purple-90: #ededf1;
+$purple-80: #d4d3dd;
+$purple-70: #bcbac9;
+$purple-60: #a4a2b6;
+$purple-50: #8a88a2;
+$purple-40: #716f8e;
+$purple-30: #5e5b7f;
+$purple-20: #4a466f;
+$purple-10: #3a3662;
+$pink-100: #fdf9fb;
+$pink-90: #f9e9f3;
+$pink-80: #f1c9e1;
+$pink-70: #e9a9cf;
+$pink-60: #e088bd;
+$pink-50: #d661a7;
+$pink-40: #b0508a;
+$pink-30: #934373;
+$pink-20: #74355b;
+$pink-10: #5c2a48;
+$slate-100: #f9fafa;
+$slate-90: #ebeeef;
+$slate-80: #cfd5d8;
+$slate-70: #b3bec2;
+$slate-60: #99a6ac;
+$slate-50: #7c8e95;
+$slate-40: #60757e;
+$slate-30: #4a636c;
+$slate-20: #334f5a;
+$slate-10: #213f4b;
+$slate-00: #0e181e;
+
+/*-- scss:rules --*/
+:root {
+  --red-100: #{$red-100};
+  --red-90: #{$red-90};
+  --red-80: #{$red-80};
+  --red-70: #{$red-70};
+  --red-60: #{$red-60};
+  --red-50: #{$red-50};
+  --red-40: #{$red-40};
+  --red-30: #{$red-30};
+  --red-20: #{$red-20};
+  --red-10: #{$red-10};
+  --orange-100: #{$orange-100};
+  --orange-90: #{$orange-90};
+  --orange-80: #{$orange-80};
+  --orange-70: #{$orange-70};
+  --orange-60: #{$orange-60};
+  --orange-50: #{$orange-50};
+  --orange-40: #{$orange-40};
+  --orange-30: #{$orange-30};
+  --orange-20: #{$orange-20};
+  --orange-10: #{$orange-10};
+  --green-100: #{$green-100};
+  --green-90: #{$green-90};
+  --green-80: #{$green-80};
+  --green-70: #{$green-70};
+  --green-60: #{$green-60};
+  --green-50: #{$green-50};
+  --green-40: #{$green-40};
+  --green-30: #{$green-30};
+  --green-20: #{$green-20};
+  --green-10: #{$green-10};
+  --blue-100: #{$blue-100};
+  --blue-90: #{$blue-90};
+  --blue-80: #{$blue-80};
+  --blue-70: #{$blue-70};
+  --blue-60: #{$blue-60};
+  --blue-50: #{$blue-50};
+  --blue-40: #{$blue-40};
+  --blue-30: #{$blue-30};
+  --blue-20: #{$blue-20};
+  --blue-10: #{$blue-10};
+  --purple-100: #{$purple-100};
+  --purple-90: #{$purple-90};
+  --purple-80: #{$purple-80};
+  --purple-70: #{$purple-70};
+  --purple-60: #{$purple-60};
+  --purple-50: #{$purple-50};
+  --purple-40: #{$purple-40};
+  --purple-30: #{$purple-30};
+  --purple-20: #{$purple-20};
+  --purple-10: #{$purple-10};
+  --pink-100: #{$pink-100};
+  --pink-90: #{$pink-90};
+  --pink-80: #{$pink-80};
+  --pink-70: #{$pink-70};
+  --pink-60: #{$pink-60};
+  --pink-50: #{$pink-50};
+  --pink-40: #{$pink-40};
+  --pink-30: #{$pink-30};
+  --pink-20: #{$pink-20};
+  --pink-10: #{$pink-10};
+  --slate-100: #{$slate-100};
+  --slate-90: #{$slate-90};
+  --slate-80: #{$slate-80};
+  --slate-70: #{$slate-70};
+  --slate-60: #{$slate-60};
+  --slate-50: #{$slate-50};
+  --slate-40: #{$slate-40};
+  --slate-30: #{$slate-30};
+  --slate-20: #{$slate-20};
+  --slate-10: #{$slate-10};
+  --slate-00: #{$slate-00};
+}
+
+.fansi-color-001 {
+  /* red */
+  color: var(--red-50);
+}
+.fansi-color-002 {
+  /* green */
+  color: var(--green-40);
+}
+.fansi-color-003 {
+  /* yellow */
+  color: var(--orange-50);
+}
+.fansi-color-004 {
+  /* blue */
+  color: var(--blue-40);
+}
+.fansi-color-005 {
+  /* purple */
+  color: var(--purple-50);
+}
+.fansi-color-006 {
+  /* cyan */
+  color: var(--pink-50);
+}
+.fansi-color-007 {
+  /* silver */
+  color: var(--slate-30);
+}
+.fansi-color-008 {
+  /* silver */
+  color: var(--slate-50);
+}
+
+.quarto-dark {
+  .fansi-color-001 {
+    /* red */
+    color: var(--red-60);
+  }
+  .fansi-color-002 {
+    /* green */
+    color: var(--green-60);
+  }
+  .fansi-color-003 {
+    /* yellow */
+    color: var(--orange-70);
+  }
+  .fansi-color-004 {
+    /* blue */
+    color: var(--blue-50);
+  }
+  .fansi-color-005 {
+    /* purple */
+    color: var(--purple-50);
+  }
+  .fansi-color-006 {
+    /* cyan */
+    color: var(--pink-70);
+  }
+  .fansi-color-007 {
+    /* silver */
+    color: var(--slate-30);
+  }
+  .fansi-color-008 {
+    /* silver */
+    color: var(--slate-50);
+  }
+}

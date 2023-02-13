@@ -1,0 +1,14 @@
+{
+  "hash": "047bdac604ff64fd079ac88215fd9194",
+  "result": {
+    "markdown": "---\ntitle: Pandoc Syntax Highlighting Examples\ndate: \"2018-07-06\"\nslug: pandoc-syntax-highlighting-examples\nimage: highlights_kate.png\naliases:\n  - /blog/2018/07/06/pandoc-syntax-highlighting-examples\ncategories:\n  - pandoc\n  - Writing\n  - Color\n  - Themes\n---\n\n\nThe R Markdown book lists [many syntax highlighting color schemes](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style):\n\n> `highlight` specifies the syntax highlighting style. Supported styles include `default`, `tango`, `pygments`, `kate`, `monochrome`, `espresso`, `zenburn`, `haddock`, and `textmate`. Pass null to prevent syntax highlighting.\n\nWhich is the same as running `pandoc --list-highlight-styles` (see [Syntax Highlighting](http://pandoc.org/MANUAL.html#syntax-highlighting) in the [pandoc manual](http://pandoc.org/MANUAL.html)).[^1]\n\n[^1]: Note that at the time of this writing 2023-02-05, pandoc has a new highlighting style `breezedark` that `rmarkdown::pdf_document` rejects. Also, `textmate` ~~seems to have been deprecated because it~~ is an HTML higlight style, so it is also rejected by `pdf_document`.\n\nBut I couldn't find a gallery for choosing among these syntax styles, so here's a quick comparison.\n\n\n\n![highlight: default](./highlights_default.png)\n\n![highlight: espresso](./highlights_espresso.png)\n\n![highlight: haddock](./highlights_haddock.png)\n\n![highlight: kate](./highlights_kate.png)\n\n![highlight: monochrome](./highlights_monochrome.png)\n\n![highlight: pygments](./highlights_pygments.png)\n\n![highlight: tango](./highlights_tango.png)\n\n![highlight: zenburn](./highlights_zenburn.png)\n\n![&ndash;&ndash;highlight=breezedark](./highlights_breezedark.png)\n\n\n**Update:** `rmarkdown::pdf_document()` doesn't currently accept `breezedark` as a highlight style, but you can use the `pandoc_args` parameter to request this style (added in [pandoc 1.19.2](https://github.com/jgm/pandoc/releases/tag/1.19.2)):\n\n```yaml\n---\noutput:\n  pdf_document:\n    pandoc_args: \"--highlight=breezedark\"\n---\n```\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

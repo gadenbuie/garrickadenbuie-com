@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Activity Profiles of Independent Older Adults in Smart Homes</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Garrick Aden-Buie" />
+    <meta name="date" content="2017-09-20" />
+    <link rel="stylesheet" href="gab-proposal.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Activity Profiles of<br>Independent Older Adults<br>in Smart Homes
+## Proposal Defense
+### Garrick Aden-Buie
+### 2017-09-20
+
+---
+
+exclude: true
+
+
+
+
+## Possible Titles
+
+- Home Activity DNA: Learning Activity Profiles of Independent Older Adults in Smart Homes
+
+- The Language of Activity at Home
+
+- Activity Profiles of Independent Older Adults in Smart Homes
+
+- Activity Profiles of Independent Older Adults from Passive Sensor Monitoring
+
+---
+
+class: inverse, center, middle
+# Introduction
+
+---
+
+## Aging Population Demographics
+
+.pull-left[
+- Baby boomers born 1946—1964 are driving significant demographic trends
+
+- Number of Americans 65+ to **double** from 46M (2014) to 98M (2060)
+
+- More older adults are divorced
+
+- More older adults live alone
+
+- 2/3 have multiple chronic conditions
+
+- Increase in elder care needs, in nursing homes and for home health and informal caregivers
+
+- Decrease in available traditional family care givers
+
+]
+
+.pull-right[
+
+
+&lt;img src="images/prb--aging-us-pop-bulletin--plots.png" style="margin-left: 25%"&gt;&lt;/img&gt;
+]
+
+.footnote[
+Mather et al. (2015). Aging in the United States. [pbr.org](http://www.pbr.org)
+]
+
+---
+
+## Aging in Place
+
+*The ability to live in a residence of their choice without moving as needs for health care services change.*&lt;sup&gt;1&lt;/sup&gt;
+
+- Older adults prefer to retain their indepencence and remain in community based settings
+
+- Half of older adults require help&lt;sup&gt;2&lt;/sup&gt;
+
+    - 75% of those receiving help live in houses or apartments
+    - 70% receive informal help
+    - 95% of informal care outside of nursing homes is from family members
+
+- Number of 75+ without...
+    - a *spouse* to double from 2010 to 2030 to 1.8M
+    - an *adult child* within 10 miles to increase by factor of **six**&lt;sup&gt;3&lt;/sup&gt;
+
+.footnote[
+1. Marek &amp; Rantz (2000). pmid:[10986927](http://www.ncbi.nlm.nih.gov/pubmed/10986927)
+2. Scommegna (2016). Today’s Research on Aging: Family Caregiving
+3. Ryan et al. (2012). doi:[10.1093/geront/gnr142](http://doi.org/10.1093/geront/gnr142)
+]
+---
+
+## Technology and Aging
+
+.pull-left[
+Simple unobtrusive sensors and computing systems
+
+Monitor older adults to support aging in place and bring piece of mind to caregivers
+
+Acceptance by older adults and their families:
+
+- 8 of 10 say using these devices would help them feel safer
+- 46% would be interested in a system that monitors daily routine
+- But only 1 of 10 currently use personal health technology devices&lt;sup&gt;1&lt;/sup&gt;
+]
+
+.pull-right-r[
+![](images/grandma-ipad.jpg)
+]
+
+.footnote[
+1. Barrett (2011). Healthy@ Home 2.0 &lt;https://assets.aarp.org/rgcenter/health/healthy-home-11.pdf&gt;
+]
+
+---
+
+background-image: url(images/cnet-smart-home3.png)
+background-size: 50%
+background-position: right
+name: tech-in-home
+
+## Technology in the Home
+
+.pull-left[
+
+IoT, Home Security, and Home Automation
+
+Smart devices for the home:
+
+- Google Home
+- Amazon Alexa
+- Apple HomeKit
+- Samsung SmartThings
+- Nest, Wink, WeMo, Lutron, Hue
+
+Enable things like:
+
+- Open the shades when you wake up
+- Turn off the lights before bed by voice
+- Lock the front door when you leave home
+- Turn on the A/C when you're headed home
+
+]
+
+---
+
+## Summary
+
+### Driving Challenge
+
+&gt; Provide care for aging adults in face of demographic and cultural shifts
+
+--
+
+### Goals
+
+- Build on cost-effective home monitoring technology
+
+- Connect older adults with health care systems and family
+
+- .highlight[**Lifestyle reassurance**] 
+    - raise awareness of health status and changes
+    - support effective, early intervention
+
+
+???
+
+- Home monitoring:
+    - Commodity sensors
+    - Small, affordable, open computing systems
+    - Unifying standards
+
+---
+
+## Challenges
+
+.left-column[
+### Sensors in the home
+]
+
+.right-column[
+- Real occupants in unscripted situations performing unknown actions
+
+- Remote sensing in low-visibility locations
+
+- Balance between high density of sensors and cost-efficiency and acceptance
+]
+
+---
+
+## Challenges
+
+.left-column[
+### Sensors in the home
+### Reliability issues
+]
+
+.right-column[
+- Low-power wireless network — communication issues
+
+- Battery powered sensors
+
+- Human interaction with sensors&lt;sup&gt;1&lt;/sup&gt;
+
+- Various devices, device types and manufacturers
+
+- Non-failure related messiness
+]
+
+.footnote[
+1. Hnat et al. (2011). doi:[10.1145/2070942.2070966](http://doi.org/10.1145/2070942.2070966).
+]
+
+???
+
+“Homes [. . . ] can be hazardous for sensors, particularly when hundreds of sensors are deployed over long time durations” Hnat et al. (2011)
+
+Hnat et al. (2011). The hitchhiker’s guide to successful residential sensing deployments. doi:10.1145/2070942.2070966.
+
+---
+
+## Challenges
+
+.left-column[
+### Sensors in the home
+### Reliability issues
+### Spatio-temporal interactions
+]
+
+
+.right-column[
+- Inherent heirarchy of sensor data as function of floor plan
+
+- Overlapping regions of detection
+
+- Various degrees of temporal resolution
+
+- Data stored out of context as discrete events
+]
+
+???
+
+data context: 
+
+- each event has at least spatial, temporal context
+- also context of state of the system at the time
+- and context of activity of occupant (completely hidden)
+
+---
+## Other Smart Home Projects for Older Adults
+
+- TigerPlace&lt;sup&gt;1&lt;/sup&gt;
+    - Pioneer of *age-in-place* and AAL
+    - 17 apartments in assisted living facility
+
+- CASAS (ORCATECH)&lt;sup&gt;2&lt;/sup&gt;
+    - Over 400 homes in Portland area
+    - Real-world settings with older adults, long-term
+    - Limited number of sensors
+
+- PlaceLab&lt;sup&gt;3&lt;/sup&gt;
+    - Live-in apartment-scale laboratory
+    - MIT - Cambridge, MA
+    - 100s of sensors
+
+.footnote[
+1. Skubic et al. (2009). doi:[10.3233/THC-2009-0551](http://doi.org/10.3233/THC-2009-0551)
+2. Cook et al. (2013). doi:[10.1109/MC.2012.328](http://doi.org/10.1109/MC.2012.328)
+3. Intilleet al. (2005)
+]
+
+---
+layout: true
+## Proposal
+---
+
+.left-column[
+### Context
+]
+
+.right-column[
+Maximize acceptance and cost efficiency, minimize reliability issues
+
+- Simple set of low-cost sensors
+- Prefer most reliable sensors
+- Sparsely installed within the home of older adults
+]
+
+---
+
+.left-column[
+### Context
+### Research Questions
+]
+
+.right-column[
+Can we make meaningful and timely observations of older adult's activities
+
+- without needing labels
+- without knowing floor plan or layout
+- without an annotated training set
+- and that works "out of the box"?
+
+to create/enable
+
+- Activity profiles
+- Detection of changes in routine
+- Early warning notification systems
+]
+
+---
+
+.left-column[
+### Context
+### Research Questions
+### Outline
+]
+
+.right-column[
+1. *Health BOOST in The Villages*
+
+2. Our sensor system
+
+3. Software layers
+
+4. Activity Profiles
+
+5. Dissertation Proposal
+]
+
+???
+
+
+---
+layout: false
+class: inverse, center, middle
+# Health BOOST
+
+### *Sensor Based Response Oriented Technology for&lt;br&gt;In-Home Monitoring of Senior Health and Well-Being*
+
+---
+
+## Health BOOST in The Villages
+
+&lt;span style="font-size:1.5em; color: #666"&gt;
+.highlight[__B__]etter 
+.highlight[__O__]utcomes for 
+.highlight[__O__]lder Adults Using 
+.highlight[__S__]ensor 
+.highlight[__T__]echnology
+&lt;/span&gt;
+
+### Overview
+
+- Interdisciplinary effort involving faculty and students from College of Engineering &lt;br&gt;and Public Health at USF
+
+- Explore the use of passive wireless sensor technology in the homes of older adults
+
+- Test a comprehensive system of sensors in real-world settings
+
+### Participants
+
+- 55+ resident of The Villages
+- Living alone in pet-free home with internet access
+- Do not exhibit signs of cognitive impairment
+
+
+---
+
+class: fullscreen-bg, no-pad
+
+&lt;video loop muted autoplay poster="images/villages-flyover.png" class="fullscreen-bg__video"&gt;
+    &lt;source src="images/villages-flyover2.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+.center[.card-6[
+## The Villages, FL
+
+&lt;div style="text-align: left"&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;p&gt;The largest retirement community in the US: 115,000+ residents&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;30 minutes south of Ocala, 75 miles north of USF Tampa Campus&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;~50k homes, 80% occupied by at least one person 55+&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;Average age of a Villager is 62 (male) and 60 (female)&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;32 square miles, 3 town squares, 10 commercial areas, 63 rec centers&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;p&gt;A Villager could play 30 straight days of golf, 18 holes/day&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+]]
+
+???
+
+TV stats: &lt;http://www.insidethebubble.co/82-cool-facts-the-villages/&gt;
+TVH news: &lt;https://www.thevillageshealth.com/news.php&gt;
+Article on TV: &lt;http://www.slate.com/articles/life/florida/features/2013/oh_florida/the_villages_scandals_irs_stds_golf_carts_and_made_up_history.html&gt;
+
+---
+
+## Overview of Study Participation
+
+
+
+- 14 total participants (7 ongoing) with 5,230 total days of observation
+
+- 12 have completed at least 6 months, 1 exited prior, 1 recently joined
+    
+--
+
+- Participant gender and age at study start
+
+&lt;img src="gab-proposal_files/figure-html/participants-age-1.png" width="1080" /&gt;
+
+--
+
+- Days of participation in study
+
+&lt;img src="gab-proposal_files/figure-html/participants-days-in-study-1.png" width="1080" /&gt;
+
+???
+
+- Minimum days is 48, newest has 75 days
+- Minimum (included) days is just over 181
+- Max days is 684.7916667
+- Median (&gt; 180) is 425.5
+
+Reasons for leaving:
+
+- 2 participants moved (002, and 010)
+- 1 participant died
+- 1 participant faced medical challenges
+- 2 participants did not continue after 6 months
+- 1 participant did not like the sensors
+
+---
+
+## Timeline
+
+&lt;img src="gab-proposal_files/figure-html/plot-timeline-1.png" width="1080" /&gt;
+
+???
+
+Most at once: 11 participants
+
+---
+
+class: inverse, center, middle
+# Our system
+
+---
+
+## Sensors
+
+.pull-left[
+#### Motion &lt;br&gt;![](images/sensors/motion.png)
+]
+
+--
+
+.pull-left[
+#### Contact &lt;br&gt;![](images/sensors/contact.png)
+]
+
+--
+
+.pull-left[
+#### Power &lt;br&gt;![](images/sensors/power.png)
+]
+
+--
+
+.pull-left[
+#### Water &lt;br&gt;![](images/sensors/water.png)
+]
+
+--
+
+.pull-left[
+#### System &lt;br&gt;![](images/sensors/system.png)
+]
+
+.pull-left[
+&lt;h4 style="color: #777"&gt;Bed/Seat Mats&lt;/h4&gt;
+]
+
+---
+
+background-image: url(images/example-house-flooplan/blank.png)
+background-position: 50% 45%
+background-size: 80%
+
+## Home Layout
+
+---
+
+background-image: url(images/example-house-flooplan/simple-legend.png)
+background-position: 50% 45%
+background-size: 80%
+
+## Home Layout
+
+---
+
+background-image: url(images/system/SystemArchitecture2.png)
+background-position: 50% 75%
+background-size: 60%
+
+## System architecture
+
+&lt;!-- ![](images/system/SystemArchitecture.png) --&gt;
+
+---
+
+class: inverse, center, middle
+# Software layers
+
+---
+
+## Data Collection
+
+- `zrayd` — An OpenZWave client in C++, collects sensor data
+
+- .highlight[__`zmonitor`__] — Monitor daemons, services, system state, OTA updates
+
+- `mqtt` — Lightweight message passing service for real-time transfer of sensor events
+
+- .highlight[__`zcollector`__] — Python script on server processes messages and associates with physical sensors
+
+- .highlight[__`zproc`__] — Micro-batch preprocessing of sensor data (R scripts)
+
+- .highlight[__`notiproc`__] — Framework and daemon for near real-time alert processing (R scripts)
+
+
+### Databases
+
+- .highlight[__`zray`__] — Raw data warehouse, **53 million** sensor events from 5,516 sensor streams
+
+- .highlight[__`zproc`__] — Preprocessed data, batch updated and recomputed on config changes, reduced to **6 - 17M** events
+
+---
+
+layout: true
+## Admin Interface (System configuration)
+
+---
+.pull-left[
+- Inventory Management
+
+- Installation Preparation
+
+- System Configuration
+
+- Planning and Review
+
+- Maintenance Visits
+
+- Data Export
+]
+
+.pull-right[&lt;img src="images/admin-pages/admin-01.png"&gt;&lt;/img&gt;]
+
+---
+&lt;img src="images/admin-pages/admin-02.png" width="45%"&gt;&lt;/img&gt;
+&lt;img src="images/admin-pages/admin-06.png" width="45%"&gt;&lt;/img&gt;
+---
+&lt;img src="images/admin-pages/admin-05.png" width="45%"&gt;&lt;/img&gt;
+&lt;img src="images/admin-pages/admin-08.png" width="45%"&gt;&lt;/img&gt;
+---
+&lt;img src="images/admin-pages/admin-09.png" width="45%"&gt;&lt;/img&gt;
+&lt;img src="images/admin-pages/admin-10.png" width="45%"&gt;&lt;/img&gt;
+
+---
+layout: true
+
+## Data Preprocessing
+
+---
+
+.pull-left[
+### Raw
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; sensor_id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; event_time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:22:22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:22:33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:23:19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.233 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:23:22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.806 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:23:25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.397 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:32:43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.411 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:32:46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.425 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:32:49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.159 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:32:55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.124 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-11 20:32:56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+### Preprocessed
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; sensor_id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; start_time &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; end_time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; duration &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:22:33 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:26:18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 223 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:23:22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:29:07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 345 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:26:18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:28:58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:28:58 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:32:56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 238 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:29:07 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:29:10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:29:10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:37:16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 486 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:32:56 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20:38:23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 326 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+???
+
+**612** is *Using Television*
+
+**618** is *In Living Room*
+
+---
+
+### Metadata
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; alias &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; install_room &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; devid &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; model &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; manufacturer &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; type &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 612 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Using Television &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Living Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AN.AL.SS.133 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Smart Switch (2nd Edition) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Aeon Labs &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Power &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 618 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Living Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Living Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; USF.EL.MS.216 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Motion Sensor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ecolink &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sensor Binary 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+- Enforce ordering of events by timestamp
+
+- Remove duplicate and non-state-change events
+
+- **Binary**: Convert values to state and reduce again
+
+- **Value**: Compress old values
+
+- Monitor run state and current position in event data stream
+
+### Modes
+
+- **Micro-batch:** Process only new events since last run
+
+- **Full rebuild:** Rebuild entire preprocessed database
+
+- **Add/rebuild/remove individual:** Update preprocessed data on config change
+
+---
+layout: true
+
+## Data Visualization and Exploration
+---
+
+.center[![](images/chdash-02-activity-out-of-home.png)]
+
+---
+
+.center[![](images/chdash-01-polar-activity.png)]
+
+---
+
+.center[![](images/chdash-03-timeline.png)]
+
+---
+
+.center[![](images/chdash-04-overview-by-day.png)]
+
+
+---
+layout: false
+
+## Notification System
+
+.right-column[
+- Real-time alert processing to deliver timely notifications
+
+- Both a processing script and a framework
+
+- As a framework it provides
+
+    - Ability to run **arbitrarily complex alert** state evaluation
+    
+    - A comprehensive design pattern for deciding **when, how and for whom**
+    
+    - Easy access to alert **actions** (email, text message, etc.)
+    
+    - A **simulation mode** for post-hoc analysis of models and methods 
+]
+
+.left-column[
+![](images/notification-email.png)
+]
+
+---
+class: inverse, center, middle
+# Activity Profiles
+
+---
+layout: true
+## Example Day of Sensor Activity
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-sensor-day-1.png" width="1080" /&gt;
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-sensor-day2-1.png" width="1080" /&gt;
+
+---
+layout:false
+## Activity Profiles Background
+
+#### *n*-grams
+
+- Bag-of-words document summarization model — Zhang et al. (2010)
+- Text categorization and "language profiles" — Cavnar and Trenkle (1994)
+- Text prediction systems — Garay-Vitoria and Abascal (2006)
+- Automatic generation of summaries — Lin and Hovy (2003)
+- Word-embedding method (word2vec) — Goldber and Levy (2014)
+
+#### Pattern and Motif learning
+
+- Sequential Aggregate Approximation (SAX) — Lin et al. (2007)
+- Periodic outlier detection in time-serier sequences — Rasheed and Alhajj (2014)
+
+#### Anamolous Activity Detection
+
+- Detect and explain anamolous activities — Hamid et al. (2005)
+
+#### Routine Discovery in Smart Homes
+
+- Unsupervised routine detection of older adults using SAX — Yin et al. (2015)
+
+---
+layout: true
+## *n*-grams 
+---
+
+&lt;div style="text-align:center; padding-top: 1em; font-size: 5em;"&gt;&lt;code&gt;corpus&lt;/code&gt;&lt;/div&gt;
+
+---
+
+&lt;div style="text-align:center; padding-top: 1em; font-size: 5em;"&gt;&lt;code&gt;_corpus_&lt;/code&gt;&lt;/div&gt;
+
+---
+
+&lt;div style="text-align:center; padding-top: 1em; font-size: 5em;"&gt;
+  &lt;code&gt;_c&lt;span class="remark-code-line-highlighted"&gt;or&lt;/span&gt;pus_&lt;/code&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div style="text-align:center; padding-top: 1em; font-size: 5em;"&gt;
+  &lt;code&gt;_c&lt;span class="remark-code-line-highlighted"&gt;orp&lt;/span&gt;us_&lt;/code&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div style="text-align:center; padding-top: 1em; font-size: 5em;"&gt;
+  &lt;code&gt;
+  _c&lt;span class="remark-code-line-highlighted"&gt;or&lt;span class="highlight"&gt;p&lt;/span&gt;&lt;/span&gt;us_
+  &lt;/code&gt;
+&lt;/div&gt;
+
+---
+
+
+
+&lt;table style="font-size: 1.5em"&gt;
+ &lt;thead&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;c&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;o&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;r&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;p&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;u&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;s&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_c&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;co&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;or&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;pu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;us&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;s_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_co&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;cor&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;orp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;pus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;us_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_cor&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;orpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;pus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;orpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+&lt;table style="font-size: 1.5em"&gt;
+ &lt;thead&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;c&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;o&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;r&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;p&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;u&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;s&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;_&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_c&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;co&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;or&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;pu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;us&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;s_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_co&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;cor&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;orp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;pus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;us_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_cor&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;corp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;orpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;rpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;pus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corp&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;corpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;orpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;rpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corpu&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;corpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;_corpus&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left; color: #999"&gt; &lt;code&gt;corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;_corpus_&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;code&gt;&lt;/code&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.footnote[
+Hornik et al. (2013). doi:[10.18637/jss.v052.i06](http://doi.org/10.18637/jss.v052.i06).
+]
+
+---
+
+&lt;div style="font-size: 1em"&gt;
+&lt;ol&gt;
+
+&lt;li&gt;&lt;p&gt; .word[o] .word[r] .word[p] .word[u] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_c] .word[or] .word[rp] .word[pu] .word[s\_] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_co] .word[orp] .word[rpu] .word[us\_] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_cor] .word[orpu] .word[pus\_] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_corp] .word[rpus\_] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_corpu] .word[orpus\_] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[] &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt; .word[\_corpus\_] &lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+
+---
+layout: true
+## Sensor Events as Event-Strings
+---
+
+.left-column[
+### Sensor Inclusion
+]
+
+.right-column[
+Keep only *active* events that indicate interaction or movement within the environment
+
+**Motion:** Keep only ON activation events
+
+**Contact:** Keep both ON and OFF events
+
+&lt;table id="simple-table"&gt;
+ &lt;thead&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Front Door Area &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Study &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Medicine Drawer &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Living Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bedroom, Guest &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Medicine Cabinet &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Kitchen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bedroom, Guest 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Medicine Closet &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Dining Area &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bathroom, Guest &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Medicine Box &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Bedroom, Master &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bath, Guest &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Garage Door &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Bathroom, Master &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Sewing Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Front Door &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Shower &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Pantry, Garage &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Fridge &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; In Office &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Pantry &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Closed Bedroom Door &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+.left-column[
+### Sensor Inclusion
+]
+
+.right-column[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; sensor_id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; alias &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; start_time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3807 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bathroom, Master &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:21:28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3772 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bedroom, Master &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:22:44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3910 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Living Room &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3613 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Front Door Area &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3721 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Kitchen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5255 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Fridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5255 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Fridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5255 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Fridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5255 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Opened Fridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:23:59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3772 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Bedroom, Master &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:24:44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3613 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; In Front Door Area &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017-07-19 03:25:12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+.left-column[
+### Sensor Inclusion
+### Standardizing Names
+]
+
+.right-column[
+#### Global
+
+- .word[In Living Room] `\(\to\)` .word[InLivingRoom]
+
+- .word[Opened*FrontDoor*] `\(\to\)` .word[Opened*FrontDoor*] and .word[!Opened*FrontDoor*]
+
+- .word[Opened*MedicineCont*] for medicine *box*, *cabinet*, *drawer*, etc.
+
+#### Specific adjustments
+
+- .word[InShower] for primary bathing location
+
+- Activity rooms and guest bedrooms: .word[InSecondRoom] and .word[InBedroomGuest]
+]
+
+---
+
+.left-column[
+### Sensor Inclusion
+### Standardizing Names
+### Pauses
+]
+
+.right-column[
+Pauses are inserted when no activity is observed
+
+Timestamp of **15 minutes** after last event before pause
+&lt;br&gt;&lt;br&gt;
+
+| Pause Type | Time Between Events |
+|:----------:|:-------------------:|
+| Short | `\(15 \leq x &lt; 60\)` *minutes* |
+| Medium | `\(1 \leq x &lt; 3\)` *hours* |
+| Long | `\(3 \leq x\)` *hours* |
+
+]
+
+---
+
+.left-column[
+### Sensor Inclusion
+### Standardizing Names
+### Pauses
+### Dictionary
+]
+
+.right-column[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Motion &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Vowel &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Active &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Letter &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Pause &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Separator &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InFrontDoorArea &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[a] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ClosedBedroomDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[B] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseLong &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[3] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InLivingRoom &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[A] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !ClosedBedroomDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[b] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseMedium &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[2] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InDiningArea &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[e] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OpenedFridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[D] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseShort &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[1] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InKitchen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[E] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !OpenedFridge &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[d] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InBathroomMaster &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[i] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OpenedFrontDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[F] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseLong &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[⏎] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InBedroomMaster &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[I] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !OpenedFrontDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[f] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseMedium &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[._] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InSecondRoom &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[o] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OpenedGarageDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[G] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PauseShort &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[_] &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InShower &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[O] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !OpenedGarageDoor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[g] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InBedroomGuest &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[u] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OpenedMedicineCont &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[M] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; InBathroomGuest &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[U] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !OpenedMedicineCont &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[m] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OpenedPantry &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[P] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; !OpenedPantry &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; .word[p] &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+.left-column[
+### Sensor Inclusion
+### Standardizing Names
+### Pauses
+### Dictionary
+]
+
+.right-column[
+### Original
+.word[InBedroomMaster] .word[InBathroomMaster] .word[InBathroomMaster] .word[InBedroomMaster] .word[InLivingRoom] .word[InFrontDoorArea] .word[InKitchen] .word[OpenedFridge] .word[!OpenedFridge] .word[OpenedFridge] .word[!OpenedFridge] .word[PauseLong] .word[InBedroomMaster] .word[InBathroomMaster] .word[InBathroomMaster] .word[InBedroomMaster] .word[InBedroomMaster] .word[InLivingRoom] .word[InFrontDoorArea] .word[InKitchen]
+
+### Encoded
+.word[I].word[i].word[i].word[I].word[A].word[a].word[E].word[D].word[d].word[D].word[d].word[3].word[I].word[i].word[i].word[I].word[I].word[A].word[a].word[E]
+]
+
+---
+layout: true
+## Event-String Example
+
+.footnote[
+.word[A] = Living Room, .word[E] = Kitchen, .word[I] = Bedroom, .word[i] = Bathroom (M), .word[U] = Bathroom (G), .word[a] = Near Front Door, .word[o] = 2nd Room
+
+.word[Dd] = Fridge, .word[Ff] = Front Door, .word[Gg] = Garage Door, .word[Pp] = Pantry, .word[Mm] = Med Container
+]
+
+---
+
+
+
+&lt;div class="ngram-example"&gt;_IiiIAaEDdDd3IiiIIAaEaoIII1IIIiAaEoiiOiiAEaGgGgAMmDdGgGgDda1AaEGgGgGgDdGgGgaiIIAEaGg1GEAgaIDd1IAEaII1AaEiIaEPpDdDdPpPpaa1AaEaFfAaiiA1AaEDaiGgPpGg1GEAgao1o1oiioAaE1oAaiEGg1GAEgPGgoiAEGgGgMmdDdDdaFfFfGgaooo1AaFfFfooAaGgGEgiMmDdDdDdDdaaa1AaEDdDdDGgFfaAAaEoIII1IiiIiiI3_&lt;/div&gt;
+
+---
+
+&lt;div class="ngram-example"&gt;_IiiIAaEDdDd&lt;span class='highlight'&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/span&gt;IiiIIAaEaoIII&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;IIIiAaEoiiOiiAEaGgGgAMmDdGgGgDda&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaEGgGgGgDdGgGgaiIIAEaGg&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;GEAgaIDd&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;IAEaII&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaEiIaEPpDdDdPpPpaa&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaEaFfAaiiA&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaEDaiGgPpGg&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;GEAgao&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;o&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;oiioAaE&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;oAaiEGg&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;GAEgPGgoiAEGgGgMmdDdDdaFfFfGgaooo&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaFfFfooAaGgGEgiMmDdDdDdDdaaa&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;AaEDdDdDGgFfaAAaEoIII&lt;span class='highlight'&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/span&gt;IiiIiiI&lt;span class='highlight'&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/span&gt;_&lt;/div&gt;
+
+---
+
+&lt;div class="ngram-example" style="word-wrap: unset;"&gt;_IiiIAaEDdDd.&lt;br&gt;&gt;IiiIIAaEaoIII IIIiAaEoiiOiiAEaGgGgAMmDdGgGgDda AaEGgGgGgDdGgGgaiIIAEaGg GEAgaIDd IAEaII AaEiIaEPpDdDdPpPpaa AaEaFfAaiiA AaEDaiGgPpGg GEAgao o oiioAaE oAaiEGg GAEgPGgoiAEGgGgMmdDdDdaFfFfGgaooo AaFfFfooAaGgGEgiMmDdDdDdDdaaa AaEDdDdDGgFfaAAaEoIII IiiIiiI.&lt;br&gt;&gt;_&lt;/div&gt;
+
+---
+
+&lt;div class="ngram-example" style="word-wrap: unset;"&gt;_IiiIAaEDdDd.&lt;br&gt;&gt;IiiIIAaEaoIII IIIiAaEoiiOiiAEaGgGgAMmDdGgGgDda AaEGgGgGgDdGgGgaiIIAEa&lt;span class='highlight'&gt;&lt;strong&gt;Gg GEAg&lt;/strong&gt;&lt;/span&gt;aIDd IAEaII AaEiIaEPpDdDdPpPpaa AaEaFfAaiiA AaEDaiGgPp&lt;span class='highlight'&gt;&lt;strong&gt;Gg GEAg&lt;/strong&gt;&lt;/span&gt;ao o oiioAaE oAaiE&lt;span class='highlight'&gt;&lt;strong&gt;Gg GAEg&lt;/strong&gt;&lt;/span&gt;PGgoiAEGgGgMmdDdDdaFfFfGgaooo AaFfFfooAaGgGEgiMmDdDdDdDdaaa AaEDdDdDGgFfaAAaEoIII IiiIiiI.&lt;br&gt;&gt;_&lt;/div&gt;
+
+---
+exclude: true
+
+&lt;div class="ngram-example" style="word-wrap: unset;"&gt;_IiiIAa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;DdDd&lt;/span&gt;.&lt;br&gt;&gt;IiiIIAa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;aoIII IIIiAa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;oiiOiiA&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;aGgGgA&lt;span class='highlight'&gt;MmDd&lt;/span&gt;GgGg&lt;span class='highlight'&gt;Dd&lt;/span&gt;a Aa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;GgGgGg&lt;span class='highlight'&gt;Dd&lt;/span&gt;GgGgaiIIA&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;aGg G&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;AgaI&lt;span class='highlight'&gt;Dd&lt;/span&gt; IA&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;aII Aa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;iIa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;PpDdDdPpPp&lt;/span&gt;aa Aa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;a&lt;span class='highlight'&gt;Ff&lt;/span&gt;AaiiA Aa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;D&lt;/span&gt;aiGg&lt;span class='highlight'&gt;Pp&lt;/span&gt;Gg G&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;Agao o oiioAa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt; oAai&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;Gg GA&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;g&lt;span class='highlight'&gt;P&lt;/span&gt;GgoiA&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;GgGg&lt;span class='highlight'&gt;MmdDdDd&lt;/span&gt;a&lt;span class='highlight'&gt;FfFf&lt;/span&gt;Ggaooo Aa&lt;span class='highlight'&gt;FfFf&lt;/span&gt;ooAaGgG&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;gi&lt;span class='highlight'&gt;MmDdDdDdDd&lt;/span&gt;aaa Aa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;DdDdD&lt;/span&gt;Gg&lt;span class='highlight'&gt;Ff&lt;/span&gt;aAAa&lt;span class='highlight'&gt;&lt;strong&gt;E&lt;/strong&gt;&lt;/span&gt;oIII IiiIiiI.&lt;br&gt;&gt;_&lt;/div&gt;
+
+---
+layout: false
+## Event-String Timeline
+
+&lt;img src="gab-proposal_files/figure-html/plot-ex-day-1.png" width="1080" /&gt;
+
+---
+layout: true
+## Day-Event Strings
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-day-event-string-1.png" width="1080" /&gt;
+
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-day-event-string-simple-1.png" width="1080" /&gt;
+
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-day-event-string-actual-1.png" width="1080" /&gt;
+
+---
+
+&lt;div class="ngram-example" style="word-wrap: unset;"&gt;&lt;p&gt;&lt;strong&gt;Day 1&lt;/strong&gt;&lt;/p&gt;_IIiioAaEiiAEPpMamGgGgMmMmMmDdDaMmMmdDdaAEGgGgDdao1...&lt;p&gt;&lt;/p&gt;&lt;/div&gt;&lt;div class="ngram-example" style="word-wrap: unset;"&gt;&lt;p&gt;&lt;strong&gt;Day 2&lt;/strong&gt;&lt;/p&gt;_IiiIIAaEaoIII1IIIiAaEoiiOiiAEaGgGgAMmDdGgGgDda1AaE...&lt;p&gt;&lt;/p&gt;&lt;/div&gt;
+
+---
+layout: false
+## Bags of *n*-grams from day-event-strings
+
+
+&lt;p&gt;&lt;strong&gt; Bigram &lt;/strong&gt;&lt;br&gt; .word[_I] .word[ii] .word[iI] .word[II] .word[IA] .word[Aa] .word[aE] .word[Ea] .word[ao] .word[oI] .word[II] .word[II] .word[I1] .word[1I] .word[II] .word[II] .word[Ii] .word[iA] .word[Aa] .word[aE] &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; Trigram &lt;/strong&gt;&lt;br&gt; .word[_Ii] .word[iiI] .word[iII] .word[IIA] .word[IAa] .word[AaE] .word[aEa] .word[Eao] .word[aoI] .word[oII] .word[III] .word[II1] .word[I1I] .word[1II] .word[III] .word[IIi] .word[IiA] .word[iAa] .word[AaE] .word[aEo] &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 4-gram &lt;/strong&gt;&lt;br&gt; .word[_Iii] .word[iiII] .word[iIIA] .word[IIAa] .word[IAaE] .word[AaEa] .word[aEao] .word[EaoI] .word[aoII] .word[oIII] .word[III1] .word[II1I] .word[I1II] .word[1III] .word[IIIi] .word[IIiA] .word[IiAa] .word[iAaE] .word[AaEo] .word[aEoi] &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 5-gram &lt;/strong&gt;&lt;br&gt; .word[_IiiI] .word[iiIIA] .word[iIIAa] .word[IIAaE] .word[IAaEa] .word[AaEao] .word[aEaoI] .word[EaoII] .word[aoIII] .word[oIII1] .word[III1I] .word[II1II] .word[I1III] .word[1IIIi] .word[IIIiA] .word[IIiAa] .word[IiAaE] .word[iAaEo] .word[AaEoi] .word[aEoii] &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 6-gram &lt;/strong&gt;&lt;br&gt; .word[_IiiII] .word[iiIIAa] .word[iIIAaE] .word[IIAaEa] .word[IAaEao] .word[AaEaoI] .word[aEaoII] .word[EaoIII] .word[aoIII1] .word[oIII1I] .word[III1II] .word[II1III] .word[I1IIIi] .word[1IIIiA] .word[IIIiAa] .word[IIiAaE] .word[IiAaEo] .word[iAaEoi] .word[AaEoii] .word[aEoiiO] &lt;/p&gt;
+
+---
+layout: true
+## Activity Profiles
+---
+
+.pull-left[
+#### Day 1 - Top *n*-grams
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; ngram &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rank &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Dd] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0152941 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Gg] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0147059 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Aa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0100000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[aE] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0082353 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[dD] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0076471 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[dDd] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0070588 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[gG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0070588 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[GgG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0064706 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[AaE] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0058824 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[DdD] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0058824 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+#### Day 2 - Top *n*-grams
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; ngram &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rank &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Gg] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0152610 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Dd] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0112450 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[Aa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0104418 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[aE] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0080321 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[AaE] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0072289 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[II] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0072289 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[dD] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0064257 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[dDd] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0056225 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[DdD] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0056225 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[gG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0056225 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+.pull-left[
+#### Day 1 - Bottom *n*-grams
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; ngram &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rank &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpGgG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1211 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpGgGg] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpMam] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpMamG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1214 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpMao] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpMaoD] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1216 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPp] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1217 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1218 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpGg] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpGgG] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1220 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0005882 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+#### Day 2 - Bottom *n*-grams
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; ngram &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; count &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rank &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpGg1] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 903 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpGg1G] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 904 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPp] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 905 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpP] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 906 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 907 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpaa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 908 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[pPpaa1] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 909 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpPp] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 910 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpPpa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 911 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; .word[PpPpaa] &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 912 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0008032 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+layout: false
+## Activity Profiles
+
+1. Transform sensor data into day-event-strings
+
+2. Overall .highlight[Activity Profiles]
+
+    - Bag, count and rank *n*-grams from collated observed day-event-strings
+    - Compare activity profile (rank, freq) with unseen days
+    
+3. Daily or activity-level .highlight[Activity Profiles]
+
+    - Bag, count and rank *n*-grams from individual day-event-strings
+    - Compare activity profile across days
+
+---
+layout:false
+## Similarity Measures
+
+- Out of Place Ranking (Cavnar &amp; Trenkle) `$$OOP = \sum_{s \in D} \vert r_P (s) - r_D (s) \vert$$`
+
+- Kullback-Leibler `\(J\)`-divergence `$$J(p, q) = \sum_i (p_i - q_i) \log (p_i / q_i)$$`
+
+- Distance measures directly on *n*-gram vectors
+
+
+
+.footnote[
+Cavnar and Trenkle (1994). doi:[10.1.1.53.9367](http://doi.org/10.1.1.53.9367)
+
+Hornik et al. (2013). doi:[10.18637/jss.v052.i06](http://doi.org/10.18637/jss.v052.i06).
+
+Sonnenburg et al. (2007). doi:[10.1.1.84.6387](http://doi.org/10.1.1.84.6387).
+]
+
+???
+
+- Cavnar and Trenkle (1994). N-gram-based text categorization
+- Hornik et al. (2013). The textcat Package for n -Gram Based Text Categorization in R. doi:10.18637/jss.v052.i06.
+- Sonnenburg et al. (2007). Large Scale Learning with String Kernels. doi:10.1.1.84.6387.
+
+---
+## Activity Profile Demonstration
+
+Given a collection of profiles for occupants and a day-event-string for a new day &lt;br&gt;.highlight[can we correctly identify the occupant from their activity string?]
+
+--
+
+.pull-left[
+### Setup
+
+- 10 Houses
+
+- 180 days
+
+- Standardize sensor names
+]
+
+--
+
+.pull-right[
+### Scenarios
+
+- Add new house to "immature" group
+
+- Add new house to "mature" group
+
+- All houses evolve together
+]
+
+---
+layout: true
+## Results
+---
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; House &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 30 days &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 140 days &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Full Evolve &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span class="highlight"&gt;&lt;strong&gt;Average&lt;/strong&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span class="highlight"&gt;&lt;strong&gt;98.45&lt;/strong&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span class="highlight"&gt;&lt;strong&gt;96.09&lt;/strong&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span class="highlight"&gt;&lt;strong&gt;99.02&lt;/strong&gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 99.42 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 98.32 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 95.53 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 98.88 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 97.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; E &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; G &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 98.29 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 96 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 98.29 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; H &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 96.65 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 91.62 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 97.69 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 95.95 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 95.95 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; J &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 99.44 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 97.75 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; L &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 98.08 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 94.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 95.51 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; M &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 97.06 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 92.94 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+
+Going to pull out House M at 140 days -- performance for this house wasn't the best
+
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-results-1.png" width="936" /&gt;
+
+???
+
+Data is House017
+
+Initally: gets confused with other profiles
+
+End of May: was spending a lot of time out of home, coming home for meals and sleep
+
+Early July: vacation 7/5-7/10
+
+---
+
+&lt;img src="gab-proposal_files/figure-html/plot-results-highlight-1.png" width="936" /&gt;
+
+???
+
+Example day was 2017-07-19
+
+---
+layout: false
+class:inverse center middle
+
+# Dissertation
+
+---
+layout: true
+## Dissertation
+---
+
+.left-column[
+### Research Questions
+]
+
+.right-column[
+Can we make meaningful and timely observations of older adult's activities
+
+- without needing labels
+- without knowing floor plan or layout
+- without an annotated training set
+- and that works "out of the box"?
+
+to create/enable
+
+- Activity profiles
+- Detection of changes in routine
+- Early warning notification systems
+]
+
+---
+
+.left-column[
+### Research Questions
+### Dissertation Outline
+]
+
+.right-column[
+Create framework based on *n*-grams to naturally resolve the above problems, and demonstrate effectiveness with the following
+
+1. **Demonstrating day-event strings**: 
+    - Build individual profiles of each home
+    - &lt;span class='highlight'&gt;How well can these profiles identify the originator of new activity data?&lt;/span&gt;
+    - Explore use of activity profiles to track occupant behavior change
+
+2. **Extending day-event strings**: 
+    - Use cluster analysis with the *n*-grams approach to identify and provide insight into anomalous days and events
+]
+
+???
+
+1. **Day-event strings**: providing labels for originating homes
+    - Demonstrates the presence of signal in the activity profiles and day-event strings
+    - Uses 180 day data, many houses
+
+2. **Extending day-event strings**: cluster analysis to find anomalous behavior, unusual or critical events, other issues
+    - Demonstrates how day-event strings and activity profiles can be used to monitor and describe at-home behavior
+    - Uses 365 days of data, selected homes (allows for more detail)
+
+3. **Activity in the home**: cluster analysis of individual activities
+    - Identify behavior prototypes and routine behavior
+    - Identify data issues, suggest corrections (extend spelling analogy)
+    
+---
+layout: false
+## Publications and Presentations
+
+- **Ambient Intelligence Applications in Healthcare**.&lt;br&gt;Garrick Aden-Buie, A. Yalcin, C. VandeWeerd, A. Ngozichukwuka, J. Hammet, E. Yetisener, C. Radwan. _IIE Industrial and Systems Engineering Research Conferencee_. 2015
+
+- **Comparison of Final Examination Formats in a Numerical Methods Course.**&lt;br&gt;Garrick Aden-Buie, A. Kaw, A. Yalcin. _International Journal of Engineering Education_. 2015
+
+- **Rough Set Theory Based Prognostic Classification Models for Hospice Referral.**&lt;br&gt;E. Gil-Herrera and Garrick Aden-Buie, A. Yalcin, A. Tsalatsanis, L.E. Barnes, B. Djulbegovic. _BMC Medical Informatics and Decision Making_. 2015
+
+- **Introduction to Engineering Design: Piloting design projects for the first year engineering experience**.&lt;br&gt;J. Gaines, B. Joseph, Garrick Aden-Buie. _Sixth Annual First Year Engineering Experience Conference_. 2014
+
+- **Are multiple-choice questions suitable for a final examination in a STEM course?**&lt;br&gt;Garrick Aden-Buie, A. Kaw, A. Yalcin, R. Pendyala. _American Society for Engineering Education_, 2014.
+
+- **Boosted Tree Ensembles for Predicting Postsurgical ICU Mortality.**&lt;br&gt;Garrick Aden-Buie, Y. Chen, R. Kayal, G. Romero, H. Yang. _INFORMS Annual Meeting_. 2013.
+
+---
+class: center, top, inverse
+background-image: url(images/bg/notebook.jpg)
+background-position: 50% 50%
+background-size: cover
+
+# Thank you
+
+## Questions &amp; Comments?
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

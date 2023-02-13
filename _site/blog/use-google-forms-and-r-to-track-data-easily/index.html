@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2013-07-24">
+
+<title>Garrick Aden-Buie - Use Google Forms and R to track data easily</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Use Google Forms and R to track data easily">
+<meta property="og:description" content="I’m going to show you a quick-and-dirty way to use Google Forms and a smartphone for in-the-field data collection.">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - Use Google Forms and R to track data easily">
+<meta name="twitter:description" content="I’m going to show you a quick-and-dirty way to use Google Forms and a smartphone for in-the-field data collection.">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Use Google Forms and R to track data easily</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Apps</div>
+                <div class="quarto-category">Data Analysis</div>
+                <div class="quarto-category">Personal Data</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Visualization</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 24, 2013</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#create-the-form" id="toc-create-the-form" class="nav-link active" data-scroll-target="#create-the-form">Create the form</a></li>
+  <li><a href="#get-smart-with-your-phone" id="toc-get-smart-with-your-phone" class="nav-link" data-scroll-target="#get-smart-with-your-phone">Get smart with your phone</a></li>
+  <li><a href="#spreadsheets" id="toc-spreadsheets" class="nav-link" data-scroll-target="#spreadsheets">Spreadsheets</a></li>
+  <li><a href="#connect-with-r" id="toc-connect-with-r" class="nav-link" data-scroll-target="#connect-with-r">Connect with R</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<p>I’m going to show you a quick-and-dirty way to use Google Forms and a smartphone for in-the-field data collection. Of course, for me “in-the-field data collection” really means keeping track of how much I weigh or how many cups of coffee I drank, but Google Forms is a powerful and versatile online form platform that can do a whole lot more.</p>
+<!-- more -->
+<p>I’ve tried other “life logging” apps, and while they’re useful at times, I’ve found that all I really want is an easy to update spreadsheet. It turns out that a link to a Google Form on my iPhone is the perfect balance between ease and control.</p>
+<p>So far, I’ve used this method as a time card to track working hours, to track my daily weight, to stay on top of a group project, and to monitor the chemical balance and consumption of my pool. With Google Forms it’s easy to design a form that specifically fits your needs – I’m sure there are a lot of other great ways this setup could be used.</p>
+<section id="create-the-form" class="level2">
+<h2 class="anchored" data-anchor-id="create-the-form">Create the form</h2>
+<p>Fire up <a href="http://docs.google.com">Google Docs</a> and create a new form from the “Create” button. Give your form a name and pick a theme. The simpler themes tend to look better on mobile browsers; I tend to pick <strong>Dark Grey</strong>, but today I chose <strong>Magazine</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="NewForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="NewForm.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>Google will ask you if you want to save the responses in a separate spreadsheet, which seems like a good idea. Give the spreadsheet the name you want and move to the next step… actually building the form.</p>
+<p>Add the form items that you need, and try to find a balance between ease of collection and integrity of the data. I’ve found that for numerical entries, the <em>Plain Text</em> format works best. If you want to allow multiple selections from a predetermined list, choose <em>Checkboxes</em> and then add your options. These will be stored in your spreadsheet as a single cell with a list of the selected options, ie: <code>"Option 1, Option 3"</code>. You can also have a slider input on a scale of 1-5 or 0-10, but if precision is important – eg. you might need to record 6.7 – then skip this and use the plain text format.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="NewItem.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="NewItem.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>For a the select <em>only one</em> option type item, the <em>Choose from a list</em> option works best, and shows up on the iPhone as a rolodex list. As an example, I’ve added a question for the number of cups of coffee I’ve had today.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="ChooseFromList1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="ChooseFromList1.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>When you’re done with the questions, edit the form submitted confirmation response to something validating, like <em>Good work, dude!</em>, and decide if you want to allow edits. Then click <strong>Send Form</strong> and send the form to an email address that gets delivered to your phone.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="SendForm1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="SendForm1.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+</section>
+<section id="get-smart-with-your-phone" class="level2">
+<h2 class="anchored" data-anchor-id="get-smart-with-your-phone">Get smart with your phone</h2>
+<p>Check your email on your phone and pull up the form you just created. It should look something like this.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="FormOnIPhone.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="FormOnIPhone.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>Enter your first data item. Here you can see the “rolodex” selector is easy to use for a short list of about 5 or less options.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="FormOnIPhone2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="FormOnIPhone2.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>If you’re using Safari, then while you’re on the form page, tap the bookmark button and choose <strong>Add to Home Screen</strong>. Make sure you give the new link a short name so it displays nicely on the home screen. Now you’ve got easy access to your form from your phone.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="OnHomePage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="OnHomePage.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+</section>
+<section id="spreadsheets" class="level2">
+<h2 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h2>
+<p>Now that you’re set up with easy data collection from your phone, you’ll want to do something with the data you’re collecting. All of the entries you submit are collected by Google into a spreadsheet you named at the beginning of the process.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="SpreadsheetResponses.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="SpreadsheetResponses.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>From here you can create graphs and charts, calculate summary statistics, etc. Everything a spreadsheet was meant to be. Of course, it’s best to do any calculations on a new sheet so that your work isn’t lost when new responses are recorded. One limitation I’ve found is that columns are added to the spreadsheet as the items are added, so if you add a new item or rearrange questions in your form, the spreadsheet columns will be disorganized.</p>
+<p>One of the greatest benefits of using Google Forms is that every entry is time stamped. Google’s timeline visualization is excellent, and once you have the data together it’s as easy as adding a chart.</p>
+</section>
+<section id="connect-with-r" class="level1">
+<h1>Connect with R</h1>
+<p>All of the above is probably overkill if all you’re looking to do is to keep track of how many sodas you’ve had in one day. (Yeah, but then use the time stamp feature and the timeline to figure out <strong>when</strong> you’re having all of those sodas!) But if Google Docs doesn’t quite have the power you’re looking for, you can easily pull your data into R and really get your hands dirty.</p>
+<p>Getting the data into R takes 2 steps:</p>
+<ol type="1">
+<li>Publish the data to the web.</li>
+<li>Grab the data from the CSV URL into R.</li>
+</ol>
+<p>It’s that easy. To publish the data to the web, click “Publish to web” under the File menu in the Google Docs spreadsheet. Click <strong>Start publishing</strong>, and make sure that <em>Automatically republish when changes are made</em> is checked, but that <em>Require viewers to sign in…</em> isn’t. There may be a way to sign in from R, but I don’t know it.</p>
+<p>Then, select <strong>CSV</strong> for the link you want, and copy the URL.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="PublishForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="PublishForm.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p>In R, use <code>RCurl</code> to pull the data as follows (you need <code>RCURL</code> to connect to HTTPS):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(RCurl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dataCSV <span class="ot">&lt;-</span> <span class="fu">getURL</span>(<span class="st">'copy URL here'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">textConnection</span>(dataCSV))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And you’re done! Happy data collecting!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});</script>
+
+
+
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "hash": "febfd202fab1b297f4113ab97adf29ff",
+  "result": {
+    "markdown": "---\ntitle: \"Better Progressive Xaringan\"\nsubtitle: \"Example Slides\"\nauthor: \"Garrick Aden-Buie\"\ninstitute: \"garrickadenbuie.com\"\noutput:\n  xaringan::moon_reader:\n    lib_dir: libs\n    css: [xaringan-themer.css, example.css]\n    seal: false\n    nature:\n      highlightStyle: github\n      highlightLines: true\n      countIncrementalSlides: true\n      ratio: \"16:9\"\n---\n\n\n\n\nclass: highlight-last-item\n\n# Best Brownies, Ingredients\n\n- 1 cup milk chocolate chips\n\n--\n\n- 2 large eggs\n\n--\n\n- 2 teaspoons vanilla extract\n\n--\n\n- 1/2 cup melted milk chocolate chips\n\n--\n\n- 1/4 cup unsweetened cocoa powder\n\n--\n\n- _More things_\n\n---\n\n# highlight-last-item\n\nUse this CSS chunk with the slide `class: highlight-last-item`.\n\n````\n```{css echo=FALSE}\n.highlight-last-item > ul > li, .highlight-last-item > ol > li {\n  opacity: 0.5;\n}\n.highlight-last-item > ul > li:last-of-type,\n.highlight-last-item > ol > li:last-of-type {\n  opacity: 1;\n}\n```\n````\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2021-10-07">
+<meta name="keywords" content="rstats">
+<meta name="description" content="Choose your own adventure and get in the ‘usethis’ pull request flow with this flow chart.">
+
+<title>Garrick Aden-Buie - Pull Request Flow with usethis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<link href="usethis-adventure.css" rel="stylesheet">
+<script src="https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js" integrity="sha384-EYn4rWu1DHvYD0sSSSbMEtXQmMl58CFJd897806+RT1jJVYbhuZlZMN6yG9nCyFa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Pull Request Flow with usethis">
+<meta property="og:description" content="Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - Pull Request Flow with usethis">
+<meta name="twitter:description" content="Choose your own adventure and get in the 'usethis' pull request flow with this flow chart.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis/usethis-pr-flow-social.jpg">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Pull Request Flow with usethis</h1>
+                  <div>
+        <div class="description">
+          Choose your own adventure and get in the ‘usethis’ pull request flow with this flow chart.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">usethis</div>
+                <div class="quarto-category">Productivity</div>
+                <div class="quarto-category">Workflow</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 7, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="usethis-pr-flow-medium.jpg" class="lightbox" title="A flow chart for the pull request functions in the usethis R package." data-description="A
+
+<code>usethis</code>
+
+pull
+
+request
+
+helper
+
+function
+
+flow
+
+diagram.
+
+<a href=&quot;#download&quot;>Download the image</a>
+
+or
+
+read
+
+a
+
+<a href=&quot;flowchart/&quot;>text version of the flow chart</a>
+.
+
+(
+<a href=&quot;http://creativecommons.org/licenses/by/4.0/&quot;>CC BY</a>
+)" data-gallery="quarto-lightbox-gallery-1"><img src="usethis-pr-flow-medium.jpg" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A flow chart for the pull request functions in the usethis R package.</figcaption><p></p>
+</figure>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> package is full of incredibly helpful functions that make life as an R developer easier. A lot of the package’s functions target R package maintainers, but there’s a small cluster of functions that are life changing for anyone who uses <code>git</code> or collaborates with others via GitHub<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>These pull request helpers all start with the <code>pr_</code> prefix, but I initially found them a little confusing to use since they’re each designed to be called in a specific context — for example, when you have local work that isn’t associated with a PR or when a PR exists but you don’t have the work locally on your computer.</p>
+<p>Once I wrapped my head around the functions, though, using them has utterly transformed my day-to-day workflow. I can move in and out of collaborative work seamlessly. The flow chart above is my personal mental model of this cluster of functions and I hope it helps you make sense of them, too.</p>
+<p>There are other great resources available in the <span class="pkg">usethis</span> documentation. Beyond the <a href="https://usethis.r-lib.org/reference/pull-requests.html">function documentation</a>, there’s also the great <a href="https://usethis.r-lib.org/articles/articles/pr-functions.html"><em>Pull request helpers</em> article</a>. That article walks through a pull request from the perspective of a contributor and a package maintainer.</p>
+<p>In this blog post, however, you get to play both roles and choose your own adventure!</p>
+</section>
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Choose your own pull request adventure</h2>
+<p>Welcome to this choose-your-own-adventure blog post. <span id="instructions">You don’t need to read this one from top to bottom. Instead, jumping around is encouraged!</span></p>
+<p>Look for the <i class="bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> icon. It tells you that it’s time for you make a choice. But don’t worry, there’s no wrong choice: if you take a wrong turn you can always use your browser’s <i class="bi bi-arrow-left-circle-fill" aria-hidden="true" title="Back"></i><span class="sr-only">back</span> button to retrace your steps.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Ready to get started?</p>
+<ul id="intro-options">
+<li>
+<p>
+Yes, <a href="#get-started">I’m ready to go</a>!
+</p>
+</li>
+</ul>
+</div>
+</section>
+<section id="story-container" class="level2">
+<h2 class="anchored" data-anchor-id="story-container"></h2>
+<div id="story" aria-live="polite" aria-relevant="additions">
+
+</div>
+</section>
+<section id="prep-work" class="level2 step">
+<h2 class="step anchored" data-anchor-id="prep-work">Prep work</h2>
+<section id="get-started" class="level3 step">
+<h3 class="step anchored" data-anchor-id="get-started">Let’s get started</h3>
+<p>You open your project in RStudio (or the editor of your choice). You make a note to yourself to come up with a better name for your package — for now you’re calling it <span class="pkg">acme</span> because it’s mostly a collection of random functions you’ve written.</p>
+<p>Anyway, you’re thankful that you closed all of your open files the last time you were working, but now the empty console beckons. You’re ready to do some work.</p>
+<p>Where do you begin? With <span class="pkg"><a href="https://usethis.r-lib.org">usethis</a></span> of course.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> That was easy! <a href="#start">Lets do some work now.</a></p>
+</div>
+</section>
+<section id="start" class="level3 step">
+<h3 class="step anchored" data-anchor-id="start">What’s next?</h3>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now you face a tough decision: what do you actually do next?</p>
+<ul>
+<li><p><a href="#pr-init">Start new work</a></p></li>
+<li><p><a href="#pr-resume">Pick up something you were working on</a></p></li>
+<li><p><a href="#pr-fetch-review">Review or collaborate with someone else’s work</a></p></li>
+<li><p><a href="#pr-finish-start">Clean up after a PR that’s been merged</a></p></li>
+</ul>
+</div>
+</section>
+<section id="pr-init" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-init">Start new work</h3>
+<p>Time to start something new. You scan your project board, issues list, JIRA tickets, slack messages, emails, and post-it notes and finally settle on something to work on. Your task: add an example to the documentation for a function you’ve been working on.</p>
+<p>You want to start your work in a new branch, so you call <code>pr_init()</code>, giving it the name of your new branch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_init</span>(<span class="st">"add-example"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Setting active project to '/Users/garrick/work/acme'
+ℹ Pulling changes from 'upstream/main'
+✓ Creating and switching to local branch 'add-example'
+● Use `pr_push()` to create PR.</code></pre>
+<p>The console output reminds you that <span class="pkg">usethis</span> updated your local repo and created and switched to a new branch for you.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> You’re ready to <a href="#do-work">do some work</a>.</p>
+</div>
+</section>
+<section id="pr-resume" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-resume">Pick up something you were working on</h3>
+<p>You’re ready to get back to that thing you were working on. Which was what again? You should probably have another sip of your coffee. You were doing some work in a branch in your local of the project…</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Do you remember the name of the branch?</p>
+<ul>
+<li><p><a href="#pr-resume-no-branch">I don’t remember, remind me</a></p></li>
+<li><p><a href="#pr-resume-branch">I remember, it’s the <code>add-example</code> branch</a></p></li>
+</ul>
+</div>
+</section>
+<section id="pr-resume-local" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-resume-local">Get to a local branch</h3>
+<p>git branches, you’ve made a few. But which one you do you want to work in?</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Do you remember the name of the branch?</p>
+<ul>
+<li><p><a href="#pr-resume-no-branch">I don’t remember, remind me</a></p></li>
+<li><p><a href="#pr-resume-branch">I remember, it’s the <code>add-example</code> branch</a></p></li>
+</ul>
+</div>
+</section>
+<section id="pr-resume-no-branch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-resume-no-branch">Choose a branch and resume working</h3>
+<p>Don’t worry, <span class="pkg">usethis</span> has your back. Just run <code>pr_resume()</code> without any arguments to get a list of local branches available to you. <code>pr_resume()</code> helpfully sorts the branches by recency of work and tells you if any of the branches are related to pull requests.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_resume</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>ℹ No branch specified ... looking up local branches and associated PRs
+Which branch do you want to checkout? (0 to exit)
+
+1:         add-example --&gt; #11 ('@gadenbuie'): Add an example
+2: feature-exploration
+
+Selection: 1
+✓ Switching to branch 'add-example'
+✓ Pulling from 'origin/add-example'
+• Use `pr_push()` to create or update PR.</code></pre>
+<p>We picked option <code>1</code> to keep working in our <code>add-example</code> branch. Notice that, since <code>add-example</code> is related to PR <code>#11</code>, <code>pr_resume()</code> also did you the extra favor of making sure that your local copy is up-to-date.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Rock and roll, you’re ready to <a href="#do-work-yours">get back to work</a>.</p>
+</div>
+</section>
+<section id="pr-resume-branch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-resume-branch">Get back to the branch</h3>
+<p>Look at you, smarty pants. You remember your git branch names! I’m proud of you.</p>
+<p>Good news, <code>pr_resume()</code> can switch to the <code>"add-example"</code> branch for you and it also makes sure that your local copy is up-to-date!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_resume</span>(<span class="st">"add-example"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Switching to branch 'add-example'
+✓ Pulling from 'origin/add-example'
+• Use `pr_push()` to create or update PR.</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Sweat deal! Okay, you’re ready to <a href="#do-work-yours">keep on working</a>.</p>
+</div>
+</section>
+<section id="pr-fetch-review" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-fetch-review">Review or collaborate with someone else’s work</h3>
+<p>Version control software like git and collaborative coding platforms like GitHub are plenty of fun when you’re working on your own. But they really start to shine when you use them to collaborate with others.</p>
+<p>The same is true for the <span class="pkg">usethis</span> PR helper functions. Setting up your local repo to pull down the changes from a collaborator – changes that probably live in a branch in <em>their copy</em> of the repo – can be a frustrating experience full of online searching to remember the specific incantations required to get your collaborators onto your computer and open in front of you.</p>
+<p>But have no fear, <code>pr_fetch()</code> does all of this for you, in just one command in your R console.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Do you know the pull request number?</p>
+<ul>
+<li><p><a href="#pr-fetch-no-branch">I don’t remember, remind me</a></p></li>
+<li><p><a href="#pr-fetch-branch">I remember, it’s PR <code>#14</code></a></p></li>
+</ul>
+</div>
+</section>
+<section id="pr-fetch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-fetch">Open a remote branch, locally</h3>
+<p>The pull request is open on GitHub and you can see the changes there, but you just can’t interact with the code in the same way through the browser. You have to bring that code into your local IDE where you can hold it in your hand and poke it with debuggers.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Do you know the pull request number?</p>
+<ul>
+<li><p><a href="#pr-fetch-no-branch">I don’t remember, remind me.</a></p></li>
+<li><p><a href="#pr-fetch-branch">I remember, it’s PR <code>#14</code>.</a></p></li>
+</ul>
+</div>
+</section>
+<section id="pr-fetch-no-branch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-fetch-no-branch">Choose a PR and bring the changes onto your computer</h3>
+<p>Your friend, who affectionately calls themselves <code>@wileycoyote</code> on GitHub, helpfully contributed a new function to your bag of tricks package, <span class="pkg">acme</span>. They sent you a message on Slack letting you know they submitted a PR, but they didn’t mention the PR number.</p>
+<p>No big deal — you can call <code>pr_fetch()</code> from your local repository without any arguments and <code>pr_fetch()</code> will look up any open pull requests and give you the option to pick the one you want.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_fetch</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>ℹ No PR specified ... looking up open PRs
+Which PR are you interested in? (0 to exit)
+
+1: 'gadenbuie/acme/#11' (@gadenbuie): 'Add an example'
+2: 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
+
+Selection: 2
+✓ Checking out PR 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
+✓ Adding remote 'wileycoyote' as 'git@github.com:wileycoyote/acme.git'
+✓ Creating and switching to local branch 'wileycoyote-toone-model'
+✓ Setting 'wileycoyote/toone-model' as remote tracking branch</code></pre>
+<p>You find your friend’s PR in the list and choose selection <code>2</code>. Next time you can perform the same steps by providing the PR number — <code>pr_fetch(14)</code> — or you can use the menu again. Who has time or brain space to memorize pull request numbers?</p>
+<p>Now that you have the code from the PR available to you locally, you’re free to poke around to try out the code and review it.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Okay, you’ve had a chance to look at the code, what do you want to do next?</p>
+<ul>
+<li><p><a href="#do-work-theirs">I want to make some changes to add to the PR.</a></p></li>
+<li><p>I reviewed the code and left comments for the PR author in the pull request.</p>
+<ul>
+<li><p><a href="#pr-forget-theirs">I’m done with this branch</a>.</p></li>
+<li><p><a href="#pr-pause">I’m done for now, but I’ll probably come back to this branch later</a>.</p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="pr-fetch-branch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-fetch-branch">Open a PR locally</h3>
+<p>You’ve been working with your friend, <code>@wileycoyote</code>, on a new set of model tuning functions. They’ve helpfully started working on a PR, but since you’ve been reviewing the code carefully with them over the past few days, you actually remember the pull request number. Lucky number <strong>14</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_fetch</span>(<span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Checking out PR 'gadenbuie/acme/#14' (@wileycoyote): 'Model tuning features'
+✓ Switching to branch 'wileycoyote-toone-model'</code></pre>
+<p>You already have a copy of the PR branch in your local project, so <code>pr_fetch()</code> simply switched you into the <code>wileycoyote-toone-model</code> branch that it created when you first fetched the PR.</p>
+<p>Because you might have been doing some work here before, <code>pr_fetch()</code> does not try to update your local branch. But you haven’t done any work yet other than looking at the code, so you follow up with <code>pr_pull()</code> to pull the latest changes into your project.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Pulling from 'wileycoyote/toone-model'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Now that you have the latest PR code, what do you want to do next?</p>
+<ul>
+<li><p><a href="#do-work-theirs">I want to make some changes to add to the PR.</a></p></li>
+<li><p>I reviewed the code and left comments for the PR author in the pull request.</p>
+<ul>
+<li><p><a href="#pr-forget-theirs">I’m done with this branch</a>.</p></li>
+<li><p><a href="#pr-pause">I’m done for now, but I’ll probably come back to this branch later</a>.</p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="pr-view-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-view-yours">Open your PR on GitHub</h3>
+<p>You can jump straight to the GitHub pull request page for the branch you’re in with <code>pr_view()</code>!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_view</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>ℹ Current branch ('add-example') is connected to PR #11
+✓ Opening URL 'https://github.com/gadenbuie/acme/pull/11'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> When you’re done with the PR on GitHub, come back here to decide where you’re headed next.</p>
+<ul>
+<li><p>That’s it for now, I’m <a href="#pr-pause">ready to start the next thing</a>.</p></li>
+<li><p>Hang on, <a href="#fix-something">I found something I need to fix</a>.</p></li>
+<li><p>Good news, the pull request was merged and <a href="#pr-finish-yours">I’m done with this work</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-view-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-view-theirs">Open their PR on GitHub</h3>
+<p>You can jump straight to the GitHub pull request page for the branch you’re in with <code>pr_view()</code>!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_view</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>ℹ Current branch ('wileycoyote-toone-models') is connected to PR #14
+✓ Opening URL 'https://github.com/gadenbuie/acme/pull/14'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Welcome back to your project, I hope everything went well over on GitHub. Where to next?</p>
+<ul>
+<li><p>I’m done here for now, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Shoot, <a href="#fix-something-theirs">I saw something I need to fix</a>.</p></li>
+<li><p>Nothing more with this branch, I can <a href="#pr-forget-theirs">forget all about this PR</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull-theirs">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-theirs">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>The PR was merged so <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="do-update" class="level2 step">
+<h2 class="step anchored" data-anchor-id="do-update">Update your local copy</h2>
+<section id="pr-pull" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-pull">Update your local copy with a reviewer’s changes</h3>
+<p>Maybe a reviewer <a href="https://docs.github.com/en/github/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request#applying-a-suggested-change">suggested changes</a> and you merged them from the PR page on GitHub. Maybe a GitHub actions workflow <a href="https://github.com/r-lib/actions/blob/master/examples/pr-commands.yaml#L45-L75">automatically re-styled your code</a>. Or maybe you did a little side-project updating on your work computer.</p>
+<p>However the changes happened, the code in the PR branch has changed, and now you want to <code>pr_pull()</code> those changes into your local copy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Pulling from 'origin/add-example'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> That was easy! What’s next?</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-yours">write some code in this branch</a>.</p></li>
+<li><p>I’m going to put this down and <a href="#pr-pause">work on something else</a>.</p></li>
+<li><p>I just merged this pull request and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-pull-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-pull-theirs">Update your local copy with someone else’s changes</h3>
+<p>Changes were made and hopefully the code has been improved, but you’d like to run through the changes yourself to make sure it works as expected.</p>
+<p>Use <code>pr_pull()</code> to get the latest changes from the PR branch into your local copy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_pull</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Pulling from 'wileycoyote/toone-model'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> That was easy! What’s next?</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-theirs">write some code in this branch</a>.</p></li>
+<li><p>I’m going to put this down and <a href="#pr-pause">work on something else</a>.</p></li>
+<li><p>That’s all I wanted to do, I can <a href="#pr-forget-theirs">forget about this PR now</a>.</p></li>
+<li><p>I just merged this pull request and <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-merge-main-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-merge-main-yours">Bring your work up to date with the main branch</h3>
+<p>While you were working on adding a new example to the documentation, your friend <code>@wileycoyote</code> went and submitted a PR that changes the function you’re working on.</p>
+<p>You found out when you looked at your pull request on GitHub and it said</p>
+<blockquote class="blockquote">
+<p><i class="fa fa-exclamation-triangle"><span class="sr-only">Caution:</span></i> This branch has conflicts that must be resolved.</p>
+</blockquote>
+<p>Usually two people can work in the same project on two different areas without running into each other, but when both you and someone else want to change the same lines of code, you run into this issue.</p>
+<p>Helpfully, <code>pr_merge_main()</code> can get the latest changes from the main branch of your project into your current pull request!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_merge_main</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Pulling changes from 'origin/main' (default branch of source repo)
+There are 1 conflicted files:
+* R/atom_arranger.R
+
+Are you ready to sort this out?
+If so, we will open the conflicted files for you to edit.
+
+1: Yes, I'm ready to resolve the merge conflicts.
+2: No, I want to abort this merge.
+
+Selection: 1
+Please fix each conflict, save, stage, and commit.
+To back out of this merge, run `gert::git_merge_abort()` (in R) or `git merge --abort` (in the shell).</code></pre>
+<p>If you need to fix any merge conflicts, <code>pr_merge_main()</code> will alert you that there are conflicts that need to be addressed. It also opens the files for you if you want it to, or you can choose to abort the merge and find another way to resolve the conflicts.</p>
+<p>You want to resolve the conflicts, so you picked selection <code>1</code> to open the conflicted file where you start looking for blocks in the source code that look like this:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; add-example
+Code in the first section appears in
+our *current* version in the `add-example` branch
+=======
+Code in the second section appears in
+the *incoming* version, i.e. the `main` branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</code></pre>
+<p>To resolve the conflict, you</p>
+<ol type="1">
+<li><p>Edit from <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> to <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> choosing one or the other or a blend of the two versions</p></li>
+<li><p>Save the file and stage it with <code>gert::git_add()</code></p></li>
+<li><p>Repeat for other files with merge conflicts</p></li>
+<li><p>Commit the updated files with <code>gert::git_commit()</code> or <code>git commit</code> in the command line</p></li>
+</ol>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, your branch is up to date with the main branch!</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-yours">write some code in this branch</a>.</p></li>
+<li><p>I want to <a href="#pr-push-yours">update the pull request on GitHub with these changes</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-merge-main-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-merge-main-theirs">Bring their work up to date with the main branch</h3>
+<p>While you and <code>@wileycoyote</code> have been working together on this new feature, you’ve been doing some work in other areas of the package. Since that other work has been added to the <code>main</code> branch, you might want to make sure that everything is up to date in <code>@wileycoyote</code>’s <code>toone-model</code> branch.</p>
+<p>To do this, run <code>pr_merge_main()</code>. It makes sure your default branch is up to date and then merges any changes into the current branch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_merge_main</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Pulling changes from 'origin/main' (default branch of source repo)
+Merged origin/main into wileycoyote-toone-model</code></pre>
+<p>If there aren’t any merge conflicts, you’ll get a nice, quick confirmation that the merge went well.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Great, <code>@wileycote</code>’s branch is up to date with the main branch!</p>
+<ul>
+<li><p>I’m going to <a href="#do-work-theirs">write some code in this branch</a>.</p></li>
+<li><p>I want to <a href="#pr-push-theirs">update the pull request on GitHub with these changes</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="do-choose-branch" class="level3 step">
+<h3 class="step anchored" data-anchor-id="do-choose-branch">Get to the right place</h3>
+<p>Let’s make sure we’re in the right branch in your local project.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Which branch do you want to work with right now?</p>
+<ul>
+<li><p>The one I’m in right now, so <a href="#do-work">I’m ready to get to work</a>!</p></li>
+<li><p><a href="#pr-resume-local">A local branch, but not the one I’m in now</a></p></li>
+<li><p><a href="#pr-fetch">A pull request branch I was looking at on GitHub</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="work" class="level2 step">
+<h2 class="step anchored" data-anchor-id="work">Work</h2>
+<section id="do-work" class="level3 step">
+<h3 class="step anchored" data-anchor-id="do-work">Do some work</h3>
+<p>You take a sip of your coffee (or the beverage of your choice), turn up your favorite <a href="https://open.spotify.com/playlist/1fk6kpO8nb1KAUc1XAkAJ6">music to write code to</a> playlist on Spotify, and line up 25 minutes in your <a href="https://pomofocus.io/">Pomodoro app</a>.</p>
+<p>You’re ready to get something done! Go write some code. ⏲️ 🧑‍💻 🎧</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Sweet! Now that you feel good about your work, you’re ready to <a href="#git-commit">take a snapshot of your updates</a>.</p>
+</div>
+</section>
+<section id="do-work-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="do-work-yours">Keep doing some work</h3>
+<blockquote class="blockquote">
+<p>Taking breaks and resting is important!</p>
+<p>Last night I got caught up in a nested <a href="https://twitter.com/hashtag/rstats">#RStats</a> list problem and couldn’t solve it.</p>
+<p>Wrote the code this morning first shot.</p>
+<p>Take breaks! You need them!</p>
+<p>— Nicholas Tierney (@nj_tierney) <a href="https://twitter.com/nj_tierney/status/1117964839127674881">April 16,2019</a></p>
+</blockquote>
+<p>Sometimes the best thing you can do to solve a problem is give it some time. Go for a walk, read something engaging, talk to a friend, take a shower.</p>
+<p>And now you’re back with fresh eyes, more energy, and a full cup of coffee. This time, things go better! You fall easily into a flow and start writing some code. As you go, you periodically pause to stage files with <code>gert::git_add()</code> or to commit batches of changes with <code>gert::git_commit()</code>.</p>
+<p>After a bit you surprise yourself when you realize that the thing you couldn’t figure out when you were tired yesterday you’ve knocked out in an hour.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Happy with your progress, you’re ready <a href="#pr-push-yours">update the PR with your latest changes</a>.</p>
+</div>
+</section>
+<section id="do-work-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="do-work-theirs">Collaborate with someone else</h3>
+<p>This is exciting! Your friend — which feels like a totally natural way to describe <code>@wileycoyote</code>, a person you know primarily from Twitter — had a pretty cool idea and you’re feeling the buzz of inspiration. Even though they started the pull request, you’re about to riff on the ideas they started laying down.</p>
+<p>You pick out your <a href="https://www.garrickadenbuie.com/project/rsthemes/">favorite RStudio theme</a> and turn up your favorite dance-slash-coding-slash-singing-out-loud music.</p>
+<p>As you work, you pause occasionally to stage files with <code>gert::git_add()</code> and to commit them with <code>gert::git_commit()</code>. Since you’re working with someone else, you remember to <a href="https://xkcd.com/1296/">write good commit messages</a>, but since you’re having fun you also use <a href="https://gitmoji.dev/">gitmoji to give each commit a good emoji.</a></p>
+<p>It’s a lot later than you expect when you start wrapping up. That’s okay, <code>@wileycoyote</code> is going to be stoked to see what you’ve been working on!</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Go head and <a href="#pr-push-theirs">update the PR with your latest changes</a>.</p>
+</div>
+</section>
+<section id="git-commit" class="level3 step">
+<h3 class="step anchored" data-anchor-id="git-commit">Take a snapshot of your work</h3>
+<p><em>If you like it then you shoulda made a <code>git commit</code>.</em></p>
+<p>There are two parts to taking a snapshot of your code. And really, it’s less like taking a picture and more like sending yourself an email with a copy of your files.</p>
+<p>First, you’ll pick the files that you want to add to the snapshot (or commit). You can do this in the R console using <code>git_add()</code> from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package. Give the function a vector with the paths to the files you changed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_add</span>(<span class="fu">c</span>(<span class="st">"R/atom_arranger.R"</span>, <span class="st">"man/atom_arranger.Rd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In git-speak, <code>git_add()</code> adds the changes in the listed files to a staging area. Running this command is like dragging a file into the email you’re writing. We haven’t officially sent that email yet, but we have a copy ready to go. By the way, you can still make more changes to the file knowing that there’s a temporary copy in that email draft in case anything goes wrong.</p>
+<p>Then, once all the files you want to commit have been added, you <em>commit</em> the changes. In our email metaphor, committing is a lot like pressing send on the email.</p>
+<p>And just like an email, the commit includes a message where you can describe the updates you made to the files in the email (commit).</p>
+<p>For this step you can use <code>git_commit()</code> (also from the <span class="pkg"><a href="https://docs.ropensci.org/gert/">gert</a></span> package) which takes the commit message as a parameter. Think of this message like the subject of an email to your future self.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gert<span class="sc">::</span><span class="fu">git_commit</span>(<span class="st">"Add an example to ?atom_arranger()"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>P.S. You can do this adding-and-committing dance in the <a href="https://happygitwithr.com/rstudio-git-github.html">Git pane in RStudio</a>, too.</em></p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Are you ready to share your work?</p>
+<ul>
+<li><p>Yes! I’m ready to <a href="#pr-push-new">push my changes out into the world</a>.</p></li>
+<li><p>Not yet, I want to <a href="#do-work">keep on working on this</a>.</p></li>
+<li><p>Actually, I don’t think I’m on the right track here. I’d <a href="#pr-forget-yours">rather back out of this branch and forget all about it</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="fix-something" class="level3 step">
+<h3 class="step anchored" data-anchor-id="fix-something">Fix something</h3>
+<p>Oh no, you need to fix something! I hope it’s just a typo and not a big scary error! But first…</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> This thing that needs to be fixed — <a href="#do-choose-branch">what branch is it in</a>?</p>
+</div>
+</section>
+<section id="fix-something-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="fix-something-theirs">Fix something</h3>
+<p>Oh no, you need to fix something! I hope it’s just a typo and not a big scary error! But first…</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> This thing that needs to be fixed — what branch is it in?</p>
+<ul>
+<li><p>The one I’m in right now, so <a href="#do-work-theirs">I’m ready to get to work</a>!</p></li>
+<li><p><a href="#pr-resume-local">A local branch, but not the one I’m in now.</a></p></li>
+<li><p><a href="#pr-fetch">A pull request branch I was looking at on GitHub.</a></p></li>
+</ul>
+</div>
+</section>
+<section id="fix-something-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="fix-something-yours">Fix something</h3>
+<p>Oh no, you need to fix something! I hope it’s just a typo and not a big scary error! But first…</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> This thing that needs to be fixed — what branch is it in?</p>
+<ul>
+<li><p>The one I’m in right now, so <a href="#do-work-yours">I’m ready to get to work</a>!</p></li>
+<li><p><a href="#pr-resume-local">A local branch, but not the one I’m in now</a></p></li>
+<li><p><a href="#pr-fetch">A pull request branch I was looking at on GitHub</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="share-your-work" class="level2 step">
+<h2 class="step anchored" data-anchor-id="share-your-work">Share your work</h2>
+<p>Fantastic! Your work is awesome and everyone is going to be happy to try it out.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Let’s get your work off of your computer and out into the world.</p>
+<ul>
+<li><p>This <a href="#pr-push-new">new work you’re sharing for the first time</a>.</p></li>
+<li><p>I’m <a href="#pr-push-yours">updating a pull request that I created</a>.</p></li>
+<li><p>I’m <a href="#pr-push-theirs">updating a pull request from someone else</a>.</p></li>
+</ul>
+</div>
+<section id="pr-push-new" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-push-new">Create a new pull request</h3>
+<p>Fantastic! Your work is awesome and everyone is going to be happy to try it out.</p>
+<p>Let’s get your work off of your computer and out into the world. To create a new pull request, you call <code>pr_push()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_push</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Pushing local 'add-example' branch to 'origin:add-example'
+✔ Setting upstream tracking branch for 'add-example' to 'origin/add-example'
+✔ Create PR at link given below
+✔ Opening URL 'https://github.com/gadenbuie/acme/compare/add-example'</code></pre>
+<p><code>pr_push()</code> sends the local changes in your new branch to GitHub, and opens a browser window where you can review your changes once more. If everything looks good, go ahead click the <em>Create Pull Request</em> button.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Good job! How are you feeling now?</p>
+<ul>
+<li><p>I’m on a roll, let’s <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>I’d want to <a href="#pr-view-yours">open the PR on GitHub again</a>.</p></li>
+<li><p>Oh shoot, <a href="#fix-something">I saw something I need to fix</a>.</p></li>
+<li><p>Great, that pull request was just merged and <a href="#pr-finish-yours">I’m done with this work</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>Actually, the pull request was closed and <a href="#pr-forget-yours">I can forget about this work</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-push-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-push-yours">Update your existing pull request</h3>
+<p>You just made <a href="#git-commit">and committed</a> some changes to an existing PR you created, and now you’d like to update that PR on GitHub. <code>pr_push()</code> also does this for you! Helpfully, before it pushes it checks to make sure your local branch is up-to-date.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_push</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Checking that local branch 'add-example' has the changes in 'origin/add-example'
+✔ Pushing local 'add-example' branch to 'origin:add-example'
+✔ View PR at 'https://github.com/gadenbuie/acme/pull/10' or call `pr_view()`</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
+<ul>
+<li><p>I want to <a href="#pr-view-yours">take a look at the PR on GitHub</a>.</p></li>
+<li><p>Rock on! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Wait a second, <a href="#fix-something-yours">I saw something I need to fix</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-yours">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>The PR has been merged and <a href="#pr-finish-yours">I’m all done with this work</a>.</p></li>
+<li><p>Never mind, my <a href="#pr-forget-yours">PR was closed and I’d like to forget about this work</a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="pr-push-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-push-theirs">Update someone else’s pull request</h3>
+<p>At this point, you have changes in your local copy of your PR branch that you need to push out to the source branch for the PR, which happens to be in <code>@wileycoyote</code>’s fork of your repo.</p>
+<p><code>pr_push()</code> is very smart and knows how to send the changes to the correct repository, pushing to the <code>toone-model</code> in the <code>wileycoyote/acme</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_push</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Checking that local branch 'wileycoyote-toone-model' has the changes in 'wileycoyote/toone-model'
+✔ Pushing local 'wileycoyote-toone-model' branch to 'wilecoyote:toone-model'
+✔ View PR at 'https://github.com/gadenbuie/acme/pull/14' or call `pr_view()`</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Phenomenal! What do you want to do next?</p>
+<ul>
+<li><p>I want to <a href="#pr-view-theirs">take a look at the PR on GitHub</a>.</p></li>
+<li><p>Beep, beep! I’m moving on to <a href="#pr-pause">start the next thing</a>.</p></li>
+<li><p>Hang on, <a href="#fix-something-theirs">I saw something I need to fix</a>.</p></li>
+<li><p>That’s all I wanted to do, I can <a href="#pr-forget-theirs">forget about this PR now</a>.</p></li>
+<li><p>Changes were made in the PR <a href="#pr-pull-theirs">and now I need to update my local copy</a>.</p></li>
+<li><p>There were updates in the main branch <a href="#pr-merge-main-theirs">and now I want to bring them into my PR branch</a>.</p></li>
+<li><p>I just merged this pull request and <a href="#pr-finish-theirs">I’m all done with this work</a>.</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="wrap-up" class="level2 step">
+<h2 class="step anchored" data-anchor-id="wrap-up">Wrap Up</h2>
+<section id="pr-pause" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-pause">Pause your work</h3>
+<p>You’re done but you have a feeling you’ll be back here again soon. What you need is a little <em>pause</em>.</p>
+<p>Call <code>pr_pause()</code> to switch from the current branch back to the default branch, and to make sure you’ve got the latest changes in the default branch. Don’t worry, the work will be waiting patiently for you in a local branch when you’re ready to come back to it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_pause</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Switching back to default branch ('main')
+✓ Pulling changes from 'origin/main'</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start">Go back to Start</a> to decide to decide what’s next in your adventure.</p>
+</div>
+</section>
+<section id="pr-finish-start" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-finish-start">Finish up your work</h3>
+<p>Hooray! A PR was merged and the new code is now in the default branch. That’s one less branch you need to keep around on your computer.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Was this PR yours?</p>
+<ul>
+<li><p><strong>Yes</strong>, and…</p>
+<ul>
+<li><p><a href="#pr-finish-yours">I’m still in the PR branch in my local project</a></p></li>
+<li><p><a href="#pr-finish-number">I’m in the main branch now, but I have the PR branch here somewhere</a></p></li>
+</ul></li>
+<li><p><strong>No</strong>, and…</p>
+<ul>
+<li><p><a href="#pr-finish-theirs">I’m still in the PR branch in my local project</a></p></li>
+<li><p><a href="#pr-finish-number">I’m in the main branch now, but I have the PR branch here somewhere</a></p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="pr-finish-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-finish-yours">Finish your work</h3>
+<p>Congrats! Your pull request was merged! That’s awesome. Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_finish</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Checking that remote branch 'origin/add-example' has the changes in 'add-example'
+✓ Switching back to default branch ('main')
+ℹ Pulling changes from 'origin/main'
+✓ Deleting local 'add-example' branch</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+</section>
+<section id="pr-finish-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-finish-theirs">Finish your work</h3>
+<p>Well done, your collaboration with <code>@wileycoyote</code> is complete and their PR is merged! That’s awesome. Now it’s time to wrap things up by calling <code>pr_finish()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_finish</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✔ Checking that remote branch 'wileycoyote/toone-model' has the changes in 'local/wileycoyote-toone-model'
+✔ Switching back to 'main' branch
+✔ Pulling changes from GitHub source repo 'origin/main'
+✔ Deleting local 'wileycoyote-toone-model' branch
+✔ Removing remote 'wileycoyote'</code></pre>
+<p>Notice that <code>pr_finish()</code> does quite a lot! It makes sure that you don’t accidentally leave behind some changes in your local branch that might have forgotten to push. Then it switches back to <code>main</code> and makes sure that’s up to date, too. Finally we forget all about <code>@wileycote</code>’s branch and forked repo.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> That’s all folks! <a href="#start">Head back to the beginning</a> to choose your next adventure.</p>
+</div>
+</section>
+<section id="pr-finish-number" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-finish-number">Clean up now that the PR has been merged</h3>
+<p>You don’t have to be in your local copy of the PR branch if you know the PR number. Give the number to <code>pr_finish()</code> and it will do the rest for you: it moves back to the default branch, updates your local copy, and deletes the old PR branch.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_finish</span>(<span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Checking that remote branch 'origin/add-example' has the changes in 'add-example'
+✓ Switching back to default branch ('main')
+ℹ Pulling changes from 'origin/main'
+✓ Deleting local 'add-example' branch</code></pre>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+</section>
+<section id="pr-forget-yours" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-forget-yours">Forget about your work</h3>
+<p>Well that was fun. But now you’re done with this branch and you call <code>pr_forget()</code> to delete it from your local copy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_forget</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Local branch 'add-example' has no associated remote branch.
+If we delete 'add-example', any work that exists only on this branch work may be hard for you to recover.
+Proceed anyway?
+
+1: No way
+2: Not now
+3: Yes
+
+Selection: 3
+✓ Switching back to default branch ('main')
+✓ Pulling changes from 'origin/main'
+✓ Deleting local 'add-example' branch</code></pre>
+<p>Notice that <code>pr_forget()</code> warns you about any work you might lose and gives you a chance to rethink it.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> <a href="#start">Go back to Start</a> to decide what’s next in your adventure.</p>
+</div>
+</section>
+<section id="pr-forget-theirs" class="level3 step">
+<h3 class="step anchored" data-anchor-id="pr-forget-theirs">Forget about their work</h3>
+<p>Your work here is done and you’d like to move on with your life. <code>pr_forget()</code> lets you put this branch behind you. And while it’s in there, it also cleans up your repo, deleting the local copy of the PR branch and removing the PR author’s repo fork from the list of remote repositories your git project could sync with.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pr_forget</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>✓ Switching back to default branch ('main')
+✓ Pulling changes from 'origin/main'
+✓ Deleting local 'wileycoyote-toone-models' branch
+✓ Removing remote 'wileycoyote'</code></pre>
+<p>That was smooth! Notice that <code>pr_forget()</code> moved you into the default branch of your repo, <code>main</code>, and it even made sure that branch is up to date.</p>
+<p><code>pr_forget()</code> is safe and cautious. If your local <code>wileycoyote-toone-models</code> branch had had any changes in it that you might have lost, <code>pr_forget()</code> would have warned you. You also know that you can get back to the PR branch any time using <code>pr_fetch()</code>.</p>
+<div class="decision">
+<p><i class="way-point bi bi-signpost-fill" aria-hidden="true" title="Decision Time"></i><span class="sr-only">Decision time:</span> Worry and care-free, you <a href="#start">head back to the beginning</a> to decide what’s next in your adventure.</p>
+</div>
+</section>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<div id="step-list" style="display:none">
+
+</div>
+<div id="story-reset">
+<a href="#start"><i aria-hidden="true" class="fas fa-undo-alt"></i> Start over</a>
+</div>
+</section>
+<section id="download" class="level2">
+<h2 class="anchored" data-anchor-id="download">Download the usethis <code>pr_*()</code> flow chart</h2>
+<ul>
+<li><a href="usethis-pr-flow.jpg">Small JPG Image (190 KB)</a></li>
+<li><a href="usethis-pr-flow-medium.jpg">Medium JPG Image (511 KB)</a></li>
+<li><a href="usethis-pr-flow-large.jpg">Large JPG Image (1.36 MB)</a></li>
+<li><a href="usethis-pr-flow.svg">SVG (40 KB)</a></li>
+<li><a href="usethis-pr-flow-editable.svg">SVG, Editable (40 KB)</a></li>
+<li><a href="usethis-pr-flow.drawio">Source File <code>.drawio</code> (4 KB)</a></li>
+</ul>
+<div class="cc-box">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+  <img alt="Creative Commons License" style="border-width:0;margin-right:1em;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" align="left">
+</a>
+<em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
+  Pull Request Flow with usethis
+</em>
+by
+<a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
+Garrick Aden-Buie
+</a> is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+</div>
+<script src="usethis-adventure.js"></script>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>I primarily use GitHub, but I think these functions will generally work for other code-hosting platforms as well, like GitLab or others.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":true,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});</script>
+
+
+
+</body></html>

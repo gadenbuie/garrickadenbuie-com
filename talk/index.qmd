@@ -1,0 +1,18 @@
+---
+title: Talks and Presentations
+description: |
+  Presentations, talks, and workshops.
+listing:
+  contents:
+    - "**/*.qmd"
+    - "**/*.md"
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: true
+  filter-ui: true
+  fields: [date, image, title, description, categories]
+  feed: true
+page-layout: full
+title-block-banner: false
+---

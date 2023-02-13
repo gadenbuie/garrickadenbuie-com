@@ -1,0 +1,16 @@
+{
+  "hash": "7b6cd8f26c8c7a7332ccffa5d4c6d71c",
+  "result": {
+    "markdown": "---\ntitle: My ggridges Twitter Header\nauthor: ''\ndate: '2018-03-30'\nslug: my-ggridges-twitter-header\naliases:\n  - /blog/2018/03/30/my-ggridges-twitter-header\ncategories: [\"Blog\"]\ntags: [\"R\", \"ggplot2\", \"Visualization\", \"Scripts\", \"Note to Self\"]\n---\n\n::: {.cell}\n\n:::\n\n\nFirst, I created a 1500 x 500 pixel image with the letter `g`.\n\n![](/images/2018/garrick-text.png)\n\nThen I made it fancy.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Requires\nlibrary(png)\nlibrary(ggplot2)\nlibrary(ggridges)\nlibrary(dplyr)\n# also: purrr and reshape2\nset.seed(4242)\n\ntheme_color <- \"#002b36\"\n\nreadPNG(image_file) %>% \n  .[, , 4] %>% \n  reshape2::melt() %>% \n  mutate(\n    value = value + rnorm(length(value), sd = 0.25),\n    value = case_when(value > 0 ~ value, TRUE ~ 0)\n  ) %>% \n  filter(Var1 %in% seq(0, 500, 15)) %>% \n  group_by(Var1) %>% \n  split(.$Var1) %>% \n  purrr::map_df(~ {\n    mutate(., value = zoo::rollmean(value, k = 20, fill = 0.1))\n  }) %>% \n  ggplot() + \n  aes(Var2, -Var1, height = value, group = Var1) + \n  geom_ridgeline(\n    scale = 30, \n    fill = theme_color, \n    alpha = 0.5, \n    color = \"#cccccc\") +\n  theme_minimal() +\n  theme(\n    axis.text = element_blank(),\n    panel.grid = element_blank(),\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank(),\n    axis.ticks = element_blank(),\n    axis.line = element_blank(), axis.title = element_blank(),\n    plot.background = element_rect(fill = theme_color, color = NA), \n    plot.margin = margin(32, 0, 32, 0))\n```\n\n::: {.cell-output-display}\n![](my-ggridges-twitter-header_files/figure-html/unnamed-chunk-1-1.png){width=1440}\n:::\n:::\n\n\nSave the image at 1500x500, the preferred size for Twitter headers.\n\n```r\nggsave(\"new-twitter-header.png\", \n       width = 15, height = 5, \n       units = 'in', dpi = 100)\n```\n\n### Accidental Art\n\nWhile hacking on the above, I ran into this [&commat;accidental_aRt](https://twitter.com/accidental__aRt):\n\n\n::: {.cell}\n\n```{.r .cell-code}\nset.seed(4242)\nreadPNG(image_file) %>% \n  .[, , 4] %>% \n  reshape2::melt() %>% \n  mutate(value = value + rnorm(length(value), sd = 0.25)) %>% \n  filter(Var1 %in% seq(0, 500, 25)) %>% \n  mutate(Var2 = floor(Var2/20)*20) %>%\n  ggplot(aes(Var2, -Var1, height = value, group = Var1)) + \n  geom_ridgeline_gradient(scale = 40, fill = \"#394e5a\") +\n  theme_void()\n```\n\n::: {.cell-output-display}\n![](my-ggridges-twitter-header_files/figure-html/unnamed-chunk-2-1.png){width=1440}\n:::\n:::\n",
+    "supporting": [
+      "my-ggridges-twitter-header_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

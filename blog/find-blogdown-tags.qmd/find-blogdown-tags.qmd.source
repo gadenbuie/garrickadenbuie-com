@@ -1,0 +1,51 @@
+---
+title: Find, count and list tags in all blogdown posts
+author: Garrick Aden-Buie
+date: '2018-04-29'
+slug: find-blogdown-tags
+categories:
+  - blogdown
+  - Scripts
+  - R
+  - Tips
+---
+
+[blogdown]: https://bookdown.org/yihui/blogdown
+
+I've been using [blogdown] for a while now and have basically been randomly selecting tags as I write each post without putting too much thought into it.
+Tonight I was searching for a method to list all of the tags I've used across my blogdown posts and I rolled up the following solution.
+
+```{r, message=FALSE}
+library(tidyverse)
+blogdown_content_path <- here::here("content")
+
+# Scan yaml of all posts (run at root of blogdown project)
+blogdown:::scan_yaml(blogdown_content_path) %>%
+  # Pull out the tags
+  map("tags") %>%
+  # Drop results without any tags
+  discard(is.null) %>%
+  # Turn into a nice tibble (can stop here if you want tags + files)
+  map_df(~ tibble::data_frame(tag = .), .id = "file") %>%
+  # Summarize (group and count)
+  group_by(tag) %>%
+  count(sort = TRUE) %>%
+  # Starts with uppercase?
+  mutate(starts_upper = substr(tag, 1, 1) %in% LETTERS)
+```
+
+Note that you can stop at the `map_df()` line and get a list of tags with the associated files in which they appear.
+
+At this point, I decided I'd write this quick post to remind future me when I decide to actually standardize my tags.
+That's when I realized that the "New Post" addin in blogdown lists all of the previously used tags.
+A little digging in the addin script ([inst/scripts/new_post.R](https://github.com/rstudio/blogdown/blob/master/inst/scripts/new_post.R)) revealed the function behind the dropdown menu.
+
+```{r}
+blogdown:::collect_yaml(dir = blogdown_content_path)
+```
+
+Finally, when you want to open the files containing a particular tag, you can use blogdown's `find_tags()` function with the option `open = TRUE`.
+
+```r
+blogdown::find_tags("Note to Self", open = TRUE)
+```

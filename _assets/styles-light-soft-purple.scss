@@ -1,0 +1,54 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+//
+// Color system
+//
+
+$white:    #FFFBF5;
+$gray-100: #F7EFE5FF;
+$gray-200: #DCD6CEFF;
+$gray-300: #C1BDB7FF;
+$gray-400: #A6A4A0FF;
+$gray-500: #8C8A8AFF;
+$gray-600: #717173FF;
+$gray-700: #56585CFF;
+$gray-800: #3B3F45FF;
+$gray-900: #20262EFF;
+$black:    #191918;
+
+$blue:    #45659a;
+$indigo:  #484597;
+$purple:  #674188;
+$pink:    #90487b;
+$red:     #E5625E; // #9f4f60; // #F56476, #E5625E
+$orange:  #FF8C42; // #9c6b1c; // #FF8C42, #F06449
+$yellow:  #ffc46b; // #F19A3E
+$green:   #5B8E7D; // #72A98F, #5B8E7D
+$teal:    #1B998B; // #46B1C9, #1B998B
+$cyan:    #46B1C9; // #38A3A5
+
+$primary:       $purple !default;
+$secondary:     #C3ACD0 !default;
+$success:       $green !default;
+$info:          mix($blue, $gray-100, 60%) !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+// Heading font size customization
+
+/*-- scss:rules --*/
+h1, h2, h3, h4, h5 {
+  &:not(.listing-title) {
+    $h1-font-size: 3rem !default;
+    $h2-font-size: 2.66rem !default;
+    $h3-font-size: 2.33rem !default;
+    $h4-font-size: 2rem !default;
+    $h5-font-size: 1.5rem !default;
+
+    font-family: Bree Serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: $purple;
+  }
+}

@@ -1,0 +1,16 @@
+title-block-banner: true
+toc: true
+toc-location: right
+
+comments:
+  giscus:
+    repo: gadenbuie/garrickadenbuie-com
+    mapping: pathname
+    category: Comments
+
+filters:
+  - lightbox
+
+lightbox:
+  match: auto
+  effect: zoom

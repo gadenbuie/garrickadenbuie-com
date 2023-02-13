@@ -10,3 +10,13 @@ ISSUES.md
 .history/
 content/project/sqrrl/index_cache/*
 content/blog/2021/print-xaringan-chromote/index_cache/*
+_*/
+/_*.*md
+!/_extensions/
+!/_assets/
+!/_freeze/
+!/_site/
+!/_site/_*
+/.quarto/
+
+/.luarc.json

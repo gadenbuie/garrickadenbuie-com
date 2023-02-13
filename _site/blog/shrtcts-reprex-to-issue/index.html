@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2021-09-03">
+<meta name="keywords" content="rstats">
+<meta name="description" content="Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.">
+
+<title>Garrick Aden-Buie - Create a GitHub issue from a reprex with shrtcts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<link href="../../site_libs/panelset-0.2.6/panelset.css" rel="stylesheet">
+<script src="../../site_libs/panelset-0.2.6/panelset.js"></script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Create a GitHub issue from a reprex with shrtcts">
+<meta property="og:description" content="Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - Create a GitHub issue from a reprex with shrtcts">
+<meta name="twitter:description" content="Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Create a GitHub issue from a reprex with shrtcts</h1>
+                  <div>
+        <div class="description">
+          <p>Turn a reprex into a GitHub issue using a custom RStudio addin with shrtcts.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Addin</div>
+                <div class="quarto-category">Shortcuts</div>
+                <div class="quarto-category">GitHub</div>
+                <div class="quarto-category">reprex</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 3, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reprex-is-awesome" id="toc-reprex-is-awesome" class="nav-link active" data-scroll-target="#reprex-is-awesome"><code>reprex</code> is awesome</a></li>
+  <li><a href="#but-wait-theres-more" id="toc-but-wait-theres-more" class="nav-link" data-scroll-target="#but-wait-theres-more">But wait, there’s more!</a></li>
+  <li><a href="#there-should-be-a-shortcut" id="toc-there-should-be-a-shortcut" class="nav-link" data-scroll-target="#there-should-be-a-shortcut">There should be a shortcut</a></li>
+  <li><a href="#from-reprex-to-issue" id="toc-from-reprex-to-issue" class="nav-link" data-scroll-target="#from-reprex-to-issue">From reprex to issue</a>
+  <ul class="collapse">
+  <li><a href="#prepare-the-issue-body" id="toc-prepare-the-issue-body" class="nav-link" data-scroll-target="#prepare-the-issue-body">Prepare the issue body</a></li>
+  <li><a href="#grab-the-input-from-the-user" id="toc-grab-the-input-from-the-user" class="nav-link" data-scroll-target="#grab-the-input-from-the-user">Grab the input from the user</a></li>
+  <li><a href="#pick-the-repository" id="toc-pick-the-repository" class="nav-link" data-scroll-target="#pick-the-repository">Pick the repository</a></li>
+  </ul></li>
+  <li><a href="#make-it-a-shortcut" id="toc-make-it-a-shortcut" class="nav-link" data-scroll-target="#make-it-a-shortcut">Make it a shortcut</a>
+  <ul class="collapse">
+  <li><a href="#set-up-shrtcts" id="toc-set-up-shrtcts" class="nav-link" data-scroll-target="#set-up-shrtcts">Set up <code>shrtcts</code></a></li>
+  <li><a href="#creating-a-shortcut-function" id="toc-creating-a-shortcut-function" class="nav-link" data-scroll-target="#creating-a-shortcut-function">Creating a shortcut function</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/shrtcts-reprex-to-issue/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/shrtcts-reprex-to-issue/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<div class="lead">
+<p>Have you ever spent a few <del>minutes</del> hours turning a bug in your code into a <a href="https://reprex.tidyverse.org/">reprex</a> – a minimal <strong>repr</strong>oducible <strong>ex</strong>ample?</p>
+<p>Getting to a reprex is 90% of the challenge. Most of the time, I find my mistake in the journey to a reprex. But sometimes, I find a legitimate bug and in those cases, I want to quickly turn my reprex into a GitHub issue.</p>
+<p>Here’s a quick way to get there using an RStudio addin and <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span>.</p>
+</div>
+<section id="reprex-is-awesome" class="level2">
+<h2 class="anchored" data-anchor-id="reprex-is-awesome"><code>reprex</code> is awesome</h2>
+<p>The <span class="pkg"><a href="https://reprex.tidyverse.org/">reprex</a></span> package is <strong>awesome</strong>. If you’ve never used it before, I highly recommend that you stop reading this blog and go watch <a href="https://youtu.be/G5Nm-GpmrLw?t=60">Sharla Gelfand’s <em>make a reprex… please</em></a> (or <a href="https://make-a-reprex-please.netlify.app/">read the slides from the talk</a>).</p>
+<p>Your goal when making a reprex is to come up with a short bit of code that demonstrates the problem you’ve experienced and that is as self-contained as possible.</p>
+<p>To disentangle your problem from your personal R environment, <span class="pkg">reprex</span> takes your code, runs it in an isolated environment, and returns a rendered version of your code that’s ready to be copy-pasted into a text box on a number of common websites where R users go for help.</p>
+<p>This last feature is one of my favorites: the rendered format of a <code>reprex</code> is the perfect way to start crafting a GitHub issue. Typically, I’ll work out the reprex locally, then use the <strong>Reprex selection</strong> RStudio addin to render the code, and finally jump over to the issues tab of a GitHub repo to paste the code right there.</p>
+<p>Here’s an example reprex from <a href="https://make-a-reprex-please.netlify.app/#33">Sharla’s talk</a>. We start with plain <a href="../../blog/shrtcts-reprex-to-issue/?panelset=r-code#panelset_r-code">R code</a>. <span class="pkg">reprex</span> renders the R code with additional information about my session and <a href="../../blog/shrtcts-reprex-to-issue/?panelset=reprex-preview#panelset_reprex-preview">shows me a preview</a>. And finally it also copies <a href="../../blog/shrtcts-reprex-to-issue/?panelset=clipboard#panelset_clipboard">the markdown I need</a> in order to paste the reprex into a GitHub issue or other online location.</p>
+<div class="panelset panelset--bordered">
+<div class="panel">
+<p><span class="panel-name">R Code</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">Reprex Preview</span></p>
+<div class="cell">
+
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `mutate()`:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Problem while computing `year = case_when(...)`.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Caused by error in `case_when()`:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Backtrace:</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      ▆</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1. ├─tibble(date = "2020-01-01") %&gt;% ...</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2. ├─dplyr::mutate(...)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3. ├─dplyr:::mutate.data.frame(...)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), caller_env = caller_env())</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5. │   ├─base::withCallingHandlers(...)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6. │   └─mask$eval_all_mutate(quo)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   7. └─dplyr::case_when(...)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   8.   └─dplyr:::replace_with(...)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   9.     └─dplyr:::check_type(val, x, name, error_call = error_call)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  10.       └─rlang::abort(msg, call = error_call)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><sup>Created on 2023-02-12 with <a href="https://reprex.tidyverse.org">reprex v2.0.2</a></sup></p>
+<details style="margin-bottom:10px;">
+<summary>
+Session info
+</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Session info ───────────────────────────────────────────────────────────────</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.2.2 (2022-10-31)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       macOS Big Sur ... 10.16</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, darwin17.0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       X11</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       America/New_York</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2023-02-12</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.18 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  package     * version    date (UTC) lib source</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  cli           3.6.0      2023-01-09 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  digest        0.6.31     2022-12-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  evaluate      0.19       2022-12-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  forcats     * 0.5.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ggplot2     * 3.4.0      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  hms           1.1.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  htmltools     0.5.4      2022-12-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  knitr         1.42       2023-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lubridate   * 1.9.0      2022-11-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purrr       * 1.0.1      2023-01-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.cache       0.15.0     2021-04-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.methodsS3   1.8.1      2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.oo          1.24.0     2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.utils       2.11.0     2021-09-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R6            2.5.1      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  readr       * 2.1.3      2022-10-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  reprex        2.0.2      2022-08-17 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rmarkdown     2.20       2023-01-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  scales        1.2.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringi       1.7.12     2023-01-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringr     * 1.5.0      2022-12-02 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  styler        1.7.0      2022-03-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyr       * 1.2.1      2022-09-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyverse   * 1.3.2.9000 2023-01-28 [1] Github (tidyverse/tidyverse@53199b7)</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  timechange  * 0.1.1      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tzdb          0.3.0      2022-03-28 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  vctrs         0.5.1      2022-11-16 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  xfun          0.36       2022-12-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] /Users/garrick/Library/R/x86_64/4.2/library</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] /Library/Frameworks/R.framework/Versions/4.2/Resources/library</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ──────────────────────────────────────────────────────────────────────────────</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="panel">
+<p><span class="panel-name">Clipboard</span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `mutate()`:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Problem while computing `year = case_when(...)`.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Caused by error in `case_when()`:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Backtrace:</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      ▆</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1. ├─tibble(date = "2020-01-01") %&gt;% ...</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2. ├─dplyr::mutate(...)</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3. ├─dplyr:::mutate.data.frame(...)</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), caller_env = caller_env())</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5. │   ├─base::withCallingHandlers(...)</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6. │   └─mask$eval_all_mutate(quo)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   7. └─dplyr::case_when(...)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   8.   └─dplyr:::replace_with(...)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   9.     └─dplyr:::check_type(val, x, name, error_call = error_call)</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  10.       └─rlang::abort(msg, call = error_call)</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;sup&gt;</span>Created on 2023-02-12 with <span class="co">[</span><span class="ot">reprex v2.0.2</span><span class="co">](https://reprex.tidyverse.org)</span><span class="kw">&lt;/sup&gt;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details</span> <span class="er">style</span><span class="ot">=</span><span class="st">"margin-bottom:10px;"</span><span class="kw">&gt;</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Session info</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Session info ───────────────────────────────────────────────────────────────</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.2.2 (2022-10-31)</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       macOS Big Sur ... 10.16</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, darwin17.0</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       X11</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       America/New_York</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2023-02-12</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.18 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  package     * version    date (UTC) lib source</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  cli           3.6.0      2023-01-09 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  digest        0.6.31     2022-12-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  evaluate      0.19       2022-12-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  forcats     * 0.5.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ggplot2     * 3.4.0      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  hms           1.1.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  htmltools     0.5.4      2022-12-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  knitr         1.42       2023-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lubridate   * 1.9.0      2022-11-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purrr       * 1.0.1      2023-01-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.cache       0.15.0     2021-04-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.methodsS3   1.8.1      2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.oo          1.24.0     2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.utils       2.11.0     2021-09-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R6            2.5.1      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  readr       * 2.1.3      2022-10-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  reprex        2.0.2      2022-08-17 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rmarkdown     2.20       2023-01-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  scales        1.2.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringi       1.7.12     2023-01-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringr     * 1.5.0      2022-12-02 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  styler        1.7.0      2022-03-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyr       * 1.2.1      2022-09-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyverse   * 1.3.2.9000 2023-01-28 [1] Github (tidyverse/tidyverse@53199b7)</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  timechange  * 0.1.1      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tzdb          0.3.0      2022-03-28 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  vctrs         0.5.1      2022-11-16 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  xfun          0.36       2022-12-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] /Users/garrick/Library/R/x86_64/4.2/library</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] /Library/Frameworks/R.framework/Versions/4.2/Resources/library</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ──────────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="but-wait-theres-more" class="level2">
+<h2 class="anchored" data-anchor-id="but-wait-theres-more">But wait, there’s more!</h2>
+<p>When you’re working on debugging something, going from code in your RStudio IDE to something you can share with others is <strong>huge</strong>. But <span class="pkg">reprex</span> can do more!</p>
+<p>Because reprex uses <code>knitr::spin()</code> — <a href="https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/"><em>knitr’s best hidden gem</em> according to Dean Attali</a> — to turn R code into an R Markdown document, you have a few more options.</p>
+<p><code>knitr::spin()</code> has a cool feature that lets you write markdown <em>in an R script</em>. You can check out <a href="https://deanattali.com/2015/03/24/knitrs-best-hidden-gem-spin/">Dean Attali’s post</a> for more details, but the gist is this: any text on a line starting with a special comment format <code>#'</code> becomes markdown.</p>
+<p>This means we can add text directly to our reprex using these comments! Below you can see that I’ve added some exposition around the problematic code.</p>
+<div class="panelset panelset--bordered">
+<div class="panel">
+<p><span class="panel-name">R Code</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' I'm using the latest version of the `tidyverse`,</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' freshly installed.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' Suppose we have a data frame with a date column.</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' The date is stored as a _character_ vector, and</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' I'd like to convert it to a _year_ with a simple</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' comparison. The first function I thought of was</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' `case_when()`, but it doesn't seem to be doing</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' what I expect. Why am I getting this error?</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">Reprex Preview</span></p>
+<div class="cell">
+
+</div>
+<p>I’m using the latest version of the <code>tidyverse</code>, freshly installed.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Suppose we have a data frame with a date column. The date is stored as a <em>character</em> vector, and I’d like to convert it to a <em>year</em> with a simple comparison. The first function I thought of was <code>case_when()</code>, but it doesn’t seem to be doing what I expect. Why am I getting this error?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `mutate()`:</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Problem while computing `year = case_when(...)`.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Caused by error in `case_when()`:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Backtrace:</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      ▆</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1. ├─tibble(date = "2020-01-01") %&gt;% ...</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2. ├─dplyr::mutate(...)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3. ├─dplyr:::mutate.data.frame(...)</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), caller_env = caller_env())</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5. │   ├─base::withCallingHandlers(...)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6. │   └─mask$eval_all_mutate(quo)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   7. └─dplyr::case_when(...)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   8.   └─dplyr:::replace_with(...)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   9.     └─dplyr:::check_type(val, x, name, error_call = error_call)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  10.       └─rlang::abort(msg, call = error_call)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><sup>Created on 2023-02-12 with <a href="https://reprex.tidyverse.org">reprex v2.0.2</a></sup></p>
+<details style="margin-bottom:10px;">
+<summary>
+Session info
+</summary>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Session info ───────────────────────────────────────────────────────────────</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.2.2 (2022-10-31)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       macOS Big Sur ... 10.16</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, darwin17.0</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       X11</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       America/New_York</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2023-02-12</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.18 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  package     * version    date (UTC) lib source</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  cli           3.6.0      2023-01-09 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  digest        0.6.31     2022-12-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  evaluate      0.19       2022-12-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  forcats     * 0.5.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ggplot2     * 3.4.0      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  hms           1.1.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  htmltools     0.5.4      2022-12-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  knitr         1.42       2023-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lubridate   * 1.9.0      2022-11-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purrr       * 1.0.1      2023-01-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.cache       0.15.0     2021-04-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.methodsS3   1.8.1      2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.oo          1.24.0     2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.utils       2.11.0     2021-09-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R6            2.5.1      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  readr       * 2.1.3      2022-10-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  reprex        2.0.2      2022-08-17 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rmarkdown     2.20       2023-01-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  scales        1.2.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringi       1.7.12     2023-01-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringr     * 1.5.0      2022-12-02 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  styler        1.7.0      2022-03-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyr       * 1.2.1      2022-09-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyverse   * 1.3.2.9000 2023-01-28 [1] Github (tidyverse/tidyverse@53199b7)</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  timechange  * 0.1.1      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tzdb          0.3.0      2022-03-28 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  vctrs         0.5.1      2022-11-16 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  xfun          0.36       2022-12-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] /Users/garrick/Library/R/x86_64/4.2/library</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] /Library/Frameworks/R.framework/Versions/4.2/Resources/library</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ──────────────────────────────────────────────────────────────────────────────</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="panel">
+<p><span class="panel-name">Clipboard</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>I’m using the latest version of the <span class="in">`tidyverse`</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>freshly installed.</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>Suppose we have a data frame with a date column.</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>The date is stored as a *character* vector, and</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>I’d like to convert it to a *year* with a simple</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>comparison. The first function I thought of was</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">`case_when()`</span>, but it doesn’t seem to be doing</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>what I expect. Why am I getting this error?</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">date =</span> <span class="st">"2020-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    date <span class="sc">&lt;=</span> <span class="st">"2020-12-31"</span> <span class="sc">&amp;</span> date <span class="sc">&gt;=</span> <span class="st">"2020-01-01"</span> <span class="sc">~</span> <span class="dv">2020</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(date) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `mutate()`:</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Problem while computing `year = case_when(...)`.</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Caused by error in `case_when()`:</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Backtrace:</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      ▆</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1. ├─tibble(date = "2020-01-01") %&gt;% ...</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2. ├─dplyr::mutate(...)</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   3. ├─dplyr:::mutate.data.frame(...)</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   4. │ └─dplyr:::mutate_cols(.data, dplyr_quosures(...), caller_env = caller_env())</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5. │   ├─base::withCallingHandlers(...)</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6. │   └─mask$eval_all_mutate(quo)</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   7. └─dplyr::case_when(...)</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   8.   └─dplyr:::replace_with(...)</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   9.     └─dplyr:::check_type(val, x, name, error_call = error_call)</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  10.       └─rlang::abort(msg, call = error_call)</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;sup&gt;</span>Created on 2023-02-12 with <span class="co">[</span><span class="ot">reprex v2.0.2</span><span class="co">](https://reprex.tidyverse.org)</span><span class="kw">&lt;/sup&gt;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details</span> <span class="er">style</span><span class="ot">=</span><span class="st">"margin-bottom:10px;"</span><span class="kw">&gt;</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;summary&gt;</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>Session info</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Session info ───────────────────────────────────────────────────────────────</span></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  setting  value</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  version  R version 4.2.2 (2022-10-31)</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  os       macOS Big Sur ... 10.16</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  system   x86_64, darwin17.0</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ui       X11</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  language (EN)</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tz       America/New_York</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  date     2023-02-12</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pandoc   2.18 @ /usr/local/bin/ (via rmarkdown)</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ─ Packages ───────────────────────────────────────────────────────────────────</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  package     * version    date (UTC) lib source</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  cli           3.6.0      2023-01-09 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  DBI           1.1.3      2022-06-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  digest        0.6.31     2022-12-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  dplyr       * 1.0.10     2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  evaluate      0.19       2022-12-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fansi         1.0.3      2022-03-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  forcats     * 0.5.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  fs            1.5.2      2021-12-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  generics      0.1.3      2022-07-05 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ggplot2     * 3.4.0      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  glue          1.6.2      2022-02-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  gtable        0.3.1      2022-09-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  hms           1.1.2      2022-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  htmltools     0.5.4      2022-12-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  knitr         1.42       2023-01-25 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lubridate   * 1.9.0      2022-11-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  munsell       0.5.0      2018-06-12 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pillar        1.8.1      2022-08-19 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purrr       * 1.0.1      2023-01-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.cache       0.15.0     2021-04-30 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.methodsS3   1.8.1      2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.oo          1.24.0     2020-08-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R.utils       2.11.0     2021-09-26 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R6            2.5.1      2021-08-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  readr       * 2.1.3      2022-10-01 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  reprex        2.0.2      2022-08-17 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rlang         1.0.6      2022-09-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  rmarkdown     2.20       2023-01-19 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  scales        1.2.1      2022-08-20 [1] CRAN (R 4.2.1)</span></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringi       1.7.12     2023-01-11 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  stringr     * 1.5.0      2022-12-02 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  styler        1.7.0      2022-03-13 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tibble      * 3.1.8      2022-07-22 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyr       * 1.2.1      2022-09-08 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tidyverse   * 1.3.2.9000 2023-01-28 [1] Github (tidyverse/tidyverse@53199b7)</span></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  timechange  * 0.1.1      2022-11-04 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  tzdb          0.3.0      2022-03-28 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  utf8          1.2.2      2021-07-24 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  vctrs         0.5.1      2022-11-16 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  withr         2.5.0      2022-03-03 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  xfun          0.36       2022-12-21 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  yaml          2.3.6      2022-10-18 [1] CRAN (R 4.2.0)</span></span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] /Users/garrick/Library/R/x86_64/4.2/library</span></span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] /Library/Frameworks/R.framework/Versions/4.2/Resources/library</span></span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ──────────────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="there-should-be-a-shortcut" class="level2">
+<h2 class="anchored" data-anchor-id="there-should-be-a-shortcut">There should be a shortcut</h2>
+<p>Kick-starting an issue report using a reprex right from within my RStudio session is great, but there’s still the part where I have to slog out of my IDE, into a browser, and find my way to the repo where this issue should go.</p>
+<p>Most of the time, though, I’m already <strong>in the repo</strong>. And <span class="pkg">usethis</span> has <a href="https://usethis.r-lib.org/reference/browse-this.html">a helpful function</a> to get me right to the issues page:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">browse_github_issues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>But there’s too much typing. I want reprex to issue, <em>with magic</em> 🧙 ✨.</p>
+<p>So that’s what we’ll do! In the rest of this post, we’ll use <span class="pkg">reprex</span> and the <span class="pkg"><a href="https://rstudio.github.io/rstudioapi/">rstudioapi</a></span> package to automatically go from code to GitHub issue. Then we’ll wrap that logic into a function and turn it into an RStudio Addin with my package, <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span>.</p>
+</section>
+<section id="from-reprex-to-issue" class="level2">
+<h2 class="anchored" data-anchor-id="from-reprex-to-issue">From reprex to issue</h2>
+<p>Suppose we have some <code>input</code> code and a target <code>repo</code>. Maybe we have a classic missing argument error and we want to send the issue to <a href="https://github.com/gadenbuie/shrtcts">gadenbuie/shrtcts</a> (please don’t!).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>input <span class="ot">&lt;-</span> <span class="st">"runif(min = 0, max = 10)</span><span class="sc">\n</span><span class="st">"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>repo <span class="ot">&lt;-</span> <span class="st">"gadenbuie/shrtcts"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="prepare-the-issue-body" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-the-issue-body">Prepare the issue body</h3>
+<p>Our goal is to render the reprex into an issue <code>body</code> and then we’ll put together a URL that takes us to GitHub’s <a href="https://github.com/gadenbuie/shrtcts/issues/new">new issue page</a> for the <code>repo</code> with the issue <code>body</code> pre-filled when we get there.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> <span class="st">"... reprex body goes here ..."</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>url_new_issue <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"https://github.com/{repo}/issues/new?body={body}"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">browseURL</span>(url_new_issue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The trick here is that you can create a new issue by going to <code>github.com/{owner}/{repo}/issues/new</code> and we’re sending along the initial body using <a href="https://url.spec.whatwg.org/#dom-urlsearchparams-urlsearchparams">the query string</a> <code>?body={body}</code>.</p>
+<p>To put together the <code>body</code>, we first render the <code>input</code> using <code>reprex::reprex()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> reprex<span class="sc">::</span><span class="fu">reprex</span>(<span class="at">input =</span> input, <span class="at">venue =</span> <span class="st">"gh"</span>, <span class="at">html_preview =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>where we’ve asked for a reprex for GitHub — <code>venue = "gh"</code> — and a local HTML preview — <code>html_preview = TRUE</code>. You can adjust the arguments to <code>reprex()</code> to fit your needs, of course.</p>
+<p>Unfortunately, <code>reprex::repex()</code> is only half the work…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> reprex<span class="sc">::</span><span class="fu">reprex</span>(<span class="at">input =</span> input, <span class="at">venue =</span> <span class="st">"gh"</span>, <span class="at">html_preview =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>body</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "``` r"                                                                           
+[2] "runif(min = 0, max = 10)"                                                        
+[3] "#&gt; Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default"
+[4] "```"                                                                             </code></pre>
+</div>
+</div>
+<p>Notice that it returns a character vector with one item per line of the rendered reprex. We need to collapse it all into a single string.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> <span class="fu">paste</span>(body, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "``` r\nrunif(min = 0, max = 10)\n#&gt; Error in runif(min = 0, max = 10): argument \"n\" is missing, with no default\n```"</code></pre>
+</div>
+</div>
+<p>But this still won’t fit in a URL because it contains spaces, new lines, and other characters URLs don’t like. So we need to use the base R function <code>URLencode()</code> to turn the <code>body</code> text into something readable only by machines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>body <span class="ot">&lt;-</span> <span class="fu">URLencode</span>(body, <span class="at">reserved =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60"</code></pre>
+</div>
+</div>
+<p>Finally, we can make our new issue URL.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>url_new_issue <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"https://github.com/{repo}/issues/new?body={body}"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>url_new_issue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>https://github.com/gadenbuie/shrtcts/issues/new?body=%60%60%60%20r%0Arunif%28min%20%3D%200%2C%20max%20%3D%2010%29%0A%23%3E%20Error%20in%20runif%28min%20%3D%200%2C%20max%20%3D%2010%29%3A%20argument%20%22n%22%20is%20missing%2C%20with%20no%20default%0A%60%60%60</code></pre>
+</div>
+</div>
+<p>I didn’t make the link clickable, but if you were to follow it, you’d find a brand new issue page ready for you.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="reprex-new-issue.png" class="lightbox" title="A new GitHub issue page with our reprex as the issue body" data-gallery="quarto-lightbox-gallery-1"><img src="reprex-new-issue.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A new GitHub issue page with our reprex as the issue body</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="grab-the-input-from-the-user" class="level3">
+<h3 class="anchored" data-anchor-id="grab-the-input-from-the-user">Grab the input from the user</h3>
+<p>Of course, we don’t want to have to define <code>input</code> manualy every time we run this function. Instead, we’d rather get the <code>input</code> code from</p>
+<ul>
+<li>the current selection in RStudio</li>
+<li>or the clipboard if nothing is selected</li>
+</ul>
+<p>To make things easy, we’ll ignore the fact that RStudio has a multiple cursors feature, and we’ll just get the first selection of code. We’ll use the <code>getSourceEditorContext()</code> to get the currently open text file, then we can grab the text from the first selection in that editor window.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ctx <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">getSourceEditorContext</span>()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>selection <span class="ot">&lt;-</span> ctx<span class="sc">$</span>selection[[<span class="dv">1</span>]]<span class="sc">$</span>text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If nothing is selected, <code>selection</code> will be an empty string, <code>""</code>, in which case we’d prefer to leave <code>input</code> as <code>NULL</code> so that <code>reprex()</code> will look in the clipboard for our input. We also need to make sure that <code>input</code> is a character vector so that <code>reprex()</code> knows that <code>input</code> contains the reprex code and not a path to a file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>input <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nzchar</span>(selection)) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">strsplit</span>(selection, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)[[<span class="dv">1</span>]], <span class="st">""</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll be wrapping this up in a function where <code>input</code> might be provided by the user, so we’ll only want to check for a selection if <code>input</code> is <code>NULL</code>.</p>
+<div class="cell" style="true">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(input)) {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  ctx <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">getSourceEditorContext</span>()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  selection <span class="ot">&lt;-</span> ctx<span class="sc">$</span>selection[[<span class="dv">1</span>]]<span class="sc">$</span>text</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  input <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nzchar</span>(selection)) {</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">strsplit</span>(selection, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)[[<span class="dv">1</span>]], <span class="st">""</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="pick-the-repository" class="level3">
+<h3 class="anchored" data-anchor-id="pick-the-repository">Pick the repository</h3>
+<p>Often, I’ll be working in the repository where I want to create the issue. <span class="pkg">usethis</span> does a great job guessing the repository from the information in a local copy of the repo. Rather than spending forever writing our own version, let’s just reach into <span class="pkg">usethis</span> with <code>:::</code> to call <code>target_repo_spec()</code>.</p>
+<p>The function returns the current repo in the form <code>"owner/repo"</code>, but since it isn’t designed to be user-facing it throws an unusual error when called from outside a git repository. We can soften this edge by catching the error with <code>tryCatch()</code> and replacing the error with a <code>NULL</code> value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>repo_guess <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  usethis<span class="sc">:::</span><span class="fu">target_repo_spec</span>(<span class="st">"source"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="cf">function</span>(err) <span class="cn">NULL</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Of course, maybe I’ll want to create a reprex in <em>another</em> repository that isn’t the one I’m currently working in. So we can follow up with a prompt asking for the repo, using our guess from <span class="pkg">usethis</span>. The prompt is created with the <code>showPrompt()</code> function from <span class="pkg">rstudioapi</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>repo <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">showPrompt</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Which repository?"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="st">"Where should we create the issue? (owner/repo)"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">default =</span> repo_guess</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p class="center">
+<img src="ask-repo-manual.png" alt="RStudio menu asking to the user to manually enter a repository." style="max-width:min(400px, 100%);display: block">
+</p>
+<p>Finally, the function we’re putting together will also take a <code>repo</code> argument that <em>might be</em> provided when we call it. In that case, we’d wouldn’t need to guess or ask for a repo.</p>
+<div class="cell" style="true">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(repo)) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  repo_guess <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    usethis<span class="sc">:::</span><span class="fu">target_repo_spec</span>(<span class="st">"source"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(err) <span class="cn">NULL</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  repo <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">showPrompt</span>(</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Which repository?"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">message =</span> <span class="st">"Where should we create the issue? (owner/repo)"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">default =</span> repo_guess</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="make-it-a-shortcut" class="level2">
+<h2 class="anchored" data-anchor-id="make-it-a-shortcut">Make it a shortcut</h2>
+<p>The last step in our process is to make it easy to run this code in RStudio, ideally as an <a href="https://rstudio.github.io/rstudioaddins/">RStudio addin</a> that we can activate from the addins menu or <a href="https://blog.rstudio.com/2020/10/14/rstudio-v1-4-preview-command-palette/">the command palette</a>.</p>
+<p>This is the exact goal of the <span class="pkg"><a href="https://pkg.garrickadenbuie.com/shrtcts">shrtcts</a></span> package: <span class="pkg">shrtcts</span> lets you turn any function into an RStudio addin.</p>
+<section id="set-up-shrtcts" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-shrtcts">Set up <code>shrtcts</code></h3>
+<p>If you’ve never used <span class="pkg">shrtcts</span> before, you need to do two things to get started. First, install the package, from <a href="https://gadenbuie.r-universe.dev">my R-universe</a> or from <a href="https://github.com/gadenbuie/shrtcts">GitHub</a>.</p>
+<div class="panelset panelset--bordered">
+<div class="panel">
+<p><span class="panel-name">R-universe</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add my universe to your list of repos</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="fu">c</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">gadenbuie =</span> <span class="st">"https://gadenbuie.r-universe.dev"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">getOption</span>(<span class="st">"repos"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.package</span>(<span class="st">"shrtcts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="panel">
+<p><span class="panel-name">GitHub</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"gadenbuie/shrtcts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>The next thing to do is to open a <code>.shrtcts.R</code> file where we’ll add our new shortcut. This is easy to do with <code>shrtcts::edit_shortcuts()</code>, which will offer to create the <code>.shrtcts.R</code> file if it doesn’t exit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>shrtcts<span class="sc">::</span><span class="fu">edit_shortcuts</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Would you like to create a new shrtcts file at
+'~/Library/Application Support/shrtcts/.shrtcts.R' (Yes/no/cancel) yes</code></pre>
+</section>
+<section id="creating-a-shortcut-function" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-shortcut-function">Creating a shortcut function</h3>
+<p>We’ll write R functions in the <code>.shrtcts.R</code> file and turn them into RStudio addins by annotating those functions with roxygen-style comments.</p>
+<p>We start with a skeleton of a function that takes two arguments: <code>input</code> and <code>repo</code>, neither of which are required. Inside the function, we’ll do all the steps from above, which we’ll fill in in a second.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>create_issue_from_reprex <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">input =</span> <span class="cn">NULL</span>, <span class="at">repo =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># guess or ask for repo</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get current selection, if available</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># render reprex</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compose new issue URL</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># go to the new issue page!</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Our next step is to turn this function into a shortcut. Using <span class="pkg"><a href="https://roxygen2.r-lib.org/">roxygen2</a></span> documentation syntax, we give the function a title and description — these will be used as the title and description of the shortcut. We can also use the <code>@shortcut</code> tag to set a keyboard shortcut (if you want), and the <code>@interactive</code> tag lets shortcuts know that the addin should be run interactively rather than in the background.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Create issue from reprex</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Creates an issue from the selected or copied reprex.</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @shortcut Cmd+Ctrl+Shift+R</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @interactive</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>create_issue_from_reprex <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">input =</span> <span class="cn">NULL</span>, <span class="at">repo =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># guess or ask for repo</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get current selection, if available</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># render reprex</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># compose new issue URL</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># go to the new issue page!</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can replace our placeholder comments with all of the code we wrote above.</p>
+<div class="cell" style="true">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Create issue from reprex</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Creates an issue from the selected or copied reprex.</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @shortcut Cmd+Ctrl+Shift+R</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @interactive</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>create_issue_from_reprex <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">input =</span> <span class="cn">NULL</span>, <span class="at">repo =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(repo)) {</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    repo_guess <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>      usethis<span class="sc">:::</span><span class="fu">target_repo_spec</span>(<span class="st">"source"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">error =</span> <span class="cf">function</span>(err) <span class="cn">NULL</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    repo <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">showPrompt</span>(</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Which repository?"</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">message =</span> <span class="st">"Where should we create the issue? (owner/repo)"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">default =</span> repo_guess</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(input)) {</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>    ctx <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">getSourceEditorContext</span>()</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    selection <span class="ot">&lt;-</span> ctx<span class="sc">$</span>selection[[<span class="dv">1</span>]]<span class="sc">$</span>text</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    input <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">nzchar</span>(selection)) {</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fu">strsplit</span>(selection, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)[[<span class="dv">1</span>]], <span class="st">""</span>)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>  body <span class="ot">&lt;-</span> reprex<span class="sc">::</span><span class="fu">reprex</span>(<span class="at">input =</span> input, <span class="at">venue =</span> <span class="st">"gh"</span>, <span class="at">html_preview =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>  body <span class="ot">&lt;-</span> <span class="fu">paste</span>(body, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>  body <span class="ot">&lt;-</span> <span class="fu">URLencode</span>(body, <span class="at">reserved =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>  url_new_issue <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"https://github.com/{repo}/issues/new?body={body}"</span>)</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">browseURL</span>(url_new_issue)</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(url_new_issue)</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load your shortcuts and restart your R session to activate the addin and you’ll be ready to jump from reprex to GitHub issue in no time!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>shrtcts<span class="sc">::</span><span class="fu">add_rstudio_shortcuts</span>(<span class="at">set_keyboard_shortcuts =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="figure">
+<img src="shrtcts-reprex.gif" alt="A demonstration of the reprex shortcut: highlight code in RStudio editor, run the 'reprex to issue' shortcut, and create a new github issue">
+<p class="caption">
+The reprex to GitHub issue shortcut in action.
+</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":true,"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox"});</script>
+
+
+
+</body></html>

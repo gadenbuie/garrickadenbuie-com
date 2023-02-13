@@ -1,0 +1,146 @@
+/*-- scss:defaults --*/
+// @import "colors";
+
+//
+// Color system
+//
+
+$white:    $slate-100;
+$gray-100: $slate-90;
+$gray-200: $slate-80;
+$gray-300: $slate-70;
+$gray-400: $slate-60;
+$gray-500: $slate-50;
+$gray-600: $slate-40;
+$gray-700: $slate-30;
+$gray-800: $slate-20;
+$gray-900: $slate-10;
+$black:    $slate-00;
+
+$blue:    $blue-50;
+$indigo:  #E574BC !default;
+$purple:  $purple-50;
+$pink:    $pink-60;
+$red:     $red-60;
+$orange:  $orange-60;
+$yellow:  $orange-70;
+$green:   $green-60;
+$teal:    $blue-40;
+$cyan:    $blue-60;
+
+$primary:       $blue !default;
+$secondary:     $blue-10 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+$headings-color: $blue-80;
+
+// Quarto variables
+$navbar-bg: $black;
+$link-color: $blue-50;
+$code-color: $pink-60;
+$code-bg: $black;
+$footer-bg: $black;
+
+// Bootstrap Alerts
+$alert-bg-scale: 66%;
+$alert-border-scale: 50%;
+$alert-color-scale: -30%;
+$alert-link-scale: 5%;
+
+$dropdown-link-hover-bg: $blue-20;
+
+/*-- scss:mixins --*/
+@mixin alert-variant($background, $border, $color) {
+  color: $color;
+  @include gradient-bg($background);
+  border-color: $border;
+
+  .alert-link {
+    color: shade-color($color, $alert-link-scale);
+  }
+}
+
+
+/*-- scss:rules --*/
+.quarto-title-banner {
+  @extend .border-bottom, .border-2, .bg-black, .border-dark;
+}
+
+.quarto-title-banner .quarto-title .title {
+  font-weight: 400 !important;
+  font-size: calc(1.5rem + 1.14vw);
+
+  #title-block-header.quarto-title-block & {
+    margin-bottom: 0.5rem !important;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: calc(2.5rem + 1.14vw);
+  }
+}
+
+h2 {
+  border-bottom: 2px solid (var(--bs-dark));
+}
+
+div.quarto-post .listing-categories .listing-category {
+  color: $slate-50;
+	border: solid 1px $slate-30;
+}
+
+.input-group-text, .form-control, .form-select {
+  border:1px solid $slate-30;
+}
+
+.quarto-listing-default div.quarto-post {
+  border-bottom: 1px solid $slate-30;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  background-color: $black;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  background-color: $black;
+}
+
+// about page - trestles template
+@media(min-width: 992px) {
+  div.quarto-about-trestles .about-contents {
+   border-left-color: $slate-30;
+  }
+}
+
+div.quarto-about-trestles .about-entity .about-link {
+	color: $blue-70;
+}
+
+/* Bootstrap Fixups */
+.btn-secondary, .btn-outline-secondary {
+	color: $blue-80;
+}
+
+/* index.html */
+.social-icon-links .link-primary {
+  color: $pink-40;
+  &:hover, &:focus {
+    color: $pink-50;
+    i {
+      transform: scale(1.25);
+      transform-origin: center center;
+    }
+  }
+}
+
+div.quarto-post .listing-categories .listing-category,
+.quarto-title-block .quarto-title .quarto-categories .quarto-category {
+  border-color: $pink-60;
+  color: $pink-90;
+  background-color: $pink-10;
+  opacity: 0.6
+}

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2020-10-01">
+<meta name="description" content="Full RStudio IDE and Syntax Themes">
+
+<title>Garrick Aden-Buie - 🔮 rsthemes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - 🔮 rsthemes">
+<meta property="og:description" content="Full RStudio IDE and Syntax Themes">
+<meta property="og:image" content="https://www.garrickadenbuie.com/project/rsthemes/social-card.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="430">
+<meta property="og:image:width" content="860">
+<meta name="twitter:title" content="Garrick Aden-Buie - 🔮 rsthemes">
+<meta name="twitter:description" content="Full RStudio IDE and Syntax Themes">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/project/rsthemes/social-card.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="430">
+<meta name="twitter:image-width" content="860">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🔮 rsthemes</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Project</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Full RStudio IDE and Syntax Themes
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Garrick Aden-Buie </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 1, 2020</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- https://buttons.github.io/ -->
+<p><a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/rsthemes" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/rsthemes on GitHub">Star</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/rsthemes/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/rsthemes on GitHub">Fork</a></p>
+<p align="center">
+<img src="https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.gif">
+</p><h1 align="center">
+{rsthemes}
+</h1>
+<p></p>
+<div class="cell">
+<style type="text/css">
+#rsthemes-list ul {
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  grid-gap: 0.66em;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 400px) {
+  #rsthemes-list ul {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 12px;
+  }
+}
+
+#rsthemes-list li {
+  list-style: none;
+  position: relative;
+}
+
+#rsthemes-list .rstheme-name {
+  font-size: 1.1em;
+  margin-top: 0;
+  padding-right: 50px;
+  position: relative;
+}
+
+#rsthemes-list .style {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: var(--text-mild);
+}
+
+#rsthemes-buttons {
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+}
+
+#rsthemes-buttons button {
+  color: var(--textColorCustom);
+  border-color: var(--textColorCustom);
+  background-color: unset;
+  display: inline-block;
+  font-size: 1em;
+  padding: 10px;
+  padding-left: 35px;
+  padding-right: 15px;
+  margin-bottom: 1.5em;
+  text-decoration: none;
+  border-radius: 0;
+  border-width: 1px;
+  break-inside: avoid;
+  white-space: nowrap;
+  position: relative;
+  text-align: left;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#rsthemes-buttons button + button {
+  margin-left: 10px;
+}
+
+#rsthemes-buttons button:hover,
+#rsthemes-buttons button:active {
+  opacity: 1;
+}
+
+#rsthemes-buttons .rsthemes-button-active,
+#rsthemes-buttons .rsthemes-button-active:hover {
+  color: var(--blue-30);
+  border-color: var(--blue-30);
+}
+
+@media (prefers-color-scheme: dark) {
+  #rsthemes-buttons .rsthemes-button-active,
+  #rsthemes-buttons .rsthemes-button-active:hover {
+    color: var(--blue-60);
+    border-color: var(--blue-60);
+  }
+}
+
+#rsthemes-buttons button.rsthemes-button-active::before {
+  content: '\2713';
+  position: absolute;
+  left: 12px;
+}
+
+/* glightbox styles */
+</style>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+<div class="cell">
+<style type="text/css">
+.gdesc-inner,
+.glightbox-clean .gslide-description {
+    background: transparent;
+}
+
+.glightbox-clean .gslide-title {
+  color: var(--blue-100);
+  font-size: 1.25em;
+  text-align: center;
+}
+
+.gslide-media.gslide-image img {
+  opacity: 1;
+}
+</style>
+</div>
+<div id="rsthemes-buttons" style="display:none;">
+<button class="rsthemes-button-active" id="rsthemes-light" value="rsthemes-is-light">
+Light
+</button>
+<button class="rsthemes-button-active" id="rsthemes-dark" value="rsthemes-is-dark">
+Dark
+</button>
+<button id="rsthemes-base16" value="rsthemes-is-base16">
+Base 16
+</button>
+</div>
+<div id="rsthemes-list">
+<ul class="list">
+</ul>
+</div>
+<div class="cell">
+<script type="text/javascript">
+const rsthemesOpts = {
+  // valueNames: [
+  //   'name',
+  //   'style',
+  //   { name: 'image', attr: 'src' },
+  //   { name: 'glightbox', attr: 'href' }
+  // ],
+  item: function(values) {
+    return `<li>
+      <div class="rstheme-name"><div class="name">${values.name}</div><div class="style">${values.style}</div></div>
+
+      <div class="rstheme-image">
+        <a class="glightbox" href="${values.image}" data-title="${values.name}">
+          <img src="${values.image}"  alt="${values.name} {rsthemes} (${values.style})"/>
+        </a>
+      </div>
+    </li>`
+  }
+}
+
+let rsthemesList = undefined
+let lightbox = undefined
+const btns = document.getElementById('rsthemes-buttons')
+
+function filterRsthemesList() {
+  if (typeof rsthemesList === 'undefined') return;
+  let btn = btns.querySelectorAll('button')
+  const state = {
+    light: btn[0].classList.contains('rsthemes-button-active'),
+    dark: btn[1].classList.contains('rsthemes-button-active'),
+    base16: btn[2].classList.contains('rsthemes-button-active')
+  }
+  rsthemesList.filter(function(item) {
+    const value = item.values()
+    if (value.isBase16 && !state.base16) {
+      return false
+    }
+    if (!state.light && !state.dark) {
+      return true
+    }
+    if (value.isDark && state.dark) {
+      return true
+    }
+    if (!value.isDark && state.light) {
+      return true
+    }
+    return false
+  })
+  lightbox.setElements(document.querySelectorAll('.glightbox'))
+}
+
+const rsthemes = fetch("https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.json")
+  .then(response => response.json())
+  .then(json => {
+    json = json.map(t => {
+      t.imageLink = t.image
+      t.style = t.isDark ? 'Dark' : 'Light'
+      t.name = t.name.replace(' {rsthemes}', '')
+      return t
+    }).
+    sort(t => t.isBase16 ? 1 : -1)
+
+    rsthemesList = new List('rsthemes-list', rsthemesOpts, json)
+    lightbox = GLightbox({
+      touchNavigation: true,
+      descPosition: 'top'
+    });
+
+    lightbox.on('open', (target) => {
+      debugger
+      console.log('lightbox opened', {target});
+    });
+    btns.style.display = 'block'
+    filterRsthemesList()
+  })
+
+btns.querySelectorAll('button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('rsthemes-button-active')
+    filterRsthemesList()
+  })
+})
+</script>
+</div>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p>You can install rsthemes from my <a href="https://gadenbuie.r-universe.dev">r-universe</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rsthemes"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="at">gadenbuie =</span> <span class="st">'https://gadenbuie.r-universe.dev'</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or you can install rsthemes from GitHub with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"gadenbuie/rsthemes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then, install the included, hand-crafted themes with:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">install_rsthemes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or you can install the themes plus an additional set of <a href="https://github.com/chriskempson/base16">base16-based themes</a> with</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">install_rsthemes</span>(<span class="at">include_base16 =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<p>The rsthemes package includes a couple helper functions for exploring the themes.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list installed themes</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">list_rsthemes</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Try all themes</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">try_rsthemes</span>()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Try just the light, dark, or base16 themes, e.g.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">try_rsthemes</span>(<span class="st">"light"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>rstudioapi::applyTheme()</code> to activate a theme from the R console, or use <em>Tools</em> &gt; <em>Global Options</em> &gt; <em>Appearance</em> to interactively select a theme.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a theme</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">applyTheme</span>(<span class="st">"One Dark {rsthemes}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="easy-theme-switching" class="level2">
+<h2 class="anchored" data-anchor-id="easy-theme-switching">Easy Theme Switching</h2>
+<p><strong>rsthemes</strong> includes RStudio addins and functions to… <a name="automatic--light-and--dark-mode"></a></p>
+<ul>
+<li><p>🌅 <strong>Toggle Dark Mode</strong><br>Switch between two preferred dark and light themes</p></li>
+<li><p>🌃 <strong>Auto Dark Mode</strong><br>Automatically choose a dark or light theme by time of day</p></li>
+<li><p>❤️ <strong>Favorite Themes</strong><br>Switch between a few of your favorite themes</p></li>
+<li><p>🥱 <strong>Use Default RStudio Theme</strong><br>Switch back to RStudio’s default theme</p></li>
+</ul>
+<section id="choose-your-preferred-themes" class="level4">
+<h4 class="anchored" data-anchor-id="choose-your-preferred-themes">Choose Your Preferred Themes</h4>
+<p>First, set a default light and dark theme. For your current R sessions, you can use the <strong>Set Default Light Theme to Current</strong> addin (or the corresponding dark theme addin), or you can call the <code>set_theme_light()</code> or <code>set_theme_dark()</code> functions:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set current theme to default light or dark theme</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_light</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_dark</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set a specific theme to default light or dark theme</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_light</span>(<span class="st">"One Light {rsthemes}"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_dark</span>(<span class="st">"One Dark {rsthemes}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To create a list of your <strong>favorite</strong> themes, you can use <code>set_theme_favorite()</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add current theme to your list of favorites</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_favorite</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a list of themes to your favorites</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">set_theme_favorite</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"GitHub {rsthemes}"</span>, <span class="st">"One Light {rsthemes}"</span>, <span class="st">"One Dark {rsthemes}"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These functions only save your preferences for the <em>current</em> R session. To set these defaults for all R sessions, add your preferences to your <code>~/.Rprofile</code>. (You can use <code>usethis::edit_r_profile()</code> to quickly open your <code>~/.Rprofile</code> for editing.)</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Rprofile</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>()) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  rsthemes<span class="sc">::</span><span class="fu">set_theme_light</span>(<span class="st">"GitHub {rsthemes}"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  rsthemes<span class="sc">::</span><span class="fu">set_theme_dark</span>(<span class="st">"Fairyfloss {rsthemes}"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  rsthemes<span class="sc">::</span><span class="fu">set_theme_favorite</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"GitHub {rsthemes}"</span>, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"One Light {rsthemes}"</span>, </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"One Dark {rsthemes}"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also set the following global options directly.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.Rprofile</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsthemes.theme_light =</span> <span class="st">"Nord Snow Storm {rsthemes}"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsthemes.theme_dark =</span> <span class="st">"Nord Polar Night Aurora {rsthemes}"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsthemes.theme_favorite =</span> <span class="fu">paste</span>(<span class="st">"One"</span>, <span class="fu">c</span>(<span class="st">"Light"</span>, <span class="st">"Dark"</span>), <span class="st">"{rsthemes}"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="toggle-your-favorite-themes" class="level3">
+<h3 class="anchored" data-anchor-id="toggle-your-favorite-themes">Toggle Your Favorite Themes</h3>
+<p>Use the <strong>Next Favorite Theme</strong> addin to walk through your list of favorite themes. Use the <em>Modify Keyboard Shortcuts…</em> dialog in the <em>Tools</em> menu of RStudio to create a keyboard shortcut to make it easy to quickly switch themes — I use <kbd>Ctrl</kbd>+ <kbd>Alt</kbd> + <kbd>N</kbd>. You can also manually call <code>use_theme_favorite()</code> to use the next theme in the your favorites list.</p>
+<p>Each time you run the addin, RStudio switches to the next theme in your favorites list. This is great if you have a few themes that you use in various contexts. For example, I have my personal favorite themes plus a few themes that work well during class or presentation sessions.</p>
+</section>
+<section id="automatic-or-manual-lightdark-mode" class="level3">
+<h3 class="anchored" data-anchor-id="automatic-or-manual-lightdark-mode">Automatic or Manual Light/Dark Mode</h3>
+<p>Use the <strong>Toggle Dark Mode</strong> addin to switch between your default light and dark themes. You can even set a keyboard shortcut in RStudio — I used <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>D</kbd> — to toggle dark mode.</p>
+<p>You can also automatically choose the dark or light theme by time of day, using the included <strong>Auto Choose Dark or Light Theme</strong> addin, which requires that you’ve set your preferred light/dark themes (see above).</p>
+<p>If you would like to automatically choose the dark or light theme by time of day during each new session, you can call <code>rsthemes::use_theme_auto()</code> in your <code>~/.Rprofile</code>. For best results, use the following template in your <code>~/.Rprofile</code> to declare your preferred dark and light themes and to choose the correct style when your R session reloads.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>() <span class="sc">&amp;&amp;</span> <span class="fu">requireNamespace</span>(<span class="st">"rsthemes"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set preferred themes if not handled elsewhere..</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  rsthemes<span class="sc">::</span><span class="fu">set_theme_light</span>(<span class="st">"One Light {rsthemes}"</span>)  <span class="co"># light theme</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  rsthemes<span class="sc">::</span><span class="fu">set_theme_dark</span>(<span class="st">"One Dark {rsthemes}"</span>) <span class="co"># dark theme</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Whenever the R session restarts inside RStudio...</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setHook</span>(<span class="st">"rstudio.sessionInit"</span>, <span class="cf">function</span>(isNewSession) {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Automatically choose the correct theme based on time of day</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    rsthemes<span class="sc">::</span><span class="fu">use_theme_auto</span>(<span class="at">dark_start =</span> <span class="st">"18:00"</span>, <span class="at">dark_end =</span> <span class="st">"6:00"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">action =</span> <span class="st">"append"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="go-back-to-the-default" class="level3">
+<h3 class="anchored" data-anchor-id="go-back-to-the-default">Go Back to the Default</h3>
+<p>Sometimes when you’re teaching or demonstrating RStudio features, you’d like to have your IDE match the appearance of your learners, or at least the basic theme that everyone starts out with when they install RStudio for the first time.</p>
+<p>Use the <strong>Use Default RStudio Theme</strong> to quickly switch back to RStudio’s default theme, Textmate. Or, you can use <code>rsthemes::use_default_rstudio_theme()</code> to initiate the switch, perhaps from within the <code>.Rprofile</code> file of your teaching project.</p>
+</section>
+</section>
+<section id="uninstall" class="level2">
+<h2 class="anchored" data-anchor-id="uninstall">Uninstall</h2>
+<p>If you want to uninstall all or some of the themes, you can use</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">remove_rsthemes</span>()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or just the base16 themes, e.g.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>rsthemes<span class="sc">::</span><span class="fu">remove_rsthemes</span>(<span class="st">"base16"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="thanks-and-theme-credits" class="level2">
+<h2 class="anchored" data-anchor-id="thanks-and-theme-credits">Thanks and Theme Credits</h2>
+<section id="palettes" class="level3">
+<h3 class="anchored" data-anchor-id="palettes">Palettes</h3>
+<ul>
+<li><a href="https://github.com/chriskempson/base16">base16</a> (Various Authors)</li>
+<li><a href="https://github.com/sailorhg/fairyfloss">Fairyfloss</a> (<a href="https://github.com/sailorhg">Amy Wibowo (sailorhg)</a>)</li>
+<li><a href="https://github.com/biletskyy/flatwhite-syntax">Flat White</a> (<a href="https://github.com/biletskyy">Dmitry Biletskyy</a>)</li>
+<li><a href="https://github.com/arcticicestudio/nord">Nord</a> (<a href="https://www.svengreb.de/">Sven Greb</a>)</li>
+<li><a href="https://github.com/marcoms/oceanic-plus">Oceanic Plus</a> (<a href="https://github.com/marcoms">Marco Scannadinari</a>)</li>
+<li><a href="https://github.com/atom/atom/tree/master/packages/one-dark-syntax">Atom One Dark</a></li>
+<li><a href="https://github.com/atom/atom/tree/master/packages/one-light-syntax">Atom One Light</a></li>
+<li><a href="https://ethanschoonover.com/solarized">Solarized</a> (Ethan Schoonover)</li>
+<li><a href="https://horizontheme.netlify.app/">Horizon Dark</a> (Jonathan Olaleye)</li>
+<li><a href="https://github.com/ericwbailey/a11y-syntax-highlighting">a11y-syntax-highlighting</a> (<a href="https://ericwbailey.design/">Eric Bailey</a>)</li>
+<li><a href="https://github.com/sdras/night-owl-vscode-theme">Night Owl</a> (<a href="https://sarah.dev/">Sarah Drasner</a>)
+<ul>
+<li>with huge thanks to original <a href="https://github.com/batpigandme/night-owlish">Night Owlish</a> implementation in RStudio by <a href="https://maraaverick.rbind.io/">Mara Averick</a></li>
+</ul></li>
+<li>Yule RStudio
+<ul>
+<li>Based on the <a href="https://tmtheme-editor.herokuapp.com/#!/editor/theme/Yule">Yule tmTheme</a></li>
+<li>Ported from <a href="https://github.com/gadenbuie/yule-rstudio">gadenbuie/yule-rstudio</a></li>
+<li>Featuring a background image by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a></li>
+</ul></li>
+<li><a href="https://material-theme.site/">Material Theme</a>
+<ul>
+<li>Contributed to rsthemes by <a href="https://www.zacdelusignan.com/">Zac de Lusignan</a></li>
+</ul></li>
+<li><a href="https://wvsc.dev/">Serendipity</a> (<a href="https://www.wickedtemplates.com/">wickedtemplates</a>)</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

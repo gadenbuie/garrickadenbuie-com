@@ -1,0 +1,899 @@
+---
+title: Saving Daylight Time?
+author: Garrick Aden-Buie
+date: '2022-03-12'
+slug: saving-daylight-time
+categories:
+  - R
+  - Visualization
+  - ggplot2
+description: |
+  How much daylight do cities across the world get throughout the year?
+  Does Daylight Saving Time really save any daylight?
+  A visualization to explore these questions.
+image: index_files/figure-html/social-1.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2022/saving-daylight-time/index.Rmarkdown'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+resources:
+  - cities
+  - us-cities
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  fig.width = 9, fig.height = 7,
+  fig.showtext = TRUE
+)
+options(htmltools.dir.version = TRUE)
+
+library(tidyverse)
+source("plot_daylight_hours.R")
+```
+
+```{r location, echo=FALSE}
+location <- as.list(ipapi::geolocate(NA, .progress = FALSE))
+
+# find a location nearby but not my actual house, lol
+location$lat <- location$lat + runif(1, min = -0.5, max = 0.5)
+location$lon <- location$lon + runif(1, min = -0.5, max = 0.5)
+```
+
+```{r location-for-real, echo=FALSE}
+location$lat <- 33.34846
+location$lon <- -85.17511
+location$timezone <- "America/New_York"
+```
+
+::: lead
+Remember when Daylight Saving Time happened to us again?
+You know, that day that causes us all to grumble loudly
+about the ridiculousness of our biannual clock adjustment and loss of sleep?
+
+In this post, I engage in some self-care data visualization
+to explore day light hours in cities across the world and the United States,
+inspired by an [awesome night hours series](https://plotparade.com/gallery_sunrise.html)
+by [Krisztina Szucs](https://krisztinaszucs.com/).
+:::
+
+## Are we saving daylight in Atlanta, GA?
+
+As a parent, I loathe daylight saving time.
+Nothing reveals the shared delusion of time
+like trying to explain to your children
+why we moved the clock forward an hour when it means
+they'll suddenly need to go to bed while it's light out
+or wake up and get ready for school while it's dark.
+
+
+So in this spirit, I started to wonder:
+what kind of returns are we getting on our daylight saving?
+Except, rather than try to directly answer that question —
+since that's way too hard —
+I chose to visualize day light hours
+to see how they align with the modern work day.
+
+The plot below shows the yearly day light schedule for 2022 in Atlanta, GA where I live.
+We'll also take a look at the day light schedule in [other cities around the world](#around-the-world)
+or [across the United States](#across-the-us).
+At the end of this post, I'll share the code I used to make the plot below.
+
+```{=html}
+<figure role="group">
+  <img src="us-cities/georgia_atlanta_normal.png"
+    alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November.">
+  <figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll">`r describe_sun_times(tidy_sun_times(location$lat, location$lon, location$timezone), "Atlanta, GA")`</figcaption>
+</figure>
+```
+
+It's pretty clear from this visualization that
+in Atlanta, GA,
+which is very much on the western edge of the U.S. Eastern time zone,
+year-round standard time
+is a decent way to live life.
+What about other cities in the world?
+
+## Around the World
+
+```{r echo = FALSE, include = FALSE}
+cities_world <- readr::read_rds("cities_world.rds")
+```
+
+```{r echo=FALSE}
+city_options <- map(transpose(cities_world), function(.x) {
+  htmltools::tags$option(
+    value = .x$file,
+    `data-city` = .x$title,
+    `data-alt` = .x$alt,
+    .x$title,
+  )
+})
+
+htmltools::withTags(
+  div(
+    class = "pa",
+    label(
+      class = "form-label",
+      `for` = "choose-city",
+      "Pick a city"
+    ),
+    div(
+      class = "mb-3",
+      select(
+        id = "choose-city",
+        class = "form-select mb-2",
+        city_options
+      ),
+      button(
+        id = "choose-city-prev",
+        class = "btn btn-light",
+        title = "Previous city",
+        "Previous city"
+      ),
+      button(
+        id = "choose-city-next",
+        class = "btn btn-light",
+        title = "Next city",
+        "Next city"
+      )
+    )
+  )
+)
+```
+
+```{r echo=FALSE}
+htmltools::withTags(
+  div(
+    `aria-live` = "polite",
+    figure(
+      role = "group",
+      img(
+        id = "city-plot",
+        src = cities_world$file[[1]],
+        alt = cities_world$title[[1]]
+      ),
+      figcaption(
+        id = "city-plot-desc",
+        class="mt-2 lh-sm fs-6 overflow-x-scroll",
+        "A sunrise/sunset time plot."
+      )
+    )
+  )
+)
+```
+
+
+## Across the US
+
+It seems that every year we talk
+about _finally doing something_ about daylight saving time,
+but this year the U.S. Senate actually went so far as to pass
+a [bill to make Daylight Saving Time permanent](https://www.washingtonpost.com/health/2022/03/15/senate-daylight-saving-permanent/).
+In a suprising-to-no-one twist,
+the bill is stalled in the House,
+where [representatives are arguing over which of standard or daylight saving time should be permanent](https://www.washingtonpost.com/health/2022/03/19/permanent-daylight-saving-time-house/).
+
+Would you prefer standard time or daylight saving time?
+If you're not sure,
+check out the [Daylight Saving Time Gripe Assistant Tool](https://observablehq.com/@awoodruff/daylight-saving-time-gripe-assistant-tool) by Andy Woodruff on Observable.
+
+I thought it'd be interesting to visualize day light hours for U.S. cities.
+You can use the dropdown below to choose your city
+or the nearest city with more than 100,000 residents
+(or just pick a random city!).
+Then, toggle between **Standard** or **DST**
+to see how either proposal would affect you.
+Or choose **Both** to see what will happen in the unimaginable case
+that the U.S. Congress doesn't actually make DST permanent.
+
+```{r cities_us_json, echo=FALSE}
+cities_us <- read_rds("cities_us.rds")
+cities_us %>%
+  filter(!str_detect(city, "Metropolitan Government")) %>%
+  arrange(state, city) %>%
+  select(title, path, starts_with("alt")) %>%
+  pmap(function(title, path, alt_normal, alt_standard, alt_dst) {
+    htmltools::tags$option(
+      value = path,
+      `data-descnormal` = alt_normal,
+      `data-descstandard` = alt_standard,
+      `data-descdst` = alt_dst,
+      title
+    )
+  }) %>% {
+    htmltools::withTags(
+      div(
+        class = "pa",
+        label(
+          class = "form-label",
+          `for` = "us-city",
+          "Pick a city in the United States (",
+          button(
+            id = "us-city-random",
+            class = "btn btn-link px-1",
+            title = "Choose a random city",
+            "random",
+            .noWS = "outside"
+          ),
+          ")"
+        ),
+        select(id = "us-city", class = "form-select", .)
+      )
+    )
+  }
+```
+
+```{=html}
+<div class="row form-check my-3" id="tz-variant-radio">
+<div class="col-sm-3 form-check-inline">
+<label for="tz-variant" class="form-check-label">Use timezone</label>
+</div>
+<div class="col-sm-3 form-check-inline">
+<!-- standard -->
+<input type="radio" id="standard" class = "form-check-input me-2" name="tz-variant" value="standard">
+<label for="standard" class="form-check-label">Standard</label>
+</div>
+<div class="col-sm-3 form-check-inline">
+<!-- normal -->
+<input type="radio" id="normal" class = "form-check-input me-2" name="tz-variant" value="normal" checked>
+<label for="normal" class="form-check-label">Both</label>
+</div>
+<div class="col-sm-3 form-check-inline">
+<!-- dst -->
+<input type="radio" id="dst" class = "form-check-input me-2" name="tz-variant" value="dst">
+<label for="dst" class="form-check-label">DST</label>
+</div>
+</div>
+<link href="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/mobius1-selectr@latest/dist/selectr.min.js" type="text/javascript"></script>
+<div id="us-city-plot" aria-live="polite">
+<figure role="group">
+<img src="us-cities/washington_d_c_normal.png" alt="Washington, D.C.">
+<figcaption class="mt-2 lh-sm fs-6 overflow-x-scroll">Sunrise and sunset times in Washington, D.C.</figcaption>
+</figure>
+</div>
+```
+
+```{js echo=FALSE}
+const selectr = new Selectr('#us-city')
+function updateUSCityPlot () {
+  const option = selectr.getSelected()[0]
+  const plotDiv = document.getElementById('us-city-plot')
+  const plotImg = plotDiv.querySelector('img')
+  const plotTz = document.querySelector('input[name="tz-variant"]:checked')
+  plotImg.src = `${option.value}_${plotTz.value}.png`
+  plotImg.alt = option.innerText
+  plotDiv.querySelector('figcaption').innerHTML = option.dataset['desc' + plotTz.value]
+}
+updateUSCityPlot()
+selectr.on('selectr.change', updateUSCityPlot)
+document.getElementById('tz-variant-radio').addEventListener('change', updateUSCityPlot)
+document.getElementById('us-city-random').addEventListener('click', function(ev) {
+  const options = selectr.options
+  const optionNew = options[Math.floor(Math.random() * options.length)]
+  selectr.setValue(optionNew.value)
+  updateUSCityPlot()
+})
+```
+
+
+## Inspiration
+
+The layout for this vizualization was heavily inspired by [a series by Kristina Szucs](https://plotparade.com/gallery_sunrise.html) that I discovered via [r/dataisbeautiful](https://www.reddit.com/r/dataisbeautiful/comments/rlfj1d/oc_how_long_are_the_nights_in_stockholm_new_york/).
+I loved the aesthetic of Kristina's plot
+and the subtle gradients and shadows of the daylight/twilight hour regions.
+Her attention to little details such a the sunrise and sunset icon labels
+and the stars in the night region are just fantastic.
+
+```{=html}
+<figure role="group">
+  <img src = "https://plotparade.com/chartimg/SUNRISE/c_NYC.jpg" alt="Night time hours plot for New York City, NY."
+  <figcaption class="mt2 lh-copy f6 f5-ns">How long are the nights in New York City? by <a href="https://krisztinaszucs.com/">Krisztina Szucs</a></figcaption>
+</figure>
+```
+
+In my version I wanted to draw on a similar structure and style
+to visualize daylight rather than sunset hours.
+I also wanted to see how far I could go with my plot
+without leaving the comfort of ggplot2,
+so I stopped short of adding the sunrise and sunset icons.
+(I suppose _anything_ is possible in ggplot2 but IMHO this is a reasonable line to draw.)
+
+## Where are you?
+
+To get accurate sunrise and sunset time data,
+we first need to figure out where in the world we are.
+Fortunately,
+the [ipapi package](https://github.com/hrbrmstr/ipapi)
+makes it easy to grab key geolocation data from your IP address,
+like latitude, longitude and time zone.
+(I'm adding a little fuzz just to make ipapi a little less accurate.)
+
+```{r ref.label="location", eval = FALSE}
+```
+```{r}
+location[c("lat", "lon", "timezone")]
+```
+
+## Sunrise and Sunset Times
+
+Next, we take our latitude and longitude to [suncalc](https://github.com/datastorm-open/suncalc), an R package port of [suncalc.js](https://github.com/mourner/suncalc).
+We ask `getSunlightTimes()` for the dawn and dusk related times for every day in 2022.
+
+```{r sun_times}
+sun_times <-
+  suncalc::getSunlightTimes(
+    date = seq(
+      as.Date("2022-01-01"),
+      as.Date("2023-01-01"),
+      by = "day"
+    ),
+    lat = location$lat,
+    lon = location$lon,
+    tz = location$timezone,
+    keep = c("dawn", "nauticalDawn", "dusk", "nauticalDusk", "sunrise", "sunset")
+  )
+
+head(sun_times)
+```
+
+If you're curious about the difference between (civil) dawn, nautical dawn and sunrise, take a stroll through [_Twilight_ on Wikipedia](https://en.wikipedia.org/wiki/Twilight).
+
+## Tidy Sun Times
+
+As cool as it is to so easily get to the point of having this data in hand,
+we need to do a little bit of tidying up to get it ready for ggplot2.
+In particular,
+we need to consolidate all of the timestamps into one column
+that we can index by `date` and `event` (such as _dawn_, _nautical dawn_, etc.).
+I used [pivot_longer()](https://tidyr.tidyverse.org/reference/pivot_longer.html)
+to move the column labels for `dawn` through `sunset` into an `event` column
+with the corresponding values from each row in an adjacent `time` column.
+
+```{r tidy-sun-times}
+library(tidyverse)
+
+tidy_sun_times <-
+  sun_times %>%
+  select(-lat, -lon) %>%
+  pivot_longer(-date, names_to = "event", values_to = "time") %>%
+  mutate(
+    tz = strftime(time, "%Z"),
+    time = hms::as_hms(time)
+  )
+
+tidy_sun_times
+```
+
+There's also a small trick here to use `strftime()`
+to extract the short timezone label `%Z`, e.g. **EST** or **EDT**,
+for each day,
+which I'll use later when calling out the time changes.
+And finally,
+I used `hms::as_hms()` to extract the time of day component
+from each sun event timestamp.
+The neat thing about the _hms_ class
+is that while it prints in a readable hours, minutes, seconds format,
+we can also treat it as
+an integer number of seconds from midnight.
+We'll use this property in just a bit when working on the plot's axis labels.
+
+## First Looks
+
+Now that we have tidy data ready for ggplot2, let's plot it!
+This plot won't look amazing,
+but it will help us get a sense of the data we have to work with.
+
+```{r plot-first-looks}
+#| fig.alt: >
+#|   Basic unthemed ggplot2 line plot of sunrise and sunset times
+#|   for Atlanta, GA. There are six lines, three in the morning
+#|   for nautical dawn, dawn and sunrise, and three lines in the
+#|   evening for their corresponding events. Each line has a
+#|   different color.
+ggplot(tidy_sun_times) +
+  aes(x = date, y = time, color = event) +
+  geom_line()
+```
+
+## Paired Daily Events
+
+The plot above reveals our next challenge:
+I used `geom_line()` to plot the time of each event as a line,
+but I want to be able to fill in the region between each pair of events:
+
+* sunrise and sunset
+* dawn and dusk
+* nautical dawn and nautical dusk.
+
+We can use [`geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)
+to acheive this look,
+but it requires a little more transformation.
+We need the sunrise time in one column called `starts`
+and a second column with the sunset time in `ends`.
+Then we can map these new columns to the `ymin` and `ymax` aesthetics,
+letting `geom_ribbon()` fill in space between them.
+
+The plan of action is to create a new column that I'll call `period`
+where we'll choose which of these two new columns a timestamp will be moved to.
+We'll identify each `pair` using the morning event label.
+
+Because we need `pivot_longer()` to create two new columns,
+`starts` and `ends`,
+from our single `period` column,
+we'll first split the table into a list of two tables,
+one for each period,
+and _then_ pivot the timestamp column into a new column.
+Because we're operating on a list,
+we'll use `purrr::map()` to coordinate this action.
+Then we can merge the two tables back together with `left_join()`,
+using `purrr::reduce()` to apply that action to the list of pivoted tables.
+
+After that,
+we're back in single-table land,
+and can use `mutate()` and `select()` to tweak the final table output
+to make sure that the morning events are ordered correctly:
+_nautical dawn_, then _dawn_, then _sunrise_.
+
+```{r tidier-sun-times}
+tidier_sun_times <-
+  tidy_sun_times %>%
+  mutate(
+    period = case_when(
+      str_detect(event, "[dD]awn|sunrise") ~ "starts",
+      str_detect(event, "[dD]usk|sunset") ~ "ends"
+    ),
+    pair = recode(
+      event,
+      nauticalDusk = "nauticalDawn",
+      sunset = "sunrise",
+      dusk = "dawn"
+    )
+  ) %>%
+  group_split(period) %>%
+  map(pivot_wider, names_from = "period", values_from = "time") %>%
+  reduce(
+    left_join,
+    by = c("date", "tz", "pair"),
+    suffix = c("_ends", "_starts")
+  ) %>%
+  mutate(
+    pair = factor(pair, c("nauticalDawn", "dawn", "sunrise"))
+  ) %>%
+  select(date, tz, pair, contains("starts"), contains("ends"))
+
+tidier_sun_times
+```
+
+## Another plot
+
+Now we're ready to try out our even tidier data set!
+Okay, it's actually less tidy, but more ready for plotting.
+We'll swap out `geom_line()` for
+[`geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html),
+and map `starts` to `ymin` and `ends` to `ymax`,
+filling in each region by `pair`.
+
+```{r plot-tidier-sun-times}
+#| fig.alt: >
+#|   Basic unthemed ggplot2 ribbon plot of sunrise and sunset times.
+#|   Unlike the previous plot, this plot has three shaded regions
+#|   stacked on top of each other with nautical dawn to dusk in the
+#|   background and sunrise to sunset in the foreground. There are now
+#|   three colors rather than six.
+ggplot(tidier_sun_times) +
+  aes(date, ymin = starts, ymax = ends, fill = pair) +
+  geom_ribbon()
+```
+
+It looks terrible, but it's more or less what we want to see.
+The y-axis is a little confusing though
+because it reads from night at the top to day at the bottom.
+The trick is to recall that we used `hms::as_hms()`
+to turn the time of day into an integer number of seconds from midnight.
+So we can reverse the y-axis with [`scale_y_reverse()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+and then provide our own labels.
+
+```{r plot-tidier-sun-times-2}
+#| fig.alt: >
+#|   Basic unthemed ggplot2 ribbon plot of sunrise and sunset times,
+#|   with better x- and y-axis labels. In this case, the y-axis is
+#|   reversed and labelled "hours:minutes". The x-axis labels include
+#|   only the month abbreviation.
+ggplot(tidier_sun_times) +
+  aes(date, ymin = starts, ymax = ends, fill = pair) +
+  geom_ribbon() +
+  scale_y_reverse(
+    limits = c(24*60^2, 0),
+    breaks = seq(0, 24*60^2, by = 3 * 60^2),
+    label = paste0(seq(0, 24, by = 3), ":00"),
+    expand = expansion()
+  ) +
+  scale_x_date(
+    breaks = "3 months",
+    date_labels = "%b"
+  )
+```
+
+## Make it pretty
+
+Great!
+Now it's time to [draw the rest of the owl](https://blog.evanburchard.com/the-rest-of-the-owl/)!
+Which means I'm now going to include roughly 150 lines of code
+that take the rough sketch above and make it a pretty ggplot.
+
+Of course I should mention that what you'll find below
+isn't even the full story of the plots you see in this post.
+It turned out to be an intermediate sketch
+of the code that I actually used to create the plots.
+It also turns out that I'm pretty good at writing code
+that creates more problems that I need to solve with more code.
+
+A few preliminaries:
+I'll use the [Outfit font](https://fonts.google.com/specimen/Outfit?query=outfit)
+from Google Fonts with the help of the [sysfonts](https://github.com/yixuan/sysfonts) package.
+
+```{r plot-tidier-sun-times-setup}
+sysfonts::font_add_google("Outfit")
+```
+
+We'll need a grid for the x- and y-axis
+that will be used in a few places,
+so I'll create them up front.
+We end up with a vector of dates from January 1, 2022 to January 1, 2023
+by 2 months for the x-axis
+and a vector of times from midnight to midnight by 3 hours for the y-axis.
+
+```{r plot-tidier-sun-times-setup-1}
+x_breaks <- seq(
+  from = as.Date("2022-01-01"),
+  to = as.Date("2023-01-01"),
+  by = "2 months"
+)
+y_breaks <- seq(0, 24*60^2, by = 3 * 60^2)
+```
+
+Finally, there are a couple of colors I used in more than one place
+for the foreground and background colors.
+There are a few other colors that I should have pulled into variables
+for clarity,
+but I've decided that it's not worth the effort
+to think up variable names for them.
+
+```{r plot-tidier-sun-times-setup-2}
+color_text <- "#F2CDB9"
+color_bg <- "#39304a"
+```
+
+Finally, as promised, the 150ish lines of ggplot2 code.
+Enjoy!
+
+```{r daylight-hours-atlanta}
+#| fig.height: 7
+#| fig.width: 9
+#| fig.alt: >
+#|   A heavily themed and customized ggplot2 plot of daylight hours in Atlanta.
+#|   The colors are evocative of a sunrise, with dark violet background and
+#|   soft sand-colored text and foreground colors. The plot highlights the
+#|   change in timezone from EST to EDT with text labels and arrows pointing
+#|   to the region where the sunlight hours shift one hour later in the day.
+ggplot(tidier_sun_times) +
+  # The x-axis is always the day of the year
+  aes(x = date) +
+  # Behind everything we add a grid of `+` characters
+  # in place of grid lines, to give a starry feel
+  geom_text(
+    # the data for this layer is our grid of x and y breaks
+    data = cross_df(
+      list(date = x_breaks, time = y_breaks, label = "+")
+    ) %>%
+      mutate(across(date, as.Date, origin = "1970-01-01")),
+    aes(label = label, y = time),
+    color = "#C29F5F"
+  ) +
+  # Here you'll recognize the outlines of our original plot sketch
+  geom_ribbon(
+    aes(ymin = starts, ymax = ends, fill = pair, alpha = pair),
+    show.legend = FALSE
+  ) +
+  # Add dotted horizontal lines at 9am and 5pm
+  geom_hline(
+    yintercept = c(9, 17) * 60^2,
+    color = color_bg,
+    alpha = 0.5,
+    linetype = 2
+  ) +
+  # And a little text to indicate the meaning of those lines
+  annotate(
+    geom = "text",
+    x = min(tidier_sun_times$date),
+    y = c(9, 17) * 60^2,
+    label = c("9am", "5pm"),
+    color = color_bg,
+    hjust = -0.25,
+    vjust = c(2, -1)
+  ) +
+  # If the timezone changes, it'll be due to daylight saving time
+  # so we'll add a little text to highlight that change
+  geom_text(
+    # This combines my favorite magrittr pipe trick:
+    #   `. %>%` creates a function with a single argument
+    # with my favorite ggplot2 geom trik:
+    #   `data` takes a function with a single argument that
+    #   can be used to filter the global dataset to a smaller subset
+    # The net result here is that we take the global data
+    # and filter down to the two places where the timezone changes
+    data = . %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
+      slice_head(n = 1),
+    aes(y = ends, label = tz),
+    hjust = 1,
+    vjust = 1,
+    nudge_x = -21,
+    nudge_y = -60^2 * 1.5,
+    lineheight = 0.8,
+    color = color_text
+  ) +
+  # These add two little arrows to point from the timezone text
+  # to the notch in the plot where the timezone change happens
+  geom_curve(
+    # Here's the `data = . %>%` trick again
+    data = . %>%
+      filter(pair == "nauticalDawn") %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
+      slice_head(n = 1),
+    # This next bit took much fiddling.
+    aes(
+      x = date - 17,
+      xend = date,
+      y = ends - (-60^2 * 1.2),
+      yend = ends + 500
+    ),
+    # If you like it put an arrow on it
+    arrow = arrow(length = unit(0.08, "inch")),
+    size = 0.5,
+    color = color_text,
+    curvature = 0.4
+  ) +
+  # The next two geoms highlight the second timezone change
+  # and are copies of the previous two layers but use
+  # `slice_tail()` instead of `slice_head()`.
+  geom_text(
+    data = . %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
+      slice_tail(n = 1),
+    aes(y = starts, label = tz),
+    hjust = 1,
+    nudge_x = -21,
+    nudge_y = 60^2 * 1.5,
+    lineheight = 0.8,
+    color = color_text
+  ) +
+  geom_curve(
+    data = . %>%
+      filter(pair == "nauticalDawn") %>%
+      filter(tz != coalesce(lag(tz), first(tz))) %>%
+      slice_tail(n = 1),
+    aes(
+      x = date - 17,
+      xend = date,
+      y = starts - 60^2,
+      yend = starts - 500
+    ),
+    arrow = arrow(length = unit(0.08, "inch")),
+    size = 0.5,
+    color = color_text,
+    curvature = -0.4
+  ) +
+  # Finally, we add a little annotation in the left edge of the plot
+  # to serve as a legend for each layer and call out dawn, dusk,
+  # sunrise and sunset, etc. Here I used the `ggrepel` package to
+  # make sure the labels don't overlap, and in hopes that I wouldn't
+  # need to fiddle too much with positioning. Fiddling was required
+  # but I think the end result looks pretty good.
+  ggrepel::geom_label_repel(
+    data = . %>% filter(date == max(date)) %>%
+      pivot_longer(contains("event")) %>%
+      mutate(
+        date = date + 12,
+        time = if_else(value == pair, starts, ends),
+        value = snakecase::to_title_case(value)
+      ),
+    aes(y = time, fill = pair, label = value),
+    color = color_bg,
+    fontface = "bold",
+    show.legend = FALSE,
+    # Most of the next few lines are designed to keep the
+    # labels on the right side of the plot as close to the
+    # layers they're supposed to annotate as possible.
+    direction = "y",
+    min.segment.length = 20,
+    hjust = 0,
+    label.size = 0,
+    label.padding = 0.33,
+    box.padding = 0.25,
+    xlim = c(as.Date("2023-01-07"), NA)
+  ) +
+  # Next up, deal with our scales.
+  # First up colors are the colors for the ribbon fill.
+  scale_fill_manual(
+    values = c(
+      nauticalDawn = "#b56576",
+      dawn = "#eaac8b",
+      sunrise = "#ffd27d"
+    )
+  ) +
+  # Then add a little opacity, even though ggplot will warn us
+  # that using opacity with a discrete variable isn't a good idea.
+  # (I think it's a fine idea, thank you very much.)
+  scale_alpha_discrete(range = c(0.5, 0.9)) +
+  # Here are the x- and y-axis scales from our original sketch
+  scale_x_date(
+    breaks = x_breaks,
+    date_labels = "%b",
+    limits = c(
+      as.Date("2022-01-01"),
+      as.Date("2023-03-15")
+    ),
+    expand = expansion()
+  ) +
+  scale_y_reverse(
+    limits = c(
+      max(tidier_sun_times$ends + 60^2),
+      min(tidier_sun_times$starts - 60^2)
+    ),
+    breaks = y_breaks,
+    labels = paste0(seq(0, 24, by = 3), ":00"),
+    expand = expansion()
+  ) +
+  # Labels, obvs.
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "How long are the days near me?",
+    subtitle = "Atlanta, GA",
+    caption = "garrickadenbuie.com"
+  ) +
+  # Make sure the sunrise/sunset labels aren't clipped by the plot area
+  coord_cartesian(clip = "off") +
+  # Finally, make it pretty. We'll start with a minimal base theme
+  theme_minimal(base_family = "Outfit", base_size = 16) +
+  # And then tweak a bunch of little things...
+  theme(
+    plot.title = element_text(
+      color = color_text,
+      hjust = 0,
+      size = 14
+    ),
+    plot.subtitle = element_text(
+      color = color_text,
+      hjust = 0,
+      size = 24,
+      margin = margin(b = 6)
+    ),
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = color_bg),
+    plot.margin = margin(20, 0, 20, 10),
+    panel.grid = element_blank(),
+    axis.text = element_text(color = color_text),
+    axis.title = element_text(color = color_text),
+    plot.caption = element_text(
+      color = "#726194",
+      hjust = 0.97,
+      vjust = -1
+    ),
+    plot.caption.position = "plot"
+  )
+```
+
+```{r eval=FALSE, echo=FALSE}
+tidier_sun_times %>%
+  filter(pair == "sunrise") %>%
+  mutate(
+    starts = lubridate::ymd_hms(paste(date, starts), tz = location$tz),
+    ends = lubridate::ymd_hms(paste(date, ends), tz = location$tz),
+    morning = lubridate::ymd_hms(paste(date, "9:00:00"), tz = location$tz),
+    evening = lubridate::ymd_hms(paste(date, "17:00:00"), tz = location$tz),
+    morning = as.numeric(difftime(morning, starts, units = "secs")),
+    evening = as.numeric(difftime(ends, evening, units = "secs")),
+    non_work_hours = (morning + evening) / 60
+  ) %>%
+  ggplot() +
+  aes(date, non_work_hours) +
+  geom_col() +
+  scale_y_continuous(
+    labels = function(x) paste0(round(x / 60), "h")
+  )
+```
+
+<!-- html_preserve -->
+```{css echo=FALSE}
+.city-plots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+}
+.selectr-selected {
+  border-width: 0;
+}
+.custom-bg-light,
+.selectr-selected {
+  background-color: var(--quarto-border-color);
+}
+.selectr-options-container,
+.selectr-input-container,
+.selectr-input {
+  background-color: var(--quarto-body-bg);
+  border-color: var(--quarto-border-color);
+  color: var(--quarto-body-color);
+}
+.selectr-option.selected {
+  color: var(--bs-primary);
+  background-color: rgba(var(--bs-primary-rgb), 0.1)
+}
+.selectr-option.active {
+  color: var(--bs-primary);
+  background-color: rgba(var(--bs-primary-rgb), 0.2)
+}
+/* @media (prefers-color-scheme: dark) {
+  .custom-bg-light,
+  .selectr-selected {
+    background-color: var(--quarto-border-color);
+  }
+  .selectr-options-container,
+  .selectr-input-container,
+  .selectr-input {
+    background-color: var(--quarto-body-bg);
+    border-color: var(--quarto-border-color);
+    color: var(--quarto-body-color);
+  }
+  .selectr-option.selected {
+    color: var(--bs-primary);
+    background-color: var(--purple-10);
+  }
+  .selectr-option.active {
+    color: var(--bs-primary);
+    background-color: var(--purple-20);
+  }
+} */
+```
+
+```{js echo=FALSE}
+function updatePlotSelectedCity() {
+  const plot = document.getElementById('city-plot')
+  const plotDesc = document.getElementById('city-plot-desc')
+  let inputCity = document.getElementById('choose-city')
+  inputCity = Array.from(inputCity.options).filter(el => el.value === inputCity.value)[0]
+
+  plot.src = inputCity.value
+  plot.setAttribute('alt', inputCity.dataset.city)
+  plotDesc.innerHTML = inputCity.dataset.alt
+}
+document.addEventListener('DOMContentLoaded', updatePlotSelectedCity)
+document.getElementById('choose-city').addEventListener('change', updatePlotSelectedCity)
+Array.from(
+  document.getElementById('choose-city').parentElement.querySelectorAll('button')
+).map(btn => btn.addEventListener('click', function(ev) {
+    const inputCity = document.getElementById('choose-city')
+    const idxCurrent = Array.from(inputCity.options).findIndex(el => inputCity.value == el.value)
+    let idxNext = idxCurrent + (ev.currentTarget.id === 'choose-city-prev' ? -1 : 1)
+    // console.log({idxCurrent, idxNext})
+    if (idxNext < 0) {
+      idxNext = inputCity.options.length - 1
+    } else if (idxNext >= inputCity.options.length) {
+      idxNext = 0
+    }
+    inputCity.value = inputCity.options[idxNext].value
+    inputCity.dispatchEvent(new Event('change'))
+  })
+)
+```
+<!-- /html_preserve -->
+
+
+```{r social, ref.label = "daylight-hours-atlanta", fig.width = 7 * 1.91, fig.height = 7, echo = FALSE, fig.show = "hide"}
+# repeat atlanta plot sized for social
+```

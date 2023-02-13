@@ -1,0 +1,60 @@
+---
+title: "Better Progressive Xaringan"
+subtitle: "Example Slides"
+author: "Garrick Aden-Buie"
+institute: "garrickadenbuie.com"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [xaringan-themer.css, example.css]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+class: show-only-last-code-result
+
+# Random Sampling in R
+
+```{r}
+runif(5)
+```
+
+--
+
+```{r}
+rnorm(5)
+```
+
+--
+
+```{r}
+rbinom(5, 1, 0.5)
+```
+
+--
+
+```{r}
+rcauchy(5)
+```
+
+---
+
+# show-only-last-code-result
+
+Use this CSS chunk with the slide `class: show-only-last-code-result`.
+
+````
+```{css echo=FALSE}`r ''`
+.show-only-last-code-result pre + pre:not(:last-of-type) code[class="remark-code"] {
+	display: none;
+}
+```
+````

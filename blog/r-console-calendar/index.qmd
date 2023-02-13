@@ -1,0 +1,234 @@
+---
+title: A Calendar in Your R Console
+author: Garrick Aden-Buie
+date: '2020-09-21'
+slug: r-console-calendar
+categories:
+  - R
+  - Scripts
+  - Productivity
+  - Interesting Uses of R
+description: >
+  Print a nicely-formatted calendar in your R console.
+image: social-card.png
+source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2020/2020-09-21-a-calendar-in-your-r-console.Rmarkdown'
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- Links -->
+[lubridate]: https://lubridate.tidyverse.org
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE,
+  fig.width = 9, fig.height = 10
+)
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+options(htmltools.dir.version = TRUE)
+```
+
+Today I was [nerd sniped](https://xkcd.com/356/)
+by [Mike FC](https://coolbutuseless.com)
+who goes by [&commat;coolbutuseless](https://twitter.com/coolbutuseless)
+on Twitter despite the fact that he makes cool and useful things on the regular.
+
+In his tweet, he shows a neat trick that works on Unix or macOS machines.
+These systems come with a command-line utility called `cal` ([read more here](https://www.computerhope.com/unix/ucal.htm)).
+By calling `cal` from the R console using `system()`,
+you can print a calendar in your console.
+
+```{r}
+system <- function(...) {
+  x <- base::system(..., intern = TRUE)
+  cat(gsub("_\b", "", x), sep = "\n")
+}
+```
+
+```{r echo=TRUE, comment=""}
+system("cal")
+```
+
+Here's Mike's [original tweet](https://twitter.com/coolbutuseless/status/1308163906674790402).
+
+```{r include=FALSE, eval=FALSE}
+tweetrmd::tweet_screenshot(
+  "https://twitter.com/coolbutuseless/status/1308163906674790402",
+  file = "coolbutuseless-tweet.png"
+)
+```
+
+<center><a href="https://twitter.com/coolbutuseless/status/1308163906674790402"><img src="coolbutuseless-tweet.png" style="width:100%;max-width:400px;" /></a></center>
+
+This is neat and all, but it doesn't work on [Windows](https://twitter.com/davidbraze/status/1308177449784610817) &#x1F622; &#x1F937;&#x200D;.
+
+So I used <span class="pkg">[lubridate]</span> and <span class="pkg">[crayon](https://github.com/r-lib/crayon)</span>
+to recreate `cal` with an R function `cal()`.
+I'm not going to do a full walk through of the code,
+but I still wanted to share it.
+Read on to explore the code or to try out the function yourself.
+
+## Tidy Dates
+
+The first step was to write a function to set up a data frame of dates.
+This I cribbed heavily from <span class="pkg">[ggweekly](/blog/ggplot2-weekly-planner/)</span>.
+
+```{r make-month-dates, echo=TRUE}
+make_month_dates <- function(start_date, end_date, week_start = 1) {
+  if (identical(week_start, 7)) {
+    get_week <- lubridate::epiweek
+    get_year <- lubridate::epiyear
+  } else if (identical(week_start, 1)) {
+    get_week <- lubridate::isoweek
+    get_year <- lubridate::isoyear
+  }
+
+  if (!inherits(start_date, "Date")) {
+    start_date <- lubridate::ymd(start_date, truncated = 1)
+  }
+  if (!inherits(end_date, "Date")) {
+    end_date <- lubridate::ymd(end_date, truncated = 1)
+  }
+
+  start_date <- lubridate::floor_date(start_date, "month")
+  end_date <- lubridate::rollback(lubridate::ceiling_date(end_date, "month"))
+
+  tibble::tibble(
+    date      = seq(start_date, end_date, by = "day"),
+    day       = lubridate::day(date),
+    wday      = lubridate::wday(.data$date, label = FALSE, abbr = TRUE, week_start = week_start),
+    weekend   = lubridate::wday(.data$date, label = FALSE, week_start = 1) %in% 6:7,
+    week      = get_week(.data$date),
+    month     = lubridate::month(.data$date, label = TRUE, abbr = FALSE),
+    month_int = lubridate::month(.data$date, label = FALSE),
+    year      = get_year(.data$date)
+  )
+}
+```
+
+The `make_month_dates()` function takes a full year-month-day or a year-month
+and returns the dates between the month start of the `start_date`
+and the month end of the `end_date`.
+Weeks can start on Monday (`1`) or Sunday (`7`).
+
+```{r make-month-dates-demo, echo=TRUE}
+make_month_dates("2020-09", "2020-11", week_start = 1)
+```
+
+## Make it a Calendar
+
+The next step is to wrangle the dates into a calendar shape.
+For this step, I used <span class="pkg">dplyr</span>, <span class="pkg">tidyr</span>, and <span class="pkg">lubridate</span> together.
+
+The gist of the process is to
+
+1. Fill in the blank days for "missing" weekdays in the first or last week of each month
+
+1. Create the month-calendar title and collapse each week into a single line
+
+1. Determine how many calendars fit on each row and paste each *n*th week together into a single line
+
+1. Finally print each line to print rows of calendars!
+
+Check out the whole function below for the complete details.
+I used package prefixes (and `cur_group_id()` from <span class="pkg">dplyr</span> 1.0.0),
+and I inlined the code from `make_month_dates()` above to facilitate copy-pasting-calendaring.
+
+<h4 id="code-cal" class="js-expandmore expand-for-code">R code</h4>
+
+<div class="js-to_expand is-opened">
+
+```{r fn-cal, echo=TRUE}
+cal <- function(
+  start_date = lubridate::today(),
+  end_date = start_date + 28,
+  week_start = 1
+) {
+  `%>%` <- dplyr::`%>%`
+
+  if (!inherits(start_date, "Date")) {
+    start_date <- lubridate::ymd(start_date, truncated = 1)
+  }
+  if (!inherits(end_date, "Date")) {
+    end_date <- lubridate::ymd(end_date, truncated = 1)
+  }
+
+  start_date <- lubridate::floor_date(start_date, "month")
+  end_date <- lubridate::rollback(lubridate::ceiling_date(end_date, "month"))
+
+  tibble::tibble(
+    date      = seq(start_date, end_date, by = "day"),
+    day       = lubridate::day(date),
+    wday      = lubridate::wday(.data$date, label = FALSE, abbr = TRUE, week_start = week_start),
+    weekend   = lubridate::wday(.data$date, label = FALSE, week_start = 1) %in% 6:7,
+    week      = as.integer(lubridate::floor_date(.data$date, unit = "week", week_start = week_start)),
+    month     = lubridate::month(.data$date, label = TRUE, abbr = FALSE),
+    month_int = lubridate::month(.data$date, label = FALSE),
+    year      = lubridate::year(lubridate::floor_date(.data$date, unit = "year", week_start = week_start))
+  ) %>%
+    dplyr::group_by(month, year) %>%
+    dplyr::mutate(week = week - min(week) + 1) %>%
+    dplyr::ungroup() %>%
+    tidyr::complete(tidyr::nesting(year, month_int, month), wday = 1:7, week) %>%
+    dplyr::arrange(year, month_int, week, wday) %>%
+    dplyr::mutate(
+      day = sprintf("%2s", day),
+      day = dplyr::if_else(weekend, as.character(crayon::silver(day)), day),
+      day = dplyr::if_else(
+        date == lubridate::today(),
+        as.character(crayon::bold(crayon::red(day))),
+        day
+      ),
+      month_label = paste(month, year)
+    ) %>%
+    tidyr::replace_na(list(day = "  ")) %>%
+    dplyr::group_by(year, month_int, month_label, week) %>%
+    dplyr::summarize(day = paste(day, collapse = " "), .groups = "drop") %>%
+    dplyr::group_by(month_int) %>%
+    dplyr::mutate(
+      width = max(crayon::col_nchar(day)),
+      day = crayon::col_align(day, width = width, align = "right"),
+      month_label = crayon::col_align(month_label, width = width, align = "center"),
+      month_label = crayon::bold(month_label)
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::bind_rows(
+      dplyr::distinct(., year, month_int, day = month_label, week = 0)
+    ) %>%
+    dplyr::mutate(width = max(crayon::col_nchar(day))) %>%
+    dplyr::arrange(year, month_int, week) %>%
+    dplyr::group_by(year, month_int) %>%
+    dplyr::mutate(
+      row = dplyr::cur_group_id() - 1,
+      row = floor(row / (getOption("width") %/% (width + 2))),
+    ) %>%
+    dplyr::group_by(row, week) %>%
+    dplyr::summarize(text = paste(day, collapse = "    "), .groups = "drop_last") %>%
+    dplyr::mutate(text = dplyr::if_else(week == max(week), paste0(text, "\n"), text)) %>%
+    dplyr::pull(text) %>%
+    cli::cat_line()
+}
+```
+
+Phew, that's a lot.
+But now I have a function `cal()` that prints out a calendar in my R console!
+
+</div>
+
+```{r, comment="", results="asis"}
+options(crayon.enabled=TRUE)
+old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
+```
+
+```{r, echo=2, comment=""}
+opts <- options(width = 44)
+cal("2020-09", "2020-12")
+options(opts)
+```
+
+***
+
+Edited on 2021-01-28 to fix a bug that caused days whose ISO weeks occur in an earlier year —
+e.g. 2021-01-01 is assigned to week `r lubridate::isoweek(lubridate::ymd("2021-01-01"))` of 2020 —
+to appear in an incorrect year. Thanks [&commat;Darkyben](https://twitter.com/Darkyben/status/1354740287877378048)!

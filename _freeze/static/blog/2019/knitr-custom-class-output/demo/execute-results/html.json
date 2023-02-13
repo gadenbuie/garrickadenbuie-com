@@ -1,0 +1,14 @@
+{
+  "hash": "ef17470ebb22c19acb2a86d145c2eb09",
+  "result": {
+    "markdown": "---\ntitle: \"Custom CSS Classes\"\nsubtitle: \"For output, messages, warnings, errors\"\noutput: html_document\n---\n\n\nNote that because this demonstration uses `rmarkdown::html_document()`, we can use [Bootstrap classes](https://getbootstrap.com/docs/3.3/css/#helper-classes-backgrounds) to customize the chunk outputs.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# setup\nknitr::opts_chunk$set(\n  class.output  = \"bg-success\",\n  class.message = \"bg-info text-info\",\n  class.warning = \"bg-warning text-warning\",\n  class.error   = \"bg-danger text-danger\"\n)\n```\n:::\n\n\n#### Normal\n\n\n::: {.cell}\n\n```{.r .cell-code}\npaste(\"Normal\", \"R chunk\", \"output!!\")\n```\n\n::: {.cell-output .cell-output-stdout}\n```{.bg-success}\n[1] \"Normal R chunk output!!\"\n```\n:::\n:::\n\n\n#### Message\n\n\n::: {.cell}\n\n```{.r .cell-code}\nmessage(\"This is a message\")\n```\n\n::: {.cell-output .cell-output-stderr}\n```{.bg-info .text-info}\nThis is a message\n```\n:::\n:::\n\n\n#### Warning\n\n\n\n```{.r .cell-code}\nwarning(\"This is a warning\")\n```\n\n```{.bg-warning .text-warning}\nWarning: This is a warning\n```\n\n\n#### Error\n\n\n::: {.cell}\n\n```{.r .cell-code}\nstop(\"An error occurred in this chunk.\", call. = FALSE)\n```\n\n::: {.cell-output .cell-output-error}\n```{.bg-danger .text-danger}\nError: An error occurred in this chunk.\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

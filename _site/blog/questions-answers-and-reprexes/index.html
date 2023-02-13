@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2021-03-16">
+<meta name="description" content="A “CSS Battle” YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.">
+
+<title>Garrick Aden-Buie - Questions, answers, and reprexes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Questions, answers, and reprexes">
+<meta property="og:description" content="A &quot;CSS Battle&quot; YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/questions-answers-and-reprexes/cssbattle-triangles.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="600">
+<meta property="og:image:width" content="800">
+<meta name="twitter:title" content="Garrick Aden-Buie - Questions, answers, and reprexes">
+<meta name="twitter:description" content="A &quot;CSS Battle&quot; YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/questions-answers-and-reprexes/cssbattle-triangles.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="600">
+<meta name="twitter:image-width" content="800">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Questions, answers, and reprexes</h1>
+                  <div>
+        <div class="description">
+          A “CSS Battle” YouTube video made me ponder metacognition in programming. I had questions, reprex gave me answers.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Teaching</div>
+                <div class="quarto-category">Learning</div>
+                <div class="quarto-category">CSS</div>
+                <div class="quarto-category">Programming</div>
+                <div class="quarto-category">reprex</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 16, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#css-battle-with-the-css-king" id="toc-css-battle-with-the-css-king" class="nav-link active" data-scroll-target="#css-battle-with-the-css-king">CSS Battle with The CSS King</a></li>
+  <li><a href="#writing-code-is-testing-your-theory-of-the-solution" id="toc-writing-code-is-testing-your-theory-of-the-solution" class="nav-link" data-scroll-target="#writing-code-is-testing-your-theory-of-the-solution">Writing code is testing your theory of the solution</a></li>
+  <li><a href="#two-roads-diverged-in-a-wood-and-i" id="toc-two-roads-diverged-in-a-wood-and-i" class="nav-link" data-scroll-target="#two-roads-diverged-in-a-wood-and-i">Two roads diverged in a wood, and I…</a></li>
+  <li><a href="#writing-code-is-thinking-about-code" id="toc-writing-code-is-thinking-about-code" class="nav-link" data-scroll-target="#writing-code-is-thinking-about-code">Writing code is thinking about code</a></li>
+  <li><a href="#questioning-your-questions" id="toc-questioning-your-questions" class="nav-link" data-scroll-target="#questioning-your-questions">Questioning your questions</a></li>
+  <li><a href="#a-reprex-is-the-answer" id="toc-a-reprex-is-the-answer" class="nav-link" data-scroll-target="#a-reprex-is-the-answer">A reprex is the answer</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/questions-answers-and-reprexes/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/questions-answers-and-reprexes/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<div class="lead">
+<p>I stumbled into a niche YouTube genre: Web Development online instructors (a.k.a <em>content creators</em>) challenge each other to “CSS Battles”.</p>
+<p>Turns out they are fascinating videos where experienced programmers talk and fumble their way through their coding.</p>
+<p>As they talked through their thought processes, I thought about the questions we ask when our code goes wrong and the answers we get when we reprex.</p>
+</div>
+<section id="css-battle-with-the-css-king" class="level2">
+<h2 class="anchored" data-anchor-id="css-battle-with-the-css-king">CSS Battle with The CSS King</h2>
+<figure style="width:100%" class="figure">
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/-QgJgZCJvo4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+
+<em>I challenged The CSS King to a CSS Battle</em> on <a href="https://youtu.be/-QgJgZCJvo4" target="_blank" rel="noopener">YouTube</a>
+
+</figure>
+<p>I’ve thought a lot about this video since I watched it. <a href="https://blog.webdevsimplified.com/">Kyle Cook</a> and <a href="https://www.kevinpowell.co/">Kevin Powell</a> both make great YouTube videos teaching CSS and front-end web development concepts.</p>
+<p>In this video, they simultaneously tackle three <a href="https://cssbattle.dev">CSS challenges</a> with a time limit of 10 minutes for each. Both Kyle and Kevin talk through their process and the video switches between the two of them as they build up their solutions.</p>
+</section>
+<section id="writing-code-is-testing-your-theory-of-the-solution" class="level2">
+<h2 class="anchored" data-anchor-id="writing-code-is-testing-your-theory-of-the-solution">Writing code is testing your theory of the solution</h2>
+<p>This is the part I loved: beyond confirming that writing CSS involves a lot of <em>let’s just try <code>width: 100%</code></em> and <em>I guess it should be 90px… 85px… 75px…</em>, it was awesome to see how much of solving a complicated programming problem is about having a vague idea of the structure of a final solution and working toward that goal with many iterations with tiny, confirmatory tests.</p>
+<p><img src="cssbattle-triangles.png" alt="CSS Battle Christmas tree challenge: three stacked triangles" width="33%" align="right" style="padding-left: 1em"></p>
+<p>In the first challenge, they made a cute little CSS Christmas tree. There are some tricks in here that you just need to know — for example, you can <a href="https://css-tricks.com/snippets/css/css-triangle/">make triangles with CSS</a> using a trick with borders — but neither Kyle nor Kevin start out knowing the exact final answer. Kevin narrates:</p>
+<blockquote class="blockquote">
+<p>I have to remember how to do an up arrow… Let’s just try… Is it like this? … Ah! I did get it right! Awesome, awesome. I don’t use this trick too often and I always forget how it works.</p>
+</blockquote>
+</section>
+<section id="two-roads-diverged-in-a-wood-and-i" class="level2">
+<h2 class="anchored" data-anchor-id="two-roads-diverged-in-a-wood-and-i">Two roads diverged in a wood, and I…</h2>
+<p>Kyle starts off with the border trick, and actually explains how it works in detail, but pretty quickly his solution goes a little off the rails. This is where I found myself fascinated.</p>
+<p>At this point, both programmers are on the right track. The video flips back-and-forth between the two and you can see that Kyle <em>has the right idea</em>. But he starts second guessing his approach. He questions whether or not he’s using the right trick and he almost starts over from scratch.</p>
+<p>Where it seemed like both programmers were headed for the same solution, Kyle’s questioning leads him to reverse course and try a radically different approach. Kevin, on the other hand, keeps on pushing forward. A small difference in the path chosen leads to two very different outcomes. In the end Kyle ends up coding in circles, trying to resolve problems that arose because of the circuitous path he chose when he gave up on his original direction.</p>
+</section>
+<section id="writing-code-is-thinking-about-code" class="level2">
+<h2 class="anchored" data-anchor-id="writing-code-is-thinking-about-code">Writing code is thinking about code</h2>
+<p>In my experience, writing actual code is an improbably small part of <em>programming</em>. I love the feeling of flow when I connect with a problem, when I’m mostly certain about how I’m going to solve it, when I can just write code — and not boiler plate, I mean real code. But day-to-day, I think about, read about, muse about, wonder about, and puzzle over much more code than I actually write.</p>
+<div class="border shadow-lg p-4 border-1 position-relative">
+<svg xmlns="http://www.w3.org/2000/svg" class="sidenote-pair-programmers position-absolute top-right" viewbox="0 0 512 512">
+<title>
+ionicons-v5-j
+</title>
+<path d="M336,256c-20.56,0-40.44-9.18-56-25.84-15.13-16.25-24.37-37.92-26-61-1.74-24.62,5.77-47.26,21.14-63.76S312,80,336,80c23.83,0,45.38,9.06,60.7,25.52,15.47,16.62,23,39.22,21.26,63.63h0c-1.67,23.11-10.9,44.77-26,61C376.44,246.82,356.57,256,336,256Zm66-88h0Z"></path><path d="M467.83,432H204.18a27.71,27.71,0,0,1-22-10.67,30.22,30.22,0,0,1-5.26-25.79c8.42-33.81,29.28-61.85,60.32-81.08C264.79,297.4,299.86,288,336,288c36.85,0,71,9,98.71,26.05,31.11,19.13,52,47.33,60.38,81.55a30.27,30.27,0,0,1-5.32,25.78A27.68,27.68,0,0,1,467.83,432Z"></path><path d="M147,260c-35.19,0-66.13-32.72-69-72.93C76.58,166.47,83,147.42,96,133.45,108.86,119.62,127,112,147,112s38,7.66,50.93,21.57c13.1,14.08,19.5,33.09,18,53.52C213.06,227.29,182.13,260,147,260Z"></path><path d="M212.66,291.45c-17.59-8.6-40.42-12.9-65.65-12.9-29.46,0-58.07,7.68-80.57,21.62C40.93,316,23.77,339.05,16.84,366.88a27.39,27.39,0,0,0,4.79,23.36A25.32,25.32,0,0,0,41.72,400h111a8,8,0,0,0,7.87-6.57c.11-.63.25-1.26.41-1.88,8.48-34.06,28.35-62.84,57.71-83.82a8,8,0,0,0-.63-13.39C216.51,293.42,214.71,292.45,212.66,291.45Z"></path>
+</svg>
+<h3 class="font-monospace mt-3 anchored">
+Sidenote: Pair Programming
+</h3>
+<p>As a side note, I find that the flow is easier to find when I’m <a href="https://martinfowler.com/articles/on-pair-programming.html">pair programming</a>. It seems paradoxical, but having another set of eyes and all the extra cycles of the other person watching, always helps me stay on track whenever I would normally get lost in the frustration of a diversion.</p>
+<p>Pre-pandemic, I always found it hard to convince others to join in pair-programming. But video conferencing makes it easier than ever to look over someone shoulder while they’re programming. It also makes it easier to switch roles while pairing, especially when you’re the navigator (the one watching/guiding) and need to step in to the driver role — <em>here, let me control your screen for a minute so I can show you…</em></p>
+</div>
+<style>
+.sidenote-pair-programmers {
+  width: 50px;
+  height: 50px;
+  float: right;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.sidenote-pair-programmers path {
+  fill: var(--bs-cyan);
+}
+.figure-left-third {
+  float: left;
+  width: 33%;
+  min-width: 200px;
+  padding: 0;
+  margin: 0;
+  margin-right: 1.5em;
+}
+.figure-left-third figcaption {
+  font-size: 0.8em;
+}
+</style>
+</section>
+<section id="questioning-your-questions" class="level2">
+<h2 class="anchored" data-anchor-id="questioning-your-questions">Questioning your questions</h2>
+<p>The art of question asking while programming is often about understanding where to put your mental break points. Not when to take a break from staring at your screen (that’s also an important skill, especially when you start flailing<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>), but points at which you pause and evaluate whether the code in front of you is doing what you think it should be doing. In your binary search of the problem space — will my broken code work if I poke this over here — choosing where to draw the boxes around your code is a skill that comes with time and experience.</p>
+<figure class="figure-left-third figure">
+<img src="pexels-karolina-grabowska-4219520.jpg" alt="Two hands, one holding a pencil and the other holding a right-angled ruler, preparing to draw a line." class="figure-img">
+<figcaption class="figure-caption">
+Photo by <a href="https://www.pexels.com/@karolina-grabowska?utm_content=attributionCopyText&amp;utm_medium=referral&amp;utm_source=pexels">Karolina Grabowska</a>
+</figcaption>
+</figure>
+<p>Sometimes, it’s made harder by experience. Is this bug I’m working on broken because of a local mistake, or is it broken because I’ve installed the latest version of three of this package’s dependencies from GitHub? Is it because I’m using the latest preview version of my IDE? Or is it because I was working on another feature for a package called by this package and I’ve installed my locally dev version of <em>that</em> package and <em>this</em> package is unhappy about that?</p>
+<p>With experience I’ve gotten better at looking at a problem, drawing a dotted line around a section of code, and finding a way to test whether the bug is inside or outside that line. But I can just as easily get distracted by a false positive and spend too much time testing things that are totally unrelated to the actual problem that I was trying to fix.</p>
+<p>One of the hardest parts of learning how to program is learning about how to draw these invisible lines. When everything is new, it’s hard to know where to look when something doesn’t work. It’s easy to think of questions that lead you further from the truth or that lead to non-local jumps in logic: rather than differentiating between two possibilities A or B, a beginner will jump from <em>A</em> doesn’t work so the problem must be possibility <em>K</em>.</p>
+<p>One of the biggest differentiators of experienced programmers from novices is their ability for metacognitive programming. They don’t just think about code in the sense of remembering a few magical commands, but they have a self-awareness of <em>how</em> they think about code. With experience, programmers move more quickly from <em>what if I try this</em> to <em>what could be going on here and how can I test it?</em></p>
+<p>Not that we don’t resort or fall into flailing. I can’t tell you how many times I get in a fight with my code just before lunch, while having the awareness to say to myself <em>this will be easier if I take a break and eat some food</em>, only to hear the voice on the other shoulder shout <strong>keep going, you’re so close, just try this <em>one last thing</em>.</strong></p>
+</section>
+<section id="a-reprex-is-the-answer" class="level2">
+<h2 class="anchored" data-anchor-id="a-reprex-is-the-answer">A reprex is the answer</h2>
+<p>How do you learn and practice the critical skill of asking your code questions? With <a href="https://reprex.tidyverse.org">a reprex</a>.</p>
+<p>A reprex is a small, reproducible example. Typically, it’s a small little bit of code with a tiny bug. It’s reproducible, meaning that it’s designed to work anywhere for anyone, or at least to work with the minimal number of dependencies. It doesn’t have to be buggy code, it can just be a tiny example.</p>
+<p>And it’s a very powerful technique.</p>
+<p>On the one hand, a reproducible example makes it easier to get help by making it easier for people to help you. For a great introduction to reprexes from this angle, you should definitely watch <a href="https://www.sharlagelfand.com/">Sharla Gelfand</a>’s talk <em><a href="https://youtu.be/G5Nm-GpmrLw?t=60">make a reprex… please</a></em>.</p>
+<p>On the other hand, when you create a reprex you’re practicing the art and science of asking questions of your code. At every iteration you ask yourself: is this part here essential? Is this package really required? Do I need this much data to make my example reproducible, or can I get to the same place with a smaller data set? Helpfully, you get immediate feedback: if you take out too much, your example doesn’t do <em>the thing</em> anymore. This skill of editing and question asking is critical — and it’s why the process of creating a reprex so often leads to a discovery of a solution.</p>
+<p>You don’t always have to start with a large problem. It can be just as valuable to create a toy problem to play with as you’re learning a new concept or a programming method. It’s easier to tinker and explore when it’s small, just like it’s easier to be confident you understand what the code or method you’re learning are <em>actually doing</em> when that’s the focus of your code.</p>
+<p>So, the next time you’re flailing, stop and make a reprex. The next time you’re learning a new concept, stop and make a reprex. And the next time you’re teaching beginners how to program, feel free to teach them how to stop and make a reprex<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><em>flailing</em> is a technical term. If you’re trying many things but you don’t have the feeling of getting anywhere, then you’re flailing. You’ll know you aren’t flailing any more when you have a feeling of getting somewhere even when your ideas aren’t panning out — because they’re at least telling you what <em>won’t work.</em><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Seriously, teach <a href="https://reprex.tidyverse.org">reprex</a> early. You don’t have to get into the weeds about environments or file paths or other technical details. Learning to program <em>is</em> learning how to understand code; they’ll either learn how to approach problematic code in a systematic way with a reprex, or they’ll learn how to debug their own code in the wild with fewer guard rails and tools.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2013-07-31">
+
+<title>Garrick Aden-Buie - The Pandoc Markdown rabbit hole</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - The Pandoc Markdown rabbit hole">
+<meta property="og:description" content="I’ve recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages.">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - The Pandoc Markdown rabbit hole">
+<meta name="twitter:description" content="I’ve recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages.">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">The Pandoc Markdown rabbit hole</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Apps</div>
+                <div class="quarto-category">Markdown</div>
+                <div class="quarto-category">Productivity</div>
+                <div class="quarto-category">Workflow</div>
+                <div class="quarto-category">Writing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 31, 2013</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-markdown-why-not-just-use-word-or-latex" id="toc-why-markdown-why-not-just-use-word-or-latex" class="nav-link active" data-scroll-target="#why-markdown-why-not-just-use-word-or-latex">Why Markdown? Why not just use Word? Or LaTeX?</a></li>
+  <li><a href="#what-im-looking-for" id="toc-what-im-looking-for" class="nav-link" data-scroll-target="#what-im-looking-for">What I’m looking for</a></li>
+  <li><a href="#what-im-using-now" id="toc-what-im-using-now" class="nav-link" data-scroll-target="#what-im-using-now">What I’m using now</a>
+  <ul class="collapse">
+  <li><a href="#whats-left-to-learn" id="toc-whats-left-to-learn" class="nav-link" data-scroll-target="#whats-left-to-learn">What’s left to learn</a></li>
+  </ul></li>
+  <li><a href="#pandoc-marked.app" id="toc-pandoc-marked.app" class="nav-link" data-scroll-target="#pandoc-marked.app">Pandoc + Marked.app</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/the-pandoc-markdown-rabbit-hole/index.md" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/the-pandoc-markdown-rabbit-hole/index.md" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<p>I’ve recently taken a hard dive into the deeply fragmented world of plaintext formatted markup languages. I currently have about 90 tabs open, each a winding, twisting trail leading through the world of <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, <a href="https://fletcherpenney.net/multimarkdown/">Multimarkdown</a>, <a href="https://pandoc.org">Pandoc</a>, <a href="http://latex-project.org">LaTeX</a>, <a href="http://w3.org/Math">MathML</a>, <a href="http://mathjax.org">MathJax</a>, and the other 500 slightly tweaked variants thereof.</p>
+<p>This post is more of a way for me to plot the easiest path to get to where I am now — a reference for the next time I have to do this. Maybe you’ll find it useful. The world of markup languages, apps, helpers, commandline tools and viewers is littered with github pages, scripts left in github gists and fixes mentioned deep in the comments of support threads.</p>
+<p>So, in hopes that this helps somebody else out, here are the apps and languages I have settled into. Today at least. We’ll see how long it all lasts.</p>
+<!-- more -->
+<section id="why-markdown-why-not-just-use-word-or-latex" class="level2">
+<h2 class="anchored" data-anchor-id="why-markdown-why-not-just-use-word-or-latex">Why Markdown? Why not just use Word? Or LaTeX?</h2>
+<p><strong>Because Word makes documents that look like shit.</strong> Because I put a lot of blood, tears and sweat into what I write and I’ve seen too many hours lost to Word documents corrupted by one equation too many. Because <a href="http://en.wikipedia.org/wiki/Cambria_(typeface)">Cambria Math</a> makes equations that just <em>look bad</em>. Math is beautiful; I want a serious looking math font. Because <a href="http://answers.microsoft.com/en-us/mac/forum/macoffice2011-macword/installing-math-fonts/301abc3b-d132-45c7-8409-99201dce1572">you cannot change the default math font in Word</a> (at least on Macs). Because writing should be easier.</p>
+<p>On the flip side, when I write in LaTeX, I spend <strong>way</strong> too much time trying to figure out what commands will format text the way I want. Sure, the math is pretty and as long as I stick to the basic document classes things tend to look good. But the structure of Markdown is just so much easier that it gets out of the way of what I want to say. When you need the power of LaTeX, then it’s incredible. But mostly when I write in LaTeX I can’t help but constantly think of <em>what could be</em>.</p>
+</section>
+<section id="what-im-looking-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-im-looking-for">What I’m looking for</h2>
+<p>So now that I know what I don’t want, here’s the short list of what I do want. Note that these intersect with the latest discussions about <a href="http://blog.martinfenner.org/2013/06/17/what-is-scholarly-markdown/">scholarly markdown</a>.</p>
+<ul>
+<li>Plays well with math</li>
+<li>Can handle citations (or not mess them up too bad)</li>
+<li>Tables are a plus</li>
+<li>Footnotes etc are cool, but not necessary</li>
+<li>Ports nicely to LaTeX, HTML, PDF and docx</li>
+</ul>
+<p>That last one is huge. I once spent ~24 hours converting a paper written in Word to LaTeX because the equations were crashing Word and corrupting the file. Only to find out two weeks later that the funding agency <strong>only accepted .docx formats</strong>. Not funny.</p>
+</section>
+<section id="what-im-using-now" class="level2">
+<h2 class="anchored" data-anchor-id="what-im-using-now">What I’m using now</h2>
+<p>Let’s follow the writing flow.</p>
+<ol type="1">
+<li><p>Create the empty .mmd file somewhere where you want the file to be.</p></li>
+<li><p>Text is written in plain text editor, preferably something that can highlight Markdown syntax. I’m using <a href="http://www.barebones.com/products/textwrangler/">TextWrangler</a>, but this choice is fluid.</p></li>
+<li><p>Text is written in <a href="http://johnmacfarlane.net/pandoc/README.html">Pandoc extended markdown</a>. Pandoc markdown lets you write LaTeX, and the benefits of being able to easily dump into .pdf, .docx, .tex, and .justaboutanything far outweigh the <a href="https://github.com/jgm/pandoc/wiki/Pandoc-vs-Multimarkdown#features-in-mmd-but-not-pandoc">missing MultiMarkdown features</a>.</p></li>
+<li><p>As I write, I use the <a href="http://markedapp.com">Marked.app</a> to preview the document every time I hit <code>⌘+s</code>. But Marked doesn’t render Pandoc extended markdown. Luckily there’s a workaround that I’ll talk about below.</p></li>
+<li><p>Final versions can be turned into the right format using the pandoc command line. I haven’t learned the ins-and-outs of this yet, but the <a href="http://johnmacfarlane.net/pandoc/demos.html">Pandoc demo page</a> has cut-and-paste commands to do basically anything you can think of, at least in a basic version.</p></li>
+</ol>
+<p>This is as far as I’ve needed to go to date. There’s a lot more to learn, but this should be enough to get anybody started.</p>
+<section id="whats-left-to-learn" class="level3">
+<h3 class="anchored" data-anchor-id="whats-left-to-learn">What’s left to learn</h3>
+<ol type="1">
+<li>Citations
+<ul>
+<li>I have a master .bib file for my citations so I can use any citekey from my library and know that they’ll show up as long as I point pandoc to my bibtex file. That can be done using the following flag:<code>--bibliography=/Users/.../Documents/PapersLibraryFull.bib</code></li>
+<li>Download <a href="http://zotero.org/styles">citation styles from zotero.org</a> and save them somewhere safe. I’ve created a folder in my home directory <code>~/.pandoc</code> for storing these things, and I put my .csl files in <code>~/.pandoc/csl</code>.To specify the citation style, use the <code>--csl</code> flag:<code>--csl /Users/.../.pandoc/csl/ieee-with-url.csl</code></li>
+<li>It’d be nice if the citation were inserted as a link to the full reference in the references section. This may be possible and I just haven’t figured it out yet.</li>
+</ul></li>
+<li>Formatting
+<ul>
+<li>I know it’s possible to make very nice looking documents with pandoc templates. I just don’t know how to do this yet.</li>
+</ul></li>
+<li>Evernote
+<ul>
+<li>I also need to figure out the best way to write text in this way and import into Evernote.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="pandoc-marked.app" class="level2">
+<h2 class="anchored" data-anchor-id="pandoc-marked.app">Pandoc + Marked.app</h2>
+<p>Big thanks go to <a href="https://github.com/kjhealy">kjhealy</a> for posting <a href="https://github.com/kjhealy/pandoc-templates">this shell script (and templates)</a> to use Pandoc to render HTML in <a href="http://markedapp.com">Marked.app</a>.</p>
+<p>While I haven’t figured out how to use the <a href="https://github.com/kjhealy/pandoc-templates/tree/master/templates">pandoc templates</a> he has developed, the shell script is phenomenal and works very well within Marked. I did make some changes to point pandoc to my Papers library bibtex file and to specify the citation style in advance.</p>
+<ol type="1">
+<li><p><a href="https://github.com/kjhealy/pandoc-templates/archive/master.zip">Download and unzip the pandoc-templates package</a>.</p></li>
+<li><p>Open the preferences panel in Marked, and under the <strong>Styles</strong> tab add the .css files included in kjhealy’s package.</p></li>
+<li><p>Then, copy <code>panmarked.sh</code> somewhere central, like your home folder and open it in your favorite text editor.</p></li>
+<li><p>Change the bibliography flag to point at the right .bib file.</p></li>
+<li><p>Add the <code>--csl</code> flag I mentioned above with the correct citation style.</p></li>
+<li><p>Save the edited file.</p></li>
+<li><p>In the <strong>Behavior</strong> tab, enable <em>Custom Markdown Processor</em> and enter the full path to your edited <code>panmarked.sh</code> file.</p></li>
+<li><p>Click save.</p></li>
+<li><p>Enjoy beautifully rendered Pandoc markdown.</p></li>
+</ol>
+<p>You can then edit <code>panmarked.sh</code> anytime to change the flags or arguments. You could also in theory copy the arguments into the Args box in the Marked app preference pane, but that box is small. Plus, it would have taken my way too long to figure that out from scratch, so big thanks again to kjhealy.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

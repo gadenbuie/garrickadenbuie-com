@@ -1,0 +1,103 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "blog/**/*.qmd"
+    - "talk/**/*.qmd"
+    - "project/**/*.qmd"
+    - "about/index.*md"
+    - "colophon/index.*md"
+  post-render:
+    # - "rsync --recursive --prune-empty-dirs --copy-links --safe-links static/. _site/"
+    - "cp -rn static/. _site/"
+
+website:
+  title: "Garrick Aden-Buie"
+  site-url: https://www.garrickadenbuie.com
+  repo-url: https://github.com/gadenbuie/garrickadenbuie-com
+  repo-actions:
+    - source
+    - edit
+    - issue
+  twitter-card:
+    creator: "@grrrck"
+    site: "@grrrck"
+    card-style: summary_large_image
+  open-graph: true
+  navbar:
+    title: garrick
+    background: light
+    right:
+      - text: blog
+        href: blog/index.qmd
+      - text: projects
+        href: project/index.qmd
+      - text: talks
+        href: talk/index.qmd
+      - text: about
+        href: about/index.qmd
+      - icon: github
+        href: https://github.com/gadenbuie
+      - icon: mastodon
+        href: https://fosstodon.org/grrrck
+  page-footer:
+    border: false
+    background: light
+    left: >-
+       © 2023 Garrick Aden-Buie
+    right: >-
+      <a class="link-dark me-1" href="/colophon">Made with 💙</a>
+      <a class="link-dark" href="/blog/index.xml" title = "RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a>
+    center: >-
+      <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener">{{< fa brands mastodon >}}</a>
+      <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener">{{< fa brands github >}}</a>
+      <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener">{{< fa brands r-project >}}</a>
+      <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener">{{< fa brands twitter >}}</a>
+      <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener">{{< fa brands keybase >}}</a>
+      <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener">{{< fa brands bandcamp >}}</a>
+      <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener">{{< ai orcid >}}</a>
+
+format:
+  html:
+    theme:
+      light:
+        - zephyr
+        - _assets/styles-elm-light.scss
+        - _assets/styles-elm-base.scss
+        - _assets/colors.scss
+      dark:
+        - _assets/zephyr-dark.scss
+        - _assets/styles-elm-dark.scss
+        - _assets/styles-elm-base.scss
+        - _assets/colors.scss
+    css:
+      - _assets/panelset-extras.css
+    highlight-style:
+      light: _assets/syntax-elm-light.theme
+      dark: _assets/syntax-elm-dark.theme
+    code-block-bg: false
+    include-before: |-
+      <script>
+        (function() {
+          const sheets = Array.from(document.styleSheets)
+            .filter(x => !x.href)
+
+          if (!sheets.length) return;
+
+          // remove the inlined base pandoc syntax styles
+          const base_syntax = sheets[0]
+          Array.from(base_syntax.cssRules)
+            .reduce((res, r, idx) => {
+              if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+                res = [...res, idx - res.length]
+              }
+              return(res)
+            }, [])
+            .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+        })()
+      </script>
+
+execute:
+  freeze: auto
+

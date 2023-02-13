@@ -1,0 +1,18 @@
+{
+  "hash": "22c876bf400f0ba9b9da79b5f20d28b1",
+  "result": {
+    "markdown": "---\ntitle: \"xaringan Playground\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  Making slides with xaringan is a great way to learn more about CSS\n  and web development.\nimage: \"../../blog/xaringan-playground/xaringan-playground-social.png\"\ndate: '2021-01-21'\nslug: xaringan-playground\ntags:\n  - R\n  - xaringan\n  - Presentation\n  - CSS\n  - Web Development\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Conference ]\nevent: \"rstudio::global\"\nevent_url: https://global.rstudio.com\nlocation: Virtual Conference\nlinks:\n  - icon: chalkboard-teacher\n    icon_pack: fas\n    name: Slides\n    url: https://slides.garrickadenbuie.com/xaringan-playground\n  - icon: github\n    icon_pack: fab\n    name: Code\n    url: https://github.com/gadenbuie/slides/tree/gh-pages/xaringan-playground\n  - icon: play\n    icon_pack: fas\n    name: Video\n    url: https://rstudio.com/resources/rstudioglobal-2021/xaringan-playground-using-xaringan-to-learn-web-development/\n---\n\n::: {.cell}\n::: {.cell-output-display}\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/xaringan-playground\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n:::\n:::\n\n\n## Abstract\n\n> xaringan is a quirky package that extends R Markdown to create beautiful web-based HTML slides. Some of xaringan’s quirks come from the JavaScript library it uses, remarkjs, and some of it from the unusual naming scheme xaringan uses for its functions. But under this quirky exterior lies a powerful tool for learning and practicing web development, especially when combined with infinite_moon_reader() for immediate feedback. In this talk I'll cover some basic web concepts that illustrate how fun and rewarding it can to learn HTML, CSS and JavaScript while building awesome slides in R Markdown.",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

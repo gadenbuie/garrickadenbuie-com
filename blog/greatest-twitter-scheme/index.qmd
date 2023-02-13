@@ -1,0 +1,158 @@
+---
+title: The Greatest Twitter Scheme of All Time?
+author: Garrick Aden-Buie
+date: '2018-08-24'
+slug: greatest-twitter-scheme
+aliases:
+  - /blog/2018/08/24/greatest-twitter-scheme
+description: |
+  In which I investigate a very cool thing that someone claims
+  to have done on Twitter. Using R and the rtweet package.
+categories:
+  - R
+  - Twitter
+  - rtweet
+source_link: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content/blog/2018/2018-08-24-costcoricebag.Rmd
+head_custom: |
+  <link rel="stylesheet" type="text/css" href="/css/tooltips.css">
+editor_options:
+  chunk_output_type: console
+references: ~
+---
+
+[rtweet]: https://rtweet.info
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = TRUE)
+```
+
+```{r extra-libraries, include=FALSE}
+# install.packages("ggsci")
+```
+
+I found this tweet today and I was intrigued.
+
+{{< tweet CostcoRiceBag 1032699857117605888 >}}
+
+What exactly had this person pulled off?
+What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?
+
+I wanted to know.
+But I didn't want to scroll through endless tweets.
+[Jump ahead to the answer](#final-result) if you're in a hurry yourself.
+
+To figure out what exactly was going on on Twitter, I turned to my favorite Twitter-related package: [rtweet].
+Getting all of [&commat;CostcoRiceBag](https://twitter.com/CostcoRiceBag)'s recent tweets was suprisingly simple — all it takes is a single call to [`get_timeline()`](https://rtweet.info/reference/get_timeline.html):
+
+```{r get-timeline, eval=FALSE}
+library(rtweet)
+library(dplyr)
+
+crb_tweets <- get_timeline("costcoricebag", n = 3200)
+```
+
+```{r get-timeline-cache, include=FALSE}
+library(rtweet)
+library(dplyr)
+
+crb_tweets <- readRDS(here::here("_data/tweets_costcoricebag.rds"))
+```
+
+From here, I simply filtered out replies and straight-up retweets (but not quote tweets), and then extracted the first word in the tweet text using a little [regex](/project/regexplain/).
+Upon arranging the tweets in reverse chronological order, the pattern in the `first_word` column is immediately apparent.
+
+```{r first-words}
+first_words <- crb_tweets %>%
+  filter(
+    !is_retweet,
+    is.na(reply_to_status_id),
+    created_at <= lubridate::ymd_hms("2018-08-23 18:43:27"),
+    created_at >= lubridate::ymd_h("2018-05-07 15"),
+    !grepl("^@", text)
+  ) %>%
+  mutate(
+    first_word = sub("^\\W*([\\w'’]+)[\\S\\s]+", "\\1", text, perl = TRUE)
+  ) %>%
+  arrange(desc(created_at))
+
+first_words %>%
+  select(created_at, text, first_word)
+```
+
+## Queen of the First Word Tweets {#final-result}
+
+The final result is amazing and definitely pretty much the greatest Twitter scheme ever.
+Hover over each word to see the text of the full tweet, or click on the word to go to the tweet.
+
+<blockquote>
+```{r result, results='asis', echo=FALSE}
+first_words %>%
+  mutate(
+    text = gsub("'", "\u2019", text), # Fix issue with single quote
+    text = gsub("\"", "&quot;", text),
+    text = gsub("\n", "&#13;&#10;", text)
+  ) %>%
+  glue::glue_data('<a class="tooltip-top no-underline" data-tooltip="{text}" style="color: var(--slate-40);" href="{status_url}">{first_word}</a>') %>%
+  glue::glue_collapse(sep = " ") %>%
+  cat()
+```
+</blockquote>
+
+In total, writing out the lyrics to Bohemian Rhapsody in reverse order took
+**`r nrow(first_words)`** tweets over
+**`r as.integer(difftime(max(first_words$created_at), min(first_words$created_at), "day"))`** days.
+
+When did [&commat;CostcoRiceBag](https://twitter.com/CostcoRiceBag) do most of their Queen-related tweeting?
+To get an idea of how often they tweeted, I created a calendar heatmap (or GitHub-style square tile plot) of their daily tweeting activities.
+
+```{r tileplot, echo=FALSE, fig.width=12, fig.height=6}
+library(ggplot2)
+first_words %>%
+  mutate(
+    created_at = lubridate::with_tz(created_at, tzone = "US/Central"),
+    created_day = lubridate::floor_date(created_at, "day"),
+    wday = lubridate::wday(created_at)
+  ) %>%
+  select(created_day, wday) %>%
+  mutate(
+    wday = factor(wday, levels = 1:7, labels = c("Su", "M", "T", "W", "Tr", "F", "Sa")),
+    week = lubridate::floor_date(created_day, "week"),
+    week = lubridate::as_date(week)
+  ) %>%
+  group_by(week, wday) %>%
+  count() %>%
+  {
+    weeks <- filter(., wday == "Su") %>%
+      pull(week)
+    weeks <- weeks[seq_along(weeks) %% 2 == 0]
+    week_labels <- strftime(weeks, "%b %d")
+
+    ggplot(.) +
+      aes(week, wday, fill = n) +
+      geom_tile(width = 0.90 * 7, height = 0.90) +
+      coord_fixed(7) +
+      theme_minimal(18, base_family = "PT Sans") +
+      labs(x = NULL, y = NULL) +
+      scale_x_date(expand = c(0, 0), breaks = weeks, labels = week_labels) +
+      ggsci::scale_fill_material("deep-orange") +
+      theme(
+        legend.position = "bottom",
+        panel.grid = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(hjust = 0.5),
+        plot.margin = margin(1.5, 0, 1.5, 0)
+      )
+  }
+```
+
+What's really impressive is that, except for a few [Bismillah](https://twitter.com/CostcoRiceBag/status/1006312148497305601) and [Scaramouche](https://twitter.com/CostcoRiceBag/status/1017228225779511297) tweets, most of the tweets are really just
+[normal](https://twitter.com/CostcoRiceBag/status/1011437034035122178)
+[everyday](https://twitter.com/CostcoRiceBag/status/996618711535640577)
+[tweeting](https://twitter.com/CostcoRiceBag/status/1023396608426303489).
+I'd love to get into a textual analysis, but it's late so I'll leave you with this:
+
+{{< tweet CostcoRiceBag 997437696476934144 >}}
+
+Rock on! &#x1F918;
+
+![](https://media.giphy.com/media/3o6ZtjUZAD5Lf0QFLW/giphy.gif)

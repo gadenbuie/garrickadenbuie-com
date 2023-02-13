@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Garrick Aden-Buie" />
+  <title>Pull Request Flow with usethis</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+
+  <script src="index_files/header-attrs-2.10/header-attrs.js"></script>
+  <link href="index_files/cleanrmd-0.0.7/new.css" rel="stylesheet" />
+</head>
+<body>
+<style type="text/css" charset="utf-8">
+main {
+  max-width: 48em;
+  margin: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  main {
+    max-width: 100%;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+</style>
+
+
+<main>
+<header>
+<h1 id="title" class="toc-ignore">Pull Request Flow with usethis</h1>
+<p id="date"><p><a href="https://garrickadenbuie.com/blog/pull-request-flow-usethis">garrickadenbuie.com/blog/pull-request-flow-usethis</a></p></p>
+<p id="author">Garrick Aden-Buie</p>
+
+</header>
+
+
+<figure>
+<img src="../usethis-pr-flow.jpg" alt="A usethis pull request helper function flow diagram. Download the image. (CC BY)" /><figcaption aria-hidden="true">A <code>usethis</code> pull request helper function flow diagram. <a href="#download">Download the image</a>. (<a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>)</figcaption>
+</figure>
+<h2 id="introduction">Introduction</h2>
+<p><code>usethis</code> has a number of functions that help you move through the pull-request process in a seamless and organized way. This flow chart helps you chose the right function at the right time.</p>
+<p>I’ve transcribed the chart above as best I can into a readable list below. The flow chart isn’t a DAG (directed acyclic graph) since work is very much a cyclic activity. In less data science jargon, this means you may have to jump around the list quite a bit.</p>
+<p>The <code>usethis</code> functions described are all documented in the <a href="https://usethis.r-lib.org/reference/pull-requests.html"><code>usethis</code> <em>Helpers for GitHub pull requests</em> page</a>, and the two functions from the <code>gert</code> package are documented online at the <a href="https://docs.ropensci.org/gert/reference/git_commit.html"><code>gert</code> <em>Stage and commit changes</em> page</a>.</p>
+<h2 id="the-pull-request-flow">The pull request flow</h2>
+<ul>
+<li><strong>Start</strong>
+<ul>
+<li>Start new work
+<ul>
+<li><code>pr_init("new-branch-name")</code></li>
+<li><em>Go to</em> Do Work</li>
+</ul></li>
+<li>Resume my work
+<ul>
+<li><code>pr_resume("existing-branch")</code></li>
+<li><em>Go to</em> Do Work <em>or</em> Update with…</li>
+</ul></li>
+<li>Review someone’s work
+<ul>
+<li><code>usethis::pr_fetch(123)</code></li>
+<li><em>Go to</em> Do Work <em>or</em> Update with…</li>
+</ul></li>
+</ul></li>
+<li><strong>Do Work</strong>
+<ol type="1">
+<li>Do work in the branch
+<ol type="1">
+<li>Stage files to be committed with <code>gert::git_add()</code></li>
+<li>Commit files to the branch with <code>gert::git_commit()</code></li>
+</ol></li>
+<li>Is the work ready to be shared?
+<ul>
+<li><em>If <strong>yes</strong>, go to step 3</em></li>
+<li><em>If <strong>no</strong>, return to step 1</em></li>
+</ul></li>
+<li>Share local work by pushing to remote branch
+<ol type="1">
+<li><code>usethis::pr_push()</code></li>
+<li>Are you done with this branch?
+<ul>
+<li><em>If <strong>yes</strong>, go to</em> All done?</li>
+<li><em>If <strong>no</strong>, return to step 1</em></li>
+</ul></li>
+</ol></li>
+</ol></li>
+<li><strong>Update with…</strong>
+<ul>
+<li>the pull request branch
+<ul>
+<li><code>pr_pull()</code></li>
+</ul></li>
+<li>the main or upstream branch
+<ul>
+<li><code>pr_merge_main()</code></li>
+</ul></li>
+<li>just look at the PR
+<ul>
+<li><code>pr_view()</code></li>
+</ul></li>
+</ul></li>
+<li><strong>All done?</strong>
+<ul>
+<li>The PR was merged
+<ul>
+<li><code>pr_finish()</code></li>
+</ul></li>
+<li>For now, so keep the local branch
+<ul>
+<li><code>pr_pause()</code></li>
+</ul></li>
+<li>Totally and the local branch isn’t needed anymore
+<ul>
+<li><code>pr_forget()</code></li>
+</ul></li>
+<li><em>Return to</em> Start</li>
+</ul></li>
+</ul>
+<h2 id="download">Download the usethis <code>pr_*()</code> flow chart</h2>
+<ul>
+<li><a href="../usethis-pr-flow.jpg">Small JPG Image (190 KB)</a></li>
+<li><a href="../usethis-pr-flow-medium.jpg">Medium JPG Image (511 KB)</a></li>
+<li><a href="../usethis-pr-flow-large.jpg">Large JPG Image (1.36 MB)</a></li>
+<li><a href="../usethis-pr-flow.svg">SVG (40 KB)</a></li>
+<li><a href="../usethis-pr-flow-editable.svg">SVG, Editable (40 KB)</a></li>
+<li><a href="../usethis-pr-flow.drawio">Source File <code>.drawio</code> (4 KB)</a></li>
+</ul>
+<div class="cc-box">
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+  <img alt="Creative Commons License" style="border-width:0;margin-right:1em;" src="https://i.creativecommons.org/l/by/4.0/88x31.png" align="left" />
+</a>
+<em xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">
+  Pull Request Flow with usethis
+</em>
+by 
+<a xmlns:cc="http://creativecommons.org/ns#" href="https://www.garrickadenbuie.com/blog/pull-request-flow-usethis" property="cc:attributionName" rel="cc:attributionURL">
+Garrick Aden-Buie
+</a> is licensed under a 
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+</div>
+
+</main>
+
+
+</body>
+</html>

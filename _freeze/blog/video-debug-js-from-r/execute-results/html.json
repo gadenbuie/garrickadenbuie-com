@@ -1,0 +1,14 @@
+{
+  "hash": "1f5041492d68b564b47b697cd2872a50",
+  "result": {
+    "markdown": "---\ntitle: 'Video: Debugging JavaScript You Wrote in R'\nauthor: Garrick Aden-Buie\ndate: '2020-07-20'\nslug: video-debug-js-from-r\ncategories:\n  - Blog\ntags:\n  - R\n  - RStudio\n  - JavaScript\n  - Debugging\n  - Web Development\n  - reactable\n  - htmlwidgets\n  - Video\ndescription: A pseudo-live-streamed walkthrough as I debug some buggy JavaScript written in R for a {reactable} htmlwidget.\nimages:\n  - /blog/video-debug-js-from-r/debug-js-from-r.png\nkeywords: rstats\neditor_options:\n  chunk_output_type: console\n---\n\n\n<!-- Links -->\n[htmlwidgets]: https://www.htmlwidgets.org/\n[reactable]: https://glin.github.io/reactable\n[thomas-mock]: https://twitter.com/thomas_mock\n[rsthemes]: https://github.com/gadenbuie/rsthemes/\n[js4shiny]: https://pkg.js4shiny.com\n\n::: {.lead}\n<span class=\"pkg\">[htmlwidgets]</span> makes it easy to create awesome web things from R and R Markdown, but sometimes you have to write your own JavaScript code... in strings... in R. What do you do if it doesn't work? How can you write JavaScript interactively?\n:::\n\n<p>\n`{{% youtube \"aNxT4IOZPtc\" %}}`{=html}\n</p>\n\nI \"live streamed\" my process\nas I worked through debugging\nsome buggy JavaScript that [Tom Mock][thomas-mock]\n[shared on twitter](https://twitter.com/thomas_mock/status/1284932187352072192),\ntouching on the tools used\nto debug JavaScript and\nsome features from the <span class=\"pkg\">[js4shiny]</span> package\nthat help R users with web development.\n\nThe example uses the awesome <span class=\"pkg\">[reactable]</span> package,\nwhich helps you make some incredible HTML interactive HTML tables.\n\nIf you want to try this at home,\nI've uploaded the\n[code that doesn't work](https://gist.github.com/gadenbuie/9ce3a58a7f6109c23cdd68711a2623ae)\nand the\n[code that does work](https://gist.github.com/gadenbuie/7d8bb61476dcfa4459fb6e8b7a219022)\nas GitHub gists.\n\nOh and by the way,\nI'm using the RStudio theme \"Flat White\" from <span class=\"pkg\">[rsthemes]</span>.\n\n---\n\nThis is the first time I've made a video like this.\nIf you liked it and want to see more,\nlet me know on Twitter\n[&commat;grrrck](https://twitter.com/grrrck).",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "hash": "69ecfe12bc04f11ba031e49f1ebde2f8",
+  "result": {
+    "markdown": "---\ntitle: \"Sliding in Style\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  Make stylish slides with {xaringanthemer} and a little bit of CSS.\nimages:\n  - \"https://slides.garrickadenbuie.com/sliding-in-style/assets/img/social.png\"\ndate: '2021-04-01'\nslug: sliding-in-style-south-coast-ma\ntags:\n  - R\n  - xaringan\n  - xaringanthemer\n  - xaringanExtra\n  - Slides\n  - Presentations\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Talk ]\nevent: \"South Coast MA UseR Group\"\nevent_url: https://www.meetup.com/South-Coast-useR-Group/events/277235768/\nlocation: Virtual Presentation\nlinks:\n  - icon: chalkboard-teacher\n    icon_pack: fas\n    name: Slides\n    url: https://slides.garrickadenbuie.com/sliding-in-style\n  - icon: github\n    icon_pack: fab\n    name: Code\n    url: https://github.com/gadenbuie/slides/tree/gh-pages/sliding-in-style\n---\n\n::: {.cell}\n::: {.cell-output-display}\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/sliding-in-style\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n:::\n:::\n\n\n## Abstract\n\nThe [xaringan] package by YiHui Xie lets R users and R Markdown authors easily\nblend data, text, plots and [htmlwidgets] into beautiful HTML presentations\nthat look great on the web, in print, and on screens.\n\nTogether we’ll create a completely customized xaringan slide style with\n[xaringanthemer], a package that lets you quickly create a complete slide\ntheme from only a few color choices. Then we’ll talk about how you can take\nyour slide design one step further with just a little bit of CSS.\n\n## Packages\n\n[xaringan]: https://slides.yihui.org/xaringan/\n[xaringanthemer]: https://pkg.garrickadenbuie.com/xaringanthemer\n[xaringanExtra]: https://pkg.garrickadenbuie.com/xaringanExtra\n[grrrck]: https://twitter.com/grrrck\n[gab]: https://www.garrickadenbuie.com\n[htmlwidgets]: http://www.htmlwidgets.org/\n[lorem]: https://github.com/gadenbuie/lorem\n\n- [xaringan]\n- [xaringanthemer]\n- [xaringanExtra]\n- [lorem]\n\n```r\n# On CRAN\ninstall.packages(\"xaringan\")\ninstall.packages(\"xaringanthemer\", dependencies = TRUE)\n\n# From GitHub\n# install.packages(\"remotes\")\nremotes::install_github(\"gadenbuie/xaringanExtra\")\nremotes::install_github(\"gadenbuie/lorem\")\n```\n\nIf you use [docker], you can get set up with an [environment for this presentation][docker-image] with:\n\n```bash\ndocker run -d --rm -p 8787:8787 -e DISABLE_AUTH=true grrrck/sliding-in-style\n```",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

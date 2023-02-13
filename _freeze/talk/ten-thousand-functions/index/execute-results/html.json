@@ -1,0 +1,18 @@
+{
+  "hash": "06f75f84fa13ea94dbbfc96956282ebb",
+  "result": {
+    "markdown": "---\ntitle: \"10,000 Reasons to Love Functions\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  A presentation writing and benefiting from programming with functions.\ndate: '2020-05-15'\nimage: ten-thousand-functions.png\nslug: ten-thousand-functions\n\ntags:\n  - R\n  - R Packages\n  - Functions\n  - Reproducible Research\n  - Workflow\n  - Tutorials\n  - Education\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Education ]\nevent: \"Bio-Data Club at Moffitt Cancer Center\"\nevent_url: https://www.biodataclub.org/\nlocation: \"Tampa, FL\"\nlinks:\n  - icon: chalkboard-teacher\n    icon_pack: fas\n    name: Slides\n    url: https://slides.garrickadenbuie.com/ten-thousand-functions/\n  - icon: github\n    icon_pack: fab\n    name: Code\n    url: https://github.com/gadenbuie/ten-thousand-functions\n---\n\n::: {.cell}\n::: {.cell-output-display}\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/ten-thousand-functions/\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

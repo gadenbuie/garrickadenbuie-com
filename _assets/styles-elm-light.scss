@@ -1,0 +1,97 @@
+/*-- scss:defaults --*/
+// @import "colors";
+
+//
+// Color system
+//
+
+$white:    $slate-100;
+$gray-100: $slate-90;
+$gray-200: $slate-80;
+$gray-300: $slate-70;
+$gray-400: $slate-60;
+$gray-500: $slate-50;
+$gray-600: $slate-40;
+$gray-700: $slate-30;
+$gray-800: $slate-20;
+$gray-900: $slate-10;
+$black:    $slate-00;
+
+$blue:    $blue-30;
+$indigo:  #E574BC !default;
+$purple:  $purple-30;
+$pink:    $pink-40;
+$red:     $red-30;
+$orange:  $orange-30;
+$yellow:  $orange-70;
+$green:   $green-50;
+$teal:    $blue-50;
+$cyan:    $blue-70;
+
+$primary:       $blue !default;
+$secondary:     $blue-90 !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-100 !default;
+$dark:          $gray-900 !default;
+
+// Quarto variables
+$body-color: $slate-10;
+$navbar-bg: $white;
+$code-color: $purple-30;
+$code-bg: $white;
+$footer-bg: $white;
+
+// Bootstrap fixups
+$text-muted: $gray-700;
+
+/*-- scss:rules --*/
+.quarto-title-banner {
+  @extend .border-bottom, .border-2, .bg-white, .border-light;
+}
+
+.quarto-title-banner .quarto-title .title {
+  font-weight: 400;
+  font-size: calc(1.5rem + 1.14vw);
+
+  #title-block-header.quarto-title-block & {
+    margin-bottom: 0.5rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: calc(2.5rem + 1.14vw);
+  }
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+	background-color: $white;
+}
+
+h2 {
+  border-bottom: 2px solid (var(--bs-light));
+}
+
+.social-icon-links .link-primary {
+  color: $pink-30;
+  &:hover, &:focus {
+    color: $pink-20;
+    i {
+      transform: scale(1.25);
+      transform-origin: center center;
+    }
+  }
+}
+
+div.quarto-post .listing-categories .listing-category,
+.quarto-title-block .quarto-title .quarto-categories .quarto-category {
+  border-color: $pink-30;
+  color: $pink-10;
+  background-color: $pink-90;
+  opacity: 0.6;
+}
+
+.blockquote {
+  color: $text-muted;
+}

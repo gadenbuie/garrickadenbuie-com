@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2017-06-30">
+<meta name="description" content="Easily build bespoke SQL queries programmatically in R">
+
+<title>Garrick Aden-Buie - 🐿️ Sqrrl</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - 🐿️ Sqrrl">
+<meta property="og:description" content="Easily build bespoke SQL queries programmatically in R">
+<meta property="og:image" content="https://www.garrickadenbuie.com/project/sqrrl/feature.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1938">
+<meta name="twitter:title" content="Garrick Aden-Buie - 🐿️ Sqrrl">
+<meta name="twitter:description" content="Easily build bespoke SQL queries programmatically in R">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/project/sqrrl/feature.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1938">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">🐿️ Sqrrl</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Project</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Easily build bespoke SQL queries programmatically in R
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 30, 2017</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>UPDATE 10/17/2017</strong>: <strong>Don’t use this!</strong> I made it for myself so it works for what I needed it for. But you probably shouldn’t use this package. There are better ways of building SQL queries that are safer and better (and probably even easier). For now, let me just point you in the direction of <a href="http://db.rstudio.com/">db.rstudio.com</a>, <a href="http://db.rstudio.com/dplyr#generating-queries">dplyr/dbplyr</a>, and the recently added <a href="http://glue.tidyverse.org/reference/glue_sql.html"><code>glue_sql()</code> function</a> in the <a href="http://glue.tidyverse.org">glue package</a>.</p>
+<p><strong>Project Links:</strong> <a href="https://github.com/gadenbuie/sqrrl/">source</a>, <a href="https://gadenbuie.github.io/sqrrl/">documentation</a></p>
+<p><code>sqrrl</code> is a small collection of utility functions that help build text-based SQL queries in an R-style native-feeling and functional manner.</p>
+<p>Unlike other packages that build SQL queries using an object-oriented style, <code>sqrrl</code> provides small functions that produce SQL snippets and can be linked together to compose SQL queries. The result is that the code to produce the SQL statement reads much like the SQL statement iteself. On the other hand, <code>sqrrl</code> doesn’t know anything about your database and can’t help you out with completions, etc.</p>
+<p>Where this package is most useful is with <a href="https://shiny.rstudio.com">Shiny web apps</a> that interact with a MySQL backend. The utilities are all built so that queries can be built using column names and values stored inside ordinary R data structures.</p>
+<p>The following is a quick demonstration of how the package works using the <code>nyclights13</code> dataset. For more information on <code>sqrrl</code>, check out the <a href="https://gadenbuie.github.io/sqrrl/">package documentation</a>.</p>
+<section id="setup-flights-database" class="level2">
+<h2 class="anchored" data-anchor-id="setup-flights-database">Setup <code>flights</code> database</h2>
+<p>To demonstrate the features in <code>sqrrl</code>, let’s set up an in-memory SQLite database using the <code>nycflights13</code> dataset featured in <code>dplyr</code> and <code>dbplyr</code>.</p>
+<p>First, load (or install) the pacakges and functions that we need.</p>
+<div class="cell" data-hash="index_cache/html/setup-flights_d1219bc444946811262410a7d1ace30b">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Workspace Setup ----</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'nycflights13'</span>) <span class="co"># install.packages('nycflights13')</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'DBI'</span>)          <span class="co"># install.packages('DBI')</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'dplyr'</span>)        <span class="co"># install.packages('dplyr')</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'dbplyr'</span>)       <span class="co"># install.packages('dbplyr')</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the sqrrl package</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::isntall_github('gadenbuie/sqrrl')</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'sqrrl'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Alias to create nice tables</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>as_table <span class="ot">&lt;-</span> <span class="cf">function</span>(...) knitr<span class="sc">::</span><span class="fu">kable</span>(..., <span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then load the <code>flights</code> data frame from <code>nycflights13</code> into the in-memory SQLite database (this code comes direclty from the <a href="http://dbplyr.tidyverse.org/articles/dbplyr.html#connecting-to-the-database">dbplyr documentation</a>).</p>
+<div class="cell" data-hash="index_cache/html/load-flights_9ecb0fe2882d8b4f7718bd75faa2ca46">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Example Setup ----</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an in-memory SQLite database</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">path =</span> <span class="st">":memory:"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use dplyr/dbplyr to copy flights table to the temp db</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">copy_to</span>(con, nycflights13<span class="sc">::</span>flights, <span class="st">"flights"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporary =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">indexes =</span> <span class="fu">list</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"carrier"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tailnum"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"dest"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first 5 rows</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dbGetQuery</span>(con, <span class="st">'SELECT * FROM flights LIMIT 5'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  as_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> year </th>
+   <th style="text-align:right;"> month </th>
+   <th style="text-align:right;"> day </th>
+   <th style="text-align:right;"> dep_time </th>
+   <th style="text-align:right;"> sched_dep_time </th>
+   <th style="text-align:right;"> dep_delay </th>
+   <th style="text-align:right;"> arr_time </th>
+   <th style="text-align:right;"> sched_arr_time </th>
+   <th style="text-align:right;"> arr_delay </th>
+   <th style="text-align:left;"> carrier </th>
+   <th style="text-align:right;"> flight </th>
+   <th style="text-align:left;"> tailnum </th>
+   <th style="text-align:left;"> origin </th>
+   <th style="text-align:left;"> dest </th>
+   <th style="text-align:right;"> air_time </th>
+   <th style="text-align:right;"> distance </th>
+   <th style="text-align:right;"> hour </th>
+   <th style="text-align:right;"> minute </th>
+   <th style="text-align:right;"> time_hour </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 517 </td>
+   <td style="text-align:right;"> 515 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 830 </td>
+   <td style="text-align:right;"> 819 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:left;"> UA </td>
+   <td style="text-align:right;"> 1545 </td>
+   <td style="text-align:left;"> N14228 </td>
+   <td style="text-align:left;"> EWR </td>
+   <td style="text-align:left;"> IAH </td>
+   <td style="text-align:right;"> 227 </td>
+   <td style="text-align:right;"> 1400 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1357034400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 533 </td>
+   <td style="text-align:right;"> 529 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 850 </td>
+   <td style="text-align:right;"> 830 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:left;"> UA </td>
+   <td style="text-align:right;"> 1714 </td>
+   <td style="text-align:left;"> N24211 </td>
+   <td style="text-align:left;"> LGA </td>
+   <td style="text-align:left;"> IAH </td>
+   <td style="text-align:right;"> 227 </td>
+   <td style="text-align:right;"> 1416 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 1357034400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 542 </td>
+   <td style="text-align:right;"> 540 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 923 </td>
+   <td style="text-align:right;"> 850 </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 1141 </td>
+   <td style="text-align:left;"> N619AA </td>
+   <td style="text-align:left;"> JFK </td>
+   <td style="text-align:left;"> MIA </td>
+   <td style="text-align:right;"> 160 </td>
+   <td style="text-align:right;"> 1089 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 1357034400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 544 </td>
+   <td style="text-align:right;"> 545 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> 1004 </td>
+   <td style="text-align:right;"> 1022 </td>
+   <td style="text-align:right;"> -18 </td>
+   <td style="text-align:left;"> B6 </td>
+   <td style="text-align:right;"> 725 </td>
+   <td style="text-align:left;"> N804JB </td>
+   <td style="text-align:left;"> JFK </td>
+   <td style="text-align:left;"> BQN </td>
+   <td style="text-align:right;"> 183 </td>
+   <td style="text-align:right;"> 1576 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 45 </td>
+   <td style="text-align:right;"> 1357034400 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 554 </td>
+   <td style="text-align:right;"> 600 </td>
+   <td style="text-align:right;"> -6 </td>
+   <td style="text-align:right;"> 812 </td>
+   <td style="text-align:right;"> 837 </td>
+   <td style="text-align:right;"> -25 </td>
+   <td style="text-align:left;"> DL </td>
+   <td style="text-align:right;"> 461 </td>
+   <td style="text-align:left;"> N668DN </td>
+   <td style="text-align:left;"> LGA </td>
+   <td style="text-align:left;"> ATL </td>
+   <td style="text-align:right;"> 116 </td>
+   <td style="text-align:right;"> 762 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1357038000 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="querying-flights" class="level2">
+<h2 class="anchored" data-anchor-id="querying-flights">Querying <code>flights</code></h2>
+<p>Often, when I’m working with a database, I’ll create an alias for <code>dbGetQuery</code> with the database or table name. Inside the alias function I usually add any data type modifications that might need to be applied, and I suppress the warning messages that <code>DBI</code> outputs about data type conversions.</p>
+<div class="cell" data-hash="index_cache/html/flights-alias_645aeb067fefb06fdeb2f5eb99cb1179">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>flights <span class="ot">&lt;-</span> <span class="cf">function</span>(query, ...) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>(<span class="fu">dbGetQuery</span>(con, query, ...))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can repeat the above <code>SELECT</code> statement using <code>sqrrl</code>, this time limiting the columns selected.</p>
+<div class="cell" data-hash="index_cache/html/flights-select_2318ac17d62dab8aae469b9cd7aae9ad">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>flight_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'carrier'</span>, <span class="st">'flight'</span>, <span class="st">'tailnum'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>(flight_cols) <span class="sc">%+%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  as_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> year </th>
+   <th style="text-align:right;"> month </th>
+   <th style="text-align:right;"> day </th>
+   <th style="text-align:left;"> carrier </th>
+   <th style="text-align:right;"> flight </th>
+   <th style="text-align:left;"> tailnum </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> UA </td>
+   <td style="text-align:right;"> 1545 </td>
+   <td style="text-align:left;"> N14228 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> UA </td>
+   <td style="text-align:right;"> 1714 </td>
+   <td style="text-align:left;"> N24211 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 1141 </td>
+   <td style="text-align:left;"> N619AA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> B6 </td>
+   <td style="text-align:right;"> 725 </td>
+   <td style="text-align:left;"> N804JB </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> DL </td>
+   <td style="text-align:right;"> 461 </td>
+   <td style="text-align:left;"> N668DN </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Note that <code>sqrrl</code> provides the <code>%+%</code> infix operator, which is essentially just an alias for <code>paste(x, y)</code>.</p>
+<div class="cell" data-hash="index_cache/html/plus-infix_6ab3b4af7e50c1c678d0843af6d8e0a1">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="st">'a'</span> <span class="sc">%+%</span> <span class="st">'b'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a b"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or PHP style without a padded space: paste0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">'a'</span> <span class="sc">%.%</span> <span class="st">'b'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "ab"</code></pre>
+</div>
+</div>
+<p>We can also do more complicated queries, like finding the average arrival delay, grouped by tail number:</p>
+<div class="cell" data-hash="index_cache/html/flights-avg-arr-delay_5f7231c6f6f4a5a46a9c1cfa07c38500">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>(<span class="st">'tailnum'</span>, <span class="at">delay =</span> <span class="st">'avg(arr_delay)'</span>, <span class="at">n =</span> <span class="st">'count(*)'</span>) <span class="sc">%+%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">GROUP_BY</span>(<span class="st">'tailnum'</span>) <span class="sc">%+%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ORDER_BY</span>(<span class="fu">DESC</span>(<span class="st">'delay'</span>)) <span class="sc">%+%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  as_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> tailnum </th>
+   <th style="text-align:right;"> delay </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> N844MH </td>
+   <td style="text-align:right;"> 320.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N911DA </td>
+   <td style="text-align:right;"> 294.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N922EV </td>
+   <td style="text-align:right;"> 276.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N587NW </td>
+   <td style="text-align:right;"> 264.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N851NW </td>
+   <td style="text-align:right;"> 219.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N928DN </td>
+   <td style="text-align:right;"> 201.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N7715E </td>
+   <td style="text-align:right;"> 188.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N654UA </td>
+   <td style="text-align:right;"> 185.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N665MQ </td>
+   <td style="text-align:right;"> 174.6667 </td>
+   <td style="text-align:right;"> 6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N427SW </td>
+   <td style="text-align:right;"> 157.0000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><code>sqrrl</code> also provides a wrapper around the python utility <code>sqlformat</code> that can be used to pretty-print SQL formats.</p>
+<div class="cell" data-hash="index_cache/html/flights-avg-arr-delay-query_2102617ed2597b39ae99b0450d0ab1bb">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>(<span class="st">'tailnum'</span>, <span class="at">delay =</span> <span class="st">'avg(arr_delay)'</span>, <span class="at">n =</span> <span class="st">'count(*)'</span>) <span class="sc">%+%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">GROUP_BY</span>(<span class="st">'tailnum'</span>) <span class="sc">%+%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ORDER_BY</span>(<span class="fu">DESC</span>(<span class="st">'delay'</span>)) <span class="sc">%+%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  sqlformat <span class="sc">%&gt;%</span> cat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> tailnum,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">avg</span>(arr_delay) <span class="kw">AS</span> delay,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> flights</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> delay <span class="kw">DESC</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s use the above as an inner query and filter on <code>n &gt; 100</code>:</p>
+<div class="cell" data-hash="index_cache/html/flights-avg-arr-delay-gt-100_f08936fac79d7bddd51295b13dbda71e">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>query_all_arr_delay <span class="ot">&lt;-</span> <span class="fu">SELECT</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'tailnum'</span>, <span class="at">delay =</span> <span class="st">'avg(arr_delay)'</span>, <span class="at">n =</span> <span class="st">'count(*)'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%+%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">GROUP_BY</span>(<span class="st">'tailnum'</span>) <span class="sc">%+%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ORDER_BY</span>(<span class="fu">DESC</span>(<span class="st">'delay'</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>() <span class="sc">%+%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="at">delay =</span> <span class="fu">parens</span>(query_all_arr_delay)) <span class="sc">%+%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">WHERE</span>(<span class="fu">gt</span>(<span class="at">n =</span> <span class="dv">100</span>)) <span class="sc">%+%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  as_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> tailnum </th>
+   <th style="text-align:right;"> delay </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> N11119 </td>
+   <td style="text-align:right;"> 30.30657 </td>
+   <td style="text-align:right;"> 148 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N16919 </td>
+   <td style="text-align:right;"> 29.88745 </td>
+   <td style="text-align:right;"> 251 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N14998 </td>
+   <td style="text-align:right;"> 27.92202 </td>
+   <td style="text-align:right;"> 230 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N15910 </td>
+   <td style="text-align:right;"> 27.61132 </td>
+   <td style="text-align:right;"> 280 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N13123 </td>
+   <td style="text-align:right;"> 25.97345 </td>
+   <td style="text-align:right;"> 121 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N11192 </td>
+   <td style="text-align:right;"> 25.85235 </td>
+   <td style="text-align:right;"> 154 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N14950 </td>
+   <td style="text-align:right;"> 25.28780 </td>
+   <td style="text-align:right;"> 219 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N21130 </td>
+   <td style="text-align:right;"> 24.96610 </td>
+   <td style="text-align:right;"> 126 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N24128 </td>
+   <td style="text-align:right;"> 24.91803 </td>
+   <td style="text-align:right;"> 129 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> N22971 </td>
+   <td style="text-align:right;"> 24.74766 </td>
+   <td style="text-align:right;"> 230 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="queries-are-just-strings" class="level2">
+<h2 class="anchored" data-anchor-id="queries-are-just-strings">Queries are just strings</h2>
+<p>Notice that unlike other packages, <code>sqrrl</code> can’t build the nested queries for you. You still need to understand the structure of the database and the structure of the query.</p>
+<p>But when compared with the final output of the query, the <code>sqrrl</code> version looks a lot like SQL transliterated into R functions.</p>
+<div class="cell" data-hash="index_cache/html/flights-avg-arr-delay-gt-100-query_bbbfff6eeed9b239857c1f49697dfb5d">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>() <span class="sc">%+%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="at">delay =</span> <span class="fu">parens</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SELECT</span>(<span class="st">'tailnum'</span>, <span class="at">delay =</span> <span class="st">'avg(arr_delay)'</span>, <span class="at">n =</span> <span class="st">'count(*)'</span>) <span class="sc">%+%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">FROM</span>(<span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">GROUP_BY</span>(<span class="st">'tailnum'</span>) <span class="sc">%+%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ORDER_BY</span>(<span class="fu">DESC</span>(<span class="st">'delay'</span>))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%+%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">WHERE</span>(<span class="fu">gt</span>(<span class="at">n =</span> <span class="dv">100</span>)) <span class="sc">%+%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqlformat</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> (</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">SELECT</span> tailnum,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">avg</span>(arr_delay) <span class="kw">AS</span> delay,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>          <span class="kw">FROM</span> flights</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>         <span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         <span class="kw">ORDER</span> <span class="kw">BY</span> delay <span class="kw">DESC</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       ) delay</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> n<span class="op">&gt;</span><span class="dv">100</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For me, at least, where the goal is to write SQL queries as bare strings, <code>sqrrl</code> lets me write in R and think in SQL without having to add a huge number of <code>paste</code> and <code>paste0</code> functions.</p>
+<p>Everything in <code>sqrrl</code> takes input data from regular R data types and outputs an SQL snippet.</p>
+<p>For an example of nearly everything each of the functions can do, see the <a href="https://gadenbuie.github.io/sqrrl/articles/sqrrl.html">Getting Started</a> section in the documentation.</p>
+</section>
+<section id="a-more-complicated-select-query" class="level2">
+<h2 class="anchored" data-anchor-id="a-more-complicated-select-query">A more complicated SELECT query</h2>
+<p>As a final example, here is a fully-loaded select query.</p>
+<div class="cell" data-hash="index_cache/html/flights-big-example_dbf71458d45b70afcd3ef373f27288c5">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span>(<span class="st">'`year`'</span>, <span class="st">'carrier'</span>, <span class="st">'flight'</span>, <span class="st">'dest'</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">n =</span> <span class="st">'count(*)'</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">avg_dist =</span> <span class="st">'avg(distance)'</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">avg_air_time =</span> <span class="st">'avg(air_time)'</span>) <span class="sc">%+%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">FROM</span>(<span class="at">f =</span> <span class="st">'flights'</span>) <span class="sc">%+%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">WHERE</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">BETWEEN</span>(<span class="st">'month'</span>, <span class="dv">6</span>, <span class="dv">12</span>),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'carrier'</span> <span class="sc">%IN%</span> <span class="fu">c</span>(<span class="st">"UA"</span>, <span class="st">"AA"</span>, <span class="st">"US"</span>, <span class="st">"WN"</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geq</span>(<span class="st">'dep_time'</span> <span class="ot">=</span> <span class="dv">800</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">leq</span>(<span class="st">'air_time'</span> <span class="ot">=</span> <span class="dv">120</span>),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'origin'</span> <span class="sc">%LIKE%</span> <span class="st">'JFK'</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%+%</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">GROUP_BY</span>(<span class="st">'`year`'</span>, <span class="st">'carrier'</span>, <span class="st">'flight'</span>, <span class="st">'dest'</span>) <span class="sc">%+%</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ORDER_BY</span>(<span class="fu">DESC</span>(<span class="st">'n'</span>)) <span class="sc">%+%</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LIMIT</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  { <span class="fu">sqlformat</span>(.) <span class="sc">%&gt;%</span> cat; . } <span class="sc">%&gt;%</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  flights <span class="sc">%&gt;%</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  as_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> `year`,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       carrier,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>       flight,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>       dest,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">AS</span> n,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">avg</span>(distance) <span class="kw">AS</span> avg_dist,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">avg</span>(air_time) <span class="kw">AS</span> avg_air_time</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> flights f</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> `month` <span class="kw">BETWEEN</span> <span class="dv">6</span> <span class="kw">AND</span> <span class="dv">12</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> carrier <span class="kw">IN</span> (<span class="ot">"UA"</span>, <span class="ot">"AA"</span>, <span class="ot">"US"</span>, <span class="ot">"WN"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> dep_time<span class="op">&gt;=</span><span class="dv">800</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> air_time<span class="op">&lt;=</span><span class="dv">120</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>   <span class="kw">AND</span> origin <span class="kw">LIKE</span>(<span class="ot">"JFK"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> `year`,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>          carrier,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>          flight,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>          dest</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> n <span class="kw">DESC</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a> <span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> year </th>
+   <th style="text-align:left;"> carrier </th>
+   <th style="text-align:right;"> flight </th>
+   <th style="text-align:left;"> dest </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> avg_dist </th>
+   <th style="text-align:right;"> avg_air_time </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:right;"> 1831 </td>
+   <td style="text-align:left;"> CLT </td>
+   <td style="text-align:right;"> 178 </td>
+   <td style="text-align:right;"> 541 </td>
+   <td style="text-align:right;"> 86.95506 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:right;"> 425 </td>
+   <td style="text-align:left;"> CLT </td>
+   <td style="text-align:right;"> 126 </td>
+   <td style="text-align:right;"> 541 </td>
+   <td style="text-align:right;"> 84.92857 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 178 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 119 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 37.94118 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 256 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 117 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 39.13675 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 2314 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 37.85217 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> US </td>
+   <td style="text-align:right;"> 1802 </td>
+   <td style="text-align:left;"> CLT </td>
+   <td style="text-align:right;"> 112 </td>
+   <td style="text-align:right;"> 541 </td>
+   <td style="text-align:right;"> 87.23214 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 84 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 37.95049 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 1850 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 94 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 38.46809 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 1838 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 93 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 37.83871 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:left;"> AA </td>
+   <td style="text-align:right;"> 1762 </td>
+   <td style="text-align:left;"> BOS </td>
+   <td style="text-align:right;"> 86 </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 38.47674 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>This query and table select the most popular flights from JFK between June and December of 2013 from the carriers <code>UA</code>, <code>AA</code>, <code>US</code>, and <code>WN</code> that depart JFK after 8:00 AM and have an air time of less than 2 hours.</p>
+</section>
+<section id="learn-more" class="level2">
+<h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
+<p>There’s more that the package can do, like <code>JOIN</code>s, <code>INSERT</code>s, and <code>UPDATE</code>s that I haven’t gone into here.</p>
+<p>There are also a number of wrappers, <a href="https://gadenbuie.github.io/sqrrl/reference/comparison.html">comparison operators</a> and <a href="https://gadenbuie.github.io/sqrrl/reference/general.html">concatenators</a> that can be used for wrapping strings in quotes — e.g.&nbsp;<code>quotes()</code> — comparing columns to values — e.g.&nbsp;<code>geq()</code>, <code>eq()</code>, <code>lt()</code>, <code>neq()</code> — and stringing together statements — e.g.&nbsp;<code>AND()</code>, <code>OR()</code>, <code>%LIKE%</code>, <code>%IN%</code>, <code>BETWEEN()</code>.</p>
+<p>There’s an example of nearly every single function and each of it’s possible configurations in the <a href="https://gadenbuie.github.io/sqrrl/">package documentation</a>.</p>
+<p>Hopefully this package is useful to someone other than myself (like you!). If you run into any problems, <a href="http://twitter.com/grrrck">let me know</a> or <a href="https://github.com/gadenbuie/sqrrl/issues">submit an issue on GitHub</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

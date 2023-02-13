@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2019-08-15">
+<meta name="keywords" content="rstats">
+<meta name="description" content="Building discrete color scales for ggplot2 with some cool features for binary categorical variables.">
+
+<title>Garrick Aden-Buie - Custom Discrete Color Scales for ggplot2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Garrick Aden-Buie</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Custom Discrete Color Scales for ggplot2</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Blog</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    <p>Building discrete color scales for ggplot2 with some cool features for binary categorical variables.</p>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Garrick Aden-Buie </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 15, 2019</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- Links -->
+<p>This is a quick post demonstrating a custom discrete color scale for <span class="pkg"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span>. The goal is to create a branded color scale that we can apply to a ggplot2 plot with <code>+ scale_color_branded()</code>.</p>
+<p>I’m going to demonstrate how to customize the order of the colors used in the palette by showcasing a neat setup for setting the colors of binary variables. Whenever two discrete values are used for the color scale, the palette will automatically choose a primary color and a softer secondary (or other) color. Both will be parameterized so that we can change the colors as needed, choosing automatically from a branded color palette.</p>
+<section id="a-color-palette-for-our-brand" class="level2">
+<h2 class="anchored" data-anchor-id="a-color-palette-for-our-brand">A color palette for our “brand”</h2>
+<p>Suppose we have color palette for our brand or organization. I just grabbed a random color palette from <a href="https://coolors.co/app/2e4057-66a182-edae49-d1495b-00798c">coolors.co</a> (but I think it actually looks okay!). We’ll store this in a list called <code>branded_colors</code>, that you would ideally export from the package containing your brand’s <span class="pkg">ggplot2</span> themes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>branded_colors <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"blue"</span>   <span class="ot">=</span> <span class="st">"#00798c"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"red"</span>    <span class="ot">=</span> <span class="st">"#d1495b"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"yellow"</span> <span class="ot">=</span> <span class="st">"#edae49"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"green"</span>  <span class="ot">=</span> <span class="st">"#66a182"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"navy"</span>   <span class="ot">=</span> <span class="st">"#2e4057"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"grey"</span>   <span class="ot">=</span> <span class="st">"#8d96a3"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/show-brand-colors-1.png" class="img-fluid" width="1728"></p>
+</div>
+</div>
+</section>
+<section id="create-a-palette-function" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-palette-function">Create a palette function</h2>
+<p>Next we create the palette function. Ultimately, what we need from a palette function is a function that takes a single argument <code>n</code> and returns <code>n</code> colors.</p>
+<p>But in our case, we want to give the user some control over which colors are used, so our palette function needs to have some additional parameters. To balance both needs, we’ll use a <em>closure</em>, which is fancy word for a function that returns another function. The outer function sets up the color choices and the inner function returns a simple function of <code>n</code> that gives <span class="pkg">ggplot2</span> our brand’s colors.</p>
+<p>What’s great is that we can do whatever we want inside these functions. You can use this opportunity to re-order the colors for specific values of <code>n</code>, for example.</p>
+<p>We’re going to make specific decisions about the colors used when <code>n == 2</code>. We want the palette to return two colors, <code>branded_colors[primary]</code> and another color. The <code>other</code> argument specifies the name of the second (or other) color, and we’ll first try to lookup the color name from the brand colors, but we’ll also let the user specify a manual color.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>branded_pal <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary =</span> <span class="st">"blue"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">other =</span> <span class="st">"grey"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(primary <span class="sc">%in%</span> <span class="fu">names</span>(branded_colors))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(n) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (n <span class="sc">&gt;</span> <span class="dv">6</span>) <span class="fu">warning</span>(<span class="st">"Branded Color Palette only has 6 colors."</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (n <span class="sc">==</span> <span class="dv">2</span>) {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      other <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span>other <span class="sc">%in%</span> <span class="fu">names</span>(branded_colors)) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        other</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        branded_colors[other]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      color_list <span class="ot">&lt;-</span> <span class="fu">c</span>(other, branded_colors[primary])</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      color_list <span class="ot">&lt;-</span> branded_colors[<span class="dv">1</span><span class="sc">:</span>n]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    color_list <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">unlist</span>(color_list))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (direction <span class="sc">&gt;=</span> <span class="dv">0</span>) color_list <span class="cf">else</span> <span class="fu">rev</span>(color_list)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here are a few examples of the colors given by the pallete function returned by <code>branded_pal()</code> for various values of <code>n</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">branded_pal</span>()(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "#8d96a3" "#00798c"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">branded_pal</span>(<span class="at">other =</span> <span class="st">"green"</span>)(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "#66a182" "#00798c"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">branded_pal</span>()(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "#00798c" "#d1495b" "#edae49"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">branded_pal</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "#edae49" "#d1495b" "#00798c"</code></pre>
+</div>
+</div>
+</section>
+<section id="create-a-discrete-color-scale" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-discrete-color-scale">Create a discrete color scale</h2>
+<p>Now, we wrap this palette into a <code>scale_colour_branded()</code> function, using <code>ggplot2::discrete_scale()</code> to turn our palette into a <span class="pkg">ggplot2</span> scale. Note that ggplot2 convention is to spell <code>colour</code> with a <code>u</code> and to create an alias to the American spelling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>scale_colour_branded <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary =</span> <span class="st">"blue"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">other =</span> <span class="st">"grey"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">discrete_scale</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"colour"</span>, <span class="st">"branded"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">branded_pal</span>(primary, other, direction),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>scale_color_branded <span class="ot">&lt;-</span> scale_colour_branded</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="demonstration" class="level2">
+<h2 class="anchored" data-anchor-id="demonstration">Demonstration</h2>
+<p>Let’s see our new discrete color scale in action. We’ll create a simple plot using <code>mtcars</code> using the binary variable <code>vs</code> (engine shape, V or straight) for the point colors.</p>
+<p>Here’s our plot using the standard <span class="pkg">ggplot2</span> colors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert vs, gear to character so ggplot2 uses discrete scales</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>vs   <span class="ot">&lt;-</span> <span class="fu">paste</span>(mtcars<span class="sc">$</span>vs)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>gear <span class="ot">&lt;-</span> <span class="fu">paste</span>(mtcars<span class="sc">$</span>gear)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(mpg, wt, <span class="at">color =</span> vs) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>Using our discrete color scale automatically uses our brand’s primary color with the brand’s grey color we chose as the default <code>other</code> value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">scale_color_branded</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo2-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>The default value is designed to highlight <code>TRUE</code> values and soften <code>FALSE</code> values, but you may want complementary colors instead.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">scale_color_branded</span>(<span class="at">other =</span> <span class="st">"yellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo3-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>When the level ordering doesn’t match the colors, we let the user reverse the direction of the palette by setting <code>direction = -1</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">scale_color_branded</span>(<span class="at">other =</span> <span class="st">"yellow"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo4-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>If you’d rather use a custom color for the <code>other</code> color, we’ve given the user a small amount of leeway to deviate from the brand colors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">scale_color_branded</span>(<span class="at">other =</span> <span class="st">"#a2d729"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo5-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>But when there are more than 2 categorical levels, the brand color palette is used…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">color =</span> gear) <span class="sc">+</span> <span class="fu">scale_color_branded</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo6-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>…and <code>primary</code> and <code>other</code> options are ignored…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">color =</span> gear) <span class="sc">+</span> <span class="fu">scale_color_branded</span>(<span class="at">other =</span> <span class="st">"yellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo7-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>…but the <code>direction</code> argument is still helpful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">color =</span> gear) <span class="sc">+</span> <span class="fu">scale_color_branded</span>(<span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/demo8-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="final-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="final-thoughts">Final thoughts</h2>
+<p>I used this technique to create a branded <span class="pkg">ggplot2</span> theme at work and I’ve found that this special treatment of binary categorical variables is incredibly helpful.</p>
+<p>I frequently need to communicate two values or trends in a way that allows for comparisons but clearly highlights one category. A common example would be comparing local cancer rates with statewide averages, and in these cases having a muted color for the comparison is incredibly helpful.</p>
+<p>Here’s an example using the Texas housing sales data that ships with <span class="pkg">ggplot2</span> to showcase monthly total home sales in Austin with Dallas sale volume shown for reference.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="custom-discrete-color-scales-for-ggplot2_files/figure-html/tx-housing-example-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<section id="indicate-discretecontinuous-in-the-function-name" class="level3">
+<h3 class="anchored" data-anchor-id="indicate-discretecontinuous-in-the-function-name">Indicate discrete/continuous in the function name</h3>
+<p>If you’re using this as guidance for building your own discrete color scale, my final tip would be to modify the name of the scale function and append <code>_d</code> to the end to indicate that the scale is discrete.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_color_branded_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll want to leave space in your package for a continuous color scale that will receive a <code>_c()</code> suffix.</p>
+</section>
+<section id="create-fill-scale-functions-too" class="level3">
+<h3 class="anchored" data-anchor-id="create-fill-scale-functions-too">Create fill scale functions, too</h3>
+<p>Finally, you’ll also want to create <code>scale_fill_...()</code> functions as well. You can create those using the same <code>branded_palette()</code> functions you used for <code>scale_color_branded()</code>, with the small tweak of replacing <code>"color"</code> with <code>"fill"</code> as the first argument to <code>ggplot2::discrete_scale()</code></p>
+</section>
+<section id="what-about-three-colors" class="level3">
+<h3 class="anchored" data-anchor-id="what-about-three-colors">What about three colors?</h3>
+<p><a href="https://emilyriederer.netlify.com/">Emily Riederer</a> has a neat function in her <a href="https://github.com/emilyriederer/rtistic">Rtistic</a> package template that I highly recommend you check out if you’re making a package of branded <span class="pkg">ggplot2</span> and <span class="pkg">rmarkdown</span> themes.</p>
+<p>She calls it <code>scale_color_opinionated()</code> and it works similarly to the functions I’ve laid out, except that it provides a color scale specifically for categorical variables with three levels: <code>"good"</code>, <code>"neutral"</code>, and <code>"bad"</code>.</p>
+<p>If this sounds like something you do frequently, consider adding an opinionated function to your package!</p>
+</section>
+<section id="thanks" class="level3">
+<h3 class="anchored" data-anchor-id="thanks">Thanks</h3>
+<p>Thanks for reading! Find me on Twitter <a href="https://twitter.com/grrrck">@grrrck</a> to let me know if this post was helpful.</p>
+<p>And thanks to <a href="https://twitter.com/BenjaminWolfe">Benjamin Wolfe</a> for inspiring this post!</p>
+<p>{{% twitter "1161844769624137728" %}}</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
