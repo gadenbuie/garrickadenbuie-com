@@ -60,9 +60,6 @@ website:
 
 format:
   html:
-    comments:
-      giscus:
-        repo: gadenbuie/garrickadenbuie-com
     theme:
       light:
         - zephyr

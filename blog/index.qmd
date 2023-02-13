@@ -19,4 +19,5 @@ listing:
   image-align: left
 page-layout: full
 title-block-banner: false
+comments: false
 ---
