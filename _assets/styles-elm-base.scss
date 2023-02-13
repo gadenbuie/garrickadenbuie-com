@@ -50,8 +50,16 @@ h2, h3, h4, h5, h6 {
 div.quarto-about-trestles {
   align-items: center;
 
-  .about-entity {
-    padding-right: 1.5em;
+  @include media-breakpoint-up(lg) {
+    .about-entity {
+      padding-right: 1.5em;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .about-entity {
+      padding-right: 0;
+    }
   }
 }
 
