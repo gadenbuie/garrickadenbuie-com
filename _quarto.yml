@@ -75,7 +75,6 @@ format:
         - _assets/styles-elm-base.scss
         - _assets/colors.scss
     css:
-      - styles.css
       - _assets/panelset-extras.css
     highlight-style:
       light: _assets/syntax-elm-light.theme
