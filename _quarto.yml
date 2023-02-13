@@ -60,22 +60,45 @@ website:
 
 format:
   html:
+    minimal: true
     theme:
-      dark:
-        - _assets/zephyr-dark.scss
-        - _assets/styles-elm-dark.scss
-        - _assets/styles-elm-base.scss
-        - _assets/colors.scss
       light:
         - zephyr
         - _assets/styles-elm-light.scss
         - _assets/styles-elm-base.scss
         - _assets/colors.scss
+      dark:
+        - _assets/zephyr-dark.scss
+        - _assets/styles-elm-dark.scss
+        - _assets/styles-elm-base.scss
+        - _assets/colors.scss
     css:
       - styles.css
       - _assets/panelset-extras.css
-    highlight-style: atom-one
+    highlight-style:
+      light: _assets/syntax-elm-light.theme
+      dark: _assets/syntax-elm-dark.theme
     code-block-bg: false
+    include-before: |-
+      <script>
+        (function() {
+          const sheets = Array.from(document.styleSheets)
+            .filter(x => !x.href)
+
+          if (!sheets.length) return;
+
+          // remove the inlined base pandoc syntax styles
+          const base_syntax = sheets[0]
+          Array.from(base_syntax.cssRules)
+            .reduce((res, r, idx) => {
+              if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+                res = [...res, idx - res.length]
+              }
+              return(res)
+            }, [])
+            .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+        })()
+      </script>
 
 execute:
   freeze: auto

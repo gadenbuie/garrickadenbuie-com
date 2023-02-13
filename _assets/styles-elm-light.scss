@@ -38,10 +38,14 @@ $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
 
 // Quarto variables
+$body-color: $slate-10;
 $navbar-bg: $white;
 $code-color: $purple-30;
 $code-bg: $white;
 $footer-bg: $white;
+
+// Bootstrap fixups
+$text-muted: $gray-700;
 
 /*-- scss:rules --*/
 .quarto-title-banner {
@@ -86,4 +90,8 @@ div.quarto-post .listing-categories .listing-category,
   color: $pink-10;
   background-color: $pink-90;
   opacity: 0.6;
+}
+
+.blockquote {
+  color: $text-muted;
 }
