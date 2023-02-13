@@ -5,7 +5,6 @@ date: '2022-07-12'
 slug: process-profile-picture-magick
 categories:
   - R
-
   - Images
   - Interesting Uses of R
 description: |
@@ -16,7 +15,6 @@ source_link: 'https://github.com/gadenbuie/garrickadenbuie-com/blob/main/content
 keywords: rstats
 editor_options:
   chunk_output_type: console
-references: ~
 post_data:
   photos:
     - id: DItYlc26zVI
@@ -30,6 +28,7 @@ post_data:
 resources:
   - profiles
   - profiles_cropped
+bump: 2
 ---
 
 <!-- Links -->
