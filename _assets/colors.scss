@@ -145,3 +145,71 @@ $slate-00: #0e181e;
   --slate-10: #{$slate-10};
   --slate-00: #{$slate-00};
 }
+
+.fansi-color-001 {
+  /* red */
+  color: var(--red-50);
+}
+.fansi-color-002 {
+  /* green */
+  color: var(--green-40);
+}
+.fansi-color-003 {
+  /* yellow */
+  color: var(--orange-50);
+}
+.fansi-color-004 {
+  /* blue */
+  color: var(--blue-40);
+}
+.fansi-color-005 {
+  /* purple */
+  color: var(--purple-50);
+}
+.fansi-color-006 {
+  /* cyan */
+  color: var(--pink-50);
+}
+.fansi-color-007 {
+  /* silver */
+  color: var(--slate-30);
+}
+.fansi-color-008 {
+  /* silver */
+  color: var(--slate-50);
+}
+
+.quarto-dark {
+  .fansi-color-001 {
+    /* red */
+    color: var(--red-60);
+  }
+  .fansi-color-002 {
+    /* green */
+    color: var(--green-60);
+  }
+  .fansi-color-003 {
+    /* yellow */
+    color: var(--orange-70);
+  }
+  .fansi-color-004 {
+    /* blue */
+    color: var(--blue-50);
+  }
+  .fansi-color-005 {
+    /* purple */
+    color: var(--purple-50);
+  }
+  .fansi-color-006 {
+    /* cyan */
+    color: var(--pink-70);
+  }
+  .fansi-color-007 {
+    /* silver */
+    color: var(--slate-30);
+  }
+  .fansi-color-008 {
+    /* silver */
+    color: var(--slate-50);
+  }
+}
