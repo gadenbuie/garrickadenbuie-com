@@ -60,7 +60,6 @@ website:
 
 format:
   html:
-    minimal: true
     theme:
       light:
         - zephyr
