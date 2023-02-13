@@ -16,6 +16,7 @@ _*/
 !/_assets/
 !/_freeze/
 !/_site/
+!/_site/_*
 /.quarto/
 
 /.luarc.json
