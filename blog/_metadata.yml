@@ -5,6 +5,8 @@ toc-location: right
 comments:
   giscus:
     repo: gadenbuie/garrickadenbuie-com
+    mapping: pathname
+    category: Comments
 
 filters:
   - lightbox
