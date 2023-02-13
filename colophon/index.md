@@ -1,9 +1,9 @@
 ---
-title: "Made with 🧡"
+title: "Made with 💙"
 date: "2023-02-13"
 ---
 
-## Made with Quarto
+## Made with [![quarto](https://quarto.org/quarto.png){style="max-height:1em;vertical-align:sub;"}](https://quarto.org)
 
 Made with
 <span
