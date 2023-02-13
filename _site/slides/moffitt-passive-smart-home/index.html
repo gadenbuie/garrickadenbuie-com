@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Utilizing Technology for Data Collection and Intervention" />
+    <meta name="date" content="2018-10-29" />
+    <link rel="stylesheet" href="css/moffitt-xaringan.css" type="text/css" />
+    <link rel="stylesheet" href="css/shiny.css" type="text/css" />
+    <link rel="stylesheet" href="css/utils.css" type="text/css" />
+    <link rel="stylesheet" href="css/bg-video.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+# The Passive Smart Home:<br>Unobtrusive At-Home Behavior Monitoring
+## Garrick Aden-Buie
+### <em>Utilizing Technology for Data Collection and Intervention</em>
+### October 29, 2018
+
+---
+
+
+
+
+
+
+
+
+
+
+class: inverse middle center
+## Aging in the United States
+
+&lt;!-- ap version: 0.6.6.9022 --&gt;
+
+???
+Thank you: Drs. **Brandon** and **Jim**, Dr. Businelle
+
+- Recently joined Moffitt
+- Cancer new, learning everyday
+- Doctoral candidate USF IE
+- Wondering what is IE?
+  - Decision Engineering
+  - Data and math. models to improve decision making
+  - Inventory allocation
+  - vehicle routing
+  - optimizing patient flows in ER
+  - choosing the best medical option under uncertainty
+
+- Last 4 years: how we age, aging in US
+
+---
+layout: true
+### US Population by Age
+---
+
+![](images/video/pop-anim-abs_first.png)
+
+???
+The first reason is summarized in this population pyramid.
+
+Population of US by 5-year age range, by percentage, non-gendered.
+
+---
+
+![](images/video/pop-anim-abs.gif)
+
+???
+- Baby-boomers: born mid-40s through late 60s
+
+- Millennials, Gen X, _echo boomers_ in the 80s-90s.
+
+- __Life expectancy has increased by 3 mon/year since 1840&lt;sup&gt;*&lt;/sup&gt;__ 
+  - and while 75% of seniors report being in __good to excellent health__, 
+  - __a majority are managing chronic health conditions__.
+
+---
+
+![](images/video/pop-anim-abs_last.png)
+
+---
+
+![](images/video/pop-anim-abs_first-last.png)
+
+---
+
+![](images/video/pop-anim-abs_dependency-ratio.png)
+
+???
+Interesting: dependency ratio
+
+Number of working force aged adults to number of dependents.
+
+Work force classically defined as 15-64.
+
+---
+layout: true
+### US Elder Dependency Ratio
+---
+
+![](images/video/pop-dependency_first.png)
+
+???
+Look at how this ratio changes over time
+
+Ratio of older adults to work-force age adults
+
+---
+
+![](images/video/pop-dependency.gif)
+
+---
+
+![](images/video/pop-dependency_last.png)
+
+???
+So our population growth is occurring along two dimensions:
+
+- Increase in absolute number of older adults
+- Increase in the relative number of older adults
+
+---
+layout: true
+### US Dependency Ratio
+---
+
+![](images/video/pop-dependency-both.gif)
+
+???
+Include children in the dependency ratio
+
+- Giant Baby Boomer bump
+- Older adults driving trends in dep. ratio
+
+Doesn't take into account:
+
+- More older adults are divorced or live alone than ever before, which in conjunction with demogrph. changes leads to decreased availability of traditional family caregivers
+- # of 75+ without a spouse will x2 between 2010 and 2030 and without an adult child within 10 miles x6
+
+---
+
+![](images/video/pop-dependency-both_last.png)
+
+---
+layout: false
+class: no-slide-number
+background-image: url('images/ruth-individual.JPG')
+background-size: cover
+
+--
+
+&lt;img src="images/family-scattered.jpg" width="250px"&gt;
+
+???
+
+Early in 2012, just after her 80th birthday my grandmother was diagnosed with Alzheimer’s.
+
+Same time: grandfather hospitalized for heart failure. Also COPD.
+
+They had just re-retired to Florida, 1200 miles from Chicago where my parents were living.
+
+My mom left a full-time position and for a while would fly back and forth.
+
+My grandparents were highly independent, very much wanted to live on their own, but it was very difficult for my mom to monitor them from a distance.
+
+As Alz progressed, tougher to know if they ate, showered, left the house, slept normally, etc.
+
+Two highlights from their story
+
+1. Not uncommon
+2. Highlighting the need and value for passive technologies that link caregivers and seniors
+
+---
+class: bottom center no-slide-number
+background-image: url(images/participant-pointing-sensor.jpg)
+background-size: cover
+background-position: 0px -20px
+
+???
+My parents would have benefited from a system like the one we installed in "Dorothy's" house
+
+Uses passive, wireless sensors installed throughout the home
+
+Collects basic information about her movements and interactions with objects
+
+---
+class: no-slide-number
+background-image: url(images/participant-computer-pointing.jpg)
+background-size: cover
+
+???
+Summarized and reported on a web interface that she shared with her daughter
+
+---
+background-image: url(images/createhealthlogo.png)
+background-size: 400px
+background-position: 80% 5%
+## HomeSense
+
+.muted[
+CREATE Health, USF  
+Dr. Carla VandeWeerd and Dr. Ali Yalcin  
+usf.edu/engineering/create-health/
+]
+
+.pull-left[
+### Goals
+
+- Leverage commerical low-cost&lt;br&gt;home monitoring technology
+
+- Support older adults to **age in place**
+
+- Improve quality of life&lt;br&gt;throught the use of technology
+]
+
+???
+**Aging in Place**: Overwhelming majority of OA want to stay in current homes, live independently
+
+Increase QoL by mitigating the impact of inconsistent monitoring and delayed health assessments.
+
+--
+
+.pull-right[
+### Lifestyle Reassurance
+
+- Monitor health and daily activities
+
+- Provide safety and security around&lt;br&gt;changes in health and routine
+
+- Alleviate burden of chronic disease
+]
+
+---
+layout: true
+name: villages
+class: bottom, center, bg-full, no-pad, no-slide-number
+&lt;!-- background-size: cover --&gt;
+&lt;!-- background-image: url(images/villages-flyover.png) --&gt;
+
+&lt;video loop muted autoplay poster="images/villages-flyover.png" class="bg-video"&gt;
+    &lt;source src="images/video/villages-flyover2.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+---
+
+.box-center-bottom.box-light[
+&lt;img src="images/thevillages-logo.svg" width="60%"&gt;
+
+&lt;div style="text-align: left; padding-left: 60px"&gt;
+&lt;ul&gt;
+&lt;li&gt;The largest retirement community in US&lt;/li&gt;
+&lt;li&gt;75 miles north of Tampa, FL&lt;/li&gt;
+&lt;li&gt;115,000 residents in 50,000 homes&lt;/li&gt;
+&lt;li&gt;Average age: 62 (M) and 60 (F)&lt;/li&gt;
+&lt;ul&gt;
+&lt;/div&gt;
+]
+&lt;!-- &lt;div style="padding: 15px"&gt;&amp;nbsp;&lt;/div&gt; --&gt;
+
+???
+A major community partner in CREATE Health's work is The Villages...
+
+.notes-list[
+- 32 sq miles
+- 3 town squares
+- 63 rec centers
+- legend has it a Villager can play 18 holes of gold for 30 straight days without repeating
+]
+
+---
+.box-center-bottom.box-light[
+&lt;h3&gt;Study Participants&lt;/h3&gt;
+&lt;div style="text-align: left; padding-left: 60px"&gt;
+&lt;ul&gt;
+&lt;li&gt;Residents 55+ from The Villages&lt;/li&gt;
+&lt;li&gt;Living alone in pet-free home&lt;br&gt;with internet access&lt;/li&gt;
+&lt;li&gt;Not exhibiting signs of&lt;br&gt;cognitive impairment&lt;/li&gt;
+&lt;ul&gt;
+&lt;/div&gt;
+]
+
+---
+layout: false
+## Overview of Study Participation
+
+
+
+- 14 total participants (7 ongoing) with 5,944 total days of observation
+
+&lt;!-- - 12 have completed at least 6 months, 1 exited prior, 1 recently joined --&gt;
+
+--
+    
+- Participant gender and age at study start
+
+&lt;img src="index_files/figure-html/participants-age-1.png" width="1080" /&gt;
+
+--
+
+- Days of participation in study
+
+&lt;img src="index_files/figure-html/participants-days-in-study-1.png" width="1080" /&gt;
+
+???
+
+- Minimum days is 48, newest has 75 days
+- Minimum (included) days is just over 181
+- Max days is 786.7916667
+- Median (&gt; 180) is 446.4166667
+
+Reasons for leaving:
+
+- 2 participants moved (002, and 010)
+- 1 participant died
+- 1 participant faced medical challenges
+- 2 participants did not continue after 6 months
+- 1 participant did not like the sensors
+
+---
+
+## Timeline
+
+&lt;img src="index_files/figure-html/plot-timeline-1.png" width="1080" /&gt;
+
+???
+
+Most at once: 11 participants
+
+---
+layout: true
+## Sensor System
+---
+background-image: url(images/sensors.png)
+background-position: center
+background-size: 500px
+---
+background-image: url(images/example-house-floorplan/simple-legend.png)
+background-position: 50% 45%
+background-size: 80%
+---
+background-image: url(images/example-house-floorplan/simple-exp-covered.png)
+background-position: 50% 45%
+background-size: 80%
+---
+background-image: url(images/SystemArchitecture2.png)
+background-position: 50% 90%
+background-size: 800px
+---
+layout: true
+## Challenges
+---
+
+.left-column[
+### Sensors in the home
+]
+
+.right-column[
+- Real occupants in unscripted situations&lt;br&gt;performing unknown actions
+
+- Remote sensing in low-visibility locations
+
+- Balance between high density of sensors and&lt;br&gt;cost-efficiency and acceptance
+
+- Cameras and wearable devices perceived as&lt;br&gt;too invasive or too difficult to use
+]
+
+---
+
+.left-column[
+### Sensors in the home
+### Reliability issues
+]
+
+.right-column[
+- Low-power wireless network — communication issues
+
+- Battery powered sensors
+
+- Human interaction with sensors
+
+- Various devices, device types and manufacturers
+
+- Non-failure related messiness
+]
+
+
+???
+
+“Homes [. . . ] can be hazardous for sensors, particularly when hundreds of sensors are deployed over long time durations” Hnat et al. (2011)
+
+Hnat et al. (2011). The hitchhiker’s guide to successful residential sensing deployments. doi:10.1145/2070942.2070966.
+
+---
+
+.left-column[
+### Sensors in the home
+### Reliability issues
+### Record Keeping
+]
+
+.right-column[
+- Inherent heirarchy of sensor data as a function of floor plan
+
+- Physical location of sensors critical to interpretation
+
+- System needs to be resilient to changes
+]
+
+???
+
+Very important to keep track of where sensors are located
+
+This is not something that's carried around with the data
+
+Systems need to be resilient agains changes in devices, locations and human interactions
+
+---
+layout: true
+## Inventory and System Management
+
+.pull-left.third[
+- Inventory Management
+
+- Installation Preparation
+
+- System Configuration
+
+- Planning and Review
+
+- Maintenance Visits
+
+- Data Export
+]
+---
+.pull-right.two-third[&lt;img src="images/admin-pages/admin-01.png" class="mh500"&gt;&lt;/img&gt;]
+---
+.pull-right.two-third[&lt;img src="images/admin-pages/admin-02.png" class="mh500"&gt;&lt;/img&gt;]
+---
+.pull-right.two-third[&lt;img src="images/admin-pages/admin-09.png" class="mh500"&gt;&lt;/img&gt;]
+---
+.pull-right.two-third[&lt;img src="images/admin-pages/admin-08.png" class="mh500"&gt;&lt;/img&gt;]
+---
+.pull-right.two-third[&lt;img src="images/admin-pages/admin-10.png" class="mh500"&gt;&lt;/img&gt;]
+
+---
+exclude: true
+layout:false
+
+&lt;!-- &lt;iframe src="http://localhost:3838/chdash/" id="chdash" placeholder="images/chdash-sensor-activity.png"&gt; --&gt;
+
+![](images/chdash-sensor-activitiy.png)
+---
+layout:false
+background-image: url(images/chdash/chdash-02-activity-out-of-home.png)
+background-size: cover
+background-position: top
+---
+background-image: url(images/chdash/chdash-01-polar-activity.png)
+background-size: cover
+background-position: top
+---
+background-image: url(images/chdash/chdash-05-overview-by-hour.png)
+background-size: cover
+background-position: top
+---
+
+.pull-left.center[
+## Notifications
+
+&lt;img src="images/notification-email.png" class="mh500"&gt;
+]
+
+.pull-right.center[
+## Activity Validation App
+
+&lt;img src="images/ava.png" class="mh500"&gt;
+]
+
+---
+class: center middle inverse
+
+## Activity Profiles
+
+---
+
+.pull-left[
+### Activity&lt;br&gt;Recognition
+
+- **Generative**
+    - Hidden Markov Models
+    - Naive Bayes
+- **Discriminative**
+    - Machine learning methods
+    - NN, ANN, SVM, etc.
+- **Ontological Models**
+
+- Require labelled training data
+
+- Accurate annotations very difficult
+]
+
+--
+
+.pull-right[
+### Activity&lt;br&gt;Profiles
+
+- Summarize occupant's activities
+
+- Do not require labelled training data
+
+- Maintaining lifestyle&lt;br&gt;(and smart home system)
+
+- Enable detection of changes or anomalies in routine, behavior
+]
+
+
+---
+layout: true
+## Example Day of Sensor Activity
+---
+
+&lt;img src="index_files/figure-html/plot-sensor-day-1.png" width="100%" /&gt;
+
+--
+
+.pull-left[
+- Use only **active** sensor firings
+
+- Day begins at first 5 active
+]
+
+.pull-right[
+- Insert _pause event_: no activity in 15 min
+
+- Summarize as **bag-of-event _n_-grams**
+]
+
+---
+
+.ngram-example[
+&lt;code&gt;
+iIbEAaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPpPpgDdPpPpEPpPpDdPpDdDdPpIiEE1EPaA1AaEaEIiIDdDdDd1aEIiaAIia1AaEDdDdpPDdDdDdDdDdDdDdEDdDd1EIpaAGgaAP1EaAAa1EaA1AaEEIipDdPp1EPpaA1AE1aEIiDdGgGEgEIP1EIDdDdDdDdEEEaAEaApPpGgIPaA1AaEpDdIBiiI1ii1
+&lt;/code&gt;
+]
+
+---
+
+.ngram-example[
+&lt;code&gt;
+iIbEAaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[i]IbEAaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iI]bEAaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIb]EAaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbE]AaDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEA]aDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEAa]DdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; ➡ &lt;span class="word"&gt;In Front Door Area&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEAaD]dDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; ➡ &lt;span class="word"&gt;In Front Door Area&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEAaDd]DdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; ➡ &lt;span class="word"&gt;In Front Door Area&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Closed Fridge&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEAaDdD]dDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; ➡ &lt;span class="word"&gt;In Front Door Area&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Closed Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;
+.hl-text-overline[iIbEAaDdDd]DdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp
+&lt;/code&gt;
+]
+&lt;p style="line-height: 2.5em"&gt; &lt;span class="word"&gt;In Bathroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;In Bedroom Master&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Bedroom Door&lt;/span&gt; ➡ &lt;span class="word"&gt;In Kitchen&lt;/span&gt; ➡ &lt;span class="word"&gt;In Living Room&lt;/span&gt; ➡ &lt;span class="word"&gt;In Front Door Area&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Closed Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Opened Fridge&lt;/span&gt; ➡ &lt;span class="word"&gt;Closed Fridge&lt;/span&gt; &lt;/p&gt;
+
+---
+
+.ngram-example[
+&lt;code&gt;.word.hl-text.hl[iIbEA]aDdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]
+
+--
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+--
+
+
+
+#### Bag of event n-grams
+
+.word[iIbEA]
+
+---
+
+.ngram-example[
+&lt;code&gt;i.word.hl-text.hl[IbEAa]DdDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa]
+
+---
+
+.ngram-example[
+&lt;code&gt;iI.word.hl-text.hl[bEAaD]dDdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa] .word[bEAaD]
+
+---
+
+.ngram-example[
+&lt;code&gt;iIb.word.hl-text.hl[EAaDd]DdDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa] .word[bEAaD] .word[EAaDd]
+
+---
+
+.ngram-example[
+&lt;code&gt;iIbE.word.hl-text.hl[AaDdD]dDdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa] .word[bEAaD] .word[EAaDd] .word[AaDdD]
+
+---
+
+.ngram-example[
+&lt;code&gt;iIbEA.word.hl-text.hl[aDdDd]DdPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa] .word[bEAaD] .word[EAaDd] .word[AaDdD] .word[aDdDd]
+
+---
+
+.ngram-example[
+&lt;code&gt;iIbEAa.word.hl-text.hl[DdDdD]dPpPpPIiEIiIIIEpDdDdiPpIiIEPpIiEPDpdIiiIEDdDdiIPpEPpIiPpDdIiiIE1EGgAaIiDdPpGg1GEgGDdDdPp&lt;/code&gt;
+]&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.big[⬇]
+
+#### Bag of event n-grams
+
+.word[iIbEA] .word[IbEAa] .word[bEAaD] .word[EAaDd] .word[AaDdD] .word[aDdDd] .word[DdDdD]
+
+---
+
+.pull-left[
+**Bag-of-event n-grams**
+
+- Repeat process for *n* from 1 to 1
+
+- Calculate relative frequency *p* of each *n*-gram
+
+- Can be used to summarize *m* days
+
+**Compare two profiles**
+
+- Using Kullback-Leibler Symmetric Distance
+
+- D&lt;sub&gt;KL&lt;/sub&gt; (P || Q) = 0.331
+]
+
+.pull-right[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; n-gram &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Count &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Rank &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq. &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;I&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0239 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;D&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0179 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;d&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0179 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;i&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0179 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;Dd&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0164 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;P&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0164 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;E&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0149 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;p&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0149 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;Ii&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0119 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; &lt;span class='word'&gt;Pp&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0119 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+???
+
+***
+
+KL Distance provides a distance measure between probability distributions.
+
+We use KL dist to compare frequencies across b-o-e n-grams (activity profiles)
+
+`\(D_{KL} (P \Vert Q) = \sum_{i} \left( p_i - q_i \right) \log \frac{p_i}{q_i}\)`
+
+---
+layout: true
+## Baseline Profile Comparison
+---
+
+.center[
+&lt;img src="index_files/figure-html/baseline-single-day-calendar-1.png" width="720" /&gt;
+]
+
+---
+
+.center[
+&lt;img src="index_files/figure-html/baseline-dist-points-1.png" width="864" /&gt;
+]
+
+---
+
+.center[
+&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" width="864" /&gt;
+]
+
+---
+
+.center[
+&lt;img src="index_files/figure-html/baseline-inlier-range-1.png" width="864" /&gt;
+]
+
+--
+
+.center[
+&lt;img src='index_files/figure-html/baseline-single-day-calendar-1.png' width="70%"&gt;
+]
+
+---
+
+.center[
+&lt;img src="index_files/figure-html/baseline-profile-tau-1.png" width="432" /&gt;
+]
+
+---
+
+.center[
+&lt;img src="index_files/figure-html/baseline-all-range-1.png" width="864" /&gt;
+]
+
+---
+
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" width="1080" /&gt;
+
+---
+layout: true
+### Behavior Change Detection
+
+
+
+- Complementary method to find changes in behavior
+
+- Permutation-based methods for change detection&lt;sup&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/sup&gt;
+
+.footnote.small[
+1: Sprint, Cook, and Schmitter-Edgecombe (2016)
+]
+
+???
+
+- Having validated that the activity profiles are capable&lt;br&gt; 
+  of summarizing the activity patterns of an occupant,&lt;br&gt;
+  we now turn to the task of behavior change detection
+
+- compare occupant's recent activity to previous behavior&lt;br&gt;
+  previous behavior is either a baseline period of normalcy&lt;br&gt;
+  or sliding windows
+
+- Given that KL-dist is a scale-less distance metric,&lt;br&gt;
+  need to establish bounds guidelines for expected similarity
+  *What is normal variation vs. anomaly/change?*
+
+- Overall, our goal is to bring abnormalities to the attention of caregiver&lt;br&gt;
+  human review and intervention is expected&lt;br&gt;
+  and system issues are equally requiring of attention
+
+---
+
+--
+
+
+
+&lt;img src="index_files/figure-html/permutation-plots-1.png" width="1008" /&gt;
+
+---
+
+&lt;img src="index_files/figure-html/permutation-plots-2.png" width="1008" /&gt;
+
+---
+layout: true
+### Permutation-Based Comparison
+---
+exclude: true
+
+.center[
+&lt;img src="images/permutations4.gif" height="450px"&gt;
+]
+
+???
+
+Each shuffling of 
+
+---
+
+.center[
+&lt;img src="images/permutations4-boxplot.png" height="450px"&gt;
+]
+
+---
+
+.center[
+&lt;img src="images/behavior-change-house013-1.png" width="750px"&gt;
+]
+
+---
+layout: false
+background-image: url(images/coen-staal-454813-unsplash.jpg)
+background-size: cover
+class: center top
+
+# Conclusions
+
+---
+
+## Conclusions
+
+Passive sensor systems can address challenges faced by aging population
+
+System, inventory, and data management infrastructure are critical
+
+--
+
+Local leaders at the University of South Florida:
+
+- CREATE Health (VandeWeerd, Yalcin)
+- Dr. Bill Kearns
+
+--
+
+CASAS "Smart Home in a Box"
+
+- Washington State University
+- casas.wsu.edu/smart-homes
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

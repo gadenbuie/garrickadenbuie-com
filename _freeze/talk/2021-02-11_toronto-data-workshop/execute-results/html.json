@@ -1,0 +1,18 @@
+{
+  "hash": "5820a91bdc4d043d2b97c85fe68a6166",
+  "result": {
+    "markdown": "---\ntitle: \"R Markdown: An Incomplete History\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  An incomplete history of the literate programming origins of R Markdown.\n  Plus some cool things I'm tinkering with: {epoxy} and {shinyComponents}.\nimages:\n  - \"https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png\"\ndate: '2021-02-11'\nslug: toronto-data-workshop\ntags:\n  - R\n  - R Markdown\n  - epoxy\n  - shinyComponents\n  - knitr\n  - Sweave\n  - Literate Programming\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Talk ]\nevent: \"Toronto Data Workshop\"\nevent_url: https://rohanalexander.com/toronto_data_workshop.html\nlocation: Virtual Workshop\nlinks:\n  - icon: chalkboard-teacher\n    icon_pack: fas\n    name: Slides\n    url: https://slides.garrickadenbuie.com/toronto-data-workshop/\n  - icon: github\n    icon_pack: fab\n    name: Code\n    url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop\n  - icon: play\n    icon_pack: fas\n    name: Video\n    url: https://www.youtube.com/watch?v=Hl798H6J-bg\n---\n\n::: {.cell}\n::: {.cell-output-display}\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/toronto-data-workshop/\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

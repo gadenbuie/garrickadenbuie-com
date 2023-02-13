@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2021-09-13">
+<meta name="keywords" content="rstats">
+<meta name="description" content="Setting up signed git commits with a Keybase GPG key that works with RStudio.">
+
+<title>Garrick Aden-Buie - Signed and verified: signed git commits with Keybase and RStudio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Signed and verified: signed git commits with Keybase and RStudio">
+<meta property="og:description" content="Setting up signed git commits with a Keybase GPG key that works with RStudio.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/signed-verified-git-commits-keybase-rstudio/social.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="346">
+<meta property="og:image:width" content="662">
+<meta name="twitter:title" content="Garrick Aden-Buie - Signed and verified: signed git commits with Keybase and RStudio">
+<meta name="twitter:description" content="Setting up signed git commits with a Keybase GPG key that works with RStudio.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/signed-verified-git-commits-keybase-rstudio/social.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="346">
+<meta name="twitter:image-width" content="662">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Signed and verified: signed git commits with Keybase and RStudio</h1>
+                  <div>
+        <div class="description">
+          Setting up signed git commits with a Keybase GPG key that works with RStudio.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">git</div>
+                <div class="quarto-category">GitHub</div>
+                <div class="quarto-category">RStudio</div>
+                <div class="quarto-category">Tutorials</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 13, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#set-up-signed-and-verified-commits" id="toc-set-up-signed-and-verified-commits" class="nav-link" data-scroll-target="#set-up-signed-and-verified-commits">Set up signed and verified commits</a>
+  <ul class="collapse">
+  <li><a href="#install-keybase-and-gpg" id="toc-install-keybase-and-gpg" class="nav-link" data-scroll-target="#install-keybase-and-gpg">Install Keybase and GPG</a></li>
+  <li><a href="#create-a-gpg-key-with-keybase" id="toc-create-a-gpg-key-with-keybase" class="nav-link" data-scroll-target="#create-a-gpg-key-with-keybase">Create a GPG key with Keybase</a></li>
+  <li><a href="#trust-your-own-key-ultimately" id="toc-trust-your-own-key-ultimately" class="nav-link" data-scroll-target="#trust-your-own-key-ultimately">Trust your own key, ultimately</a></li>
+  <li><a href="#configure-git-to-always-sign-your-commits" id="toc-configure-git-to-always-sign-your-commits" class="nav-link" data-scroll-target="#configure-git-to-always-sign-your-commits">Configure git to always sign your commits</a></li>
+  <li><a href="#add-your-key-to-github" id="toc-add-your-key-to-github" class="nav-link" data-scroll-target="#add-your-key-to-github">Add your key to GitHub</a></li>
+  <li><a href="#check-your-signed-commit-powers" id="toc-check-your-signed-commit-powers" class="nav-link" data-scroll-target="#check-your-signed-commit-powers">Check your signed commit powers</a></li>
+  <li><a href="#install-a-pinentry-app" id="toc-install-a-pinentry-app" class="nav-link" data-scroll-target="#install-a-pinentry-app">Install a pinentry app</a></li>
+  <li><a href="#import-your-gpg-key-on-another-computer" id="toc-import-your-gpg-key-on-another-computer" class="nav-link" data-scroll-target="#import-your-gpg-key-on-another-computer">Import your GPG key on another computer</a></li>
+  </ul></li>
+  <li><a href="#links-and-resources" id="toc-links-and-resources" class="nav-link" data-scroll-target="#links-and-resources">Links and Resources</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#gpg-agent-cache-passphrase" id="toc-gpg-agent-cache-passphrase" class="nav-link" data-scroll-target="#gpg-agent-cache-passphrase">Use <code>gpg-agent</code> to cache your passphrase without a pinentry GUI</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/signed-verified-git-commits-keybase-rstudio/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/signed-verified-git-commits-keybase-rstudio/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<div class="lead">
+<p>Cryptographically sign all of your commits with a GPG key managed by Keybase, proving to GitHub and the world that you are a real person who really wrote your code and getting that neat <strong>Verified</strong> badge next to all of your commits.</p>
+<p>Along the way, we’ll also make sure everything is set up in a way that plays nicely with RStudio.</p>
+</div>
+<div class="center">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="verified.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="A verified commit on GitHub with the green Verified badge."><img src="verified.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A verified commit on GitHub with the green <em>Verified</em> badge.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Did you know it’s incredibly easy to <a href="https://blog.gruntwork.io/how-to-spoof-any-user-on-github-and-what-to-do-to-prevent-it-e237e95b8deb">spoof commit authors with git</a>? Basically, you only need to tell <code>git</code> you’re a different person.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"hadley@..."</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--glboal</span> user.name <span class="st">"Hadley Wickham"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pretend to commit as Hadley</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Fix recode() arguments to new = old"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git</code> <em>doesn’t do anything</em> to verify the commit author and, while GitHub will try a little harder than <code>git</code>, it’s surprisingly easy to pretend to be somewhere else in a git repo.</p>
+<p>This can obviously lead to problems (that are admittedly mostly theoretical in my daily life) and there’s a relatively easy solution: signed commits. With signed commits, you cryptographically sign each commit with your private key that only you own, and GitHub (and others) will verify your signature with the public key pair. When GitHub knows that the real you made the commit, it adds the green <img src="verified-small.png" alt="verified" style="display:inline;margin:0;vertical-align:middle" height="24"> badge.</p>
+<p>In this post, I’ll show you how to use Keybase to create your own GPG key. Then we’ll set up <code>git</code> to use this key to sign your commits, and along the way we’ll configure <code>git</code> to work with RStudio, too. I’m using a Mac, but the process is very similar for Linux/Unix machines<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+</section>
+<section id="set-up-signed-and-verified-commits" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-signed-and-verified-commits">Set up signed and verified commits</h2>
+<section id="install-keybase-and-gpg" class="level3">
+<h3 class="anchored" data-anchor-id="install-keybase-and-gpg">Install Keybase and GPG</h3>
+<p>We need at least four pieces of software to make this work. I’m hoping you have <a href="https://git-scm.com/">git</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and <a href="https://www.rstudio.com">RStudio</a> installed; the two new things you’ll probably need are <a href="https://keybase.io">Keybase</a> and <a href="https://gnupg.org/">gpg</a>.</p>
+<p>The easiest way to install both is with the MacOS package manager, <a href="https://brew.sh">homebrew</a>. (If homebrew is new to you, head over to https://brew.sh/ to learn more and to grab the installation command.)</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install gpg</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> keybase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The first line installs <code>gpg</code>, the <a href="https://gnupg.org/">GNU Privacy Guard</a> command line tool. It manages the cryptographic steps: signing or encoding files with your personal GPG key.</p>
+<p><a href="https://keybase.io">Keybase</a> is <em>key directory that maps social media identities to encryption keys in a publicly auditable manner<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></em>. In other words, Keybase is place to store encryption keys and to link your identity (and those keys) to your public identities such as your accounts on <a href="https://twitter.com">Twitter</a> or <a href="https://github.com">GitHub</a>. One advantage of Keybase is that its app and command line tool make it relatively easy to generate and store GPG keys. It’s also a great way to share that key between your own computers.</p>
+</section>
+<section id="create-a-gpg-key-with-keybase" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-gpg-key-with-keybase">Create a GPG key with Keybase</h3>
+<p>If you don’t have a Keybase account, open the Keybase app that we installed with <code>brew</code>. Their app will guide you through the process of creating an account.</p>
+<p>Once you have a Keybase account, head back to the command line<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> to create a new GPG key. Note that the <code>keybase</code> cli uses the <code>pgp</code> command, but we’ve been talking about <em>GPG</em> keys. To most people, the terms GPG and PGP are functionally interchangeable: GPG is the <a href="https://gnupg.org/">GNU Privacy Guard</a> which is an open-source version of PGP (<a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy">Pretty Good Privacy</a>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">keybase</span> pgp gen <span class="at">--multi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Enter your real name, which will be publicly visible in your new key: Garrick Aden-Buie
+Enter a public email address for your key: garrick@adenbuie.com
+Enter another email address (or &lt;enter&gt; when done):
+Push an encrypted copy of your new secret key to the Keybase.io server? [Y/n] Y
+When exporting to the GnuPG keychain, encrypt private keys with a passphrase? [Y/n] Y
+▶ INFO PGP User ID: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt; [primary]
+▶ INFO Generating primary key (4096 bits)
+▶ INFO Generating encryption subkey (4096 bits)
+▶ INFO Generated new PGP key:
+▶ INFO   user: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+▶ INFO  4096-bit RSA key, ID B606B038A1A5CE20, created 2021-09-12
+▶ INFO Exported new key to the local GPG keychain</code></pre>
+<p>To recap the process:</p>
+<ul>
+<li><p><code>keybase</code> will first ask you for your real name and email address. Make sure these match your identity on GitHub, or at least a <a href="https://github.com/settings/emails">verified email that you use on GitHub</a>.</p></li>
+<li><p>Then choose <code>Y</code> to push a copy of the key to Keybase and <code>Y</code> again to add give your private key a passphrase.</p></li>
+<li><p>After a few seconds, Keybase asks for your account password and then prompts you to enter a passphrase for your GPG key.</p></li>
+</ul>
+<p>At the end of the output, note your key’s ID — in my case, <code>B606B038A1A5CE20</code>. You should also be able to find your key on your Keybase profile, or list your local keys that <code>gpg</code> knows about with</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--list-secret-keys</span> <span class="at">--keyid-format</span> LONG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>/Users/garrick/.gnupg/pubring.kbx
+---------------------------------
+sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
+      87888BBEBC09E6093A8310F9B606B038A1A5CE20
+uid                 [ unknown] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
+<p>Notice that we again see our key id, <code>B606B038A1A5CE20</code>, in the third line of the output. There’s also the <code>[ unknown]</code> on line 5 next to our name. This indicates that <code>gpg</code> isn’t totally confident about this key yet and we need to tell <code>gpg</code> that it can be trusted.</p>
+</section>
+<section id="trust-your-own-key-ultimately" class="level3">
+<h3 class="anchored" data-anchor-id="trust-your-own-key-ultimately">Trust your own key, ultimately</h3>
+<p>Open the <code>gpg</code> interactive prompt to edit your key, then run <code>trust</code>, choose <code>I trust ultimately</code> and finally run <code>save</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--edit-key</span> B606B038A1A5CE20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>gpg&gt; trust
+# Please decide how far you trust this user to correctly verify other users' keys
+# (by looking at passports, checking fingerprints from different sources, etc.)
+#
+#   1 = I don't know or won't say
+#   2 = I do NOT trust
+#   3 = I trust marginally
+#   4 = I trust fully
+#   5 = I trust ultimately
+#   m = back to the main menu
+#
+# Your decision? 5
+# Do you really want to set this key to ultimate trust? (y/N) y
+
+gpg&gt; save
+# Key not changed so no update needed.</code></pre>
+<p>Now if you run <code>gpg --list-secret-keys</code> again, you’ll see <code>[ultimate]</code> next to your name.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--list-secret-keys</span> <span class="at">--keyid-format</span> LONG</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>/Users/garrick/.gnupg/pubring.kbx
+---------------------------------
+sec   rsa4096/B606B038A1A5CE20 2021-09-13 [SC] [expires: 2037-09-09]
+      87888BBEBC09E6093A8310F9B606B038A1A5CE20
+uid                 [ultimate] Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+ssb   rsa4096/F4435076C9C363BD 2021-09-13 [E] [expires: 2037-09-09]</code></pre>
+</section>
+<section id="configure-git-to-always-sign-your-commits" class="level3">
+<h3 class="anchored" data-anchor-id="configure-git-to-always-sign-your-commits">Configure git to always sign your commits</h3>
+<p>Setting <code>git</code> to always sign your commits is straightforward. Update the git global config to sign commits using your default key with the following two commands, replacing my key id in the first command with <em>your</em> key id.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.signingkey B606B038A1A5CE20</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> commit.gpgsign true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="add-your-key-to-github" class="level3">
+<h3 class="anchored" data-anchor-id="add-your-key-to-github">Add your key to GitHub</h3>
+<p>Now you need to tell GitHub about your new GPG key. Using your key id, ask Keybase to export the public key that matches your private GPG key. Here we’ll pipe it to <code>pbcopy</code> to copy it into the system clipboard.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">keybase</span> pgp export <span class="at">-q</span> B606B038A1A5CE20 <span class="kw">|</span> <span class="ex">pbcopy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then head over to <a href="https://github.com/settings/keys">github.com/settings/keys</a>, click on <strong>New GPG key</strong>, and paste and add your key into GitHub.</p>
+</section>
+<section id="check-your-signed-commit-powers" class="level3">
+<h3 class="anchored" data-anchor-id="check-your-signed-commit-powers">Check your signed commit powers</h3>
+<p>At this point, <code>git</code> will <em>try</em> to sign your commits, but if you’re also using MacOS like me there’s a good chance you’ll run into a problem when you try to commit a file.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in a git repo</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> test.txt</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add test.txt</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"test signed commits"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># error: gpg failed to sign the data</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fatal: failed to write commit object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This error message isn’t entirely helpful, but you can try to sign some random text with <code>gpg</code> to expose the underlying error.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"test"</span> <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">--clear-sign</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+test
+gpg: signing failed: Inappropriate ioctl for device
+gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device</code></pre>
+<p>The problem in my case is that I have an “Inappropriate ioctl for device”. Take that error to your <a href="https://duckduckgo.com">favorite web search engine</a> and you’ll find a resolution. If you also run into this <code>ioctl</code> error, you need to add the following line to <code>~/.zshrc</code> (if you’re using <a href="https://en.wikipedia.org/wiki/Z_shell">Z shell</a>, the latest default on MacOS) or <code>~/.profile</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">GPG_TTY</span><span class="op">=</span><span class="va">$(</span><span class="fu">tty</span><span class="va">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save the file and then close and re-open your terminal window. When you test <code>gpg</code> signing again, you should be prompted with a full-terminal prompt to enter your password.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"test"</span> <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">--clear-sign</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>
+ ┌───────────────────────────────────────────────────────────────┐
+ │ Please enter the passphrase to unlock the OpenPGP secret key: │
+ │ "Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;"                    │
+ │ 4096-bit RSA key, ID B606B038A1A5CE20,                        │
+ │ created 2021-09-13.                                           │
+ │                                                               │
+ │                                                               │
+ │ Passphrase: _________________________________________________ │
+ │                                                               │
+ │         &lt;OK&gt;                                   &lt;Cancel&gt;       │
+ └───────────────────────────────────────────────────────────────┘
+</code></pre>
+<p>Enter your key’s passphrase and, if everything works, you should see a message like this:</p>
+<pre><code>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+test
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEh4iLvrwJ5gk6gxD5tgawOKGlziAFAmE/UYkACgkQtgawOKGl
+ziAzgg/7Bl6cCapi+k2OrxPafl811G4x7fC4PQWCJKWXinUjkZK/8+o6jM+ZQp+4
+gc1wv0gBfNyKNkTmMg/qiQhuLYiujSH9pyjaoMgO9QoYvUuPituSjV7RQOfAhlHD
+N+wgkACPd3PH2kQVFj8Jw3Nkesrpgby9t/S6sSiLZf284rMfx31ua1/l4tsHWowP
+5a+FRujDtarWJ1/zL9pgMkr9kkWEejqpzGVLrVKrB3xsPLyGnPf8BW+an7CwkkDS
+umJulX3Ck1u14DRgIyj4VdwfCkkCle0uyZcLorZsqDP5GC/3ZKcpDe6XgSSKz0O0
+HVvm4bTqBBmesVNWHVuFmYGmmXFU/sYvYoHOy3wvLiCu/hbRhBvboUcogW79/PWR
+Gw/DYln5W1ClIKH9LsU0GpydSTMMhXZySEp+r1OCl4sQqKCe6Ka3ex+3lOHyym7F
+U5rgfH6tmu6U2Jtn8QEFg106vxQDQ76TIRVS9xvicH98PJQnhoyg3jtu5tMbITz1
+oev0Z11vq76mw3MFmVx455AVqxplGM/4qB9HsmNWTsi0fGoFa/vlbBN3vJQn0xaX
+2PSXKWlkZiyd+WplWsOH2OnZ8V8s2cHNxlKsSPrWQNflYsDtO8vANwAFjiJK2Bkq
+YLPCcwzEVSwFrLRRXt5Crcpc/32ZqrfvcLe0G+ACWQYAhktwJnQ=
+=S1iU
+-----END PGP SIGNATURE-----</code></pre>
+<p>And if you try to <code>git commit</code> again, it should work!</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"test signed commits"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[main (root-commit) 4c4573f] test signed commits
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt</code></pre>
+<p>Note that you can be extra sure by looking at the <code>git</code> log with signatures.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--show-signature</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>commit 4c4573f2fbed44eab6c0f4a08a38a9f8292580cf (HEAD -&gt; main)
+gpg: Signature made Mon Sep 13 09:34:59 2021 EDT
+gpg:                using RSA key 87888BBEBC09E6093A8310F9B606B038A1A5CE20
+gpg: Good signature from "Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;" [ultimate]
+Author: Garrick Aden-Buie &lt;garrick@adenbuie.com&gt;
+Date:   Mon Sep 13 09:34:59 2021 -0400
+
+    test signed commits</code></pre>
+</section>
+<section id="install-a-pinentry-app" class="level3">
+<h3 class="anchored" data-anchor-id="install-a-pinentry-app">Install a pinentry app</h3>
+<p>Remember that console dialog that appeared when we committed our test commit above? Yes, it’s fun and retro, but it isn’t going to work inside RStudio when the IDE runs <code>git</code> commands for you to commit your files.</p>
+<p>In this step, we’ll install <code>pinentry-mac</code>, a modern method for providing a passphrase for your key, that also integrates with MacOS’s Keychain so you don’t have to enter the passphrase with every commit.</p>
+<p>If you’re using Windows, you might want to check out the <a href="https://www.gpg4win.org/">Gpg4win app</a>. On Linux, you may want to use <a href="http://manpages.ubuntu.com/manpages/bionic/man1/pinentry-gnome3.1.html">pinentry-gnome3</a>. Finally, you could also <a href="#gpg-agent-cache-passphrase">configure <code>gpg-agent</code> to cache your passphrase</a> if none of the above options work for you.</p>
+<p>Installing <code>pinentry-mac</code> is easy with <code>brew</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install pinentry-mac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we need to configure <code>gpg</code> to use <code>pinentry-mac</code> for its passphrase needs. Add the line below to <code>~/.gnupg/gpg-agent.conf</code>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># vim ~/.gnupg/gpg-agent.conf</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pinentry-program</span> /usr/local/bin/pinentry-mac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or you can create the file and add the line in one command:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"pinentry-program /usr/local/bin/pinentry-mac"</span> <span class="op">&gt;&gt;</span> ~/.gnupg/gpg-agent.conf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, restart the <code>gpg-agent</code> so that <code>pinentry-mac</code> is used for passphrase entry.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpgconf</span> <span class="at">--kill</span> gpg-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When you create your next commit in RStudio, you’ll be prompted with a dialog box to enter your passphrase. If you select the <em>Save in Keychain</em> option, you won’t be prompted again; <code>gpg</code> and <code>git</code> will use the passphrase in your Keychain to sign your commit with the GPG key you created with Keybase!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="rstudio-pinentry-mac.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The pinentry-mac dialog window asking for the GPG key passphrase when signing a commit for the first time."><img src="rstudio-pinentry-mac.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">The <code>pinentry-mac</code> dialog window asking for the GPG key passphrase when signing a commit for the first time.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="import-your-gpg-key-on-another-computer" class="level3">
+<h3 class="anchored" data-anchor-id="import-your-gpg-key-on-another-computer">Import your GPG key on another computer</h3>
+<p>If you’d like to use the same GPG key on another computer, first make sure that you have <a href="#install-keybase-and-gpg">Keybase and gpg installed</a>. Then you can export the existing key (both its public and secret versions) from Keybase into <code>gpg</code>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">keybase</span> pgp export <span class="at">-q</span> B606B038A1A5CE20 <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">--import</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">keybase</span> pgp export <span class="at">-q</span> B606B038A1A5CE20 <span class="at">--secret</span> <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">--allow-secret-key-import</span> <span class="at">--import</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Again, you’ll want to tell <code>gpg</code> to <a href="#trust-your-own-key-ultimately">trust this key ultimately</a>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span> <span class="at">--edit-key</span> B606B038A1A5CE20</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span><span class="op">&gt;</span> trust</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pick "5 = I trust ultimately"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gpg</span><span class="op">&gt;</span> save</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="links-and-resources" class="level2">
+<h2 class="anchored" data-anchor-id="links-and-resources">Links and Resources</h2>
+<p>Here’s a short list of links that were helpful to me while figuring out this process. Hopefully, everything above <em>just works</em> for you, but if not then maybe the posts below will help you out:</p>
+<ul>
+<li><p><a href="https://github.com/pstadler/keybase-gpg-github">pstadler/keybase-gpg-github: Step-by-step guide on how to create a GPG key on keybase.io, adding it to a local GPG setup and use it with Git and GitHub.</a></p></li>
+<li><p><a href="https://stephenreescarter.net/signing-git-commits-with-a-keybase-gpg-key/">Sign Git Commits With A Keybase GPG Key – Stephen’s Thoughts</a></p></li>
+<li><p><a href="https://byparker.com/blog/2021/gpg-pinentry-mac-git/">Sign commits with a GPG key using a passphrase with pinentry-mac | By Parker</a></p></li>
+<li><p><a href="https://github.com/Homebrew/homebrew-core/issues/14737">gnupg2: gpg: public key decryption failed: Inappropriate ioctl for device · Issue #14737 · Homebrew/homebrew-core</a></p></li>
+<li><p><a href="https://github.com/rstudio/rstudio/issues/1865">Support signing of git commits · Issue #1865 · rstudio/rstudio</a></p></li>
+</ul>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<section id="gpg-agent-cache-passphrase" class="level3">
+<h3 class="anchored" data-anchor-id="gpg-agent-cache-passphrase">Use <code>gpg-agent</code> to cache your passphrase without a pinentry GUI</h3>
+<p>If you don’t want to or can’t <a href="#install-a-pinentry-app">install a pinentry app</a>, you can get <code>gpg-agent</code> to cache your passphrase for a fixed period of time, say 8 hours.</p>
+<p>When you start your day — or when the cache expires — you’ll need to sign something or commit once from the command line to re-enter your passphrase.</p>
+<p>The first step is to configure <code>gpg-agent</code> to remember your key’s password for the day (8 hours or 28,800 seconds).</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.gnupg/gpg-agent.conf</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">default-cache-ttl</span> 28800</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ex">max-cache-ttl</span> 28800</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll need to restart <code>gpg-agent</code> so that it picks up the new configuration.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gpgconf</span> <span class="at">--kill</span> gpg-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>At this point, any <code>git commit</code> will automatically be signed using your default key. The first commit of the day will require you to enter your password, which does mean that the RStudio Git UI won’t be able to sign the first commit until you’ve asked <code>gpg</code> to sign something for you.</p>
+<p>To get around this, you can unlock your gpg key by signing <em>anything</em> at the start of your work day or whenever the 8 hour time limit runs out.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"open sesame"</span> <span class="kw">|</span> <span class="ex">gpg</span> <span class="at">-s</span> <span class="op">&gt;</span> /dev/null</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prompt for password</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Windows users, I’m sorry! I don’t own anything that runs Windows. 😒<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>You’ll need <code>git</code> version 2.0 or later. Check with <code>git --version</code> or upgrade git to the latest version with <code>brew install git</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://en.wikipedia.org/wiki/Keybase<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>You could also create a GPG/PGP key in the Keybase app in the identities section of your profile, but I’m using the command line so it’s easier to copy-paste.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="General" data-category-id="DIC_kwDOB0UOXs4CAIFU" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 🧡</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":true,"descPosition":"bottom","closeEffect":"zoom"});</script>
+
+
+
+</body></html>

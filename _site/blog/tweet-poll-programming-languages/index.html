@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2019-10-08">
+<meta name="keywords" content="rstats, rtweet, Tweet analysis, Programming languages, R">
+<meta name="description" content="A deep dive into an informal, free-form survey about experiences with programming languages.">
+
+<title>Garrick Aden-Buie - Twitter’s Feelings About Programming Languages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Twitter’s Feelings About Programming Languages">
+<meta property="og:description" content="A deep dive into an informal, free-form survey about experiences with programming languages.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/tweet-poll-programming-languages/index_files/figure-html/votes-love-hate-twitter-1.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="1152">
+<meta property="og:image:width" content="2304">
+<meta name="twitter:title" content="Garrick Aden-Buie - Twitter’s Feelings About Programming Languages">
+<meta name="twitter:description" content="A deep dive into an informal, free-form survey about experiences with programming languages.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/tweet-poll-programming-languages/index_files/figure-html/votes-love-hate-twitter-1.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="1152">
+<meta name="twitter:image-width" content="2304">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Twitter’s Feelings About Programming Languages</h1>
+                  <div>
+        <div class="description">
+          A deep dive into an informal, free-form survey about experiences with programming languages.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">rtweet</div>
+                <div class="quarto-category">Data Analysis</div>
+                <div class="quarto-category">Visualization</div>
+                <div class="quarto-category">Programming</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 8, 2019</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gather-the-tweets" id="toc-gather-the-tweets" class="nav-link active" data-scroll-target="#gather-the-tweets">Gather the Tweets</a></li>
+  <li><a href="#whose-tweets-were-the-most-popular" id="toc-whose-tweets-were-the-most-popular" class="nav-link" data-scroll-target="#whose-tweets-were-the-most-popular">Whose Tweets Were The Most Popular?</a></li>
+  <li><a href="#our-experience-with-programming-languages" id="toc-our-experience-with-programming-languages" class="nav-link" data-scroll-target="#our-experience-with-programming-languages">Our Experience with Programming Languages</a>
+  <ul class="collapse">
+  <li><a href="#first-language-vs.-recommended-first-language" id="toc-first-language-vs.-recommended-first-language" class="nav-link" data-scroll-target="#first-language-vs.-recommended-first-language">First Language vs.&nbsp;Recommended First Language</a></li>
+  <li><a href="#love-it-or-hate-it" id="toc-love-it-or-hate-it" class="nav-link" data-scroll-target="#love-it-or-hate-it">Love It or Hate It</a></li>
+  <li><a href="#most-used-or-had-difficulties" id="toc-most-used-or-had-difficulties" class="nav-link" data-scroll-target="#most-used-or-had-difficulties">Most Used or Had Difficulties</a></li>
+  <li><a href="#rstats" id="toc-rstats" class="nav-link" data-scroll-target="#rstats">Feelings about <code>#rstats</code></a></li>
+  </ul></li>
+  <li><a href="#code-walkthrough" id="toc-code-walkthrough" class="nav-link" data-scroll-target="#code-walkthrough">Code Walkthrough</a>
+  <ul class="collapse">
+  <li><a href="#remove-unused-text" id="toc-remove-unused-text" class="nav-link" data-scroll-target="#remove-unused-text">Remove Unused Text</a></li>
+  <li><a href="#process-answer" id="toc-process-answer" class="nav-link" data-scroll-target="#process-answer">Process Answer</a></li>
+  <li><a href="#recode-answer" id="toc-recode-answer" class="nav-link" data-scroll-target="#recode-answer">Recode Answer</a></li>
+  <li><a href="#recode-category" id="toc-recode-category" class="nav-link" data-scroll-target="#recode-category">Recode Category</a></li>
+  <li><a href="#tweets-lang-poll" id="toc-tweets-lang-poll" class="nav-link" data-scroll-target="#tweets-lang-poll">Poll Processing Pipeline</a></li>
+  <li><a href="#plot-tweets-by-category" id="toc-plot-tweets-by-category" class="nav-link" data-scroll-target="#plot-tweets-by-category">Plot Language Counts by Category</a></li>
+  </ul></li>
+  <li><a href="#what-about-you" id="toc-what-about-you" class="nav-link" data-scroll-target="#what-about-you">What About You?</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/tweet-poll-programming-languages/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/tweet-poll-programming-languages/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<div class="cell">
+
+</div>
+<div class="cell" data-hash="index_cache/html/load-tweets_4f9192423504357bcdebc68965e34732">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell" data-hash="index_cache/html/tweets-lang-poll_434ddbbe56e518814987070ebb7b4f4a">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<!----------- POST START ----------->
+<p>An informal poll about experiences with programming languages has been making the rounds on Twitter this week. It all started with <a href="https://twitter.com/cotufa82/status/1179601883448655874">this tweet</a> from <a href="https://twitter.com/cotufa82/">@cotufa82</a>:</p>
+<blockquote class="twitter-tweet blockquote" data-twitter-extracted-i163061341656489096="true">
+<p dir="ltr" lang="en">
+</p><ol type="1">
+<li>First language: Basic / Java<br>2. Had difficulties: Java<br>3. Most used: JavaScript / Python<br>4. Totally hate: Java<br>5. Most loved: Go / Python<br>6. For beginners: Python / Ruby<br><br>What about you?
+<p></p>
+— Super Di (@cotufa82) <a href="https://twitter.com/cotufa82/status/1179601883448655874?ref_src=twsrc%5Etfw">October 3, 2019</a>
+</li></ol></blockquote>
+
+<p>The tweet caught on within a few days and there are now more than 16,840 replies and quote tweets from developers and programmers sharing their own experiences.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/tweets-per-day-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/tweets-per-day-1.svg" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>My interest in the poll was piqued by another tweet by <a href="https://twitter.com/edsu/status/1180844062552858624">@edsu</a> sharing a <a href="https://github.com/edsu/notebooks/blob/c5aad3555adfbf7c63dcd968f7b4a73ce11820b5/Languages.ipynb">Jupyter notebook</a> analyzing the tweeted responses. I thought it would be interesting to do a similar analysis using R, initially thinking I could compare the R and Python versions.</p>
+<p>What I should have done is to have used <em>both</em> R and Python (because they’re friends and language wars are silly), but instead I ended up going down the endless rabbit hole of regular expressions and free-form informal survey results.</p>
+<section id="gather-the-tweets" class="level2">
+<h2 class="anchored" data-anchor-id="gather-the-tweets">Gather the Tweets</h2>
+<p>I gathered all tweets containing <code>"first language"</code>, <code>"most used"</code>, and <code>"most loved"</code> using the excellent <a href="https://rtweet.info">rtweet</a> package by <a href="https://mikewk.com/">Mike Kearney</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tweets <span class="ot">&lt;-</span> rtweet<span class="sc">::</span><span class="fu">search_tweets</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'"first language" AND "most used" AND "most loved"'</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">18000</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_rts =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can download <a href="tweets-first-lang.csv">a CSV with the processed tweets</a>. The <code>.csv</code> doesn’t include the full tweet data, but it does include <code>status_id</code> so that you can recover the tweet data with <code>rtweet::lookup_statuses()</code>.</p>
+</section>
+<section id="whose-tweets-were-the-most-popular" class="level2">
+<h2 class="anchored" data-anchor-id="whose-tweets-were-the-most-popular">Whose Tweets Were The Most Popular?</h2>
+<div class="cell">
+
+</div>
+<p>There were 16,840 responses to the poll and 89% or 15,025 of them are replies to or quotes of another tweet. Here are the top contributors to the popularity of the poll, in the form of the top 10 recipients of a reply or quote tweet.</p>
+<div class="cell">
+<div class="cell-output-display">
+<script type="application/json" id="screen-names">[{"status_id":"1179601883448655874","screen_name":"cotufa82"},{"status_id":"1180073494047969280","screen_name":"nixcraft"},{"status_id":"1180147893350612993","screen_name":"ASpittel"},{"status_id":"1180173845749125121","screen_name":"ryanflorence"},{"status_id":"1180074716440223744","screen_name":"Sosowski"},{"status_id":"1180169402127249408","screen_name":"malwareunicorn"},{"status_id":"1180151225435742208","screen_name":"_developit"},{"status_id":"1180176367322722304","screen_name":"rakyll"},{"status_id":"1180081960519114757","screen_name":"asemota"},{"status_id":"1180238736698687488","screen_name":"JackRhysider"}]</script>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div id="starter-tweet-container">
+<div id="plot">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d5e28361da9c64f6e1cf" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-d5e28361da9c64f6e1cf">{"x":{"data":[{"x":[0,78],"y":[1,1],"text":"   78 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(157,220,165,1)","dash":"solid"},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,79],"y":[2,2],"text":"   79 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(127,208,163,1)","dash":"solid"},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,80],"y":[3,3],"text":"   80 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(105,195,163,1)","dash":"solid"},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,85],"y":[4,4],"text":"   85 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(89,180,163,1)","dash":"solid"},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,88],"y":[5,5],"text":"   88 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(80,164,162,1)","dash":"solid"},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,122],"y":[6,6],"text":"  122 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(74,149,159,1)","dash":"solid"},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,138],"y":[7,7],"text":"  138 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(69,134,156,1)","dash":"solid"},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,156],"y":[8,8],"text":"  156 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(65,119,152,1)","dash":"solid"},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,539],"y":[9,9],"text":"  539 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,104,149,1)","dash":"solid"},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,2045],"y":[10,10],"text":"2,045 quotes and replies","type":"scatter","mode":"lines","line":{"width":3.77952755905512,"color":"rgba(62,88,144,1)","dash":"solid"},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[78],"y":[1],"text":"   78 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(157,220,165,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(157,220,165,1)"}},"hoveron":"points","name":"(JackRhysider,1)","legendgroup":"(JackRhysider,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[79],"y":[2],"text":"   79 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(127,208,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(127,208,163,1)"}},"hoveron":"points","name":"(asemota,1)","legendgroup":"(asemota,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[80],"y":[3],"text":"   80 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(105,195,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(105,195,163,1)"}},"hoveron":"points","name":"(rakyll,1)","legendgroup":"(rakyll,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[85],"y":[4],"text":"   85 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(89,180,163,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(89,180,163,1)"}},"hoveron":"points","name":"(_developit,1)","legendgroup":"(_developit,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[88],"y":[5],"text":"   88 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(80,164,162,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(80,164,162,1)"}},"hoveron":"points","name":"(malwareunicorn,1)","legendgroup":"(malwareunicorn,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[122],"y":[6],"text":"  122 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(74,149,159,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(74,149,159,1)"}},"hoveron":"points","name":"(Sosowski,1)","legendgroup":"(Sosowski,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[138],"y":[7],"text":"  138 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(69,134,156,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(69,134,156,1)"}},"hoveron":"points","name":"(ryanflorence,1)","legendgroup":"(ryanflorence,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[156],"y":[8],"text":"  156 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(65,119,152,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(65,119,152,1)"}},"hoveron":"points","name":"(ASpittel,1)","legendgroup":"(ASpittel,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[539],"y":[9],"text":"  539 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,104,149,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,104,149,1)"}},"hoveron":"points","name":"(nixcraft,1)","legendgroup":"(nixcraft,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2045],"y":[10],"text":"2,045 quotes and replies","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(62,88,144,1)","opacity":1,"size":11.3385826771654,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(62,88,144,1)"}},"hoveron":"points","name":"(cotufa82,1)","legendgroup":"(cotufa82,1)","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.958904109589,"r":7.30593607305936,"b":40.9132420091324,"l":92.7853881278539},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-102.25,2147.25],"tickmode":"array","ticktext":["0","500","1000","1500","2000"],"tickvals":[0,500,1000,1500,2000],"categoryorder":"array","categoryarray":["0","500","1000","1500","2000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Quotes and Replies","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,10.6],"tickmode":"array","ticktext":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"tickvals":[1,2,3,4,5,6,7,8,9,10],"categoryorder":"array","categoryarray":["JackRhysider","asemota","rakyll","_developit","malwareunicorn","Sosowski","ryanflorence","ASpittel","nixcraft","cotufa82"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative","dragmode":false},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"1208e6e4c2a3d":{"x":{},"y":{},"colour":{},"text":{},"yend":{},"xend":{},"type":"scatter"},"1208e4a69435d":{"x":{},"y":{},"colour":{},"text":{}}},"cur_data":"1208e6e4c2a3d","visdat":{"1208e6e4c2a3d":["function (y) ","x"],"1208e4a69435d":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":{"render":[{"code":"\nfunction (el) {\n  const screenNames = JSON.parse(document.getElementById('screen-names').innerHTML)\n  el.on('plotly_click', function(d) {\n    const hoveredIdx = d.points[0].y\n    const tweet = screenNames[screenNames.length - hoveredIdx]\n    const tweetDiv = document.getElementById('tweet')\n    tweetDiv.innerHTML = ''\n    twttr.widgets.createTweet(tweet.status_id, tweetDiv)\n  })\n}\n    ","data":null}]}}</script>
+</div>
+<div id="tweet">
+<div class="tweet-placeholder">
+<div>Click on dot in plot to view tweet...</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="our-experience-with-programming-languages" class="level2">
+<h2 class="anchored" data-anchor-id="our-experience-with-programming-languages">Our Experience with Programming Languages</h2>
+<p>Let’s dive into the results. If you’re interested in taking a peek behind the regular expressions curtain, I’ve included a <a href="#code-walkthrough">code walkthrough</a> below.</p>
+<p>The original tweet asked for six categories: <strong>First language</strong>, <strong>Had difficulties</strong>, <strong>Most used</strong>, <strong>Totally hate</strong>, <strong>Most loved</strong>, <strong>For beginners</strong>. Replies to this tweet were… creative. The category names and formatting were hand-typed, so flexible and prone to spelling errors and permutations.</p>
+<p>To get the broadest range of answers possible, I used flexible regular expressions to accept a variety of formatting choices, and I also widened the categories to encompass the same core themes. For example, <code>first love</code>, <code>secret love</code>, and <code>mostly loved</code> all were added to the <strong>Most loved</strong> category, which I called, simply, <strong>love</strong>.</p>
+<p>I also captured multiple programming languages in each category (even the <a href="https://twitter.com/cotufa82/status/1179601883448655874">original tweet</a> had multiple answers for first language (Basic/Java) and a few other categories).</p>
+<p>Each of the following plots shows the top 20 responses in each category.</p>
+<div class="cell">
+
+</div>
+<section id="first-language-vs.-recommended-first-language" class="level3">
+<h3 class="anchored" data-anchor-id="first-language-vs.-recommended-first-language">First Language vs.&nbsp;Recommended First Language</h3>
+<p>How do the first languages learned by programmers compare to the languages <em>they</em> would recommend to <em>others</em> to learn first? Many people started with older languages like Basic, C, Pascal, C++ and Java but would recommend new programmers start with Python, JavaScript, Ruby and also C or Java.</p>
+<p></p><div class="fig-wide"> <img src="index_files/figure-html/votes-first-beginner-wide-1.svg"> </div> <div class="fig-narrow"> <img src="index_files/figure-html/votes-first-beginner-narrow-1.svg"> </div><p></p>
+</section>
+<section id="love-it-or-hate-it" class="level3">
+<h3 class="anchored" data-anchor-id="love-it-or-hate-it">Love It or Hate It</h3>
+<p>Which programming languages are loved and which languages are not? The world seems to have a love/hate relationship with JavaScript, but Python is much more loved than hated. Likewise Swift, Ruby, and Go are significantly more positive than negative, C++ is also a bit love/hate, and PHP certainly isn’t feeling the love.</p>
+<p></p><div class="fig-wide"> <img src="index_files/figure-html/votes-love-hate-wide-1.svg"> </div> <div class="fig-narrow"> <img src="index_files/figure-html/votes-love-hate-narrow-1.svg"> </div><p></p>
+</section>
+<section id="most-used-or-had-difficulties" class="level3">
+<h3 class="anchored" data-anchor-id="most-used-or-had-difficulties">Most Used or Had Difficulties</h3>
+<p>Which languages are most used compared with those that have caused difficulties? JavaScript is eating the world, and plenty of people are using workhorse languages like Python, Java and C#/C++. (And a quite a few are using PHP presumably because they have to.) Still, JavaScript’s love/hate relationship continues as many people indicated that it caused them problems. I’m not surprised to see C++, C, and Java on the <em>had difficulties</em> list. Interestingly, Haskell shows up in the <em>loved</em> list but seems to also be tricky to learn.</p>
+<p></p><div class="fig-wide"> <img src="index_files/figure-html/votes-used-difficult-wide-1.svg"> </div> <div class="fig-narrow"> <img src="index_files/figure-html/votes-used-difficult-narrow-1.svg"> </div><p></p>
+</section>
+<section id="rstats" class="level3">
+<h3 class="anchored" data-anchor-id="rstats">Feelings about <code>#rstats</code></h3>
+<div class="cell">
+
+</div>
+<p>How do developers feel about my favorite language? R isn’t a typical first language, but it is among the top 20 recommended to new programmers to learn first. It’s also the 12th most used language.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 90%">
+<col style="width: 4%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Rank</th>
+<th style="text-align: left;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">most used</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">1456</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">love</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">2067</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">had difficulties</td>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">2092</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hate</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">2641</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">beginner</td>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">2296</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">first language</td>
+<td style="text-align: left;">28</td>
+<td style="text-align: left;">1508</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">curious</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">207</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">currently</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">next</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">honerable mention</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">98</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chronology</td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">also used, eager to learn, frenemy, never studied, on my list, to learn, totally meh, willing to learn</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="code-walkthrough" class="level2">
+<h2 class="anchored" data-anchor-id="code-walkthrough">Code Walkthrough</h2>
+<p>At a high level, the process for cleaning and standardizing the tweet repsonses looks like this. I abstracted some of the larger steps in <a href="#tweets-lang-poll">the pipeline</a> into separate functions.</p>
+<ol type="1">
+<li><p>Pre-clean the tweet text, including <a href="#remove-unused-text">remove_unused_text()</a></p></li>
+<li><p>Separate tweets so that each line or item of the tweet is in its own row using <code>tidyr::separate_rows()</code></p>
+<ul>
+<li>Items are indicated by <code>N.</code>, <code>N)</code>, <code>N:</code>, or <code>N-</code>, or just appear on a new line without numbering.</li>
+</ul></li>
+<li><p>Remove whitespace and any numbering from each line</p></li>
+<li><p>Separate each line into a question <code>category</code> and <code>answer</code> pair by splitting on <code>:</code> using <code>tidyr::separate()</code></p></li>
+<li><p>Filter out empty answers and convert everything to lower case</p></li>
+<li><p>Use a set of regular expressions to <a href="#process-answer">process_answer()</a> into individual languages</p></li>
+<li><p>Use more regular expressions to <a href="#recode-answer">recode_answer()</a> and <a href="#recode-category">recode_category()</a>, fixing spelling mistakes and combining overlapping groups</p></li>
+<li><p>Count the number of replies mentioning each programming language by category</p></li>
+</ol>
+<p>The <a href="#tweets-lang-poll">whole pipeline</a> is summarized below, including the function to <a href="#plot-tweets-by-category">plot response counts by category</a>.</p>
+<section id="remove-unused-text" class="level3">
+<h3 class="anchored" data-anchor-id="remove-unused-text">Remove Unused Text</h3>
+<p>This little function removes usernames (<code>@user</code>), URLs, parenthetical comments, and turns <code>#hashtag</code> into <code>hashtag</code> because many people specified their choices using language hashtags, like <code>#rstats</code> instead of <code>r</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remove_unused_text <span class="ot">&lt;-</span> <span class="cf">function</span>(text) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  text <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip usernames</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"@</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># strip URLs</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*http[^ ]+</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove parentheticals</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s*</span><span class="sc">\\</span><span class="st">(.+?</span><span class="sc">\\</span><span class="st">)( |</span><span class="sc">\n</span><span class="st">|$)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># replace "#hashtag" with "hashtag"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"#(</span><span class="sc">\\</span><span class="st">w)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="process-answer" class="level3">
+<h3 class="anchored" data-anchor-id="process-answer">Process Answer</h3>
+<p>The goal in processing the answers is to transform each answer to a single string of comma separated languages. In doing this, common variations of language lists should result in the same final answers. For example, <code>Python and R</code>, <code>Python/R</code>, and <code>Python or R</code> should all be handled similarly. To help with this process I created a list of common languages that frequently appear in the answers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>common_langs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># c, c#, c++, and .net are manually included later</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"css"</span>, <span class="st">"html"</span>, <span class="st">"python"</span>, <span class="st">"javascript"</span>, <span class="st">"x86"</span>, <span class="st">"java"</span>, <span class="st">"ruby"</span>, <span class="st">"pascal"</span>, <span class="st">"php"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"matlab"</span>, <span class="st">"perl"</span>, <span class="st">"fortran"</span>, <span class="st">"logo"</span>, <span class="st">"actionscript"</span>, <span class="st">"lua"</span>, <span class="st">"assembly"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"delphi"</span>, <span class="st">"js"</span>, <span class="st">"scheme"</span>, <span class="st">"scratch"</span>, <span class="st">"go"</span>, <span class="st">"typescript"</span>, <span class="st">"clojure"</span>, <span class="st">"elixr"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"kotlin"</span>, <span class="st">"ocaml"</span>, <span class="st">"rust"</span>, <span class="st">"mathematica"</span>, <span class="st">"matlab"</span>, <span class="st">"dart"</span>, <span class="st">"flutter"</span>, <span class="st">"groovy"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"flash"</span>, <span class="st">"bash"</span>, <span class="st">"shell"</span>, <span class="st">"sql"</span>, <span class="st">"haskell"</span>, <span class="st">"lisp"</span>, <span class="st">"scala"</span>, <span class="st">"sas"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rstats"</span>, <span class="st">"golang"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, with a bit of regex kung fu, the responses are converted from <code>Python and R</code> to <code>python,r</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>process_answer <span class="ot">&lt;-</span> <span class="cf">function</span>(answer, common_langs) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  answer <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aggresively remove unusual characters</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"[^</span><span class="sc">\\</span><span class="st">w</span><span class="sc">\\</span><span class="st">d#+., ]"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove leading character if it's a `,`</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"^,"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove `.` at end of string</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"[.]$"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Replace and, or with space (prep for next step)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b(and|or|also|amp)</span><span class="sc">\\</span><span class="st">b"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove qualifiers</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b(maybe|now)</span><span class="sc">\\</span><span class="st">b"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Multiple languages may be listed separated by spaces, if so add comma</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">pattern =</span> <span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b("</span>, <span class="fu">paste</span>(common_langs, <span class="at">collapse =</span> <span class="st">"|"</span>), <span class="st">")</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">s*"</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">replacement =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">1,"</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">"c</span><span class="sc">\\</span><span class="st">+</span><span class="sc">\\</span><span class="st">+</span><span class="sc">\\</span><span class="st">d+"</span>, <span class="st">"c++"</span>, .) <span class="sc">%&gt;%</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Comma separate languages that are tough to regex</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">"c "</span>, <span class="st">"c,"</span>, ., <span class="at">fixed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">".net "</span>, <span class="st">".net,"</span>, ., <span class="at">fixed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">"c# "</span>, <span class="st">"c#,"</span>, ., <span class="at">fixed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">"c++ "</span>, <span class="st">"c++,"</span>, ., <span class="at">fixed =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># No trailing punctuation</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove</span>(<span class="st">"[.,!?/=&lt;&gt;;:]+$"</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="recode-answer" class="level3">
+<h3 class="anchored" data-anchor-id="recode-answer">Recode Answer</h3>
+<p>There are a number of programming languages that have multiple variants or are commonly referred to by shorthand names — <code>rstats</code> for <code>R</code> or <code>golang</code> for <code>go</code>, for example. This function recodes the programming language answers that I noticed while working with the data (but it’s admitedly not complete).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>recode_answer <span class="ot">&lt;-</span> <span class="cf">function</span>(answer) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recode Basic Variants</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">recode</span>(answer, <span class="st">"vb"</span> <span class="ot">=</span> <span class="st">"visual basic"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(answer, <span class="st">"visual.*basic"</span>), <span class="st">"visual basic"</span>, answer)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(answer, <span class="st">"q.*basic"</span>), <span class="st">"qbasic"</span>, answer)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(answer, <span class="st">"gw.*basic"</span>), <span class="st">"gw basic"</span>, answer)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(answer, <span class="st">"(?&lt;!(visual|q|gw)</span><span class="sc">\\</span><span class="st">s?)basic"</span>), <span class="st">"basic"</span>, answer)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recode Pascal variants</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">str_detect</span>(answer, <span class="st">"pascal"</span>), <span class="st">"pascal"</span>, answer)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recode js vs Javascript</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">recode</span>(answer, <span class="st">"js"</span> <span class="ot">=</span> <span class="st">"javascript"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recode golang to go</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  answer <span class="ot">&lt;-</span> <span class="fu">recode</span>(answer, <span class="st">"golang"</span> <span class="ot">=</span> <span class="st">"go"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recode rstats as r</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recode</span>(answer, <span class="st">"rstats"</span> <span class="ot">=</span> <span class="st">"r"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="recode-category" class="level3">
+<h3 class="anchored" data-anchor-id="recode-category">Recode Category</h3>
+<p>As you might imagine with a free-form survey where users manually enter both the question <em>and</em> the answer, there is a large amount of variation in the spelling and categories used.</p>
+<p>I broadly grouped many of the variations into common themes, primarily working to fit the original prompt. There are many, many interesting created categories, like <code>best dead language</code>, <code>didn't spark joy</code>, or <code>latest crush</code>. Here are two additional categories that I created, <code>curious</code> and <code>interesting</code>.</p>
+<p></p><div class="fig-wide"> <img src="index_files/figure-html/votes-curious-interesting-wide-1.svg"> </div> <div class="fig-narrow"> <img src="index_files/figure-html/votes-curious-interesting-narrow-1.svg"> </div><p></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>recode_category <span class="ot">&lt;-</span> <span class="cf">function</span>(category) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"first.+lang(uage)?|firstlanguage"</span>) <span class="sc">~</span> <span class="st">"first language"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"^first$"</span>) <span class="sc">~</span> <span class="st">"first language"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"b(e|i)ginn?e|new dev|newb|starter|noob|brginners|begginners|begginers"</span>) <span class="sc">~</span> <span class="st">"beginner"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"want|would|wish|wanna|curious|desire|(like.+learn)|curios|(like to try)"</span>) <span class="sc">~</span> <span class="st">"curious"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"m[ou]st?(ly)? ?used?"</span>) <span class="sc">~</span> <span class="st">"most used"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"diff?.+c.+lt|diificulties|difficulies|difficuties|difficulities"</span>) <span class="sc">~</span> <span class="st">"had difficulties"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"love"</span>) <span class="sc">~</span> <span class="st">"love"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"hate|dislike|avoid|(don.?t.+like)"</span>) <span class="sc">~</span> <span class="st">"hate"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"promis|interest|exotic|esoter|(most excited)|(weird)"</span>) <span class="sc">~</span> <span class="st">"interesting"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"honou?rable mention"</span>) <span class="sc">~</span> <span class="st">"honerable mention"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"next|need to learn"</span>) <span class="sc">~</span> <span class="st">"next"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"others used|other lang|dabbl"</span>) <span class="sc">~</span> <span class="st">"others used"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(category, <span class="st">"current"</span>) <span class="sc">~</span> <span class="st">"currently"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> category</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tweets-lang-poll" class="level3">
+<h3 class="anchored" data-anchor-id="tweets-lang-poll">Poll Processing Pipeline</h3>
+<p>Finally, here is the full pipeline to go from raw tweets to poll results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tweets_lang_poll <span class="ot">&lt;-</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  tweets <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(status_id, created_at, user_id, screen_name, text) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove tweets with "English" because that's probably a different thread</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(text, <span class="st">"[eE]nglish"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Backup original tweet text</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_og =</span> text,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove unused text from tweets</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">remove_unused_text</span>(text)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split text into question/answer pairs,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># splitting on newline or one of: `N.`, `N)`, `N:`, or `N-`</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(text, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">|</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">s*[.):-]"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove whitespace and `N.` numbers from start of text</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_remove_all</span>(text, <span class="st">"^</span><span class="sc">\\</span><span class="st">s*(</span><span class="sc">\\</span><span class="st">d[.):-])?</span><span class="sc">\\</span><span class="st">s*"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Seperate question/answer into category, answer columns, splitting on colon `:`</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> text,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"category"</span>, <span class="st">"answer"</span>),</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">s*:</span><span class="sc">\\</span><span class="st">s*"</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove =</span> <span class="cn">FALSE</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove nothing answers or answers without any letters</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(answer),</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(answer, <span class="st">"[[:alnum:]]"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Re-encode category, answer as UTF-8 (:shrug:) and lowercase</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(category, answer), stringi<span class="sc">::</span>stri_enc_toutf8) <span class="sc">%&gt;%</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(category, answer), tolower) <span class="sc">%&gt;%</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Category: Remove leading non-alpha characters and squish whitespace</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_remove</span>(category, <span class="st">"^[^[:alpha:]]+"</span>),</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">category =</span> <span class="fu">str_squish</span>(category)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process answer as well as we can programmatically</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">answer =</span> <span class="fu">process_answer</span>(answer, common_langs)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separate into one language per row</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(answer, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">s*[,/]</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Squish the strings</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(answer), str_squish) <span class="sc">%&gt;%</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">answer =</span> <span class="fu">recode_answer</span>(answer),</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">category2 =</span> <span class="fu">recode_category</span>(category)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter out empty category, answer fields</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(answer, <span class="st">"^</span><span class="sc">\\</span><span class="st">s*$"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar</span>(answer) <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nchar</span>(category) <span class="sc">&gt;</span> <span class="dv">4</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And then to aggregate and count programming language mentions per category.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tweets_lang_counted <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  tweets_lang_poll <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(category2, answer, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plot-tweets-by-category" class="level3">
+<h3 class="anchored" data-anchor-id="plot-tweets-by-category">Plot Language Counts by Category</h3>
+<p>Last, but not least, this function creates the plots for requested categories. One key detail is that bars are ordered within each facet using <span class="pkg">tidytext</span>’s <code>reorder_within()</code> function. Check out Julia Silge’s excellent blog post on this function: <a href="https://juliasilge.com/blog/reorder-within/">Reordering and facetting for ggplot2</a>.</p>
+<p>While the bars are ordered in descending order, I wanted the bar fill color to be consistent across facets to facilitate comparison between the two categories. The color palette is <code>ocean.deep</code> from the <span class="pkg">pals</span> package, which I found by looking through Emil Hvitfeldt’s <a href="https://github.com/EmilHvitfeldt/r-color-palettes#comprehensive-list-of-color-palettes-in-r">Comprehensive list of color palettes in R</a>.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_tweets_by_category <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  tweets_lang_counted,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  categories,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">10</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  tweets_lang_counted <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(category2 <span class="sc">%in%</span> categories) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(category2), factor, <span class="at">levels =</span> categories) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(category2) <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(n <span class="sc">&gt;=</span> min_count) <span class="sc">%&gt;%</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="dv">20</span>, n) <span class="sc">%&gt;%</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(category2, answer, <span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">answer_within =</span> tidytext<span class="sc">::</span><span class="fu">reorder_within</span>(answer, n, category2),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">answer =</span> <span class="fu">fct_reorder</span>(answer, n, first)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(answer_within, n, <span class="at">fill =</span> answer) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    tidytext<span class="sc">::</span><span class="fu">scale_x_reordered</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">discrete_scale</span>(<span class="st">"fill"</span>, <span class="st">"ocean"</span>, <span class="cf">function</span>(n) <span class="fu">rev</span>(pals<span class="sc">::</span><span class="fu">ocean.deep</span>(n <span class="sc">+</span> <span class="dv">10</span>))[<span class="dv">6</span><span class="sc">:</span>(n<span class="sc">+</span><span class="dv">5</span>)]) <span class="sc">+</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> category2, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> ncol) <span class="sc">+</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"PT Sans"</span>, <span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"PT Sans Narrow"</span>),</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>()),</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"line"</span>),</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"line"</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="what-about-you" class="level2">
+<h2 class="anchored" data-anchor-id="what-about-you">What About You?</h2>
+<p>If you made it this far, share your programming experiences on Twitter!</p>
+<p>Thanks for reading and feel free to share feedback, thoughts, or questions with me on Twitter at <a href="https://twitter.com/grrrck">@grrrck</a>.</p>
+<div class="cell">
+<style type="text/css">
+#starter-tweet-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 540px;
+}
+#plot {
+  max-width: 90vw;
+}
+#tweet > * {
+  margin: 0 auto;
+}
+.tweet-placeholder {
+    background: #F8F8F8;
+  height: calc(525px - 4em);
+  width: 100%;
+    margin: 2em;
+    padding: 2em;
+    border-radius: 10px;
+    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (min-width: 601px) {
+  .fig-wide {
+    display: block;
+  }
+  .fig-narrow {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .fig-wide {
+    display: none;
+  }
+  .fig-narrow {
+    display: block;
+  }
+  #starter-tweet-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 540px 1fr;
+    width: 100%;
+    max-width: 100%;
+  }
+  #tweet {
+    min-height: 200px;
+  }
+  .tweet-placeholder {
+    height: 175px;
+  }
+}
+@media screen and (max-width: 65em) and (min-width: 48em) {
+  #starter-tweet-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 540px 1fr;
+    width: 100%;
+  }
+  .container.expanded #starter-tweet-container {
+    max-width: 100vw;
+  }
+  .container:not(.expanded) #starter-tweet-container {
+    max-width: calc(100vw - 288px);
+  }
+  #tweet {
+    min-height: 500px;
+  }
+}
+</style>
+</div>
+<div class="cell">
+
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="General" data-category-id="DIC_kwDOB0UOXs4CAIFU" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 🧡</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":true,"openEffect":"zoom","descPosition":"bottom"});</script>
+
+
+
+</body></html>

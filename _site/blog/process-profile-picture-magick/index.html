@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2022-07-12">
+<meta name="keywords" content="rstats">
+<meta name="description" content="Process a directory full of profile pictures, resizing and cropping the images to be centered around faces.">
+
+<title>Garrick Aden-Buie - Process Profile Pictures with magick</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Process Profile Pictures with magick">
+<meta property="og:description" content="Process a directory full of profile pictures, resizing and cropping the images
+to be centered around faces.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/process-profile-picture-magick/feature.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="1072">
+<meta property="og:image:width" content="2048">
+<meta name="twitter:title" content="Garrick Aden-Buie - Process Profile Pictures with magick">
+<meta name="twitter:description" content="Process a directory full of profile pictures, resizing and cropping the images
+to be centered around faces.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/process-profile-picture-magick/feature.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="1072">
+<meta name="twitter:image-width" content="2048">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Process Profile Pictures with magick</h1>
+                  <div>
+        <div class="description">
+          <p>Process a directory full of profile pictures, resizing and cropping the images to be centered around faces.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Images</div>
+                <div class="quarto-category">Interesting Uses of R</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 12, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rstudioconf2022-runs-on-r" id="toc-rstudioconf2022-runs-on-r" class="nav-link active" data-scroll-target="#rstudioconf2022-runs-on-r">rstudio::conf(2022) runs on R</a></li>
+  <li><a href="#send-me-your-profile-picture-please" id="toc-send-me-your-profile-picture-please" class="nav-link" data-scroll-target="#send-me-your-profile-picture-please">Send me your profile picture, please</a></li>
+  <li><a href="#collect-the-profile-pictures" id="toc-collect-the-profile-pictures" class="nav-link" data-scroll-target="#collect-the-profile-pictures">Collect the Profile Pictures</a></li>
+  <li><a href="#magick-with-r" id="toc-magick-with-r" class="nav-link" data-scroll-target="#magick-with-r">Magick with R</a></li>
+  <li><a href="#finding-faces" id="toc-finding-faces" class="nav-link" data-scroll-target="#finding-faces">Finding Faces</a></li>
+  <li><a href="#resize" id="toc-resize" class="nav-link" data-scroll-target="#resize">Resize</a></li>
+  <li><a href="#find-resized-faces" id="toc-find-resized-faces" class="nav-link" data-scroll-target="#find-resized-faces">Find Resized Faces</a></li>
+  <li><a href="#cropping" id="toc-cropping" class="nav-link" data-scroll-target="#cropping">Cropping</a></li>
+  <li><a href="#put-it-all-together" id="toc-put-it-all-together" class="nav-link" data-scroll-target="#put-it-all-together">Put it all together</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/process-profile-picture-magick/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/process-profile-picture-magick/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<section id="rstudioconf2022-runs-on-r" class="level2">
+<h2 class="anchored" data-anchor-id="rstudioconf2022-runs-on-r">rstudio::conf(2022) runs on R</h2>
+<p><a href="https://rstudio.com/conference">rstudio::conf(2022)</a> is just around the corner! This year, I’ve been fortunate to be part of the conference program committee, the small group of RStudio people who gather and evaluate talk submissions, make the tough scheduling decisions about the sessions and talks in the conference program, and generally wrangle and herd all the speaker and talk information into the final schedule.</p>
+<p>My favorite part of the process — apart from seeing all of the wonderful and creative ways our community approaches data science with R (okay, and Python too) — is finding out how many creative ways <strong>we</strong> use R to manage the conference. Let’s just say Jenny Bryan is a literal Google Forms/Sheets/Drive wizard.</p>
+<p>One of the things I love about R is the cycle of starting a task wondering <em>Can I do this with R?</em> and ending with <em>Wow, I can do this with R!</em> I’ve been using R for a while and I’m still occasionally surprised when I find myself on this virtuous loop.</p>
+<p>This post is about an otherwise mundane conference admin task that would have involved a lot of manual labor (in the form of clicks and mouse movements) that I automated with the help of a few R packages. Maybe in future posts I’ll share more cool things that we did with R in the making of rstudio::conf.</p>
+<p>Oh and I hope to see you there, either in person, online or on Twitter at <a href="https://twitter.com/search?q=%23RStudioConf2022">#RStudioConf2022</a>! Learn more at <a href="https://rstudio.com/conference">rstd.io/conf</a>.</p>
+</section>
+<section id="send-me-your-profile-picture-please" class="level2">
+<h2 class="anchored" data-anchor-id="send-me-your-profile-picture-please">Send me your profile picture, please</h2>
+<p>Suppose you’ve asked 100-ish people to send you a profile picture and to your surprise they all followed through and sent you an actual image.</p>
+<p>But, of course, you now have a new problem. Each of those 100-ish people has used slightly different sizes for their profile picture. They’re all sorts of different shapes, sizes, and resolutions.</p>
+<p>Some people’s profile images feature their faces, centered and tightly cropped. Others are photographed at a distance or off-center.</p>
+<div class="cell">
+<div class="cell-output-display">
+<figure class="mx-auto figure" style="width: 66vw; max-width: 100%">
+<img alt="A profile picture of a man, early 30s and smiling, against a soft gray background." src="profiles/DItYlc26zVI.jpg" class="figure-img">
+<figcaption class="figure-caption">
+An example profile picture you received.
+Image by <a href="https:/unsplash.com/photos/DItYlc26zVI">christian buehner</a>.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>In their final placement, you want all of the profile images to be circular images centered on the person’s face as much as possible. If we took the image above and simply centered it inside a circle, we would get something like this:</p>
+<div class="p-3 text-center rounded-circle mx-auto shadow-lg" style="background-size: cover; background-image: url(profiles/DItYlc26zVI.jpg); width: 200px; height: 200px">
+<div class="visually-hidden">
+The example profile image clipped to fit a circular avatar image. The subject appears at the right edge of the circle. About 40% of their face is clipped.
+</div>
+</div>
+<p>Obviously, we’d rather not clip half of the person out of their profile image, so we’ll need to edit this photo. But there are hundreds of them and most of them will need <em>some</em> adjustment.</p>
+<p>Good news! You have access to R, where we can use tools like magick to read and process the images, or face detection with neural networks. So with a few hours of work you can save yourself <a href="https://xkcd.com/1319">an hour of mindless clicking</a>. Let’s do this!</p>
+</section>
+<section id="collect-the-profile-pictures" class="level2">
+<h2 class="anchored" data-anchor-id="collect-the-profile-pictures">Collect the Profile Pictures</h2>
+<p>To see how this all works, I’ve downloaded four example profile pictures from <a href="https://unsplash.com">unsplash</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"profiles"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>photo_ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DItYlc26zVI"</span>, <span class="st">"bpxgyD4YYt4"</span>, <span class="st">"6anudmpILw4"</span>, <span class="st">"3dqSZidOkvs"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (id <span class="cf">in</span> photo_ids) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">"https://source.unsplash.com/%s"</span>, id),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sprintf</span>(<span class="st">"profiles/%s.jpg"</span>, id)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I’ve put the photos in a <code>profiles/</code> directory so that I can list the them all at once:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">"profiles"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## profiles/3dqSZidOkvs.jpg profiles/6anudmpILw4.jpg profiles/DItYlc26zVI.jpg </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## profiles/bpxgyD4YYt4.jpg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="magick-with-r" class="level2">
+<h2 class="anchored" data-anchor-id="magick-with-r">Magick with R</h2>
+<p>The first step is to use the magick package to read in our profile pictures.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>profiles <span class="ot">&lt;-</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">"profiles"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(image_read)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>profiles</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">## $`profiles/3dqSZidOkvs.jpg`</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   format width height colorspace matte filesize density</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1   JPEG  1080    810       sRGB FALSE   135368   72x72</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">## $`profiles/6anudmpILw4.jpg`</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   format width height colorspace matte filesize density</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1   JPEG  1080    720       sRGB FALSE    46181   72x72</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="do">## $`profiles/DItYlc26zVI.jpg`</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   format width height colorspace matte filesize density</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 1   JPEG  1080    720       sRGB FALSE    87827   72x72</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="do">## $`profiles/bpxgyD4YYt4.jpg`</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="do">##   format width height colorspace matte filesize density</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 1   JPEG  1080    608       sRGB FALSE    80277   72x72</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here are the four profiles. As you can see, they come in a variety of sizes and the person in the frame is rarely centered.</p>
+<div class="text-center">
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Four profile pictures of irregular sizes in a 2 by 2 grid. None of the subjects are perfectly centered in the images. Clockwise: a late 20s black woman against a green, natural background; a mid-50s white male on a gray background; a mid-20s woman in a blue shirt against a tan background; an early-30s male with curly hair and a floral print shirt on a light gray background."><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Four profile pictures of irregular sizes in a 2 by 2 grid. None of the subjects are perfectly centered in the images. Clockwise: a late 20s black woman against a green, natural background; a mid-50s white male on a gray background; a mid-20s woman in a blue shirt against a tan background; an early-30s male with curly hair and a floral print shirt on a light gray background." width="250"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="finding-faces" class="level2">
+<h2 class="anchored" data-anchor-id="finding-faces">Finding Faces</h2>
+<p>Now for the most fun of this entire post. After a quick search on <a href="https://r-pkg.org">r-pkg.org</a>, I found a few packages that provide methods for <a href="https://r-pkg.org/search.html?q=face+detect">facial detection</a>; I tried <a href="https://github.com/bnosac/image">image.libfacedetection</a> first and it worked out so well that I didn’t have to look any further on the list.</p>
+<p>As it says on the CRAN page, image.libfacedetection is</p>
+<blockquote class="blockquote">
+<p>An open source library for face detection in images. Provides a pretrained convolutional neural network based on <a href="https://github.com/ShiqiYu/libfacedetection" class="uri">https://github.com/ShiqiYu/libfacedetection</a> which can be used to detect faces which have size greater than 10x10 pixels.</p>
+</blockquote>
+<p>The best feature — apart from reliably detecting faces — is that it works really well with magick. The core functionality is all wrapped up in a single function, <code>image.libfacedetection::image_detect_faces()</code>, and the example in the <a href="https://cran.rstudio.com/web/packages/image.libfacedetection/readme/README.html">README</a> tells you just about everything you need to know.</p>
+<p>In short, after reading the image into R with <code>magick::image_read()</code>, you can call <code>image_detect_faces()</code> to find faces in the image. <code>image_detect_faces()</code> returns data about the detected faces, and you can use its <code>plot()</code> method to overlay boxes over the found faces in the image.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(image.libfacedetection)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>faces <span class="ot">&lt;-</span> all_profiles <span class="sc">|&gt;</span> <span class="fu">image_detect_faces</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(faces, all_profiles, <span class="at">only_box =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-class.chunk="tc">
+<div class="tc">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The four profile images from the previous example. A red square outline marking the detected face regions has been overlaid over each face in the examples profile images."><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="The four profile images from the previous example. A red square outline marking the detected face regions has been overlaid over each face in the examples profile images." width="250"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><code>image_detect_faces()</code> returns some interesting data about the detected faces:</p>
+<blockquote class="blockquote">
+<p>The data frame detections indicates the locations of these. This data.frame has columns <code>x</code>, <code>y</code>, <code>width</code> and <code>height</code> as well as a column called <code>confidence</code>. The values of <code>x</code> and <code>y</code> are the top left of the start of the box.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>faces</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $nr</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## $detections</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     x   y width height confidence landmark1_x landmark1_y landmark2_x</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 153  48    43     57         99         158          70         175</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 140 239    43     58         99         150         260         171</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 365  64    33     44         99         373          79         387</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   landmark2_y landmark3_x landmark3_y landmark4_x landmark4_y landmark5_x</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          68         162          80         162          92         177</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2         260         160         272         151         282         168</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          80         377          86         372          94         385</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   landmark5_y</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          89</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 2         282</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          95</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  [ reached 'max' / getOption("max.print") -- omitted 1 rows ]</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,"class")</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "libfacedetection"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since we asked for a profile picture, we can reasonably expect that there’s only one person in the image. So we’ll take the detection with the highest confidence (in case something else registers as a face), and find the center of the detected region.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>find_face_center <span class="ot">&lt;-</span> <span class="cf">function</span>(image) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  detections <span class="ot">&lt;-</span> image.libfacedetection<span class="sc">::</span><span class="fu">image_detect_faces</span>(image)<span class="sc">$</span>detections</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  best_face <span class="ot">&lt;-</span> <span class="fu">which</span>(detections<span class="sc">$</span>confidence <span class="sc">==</span> <span class="fu">max</span>(detections<span class="sc">$</span>confidence))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  dims <span class="ot">&lt;-</span> <span class="fu">as.list</span>(detections[best_face[[<span class="dv">1</span>]], ])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> dims<span class="sc">$</span>x <span class="sc">+</span> dims<span class="sc">$</span>width <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> dims<span class="sc">$</span>y <span class="sc">+</span> dims<span class="sc">$</span>height <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So when applied to our example profile image, we find that our subject’s face is centered at (697.5, 290).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>face_center <span class="ot">&lt;-</span> <span class="fu">find_face_center</span>(profiles[[<span class="dv">3</span>]])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(face_center)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 2</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ x: num 698</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ y: num 290</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-class.chunk="text-center">
+<div class="text-center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/find-face-center-image-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="The primary example profile image, with a medium yellow dot placed on the man's nose marking the center of his face as detected by the algorithm."><img src="index_files/figure-html/find-face-center-image-1.png" class="img-fluid figure-img" style="width:75.0%" alt="The primary example profile image, with a medium yellow dot placed on the man's nose marking the center of his face as detected by the algorithm."></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>In the next steps, we’ll resize and crop the photo so that it’s centered, as much as possible, on this point.</p>
+</section>
+<section id="resize" class="level2">
+<h2 class="anchored" data-anchor-id="resize">Resize</h2>
+<p>Our goal is to resize and crop the photo into an 600px square image. If we start with an image smaller than 600px in either dimension, then we won’t scale up. We also take another shortcut: since most people will provide a profile image that prominently features their face, we can start by shrinking the smaller side of the image down to match the desired image size.</p>
+<p>This shortcut keeps us from perfectly framing the person’s face. Sometimes their face is too close to the edge of the picture, and in other cases there may be negative space around their head that will end up in the cropped profile image. I’d argue that this is okay. It keeps our cropping from being <em>too perfect</em> and the final images still retain some of the character of the original photo.</p>
+<p>Our example profile image is 1080px wide and 720px tall, so we’ll resize the image proportionally down to an image with height 600px.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>resize_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(image, <span class="at">size =</span> <span class="dv">600</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">image_info</span>(image)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  size <span class="ot">&lt;-</span> <span class="fu">min</span>(size, info<span class="sc">$</span>width, info<span class="sc">$</span>height)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image_resize</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    image,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geometry_size_pixels</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> <span class="cf">if</span> (info<span class="sc">$</span>width <span class="sc">&gt;=</span> info<span class="sc">$</span>height) size,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> <span class="cf">if</span> (info<span class="sc">$</span>height <span class="sc">&gt;</span> info<span class="sc">$</span>width) size</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When applied to our example profile image, we end up with a 900px × 600px image.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>resized_profile <span class="ot">&lt;-</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  profiles[[<span class="dv">3</span>]] <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">resize_fit</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>resized_profile <span class="sc">|&gt;</span> <span class="fu">image_info</span>()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   format width height colorspace matte filesize density</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1   JPEG   900    600       sRGB FALSE        0   72x72</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the next step, we’ll figure out which 600px horizontal region best covers the person’s face.</p>
+</section>
+<section id="find-resized-faces" class="level2">
+<h2 class="anchored" data-anchor-id="find-resized-faces">Find Resized Faces</h2>
+<p>Wait. I showed the face-center discovery step above because it’s the coolest part of this pipeline, but we don’t actually perform the facial detection first. We need to know where the person’s face is located <strong>after</strong> we scale down their profile image.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>resized_profile <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">find_face_center</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $x</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 579</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $y</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 240.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cropping" class="level2">
+<h2 class="anchored" data-anchor-id="cropping">Cropping</h2>
+<p>Now that we know where the center <code>point</code> of the person’s face is located in the image, and also because we’ve already resized the image so we don’t have to worry about its height, we only need to crop the image in one direction. The problem now is that we need to pick a 600px <code>width</code> region within the full 900px <code>range</code>.</p>
+<pre><code>           point
+|------[=====*=====]---|
+       ^~~ width ~~^
+^......................^ range</code></pre>
+<p>This isn’t too complicated. There are three cases:</p>
+<ol type="1">
+<li>The <code>point</code> is so close to the start of the <code>range</code> that it we can’t center the point in our <code>width</code> and instead have to start at 0.</li>
+<li>Similarly, the <code>point</code> might be so close to the end of the <code>range</code> that our crop <code>width</code> lines up with the end. Or, in other words, the crop width starts at <code>range - width</code>.</li>
+<li>Or finally, we can center the <code>point</code> in our crop <code>width</code>, so it should start at <code>point - width/2</code>.</li>
+<li>Oh, and there’s an edge case: if the <code>width</code> is greater than or equal to the full <code>range</code>, then the offset is 0, too.</li>
+</ol>
+<p>This logic gives us the following <code>crop_offset()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>crop_offset <span class="ot">&lt;-</span> <span class="cf">function</span>(point, range, width) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Catch the edge case first</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (width <span class="sc">&gt;=</span> range) <span class="fu">return</span>(<span class="dv">0</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ((point <span class="sc">-</span> width <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. must start at left edge</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="dv">0</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ((point <span class="sc">+</span> width <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">&gt;</span> range) {</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. must start at right edge</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(range <span class="sc">-</span> width)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. enough space on both sides to center width in range</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  point <span class="sc">-</span> width <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Which in our example case tells us that we could crop our resized profile image to a 600px square, offset by the following amount in the <code>x</code> direction:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>offset <span class="ot">&lt;-</span> <span class="fu">crop_offset</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">point =</span> <span class="dv">579</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">range =</span> <span class="dv">900</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">600</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>offset</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 279</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use <code>magick::image_crop()</code> with the <code>magick::geometry_area()</code> helper function:</p>
+<div class="text-center">
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/resized-cropped-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The example profile image, cropped to a square and centered on the man's face."><img src="index_files/figure-html/resized-cropped-1.png" class="img-fluid figure-img" style="width:50.0%" alt="The example profile image, cropped to a square and centered on the man's face."></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>When this image is used as a profile or avatar picture, it ends up looking much better than the uncropped and uncentered version!</p>
+<div class="p-4 text-center rounded-circle mx-auto shadow-lg" style="background-size: cover; background-image: url(index_files/figure-html/resized-cropped-1.png); width: 200px; height: 200px">
+<div class="visually-hidden">
+The example profile image cropped and centered to fit a circular avatar image. The subject appears directly in the middle of the circle.
+</div>
+</div>
+</section>
+<section id="put-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="put-it-all-together">Put it all together</h2>
+<p>The last step is to put everything we’ve sketched out above into a single function that takes a <span class="pkg">magick</span> image and returns a new cropped and centered version. And here’s that function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>resize_crop_to_face <span class="ot">&lt;-</span> <span class="cf">function</span>(image, <span class="at">size =</span> <span class="dv">600</span>) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  image <span class="ot">&lt;-</span> <span class="fu">resize_fit</span>(image, size)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">image_info</span>(image)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># size may have changed after refit</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  size <span class="ot">&lt;-</span> <span class="fu">min</span>(info<span class="sc">$</span>height, info<span class="sc">$</span>width)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  is_image_square <span class="ot">&lt;-</span> info<span class="sc">$</span>width <span class="sc">==</span> info<span class="sc">$</span>height</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (is_image_square) {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(image)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">find_face_center</span>(image)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image_crop</span>(</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    image,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">geometry =</span> <span class="fu">geometry_area</span>(</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> size,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> size,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">x_off =</span> <span class="fu">crop_offset</span>(face<span class="sc">$</span>x, info<span class="sc">$</span>width, size),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">y_off =</span> <span class="fu">crop_offset</span>(face<span class="sc">$</span>y, info<span class="sc">$</span>height, size)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Starting over from the beginning, we can read all of the profile images and resize and crop them around the subject’s face in just a few lines</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>profiles <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">"profiles"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(image_read) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(resize_crop_to_face)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and then we can write them back into the profiles directory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_create</span>(<span class="st">"profiles_cropped"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>profiles <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">iwalk</span>(<span class="cf">function</span>(image, path) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    new_path <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">path</span>(<span class="st">"profiles_cropped"</span>, fs<span class="sc">::</span><span class="fu">path_file</span>(path))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">image_write</span>(image, new_path)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The end result is four perfect profile pictures!</p>
+<div class="cell">
+
+</div>
+<div class="d-flex flex-row flex-wrap">
+<p></p><div class="p-3 text-center rounded-circle m-3 shadow-lg" style="background-size: cover; background-image: url(profiles_cropped/3dqSZidOkvs.jpg); width: 250px; height: 250px"> <div class="visually-hidden">A young black woman, centered in the image, against a green background.</div> </div> <div class="p-3 text-center rounded-circle m-3 shadow-lg" style="background-size: cover; background-image: url(profiles_cropped/6anudmpILw4.jpg); width: 250px; height: 250px"> <div class="visually-hidden">An older white man on a gray background, centered in the image.</div> </div> <div class="p-3 text-center rounded-circle m-3 shadow-lg" style="background-size: cover; background-image: url(profiles_cropped/DItYlc26zVI.jpg); width: 250px; height: 250px"> <div class="visually-hidden">The example profile: a young white male centered in the image.</div> </div> <div class="p-3 text-center rounded-circle m-3 shadow-lg" style="background-size: cover; background-image: url(profiles_cropped/bpxgyD4YYt4.jpg); width: 250px; height: 250px"> <div class="visually-hidden">A young woman against a tan background, centered in the image.</div> </div><p></p>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Images by <a href="https:/unsplash.com/photos/DItYlc26zVI">christian buehner</a>, <a href="https:/unsplash.com/photos/bpxgyD4YYt4">Eunice Lituañas</a>, <a href="https:/unsplash.com/photos/6anudmpILw4">Foto Sushi</a>, and <a href="https:/unsplash.com/photos/3dqSZidOkvs">Eye for Ebony</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="General" data-category-id="DIC_kwDOB0UOXs4CAIFU" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 🧡</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"loop":true,"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});</script>
+
+
+
+</body></html>

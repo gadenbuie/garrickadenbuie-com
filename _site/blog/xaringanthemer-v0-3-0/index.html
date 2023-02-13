@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2020-05-08">
+<meta name="keywords" content="rstats">
+<meta name="description" content="xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.">
+
+<title>Garrick Aden-Buie - Announcing xaringanthemer v0.3.0!</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Announcing xaringanthemer v0.3.0!">
+<meta property="og:description" content="xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="675">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="Garrick Aden-Buie - Announcing xaringanthemer v0.3.0!">
+<meta name="twitter:description" content="xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/xaringanthemer-v0-3-0/announcing-xaringanthemer-card.png">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="675">
+<meta name="twitter:image-width" content="1200">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Announcing xaringanthemer v0.3.0!</h1>
+                  <div>
+        <div class="description">
+          xaringanthemer is now on CRAN with lots of new features to make your xaringan slides awesome.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">My Projects</div>
+                <div class="quarto-category">Announcement</div>
+                <div class="quarto-category">xaringanthemer</div>
+                <div class="quarto-category">xaringan</div>
+                <div class="quarto-category">Themes</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 8, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#new-features-and-now-on-cran" id="toc-new-features-and-now-on-cran" class="nav-link active" data-scroll-target="#new-features-and-now-on-cran">New Features and Now on CRAN! 🎉</a></li>
+  <li><a href="#what-does-xaringanthemer-do" id="toc-what-does-xaringanthemer-do" class="nav-link" data-scroll-target="#what-does-xaringanthemer-do">What does xaringanthemer do?</a></li>
+  <li><a href="#new-features" id="toc-new-features" class="nav-link" data-scroll-target="#new-features">New Features</a>
+  <ul class="collapse">
+  <li><a href="#consistent-api-with-style-functions" id="toc-consistent-api-with-style-functions" class="nav-link" data-scroll-target="#consistent-api-with-style-functions">Consistent API with style functions</a></li>
+  <li><a href="#powered-by-css-variables" id="toc-powered-by-css-variables" class="nav-link" data-scroll-target="#powered-by-css-variables">Powered by CSS variables</a></li>
+  <li><a href="#setting-additional-colors" id="toc-setting-additional-colors" class="nav-link" data-scroll-target="#setting-additional-colors">Setting additional colors</a></li>
+  <li><a href="#matching-ggplot2-themes" id="toc-matching-ggplot2-themes" class="nav-link" data-scroll-target="#matching-ggplot2-themes">Matching ggplot2 themes</a></li>
+  <li><a href="#other-new-things" id="toc-other-new-things" class="nav-link" data-scroll-target="#other-new-things">Other new things</a></li>
+  </ul></li>
+  <li><a href="#thanks" id="toc-thanks" class="nav-link" data-scroll-target="#thanks">Thanks</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/xaringanthemer-v0-3-0/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/xaringanthemer-v0-3-0/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<!-- https://buttons.github.io/ -->
+<p><a class="github-button" href="https://github.com/gadenbuie/xaringanthemer" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/xaringanthemer on GitHub">Star</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/xaringanthemer/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/xaringanthemer on GitHub">Fork</a></p>
+<!-- ![](https://raw.githubusercontent.com/gadenbuie/xaringanthemer/assets/examples.gif) -->
+<div class="cell">
+<style type="text/css">
+.logo {
+  background-image: url('xaringanthemer.png');
+  background-size: contain;
+  width: 200px;
+  height: 200px;
+  float: right;
+}
+</style>
+</div>
+<div class="logo">
+
+</div>
+<section id="new-features-and-now-on-cran" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-and-now-on-cran">New Features and Now on CRAN! 🎉</h2>
+<p>This release has been a long time in the making, and I’m very excited to share with you all of the cool new things that <span class="pkg">xaringanthemer</span> can bring to your <span class="pkg">xaringan</span> slides!</p>
+<p>I started working on one of the key features of this release about a year ago — <a href="#matching-ggplot2-themes">ggplot2 themes that magically match your slide theme</a> — but only recently was able to make the time to push the documentation and tests over the CRAN finish line. Equally exciting, <span class="pkg">xaringanthemer</span> finally has it’s own hex logo thanks to critical artistic help from my amazingly talented sister <a href="https://www.aubreyadenbuie.com/">Aubrey Aden-Buie</a>!</p>
+<p>This post walks through the <a href="#what-does-xaringanthemer-do">purpose of xaringanthemer</a> and all of <a href="#new-features">the new features in version 0.3.0</a>. You can try out <span class="pkg">xaringanthemer</span> for your next presentation, right after you install the package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"xaringanthemer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="what-does-xaringanthemer-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-xaringanthemer-do">What does xaringanthemer do?</h2>
+<p><span class="pkg">xaringanthemer</span> works hand-in-hand with <span class="pkg"><a href="https://slides.yihui.name/xaringan">xaringan</a></span>, the R package that turns your R Markdown into beautiful HTML slides rendered as web pages using the <a href="https://github.com/gnab/remark/">remarkjs</a> library.</p>
+<p><span class="pkg">xaringan</span> slides tend to look like the slides below, and, by default, <span class="pkg">xaringan</span> uses the default slide theme from remarkjs.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="xaringan-default.png" class="lightbox" data-description="Default
+
+style
+
+of
+
+xaringan
+
+slides" data-gallery="quarto-lightbox-gallery-1"><img src="xaringan-default.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="pkg">xaringan</span> does come with a collection of <a href="https://github.com/yihui/xaringan/wiki/Themes">user-contributed themes</a> to choose from, but customizing any <span class="pkg">xaringan</span> slide theme requires working with CSS and learning which CSS rules apply to each element in the slides.</p>
+<p>Even if you love CSS, it can still be difficult and time-consuming to set up your slides to use a consistent color palette or custom fonts.</p>
+<p>The magic of <span class="pkg"><a href="https://pkg.garrickadenbuie.com/xaringanthemer">xaringanthemer</a></span> is that it grants you the power to <strong>quickly set up a complete slide theme</strong>, starting from only <strong>one or two color choices</strong>. You pick how these color choices are applied by choosing from a collection of <code>style_</code> functions, and you can tweak the default color choices easily by providing alternative values for many theme parameters.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="example_duo_accent.png" class="lightbox" data-description="Slides
+
+styled
+
+with
+
+xaringanthemer" data-gallery="quarto-lightbox-gallery-2"><img src="example_duo_accent.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<div class="cell">
+<style type="text/css">
+.bg-blue {
+  background-color: #035AA6;
+  color: white;
+}
+.bg-green {
+  background-color: #03A696;
+  color: white;
+}
+.ph3 {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.plot-preview .caption {
+  text-align: center;
+}
+</style>
+</div>
+<p>These slides were styled using the <code>style_duo_accent()</code> function, which applied my <span class="bg-blue ph3">primary color</span> and my <span class="bg-green ph3">secondary color</span> consistently throughout the slide theme.</p>
+<p>You can also easily use fonts from <a href="https://fonts.google.com">Google Fonts</a> by using the <code>google_font()</code> helper. I used eye-catching fonts in this example that I probably wouldn’t use in real life (the default fonts used by <span class="pkg">xaringanthemer</span> <a href="#new-default-fonts">are much more readable</a>).</p>
+<p>Here’s the complete code chunk that I used in my <code>slides.Rmd</code> file to create the example above.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r xaringan-themer, include=FALSE}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">style_duo_accent</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary_color =</span> <span class="st">"#035AA6"</span>,        <span class="co"># blue</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">secondary_color =</span> <span class="st">"#03A696"</span>,      <span class="co"># sea green</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">header_font_google =</span> <span class="fu">google_font</span>(<span class="st">"Amatic SC"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_font_google =</span> <span class="fu">google_font</span>(<span class="st">"Crete Round"</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">header_h1_font_size =</span> <span class="st">"3.5rem"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">header_h2_font_size =</span> <span class="st">"2.75rem"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The slide style functions come in a few flavors. Styles derived from two color choices are prefixed with <code>style_duo_</code>. Slide themes generated from a single color use the <code>style_mono_</code> prefix. There are also two complete styles based on the <a href="http://ethanschoonover.com/solarized">solarized color palette</a>: <code>style_solarized_light()</code> and <code>style_solarized_dark()</code>. And finally, you can use the <code>style_xaringan()</code> base theme function directly, which starts from the default <span class="pkg">xaringan</span> theme.</p>
+<p>All of the <code>style_</code> functions write a CSS file containing your complete slide theme. By default, the file is called <code>xaringan-themer.css</code> and you can create your CSS file in a separate R script or you can include the style-generating code in your slides with a chunk like the one above.</p>
+<p>In either case, in order for your slides to use your new theme, you need to modify the <code>css</code> argument of <code>xaringan::moon_reader</code> in the YAML header of your slides.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  xaringan:</span><span class="fu">:moon_reader</span><span class="kw">:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> xaringan-themer.css</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That’s <span class="pkg">xaringanthemer</span> in a nutshell! You can learn more about the features in the package below, or by visiting <a href="https://pkg.garrickadenbuie.com/xaringanthemer">pkg.garrickadenbuie.com/xaringanthemer</a>.</p>
+</section>
+<section id="new-features" class="level2">
+<h2 class="anchored" data-anchor-id="new-features">New Features</h2>
+<p>There are quite a lot of new features in version <code>0.3.0</code> that I’m very excited to share with you.</p>
+<section id="consistent-api-with-style-functions" class="level3">
+<h3 class="anchored" data-anchor-id="consistent-api-with-style-functions">Consistent API with style functions</h3>
+<p>This package has been on <a href="https://github.com/gadenbuie/xaringanthemer">GitHub</a> for a couple of years, and thank you to everyone who tested <a href="#thanks">and contributed</a> to the development over the years.</p>
+<p>If you’ve used the GitHub version before, the API has changed slightly, but there should not have been any breaking changes. In short, all of the files that write CSS, for example the functions previouslly called <code>duo_accent()</code> or <code>write_xaringan_theme()</code>, are now prefixed with <code>style_</code>, e.g.&nbsp;<code>style_duo_accent()</code> and <code>style_xaringan()</code>.</p>
+</section>
+<section id="powered-by-css-variables" class="level3">
+<h3 class="anchored" data-anchor-id="powered-by-css-variables">Powered by CSS variables</h3>
+<p><span class="pkg">xaringanthemer</span> does much of the work on the R side to prepare the theme, but nearly all of the properties of your theme are stored in <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/--*">CSS variables</a> (or <em>custom properties</em>). This makes it possible to re-use colors from your theme, either in custom CSS or as arguments to the style function parameters.</p>
+<p>Whenever a theme parameter is stored in a CSS variable, the documentation of the associated argument in the style function will tell you what CSS variable name is used. For example, the <code>link_color</code> argument is made available in the CSS as <code>var(--link-color)</code>.</p>
+<p>In general, argument names are converted from <code>snake_case_names</code> to <code>kebab-case-names</code>.</p>
+</section>
+<section id="setting-additional-colors" class="level3">
+<h3 class="anchored" data-anchor-id="setting-additional-colors">Setting additional colors</h3>
+<p>If you’ve spent a lot of time picking out a color palette, or if you’re using a corporate color palette, you’ll likely have more than just two colors that you want to use, and possibly not just in the components of your theme.</p>
+<p>The markdown syntax used by <span class="pkg">xaringan</span> (actually remarkjs in this case) allows you to apply a class to text using syntax like this: <code>.class[ ... ]</code></p>
+<p>Building on the use of CSS variables, <span class="pkg">xaringanthemer</span> helps you add these additional colors to your theme. Using the <code>colors</code> argument, you can specify a vector of named colors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">style_xaringan</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">red =</span> <span class="st">"#f34213"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">purple =</span> <span class="st">"#3e2f5b"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">orange =</span> <span class="st">"#ff8811"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">green =</span> <span class="st">"#136f63"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">white =</span> <span class="st">"#FFFFFF"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The color names are then used in three places. Using the <code>red</code> color as an example, <span class="pkg">xaringanthemer</span> adds</p>
+<ol type="1">
+<li><p>a CSS variable <code>var(--red)</code> that use anywhere in custom CSS</p></li>
+<li><p>a <code>.red</code> class to set <code>color: var(--red)</code></p></li>
+<li><p>a <code>.bg-red</code> class setting <code>background-color: var(--red)</code>.</p></li>
+</ol>
+<p>The named color and background classes are then easy to use in <span class="pkg">xaringan</span>. Slide text like this</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>This **.red[simple]** .white.bg-purple<span class="co">[</span><span class="ot">demo</span><span class="co">]</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>_.orange[shows]_ the colors .green<span class="co">[</span><span class="ot">in action</span><span class="co">]</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>will be rendered in HTML as</p>
+<blockquote class="blockquote">
+This <strong><span style="color: #f34213">simple</span></strong> <span style="color:#FFFFFF;background-color:#3e2f5b;">demo</span> <em style="color:#ff8811">shows</em> the colors <span style="color:#136f63">in action</span>.
+</blockquote>
+</section>
+<section id="matching-ggplot2-themes" class="level3">
+<h3 class="anchored" data-anchor-id="matching-ggplot2-themes">Matching ggplot2 themes</h3>
+<p>At this point your slides look <em>a m a z i n g</em>, but your <span class="pkg"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span> plots stick out like a sore thumb with their sad shades of gray.</p>
+<p>You want your data visualizations to have the same level of visual appeal as your hand-crafted slide theme, and <span class="pkg">xaringanthemer</span> can help! I’ll quickly cover some of the new features for styling ggplots here, and you can learn more in the <a href="https://pkg.garrickadenbuie.com/xaringanthemer/articles/ggplot2-themes.html">ggplot2 Themes</a> vignette.</p>
+<section id="theme_xaringan" class="level4">
+<h4 class="anchored" data-anchor-id="theme_xaringan">theme_xaringan()</h4>
+<p><span class="pkg">xaringanthemer</span> provides a <span class="pkg">ggplot2</span> theme that knows the styles used in your slides: <code>theme_xaringan()</code>. Let’s start with a basic, typical <span class="pkg">ggplot2</span> plot of fuel efficiency of cars using the <code>ggplot2::mpg</code> dataset. You only need to add <code>+ theme_xaringan()</code> to give your plot a makeover.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>g_base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(hwy, cty) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Highway MPG"</span>, <span class="at">y =</span> <span class="st">"City MPG"</span>, <span class="at">title =</span> <span class="st">"Fuel Efficiency"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic plot with default theme</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>g_base</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div>
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fancy slide-matching themed plot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>g_base <span class="sc">+</span> <span class="fu">theme_xaringan</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/ggplot2-demo-1-1.png" class="lightbox" title="Basic ggplot2 plot" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/ggplot2-demo-1-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Basic ggplot2 plot</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/ggplot2-demo-2-1.png" class="lightbox" title="A theme_xaringan() ggplot" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/ggplot2-demo-2-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">A theme_xaringan() ggplot</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p><code>theme_xaringan()</code> matches the colors used in your slides to the plot and axis titles (slide heading color) and axis tick labels and default text geometries (slide text color). It also uses the <span class="pkg"><a href="https://github.com/yixuan/showtext">showtext</a></span> by Yixuan Qiu to match the fonts used in your slides — this feature works particularly well when you use fonts from <a href="https://fonts.google.com">Google Fonts</a>. <code>theme_xaringan()</code> also sets the default color, fill and text family aesthetics of many <span class="pkg">ggplot2</span> geoms, changing, for example, the color of points to match the primary slide color.</p>
+<p>Our <code>theme_xaringan()</code> themed plot would fit right in on just about any slide in the slide deck we made with <code>style_duo_accent()</code> above, except for our inverse-styled slides…</p>
+</section>
+<section id="theme_xaringan_inverse" class="level4">
+<h4 class="anchored" data-anchor-id="theme_xaringan_inverse">theme_xaringan_inverse()</h4>
+<p>In <span class="pkg">xaringan</span>, inverse slides provide a nice way to visually break up your presentation. You can create them using the <code>inverse</code> class:</p>
+<pre><code>---
+class: inverse
+
+&lt;!-- slide content --&gt;</code></pre>
+<p><span class="pkg">xaringanthemer</span> also provide a ggplot2 theme for these slides as well: <code>theme_xaringan_inverse()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># theme_xaringan() on the left,</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>g_base <span class="sc">+</span> <span class="fu">theme_xaringan</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># theme_xaringan_inverse() on the right</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>g_base <span class="sc">+</span> <span class="fu">theme_xaringan_inverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/ggplot2-demo-2-1.png" class="lightbox" title="theme_xaringan()" data-gallery="quarto-lightbox-gallery-5"><img src="index_files/figure-html/ggplot2-demo-2-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">theme_xaringan()</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/ggplot2-demo-inverse-1.png" class="lightbox" title="theme_xaringan_inverse()" data-gallery="quarto-lightbox-gallery-6"><img src="index_files/figure-html/ggplot2-demo-inverse-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">theme_xaringan_inverse()</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="matching-color-and-fill-scales" class="level4">
+<h4 class="anchored" data-anchor-id="matching-color-and-fill-scales">Matching color and fill scales</h4>
+<p>To give your plots a little more visual appeal, <span class="pkg">xaringanthemer</span> includes custom color and fill scales based on the primary slide color. This feature uses <a href="http://colorspace.r-forge.r-project.org//reference/hcl_palettes.html"><code>colorspace::sequential_hcl()</code></a> from the <span class="pkg"><a href="http://colorspace.r-forge.r-project.org//index.html">colorspace</a></span> package.</p>
+<p>The scale functions all follow the naming pattern <code>scale_xaringan_&lt;aes&gt;_&lt;data_type&gt;()</code>, where <code>&lt;aes&gt;</code> is replaced with either <code>color</code> or <code>fill</code> and <code>&lt;data_type&gt;</code> is one of <code>discrete</code> or <code>continuous</code>. For colors scales matching the inverse slide style, set <code>inverse = TRUE</code>. Occasionally, you may want to use a different primary color to generate the color or fill scale using the <code>color</code> argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> cut)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> ..count..), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Diamond Cut Quality"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_xaringan</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_xaringan_fill_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div>
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> cut)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> ..count..), <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Diamond Cut Quality"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_xaringan_inverse</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_xaringan_fill_continuous</span>(<span class="at">color =</span> <span class="st">"#F2B155"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/scale-xaringan-1-1.png" class="lightbox" title="scale_xaringan_fill_continuous()" data-gallery="quarto-lightbox-gallery-7"><img src="index_files/figure-html/scale-xaringan-1-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">scale_xaringan_fill_continuous()</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="plot-preview w-100 w-50-ns fl-ns">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/scale-xaringan-2-1.png" class="lightbox" title="Custom color with scale_xaringan_fill_continuous()" data-gallery="quarto-lightbox-gallery-8"><img src="index_files/figure-html/scale-xaringan-2-1.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Custom color with scale_xaringan_fill_continuous()</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="three-ways-to-use-theme_xaringan" class="level4">
+<h4 class="anchored" data-anchor-id="three-ways-to-use-theme_xaringan">Three ways to use <code>theme_xaringan()</code></h4>
+<p>In what is likely the most common scenario, <code>theme_xaringan()</code> learns the slide styles when you use any of the style functions in your slides’ source code.</p>
+<p>Alternatively, you may want to create your CSS files in another process or to use a <span class="pkg">xaringanthemer</span> CSS file that you share between presentations. In these cases, <code>theme_xaringan()</code> will find the CSS file if it’s in the same folder or a subdirectory of the folder containing your slides source <code>.Rmd</code>. If you have multiple CSS files, or your CSS file is stored elsewhere, you can use the <code>css_file</code> argument to tell <code>theme_xaringan()</code> which file to use. This also means that you can easily match the plots in other R Markdown reports or webpages with <code>theme_xaringan()</code> to the styles used in your presentations by point <code>css_file</code> to the styles used in your slides.</p>
+<p>Finally, you can create themes without calling a style function or a CSS file using the <code>theme_xaringan_base()</code> function. This theme function can be used for complete <span class="pkg">ggplot2</span> themes, including Google Fonts. (Note that the <code>text_font</code> and <code>title_font</code> arguments can take a <code>google_font()</code> in all <code>theme_xaringan_</code> functions.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> cut)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="st">"Diamond Cut Quality"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">25000</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_xaringan_base</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title_font =</span> <span class="fu">google_font</span>(<span class="st">"Merriweather"</span>, <span class="dv">800</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title_font_size =</span> <span class="dv">20</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_font =</span> <span class="fu">google_font</span>(<span class="st">"PT Sans"</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_font_size =</span> <span class="dv">16</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">background_color =</span> <span class="st">"#FFFFFF"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_color =</span> <span class="st">"#444444"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">accent_color =</span> <span class="st">"#002B36"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="index_files/figure-html/theme-xaringan-base-1.png" class="lightbox" title="A plot with theme_xaringan_base() styled to match this blog" data-gallery="quarto-lightbox-gallery-9"><img src="index_files/figure-html/theme-xaringan-base-1.png" class="img-fluid figure-img" width="960"></a></p>
+<p></p><figcaption class="figure-caption">A plot with theme_xaringan_base() styled to match this blog</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-more-about-ggplot2-themes" class="level4">
+<h4 class="anchored" data-anchor-id="learning-more-about-ggplot2-themes">Learning more about ggplot2 themes</h4>
+<p>To learn more about the <span class="pkg">ggplot2</span> themes, you can reference the <a href="https://pkg.garrickadenbuie.com/xaringanthemer/articles/ggplot2-themes.html">ggplot2 themes vignette</a> online or with <code>vignettes("ggplot2-themes")</code>.</p>
+</section>
+</section>
+<section id="other-new-things" class="level3">
+<h3 class="anchored" data-anchor-id="other-new-things">Other new things</h3>
+<p>There are a few other new features that are worth a quick mention.</p>
+<section id="header-background" class="level4">
+<h4 class="anchored" data-anchor-id="header-background">Header background</h4>
+<p>If you like the <strong>metropolis</strong> theme in <span class="pkg">xaringan</span> — ported from the classic beamer theme by <a href="https://pat-s.me/">Patrick Schratz</a> who has a <a href="https://pat-s.me/files/xaringan-metropolis.html">demo slide deck</a> on his site — then you might like the <em>header background</em> feature that brings the title bar background to any <span class="pkg">xaringan</span> presentation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="example_header-background.png" class="lightbox" title="Slides with class: header_background" data-gallery="quarto-lightbox-gallery-10"><img src="example_header-background.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Slides with class: header_background</figcaption><p></p>
+</figure>
+</div>
+<p>The background is applied to the first level-1 heading on the slide — either <code>&lt;h1&gt;Title&lt;/h1&gt;</code> or <code># Title</code>. There are two modes to the header background: auto and manual.</p>
+<p>Manual mode is the default, meaning that for any <span class="pkg">xaringanthemer</span> slides you can enable the header background using the <code>header_background</code> slide class:</p>
+<pre><code>---
+class: header_background
+
+# Title with a background
+
+&lt;!-- slide content --&gt;</code></pre>
+<p>Auto mode is invoked by setting <code>header_background_auto = TRUE</code> in the style functions which makes the first level-1 heading of all normal slides into title background. In auto mode, you can disable the header background manually by using <code>class: normal</code>. The header background isn’t applied to <code>title</code> or <code>inverse</code> slides, slides where the text is aligned <code>middle</code> or <code>bottom</code>, or slides with the <code>normal</code> class.</p>
+</section>
+<section id="new-default-fonts" class="level4">
+<h4 class="anchored" data-anchor-id="new-default-fonts">New default fonts</h4>
+<p><link href="https://fonts.googleapis.com/css2?family=Cabin:wght@600&amp;family=Noto+Sans&amp;display=swap" rel="stylesheet"></p>
+<div class="cell">
+<style type="text/css">
+.cabin {
+  font-family: Cabin;
+  font-weight: 600
+}
+.noto-sans {
+  font-family: 'Noto Sans';
+}
+.font-preview {
+  padding: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  font-size: 1.25em;
+}
+</style>
+</div>
+<p>While the default <span class="pkg">xaringan</span> fonts are eye-catching and interesting when you first see them, I personally think that they don’t work well in low-visibility settings, like presentations made in person. <span class="pkg">xaringanthemer</span> therefore uses a different set of default fonts: <a href="https://fonts.google.com/specimen/Cabin">Cabin</a> for headings and <a href="https://fonts.google.com/specimen/Noto+Sans">Noto Sans</a> for body text.</p>
+<div class="font-preview">
+<p style="font-size: 1.5em" class="cabin">
+A Cabin in the Clearing
+</p>
+<p class="noto-sans">
+Pack my box with five dozen liquor jugs. Amazingly few discotheques provide jukeboxes.
+</p>
+</div>
+<p>These fonts are easier to read on screens and at a distance during presentations, and they support a wide variety of languages and weights. Another reason for the change is that the xaringan (remarkjs) default body font, <em>Droid Serif</em>, is no longer officially included in Google Fonts.</p>
+</section>
+</section>
+</section>
+<section id="thanks" class="level2">
+<h2 class="anchored" data-anchor-id="thanks">Thanks</h2>
+<p>Thanks to everyone who sumbitted pull requests, issues, or comments: <a href="https://github.com/Btibert3">@Btibert3</a>, <a href="https://github.com/Northbreeze">@Northbreeze</a>, <a href="https://github.com/pat-s">@pat-s</a>, <a href="https://github.com/PMassicotte">@PMassicotte</a>, <a href="https://github.com/techisdead">@techisdead</a>, and <a href="https://github.com/TrashBirdEcology">@TrashBirdEcology</a></p>
+<p>Thanks to <a href="https://www.aubreyadenbuie.com/">Aubrey Aden-Buie</a> for help designing the <span class="pkg">xaringanthemer</span> hex logo!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="General" data-category-id="DIC_kwDOB0UOXs4CAIFU" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 🧡</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":true});</script>
+
+
+
+</body></html>

@@ -1,0 +1,64 @@
+---
+title: "Better Progressive Xaringan"
+subtitle: "Example Slides"
+author: "Garrick Aden-Buie"
+institute: "garrickadenbuie.com"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [xaringan-themer.css, example.css]
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: true
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+class: highlight-last-item
+
+# Best Brownies, Ingredients
+
+- 1 cup milk chocolate chips
+
+--
+
+- 2 large eggs
+
+--
+
+- 2 teaspoons vanilla extract
+
+--
+
+- 1/2 cup melted milk chocolate chips
+
+--
+
+- 1/4 cup unsweetened cocoa powder
+
+--
+
+- _More things_
+
+---
+
+# highlight-last-item
+
+Use this CSS chunk with the slide `class: highlight-last-item`.
+
+````
+```{css echo=FALSE}`r ''`
+.highlight-last-item > ul > li, .highlight-last-item > ol > li {
+  opacity: 0.5;
+}
+.highlight-last-item > ul > li:last-of-type,
+.highlight-last-item > ol > li:last-of-type {
+  opacity: 1;
+}
+```
+````

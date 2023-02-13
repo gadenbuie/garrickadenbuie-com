@@ -1,0 +1,165 @@
+/* quarto syntax highlight colors */
+:root {
+  --quarto-hl-ot-color: #934373;
+  --quarto-hl-at-color: #8b5101;
+  --quarto-hl-ss-color: #587b4b;
+  --quarto-hl-an-color: #60757e;
+  --quarto-hl-fu-color: #0e6876;
+  --quarto-hl-st-color: #587b4b;
+  --quarto-hl-cf-color: #0e6876;
+  --quarto-hl-op-color: #cb7702;
+  --quarto-hl-er-color: #852b35;
+  --quarto-hl-bn-color: #852b35;
+  --quarto-hl-al-color: #852b35;
+  --quarto-hl-va-color: #a76101;
+  --quarto-hl-bu-color: inherit;
+  --quarto-hl-ex-color: inherit;
+  --quarto-hl-pp-color: #852b35;
+  --quarto-hl-in-color: #60757e;
+  --quarto-hl-vs-color: #69965d;
+  --quarto-hl-wa-color: #60757e;
+  --quarto-hl-do-color: #60757e;
+  --quarto-hl-im-color: inherit;
+  --quarto-hl-ch-color: #69965d;
+  --quarto-hl-dt-color: #4a466f;
+  --quarto-hl-fl-color: #c94150;
+  --quarto-hl-co-color: #60757e;
+  --quarto-hl-cv-color: #60757e;
+  --quarto-hl-cn-color: #c94150;
+  --quarto-hl-sc-color: #934373;
+  --quarto-hl-dv-color: #c94150;
+  --quarto-hl-kw-color: #ef8c02;
+}
+
+/* other quarto variables */
+:root {
+  --quarto-font-monospace: "IBM Plex Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+pre > code.sourceCode > span {
+  color: #213f4b;
+}
+
+code span {
+  color: #213f4b;
+}
+
+code.sourceCode > span {
+  color: #213f4b;
+}
+
+div.sourceCode,
+div.sourceCode pre.sourceCode {
+  color: #213f4b;
+}
+
+code span.ot {
+  color: #934373;
+}
+
+code span.at {
+  color: #8b5101;
+}
+
+code span.ss {
+  color: #587b4b;
+}
+
+code span.an {
+  color: #60757e;
+}
+
+code span.fu {
+  color: #0e6876;
+}
+
+code span.st {
+  color: #587b4b;
+}
+
+code span.cf {
+  color: #0e6876;
+}
+
+code span.op {
+  color: #cb7702;
+}
+
+code span.er {
+  color: #852b35;
+}
+
+code span.bn {
+  color: #852b35;
+}
+
+code span.al {
+  color: #852b35;
+}
+
+code span.va {
+  color: #a76101;
+}
+
+code span.pp {
+  color: #852b35;
+}
+
+code span.in {
+  color: #60757e;
+}
+
+code span.vs {
+  color: #69965d;
+  font-weight: bold;
+}
+
+code span.wa {
+  color: #60757e;
+}
+
+code span.do {
+  color: #60757e;
+}
+
+code span.ch {
+  color: #69965d;
+}
+
+code span.dt {
+  color: #4a466f;
+}
+
+code span.fl {
+  color: #c94150;
+}
+
+code span.co {
+  color: #60757e;
+}
+
+code span.cv {
+  color: #60757e;
+}
+
+code span.cn {
+  color: #c94150;
+}
+
+code span.sc {
+  color: #934373;
+}
+
+code span.dv {
+  color: #c94150;
+}
+
+code span.kw {
+  color: #ef8c02;
+}
+
+.prevent-inlining {
+  content: "</";
+}
+
+/*# sourceMappingURL=debc5d5d77c3f9108843748ff7464032.css.map */

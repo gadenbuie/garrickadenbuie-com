@@ -1,0 +1,14 @@
+{
+  "hash": "155c0ab057036e31f8cacdb94ad55c51",
+  "result": {
+    "markdown": "---\ntitle: \"Better Progressive Xaringan\"\nsubtitle: \"Example Slides\"\nauthor: \"Garrick Aden-Buie\"\ninstitute: \"garrickadenbuie.com\"\noutput:\n  xaringan::moon_reader:\n    lib_dir: libs\n    css: [xaringan-themer.css, example.css]\n    seal: false\n    nature:\n      highlightStyle: github\n      highlightLines: true\n      countIncrementalSlides: true\n      ratio: \"16:9\"\n---\n\n\n\n\nclass: show-only-last-code-result\n\n# Random Sampling in R\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrunif(5)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 0.1934435 0.4265438 0.4947198 0.1169655 0.8528030\n```\n:::\n:::\n\n\n--\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrnorm(5)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1]  0.0860143  1.1024212  0.3720217 -1.1011921  2.0168308\n```\n:::\n:::\n\n\n--\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrbinom(5, 1, 0.5)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 0 1 0 1 0\n```\n:::\n:::\n\n\n--\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrcauchy(5)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] -1.9261257  0.7188465 -0.6738887 -0.1279699 -1.8986045\n```\n:::\n:::\n\n\n---\n\n# show-only-last-code-result\n\nUse this CSS chunk with the slide `class: show-only-last-code-result`.\n\n````\n```{css echo=FALSE}\n.show-only-last-code-result pre + pre:not(:last-of-type) code[class=\"remark-code\"] {\n\tdisplay: none;\n}\n```\n````\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

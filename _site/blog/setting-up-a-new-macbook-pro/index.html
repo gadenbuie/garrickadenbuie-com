@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2020-12-01">
+<meta name="keywords" content="rstats">
+<meta name="description" content="A big post with all the Mac apps and command line utilities I use everyday.">
+
+<title>Garrick Aden-Buie - Setting up a new MacBook Pro</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../_assets/panelset-extras.css">
+<meta property="og:title" content="Garrick Aden-Buie - Setting up a new MacBook Pro">
+<meta property="og:description" content="A big post with all the Mac apps and command line utilities I use everyday.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/setting-up-a-new-macbook-pro/img/EoLPlKhXUAAVThW.jpg">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - Setting up a new MacBook Pro">
+<meta name="twitter:description" content="A big post with all the Mac apps and command line utilities I use everyday.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/setting-up-a-new-macbook-pro/img/EoLPlKhXUAAVThW.jpg">
+<meta name="twitter:creator" content="@grrrck">
+<meta name="twitter:site" content="@grrrck">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">garrick</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html">
+ <span class="menu-text">blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../project/index.html">
+ <span class="menu-text">projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talk/index.html">
+ <span class="menu-text">talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about/index.html">
+ <span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/gadenbuie"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/grrrck"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Setting up a new MacBook Pro</h1>
+                  <div>
+        <div class="description">
+          A big post with all the Mac apps and command line utilities I use everyday.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Tips</div>
+                <div class="quarto-category">Programming</div>
+                <div class="quarto-category">Twitter</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Garrick Aden-Buie </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 1, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<script>
+  (function() {
+    const sheets = Array.from(document.styleSheets)
+      .filter(x => !x.href)
+
+    if (!sheets.length) return;
+
+    // remove the inlined base pandoc syntax styles
+    const base_syntax = sheets[0]
+    Array.from(base_syntax.cssRules)
+      .reduce((res, r, idx) => {
+        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
+          res = [...res, idx - res.length]
+        }
+        return(res)
+      }, [])
+      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
+  })()
+</script>
+
+
+
+
+<!-- Links -->
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<style type="text/css">
+.tweet-timestamp {
+  display: block;
+  position: relative;
+  font-size: 1em;
+}
+.tweet-timestamp a .tweet-timestamp__text {
+  color: var(--text-light);
+}
+.tweet-timestamp a:hover .tweet-timestamp__text {
+  color: var(--text-mild);
+}
+.tweet-timestamp .tweet-link > i {
+    display: inline-block;
+    position: absolute;
+  left: -1.5em;
+}
+</style>
+</div>
+<div class="lead">
+<p>I had to set up my new work computer today and rather than just slog away at it, I thought I would live tweet the process. Honestly, there’s still a lot of config left to do, but the <a href="https://twitter.com/grrrck/status/1333804309272621060">tweet thread</a> does a good job organizing the apps and software I use daily. <a href="https://gist.github.com/gadenbuie/a14cab3d075901d8b25cbaf9e1f1fa7d">My install notes</a> are another good summary.</p>
+<p>I used <a href="https://docs.ropensci.org/rtweet">rtweet</a> and <a href="https://github.com/gadenbuie/tweetrmd">tweetrmd</a> to unroll the twitter thread.</p>
+<ul>
+<li><a href="#upgrade-to-big-sur">Upgrade to Big Sur</a></li>
+<li><a href="#critical-first-steps">Critical First Steps</a></li>
+<li><a href="#install-r-and-friends">Install R and Friends</a></li>
+<li><a href="#utility-mac-apps">Utility Mac Apps</a></li>
+<li><a href="#command-line-utilities">Command Line Utilities</a></li>
+<li><a href="#fish-shell">Fish Shell</a></li>
+</ul>
+</div>
+<div class="thread">
+<section id="upgrade-to-big-sur" class="level2">
+<h2 class="anchored" data-anchor-id="upgrade-to-big-sur">Upgrade to Big Sur</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333804309272621060" title="2020-12-01 16:05:02" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:05am</span></a></span>I’ve got a new work laptop! I’m going to try to track my setup process and the software and tools I install in this thread</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKe400UcAY9wTb.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="img/EoKe400UcAY9wTb.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333804487148855300" title="2020-12-01 16:05:45" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:05am</span></a></span>Step #1, wait…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKgEd0VQAImTS-.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="img/EoKgEd0VQAImTS-.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333805092152123394" title="2020-12-01 16:08:09" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:08am</span></a></span>Oh wow, I really jumped the gun on this thread</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKgpSgXMAARLQc.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="img/EoKgpSgXMAARLQc.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333807464907681794" title="2020-12-01 16:17:35" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:17am</span></a></span>in the mean time, I guess I’ll tidy the dock</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKixqNXYAEtjZC.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="img/EoKixqNXYAEtjZC.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333810013362675712" title="2020-12-01 16:27:42" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:27am</span></a></span>Here’s something I do on every machine I use: turn Caps Lock into Escape. It’s only annoying when I write SQL but it saves so much finger and hand movement. Essential for vim mode.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKlAg2XUAIQutF.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="img/EoKlAg2XUAIQutF.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333813719827177473" title="2020-12-01 16:42:26" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:42am</span></a></span>Looking for other things I can tweak while I wait. Hot corners?</p>
+<p>↗️ Mission Control<br>
+↘️ Desktop<br>
+↙️ Application Windows<br>
+↖️ Put Display to Sleep (and add require password immediately)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKob5mWMAA8fCm.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="img/EoKob5mWMAA8fCm.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333815050163904512" title="2020-12-01 16:47:43" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">11:47am</span></a></span>Okay, Big Sur Install Time has arrived. After these messages, we’ll be right back.</p>
+<p>🍎 1 minute remaining…<br>
+🍎 About 17 minutes remaining…<br>
+🍎 About 26 minutes remaining…<br>
+🍎 About 9 minutes remaining…<br>
+*reboots*<br>
+🍎 (no time estimate)</p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333819394137464837" title="2020-12-01 17:04:59" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">12:04pm</span></a></span>After a reboot, all is quiet. The screen is black. I move the mouse. A login screen! That was fast!</p>
+<p>I login. I’ve entered a time loop. Tuesday starts again.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKtpVWWMAMuBbS.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="img/EoKtpVWWMAMuBbS.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333819947252846593" title="2020-12-01 17:07:11" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">12:07pm</span></a></span>I guess we’re downloading Big Sur again. I feel like I did this before…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoKuCr0XMAQHALm.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="img/EoKuCr0XMAQHALm.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333828745573126148" title="2020-12-01 17:42:08" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">12:42pm</span></a></span>Download complete … now this looks legit. Wish me luck!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoK2KWYXYAAaRa_.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="img/EoK2KWYXYAAaRa_.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+</section>
+<section id="critical-first-steps" class="level2">
+<h2 class="anchored" data-anchor-id="critical-first-steps">Critical First Steps</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333856706858717185" title="2020-12-01 19:33:15" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:33pm</span></a></span>And we’re back! I am… not sure how I feel about the new look of Big Sur</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLPlLHXEAAMWS0.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="img/EoLPlLHXEAAMWS0.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLPlKhXUAAVThW.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="img/EoLPlKhXUAAVThW.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333858714269388803" title="2020-12-01 19:41:14" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:41pm</span></a></span>Just in case you or I get lost, I took some notes while I was waiting for Big Sur to install. Here’s my general install plan<br>
+<a href="https://gist.github.com/gadenbuie/a14cab3d075901d8b25cbaf9e1f1fa7d" class="uri">https://gist.github.com/gadenbuie/a14cab3d075901d8b25cbaf9e1f1fa7d</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333859122517860352" title="2020-12-01 19:42:51" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:42pm</span></a></span>First things first I need a good terminal and iTerm2 is my favorite<br>
+<a href="https://iterm2.com/" class="uri">https://iterm2.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333860197551443971" title="2020-12-01 19:47:07" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:47pm</span></a></span>Now that I have iTerm2, I need Apple’s Command Line Tools. Open up iTerm2 and run</p>
+<pre><code>xcode-select --install</code></pre>
+<p>Hopefully this won’t take long…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLSpefXMAEYhA_.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="img/EoLSpefXMAEYhA_.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLSwHoXIAIjuwU.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="img/EoLSwHoXIAIjuwU.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333860632798633986" title="2020-12-01 19:48:51" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:48pm</span></a></span>That was pleasantly fast. Next up: homebrew.</p>
+<p>Homebrew makes it easy to install software, even apps. I’m just going to copy the install code from <a href="https://brew.sh/" class="uri">https://brew.sh/</a> and run it</p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333862564749594628" title="2020-12-01 19:56:32" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:56pm</span></a></span>Homebrew’s ready, so let’s put it to use. I use <a href="https://twitter.com/alfredapp">@alfredapp</a> to switch between apps, files, etc. so I’ll use brew to install it:</p>
+<pre><code>brew cask install Alfred</code></pre>
+<p><code>brew install &lt;x&gt;</code> usually installs command line utility <code>&lt;x&gt;</code>. Apps with interfaces need “cask”.<br>
+<a href="https://www.alfredapp.com/" class="uri">https://www.alfredapp.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333862918778200068" title="2020-12-01 19:57:56" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:57pm</span></a></span>If you use Alfred, <a href="https://twitter.com/hadleywickham">@hadleywickham</a> has an awesome tip to let Alfred find <a href="https://twitter.com/rstudio">@rstudio</a> .Rproj project files.</p>
+<blockquote class="blockquote">
+<p>I've documented my workflow for opening <a href="https://twitter.com/rstudio">@RStudio</a> projects (using on <a href="https://twitter.com/alfredapp">@alfredapp</a>) in this short video: <a href="https://t.co/XvmRyGSsol" class="uri">https://t.co/XvmRyGSsol</a> <a href="https://twitter.com/hashtag/rstats">#rstats</a></p>
+<p>— Hadley Wickham (<span class="citation" data-cites="hadleywickham">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/968624630276804608">February 27, 2018</a></p>
+</blockquote>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333863368885739523" title="2020-12-01 19:59:43" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">02:59pm</span></a></span>And if you purchase Alfred’s powerpack features, <a href="https://twitter.com/pjs_228">@pjs_228</a> has a collection of helpful R workflows</p>
+<blockquote class="blockquote">
+<p>Are you an <a href="https://twitter.com/alfredapp">@alfredapp</a> and <a href="https://twitter.com/hashtag/rstats">#rstats</a> user?<br>
+<br>
+I’ve created an alfred workflow for R which might be helpful.<a href="https://t.co/GrsIbCqaBT" class="uri">https://t.co/GrsIbCqaBT</a><br>
+<br>
+Feedback welcome.</p>
+<p>— Patrick Schratz (<span class="citation" data-cites="patscli">@patscli</span>) <a href="https://twitter.com/patscli/status/1329322637122826240">November 19, 2020</a></p>
+</blockquote>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333865026743128066" title="2020-12-01 20:06:19" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:06pm</span></a></span>After jumping through a few permission hoops to give Alfred access to everything, we’re in business.</p>
+<p>I remap Alt + Space to Spotlight (Mac’s quick finder) and make Alfred Cmd + space.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLXEfsXIAEjpbH.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="img/EoLXEfsXIAEjpbH.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333866135322849280" title="2020-12-01 20:10:43" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:10pm</span></a></span>Next up, my browser. I use and love Firefox on all devices and my daily driver is the Firefox Developer Edition<br>
+<a href="https://www.mozilla.org/en-US/firefox/developer/" class="uri">https://www.mozilla.org/en-US/firefox/developer/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333866354336800776" title="2020-12-01 20:11:35" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:11pm</span></a></span>I’ve been informed by homebrew that</p>
+<pre><code>brew cask install &lt;app&gt;</code></pre>
+<p>has been deprecated in favor of</p>
+<pre><code>brew install --cask &lt;app&gt;</code></pre>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333866753844195329" title="2020-12-01 20:13:10" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:13pm</span></a></span>After a short digression, I got Firefox to install with brew</p>
+<pre><code>brew tap homebrew/cask-version
+
+brew install --cask firefox-developer-edition</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLYvWAXMAcMrQc.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="img/EoLYvWAXMAcMrQc.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333868339869999110" title="2020-12-01 20:19:28" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:19pm</span></a></span>My favorite part of installing <a href="https://twitter.com/firefox">@firefox</a>: login to Firefox Sync and all of my bookmarks, extensions, preferences, etc. all magically appear in my new browser</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLaApqW8AIMz3_.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="img/EoLaApqW8AIMz3_.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333868993732620288" title="2020-12-01 20:22:04" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:22pm</span></a></span>Another short digression, I use these extensions every day:</p>
+<ul>
+<li>LastPass <a href="https://lastpass.com" class="uri">https://lastpass.com</a></li>
+<li>Refined Github <a href="https://github.com/sindresorhus/refined-github" class="uri">https://github.com/sindresorhus/refined-github</a></li>
+<li>Dark Reader <a href="https://darkreader.org/" class="uri">https://darkreader.org/</a></li>
+<li>Copy as Markdown <a href="https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/" class="uri">https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/</a></li>
+</ul>
+</section>
+<section id="install-r-and-friends" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-and-friends">Install R and Friends</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333870071656148995" title="2020-12-01 20:26:21" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:26pm</span></a></span>Okay, with the critical bits done, it’s time to install <a href="https://twitter.com/hashtag/rstats">#rstats</a>!</p>
+<p>I’m going to install both 3.6.3 and 4.0.3 (and maybe eventually devel). Yes, you have multiple versions of R on your machine at once (more on that in a second)<br>
+<a href="https://cran.r-project.org/src/base/R-4" class="uri">https://cran.r-project.org/src/base/R-4</a><br>
+<a href="https://cran.r-project.org/src/base/R-3" class="uri">https://cran.r-project.org/src/base/R-3</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333871027881992199" title="2020-12-01 20:30:09" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:30pm</span></a></span>Yikes! Those are not the links I want. How many other people click the wrong links on the front page of <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a> ?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLcn1hXMAMdx0A.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="img/EoLcn1hXMAMdx0A.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333871929330200580" title="2020-12-01 20:33:44" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:33pm</span></a></span>It takes a surprising number of clicks to get to where I can download the macOS R binaries. I mostly just click things but I’m sure this process is very confusing for many people. The page is loaded in an iframe, which makes deep-linking hard: <a href="https://cloud.r-project.org/bin/macosx/" class="uri">https://cloud.r-project.org/bin/macosx/</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLdZTOXMAAPzAK.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="img/EoLdZTOXMAAPzAK.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333873278956482561" title="2020-12-01 20:39:06" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:39pm</span></a></span>I picked the signed 3.6.3 binary but I still had to go through macOS security steps. When it doesn’t open, open System Preferences &gt; Security and Privacy &gt; General and then, while second-guessing yourself, click “Open Anyway”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLed_sW8AIWt4n.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="img/EoLed_sW8AIWt4n.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLee5EW8AIu--F.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="img/EoLee5EW8AIu--F.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333876366161416195" title="2020-12-01 20:51:22" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:51pm</span></a></span>Which R installs faster? It’s a race (to see if I can remember my new password)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLhXQ7XcAIU4QP.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="img/EoLhXQ7XcAIU4QP.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333876782689382402" title="2020-12-01 20:53:01" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:53pm</span></a></span>Now that I have more than one version of R installed, Bob Rudis’ RSwitch utility is essential. Easily switch between versions of R from the menu bar!<br>
+<a href="https://rud.is/rswitch/" class="uri">https://rud.is/rswitch/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333877147950321664" title="2020-12-01 20:54:28" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:54pm</span></a></span>It also makes it easy to grab the latest preview version of <a href="https://twitter.com/rstudio">@rstudio</a> which you can also find online <a href="https://dailies.rstudio.com/" class="uri">https://dailies.rstudio.com/</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLiI5SXEAQOYw2.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="img/EoLiI5SXEAQOYw2.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333878261315735560" title="2020-12-01 20:58:54" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">03:58pm</span></a></span>My little laptop is growing up so fast</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLjGsLW8AEYq9a.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="img/EoLjGsLW8AEYq9a.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333880440969711619" title="2020-12-01 21:07:34" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:07pm</span></a></span>Okay, I need R packages now. To get them fast, I’ll install <span class="pkg"><a href="https://pak.r-lib.org">pak</a></span>, which requires a little setup, and then I’ll kick off an install of <span class="pkg"><a href="https://tidyverse.org">tidyverse</a></span></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pak"</span>, <span class="at">repos =</span> <span class="st">"https://r-lib.github.io/p/pak/dev/"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak_setup</span>()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>16 seconds later 🎉</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLlBo5W8AI6IVI.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="img/EoLlBo5W8AI6IVI.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333882737212715010" title="2020-12-01 21:16:41" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:16pm</span></a></span>Wow <span class="pkg"><a href="https://pak.r-lib.org">pak</a></span> is fast. These packages installed in literal seconds.</p>
+<p>Mostly just basics I know I’ll want, other things to customize <a href="https://twitter.com/rstudio">@rstudio</a></p>
+<p>I ran this code for both R 3.6.3 and 4.0.3</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLmAoUXEAcefrl.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="img/EoLmAoUXEAcefrl.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333883010136084487" title="2020-12-01 21:17:46" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:17pm</span></a></span>Like it’s actually kind of fun to watch <span class="pkg"><a href="https://pak.r-lib.org">pak</a></span> install your packages.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/xKWZ1NjHU6Xqypad.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="img/xKWZ1NjHU6Xqypad.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+</section>
+<section id="utility-mac-apps" class="level2">
+<h2 class="anchored" data-anchor-id="utility-mac-apps">Utility Mac Apps</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333883561364123648" title="2020-12-01 21:19:58" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:19pm</span></a></span>That’s it for R, here come a bunch of utility apps for Macs. These all make life a little easier, more productive. Fitter, happier.</p>
+<p>These all worked on Catalina so I guess I’ll find out soon if they work for Big Sur…</p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333884254011404288" title="2020-12-01 21:22:43" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:22pm</span></a></span>Flycut is a clipboard manager that adds history to your clipboard. Copy several things from here, paste them there. Reuse old clips. I can’t even without this.<br>
+<a href="https://github.com/TermiT/Flycut#readme" class="uri">https://github.com/TermiT/Flycut#readme</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333884676352708608" title="2020-12-01 21:24:23" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:24pm</span></a></span>Kap records your screen, converts movies to gifs and has powered half of this thread so far.</p>
+<pre><code>brew install --cask kap  </code></pre>
+<p><a href="https://getkap.co/" class="uri">https://getkap.co/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333885191056658438" title="2020-12-01 21:26:26" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:26pm</span></a></span>Rectangle is another absolutely essential mac app. Easily resize windows to fill parts of the screen with many keyboard shortcuts. Rectangle replaces Spectacle and adds snap zones.</p>
+<pre><code>brew install --cask rectangle  </code></pre>
+<p><a href="https://rectangleapp.com/" class="uri">https://rectangleapp.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333885687205142531" title="2020-12-01 21:28:24" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:28pm</span></a></span>AltTab adds window previews to the window switcher. Thanks <a href="https://twitter.com/PeeltothePithy">@PeeltothePithy</a> for the tip!</p>
+<pre><code>brew install --cask alt-tab  </code></pre>
+<p><a href="https://alt-tab-macos.netlify.app/" class="uri">https://alt-tab-macos.netlify.app/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333886100306350081" title="2020-12-01 21:30:03" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:30pm</span></a></span>KeyCastr show key presses on-screen, perfect for demonstrating cool RStudio keyboard shortcuts</p>
+<pre><code>brew install --cask keycastr  </code></pre>
+<p><a href="http://github.com/keycastr/keycastr" class="uri">http://github.com/keycastr/keycastr</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333886537000497153" title="2020-12-01 21:31:47" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:31pm</span></a></span>Pock puts the dock in the touchbar. I appreciate this whenever my laptop isn’t docked.<br>
+<a href="https://pock.dev/" class="uri">https://pock.dev/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333886856845516806" title="2020-12-01 21:33:03" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:33pm</span></a></span>Amphetamine keeps your laptop awake for a certain amount of time. Useful for long running <a href="https://twitter.com/hashtag/rstats">#rstats</a> scripts, turn on amphetamine, turn off the monitor, walk away knowing your script is still going.<br>
+<a href="https://apps.apple.com/us/app/amphetamine/id937984704" class="uri">https://apps.apple.com/us/app/amphetamine/id937984704</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333887150388076547" title="2020-12-01 21:34:13" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:34pm</span></a></span>If you’ve ever wanted to open certain links in *certain* browsers, Finicky can help.</p>
+<pre><code>brew install --cask finicky  </code></pre>
+<p><a href="https://github.com/johnste/finicky" class="uri">https://github.com/johnste/finicky</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333887537148997634" title="2020-12-01 21:35:45" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:35pm</span></a></span>I’ve had enough of the default Big Sur desktop background. Luckily there’s Irvue – an hourly wallpaper refresh using pictures from <a href="https://twitter.com/unsplash">@unsplash</a> <a href="https://irvue.tumblr.com/" class="uri">https://irvue.tumblr.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333887933603045383" title="2020-12-01 21:37:20" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:37pm</span></a></span>If you use, work with, or collect colors, Culr looks awesome. I haven’t used it much but I have a feeling I’ll use it frequently.<br>
+<a href="https://culrs.app/" class="uri">https://culrs.app/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333888411632103424" title="2020-12-01 21:39:14" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:39pm</span></a></span>And now that I just installed a dozen menu-bar apps, I don’t want to have to look at them all the time.</p>
+<p>Hello dozer, a little app that hides the clutter!</p>
+<pre><code>brew install --cask dozer  </code></pre>
+<p><a href="https://github.com/Mortennn/Dozer" class="uri">https://github.com/Mortennn/Dozer</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLsWskXMAIz71x.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="img/EoLsWskXMAIz71x.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333889149192052738" title="2020-12-01 21:42:10" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:42pm</span></a></span>That’s it for menu bar apps, let’s move on to big apps!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLtG-FXEAIxWzc.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="img/EoLtG-FXEAIxWzc.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333889821165678596" title="2020-12-01 21:44:50" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:44pm</span></a></span>First up, essential work apps, slack and spotify.</p>
+<p>Did you know you can install both with brew at the same time?</p>
+<pre><code>brew install --cask spotify slack</code></pre>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333890263459237904" title="2020-12-01 21:46:35" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:46pm</span></a></span>I don’t always use editors that aren’t RStudio to edit code…</p>
+<p>but when I do I use Visual Studio Code.</p>
+<pre><code>brew install --cask visual-studio-code  </code></pre>
+<p><a href="https://code.visualstudio.com/" class="uri">https://code.visualstudio.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333890648626372609" title="2020-12-01 21:48:07" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:48pm</span></a></span>There are a lot of cool things going on with R and vscode. If you want a little intro to some good vscode extensions for web dev and more, I put together a list for <a href="https://twitter.com/hashtag/js4shiny">#js4shiny</a><br>
+<a href="https://js4shiny.com/resources/setup/extras/#visual-studio-code" class="uri">https://js4shiny.com/resources/setup/extras/#visual-studio-code</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333890948900810753" title="2020-12-01 21:49:19" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:49pm</span></a></span>I recently started using <a href="https://twitter.com/NotionHQ">@NotionHQ</a> for collecting all of my random thoughts, outline writing, keep track of links and more.<br>
+<a href="https://www.notion.so/" class="uri">https://www.notion.so/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333891234939678720" title="2020-12-01 21:50:27" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:50pm</span></a></span>It pairs nicely with Agenda, which is an app for date-linked notes and perfect for meeting notes.<br>
+<a href="https://www.agenda.com/" class="uri">https://www.agenda.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333891669872308228" title="2020-12-01 21:52:11" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:52pm</span></a></span>Another awesome app is Figma. Great for bits of design, testing app layouts, drawing diagrams and a whole lot more. The desktop app is slick.<br>
+<a href="https://www.figma.com/" class="uri">https://www.figma.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333892067769069571" title="2020-12-01 21:53:46" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:53pm</span></a></span>My favorite app for working with big and complicated git repos is Fork. The visual history and diff features have saved me many times.<br>
+<a href="https://fork.dev/home" class="uri">https://fork.dev/home</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333892622843252743" title="2020-12-01 21:55:58" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:55pm</span></a></span>I wasn’t sure where to put Docker in the lineup, but it’ll be a good segue into command line apps.</p>
+<p>And I always have to click around a bunch to find the download: <a href="https://hub.docker.com/editions/community/docker-ce-desktop-mac/" class="uri">https://hub.docker.com/editions/community/docker-ce-desktop-mac/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333893087815458819" title="2020-12-01 21:57:49" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">04:57pm</span></a></span>What’s cooler than docker? Rocker! 👩‍🎤</p>
+<p>The rocker project provides a ton of r-based docker images, ranging from bare bones to ready for publication or geospatial analysis. Thank you <a href="https://twitter.com/cboettig">@cboettig</a>, <a href="https://twitter.com/eddelbuettel">@eddelbuettel</a> and <a href="https://twitter.com/noamross">@noamross</a> for your awesome work!<br>
+<a href="https://www.rocker-project.org/" class="uri">https://www.rocker-project.org/</a></p>
+</section>
+<section id="command-line-utilities" class="level2">
+<h2 class="anchored" data-anchor-id="command-line-utilities">Command Line Utilities</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333894147716116481" title="2020-12-01 22:02:02" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:02pm</span></a></span>And now we’re moving into a new category: command line apps.</p>
+<p>I know what you’re thinking, but these aren’t your mother’s command line apps. Command line apps have gotten really pleasant to use lately. They even have color! 🌈</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLxpJbXUAMG-Jd.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="img/EoLxpJbXUAMG-Jd.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333894731542253569" title="2020-12-01 22:04:21" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:04pm</span></a></span>My recent new favorite is <a href="https://twitter.com/github">@github</a>’s command line tool. It makes it surprisingly easy to create issues, review PRs, and generally interact with my work on GitHub.</p>
+<pre><code>brew install gh  </code></pre>
+<p><a href="https://cli.github.com/" class="uri">https://cli.github.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333895391033647105" title="2020-12-01 22:06:58" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:06pm</span></a></span>Speaking of git, bit is a fun CLI that smooths out some of git’s rougher edges.</p>
+<pre><code>brew install bit-git  </code></pre>
+<p><a href="https://github.com/chriswalz/bit" class="uri">https://github.com/chriswalz/bit</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLyv1ZXMAIUHbP.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="img/EoLyv1ZXMAIUHbP.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333896384722972672" title="2020-12-01 22:10:55" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:10pm</span></a></span>Two more rhyming CLIs:</p>
+<ul>
+<li>bat makes it easy to see inside files</li>
+<li>nat makes it easy to see inside directories</li>
+</ul>
+<pre><code>brew install bat nat  </code></pre>
+<p><a href="https://github.com/sharkdp/bat" class="uri">https://github.com/sharkdp/bat</a><br>
+<a href="https://github.com/willdoescode/nat" class="uri">https://github.com/willdoescode/nat</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLzEnDXYAEVSve.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="img/EoLzEnDXYAEVSve.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoLzImMW8AEexZD.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="img/EoLzImMW8AEexZD.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333896777293029379" title="2020-12-01 22:12:28" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:12pm</span></a></span>Oops nat needs a little more to install:</p>
+<pre><code>brew tap willdoescode/homebrew-natls
+
+brew install natls</code></pre>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333897393130057730" title="2020-12-01 22:14:55" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:14pm</span></a></span>I love the idea of this one. Forget how <code>tar</code> works? tldr</p>
+<pre><code>brew install tldr  </code></pre>
+<p><a href="https://tldr.sh/" class="uri">https://tldr.sh/</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoL0XYtWMAMc2th.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="img/EoL0XYtWMAMc2th.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333898304980201472" title="2020-12-01 22:18:33" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:18pm</span></a></span>I can’t believe how much of the stuff in this thread I’ve been able to install with brew. Did you know you can use it to install fonts?</p>
+<pre><code>brew tap homebrew/cask-fonts</code></pre>
+<p>Then install fonts with</p>
+<pre><code>brew install --cask font-incosolata</code></pre>
+<p>or find fonts</p>
+<pre><code>brew search font-</code></pre>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333898753015689219" title="2020-12-01 22:20:20" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:20pm</span></a></span>brew can even install node and then you can use npm to install even more things!</p>
+<pre><code>brew install node  </code></pre>
+<p><a href="https://nodejs.dev/" class="uri">https://nodejs.dev/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333899123783835648" title="2020-12-01 22:21:48" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:21pm</span></a></span>Do you ever write JavaScript and want it to look great without doing any extra work? StandardJS makes this happen.</p>
+<pre><code>npm install --global standard  </code></pre>
+<p><a href="https://standardjs.com/" class="uri">https://standardjs.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333899796827004932" title="2020-12-01 22:24:28" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:24pm</span></a></span>Another fun node package and CLI that I like a lot is gitmoji</p>
+<pre><code>npm install --global gitmoji-cli</code></pre>
+<p>Semantic emoji for git commit messages! 🤪<br>
+<a href="https://gitmoji.carloscuesta.me/" class="uri">https://gitmoji.carloscuesta.me/</a></p>
+</section>
+<section id="fish-shell" class="level2">
+<h2 class="anchored" data-anchor-id="fish-shell">Fish Shell</h2>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333900493677080577" title="2020-12-01 22:27:15" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:27pm</span></a></span>If you hung with me this far, I hope you don’t mind if I go extra geeky and talk about shells. Terminal shells. Like, a totally new command prompt, but one that helps finish your thoughts like fish<br>
+<a href="https://fishshell.com/" class="uri">https://fishshell.com/</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333900993080287241" title="2020-12-01 22:29:14" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:29pm</span></a></span>You can install fish from brew, and then it’s a good idea to install fisher, too. It’s a plugin manager for your shell.</p>
+<pre><code>brew install fish</code></pre>
+<p>fisher install instructions: <a href="https://github.com/jorgebucaran/fisher" class="uri">https://github.com/jorgebucaran/fisher</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333901428591570947" title="2020-12-01 22:30:57" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:30pm</span></a></span>Then you can install plugins, like this sweet prompt theme called tide</p>
+<pre><code>fish # to start the fish shell
+
+fisher install IlanCosman/tide  </code></pre>
+<p><a href="https://github.com/IlanCosman/tide#readme" class="uri">https://github.com/IlanCosman/tide#readme</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333901922458365953" title="2020-12-01 22:32:55" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:32pm</span></a></span>tide has a sweet configuration menu that it walks you through, but of course I forgot that to make cool prompts like this work you need to install a Nerd Font<br>
+<a href="https://github.com/ryanoasis/nerd-fonts" class="uri">https://github.com/ryanoasis/nerd-fonts</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333903259254353923" title="2020-12-01 22:38:14" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:38pm</span></a></span>I’ll just pick one to make it work</p>
+<pre><code>brew install --cask font-hasklug-nerd-font</code></pre>
+<p>and then configure iTerm to use “Hasklug Nerd”…</p>
+<p>Boom, fancy prompt with icons!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoL53KyXIAc6_e1.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="img/EoL53KyXIAc6_e1.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333903809337323520" title="2020-12-01 22:40:25" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:40pm</span></a></span>One more fish thing… there’s a utility called “z”</p>
+<p>fisher install jethrokuan/z</p>
+<p>z uses a list of frequent and recent directories to make it easy to move around your computer. After using it a bit you can type <code>z doc</code> and jump to <code>~/Documents</code><br>
+<a href="https://github.com/jethrokuan/z" class="uri">https://github.com/jethrokuan/z</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333904861168103427" title="2020-12-01 22:44:36" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:44pm</span></a></span>Final fish point. The docs are awesome and there are some great extensions out there.<br>
+<a href="https://fishshell.com/docs/current/index.html" class="uri">https://fishshell.com/docs/current/index.html</a><br>
+<a href="https://github.com/jorgebucaran/awesome.fish" class="uri">https://github.com/jorgebucaran/awesome.fish</a></p>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333905318217179145" title="2020-12-01 22:46:25" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:46pm</span></a></span>Okay, at this point, my machine should be ready to use! And if not, it’s time for dinner anyway.</p>
+<p>Thanks for reading! Let me know if I missed your favorite app anywhere 😉</p>
+<p>So long and thanks for all the fish!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoL70IgW8AME7Fo.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="img/EoL70IgW8AME7Fo.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><span class="tweet-timestamp"><a class="tweet-link" href="https://twitter.com/grrrck/status/1333907891049402371" title="2020-12-01 22:56:38" target="_blank" rel="noopener noreferrer"><i class="bi bi-twitter"></i><span class="tweet-timestamp__text">05:56pm</span></a></span>omg I still have so many things to log into and configure</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/EoL-JozXcAIWuj6.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="img/EoL-JozXcAIWuj6.jpg" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="General" data-category-id="DIC_kwDOB0UOXs4CAIFU" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+      <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 🧡</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":true,"closeEffect":"zoom","openEffect":"zoom"});</script>
+
+
+
+</body></html>
