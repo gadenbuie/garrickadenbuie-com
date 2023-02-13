@@ -3,6 +3,11 @@ pagetitle: "Garrick Aden-Buie"
 page-layout: full
 title-block-banner: false
 
+twitter-card:
+  title: Garrick Aden-Buie
+  description: >-
+    I’m a Software Engineer for Shiny at Posit (formerly RStudio).
+
 listing:
   - id: recent-blog-listing
     contents:

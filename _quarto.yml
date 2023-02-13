@@ -24,6 +24,7 @@ website:
     creator: "@grrrck"
     site: "@grrrck"
     card-style: summary_large_image
+    image: social-default.png
   open-graph: true
   navbar:
     title: garrick
