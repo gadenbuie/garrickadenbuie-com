@@ -1,0 +1,4 @@
+format:
+  html:
+    template-partials:
+      - ../_partials/talk/title-block.html
