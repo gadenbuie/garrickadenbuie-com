@@ -28,8 +28,7 @@ event_url: http://www.iise.org/Annual/default.aspx
 # talk_venue:
 location: "Nashville, TN"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: "/slides/iserc2015/ISERC2015--GarrickAden-Buie.pdf"
 ---

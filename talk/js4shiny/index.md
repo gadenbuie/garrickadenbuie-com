@@ -17,20 +17,16 @@ event: "rstudio::conf(2020)"
 event_url: https://www.rstudio.com/events/rstudioconf-2020/
 location: San Francisco, CA
 links:
-  - icon: home
-    icon_pack: fas
+  - icon: house-door-fill
     name: Website
     url: https://js4shiny.com
-  - icon: box-open
-    icon_pack: fas
+  - icon: box-seam
     name: Package
     url: https://pkg.js4shiny.com
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: https://slides.js4shiny.com
   - icon: github
-    icon_pack: fab
     name: Code
     url: https://github.com/rstudio-conf-2020/js-for-shiny
 ---

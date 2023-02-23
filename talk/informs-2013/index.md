@@ -19,8 +19,7 @@ event: "INFORMS Annual Meeting"
 # talk_venue:
 location: "Minneapolis, MN"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: /slides/informs2013/GAdenBuie_GBM-ICU-Mortality-Prediction_INFORMS2013.pdf
 ---

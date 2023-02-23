@@ -22,12 +22,10 @@ event: "Bio-Data Club at Moffitt Cancer Center"
 event_url: https://www.biodataclub.org/
 location: "Tampa, FL"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: https://gadenbuie.github.io/drake-intro/
   - icon: github
-    icon_pack: fab
     name: Code
     url: https://github.com/gadenbuie/drake-intro/
 ---

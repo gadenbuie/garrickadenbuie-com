@@ -1,0 +1,38 @@
+<header id="title-block-header" class="quarto-title-block default">
+<div>Talk</div>
+<div class="quarto-title">
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<p class="subtitle lead">$subtitle$</p>
+$endif$
+$if(categories)$
+  $if(quarto-template-params.title-block-categories)$
+<div class="quarto-categories">
+  $for(categories)$
+  <div class="quarto-category">$categories$</div>
+  $endfor$
+</div>
+  $endif$
+$endif$
+</div>
+
+$if(hide-description)$
+$elseif(description)$
+<div>
+  <div class="description">
+    $description$
+  </div>
+</div>
+$endif$
+
+$title-metadata.html()$
+
+$if(links)$
+<div class="mt-4 d-flex flex-row flex-wrap gap-1 justify-content-center justify-content-sm-start" role="group" aria-label="Talk Links">
+$for(links)$
+<a href="$links.url$" class="btn btn-secondary"><i class="bi bi-$links.icon$ me-1"></i> $links.name$</a>
+$endfor$
+</div>
+$endif$
+
+</header>
