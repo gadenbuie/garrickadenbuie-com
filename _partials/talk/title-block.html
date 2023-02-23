@@ -28,7 +28,7 @@ $endif$
 $title-metadata.html()$
 
 $if(links)$
-<div class="mt-4" role="group" aria-label="Talk Links">
+<div class="mt-4 d-flex flex-row flex-wrap gap-1 justify-content-center justify-content-sm-start" role="group" aria-label="Talk Links">
 $for(links)$
 <a href="$links.url$" class="btn btn-secondary"><i class="bi bi-$links.icon$ me-1"></i> $links.name$</a>
 $endfor$
