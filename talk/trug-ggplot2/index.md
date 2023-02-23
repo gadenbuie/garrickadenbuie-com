@@ -24,12 +24,10 @@ event_url: https://www.meetup.com/Tampa-R-Users-Group/events/246724206/
 talk_venue: "Southern Brewing and Wine"
 location: "Tampa, FL"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: https://gadenbuie.github.io/trug-ggplot2
   - icon: github
-    icon_pack: fab
     name: Code
     url: https://github.com/gadenbuie/trug-ggplot2
 ---

@@ -8,7 +8,6 @@ description: |
 date: '2021-07-07 16:00:00'
 date_end: '2021-07-07 19:00:00'
 categories: [ Workshop ]
-
 show_author_byline: true
 tags:
   - R
@@ -21,20 +20,16 @@ event: "useR!2021 Conference"
 event_url: https://user2021.r-project.org/
 location: Virtual Workshop
 links:
-  - icon: home
-    icon_pack: fas
+  - icon: house-door-fill
     name: Website
     url: https://presentable-user2021.netlify.app/
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: https://presentable-user2021.netlify.app/materials/
   - icon: github
-    icon_pack: fab
     name: Code
     url: https://github.com/rstudio-conf-2020/js-for-shiny
   - icon: youtube
-    icon_pack: fab
     name: Video
     url: https://youtu.be/RPFh3y9UAX4
 ---

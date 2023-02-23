@@ -20,8 +20,7 @@ event: "INFORMS Annual Meeting"
 event_url: http://meetings2.informs.org/wordpress/houston2017/
 location: "Houston, TX"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: http://garrickadenbuie.com/slides/informs2017/
 ---

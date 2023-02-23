@@ -21,16 +21,13 @@ event: "R/Medicine 2020"
 event_url: https://events.linuxfoundation.org/r-medicine/
 location: Virtual Conference
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: https://slides.garrickadenbuie.com/build-your-own-universe/
   - icon: github
-    icon_pack: fab
     name: Code
     url: https://github.com/tgerke/build-your-own-universe
-  - icon: play
-    icon_pack: fas
+  - icon: play-btn-fill
     name: Video
     url: https://youtu.be/lm0QYr1C2Sw
 ---

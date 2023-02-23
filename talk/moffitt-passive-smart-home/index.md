@@ -17,8 +17,7 @@ event: "Utilizing Technology for Data Collection and Intervention"
 talk_venue: "Health Outcomes and Behavior"
 location: "Moffitt Cancer Center, Tampa, FL"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: /slides/moffitt-passive-smart-home/
 ---

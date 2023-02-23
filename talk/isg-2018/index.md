@@ -22,8 +22,7 @@ event: "Gerontechnology 2018"
 event_url: http://www.sfu.ca/fc/ISG2018.html
 location: "St. Petersburg, FL"
 links:
-  - icon: chalkboard-teacher
-    icon_pack: fas
+  - icon: file-slides-fill
     name: Slides
     url: http://gadenbuie.github.io/isg-2018
 ---
