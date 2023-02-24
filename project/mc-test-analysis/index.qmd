@@ -9,19 +9,15 @@ categories:
   - Project
 links:
 - icon: github # icon name without the 'fa-'
-  icon_pack: fab
   name: Source
   url: https://github.com/gadenbuie/mctestanalysis
-- icon: bolt
-  icon_pack: fas
+- icon: lightbulb-fill
   name: Try the App
   url: "/project/mc-test-analysis/#try-online"
 - icon: download # icon name without the 'fa-'
-  icon_pack: fas
   name: Installation
   url: "/project/mc-test-analysis/#installation"
-- icon: info-circle # icon name without the 'fa-'
-  icon_pack: fas
+- icon: info-circle-fill # icon name without the 'fa-'
   name: Docs
   url: https://pkg.garrickadenbuie.com/mctestanalysis/
 ---

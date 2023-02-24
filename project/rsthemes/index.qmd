@@ -12,15 +12,12 @@ tags:
   - RStudio
 links:
 - icon: github # icon name without the 'fa-'
-  icon_pack: fab
   name: Source
   url: https://github.com/gadenbuie/rsthemes
 - icon: download # icon name without the 'fa-'
-  icon_pack: fas
   name: Installation
   url: /project/rsthemes/#installation
-- icon: info-circle # icon name without the 'fa-'
-  icon_pack: fas
+- icon: info-circle-fill # icon name without the 'fa-'
   name: Usage
   url: /project/rsthemes/#usage
 ---

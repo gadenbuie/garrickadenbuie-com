@@ -11,15 +11,12 @@ tags:
   - emoji
 links:
 - icon: github # icon name without the 'fa-'
-  icon_pack: fab
   name: Source
   url: https://github.com/gadenbuie/ermoji
 - icon: download # icon name without the 'fa-'
-  icon_pack: fas
   name: Installation
   url: /project/ermoji/#installation
 - icon: images # icon name without the 'fa-'
-  icon_pack: fas
   name: Screenshots
   url: /project/ermoji/#usage
 ---

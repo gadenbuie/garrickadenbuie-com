@@ -13,19 +13,15 @@ tags:
   - cleanrmd
 links:
 - icon: book # icon name without the 'fa-'
-  icon_pack: fas
   name: Demo
   url: https://pkg.garrickadenbuie.com/cleanrmd/
-- icon: r-project # icon name without the 'fa-'
-  icon_pack: fab
+- icon: braces-asterisk # icon name without the 'fa-'
   name: CRAN
   url: https://cran.r-project.org/package=cleanrmd
-- icon: user-astronaut # icon name without the 'fa-'
-  icon_pack: fas
+- icon: robot # icon name without the 'fa-'
   name: r-universe
   url: https://gadenbuie.r-universe.dev/ui#package:cleanrmd
 - icon: github # icon name without the 'fa-'
-  icon_pack: fab
   name: Source
   url: https://github.com/gadenbuie/cleanrmd
 ---

@@ -9,20 +9,16 @@ categories:
   - Project
 tags: ["R", "R Package", "Shiny", "RStudio", "Addin", "Gadget"]
 links:
-- icon: github # icon name without the 'fa-'
-  icon_pack: fab
+- icon: github
   name: Source
   url: https://github.com/gadenbuie/regexplain
-- icon: bolt
-  icon_pack: fas
+- icon: lightbulb-fill
   name: Try the App
   url: "/project/regexplain/#demo"
-- icon: download # icon name without the 'fa-'
-  icon_pack: fas
+- icon: download
   name: Installation
   url: "/project/regexplain/#installation"
-- icon: info-circle # icon name without the 'fa-'
-  icon_pack: fas
+- icon: info-circle-fill
   name: Usage
   url: /project/regexplain/#overview
 ---

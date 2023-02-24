@@ -13,14 +13,31 @@ tags:
   - Presentation
   - R
   - RStudio
+links:
+- icon: book # icon name without the 'fa-'
+  name: Docs
+  url: https://pkg.garrickadenbuie.com/xaringanthemer
+- icon: braces-asterisk # icon name without the 'fa-'
+  name: CRAN
+  url: https://cran.r-project.org/package=xrainganthemer
+- icon: robot # icon name without the 'fa-'
+  name: r-universe
+  url: https://gadenbuie.r-universe.dev/ui#package:xaringanthemer
+- icon: github # icon name without the 'fa-'
+  name: Source
+  url: https://github.com/gadenbuie/xaringanthemer
+- icon: download
+  name: Installation
+  url: "#installation"
+- icon: info-circle-fill
+  name: Usage
+  url: "#usage"
 ---
 
 [xt-src]: https://github.com/gadenbuie/xaringanthemer
 [devtools]: https://github.com/r-lib/devtools
 [xaringan]: https://github.com/yihui/xaringan
 [xt-docs]: https://pkg.garrickadenbuie.com/xaringanthemer
-
-**Project Links:** [source][xt-src], [docs][xt-docs], [installation](#installation), [usage](#usage)
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;

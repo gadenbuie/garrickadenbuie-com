@@ -13,6 +13,13 @@ tags:
   - ggplot2
   - R Package
   - Visualization
+links:
+- icon: github
+  name: Source
+  url: https://github.com/gadenbuie/ggpomological/
+- icon: book
+  name: Readme
+  url: https://github.com/gadenbuie/ggpomological/#readme
 ---
 
 ```{r setup, include=FALSE}
@@ -40,8 +47,6 @@ set_filename <- function(fname, rel = FALSE) {
 [dplyr]:         http://dplyr.tidyverse.org/
 [ggplot2]:       http://ggplot2.tidyverse.org/
 [ggpomological]: https://github.com/gadenbuie/ggpomological
-
-**Project Links:** [source][ggpomological], [readme](https://github.com/gadenbuie/ggpomological/#readme)
 
 <!-- https://buttons.github.io/ -->
 <a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
