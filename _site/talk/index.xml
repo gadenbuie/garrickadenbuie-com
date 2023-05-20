@@ -10,32 +10,13 @@
 <atom:link href="https://www.garrickadenbuie.com/talk/index.xml" rel="self" type="application/rss+xml"/>
 <description>Presentations, talks, and workshops.
 </description>
-<generator>quarto-1.2.475</generator>
+<generator>quarto-1.3.353</generator>
 <lastBuildDate>Wed, 07 Jul 2021 20:00:00 GMT</lastBuildDate>
 <item>
   <title>Professional, Polished, Presentable</title>
   <dc:creator>Garrick Aden-Buie and Silvia Canelón</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/presentable-user2021/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -63,25 +44,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -106,16 +68,56 @@
 <li><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></li>
 <li><a href="https://github.com/gadenbuie/lorem">lorem</a></li>
 </ul>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># On CRAN</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"xaringan"</span>)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"xaringanthemer"</span>, <span class="at" style="color: #657422;">dependencies =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># On CRAN</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xaringan"</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xaringanthemer"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dependencies =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
 <span id="cb1-4"></span>
-<span id="cb1-5"><span class="co" style="color: #5E5E5E;"># From GitHub</span></span>
-<span id="cb1-6"><span class="co" style="color: #5E5E5E;"># install.packages("remotes")</span></span>
-<span id="cb1-7">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"gadenbuie/xaringanExtra"</span>)</span>
-<span id="cb1-8">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"gadenbuie/lorem"</span>)</span></code></pre></div>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># From GitHub</span></span>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("remotes")</span></span>
+<span id="cb1-7">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gadenbuie/xaringanExtra"</span>)</span>
+<span id="cb1-8">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gadenbuie/lorem"</span>)</span></code></pre></div>
 <p>If you use [docker], you can get set up with an [environment for this presentation][docker-image] with:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;">docker</span> run <span class="at" style="color: #657422;">-d</span> <span class="at" style="color: #657422;">--rm</span> <span class="at" style="color: #657422;">-p</span> 8787:8787 <span class="at" style="color: #657422;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 8787:8787 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span></code></pre></div>
 
 
 </section>
@@ -131,25 +133,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -176,16 +159,52 @@
 <li><a href="https://github.com/jhelvy/xaringanBuilder">xaringanBuilder</a></li>
 <li><a href="https://pkg.garrickadenbuie.com/metathis">metathis</a></li>
 </ul>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># On CRAN</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"xaringan"</span>)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"xaringanthemer"</span>)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"metathis"</span>)</span>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># On CRAN</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xaringan"</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"xaringanthemer"</span>)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"metathis"</span>)</span>
 <span id="cb1-5"></span>
-<span id="cb1-6"><span class="co" style="color: #5E5E5E;"># From GitHub</span></span>
-<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># install.packages("remotes")</span></span>
-<span id="cb1-8">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"gadenbuie/xaringanExtra"</span>)</span>
-<span id="cb1-9">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"jhelvy/xaringanBuilder"</span>)</span>
-<span id="cb1-10">remotes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">install_github</span>(<span class="st" style="color: #20794D;">"gadenbuie/countdown"</span>)</span></code></pre></div>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># From GitHub</span></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("remotes")</span></span>
+<span id="cb1-8">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gadenbuie/xaringanExtra"</span>)</span>
+<span id="cb1-9">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"jhelvy/xaringanBuilder"</span>)</span>
+<span id="cb1-10">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
 
 </section>
@@ -201,25 +220,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/toronto-data-workshop/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -245,25 +245,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/xaringan-playground/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -296,25 +277,6 @@
   <dc:creator>Travis Gerke</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/build-your-own-universe/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -346,25 +308,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/extra-special-xaringan/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -396,25 +339,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/ten-thousand-functions/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -440,25 +364,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -486,25 +391,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/js4shiny/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -528,25 +414,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -556,15 +423,39 @@
 <section id="meeting-prerequisites" class="level3">
 <h3 class="anchored" data-anchor-id="meeting-prerequisites">Meeting prerequisites</h3>
 <p>We’ll work through a few examples together, so please bring a laptop with the <strong>drake</strong> and <strong>visNetwork</strong> packages installed. (If you don’t have a laptop you can share with someone who does at the session.) You would also benefit from installing the <strong>tidyverse</strong> package for the session. See the <a href="https://pkg.garrickadenbuie.com/drake-intro/requirements/">full requirements here</a>.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">required_packages <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(</span>
-<span id="cb1-2">  <span class="co" style="color: #5E5E5E;"># "tidyverse",  #&lt;&lt; For data processing, etc. (you probably have this)</span></span>
-<span id="cb1-3">  <span class="st" style="color: #20794D;">"here"</span>,         <span class="co" style="color: #5E5E5E;">#&lt;&lt; For sane path management</span></span>
-<span id="cb1-4">  <span class="st" style="color: #20794D;">"cowplot"</span>,      <span class="co" style="color: #5E5E5E;">#&lt;&lt; For composing ggplot2 plots</span></span>
-<span id="cb1-5">  <span class="st" style="color: #20794D;">"visNetwork"</span>,   <span class="co" style="color: #5E5E5E;">#&lt;&lt; For visualizing drake plans</span></span>
-<span id="cb1-6">  <span class="st" style="color: #20794D;">"drake"</span>         <span class="co" style="color: #5E5E5E;">#&lt;&lt; Because drake</span></span>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">required_packages <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb1-2">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># "tidyverse",  #&lt;&lt; For data processing, etc. (you probably have this)</span></span>
+<span id="cb1-3">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"here"</span>,         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&lt;&lt; For sane path management</span></span>
+<span id="cb1-4">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cowplot"</span>,      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&lt;&lt; For composing ggplot2 plots</span></span>
+<span id="cb1-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"visNetwork"</span>,   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&lt;&lt; For visualizing drake plans</span></span>
+<span id="cb1-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"drake"</span>         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&lt;&lt; Because drake</span></span>
 <span id="cb1-7">)</span>
 <span id="cb1-8"></span>
-<span id="cb1-9"><span class="fu" style="color: #4758AB;">install.packages</span>(required_packages)</span></code></pre></div>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(required_packages)</span></code></pre></div>
 <p>Note: if you’ve used <strong>drake</strong> before, please ensure that you have version <code>7.0.0</code> or later installed.</p>
 </section>
 <section id="meeting-materials" class="level3">
@@ -585,25 +476,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -622,25 +494,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -658,25 +511,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/isg-2018/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -718,25 +552,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/trug-ggplot2/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -753,25 +568,6 @@
   <title>Occupant Activity Profiles from Smart Home Sensor Event Streams</title>
   <link>https://www.garrickadenbuie.com/talk/informs-2017/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -790,25 +586,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/getting-started-in-r/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -825,25 +602,6 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/iie-iserc-2015/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -860,25 +618,6 @@
   <title>Reporting Reproducible Research with R and Markdown</title>
   <link>https://www.garrickadenbuie.com/talk/reproducible-research/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
@@ -899,25 +638,6 @@
   <dc:creator>Hui Yang, Ph.D.</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/informs-2013/index.html</link>
   <description><![CDATA[ 
-<script>
-  (function() {
-    const sheets = Array.from(document.styleSheets)
-      .filter(x => !x.href)
-
-    if (!sheets.length) return;
-
-    // remove the inlined base pandoc syntax styles
-    const base_syntax = sheets[0]
-    Array.from(base_syntax.cssRules)
-      .reduce((res, r, idx) => {
-        if (/code span[.][a-z]{2}/.test(r.selectorText)) {
-          res = [...res, idx - res.length]
-        }
-        return(res)
-      }, [])
-      .forEach(idx_rule => base_syntax.deleteRule(idx_rule))
-  })()
-</script>
 
 
 
