@@ -26,6 +26,9 @@ links:
   - icon: file-slides-fill
     name: Slides
     url: https://slides.garrickadenbuie.com/toronto-data-workshop/
+  - icon: filetype-pdf
+    name: Slides PDF
+    url: https://slides.garrickadenbuie.com/toronto-data-workshop/2021-02-11_garrick-adenbuie_rmarkdown-slides.pdf
   - icon: github
     name: Code
     url: https://github.com/gadenbuie/slides/tree/gh-pages/toronto-data-workshop
