@@ -39,5 +39,5 @@ links:
 
 ```{r echo=FALSE}
 options(htmltools.dir.version = TRUE)
-xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[2]]$url)
 ```
