@@ -3,7 +3,7 @@ title: Automated Image Overflow Detection for xaringan or remark Slides
 author: Garrick Aden-Buie
 date: '2023-07-21'
 slug: remark-slide-image-overflow
-image: feature.png
+# image: feature.png
 categories:
   - R
   - Slides
@@ -15,7 +15,8 @@ excerpt: >
   Using chromote and a little JavaScript to detect image overflow issues in
   {xaringan} or remark slides.
 summary: >
-  TODO
+  Using chromote and a little JavaScript to detect image overflow issues in
+  {xaringan} or remark slides.
 
 resources:
   - example-slide/
@@ -93,7 +94,7 @@ but it'd be a pretty terrible process to have to do this manually
 for, say, 530 slides a dozen times or more over the next three months.
 
 If that sounds like an oddly specific example, that's because it is.
-I was reminded of this problem by [Greg Wilson's recent ~bat signal~ toot][gw-toot]:
+I was reminded of this problem by [Greg Wilson's recent <del>bat signal</del> toot][gw-toot]:
 
 > _plea for help; macOS; open source; command-line; PDF_
 >
