@@ -169,7 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/grrrck" rel="" target=""><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@grrrck" rel="" target=""><i class="bi bi-mastodon" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -269,8 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="what-is-countdown" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-countdown">What is countdown?</h2>
-<div class="d-flex">
-<div class="justify-content-center">
+<div class="d-md-flex">
+<div class="justify-content-center mx-auto align-self-center" style="width: max-content">
 <div class="cell">
 <div class="cell-output-display">
 <div class="countdown" id="first-example" data-warn-when="30" data-update-every="1" tabindex="0" style="right:0;bottom:0;position: relative;width: max-content; max-width: 100%">
@@ -282,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="justify-content-start">
 <p><code>countdown()</code> is a simple timer you can use in presentations, documents and Shiny apps. It’s great for teaching or breakout sessions!</p>
-<p><span class="di-ns dn">👈</span><span class="di dn-ns">☝️</span> <strong>Click</strong> the timer to start it. <strong>Click</strong> again to pause. <strong>Double click</strong> to reset it. Adjust the timer on the fly with the <strong>+</strong> and <strong>−</strong> buttons.</p>
+<p><span class="d-none d-md-inline">👈</span><span class="d-inline d-md-none">☝️</span> <strong>Click</strong> the timer to start it. <strong>Click</strong> again to pause. <strong>Double click</strong> to reset it. Adjust the timer on the fly with the <strong>+</strong> and <strong>−</strong> buttons.</p>
 </div>
 </div>
 <p>Everything you need to know about countdown, you can learn from the docs-slash-presentation at <a href="https://pkg.garrickadenbuie.com/countdown">pkg.garrickadenbuie.com/countdown</a>.</p>
@@ -371,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="float-md-end ps-md-4 mx-sm-auto" style="max-width:22rem">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="A slide from Garrett’s workshop materials with a 4-minute timer in the lower right corner."><img src="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="img-fluid figure-img"></a></p>
+<p><a href="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="lightbox" title="A slide from Garrett’s workshop materials with a 4-minute timer in the lower right corner." data-gallery="quarto-lightbox-gallery-1"><img src="https://pkg.garrickadenbuie.com/countdown/img/teach-tidyverse-timer.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">A slide from Garrett’s workshop materials with a 4-minute timer in the lower right corner.</figcaption>
 </figure>
 </div>
@@ -391,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>So I left it alone…</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="countdown-history-3-years.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Screenshot of the countdown GitHub repository page where the phrase “3 years ago” is highlighted. That is GitHub’s summary of the last time I updated countdown."><img src="countdown-history-3-years.png" class="img-fluid figure-img"></a></p>
+<p><a href="countdown-history-3-years.png" class="lightbox" title="Screenshot of the countdown GitHub repository page where the phrase “3 years ago” is highlighted. That is GitHub’s summary of the last time I updated countdown." data-gallery="quarto-lightbox-gallery-2"><img src="countdown-history-3-years.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">Screenshot of the countdown GitHub repository page where the phrase “3 years ago” is highlighted. That is GitHub’s summary of the last time I updated countdown.</figcaption>
 </figure>
 </div>
@@ -634,7 +634,7 @@ timerTwo.addEventListener('click', function({ target: el }) {
 <div class="float-md-end ps-md-4 mx-sm-auto" style="max-width:22rem">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A screenshot of the full screen countdown timer app."><img src="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="img-fluid figure-img"></a></p>
+<p><a href="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="lightbox" title="A screenshot of the full screen countdown timer app." data-gallery="quarto-lightbox-gallery-3"><img src="https://pkg.garrickadenbuie.com/countdown/img/countdown-app.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">A screenshot of the full screen countdown timer app.</figcaption>
 </figure>
 </div>
@@ -1056,7 +1056,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":true,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox"});</script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":true,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});</script>
 
 
 

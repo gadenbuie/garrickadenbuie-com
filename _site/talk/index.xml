@@ -11,7 +11,38 @@
 <description>Presentations, talks, and workshops.
 </description>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Wed, 07 Jul 2021 20:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 08 Jun 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Seamless data-driven reporting with {epoxy}</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://slides.garrickadenbuie.com/seamless-epoxy/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<blockquote class="blockquote">
+<p>{epoxy} is a new R package that allows report authors to seamless blend prose and data in markdown, HTML, and LaTeX reports. {epoxy} builds on the excellent tools for data-driven reporting provided by R Markdown, Quarto and Shiny, while saving report authors from tedious and repetitive data formatting tasks. This talk will highlight the many ways that {epoxy} can help data scientists in medicine to streamline reports, articles, and Shiny apps.</p>
+</blockquote>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</guid>
+  <pubDate>Thu, 08 Jun 2023 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/seamless-epoxy/feature.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
 <item>
   <title>Professional, Polished, Presentable</title>
   <dc:creator>Garrick Aden-Buie and Silvia Canelón</dc:creator>
@@ -628,27 +659,6 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
   <category>Education</category>
   <guid>https://www.garrickadenbuie.com/talk/reproducible-research/index.html</guid>
   <pubDate>Fri, 11 Apr 2014 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Boosted Tree Ensembles for Predicting Postsurgical ICU Mortality</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <dc:creator>Yun Chen</dc:creator>
-  <dc:creator>Gina Romero</dc:creator>
-  <dc:creator>Rashad Kayal</dc:creator>
-  <dc:creator>Hui Yang, Ph.D.</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/informs-2013/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<p>Real-time monitoring of patient conditions in the ICU environment is essential in supporting clinical decisions and ensuring optimal allocation of medical resources. This study focuses on accurately predicting in-hospital ICU patient mortality utilizing functional profile data. We demonstrate that a boosted trees ensemble model is well suited for the diverse data typologies present in ICU data and provides an interpretable and accurate model to aid clinical experts in critical ICU decisions.</p>
-
-
-
- ]]></description>
-  <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/informs-2013/index.html</guid>
-  <pubDate>Mon, 07 Oct 2013 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
