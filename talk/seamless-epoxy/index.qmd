@@ -5,7 +5,6 @@ author:
 description: |
   {epoxy} is a new R package that allows report authors to seamlessly
   blend prose and data in markdown, HTML, and LaTeX reports.
-image: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
 date: '2023-06-08'
 slug: seamless-epoxy
 
