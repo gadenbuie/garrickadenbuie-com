@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Garrick Aden-Buie">
-<meta name="dcterms.date" content="2023-07-21">
+<meta name="dcterms.date" content="2023-07-23">
 <meta name="description" content="Using chromote and a little JavaScript to detect image overflow issues in {xaringan} or remark slides.">
 
 <title>Garrick Aden-Buie - Automated Image Overflow Detection for xaringan or remark Slides</title>
@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 21, 2023</p>
+        <p class="date">July 23, 2023</p>
       </div>
     </div>
     
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#awesome-slides-from-plain-text" id="toc-awesome-slides-from-plain-text" class="nav-link active" data-scroll-target="#awesome-slides-from-plain-text">Awesome slides from plain text</a></li>
+  <li><a href="#plain-text-slides" id="toc-plain-text-slides" class="nav-link active" data-scroll-target="#plain-text-slides">Plain text slides</a></li>
   <li><a href="#pdf-slides-and-the-case-of-the-missing-images" id="toc-pdf-slides-and-the-case-of-the-missing-images" class="nav-link" data-scroll-target="#pdf-slides-and-the-case-of-the-missing-images">PDF slides and the case of the missing images</a></li>
   <li><a href="#more-slides-more-problems" id="toc-more-slides-more-problems" class="nav-link" data-scroll-target="#more-slides-more-problems">More slides, more problems</a></li>
   <li><a href="#example-slides" id="toc-example-slides" class="nav-link" data-scroll-target="#example-slides">Example slides</a></li>
@@ -243,21 +243,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="awesome-slides-from-plain-text" class="level2">
-<h2 class="anchored" data-anchor-id="awesome-slides-from-plain-text">Awesome slides from plain text</h2>
-<p>I’m a long-time user and big fan of using the <a href="https://github.com/yihui/xaringan">xaringan</a> package to create slides<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (as you might <a href="../../blog/#category=xaringan">know from my blog</a>).</p>
-<p>I’ve always appreciated that you can use <a href="https://rmarkdown.posit.co/">R Markdown</a> (or just regular markdown) to write your slides, but you can also use HTML, CSS and JavaScript to customize your slides. You can write in plain text, or you can <a href="../../blog/xaringan-playground/">turn each slide into a small web project</a>.</p>
-<p>Web-based slides can be shared with others online and tend to be more accessible than traditional slide formats. And with packages like <a href="https://jhelvy.github.io/renderthis/">renderthis</a> – a package by <a href="https://github.com/jhelvy">John Helveston</a> and I – you can even get PDF and other formats easily.</p>
+<section id="plain-text-slides" class="level2">
+<h2 class="anchored" data-anchor-id="plain-text-slides">Plain text slides</h2>
+<p>I’m a long-time fan of using the <a href="https://github.com/yihui/xaringan">xaringan</a> package to create slides<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (as you might <a href="../../blog/#category=xaringan">know from my blog</a>). I’ve always appreciated that you can use <a href="https://rmarkdown.posit.co/">R Markdown</a> (or just regular markdown) to write your slides, but you can also use HTML, CSS and JavaScript to customize your slides. You can write in plain text, or you can <a href="../../blog/xaringan-playground/">turn each slide into a small web project</a>.</p>
+<p>Web-based slides can be shared with others online and tend to be more accessible than traditional slide formats. And with packages like <a href="https://jhelvy.github.io/renderthis/">renderthis</a> – a package by <a href="https://github.com/jhelvy">John Helveston</a> and me – you can even get PDF and other formats easily.</p>
 </section>
 <section id="pdf-slides-and-the-case-of-the-missing-images" class="level2">
 <h2 class="anchored" data-anchor-id="pdf-slides-and-the-case-of-the-missing-images">PDF slides and the case of the missing images</h2>
-<p>But PDF slides come with a few challenges of their own, one of which is that, because you’re essentially using the browser’s printing features to render the PDF, you’re stuck dealing with some print-related quirks.</p>
-<p>The one that I’ve seen most often in PDFs is that images that happily render in the browser can suddenly dissapear from the PDF version of the slides. Here’s how I described the problem in <a href="https://github.com/jhelvy/renderthis/issues/44">an issue in renderthis</a>:</p>
+<p>But PDF slides come with a few challenges of their own, most of which are related to the fact that you’re essentially using the browser’s printing features to print your slides to PDF.</p>
+<p>The one that I’ve seen most often in PDFs is that images that happily render in the browser can suddenly disappear from the PDF version of the slides. Here’s how I described the problem in <a href="https://github.com/jhelvy/renderthis/issues/44">an issue in renderthis</a>:</p>
 <blockquote class="blockquote">
 <p>Chrome’s printing algorithm…excludes images that extend beyond the visible margin from printing. I’m sure [there’s a reason for this that] makes sense for general webpage printing, but it does cause problems for slides.</p>
 <p>It can be hard to tell visually if the plot extends past the margins of the slide because the actual image may include empty space that you can’t see.</p>
 </blockquote>
-<p>One trick I’ve used quite often is to add a red outline around all the images in the slides during development (or just before publishing the slides):</p>
+<p>Often plots and other images include some empty space at the edges that can overflow the slide in a non-obvious way. The trick I tend to use is to add a red outline around all the images in the slides during development (or just before publishing the slides):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode css code-with-copy"><code class="sourceCode css"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>img<span class="op">,</span> svg {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">outline</span>: <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">red</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -265,13 +264,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="more-slides-more-problems" class="level2">
 <h2 class="anchored" data-anchor-id="more-slides-more-problems">More slides, more problems</h2>
 <p>That little CSS trick works well enough if you’re in the middle of writing the slides, but it’d be a pretty terrible process to have to do this manually for, say, 530 slides a dozen times or more over the next three months.</p>
-<p>If that sounds like an oddly specific example, that’s because it is. I was reminded of this problem by <a href="https://mastodon.social/@gvwilson/110748990146853019">Greg Wilson’s recent ~bat signal~ toot</a>:</p>
+<p>If that sounds like an oddly specific example, that’s because it is. I was reminded of this problem by <a href="https://mastodon.social/@gvwilson/110748990146853019">Greg Wilson’s recent <del>bat signal</del> toot</a>:</p>
 <blockquote class="blockquote">
 <p><em>plea for help; macOS; open source; command-line; PDF</em></p>
 <p>dear lazyweb: is there a command-line tool for macos that will take a PDF and produce a 4-up or 6-up PDF? I need to check the layout of a bunch of slides (because I haven’t figured out how to get the remark slideshow tool to tell me when an SVG image in a slide overflows, so I’m going to have to eyeball ’em). thank you</p>
 <p>Greg Wilson <a href="https://mastodon.social/@gvwilson"><span class="citation" data-cites="gvwilson">@gvwilson</span><span class="citation" data-cites="mastodon.social">@mastodon.social</span></a> – Jul 20, 2023, 19:24</p>
 </blockquote>
-<p>This is exactly the kind of task I would want to automate, and it’s an exquisitely designed and irresistable nerd snipe. I’ve used <a href="https://github.com/rstudio/chromote">chromote</a> (and headless Chrome) before to <a href="../../blog/print-xaringan-chromote/">automate printing complex xaringan slides</a>, so I know there’s a good chance its doable.</p>
+<p>This is exactly the kind of task I would want to automate, and it’s an exquisitely designed and irresistible nerd snipe. I’ve used <a href="https://github.com/rstudio/chromote">chromote</a> (and headless Chrome) before to <a href="../../blog/print-xaringan-chromote/">automate printing complex xaringan slides</a>, so I know there’s a good chance its doable.</p>
 <p>So the rest of this post is a quick exploration of how to use a remote-controlled browser (via <a href="https://github.com/rstudio/chromote">chromote</a>) to load the slides and detect any images that are clipped.</p>
 </section>
 <section id="example-slides" class="level2">
@@ -360,10 +359,10 @@ Source
 </section>
 <section id="automate-it" class="level2">
 <h2 class="anchored" data-anchor-id="automate-it">Automate it!</h2>
-<p>Let’s automate all the things! (I have to say, I absolutely love taking an annoying manual process and turning it into runnable, repeatable code.)</p>
-<p>The basic idea is to do these 4 steps:</p>
+<p>I absolutely love taking an annoying manual process and turning it into runnable, repeatable code. Automate all the things!</p>
+<p>We can automate slide-image overflow with these 4 steps:</p>
 <ol type="1">
-<li><p>Fire up headless Chrome and load the slides.</p></li>
+<li><p>Fire up headless Chrome and load the slides in the virtual, remote-controllable browser.</p></li>
 <li><p>Determine the natural desired size of the slides (in pixels) and then set the virtual browser window to this size. This isn’t strictly necessary, but it makes the math <em>much easier</em> later on, so it’s worth it.</p></li>
 <li><p>Make all of slides visible at once. Otherwise, remark (the JavaScript library that powers the slides) hides all of the slides except the current slide. Elements that are hidden from the browser don’t have a size, ruining our ability to detect overflow.</p></li>
 <li><p>Finally, find all of the images in the slides and check if any escape the slide (browser window) boundaries.</p></li>
@@ -376,7 +375,7 @@ Source
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>chrome <span class="ot">&lt;-</span> ChromoteSession<span class="sc">$</span><span class="fu">new</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>I’ve stored the example slide deck in a folder called <code>example-slide</code>, and I’ve rendered it from <code>index.Rmd</code> to <code>index.html</code>. To load the file in Chrome, we need the full path to the file, prefixed with <code>file://</code>, e.g.&nbsp;<code>file:///Users/garrick/.../example-slide/index.html</code>.</p>
+<p>I’ve stored the example slide deck in a folder called <code>example-slide</code>, and I’ve already rendered it from <a href="example-slide/index.Rmd"><code>index.Rmd</code></a> to <a href="example-slide/index.html"><code>index.html</code></a>. To load the file in Chrome, we need the full path to the file, prefixed with <code>file://</code>, e.g.&nbsp;<code>file:///Users/garrick/.../example-slide/index.html</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>slide_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"example-slide"</span>, <span class="st">"index.html"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>slide_path_uri <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"file:/"</span>, <span class="fu">normalizePath</span>(slide_path))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -392,7 +391,7 @@ Source
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>chrome<span class="sc">$</span><span class="fu">wait_for</span>(pl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$timestamp
-[1] 190338.4</code></pre>
+[1] 192972.5</code></pre>
 </div>
 </div>
 <p>That’s not something you usually have to do with chromote when you’re interacting with pages on the web (because those take long enough to load), but local pages load very quickly, sometimes faster than the R expressions are evaluated. (In other words, if you execute the navigate command and <em>then</em> wait for page load event, you might miss it.)</p>
@@ -417,7 +416,7 @@ Source
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We the use the <code>$Runtime$evaluate()</code> methods of the chromote object to run the JavaScript function definition. Basically, I’ve put that function definition above into a string and handed it to <code>chrome$Runtime$evaluate()</code>.</p>
+<p>We the use the <code>$Runtime$evaluate()</code> methods of the chromote object to run the JavaScript function definition, by passing the JS code as a string<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <div class="cell">
 <details>
 <summary>Loading the function in the browser via chromote</summary>
@@ -469,7 +468,7 @@ $height
 <p>If you wanted to be certain everything is set up correctly, you could call <code>chrome$view()</code> now and see the slides your browser’s seeing.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="chromote-view.png" class="lightbox" title="The headless Chrome preview of the slides in a Chrome window." data-gallery="quarto-lightbox-gallery-1"><img src="chromote-view.png" class="img-fluid figure-img"></a></p>
+<p><a href="chromote-view.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The headless Chrome preview of the slides in a Chrome window."><img src="chromote-view.png" class="img-fluid figure-img"></a></p>
 <figcaption class="figure-caption">The headless Chrome preview of the slides in a Chrome window.</figcaption>
 </figure>
 </div>
@@ -567,6 +566,7 @@ $height
 
 <ol>
 <li id="fn1"><p>R users know of these slides as <a href="https://github.com/yihui/xaringan">xaringan slides</a>, but the underlying technology is <a href="https://github.com/gnab/remark">remark</a>, a JavaScript library for creating slides from plain text.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>My least favorite way to write code of any language is inside a string literal of another language. 🤪<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -927,7 +927,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":true,"openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});</script>
 
 
 
