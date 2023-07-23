@@ -54,9 +54,9 @@ but you can also skip straight to the [release notes](#release)!
 
 ## What is countdown?
 
-::: {.d-flex}
+::: {.d-md-flex}
 
-::: {.justify-content-center}
+::: {.justify-content-center .mx-auto .align-self-center style="width: max-content"}
 ```{r countdown-example, eval = FALSE}
 countdown::countdown(
   minutes = 1,
@@ -79,7 +79,7 @@ countdown::countdown(
 `countdown()` is a simple timer you can use in presentations, documents and Shiny apps.
 It's great for teaching or breakout sessions!
 
-[&#x1F448;]{.di-ns .dn}[&#x261D;&#xFE0F;]{.di .dn-ns}
+[&#x1F448;]{.d-none .d-md-inline}[&#x261D;&#xFE0F;]{.d-inline .d-md-none}
 **Click** the timer to start it.
 **Click** again to pause.
 **Double click** to reset it.
