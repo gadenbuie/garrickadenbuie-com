@@ -41,7 +41,7 @@ website:
       - icon: github
         href: https://github.com/gadenbuie
       - icon: mastodon
-        href: https://fosstodon.org/grrrck
+        href: https://fosstodon.org/@grrrck
   page-footer:
     border: false
     background: light
