@@ -22,8 +22,10 @@ resources:
   - example-slide/
   - "example-slide/**/*"
 
-editor_options:
-  chunk_output_type: console
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
 
 editor:
   render-on-save: true
@@ -212,12 +214,12 @@ we need to figure out what size they are.
 remark uses some rather random pixels values based on the
 specified slide ratio,
 so the easiest thing to do is
-find the first visible size
+find the first visible slide
 and figure out what size remark used.
 
 Here's a small JavaScript function that will do that for us:
 
-```{js get-slide-size, eval = FALSE}
+```{js get_slide_size, eval = FALSE}
 function get_slide_size() {
   // Find the first visible slide in the deck
   const visible_slide = document
@@ -245,7 +247,7 @@ by passing the JS code as a string[^no-string].
 #| code-fold: true
 #| code-summary: Loading the function in the browser via chromote
 chrome$Runtime$evaluate("
-<<get-slide-size>>
+<<get_slide_size>>
 ")
 ```
 
@@ -369,7 +371,7 @@ document
 #| include: false
 script <- c(
   knitr::knit_code$get("get_slide_size"),
-  "",
+  "\n\nget_slide_size()\n\n",
   knitr::knit_code$get("is_element_clipped"),
   "",
   knitr::knit_code$get("make_all_slides_visible"),

@@ -1,3 +1,21 @@
+function get_slide_size() {
+  // Find the first visible slide in the deck
+  const visible_slide = document
+    .querySelector('.remark-visible .remark-slide-scaler')
+
+  // and inspect it's width and height
+  // knowing that remark will set these values
+  const {width, height} = visible_slide.style
+
+  return {
+    width: parseInt(width),
+    height: parseInt(height)
+  }
+}
+
+
+get_slide_size()
+
 
 function is_element_clipped(el) {
   const { top, left, bottom, right  } = el.getBoundingClientRect()
