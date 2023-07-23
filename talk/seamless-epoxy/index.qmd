@@ -1,0 +1,46 @@
+---
+title: "Seamless data-driven reporting with {epoxy}"
+author:
+  - Garrick Aden-Buie
+description: |
+  {epoxy} is a new R package that allows report authors to seamlessly
+  blend prose and data in markdown, HTML, and LaTeX reports.
+image: "https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png"
+date: '2023-06-08'
+slug: seamless-epoxy
+
+tags:
+  - R
+  - R Packages
+  - R Markdown
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "R/Medicine 2023"
+event_url: https://rmed2023a.sched.com/event/1MwTk/seamless-data-driven-reporting-with-epoxy-garrick-aden-buie-posit-software-pbc
+location: Virtual Conference
+links:
+  - icon: file-slides-fill
+    name: Slides
+    url: https://slides.garrickadenbuie.com/seamless-epoxy/
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/slides/main/seamless-epoxy
+  # - icon: play-btn-fill
+  #   name: Video
+  #   url: https://youtu.be/lm0QYr1C2Sw
+---
+
+```{r echo=FALSE}
+options(htmltools.dir.version = TRUE)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+```
+
+## Abstract
+
+> {epoxy} is a new R package that allows report authors to seamless blend prose
+> and data in markdown, HTML, and LaTeX reports. {epoxy} builds on the excellent
+> tools for data-driven reporting provided by R Markdown, Quarto and Shiny,
+> while saving report authors from tedious and repetitive data formatting tasks.
+> This talk will highlight the many ways that {epoxy} can help data scientists
+> in medicine to streamline reports, articles, and Shiny apps.
