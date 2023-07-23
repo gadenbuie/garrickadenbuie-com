@@ -114,8 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:description" content="Using chromote and a little JavaScript to detect image overflow issues in {xaringan} or remark slides.">
 <meta property="og:image" content="https://www.garrickadenbuie.com/blog/remark-img-overflow/chromote-view.png">
 <meta property="og:site-name" content="Garrick Aden-Buie">
-<meta property="og:image:height" content="1594">
-<meta property="og:image:width" content="2398">
+<meta property="og:image:height" content="1500">
+<meta property="og:image:width" content="2790">
 <meta name="twitter:title" content="Garrick Aden-Buie - Automated Image Overflow Detection for xaringan or remark Slides">
 <meta name="twitter:description" content="Using chromote and a little JavaScript to detect image overflow issues in {xaringan} or remark slides.">
 <meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/remark-img-overflow/social-default.png">
@@ -391,7 +391,7 @@ Source
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>chrome<span class="sc">$</span><span class="fu">wait_for</span>(pl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$timestamp
-[1] 192972.5</code></pre>
+[1] 193878.8</code></pre>
 </div>
 </div>
 <p>That’s not something you usually have to do with chromote when you’re interacting with pages on the web (because those take long enough to load), but local pages load very quickly, sometimes faster than the R expressions are evaluated. (In other words, if you execute the navigate command and <em>then</em> wait for page load event, you might miss it.)</p>
@@ -927,7 +927,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});</script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":true,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});</script>
 
 
 
