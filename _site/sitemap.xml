@@ -2,438 +2,442 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.garrickadenbuie.com/talk/trug-ggplot2/index.html</loc>
-    <lastmod>2023-07-23T13:05:59.451Z</lastmod>
+    <lastmod>2023-07-23T20:13:14.572Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/reproducible-research/index.html</loc>
-    <lastmod>2023-07-23T13:05:58.682Z</lastmod>
+    <lastmod>2023-07-23T20:13:13.808Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/index.html</loc>
-    <lastmod>2023-07-23T13:05:57.948Z</lastmod>
+    <lastmod>2023-07-23T20:13:13.060Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/isg-2018/index.html</loc>
-    <lastmod>2023-07-23T13:05:57.179Z</lastmod>
+    <lastmod>2023-07-23T20:13:12.270Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/informs-2013/index.html</loc>
-    <lastmod>2023-07-23T13:05:56.352Z</lastmod>
+    <lastmod>2023-07-23T20:13:11.393Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/getting-started-in-r/index.html</loc>
-    <lastmod>2023-07-23T13:05:55.601Z</lastmod>
+    <lastmod>2023-07-23T20:13:10.642Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/index.html</loc>
-    <lastmod>2023-07-23T13:05:54.853Z</lastmod>
+    <lastmod>2023-07-23T20:13:09.877Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/index.html</loc>
-    <lastmod>2023-07-23T13:05:53.902Z</lastmod>
+    <lastmod>2023-07-23T20:13:08.901Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/use-google-forms-and-r-to-track-data-easily/index.html</loc>
-    <lastmod>2023-07-23T13:05:52.345Z</lastmod>
+    <lastmod>2023-07-23T20:13:07.357Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/up-and-running/index.html</loc>
-    <lastmod>2023-07-23T13:05:50.398Z</lastmod>
+    <lastmod>2023-07-23T20:13:05.491Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/the-pandoc-markdown-rabbit-hole/index.html</loc>
-    <lastmod>2023-07-23T13:05:48.909Z</lastmod>
+    <lastmod>2023-07-23T20:13:03.685Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/the-book-of-us/index.html</loc>
-    <lastmod>2023-07-23T13:05:47.265Z</lastmod>
+    <lastmod>2023-07-23T20:13:01.922Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/shiny-tip-option-where-to-run/index.html</loc>
-    <lastmod>2023-07-23T13:05:45.803Z</lastmod>
+    <lastmod>2023-07-23T20:13:00.457Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/remember-markdown-compile-commands-with-bash/index.html</loc>
-    <lastmod>2023-07-23T13:05:43.652Z</lastmod>
+    <lastmod>2023-07-23T20:12:58.680Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/pupsters-at-the-window/index.html</loc>
-    <lastmod>2023-07-23T13:05:42.170Z</lastmod>
+    <lastmod>2023-07-23T20:12:56.819Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/new-website/index.html</loc>
-    <lastmod>2023-07-23T13:05:39.957Z</lastmod>
+    <lastmod>2023-07-23T20:12:54.693Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/lookup-citation-counts-with-r-and-rcrossref/index.html</loc>
-    <lastmod>2023-07-23T13:05:38.481Z</lastmod>
+    <lastmod>2023-07-23T20:12:53.222Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/educating-engineers-for-sustainability/index.html</loc>
-    <lastmod>2023-07-23T13:05:36.817Z</lastmod>
+    <lastmod>2023-07-23T20:12:51.386Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/toronto-data-workshop/index.html</loc>
-    <lastmod>2023-07-23T13:05:35.676Z</lastmod>
+    <lastmod>2023-07-23T20:12:50.265Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/index.html</loc>
-    <lastmod>2023-07-23T13:05:34.903Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/talk/extra-special-xaringan/index.html</loc>
-    <lastmod>2023-07-23T13:05:32.962Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/talk/build-your-own-universe/index.html</loc>
-    <lastmod>2023-07-23T13:05:31.971Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/xaringanthemer/index.html</loc>
-    <lastmod>2023-07-23T13:05:31.125Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/tidyexplain/index.html</loc>
-    <lastmod>2023-07-23T13:05:30.135Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/shrtcts/index.html</loc>
-    <lastmod>2023-07-23T13:05:28.213Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/regexplain/index.html</loc>
-    <lastmod>2023-07-23T13:05:27.113Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/mc-test-analysis/index.html</loc>
-    <lastmod>2023-07-23T13:05:26.057Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/ggpomological/index.html</loc>
-    <lastmod>2023-07-23T13:05:24.332Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/countdown/index.html</loc>
-    <lastmod>2023-07-23T13:05:22.968Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/index.html</loc>
-    <lastmod>2023-07-23T13:06:31.675Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/xaringanthemer-v0-3-0/index.html</loc>
-    <lastmod>2023-07-23T13:05:18.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/xaringan-playground/index.html</loc>
-    <lastmod>2023-07-23T13:05:16.054Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/video-debug-js-from-r/index.html</loc>
-    <lastmod>2023-07-23T13:05:12.523Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/tweet-archive-in-r/index.html</loc>
-    <lastmod>2023-07-23T13:05:10.336Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/shrtcts/index.html</loc>
-    <lastmod>2023-07-23T13:05:06.314Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/sharing-xaringan-slides/index.html</loc>
-    <lastmod>2023-07-23T13:05:03.521Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/saving-daylight-time/index.html</loc>
-    <lastmod>2023-07-23T13:05:00.533Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/redacted-text-extracted-mueller-report/index.html</loc>
-    <lastmod>2023-07-23T13:04:55.249Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/r-console-calendar/index.html</loc>
-    <lastmod>2023-07-23T13:04:52.785Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/questions-answers-and-reprexes/index.html</loc>
-    <lastmod>2023-07-23T13:04:50.444Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/process-profile-picture-magick/index.html</loc>
-    <lastmod>2023-07-23T13:04:47.263Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/presidents-day/index.html</loc>
-    <lastmod>2023-07-23T13:04:44.874Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/pandoc-syntax-highlighting-examples/index.html</loc>
-    <lastmod>2023-07-23T13:04:41.835Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/math-and-code/index.html</loc>
-    <lastmod>2023-07-23T13:04:40.048Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/lets-move-on-from-iris/index.html</loc>
-    <lastmod>2023-07-23T13:04:38.028Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/index.html</loc>
-    <lastmod>2023-07-23T13:04:35.832Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/gun-control-google-trends/index.html</loc>
-    <lastmod>2023-07-23T13:04:28.676Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/ggplot2-weekly-planner/index.html</loc>
-    <lastmod>2023-07-23T13:04:24.518Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/dry-vignette-and-readme/index.html</loc>
-    <lastmod>2023-07-23T13:04:22.594Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/custom-discrete-color-scales-for-ggplot2/index.html</loc>
-    <lastmod>2023-07-23T13:04:20.506Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/countdown-v0.4.0/index.html</loc>
-    <lastmod>2023-07-23T13:04:18.032Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/colors-of-xcolor/index.html</loc>
-    <lastmod>2023-07-23T13:04:15.516Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/index.html</loc>
-    <lastmod>2023-07-23T13:04:13.415Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/animate-xaringan-slide-transitions/index.html</loc>
-    <lastmod>2023-07-23T13:04:11.367Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/about/index.html</loc>
-    <lastmod>2023-07-23T13:04:09.025Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/add-a-generated-table-of-contents-anywhere-in-rmarkdown/index.html</loc>
-    <lastmod>2023-07-23T13:04:10.304Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/better-progressive-xaringan/index.html</loc>
-    <lastmod>2023-07-23T13:04:12.357Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/branchmover/index.html</loc>
-    <lastmod>2023-07-23T13:04:14.529Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/convert-r-markdown-rmd-files-to-r-scripts/index.html</loc>
-    <lastmod>2023-07-23T13:04:16.611Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/cream-with-your-coffee/index.html</loc>
-    <lastmod>2023-07-23T13:04:18.999Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/index.html</loc>
-    <lastmod>2023-07-23T13:04:21.657Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/find-blogdown-tags/index.html</loc>
-    <lastmod>2023-07-23T13:04:23.340Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/greatest-twitter-scheme/index.html</loc>
-    <lastmod>2023-07-23T13:04:26.700Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/index.html</loc>
-    <lastmod>2023-07-23T13:04:29.734Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/knitr-custom-class-output/index.html</loc>
-    <lastmod>2023-07-23T13:04:36.654Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/little-inline-color-boxes/index.html</loc>
-    <lastmod>2023-07-23T13:04:39.041Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/my-ggridges-twitter-header/index.html</loc>
-    <lastmod>2023-07-23T13:04:41.003Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/popular-letters-in-babynames/index.html</loc>
-    <lastmod>2023-07-23T13:04:42.968Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/print-xaringan-chromote/index.html</loc>
-    <lastmod>2023-07-23T13:04:45.912Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/pull-request-flow-usethis/index.html</loc>
-    <lastmod>2023-07-23T13:04:49.351Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/r-colors-css/index.html</loc>
-    <lastmod>2023-07-23T13:04:51.708Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/recursive-xml-workout/index.html</loc>
-    <lastmod>2023-07-23T13:04:54.182Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/remark-img-overflow/index.html</loc>
-    <lastmod>2023-07-23T13:06:38.896Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/setting-up-a-new-macbook-pro/index.html</loc>
-    <lastmod>2023-07-23T13:05:02.205Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/shrtcts-reprex-to-issue/index.html</loc>
-    <lastmod>2023-07-23T13:05:05.061Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/signed-verified-git-commits-keybase-rstudio/index.html</loc>
-    <lastmod>2023-07-23T13:05:07.413Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/tweet-poll-programming-languages/index.html</loc>
-    <lastmod>2023-07-23T13:05:11.737Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/wordle-guess-helper/index.html</loc>
-    <lastmod>2023-07-23T13:05:14.983Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/xaringanextra-v0.6.0/index.html</loc>
-    <lastmod>2023-07-23T13:05:17.156Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/blog/yule-rstudio-theme/index.html</loc>
-    <lastmod>2023-07-23T13:05:19.589Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/cleanrmd/index.html</loc>
-    <lastmod>2023-07-23T13:05:22.614Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/ermoji/index.html</loc>
-    <lastmod>2023-07-23T13:05:23.573Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/index.html</loc>
-    <lastmod>2023-07-23T13:07:28.873Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/metathis/index.html</loc>
-    <lastmod>2023-07-23T13:05:26.405Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/rsthemes/index.html</loc>
-    <lastmod>2023-07-23T13:05:27.875Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/sqrrl/index.html</loc>
-    <lastmod>2023-07-23T13:05:29.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/project/xaringanExtra/index.html</loc>
-    <lastmod>2023-07-23T13:05:30.469Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/style-test.html</loc>
-    <lastmod>2023-07-23T13:05:31.563Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</loc>
-    <lastmod>2023-07-23T13:05:32.573Z</lastmod>
+    <lastmod>2023-07-23T20:12:49.491Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/index.html</loc>
-    <lastmod>2023-07-23T13:07:31.980Z</lastmod>
+    <lastmod>2023-07-23T20:12:47.964Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</loc>
+    <lastmod>2023-07-23T20:12:46.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/style-test.html</loc>
+    <lastmod>2023-07-23T20:12:45.169Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/xaringanExtra/index.html</loc>
+    <lastmod>2023-07-23T20:12:44.107Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/sqrrl/index.html</loc>
+    <lastmod>2023-07-23T20:12:42.961Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/rsthemes/index.html</loc>
+    <lastmod>2023-07-23T20:12:41.526Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/metathis/index.html</loc>
+    <lastmod>2023-07-23T20:12:40.074Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/index.html</loc>
+    <lastmod>2023-07-23T20:12:38.926Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/ermoji/index.html</loc>
+    <lastmod>2023-07-23T20:12:37.218Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/cleanrmd/index.html</loc>
+    <lastmod>2023-07-23T20:12:36.293Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/yule-rstudio-theme/index.html</loc>
+    <lastmod>2023-07-23T20:12:33.351Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/xaringanextra-v0.6.0/index.html</loc>
+    <lastmod>2023-07-23T20:12:30.923Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/wordle-guess-helper/index.html</loc>
+    <lastmod>2023-07-23T20:12:28.939Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/tweet-poll-programming-languages/index.html</loc>
+    <lastmod>2023-07-23T20:12:25.764Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/signed-verified-git-commits-keybase-rstudio/index.html</loc>
+    <lastmod>2023-07-23T20:12:22.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/shrtcts-reprex-to-issue/index.html</loc>
+    <lastmod>2023-07-23T20:12:19.847Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/setting-up-a-new-macbook-pro/index.html</loc>
+    <lastmod>2023-07-23T20:12:16.933Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/remark-img-overflow/index.html</loc>
+    <lastmod>2023-07-23T20:12:13.491Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/recursive-xml-workout/index.html</loc>
+    <lastmod>2023-07-23T20:12:10.956Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/r-colors-css/index.html</loc>
+    <lastmod>2023-07-23T20:12:08.494Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/pull-request-flow-usethis/index.html</loc>
+    <lastmod>2023-07-23T20:12:06.188Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/print-xaringan-chromote/index.html</loc>
+    <lastmod>2023-07-23T20:12:02.485Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/popular-letters-in-babynames/index.html</loc>
+    <lastmod>2023-07-23T20:11:59.344Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/my-ggridges-twitter-header/index.html</loc>
+    <lastmod>2023-07-23T20:11:57.350Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/little-inline-color-boxes/index.html</loc>
+    <lastmod>2023-07-23T20:11:55.409Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/knitr-custom-class-output/index.html</loc>
+    <lastmod>2023-07-23T20:11:53.088Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/highlight-lines-without-breaking-the-code-in-xaringan/index.html</loc>
+    <lastmod>2023-07-23T20:11:46.121Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/greatest-twitter-scheme/index.html</loc>
+    <lastmod>2023-07-23T20:11:43.070Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/find-blogdown-tags/index.html</loc>
+    <lastmod>2023-07-23T20:11:39.660Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/decouple-code-and-output-in-xaringan-slides/index.html</loc>
+    <lastmod>2023-07-23T20:11:37.953Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/cream-with-your-coffee/index.html</loc>
+    <lastmod>2023-07-23T20:11:35.296Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/convert-r-markdown-rmd-files-to-r-scripts/index.html</loc>
+    <lastmod>2023-07-23T20:11:32.118Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/branchmover/index.html</loc>
+    <lastmod>2023-07-23T20:11:29.796Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/better-progressive-xaringan/index.html</loc>
+    <lastmod>2023-07-23T20:11:27.509Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/add-a-generated-table-of-contents-anywhere-in-rmarkdown/index.html</loc>
+    <lastmod>2023-07-23T20:11:25.480Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/about/index.html</loc>
+    <lastmod>2023-07-23T20:11:24.179Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/animate-xaringan-slide-transitions/index.html</loc>
+    <lastmod>2023-07-23T20:11:26.529Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/index.html</loc>
+    <lastmod>2023-07-23T20:11:28.685Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/colors-of-xcolor/index.html</loc>
+    <lastmod>2023-07-23T20:11:30.967Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/countdown-v0.4.0/index.html</loc>
+    <lastmod>2023-07-23T20:11:34.456Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/custom-discrete-color-scales-for-ggplot2/index.html</loc>
+    <lastmod>2023-07-23T20:11:36.793Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/dry-vignette-and-readme/index.html</loc>
+    <lastmod>2023-07-23T20:11:38.847Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/ggplot2-weekly-planner/index.html</loc>
+    <lastmod>2023-07-23T20:11:40.918Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/gun-control-google-trends/index.html</loc>
+    <lastmod>2023-07-23T20:11:45.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/index.html</loc>
+    <lastmod>2023-07-23T20:11:52.257Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/lets-move-on-from-iris/index.html</loc>
+    <lastmod>2023-07-23T20:11:54.436Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/math-and-code/index.html</loc>
+    <lastmod>2023-07-23T20:11:56.370Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/pandoc-syntax-highlighting-examples/index.html</loc>
+    <lastmod>2023-07-23T20:11:58.114Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/presidents-day/index.html</loc>
+    <lastmod>2023-07-23T20:12:01.397Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/process-profile-picture-magick/index.html</loc>
+    <lastmod>2023-07-23T20:12:03.808Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/questions-answers-and-reprexes/index.html</loc>
+    <lastmod>2023-07-23T20:12:07.254Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/r-console-calendar/index.html</loc>
+    <lastmod>2023-07-23T20:12:09.579Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/redacted-text-extracted-mueller-report/index.html</loc>
+    <lastmod>2023-07-23T20:12:12.164Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/saving-daylight-time/index.html</loc>
+    <lastmod>2023-07-23T20:12:15.260Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/sharing-xaringan-slides/index.html</loc>
+    <lastmod>2023-07-23T20:12:18.236Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/shrtcts/index.html</loc>
+    <lastmod>2023-07-23T20:12:21.069Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/tweet-archive-in-r/index.html</loc>
+    <lastmod>2023-07-23T20:12:24.429Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/video-debug-js-from-r/index.html</loc>
+    <lastmod>2023-07-23T20:12:26.485Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/xaringan-playground/index.html</loc>
+    <lastmod>2023-07-23T20:12:29.825Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/blog/xaringanthemer-v0-3-0/index.html</loc>
+    <lastmod>2023-07-23T20:12:32.331Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/index.html</loc>
+    <lastmod>2023-07-23T20:12:35.623Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/countdown/index.html</loc>
+    <lastmod>2023-07-23T20:12:36.643Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/ggpomological/index.html</loc>
+    <lastmod>2023-07-23T20:12:38.009Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/mc-test-analysis/index.html</loc>
+    <lastmod>2023-07-23T20:12:39.727Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/regexplain/index.html</loc>
+    <lastmod>2023-07-23T20:12:40.730Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/shrtcts/index.html</loc>
+    <lastmod>2023-07-23T20:12:41.860Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/tidyexplain/index.html</loc>
+    <lastmod>2023-07-23T20:12:43.765Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/xaringanthemer/index.html</loc>
+    <lastmod>2023-07-23T20:12:44.729Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/talk/build-your-own-universe/index.html</loc>
+    <lastmod>2023-07-23T20:12:45.570Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/talk/extra-special-xaringan/index.html</loc>
+    <lastmod>2023-07-23T20:12:46.627Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</loc>
+    <lastmod>2023-07-23T20:12:48.903Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/ten-thousand-functions/index.html</loc>
-    <lastmod>2023-07-23T13:05:35.292Z</lastmod>
+    <lastmod>2023-07-23T20:12:49.873Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/xaringan-playground/index.html</loc>
-    <lastmod>2023-07-23T13:05:36.069Z</lastmod>
+    <lastmod>2023-07-23T20:12:50.663Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/go-postal-sunset/index.html</loc>
-    <lastmod>2023-07-23T13:05:37.445Z</lastmod>
+    <lastmod>2023-07-23T20:12:52.143Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/minneapolis-informs-2013/index.html</loc>
-    <lastmod>2023-07-23T13:05:39.248Z</lastmod>
+    <lastmod>2023-07-23T20:12:54.010Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/presenting-smart-home-activity-profiles-at-informs-2017/index.html</loc>
-    <lastmod>2023-07-23T13:05:41.359Z</lastmod>
+    <lastmod>2023-07-23T20:12:56.081Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/quote-albert-einstein/index.html</loc>
-    <lastmod>2023-07-23T13:05:42.868Z</lastmod>
+    <lastmod>2023-07-23T20:12:57.571Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/respond-peer-reviews-with-pandoc/index.html</loc>
-    <lastmod>2023-07-23T13:05:44.884Z</lastmod>
+    <lastmod>2023-07-23T20:12:59.507Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/sitting-by-the-fire/index.html</loc>
-    <lastmod>2023-07-23T13:05:46.570Z</lastmod>
+    <lastmod>2023-07-23T20:13:01.147Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/the-end-of-stanford/index.html</loc>
-    <lastmod>2023-07-23T13:05:47.973Z</lastmod>
+    <lastmod>2023-07-23T20:13:02.643Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/trump-tweet-time/index.html</loc>
-    <lastmod>2023-07-23T13:05:49.690Z</lastmod>
+    <lastmod>2023-07-23T20:13:04.579Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/upcoming-code-and-data-boot-camp/index.html</loc>
-    <lastmod>2023-07-23T13:05:51.337Z</lastmod>
+    <lastmod>2023-07-23T20:13:06.299Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/visualize-physionet-data-with-r/index.html</loc>
-    <lastmod>2023-07-23T13:05:53.111Z</lastmod>
+    <lastmod>2023-07-23T20:13:08.141Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/colophon/index.html</loc>
-    <lastmod>2023-07-23T13:05:54.269Z</lastmod>
+    <lastmod>2023-07-23T20:13:09.279Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/index.html</loc>
-    <lastmod>2023-07-23T13:05:55.260Z</lastmod>
+    <lastmod>2023-07-23T20:13:10.275Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/iie-iserc-2015/index.html</loc>
-    <lastmod>2023-07-23T13:05:55.976Z</lastmod>
+    <lastmod>2023-07-23T20:13:11.005Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/informs-2017/index.html</loc>
-    <lastmod>2023-07-23T13:05:56.699Z</lastmod>
+    <lastmod>2023-07-23T20:13:11.745Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/js4shiny/index.html</loc>
-    <lastmod>2023-07-23T13:05:57.583Z</lastmod>
+    <lastmod>2023-07-23T20:13:12.699Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/presentable-user2021/index.html</loc>
-    <lastmod>2023-07-23T13:05:58.343Z</lastmod>
+    <lastmod>2023-07-23T20:13:13.462Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/index.html</loc>
-    <lastmod>2023-07-23T13:05:59.085Z</lastmod>
+    <lastmod>2023-07-23T20:13:14.181Z</lastmod>
   </url>
 </urlset>
