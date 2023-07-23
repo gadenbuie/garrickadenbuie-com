@@ -1,7 +1,7 @@
 ---
 title: Automated Image Overflow Detection for xaringan or remark Slides
 author: Garrick Aden-Buie
-date: '2023-07-21'
+date: '2023-07-23'
 slug: remark-slide-image-overflow
 # image: feature.png
 categories:
@@ -40,13 +40,10 @@ editor:
 [xaringan-playground]: /blog/xaringan-playground/
 [rmarkdown]: https://rmarkdown.posit.co/
 
-## Awesome slides from plain text
+## Plain text slides
 
-I'm a long-time user and big fan of using the [xaringan] package to create slides[^actually-remark]
+I'm a long-time fan of using the [xaringan] package to create slides[^actually-remark]
 (as you might [know from my blog][xaringan-posts]).
-
-[^actually-remark]: R users know of these slides as [xaringan slides][xaringan], but the underlying technology is [remark][remark], a JavaScript library for creating slides from plain text.
-
 I've always appreciated that you can
 use [R Markdown][rmarkdown] (or just regular markdown)
 to write your slides,
@@ -54,29 +51,34 @@ but you can also use HTML, CSS and JavaScript to customize your slides.
 You can write in plain text,
 or you can [turn each slide into a small web project][xaringan-playground].
 
+[^actually-remark]: R users know of these slides as [xaringan slides][xaringan], but the underlying technology is [remark][remark], a JavaScript library for creating slides from plain text.
+
 Web-based slides can be shared with others online
 and tend to be more accessible than traditional slide formats.
 And with packages like [renderthis] --
-a package by [John Helveston](https://github.com/jhelvy) and I --
+a package by [John Helveston](https://github.com/jhelvy) and me --
 you can even get PDF and other formats easily.
 
 ## PDF slides and the case of the missing images
 
 But PDF slides come with a few challenges of their own,
-one of which is that,
-because you're essentially using the browser's printing features to render the PDF,
-you're stuck dealing with some print-related quirks.
+most of which are related to the fact that you're essentially
+using the browser's printing features
+to print your slides to PDF.
 
 The one that I've seen most often in PDFs
 is that images that happily render in the browser
-can suddenly dissapear from the PDF version of the slides.
+can suddenly disappear from the PDF version of the slides.
 Here's how I described the problem in [an issue in renderthis][renderthis-issue]:
 
 > Chrome's printing algorithm...excludes images that extend beyond the visible margin from printing. I'm sure [there's a reason for this that] makes sense for general webpage printing, but it does cause problems for slides.
 >
 > It can be hard to tell visually if the plot extends past the margins of the slide because the actual image may include empty space that you can't see.
 
-One trick I've used quite often is to add a red outline
+Often plots and other images
+include some empty space at the edges
+that can overflow the slide in a non-obvious way.
+The trick I tend to use is to add a red outline
 around all the images in the slides during development
 (or just before publishing the slides):
 
@@ -104,7 +106,7 @@ I was reminded of this problem by [Greg Wilson's recent <del>bat signal</del> to
 > Jul 20, 2023, 19:24
 
 This is exactly the kind of task I would want to automate,
-and it's an exquisitely designed and irresistable nerd snipe.
+and it's an exquisitely designed and irresistible nerd snipe.
 I've used [chromote] (and headless Chrome) before to
 [automate printing complex xaringan slides][post-print-xaringan],
 so I know there's a good chance its doable.
@@ -138,13 +140,13 @@ xaringanExtra::embed_xaringan(
 
 ## Automate it!
 
-Let's automate all the things!
-(I have to say, I absolutely love taking an annoying manual process
-and turning it into runnable, repeatable code.)
+I absolutely love taking an annoying manual process
+and turning it into runnable, repeatable code.
+Automate all the things!
 
-The basic idea is to do these 4 steps:
+We can automate slide-image overflow with these 4 steps:
 
-1. Fire up headless Chrome and load the slides.
+1. Fire up headless Chrome and load the slides in the virtual, remote-controllable browser.
 
 2. Determine the natural desired size of the slides (in pixels) and then set the virtual browser window to this size. This isn't strictly necessary, but it makes the math _much easier_ later on, so it's worth it.
 
@@ -166,7 +168,9 @@ chrome <- ChromoteSession$new()
 ```
 
 I've stored the example slide deck in a folder called `example-slide`,
-and I've rendered it from `index.Rmd` to `index.html`.
+and I've already rendered it
+from [`index.Rmd`](example-slide/index.Rmd)
+to [`index.html`](example-slide/index.html).
 To load the file in Chrome,
 we need the full path to the file,
 prefixed with `file://`,
@@ -231,8 +235,10 @@ function get_slide_size() {
 ```
 
 We the use the `$Runtime$evaluate()` methods of the chromote object
-to run the JavaScript function definition.
-Basically, I've put that function definition above into a string and handed it to `chrome$Runtime$evaluate()`.
+to run the JavaScript function definition,
+by passing the JS code as a string[^no-string].
+
+[^no-string]: My least favorite way to write code of any language is inside a string literal of another language. &#x1F92A;
 
 ```{r}
 #| results: hide
