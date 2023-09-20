@@ -10,8 +10,266 @@
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.3.433</generator>
-<lastBuildDate>Mon, 13 Jun 2022 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.357</generator>
+<lastBuildDate>Wed, 20 Sep 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>{epoxy}</title>
+  <link>https://www.garrickadenbuie.com/project/epoxy/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<!-- https://buttons.github.io/ -->
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/epoxy" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/epoxy on GitHub">Star</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/epoxy/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/epoxy on GitHub">Fork</a>
+<div class="cell">
+<div class="cell-output-display">
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<h1 align="center">
+<a href="http://pkg.garrickadenbuie.com/epoxy/"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/pkg.garrickadenbuie.com/epoxy/logo.png" align="center" height="250" alt="epoxy logo"></a><br> {epoxy}
+</h1>
+<p align="center">
+<b>extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for scripts, reports, and apps.
+</p>
+<p align="center">
+<!-- badges: start -->
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/www.r-pkg.org/badges/version/epoxy" alt="CRAN status"></a> <a href="https://gadenbuie.r-universe.dev"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge"></a> <a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://app.codecov.io/gh/gadenbuie/epoxy?branch=main"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/codecov.io/gh/gadenbuie/epoxy/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://www.garrickadenbuie.com/project/epoxy/https:/img.shields.io/badge/License-MIT-blue.svg"></a> <!-- badges: end -->
+</p>
+<section id="epoxy-is-super-glue" class="level2">
+<h2 class="anchored" data-anchor-id="epoxy-is-super-glue">epoxy is super glue</h2>
+<section id="in-r-markdown-and-quarto-reports" class="level3">
+<h3 class="anchored" data-anchor-id="in-r-markdown-and-quarto-reports"><a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-report.html">In R Markdown and Quarto reports</a></h3>
+<p>Use <code>epoxy</code> chunks for extra-strength inline syntax. Just <code>library(epoxy)</code> in your <a href="https://rmarkdown.rstudio.com">R Markdown</a> or <a href="https://quarto.org">Quarto</a> document to get started. All epoxy chunks make it easy to transform values in place with a <code>{cli}</code>-inspired inline syntax described in <code>?epoxy_transform_inline</code>.</p>
+</section>
+<section id="in-r-scripts" class="level3">
+<h3 class="anchored" data-anchor-id="in-r-scripts"><a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-script.html">In R scripts</a></h3>
+<p>The same functions that power epoxy chunks are availble in three flavors:</p>
+<ul>
+<li><p><code>epoxy()</code> for markdown and general purpose outputs</p></li>
+<li><p><code>epoxy_html()</code> for HTML outputs, with added support for HTML templating (see <code>?epoxy_transform_html</code>)</p></li>
+<li><p><code>epoxy_latex()</code> for LaTeX reports</p></li>
+</ul>
+<p>These functions are accompanied by a robust system for chained glue-transformers powered by <code>epoxy_transform()</code>.</p>
+</section>
+<section id="in-shiny-apps" class="level3">
+<h3 class="anchored" data-anchor-id="in-shiny-apps"><a href="https://pkg.garrickadenbuie.com/epoxy/articles/epoxy-shiny.html">In Shiny apps</a></h3>
+<p><code>ui_epoxy_html()</code> makes it easy to update text or HTML dynamically, anywhere in your <a href="https://shiny.posit.co/">Shiny</a> app’s UI. For more complicated situations, <code>ui_epoxy_mustache()</code> lets you turn any Shiny UI into a template that leverages the <a href="https://mustache.github.io">Mustache templating language</a>.</p>
+</section>
+</section>
+<section id="epoxy-in-r-markdown-and-quarto-documents" class="level2">
+<h2 class="anchored" data-anchor-id="epoxy-in-r-markdown-and-quarto-documents">epoxy in R Markdown and Quarto documents</h2>
+<p>In <a href="https://rmarkdown.rstudio.com">R Markdown</a> and <a href="https://quarto.org">Quarto</a> documents, <strong>epoxy</strong> gives you an <code>epoxy</code> chunk where you can write in markdown, blending prose and data using <a href="https://glue.tidyverse.org">glue</a>’s template syntax.</p>
+<p>Here’s an example using a small list containing data about a <code>movie</code> (expand the section below to see the full code for <code>movie</code>). We can use the inline transformer to format the replacement text as we build up a description from this data.</p>
+<details>
+<summary>
+Movie data
+</summary>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">movie <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(</span>
+<span id="cb1-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">year =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1989</span>,</span>
+<span id="cb1-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Back to the Future Part II"</span>,</span>
+<span id="cb1-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">budget =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4e+07</span>,</span>
+<span id="cb1-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">domgross =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">118450002</span>,</span>
+<span id="cb1-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imdb_rating =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.8</span>,</span>
+<span id="cb1-7">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">actors =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb1-8">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Michael J. Fox"</span>,</span>
+<span id="cb1-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Christopher Lloyd"</span>,</span>
+<span id="cb1-10">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Lea Thompson"</span>,</span>
+<span id="cb1-11">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas F. Wilson"</span></span>
+<span id="cb1-12">  ),</span>
+<span id="cb1-13">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">runtime =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">108</span>L</span>
+<span id="cb1-14">)</span></code></pre></div>
+</details>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">```{epoxy}</span>
+<span id="cb2-2">The movie {.emph {.titlecase movie$title}}</span>
+<span id="cb2-3">was released in {.strong movie$year}.</span>
+<span id="cb2-4">It earned {.dollar movie$domgross}</span>
+<span id="cb2-5">with a budget of {.dollar movie$budget},</span>
+<span id="cb2-6">and it features movie stars</span>
+<span id="cb2-7">{.and movie$actors}.</span>
+<span id="cb2-8">```</span></code></pre></div>
+<blockquote class="blockquote">
+The movie <em>Back to the Future Part II</em> was released in <strong>1989</strong>. It earned $118,450,002 with a budget of $40,000,000, and it features movie stars Michael J. Fox, Christopher Lloyd, Lea Thompson, and Thomas F. Wilson.
+</blockquote>
+<p>Learn more about <code>epoxy</code> chunks – and its siblings <code>epoxy_html</code> and <code>epoxy_latex</code> – in <a href="https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html">Getting Started</a>. Or read more about epoxy’s inline formatting in <code>?epoxy_transform_inline</code>.</p>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p>You can install epoxy from CRAN:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"epoxy"</span>)</span></code></pre></div>
+<p>You can install the latest development version of epoxy with <a href="https://remotes.r-lib.org">remotes</a></p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("remotes")</span></span>
+<span id="cb4-2">remotes<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gadenbuie/epoxy"</span>)</span></code></pre></div>
+<p>or from <a href="https://gadenbuie.r-universe.dev">gadenbuie.r-universe.dev</a>.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">options</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">repos =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb5-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gadenbuie =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://gadenbuie.r-universe.dev/"</span>,</span>
+<span id="cb5-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getOption</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"repos"</span>)</span>
+<span id="cb5-4">))</span>
+<span id="cb5-5"></span>
+<span id="cb5-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"epoxy"</span>)</span></code></pre></div>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(epoxy)</span></code></pre></div>
+<p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html">knitr engines</a>, or chunk types. Each type lets you intermix text with R code or data (<code>expr</code> in the table below), and each is geared toward a different output context.</p>
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Engine</th>
+<th style="text-align: left;">Output Context</th>
+<th style="text-align: center;">Delimiter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>epoxy</code></td>
+<td style="text-align: left;">all-purpose markdown</td>
+<td style="text-align: center;"><code>{expr}</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>epoxy_html</code></td>
+<td style="text-align: left;">HTML</td>
+<td style="text-align: center;"><code>{expr}</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>epoxy_latex</code></td>
+<td style="text-align: left;">LaTeX</td>
+<td style="text-align: center;"><code>&lt;&lt;expr&gt;&gt;</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>whisker</code></td>
+<td style="text-align: left;">all-purpose</td>
+<td style="text-align: center;"><a href="https://mustache.github.io/">mustache template language</a></td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>Caution:</strong> Previously, epoxy provided a <code>glue</code> engine, but this conflicts with a similar chunk engine by the <a href="https://glue.tidyverse.org">glue</a> package. You can update existing documents to use the <code>epoxy</code> engine, or you can explicitly use epoxy’s <code>glue</code> chunk by including the following in your setup chunk.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">use_epoxy_glue_engine</span>()</span></code></pre></div>
+</section>
+<section id="use-epoxy" class="level2">
+<h2 class="anchored" data-anchor-id="use-epoxy">Use epoxy</h2>
+<p>To use epoxy in your R Markdown document, create a new chunk using the engine of your choice. In that chunk, write in markdown, HTML, or LaTeX as needed, wrapping R expressions inside the delimiters for the epoxy chunk.</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1">```{epoxy}</span>
+<span id="cb8-2">The average speed of the cars was **{mean(cars$speed)} mph.**</span>
+<span id="cb8-3">But on average the distance traveled was only _{mean(cars$dist)}_.</span>
+<span id="cb8-4">```</span></code></pre></div>
+<p>The average speed of the cars was <strong>15.4 mph</strong>. But on average the distance traveled was only <em>42.98 ft</em>.</p>
+<p><code>epoxy</code> is built around <code>glue::glue()</code>, which evaluates the R expressions in the <code>{ }</code> and inserts the results into the string. The chunk above is equivalent to this call to <code>glue::glue()</code>:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">glue<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glue</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The average speed of the cars was **{mean(cars$speed)} mph**.</span></span>
+<span id="cb9-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">But on average the distance traveled was only _{mean(cars$dist)} ft_."</span>)</span>
+<span id="cb9-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; The average speed of the cars was **15.4 mph**.</span></span>
+<span id="cb9-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#&gt; But on average the distance traveled was only _42.98 ft_.</span></span></code></pre></div>
+<p>One immediate advantage of using <code>epoxy</code> instead of <code>glue::glue()</code> is that RStudio’s autocompletion feature works inside <code>epoxy</code> chunks! Typing <code>cars$</code> in the chunk will suggest the columns of <code>cars</code>.</p>
+</section>
+<section id="learn-more" class="level2">
+<h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
+<p>There’s a whole lot more that epoxy can do! Learn more:</p>
+<ul>
+<li><p><a href="https://pkg.garrickadenbuie.com/epoxy/">epoxy Package Documentation</a></p></li>
+<li><p><a href="https://pkg.garrickadenbuie.com/epoxy//articles/epoxy.html">Getting Started</a></p></li>
+<li><p><a href="https://pkg.garrickadenbuie.com/epoxy//articles/inline-reporting.html">Inline Reporting with epoxy</a></p></li>
+</ul>
+</section>
+<section id="code-of-conduct" class="level2">
+<h2 class="anchored" data-anchor-id="code-of-conduct">Code of Conduct</h2>
+<p>Please note that the epoxy project is released with a <a href="http://pkg.garrickadenbuie.com/epoxy/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</section>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://www.garrickadenbuie.com/project/epoxy/index.html</guid>
+  <pubDate>Wed, 20 Sep 2023 05:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/project/epoxy/epoxy-social.png" medium="image" type="image/png" height="75" width="144"/>
+</item>
 <item>
   <title>🧼 cleanrmd</title>
   <link>https://www.garrickadenbuie.com/project/cleanrmd/index.html</link>
@@ -262,7 +520,7 @@ font-style: inherit;">#&gt; [28] "water"             "water-dark"        "writ"<
 
  ]]></description>
   <guid>https://www.garrickadenbuie.com/project/cleanrmd/index.html</guid>
-  <pubDate>Mon, 13 Jun 2022 04:00:00 GMT</pubDate>
+  <pubDate>Mon, 13 Jun 2022 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/cleanrmd/cleanrmd-social.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
 <item>
@@ -884,7 +1142,7 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/rsthemes/index.html</guid>
-  <pubDate>Thu, 01 Oct 2020 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 01 Oct 2020 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/rsthemes/social-card.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
@@ -905,7 +1163,7 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/shrtcts/index.html</guid>
-  <pubDate>Sun, 13 Sep 2020 04:00:00 GMT</pubDate>
+  <pubDate>Sun, 13 Sep 2020 05:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/shrtcts/reference/figures/shrtcts-card.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -926,7 +1184,7 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/xaringanExtra/index.html</guid>
-  <pubDate>Mon, 06 Jul 2020 04:00:00 GMT</pubDate>
+  <pubDate>Mon, 06 Jul 2020 05:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/xaringanExtra/xaringanExtra-social.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -947,7 +1205,7 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/metathis/index.html</guid>
-  <pubDate>Wed, 11 Sep 2019 04:00:00 GMT</pubDate>
+  <pubDate>Wed, 11 Sep 2019 05:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/metathis/reference/figures/card.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -968,7 +1226,7 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/countdown/index.html</guid>
-  <pubDate>Tue, 07 May 2019 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 07 May 2019 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/countdown/countdown.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
@@ -1676,7 +1934,7 @@ font-style: inherit;">#&gt; 2     2 b     d     f</span></span></code></pre></di
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/tidyexplain/index.html</guid>
-  <pubDate>Mon, 27 Aug 2018 04:00:00 GMT</pubDate>
+  <pubDate>Mon, 27 Aug 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/tidyexplain/images/static/png/original-dfs.png" medium="image" type="image/png" height="103" width="144"/>
 </item>
 <item>
@@ -1793,7 +2051,7 @@ font-style: inherit;">```</span></span></code></pre></div>
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/xaringanthemer/index.html</guid>
-  <pubDate>Sat, 12 May 2018 04:00:00 GMT</pubDate>
+  <pubDate>Sat, 12 May 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/xaringanthemer/examples.gif" medium="image" type="image/gif"/>
 </item>
 <item>
@@ -1854,7 +2112,7 @@ font-style: inherit;">"gadenbuie/ermoji"</span>)</span></code></pre></div>
 
  ]]></description>
   <guid>https://www.garrickadenbuie.com/project/ermoji/index.html</guid>
-  <pubDate>Tue, 24 Apr 2018 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 24 Apr 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/ermoji/example-browse.png" medium="image" type="image/png" height="155" width="144"/>
 </item>
 <item>
@@ -2773,7 +3031,7 @@ font-style: inherit;">"plot-ridges-painted.png"</span>))</span></code></pre></di
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/ggpomological/index.html</guid>
-  <pubDate>Fri, 16 Feb 2018 05:00:00 GMT</pubDate>
+  <pubDate>Fri, 16 Feb 2018 06:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/ggpomological/ggpomological.png" medium="image" type="image/png" height="90" width="144"/>
 </item>
 <item>
@@ -3032,7 +3290,7 @@ Generate Report
  ]]></description>
   <category>Project</category>
   <guid>https://www.garrickadenbuie.com/project/mc-test-analysis/index.html</guid>
-  <pubDate>Thu, 06 Jul 2017 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 06 Jul 2017 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/mc-test-analysis/explore-03-irt.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>

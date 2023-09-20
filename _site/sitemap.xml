@@ -82,7 +82,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/index.html</loc>
-    <lastmod>2023-07-23T20:29:07.315Z</lastmod>
+    <lastmod>2023-02-24T02:15:03.572Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</loc>
@@ -110,7 +110,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/project/index.html</loc>
-    <lastmod>2023-07-23T20:24:40.604Z</lastmod>
+    <lastmod>2023-02-24T02:49:48.455Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/project/ermoji/index.html</loc>
@@ -238,7 +238,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/countdown-v0.4.0/index.html</loc>
-    <lastmod>2023-07-23T20:23:33.820Z</lastmod>
+    <lastmod>2023-07-23T20:34:44.042Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/custom-discrete-color-scales-for-ggplot2/index.html</loc>
@@ -258,7 +258,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/index.html</loc>
-    <lastmod>2023-07-23T20:23:51.952Z</lastmod>
+    <lastmod>2023-02-24T02:15:02.528Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/blog/lets-move-on-from-iris/index.html</loc>
@@ -322,7 +322,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/index.html</loc>
-    <lastmod>2023-07-23T20:29:05.981Z</lastmod>
+    <lastmod>2023-02-24T02:15:03.381Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/project/countdown/index.html</loc>
@@ -362,7 +362,7 @@
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</loc>
-    <lastmod>2023-07-23T20:29:03.863Z</lastmod>
+    <lastmod>2023-07-23T20:34:44.042Z</lastmod>
   </url>
   <url>
     <loc>https://www.garrickadenbuie.com/talk/ten-thousand-functions/index.html</loc>
@@ -439,5 +439,9 @@
   <url>
     <loc>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/index.html</loc>
     <lastmod>2023-07-23T20:25:15.808Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.garrickadenbuie.com/project/epoxy/index.html</loc>
+    <lastmod>2023-09-20T14:31:48.649Z</lastmod>
   </url>
 </urlset>

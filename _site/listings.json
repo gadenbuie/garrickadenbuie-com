@@ -28,6 +28,7 @@
   {
     "listing": "/project/index.html",
     "items": [
+      "/project/epoxy/index.html",
       "/project/cleanrmd/index.html",
       "/project/rsthemes/index.html",
       "/project/shrtcts/index.html",
@@ -189,6 +190,7 @@
       "/blog/visualize-physionet-data-with-r/index.html",
       "/blog/educating-engineers-for-sustainability/index.html",
       "/blog/new-website/index.html",
+      "/project/epoxy/index.html",
       "/project/cleanrmd/index.html",
       "/project/rsthemes/index.html",
       "/project/shrtcts/index.html",
