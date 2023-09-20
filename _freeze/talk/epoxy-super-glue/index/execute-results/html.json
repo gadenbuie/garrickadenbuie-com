@@ -1,0 +1,18 @@
+{
+  "hash": "30c01a33042f2c011262ff28d44d0086",
+  "result": {
+    "markdown": "---\ntitle: \"{epoxy}\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  Super glue for data-driven reports and Shiny apps.\nimage: feature.png\ndate: '2023-09-20'\nslug: epoxy-super-glue\n\ntags:\n  - R\n  - R Packages\n  - R Markdown\n  - Shiny\n  - Quarto\n  - \"posit::conf\"\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Conference ]\nevent: \"posit::conf(2023)\"\nevent_url: https://posit.co/conference/\nlocation: Chicago, IL\nlinks:\n  - icon: file-slides-fill\n    name: Slides\n    url: https://slides.garrickadenbuie.com/epoxy-super-glue/\n  - icon: github\n    name: Code\n    url: https://github.com/gadenbuie/slides/main/epoxy-super-glue\n  # - icon: play-btn-fill\n  #   name: Video\n  #   url: https://youtu.be/lm0QYr1C2Sw\n  - icon: book # icon name without the 'fa-'\n    name: About {epoxy}\n    url: https://pkg.garrickadenbuie.com/epoxy/\n---\n\n::: {.cell}\n::: {.cell-output-display}\n\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/epoxy-super-glue/\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n\n:::\n:::\n\n\n## Abstract\n\nR Markdown, Quarto, and Shiny are powerful frameworks that allow authors to create data-driven reports and apps. Authors blend prose and data, without having to copy and paste results. This is fantastic! But truly excellent reports require a lot of work in the final inch to get numerical and stylistic formatting *just right*.\n\n{epoxy} is a new package that uses {glue} to give authors templating super powers. First, authors can use epoxy chunks to write sentences or paragraphs in markdown with glue-like inline variables. Then, they can use inline formatting for common numerical or character transformations.\n\nEpoxy works in R Markdown and Quarto, in markdown, LaTeX and HTML outputs. It also provides easy templating for Shiny apps for dynamic data-driven reporting. Beyond epoxy's features, this talk will also touch on tips and approaches for data-driven reporting that will be useful to a wide audience, from R Markdown experts to the Quarto and Shiny curious.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

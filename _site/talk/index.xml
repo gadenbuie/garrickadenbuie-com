@@ -11,7 +11,38 @@
 <description>Presentations, talks, and workshops.
 </description>
 <generator>quarto-1.4.357</generator>
-<lastBuildDate>Thu, 08 Jun 2023 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 20 Sep 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>{epoxy}</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/epoxy-super-glue/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://slides.garrickadenbuie.com/epoxy-super-glue/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>R Markdown, Quarto, and Shiny are powerful frameworks that allow authors to create data-driven reports and apps. Authors blend prose and data, without having to copy and paste results. This is fantastic! But truly excellent reports require a lot of work in the final inch to get numerical and stylistic formatting <em>just right</em>.</p>
+<p>{epoxy} is a new package that uses {glue} to give authors templating super powers. First, authors can use epoxy chunks to write sentences or paragraphs in markdown with glue-like inline variables. Then, they can use inline formatting for common numerical or character transformations.</p>
+<p>Epoxy works in R Markdown and Quarto, in markdown, LaTeX and HTML outputs. It also provides easy templating for Shiny apps for dynamic data-driven reporting. Beyond epoxy’s features, this talk will also touch on tips and approaches for data-driven reporting that will be useful to a wide audience, from R Markdown experts to the Quarto and Shiny curious.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/epoxy-super-glue/index.html</guid>
+  <pubDate>Wed, 20 Sep 2023 05:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/epoxy-super-glue/feature.png" medium="image" type="image/png" height="76" width="144"/>
+</item>
 <item>
   <title>Seamless data-driven reporting with {epoxy}</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
@@ -644,21 +675,6 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
   <category>Conference</category>
   <guid>https://www.garrickadenbuie.com/talk/iie-iserc-2015/index.html</guid>
   <pubDate>Fri, 06 Feb 2015 06:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Reporting Reproducible Research with R and Markdown</title>
-  <link>https://www.garrickadenbuie.com/talk/reproducible-research/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
- ]]></description>
-  <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/reproducible-research/index.html</guid>
-  <pubDate>Fri, 11 Apr 2014 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
