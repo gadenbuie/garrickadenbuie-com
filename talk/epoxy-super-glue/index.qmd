@@ -1,0 +1,50 @@
+---
+title: "{epoxy}"
+author:
+  - Garrick Aden-Buie
+description: |
+  Super glue for data-driven reports and Shiny apps.
+image: feature.png
+date: '2023-09-20'
+slug: epoxy-super-glue
+
+tags:
+  - R
+  - R Packages
+  - R Markdown
+  - Shiny
+  - Quarto
+  - "posit::conf"
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "posit::conf(2023)"
+event_url: https://posit.co/conference/
+location: Chicago, IL
+links:
+  - icon: file-slides-fill
+    name: Slides
+    url: https://slides.garrickadenbuie.com/epoxy-super-glue/
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/slides/main/epoxy-super-glue
+  # - icon: play-btn-fill
+  #   name: Video
+  #   url: https://youtu.be/lm0QYr1C2Sw
+  - icon: book # icon name without the 'fa-'
+    name: About {epoxy}
+    url: https://pkg.garrickadenbuie.com/epoxy/
+---
+
+```{r echo=FALSE}
+options(htmltools.dir.version = TRUE)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+```
+
+## Abstract
+
+R Markdown, Quarto, and Shiny are powerful frameworks that allow authors to create data-driven reports and apps. Authors blend prose and data, without having to copy and paste results. This is fantastic! But truly excellent reports require a lot of work in the final inch to get numerical and stylistic formatting *just right*.
+
+{epoxy} is a new package that uses {glue} to give authors templating super powers. First, authors can use epoxy chunks to write sentences or paragraphs in markdown with glue-like inline variables. Then, they can use inline formatting for common numerical or character transformations.
+
+Epoxy works in R Markdown and Quarto, in markdown, LaTeX and HTML outputs. It also provides easy templating for Shiny apps for dynamic data-driven reporting. Beyond epoxy's features, this talk will also touch on tips and approaches for data-driven reporting that will be useful to a wide audience, from R Markdown experts to the Quarto and Shiny curious.
