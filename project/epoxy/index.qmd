@@ -1,0 +1,49 @@
+---
+title: "{epoxy}"
+description: "Extra-strength glue for scripts, reports, and apps"
+summary: "Extra-strength glue for scripts, reports, and apps"
+date: '2023-09-20'
+slug: epoxy
+image: epoxy-social.png
+tags:
+  - R Markdown
+  - R Package
+  - Quarto
+  - Shiny
+  - epoxy
+package: epoxy
+links:
+- icon: book # icon name without the 'fa-'
+  name: Docs
+  url: https://pkg.garrickadenbuie.com/epoxy/
+- icon: braces-asterisk # icon name without the 'fa-'
+  name: CRAN
+  url: https://cran.r-project.org/package=epoxy
+- icon: robot # icon name without the 'fa-'
+  name: r-universe
+  url: https://gadenbuie.r-universe.dev/ui#package:epoxy
+- icon: github # icon name without the 'fa-'
+  name: Source
+  url: https://github.com/gadenbuie/epoxy
+---
+
+<!-- https://buttons.github.io/ -->
+```{=html}
+<a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow &commat;gadenbuie</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/{{< meta package >}}" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/{{< meta package >}} on GitHub">Star</a>&nbsp;
+<a class="github-button" href="https://github.com/gadenbuie/{{< meta package >}}/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/{{< meta package >}} on GitHub">Fork</a>
+```
+
+```{r echo=FALSE}
+branch <- "main"
+readme_url <- "https://github.com/gadenbuie/%s/raw/%s/README.md"
+readme <- readLines(sprintf(readme_url, rmarkdown::metadata$package, branch))
+readme <- paste(readme, collapse = "\n")
+readme <- sub(
+  "src='man/figures/logo.png'",
+  'src="https://pkg.garrickadenbuie.com/epoxy/logo.png"',
+  readme,
+  fixed = TRUE
+)
+knitr::asis_output(readme)
+```
