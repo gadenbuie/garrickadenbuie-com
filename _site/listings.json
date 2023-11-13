@@ -27,25 +27,6 @@
     ]
   },
   {
-    "listing": "/project/index.html",
-    "items": [
-      "/project/epoxy/index.html",
-      "/project/cleanrmd/index.html",
-      "/project/rsthemes/index.html",
-      "/project/shrtcts/index.html",
-      "/project/xaringanExtra/index.html",
-      "/project/metathis/index.html",
-      "/project/countdown/index.html",
-      "/project/tidyexplain/index.html",
-      "/project/xaringanthemer/index.html",
-      "/project/ermoji/index.html",
-      "/project/regexplain/index.html",
-      "/project/ggpomological/index.html",
-      "/project/mc-test-analysis/index.html",
-      "/project/sqrrl/index.html"
-    ]
-  },
-  {
     "listing": "/blog/index.html",
     "items": [
       "/blog/remark-img-overflow/index.html",
@@ -227,6 +208,25 @@
       "/talk/iie-iserc-2015/index.html",
       "/talk/reproducible-research/index.html",
       "/talk/informs-2013/index.html"
+    ]
+  },
+  {
+    "listing": "/project/index.html",
+    "items": [
+      "/project/epoxy/index.html",
+      "/project/cleanrmd/index.html",
+      "/project/rsthemes/index.html",
+      "/project/shrtcts/index.html",
+      "/project/xaringanExtra/index.html",
+      "/project/metathis/index.html",
+      "/project/countdown/index.html",
+      "/project/tidyexplain/index.html",
+      "/project/xaringanthemer/index.html",
+      "/project/ermoji/index.html",
+      "/project/regexplain/index.html",
+      "/project/ggpomological/index.html",
+      "/project/mc-test-analysis/index.html",
+      "/project/sqrrl/index.html"
     ]
   }
 ]
