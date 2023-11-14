@@ -30,7 +30,12 @@ One highlight from the released documents is the large amount of unstructured "E
 
 The #rstats Twitter community immediately began to wonder what interesting anaylses could be done in comparing Trump's schedule to the tweets he sent out.
 
-{{<tweet 1092518004573851648>}}
+<blockquote class="twitter-tweet blockquote" data-conversation="none" data-twitter-extracted-i1699884431699760446="true">
+<p lang="en" dir="ltr">
+Here's something simple, using tweets from the <a href="https://twitter.com/hashtag/trumptwitterarchive">#TrumpTwitterArchive</a> so limited to midterms to end of 2018. <a href="https://t.co/CdRxUNwyq2">pic.twitter.com/CdRxUNwyq2</a>
+</p>
+— Garrick Aden-Buie (<span class="citation" data-cites="grrrck">@grrrck</span>) <a href="https://twitter.com/grrrck/status/1092538573730000899">February 4, 2019</a>
+</blockquote>
 
 Axios helpfully released [a Google Spreadsheet][axios-spreadsheet] to accompany the PDF version of the schedule, and a curated version has also been posted on [Data World][data-world]. Jonathan Sidi also built a [cool Shiny app](https://github.com/yonicd/potus_public_schedule) for viewing Trumps tweets on a time line over his schedule.
 

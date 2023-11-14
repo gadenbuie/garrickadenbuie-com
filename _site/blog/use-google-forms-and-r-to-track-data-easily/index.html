@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.480">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -76,20 +76,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,10 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
 <meta property="og:title" content="Garrick Aden-Buie - Use Google Forms and R to track data easily">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://www.garrickadenbuie.com/blog/use-google-forms-and-r-to-track-data-easily/NewForm.png">
-<meta property="og:site-name" content="Garrick Aden-Buie">
-<meta property="og:image:height" content="946">
-<meta property="og:image:width" content="1143">
+<meta property="og:site_name" content="Garrick Aden-Buie">
 <meta name="twitter:title" content="Garrick Aden-Buie - Use Google Forms and R to track data easily">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/use-google-forms-and-r-to-track-data-easily/social-default.png">
@@ -125,9 +128,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">garrick</span>
     </a>
@@ -139,36 +142,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../blog/index.html" rel="" target="">
- <span class="menu-text">blog</span></a>
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../project/index.html" rel="" target="">
- <span class="menu-text">projects</span></a>
+    <a class="nav-link" href="../../project/index.html"> 
+<span class="menu-text">projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../talk/index.html" rel="" target="">
- <span class="menu-text">talks</span></a>
+    <a class="nav-link" href="../../talk/index.html"> 
+<span class="menu-text">talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about/index.html" rel="" target="">
- <span class="menu-text">about</span></a>
+    <a class="nav-link" href="../../about/index.html"> 
+<span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/gadenbuie" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/gadenbuie"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@grrrck" rel="" target=""><i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@grrrck"> <i class="bi bi-mastodon" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -215,10 +218,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#spreadsheets" id="toc-spreadsheets" class="nav-link" data-scroll-target="#spreadsheets">Spreadsheets</a></li>
   <li><a href="#connect-with-r" id="toc-connect-with-r" class="nav-link" data-scroll-target="#connect-with-r">Connect with R</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/use-google-forms-and-r-to-track-data-easily/index.md" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -230,60 +234,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="create-the-form" class="level2">
 <h2 class="anchored" data-anchor-id="create-the-form">Create the form</h2>
 <p>Fire up <a href="http://docs.google.com">Google Docs</a> and create a new form from the “Create” button. Give your form a name and pick a theme. The simpler themes tend to look better on mobile browsers; I tend to pick <strong>Dark Grey</strong>, but today I chose <strong>Magazine</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="NewForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="NewForm.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="NewForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="NewForm.png" class="img-fluid"></a></p>
 <p>Google will ask you if you want to save the responses in a separate spreadsheet, which seems like a good idea. Give the spreadsheet the name you want and move to the next step… actually building the form.</p>
 <p>Add the form items that you need, and try to find a balance between ease of collection and integrity of the data. I’ve found that for numerical entries, the <em>Plain Text</em> format works best. If you want to allow multiple selections from a predetermined list, choose <em>Checkboxes</em> and then add your options. These will be stored in your spreadsheet as a single cell with a list of the selected options, ie: <code>"Option 1, Option 3"</code>. You can also have a slider input on a scale of 1-5 or 0-10, but if precision is important – eg. you might need to record 6.7 – then skip this and use the plain text format.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="NewItem.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="NewItem.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="NewItem.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="NewItem.png" class="img-fluid"></a></p>
 <p>For a the select <em>only one</em> option type item, the <em>Choose from a list</em> option works best, and shows up on the iPhone as a rolodex list. As an example, I’ve added a question for the number of cups of coffee I’ve had today.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="ChooseFromList1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="ChooseFromList1.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="ChooseFromList1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="ChooseFromList1.png" class="img-fluid"></a></p>
 <p>When you’re done with the questions, edit the form submitted confirmation response to something validating, like <em>Good work, dude!</em>, and decide if you want to allow edits. Then click <strong>Send Form</strong> and send the form to an email address that gets delivered to your phone.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="SendForm1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="SendForm1.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="SendForm1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="SendForm1.png" class="img-fluid"></a></p>
 </section>
 <section id="get-smart-with-your-phone" class="level2">
 <h2 class="anchored" data-anchor-id="get-smart-with-your-phone">Get smart with your phone</h2>
 <p>Check your email on your phone and pull up the form you just created. It should look something like this.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="FormOnIPhone.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="FormOnIPhone.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="FormOnIPhone.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="FormOnIPhone.png" class="img-fluid"></a></p>
 <p>Enter your first data item. Here you can see the “rolodex” selector is easy to use for a short list of about 5 or less options.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="FormOnIPhone2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="FormOnIPhone2.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="FormOnIPhone2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="FormOnIPhone2.png" class="img-fluid"></a></p>
 <p>If you’re using Safari, then while you’re on the form page, tap the bookmark button and choose <strong>Add to Home Screen</strong>. Make sure you give the new link a short name so it displays nicely on the home screen. Now you’ve got easy access to your form from your phone.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="OnHomePage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="OnHomePage.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="OnHomePage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="OnHomePage.png" class="img-fluid"></a></p>
 </section>
 <section id="spreadsheets" class="level2">
 <h2 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h2>
 <p>Now that you’re set up with easy data collection from your phone, you’ll want to do something with the data you’re collecting. All of the entries you submit are collected by Google into a spreadsheet you named at the beginning of the process.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="SpreadsheetResponses.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="SpreadsheetResponses.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="SpreadsheetResponses.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="SpreadsheetResponses.png" class="img-fluid"></a></p>
 <p>From here you can create graphs and charts, calculate summary statistics, etc. Everything a spreadsheet was meant to be. Of course, it’s best to do any calculations on a new sheet so that your work isn’t lost when new responses are recorded. One limitation I’ve found is that columns are added to the spreadsheet as the items are added, so if you add a new item or rearrange questions in your form, the spreadsheet columns will be disorganized.</p>
 <p>One of the greatest benefits of using Google Forms is that every entry is time stamped. Google’s timeline visualization is excellent, and once you have the data together it’s as easy as adding a chart.</p>
 </section>
@@ -297,11 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>It’s that easy. To publish the data to the web, click “Publish to web” under the File menu in the Google Docs spreadsheet. Click <strong>Start publishing</strong>, and make sure that <em>Automatically republish when changes are made</em> is checked, but that <em>Require viewers to sign in…</em> isn’t. There may be a way to sign in from R, but I don’t know it.</p>
 <p>Then, select <strong>CSV</strong> for the link you want, and copy the URL.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="PublishForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="PublishForm.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="PublishForm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="PublishForm.png" class="img-fluid"></a></p>
 <p>In R, use <code>RCurl</code> to pull the data as follows (you need <code>RCURL</code> to connect to HTTPS):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(RCurl)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dataCSV <span class="ot">&lt;-</span> <span class="fu">getURL</span>(<span class="st">'copy URL here'</span>)</span>
@@ -353,6 +321,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -421,13 +416,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -506,10 +503,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -519,8 +515,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -533,6 +538,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -576,6 +703,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -601,6 +729,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -662,15 +816,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
-    <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
-    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
+    <div class="nav-footer-left">
+<p>© 2023 Garrick Aden-Buie</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
+</div>
+    <div class="nav-footer-right">
+<p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
+</div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":true,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});</script>
+
 
 
 
