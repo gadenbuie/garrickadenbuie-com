@@ -103,6 +103,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/blog/shiny-modules-return-anything/index.html",
       "/blog/remark-img-overflow/index.html",
       "/blog/tweet-archive-in-r/index.html",
       "/blog/countdown-v0.4.0/index.html",

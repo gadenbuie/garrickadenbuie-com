@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.480">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Garrick Aden-Buie">
-<meta name="dcterms.date" content="2019-02-09">
-<meta name="description" content="A silly game to guess the activity on Trump’s schedule while he was tweeting.">
+<meta name="dcterms.date" content="2023-11-27">
+<meta name="description" content="TK: An epiphany about building flexible shiny modules by letting go of functional input-and-output thinking and embracing the return value.">
 
-<title>Garrick Aden-Buie - Trump Tweet Time: An 8-bit “Executive Time” Game</title>
+<title>Garrick Aden-Buie - Shiny Modules Can Return Anything</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -48,22 +82,13 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -81,29 +106,25 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
-<meta property="og:title" content="Garrick Aden-Buie - Trump Tweet Time: An 8-bit “Executive Time” Game">
-<meta property="og:description" content="A silly game to guess the activity on Trump’s schedule while he was tweeting.">
-<meta property="og:image" content="https://www.garrickadenbuie.com/blog/trump-tweet-time/trump-tweet-time-01.png">
-<meta property="og:site_name" content="Garrick Aden-Buie">
-<meta property="og:image:height" content="840">
-<meta property="og:image:width" content="900">
-<meta name="twitter:title" content="Garrick Aden-Buie - Trump Tweet Time: An 8-bit “Executive Time” Game">
-<meta name="twitter:description" content="A silly game to guess the activity on Trump’s schedule while he was tweeting.">
-<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/trump-tweet-time/trump-tweet-time-01.png">
+<meta property="og:title" content="Garrick Aden-Buie - Shiny Modules Can Return Anything">
+<meta property="og:description" content="TK: An epiphany about building flexible shiny modules by letting go of functional input-and-output thinking and embracing the return value.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/shiny-modules-return-anything/index_files/figure-html/social-1.png">
+<meta property="og:site-name" content="Garrick Aden-Buie">
+<meta name="twitter:title" content="Garrick Aden-Buie - Shiny Modules Can Return Anything">
+<meta name="twitter:description" content="TK: An epiphany about building flexible shiny modules by letting go of functional input-and-output thinking and embracing the return value.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/shiny-modules-return-anything/social-default.png">
 <meta name="twitter:creator" content="@grrrck">
 <meta name="twitter:site" content="@grrrck">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image-height" content="840">
-<meta name="twitter:image-width" content="900">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
+      <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">garrick</span>
     </a>
@@ -115,36 +136,36 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../blog/index.html"> 
-<span class="menu-text">blog</span></a>
+    <a class="nav-link" href="../../blog/index.html" rel="" target="">
+ <span class="menu-text">blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../project/index.html"> 
-<span class="menu-text">projects</span></a>
+    <a class="nav-link" href="../../project/index.html" rel="" target="">
+ <span class="menu-text">projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../talk/index.html"> 
-<span class="menu-text">talks</span></a>
+    <a class="nav-link" href="../../talk/index.html" rel="" target="">
+ <span class="menu-text">talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about/index.html"> 
-<span class="menu-text">about</span></a>
+    <a class="nav-link" href="../../about/index.html" rel="" target="">
+ <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/gadenbuie"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/gadenbuie" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text"></span></a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://fosstodon.org/@grrrck"> <i class="bi bi-mastodon" role="img">
+    <a class="nav-link" href="https://fosstodon.org/@grrrck" rel="" target=""><i class="bi bi-mastodon" role="img">
 </i> 
-<span class="menu-text"></span></a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
+          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -152,17 +173,15 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Trump Tweet Time: An 8-bit “Executive Time” Game</h1>
+      <h1 class="title">Shiny Modules Can Return Anything</h1>
                   <div>
         <div class="description">
-          A silly game to guess the activity on Trump’s schedule while he was tweeting.
+          <p>TK: An epiphany about building flexible shiny modules by letting go of functional input-and-output thinking and embracing the return value.</p>
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">R</div>
-                <div class="quarto-category">rtweet</div>
                 <div class="quarto-category">Shiny</div>
-                <div class="quarto-category">Apps</div>
               </div>
                   </div>
   </div>
@@ -180,7 +199,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 9, 2019</p>
+        <p class="date">November 27, 2023</p>
       </div>
     </div>
     
@@ -196,11 +215,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#trumps-excutive-time" id="toc-trumps-excutive-time" class="nav-link active" data-scroll-target="#trumps-excutive-time">Trump’s Excutive Time</a></li>
-  <li><a href="#an-8-bit-distraction" id="toc-an-8-bit-distraction" class="nav-link" data-scroll-target="#an-8-bit-distraction">An 8-bit Distraction</a></li>
-  <li><a href="#trump-tweet-time" id="toc-trump-tweet-time" class="nav-link" data-scroll-target="#trump-tweet-time">Trump Tweet Time</a></li>
+  <li><a href="#epiphany-shiny-modules-are-tiny-shiny-apps" id="toc-epiphany-shiny-modules-are-tiny-shiny-apps" class="nav-link active" data-scroll-target="#epiphany-shiny-modules-are-tiny-shiny-apps">Epiphany: Shiny modules are tiny Shiny apps</a></li>
+  <li><a href="#epiphany-shiny-modules-are-a-useful-lie" id="toc-epiphany-shiny-modules-are-a-useful-lie" class="nav-link" data-scroll-target="#epiphany-shiny-modules-are-a-useful-lie">Epiphany: Shiny modules are a useful lie</a></li>
+  <li><a href="#shiny-modules-are-functions" id="toc-shiny-modules-are-functions" class="nav-link" data-scroll-target="#shiny-modules-are-functions">Shiny modules are functions?</a></li>
+  <li><a href="#epiphany-shiny-modules-can-return-anything" id="toc-epiphany-shiny-modules-can-return-anything" class="nav-link" data-scroll-target="#epiphany-shiny-modules-can-return-anything">Epiphany: Shiny modules can return <em>anything</em></a></li>
+  <li><a href="#cutting-floor" id="toc-cutting-floor" class="nav-link" data-scroll-target="#cutting-floor">Cutting floor</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/trump-tweet-time/index.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/trump-tweet-time/index.md" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/shiny-modules-return-anything/index.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/shiny-modules-return-anything/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -208,55 +229,78 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-
-<section id="trumps-excutive-time" class="level2">
-<h2 class="anchored" data-anchor-id="trumps-excutive-time">Trump’s Excutive Time</h2>
-<p>Last week, Donald Trump’s White House schedule was leaked and <a href="https://www.axios.com/donald-trump-private-schedules-leak-executive-time-34e67fbb-3af6-48df-aefb-52e02c334255.html">published online by Axios</a>. One highlight from the released documents is the large amount of unstructured “Executive Time” that appears on his schedule.</p>
-<p>The #rstats Twitter community immediately began to wonder what interesting anaylses could be done in comparing Trump’s schedule to the tweets he sent out.</p>
-<blockquote class="twitter-tweet blockquote" data-conversation="none" data-twitter-extracted-i1699884431699760446="true">
-<p lang="en" dir="ltr">
-Here’s something simple, using tweets from the <a href="https://twitter.com/hashtag/trumptwitterarchive">#TrumpTwitterArchive</a> so limited to midterms to end of 2018. <a href="https://t.co/CdRxUNwyq2">pic.twitter.com/CdRxUNwyq2</a>
-</p>
-— Garrick Aden-Buie (<span class="citation" data-cites="grrrck"><span class="citation" data-cites="grrrck">@grrrck</span></span>) <a href="https://twitter.com/grrrck/status/1092538573730000899">February 4, 2019</a>
-</blockquote>
-<p>Axios helpfully released <a href="https://docs.google.com/spreadsheets/d/1oITCuVsYdhNXtY7GElLelsrbjRRIPJ1ce-_v-8J1X_A/edit#gid=0">a Google Spreadsheet</a> to accompany the PDF version of the schedule, and a curated version has also been posted on <a href="https://data.world/firsthara/presidential-time">Data World</a>. Jonathan Sidi also built a <a href="https://github.com/yonicd/potus_public_schedule">cool Shiny app</a> for viewing Trumps tweets on a time line over his schedule.</p>
-<p>I started to pull together an analysis for an upcoming blog post, and here’s a little sneak peak.</p>
-<blockquote class="twitter-tweet blockquote" data-conversation="none">
-<p lang="en" dir="ltr">
-Here's something simple, using tweets from the <a href="https://twitter.com/hashtag/trumptwitterarchive?src=hash&amp;ref_src=twsrc%5Etfw">#trumptwitterarchive</a> so limited to midterms to end of 2018. <a href="https://t.co/CdRxUNwyq2">pic.twitter.com/CdRxUNwyq2</a>
-</p>
-— Garrick Aden-Buie (<span class="citation" data-cites="grrrck">@grrrck</span>) <a href="https://twitter.com/grrrck/status/1092538573730000899?ref_src=twsrc%5Etfw">February 4, 2019</a>
-</blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Learning shiny modules is a path of epiphanies. On the one hand, they’re incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there’s just a hint of magic.</p>
+<section id="epiphany-shiny-modules-are-tiny-shiny-apps" class="level2">
+<h2 class="anchored" data-anchor-id="epiphany-shiny-modules-are-tiny-shiny-apps">Epiphany: Shiny modules are tiny Shiny apps</h2>
+<p>Shiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps. If you’re new to Shiny modules, then you might want to take a quick break and read these great articles: <a href="https://emilyriederer.netlify.app/post/shiny-modules/">Emily’s beginner modules</a> or <a href="https://mastering-shiny.org/scaling-modules.html#scaling-modules">Mastering Shiny: Shiny modules</a>.</p>
+<p>A Shiny module has the same components as a Shiny app: just as an app has a <code>ui</code> and a <code>server</code>, a Shiny module has a function that returns UI elements and a <code>server</code> function that contains the module’s server-side logic. You can think of a Shiny module as a mini Shiny app. You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.</p>
+<p>In fact, a great way to create a Shiny module is to start with a tiny Shiny app that does exactly what you want it to do. You can see an example of this in the way <a href="https://mastering-shiny.org/scaling-modules.html#module-basics">Mastering Shiny introduces Shiny modules</a>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">App</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Module</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fluidPage</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="st">"Variable"</span>, <span class="fu">names</span>(mtcars)),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">numericInput</span>(<span class="st">"bins"</span>, <span class="st">"bins"</span>, <span class="dv">10</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotOutput</span>(<span class="st">"hist"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">reactive</span>(mtcars[[input<span class="sc">$</span>var]])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">hist</span>(<span class="fu">data</span>(), <span class="at">breaks =</span> input<span class="sc">$</span>bins, <span class="at">main =</span> input<span class="sc">$</span>var)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>histogramUI <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tagList</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="fu">NS</span>(id, <span class="st">"var"</span>), <span class="st">"Variable"</span>, <span class="at">choices =</span> <span class="fu">names</span>(mtcars)),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">numericInput</span>(<span class="fu">NS</span>(id, <span class="st">"bins"</span>), <span class="st">"bins"</span>, <span class="at">value =</span> <span class="dv">10</span>, <span class="at">min =</span> <span class="dv">1</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotOutput</span>(<span class="fu">NS</span>(id, <span class="st">"hist"</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>histogramServer <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">moduleServer</span>(id, <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">reactive</span>(mtcars[[input<span class="sc">$</span>var]])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">hist</span>(<span class="fu">data</span>(), <span class="at">breaks =</span> input<span class="sc">$</span>bins, <span class="at">main =</span> input<span class="sc">$</span>var)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">res =</span> <span class="dv">96</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="an-8-bit-distraction" class="level2">
-<h2 class="anchored" data-anchor-id="an-8-bit-distraction">An 8-bit Distraction</h2>
-<p>But then I got distracted. Colin Fay recently released a port of <a href="https://nostalgic-css.github.io/NES.css/">ness-css</a> for Shiny called <a href="https://github.com/ColinFay/nessy">nessy</a>, and it looks awesome. I just needed a good reason to create an awesome 8-bit retro Shiny app.</p>
-<p>The idea came to me during the analysis. Can you tell what Trump is doing (or is supposed to be doing) by the tweets he sends? Why not put your intuition to the test?</p>
+<section id="epiphany-shiny-modules-are-a-useful-lie" class="level2">
+<h2 class="anchored" data-anchor-id="epiphany-shiny-modules-are-a-useful-lie">Epiphany: Shiny modules are a useful lie</h2>
+<p>The hardest part of this approach is finding all the places in your UI where you need to wrap an input ID in <code>ns()</code>. <a href="https://twitter.com/_ColinFay/status/1196879284532662273">Colin Fay knows this</a>.</p>
+<p>In fact, <code>ns()</code> itself is another common epiphany. When I learned Shiny modules, <code>ns()</code> seemed like a small piece of magic. I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny’s magic. And when I learned that <code>ns(id)</code> uses no more magic than a simple <code>paste0(namespace, "-", id)</code> , I remember wondering if everything I had learned about Shiny modules was a lie. A <em>convenient fiction</em>, as <a href="https://fosstodon.org/@jonthegeek/111383079879981433">Jon Harmon put it</a>.</p>
 </section>
-<section id="trump-tweet-time" class="level2">
-<h2 class="anchored" data-anchor-id="trump-tweet-time">Trump Tweet Time</h2>
-<p>So I built a simple Shiny game called <a href="https://apps.garrickadenbuie.com/trump-tweet-time">Trump Tweet Time</a> that you can <a href="https://apps.garrickadenbuie.com/trump-tweet-time">play right now</a>. An 8-bit Trump shouts a tweet at you and you have to guess what was on his schedule while he was tweeting.</p>
-<div class="grid">
-<div class="g-col-sm-12 g-col-md-6">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="trump-tweet-time-01.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-description="" title="A screenshot of a SuperNES-styled Donald Trump with a speach bubble containing a random tweet. Three buttons offer the options for “meeting”, “travel” or “executive time”"><img src="trump-tweet-time-01.png" class="img-fluid figure-img" alt="A screenshot of a SuperNES-styled Donald Trump with a speach bubble containing a random tweet. Three buttons offer the options for “meeting”, “travel” or “executive time”"></a></p>
-<figcaption>A screenshot of a SuperNES-styled Donald Trump with a speach bubble containing a random tweet. Three buttons offer the options for “meeting”, “travel” or “executive time”</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-sm-12 g-col-md-6">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="trump-tweet-time-02.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-description="" title="A screenshot after the user has clicked “executive time” revealing that Trump tweeted during Executive Time."><img src="trump-tweet-time-02.png" class="img-fluid figure-img" alt="A screenshot after the user has clicked “executive time” revealing that Trump tweeted during Executive Time."></a></p>
-<figcaption>A screenshot after the user has clicked “executive time” revealing that Trump tweeted during Executive Time.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>Thanks to Colin Fay for <a href="https://github.com/ColinFay/nessy">nessy</a> and Mike Kearney for <a href="https://rtweet.info">rtweet</a>! Your packages made this fun and easy.</p>
-<p>Now go <a href="https://apps.garrickadenbuie.com/trump-tweet-time">enjoy some executive time</a>!</p>
+<section id="shiny-modules-are-functions" class="level2">
+<h2 class="anchored" data-anchor-id="shiny-modules-are-functions">Shiny modules are functions?</h2>
+<p>When Shiny modules are taught, they’re often presented in a functional context: a function returns the module’s UI, a function contains the server-side logic. This is a great starting place. But I often think of functions as units of code that take inputs and return outputs.</p>
+<p>diagram: input, function, output</p>
+<p>Shiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure. For example, you don’t need to limit yourself to just one UI function for your module (nor your server function either, for that matter).</p>
+<p>On the server side, it can be particularly cumbersome to think of the module’s server function in the typical way, taking inputs, performing actions, and returning an output. Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany and has since unlocked a new way of thinking about Shiny modules: Shiny module functions <em>can return anything</em>.</p>
+</section>
+<section id="epiphany-shiny-modules-can-return-anything" class="level2">
+<h2 class="anchored" data-anchor-id="epiphany-shiny-modules-can-return-anything">Epiphany: Shiny modules can return <em>anything</em></h2>
+<hr>
+</section>
+<section id="cutting-floor" class="level2">
+<h2 class="anchored" data-anchor-id="cutting-floor">Cutting floor</h2>
+<p>While I’ve always appreciated carpenter-related metaphors for software development (and I do like calling myself a software engineer), I also have to admit that my shiny apps are rarely ever constructed from blue prints with precise measurements. My shiny apps aren’t built as much as they’re grown. I’m a terrible gardener. I can barely keep a house plant alive. My apps are grown like weeds, or trees that sprout in the cracks in concrete. My apps should have “Don’t Mow, Let It Grow” signs in the source code.</p>
+<p>The thing I’ve always appreciated about Shiny is that it fully supports this method of development. Most Shiny apps start as a simple UI around a piece of code and a few questions.</p>
+<p>Imagine a plot and a question: what if we broke this down by ____?</p>
+<p>The question usually isn’t yours, but one you’re anticipating. You have the plot. And you know that as soon as they see it they’ll wonder, what if we broke this down by ____?</p>
+<p>You can do that quickly. There’s one place in your code where you change “X” to “Y” or “Z”, hit Run Code and see the new plot. But there’s nothing slick about watching you type and hit enter. More importantly, you’re not letting them have the power of seeing the plot, asking the question, changing X to Y and seeing the new plot.</p>
+<p>This is what Shiny does. With a few lines of code you have a dropdown and a plot. With <code>selectInput()</code> you create a dropdown with a few choices, they pick those choices, <code>renderPlot()</code> updates, new plot, win!</p>
 
 
 </section>
@@ -303,33 +347,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -398,15 +415,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -485,9 +500,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -497,17 +513,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -520,128 +527,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
-        }
-        typesetMath(container);
-        return container.innerHTML
-      } else {
-        typesetMath(note);
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      typesetMath(note);
-      return note.innerHTML;
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -685,7 +570,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -711,32 +595,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -798,24 +656,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="gadenbuie/garrickadenbuie-com" data-repo-id="MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=" data-category="Comments" data-category-id="DIC_kwDOB0UOXs4CAIFZ" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">
-<p>© 2023 Garrick Aden-Buie</p>
-</div>   
-    <div class="nav-footer-center">
-<p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
-</div>
-    <div class="nav-footer-right">
-<p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
-</div>
+    <div class="nav-footer-left">© 2023 Garrick Aden-Buie</div>   
+    <div class="nav-footer-center"><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></div>
+    <div class="nav-footer-right"><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});</script>
-
 
 
 

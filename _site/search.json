@@ -2132,7 +2132,7 @@
     "href": "index.html#latest-posts",
     "title": "\n      Garrick\n      Aden-Buie\n    ",
     "section": "Latest Posts",
-    "text": "Latest Posts\n\n\n\n\n\n\n\n\nAutomated Image Overflow Detection for xaringan or remark Slides\n\n\nUsing chromote and a little JavaScript to detect image overflow issues in {xaringan} or remark slides.\n\n\n\nJul 23, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRead and Visualize your Twitter Archive\n\n\nUsing R to read and visualize my Twitter archive data. Featuring {ggiraph}, {ggplot2}, {jsonlite}, {dplyr} and more…\n\n\n\nDec 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncountdown v0.4.0 – Now on CRAN!\n\n\ncountdown v0.4.0 is now available on CRAN with a ton of new features!\n\n\n\nAug 15, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProcess Profile Pictures with magick\n\n\nProcess a directory full of profile pictures, resizing and cropping the images to be centered around faces.\n\n\n\nJul 12, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nxaringanExtra v0.6.0 — Now on CRAN!\n\n\nxaringanExtra v0.6.0 is now available on CRAN! Plus some new features.\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSaving Daylight Time?\n\n\nHow much daylight do cities across the world get throughout the year? Does Daylight Saving Time really save any daylight? A visualization to explore these questions.\n\n\n\nMar 12, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWordle Guess Helper\n\n\nPicking words to guess in Wordle. It’s only fun if you can solve it with R.\n\n\n\nFeb 21, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbranchMover: A Shiny app for moving the default branch of your GitHub repos\n\n\nIntroducing branchMover, a Shiny app slash RStudio addin for coordinated default branch changes across your GitHub repositories.\n\n\n\nNov 2, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPull Request Flow with usethis\n\n\nChoose your own adventure and get in the ‘usethis’ pull request flow with this flow chart.\n\n\n\nOct 7, 2021\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Latest Posts\n\n\n\n\n\n\n\n\n\n\nShiny Modules Can Return Anything\n\n\nTK: An epiphany about building flexible shiny modules by letting go of functional input-and-output thinking and embracing the return value.\n\n\n\nNov 27, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nAutomated Image Overflow Detection for xaringan or remark Slides\n\n\nUsing chromote and a little JavaScript to detect image overflow issues in {xaringan} or remark slides.\n\n\n\nJul 23, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRead and Visualize your Twitter Archive\n\n\nUsing R to read and visualize my Twitter archive data. Featuring {ggiraph}, {ggplot2}, {jsonlite}, {dplyr} and more…\n\n\n\nDec 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncountdown v0.4.0 – Now on CRAN!\n\n\ncountdown v0.4.0 is now available on CRAN with a ton of new features!\n\n\n\nAug 15, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nProcess Profile Pictures with magick\n\n\nProcess a directory full of profile pictures, resizing and cropping the images to be centered around faces.\n\n\n\nJul 12, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nxaringanExtra v0.6.0 — Now on CRAN!\n\n\nxaringanExtra v0.6.0 is now available on CRAN! Plus some new features.\n\n\n\nJun 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSaving Daylight Time?\n\n\nHow much daylight do cities across the world get throughout the year? Does Daylight Saving Time really save any daylight? A visualization to explore these questions.\n\n\n\nMar 12, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWordle Guess Helper\n\n\nPicking words to guess in Wordle. It’s only fun if you can solve it with R.\n\n\n\nFeb 21, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbranchMover: A Shiny app for moving the default branch of your GitHub repos\n\n\nIntroducing branchMover, a Shiny app slash RStudio addin for coordinated default branch changes across your GitHub repositories.\n\n\n\nNov 2, 2021\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#latest-projects",
@@ -2504,5 +2504,47 @@
     "title": "Extra Awesome xaringan Presentations",
     "section": "",
     "text": "Learn how to make extra awesome xaringan presentations with a few new packages\n\nxaringanthemer\nxaringanExtra\nmetathis\n\nthat add the extra touches needed to personalize your slides and make them stand out from the crowd."
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html",
+    "href": "blog/shiny-modules-return-anything/index.html",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "",
+    "text": "Learning shiny modules is a path of epiphanies. On the one hand, they’re incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there’s just a hint of magic."
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-are-tiny-shiny-apps",
+    "href": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-are-tiny-shiny-apps",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "Epiphany: Shiny modules are tiny Shiny apps",
+    "text": "Epiphany: Shiny modules are tiny Shiny apps\nShiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps. If you’re new to Shiny modules, then you might want to take a quick break and read these great articles: Emily’s beginner modules or Mastering Shiny: Shiny modules.\nA Shiny module has the same components as a Shiny app: just as an app has a ui and a server, a Shiny module has a function that returns UI elements and a server function that contains the module’s server-side logic. You can think of a Shiny module as a mini Shiny app. You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.\nIn fact, a great way to create a Shiny module is to start with a tiny Shiny app that does exactly what you want it to do. You can see an example of this in the way Mastering Shiny introduces Shiny modules.\n\nAppModule\n\n\nui &lt;-\n  fluidPage(\n    selectInput(\"var\", \"Variable\", names(mtcars)),\n    numericInput(\"bins\", \"bins\", 10, min = 1),\n    plotOutput(\"hist\")\n\n)\n\nserver &lt;-\n  function(input, output, session) {\n    data &lt;- reactive(mtcars[[input$var]])\n    output$hist &lt;- renderPlot({\n      hist(data(), breaks = input$bins, main = input$var)\n    }, res = 96)\n\n}\n\n\nhistogramUI &lt;- function(id) {\n  tagList(\n    selectInput(NS(id, \"var\"), \"Variable\", choices = names(mtcars)),\n    numericInput(NS(id, \"bins\"), \"bins\", value = 10, min = 1),\n    plotOutput(NS(id, \"hist\"))\n  )\n}\n\nhistogramServer &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    data &lt;- reactive(mtcars[[input$var]])\n    output$hist &lt;- renderPlot({\n      hist(data(), breaks = input$bins, main = input$var)\n    }, res = 96)\n  })\n}"
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-are-a-useful-lie",
+    "href": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-are-a-useful-lie",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "Epiphany: Shiny modules are a useful lie",
+    "text": "Epiphany: Shiny modules are a useful lie\nThe hardest part of this approach is finding all the places in your UI where you need to wrap an input ID in ns(). Colin Fay knows this.\nIn fact, ns() itself is another common epiphany. When I learned Shiny modules, ns() seemed like a small piece of magic. I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny’s magic. And when I learned that ns(id) uses no more magic than a simple paste0(namespace, \"-\", id) , I remember wondering if everything I had learned about Shiny modules was a lie. A convenient fiction, as Jon Harmon put it."
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html#shiny-modules-are-functions",
+    "href": "blog/shiny-modules-return-anything/index.html#shiny-modules-are-functions",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "Shiny modules are functions?",
+    "text": "Shiny modules are functions?\nWhen Shiny modules are taught, they’re often presented in a functional context: a function returns the module’s UI, a function contains the server-side logic. This is a great starting place. But I often think of functions as units of code that take inputs and return outputs.\ndiagram: input, function, output\nShiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure. For example, you don’t need to limit yourself to just one UI function for your module (nor your server function either, for that matter).\nOn the server side, it can be particularly cumbersome to think of the module’s server function in the typical way, taking inputs, performing actions, and returning an output. Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany and has since unlocked a new way of thinking about Shiny modules: Shiny module functions can return anything."
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-can-return-anything",
+    "href": "blog/shiny-modules-return-anything/index.html#epiphany-shiny-modules-can-return-anything",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "Epiphany: Shiny modules can return anything",
+    "text": "Epiphany: Shiny modules can return anything"
+  },
+  {
+    "objectID": "blog/shiny-modules-return-anything/index.html#cutting-floor",
+    "href": "blog/shiny-modules-return-anything/index.html#cutting-floor",
+    "title": "Shiny Modules Can Return Anything",
+    "section": "Cutting floor",
+    "text": "Cutting floor\nWhile I’ve always appreciated carpenter-related metaphors for software development (and I do like calling myself a software engineer), I also have to admit that my shiny apps are rarely ever constructed from blue prints with precise measurements. My shiny apps aren’t built as much as they’re grown. I’m a terrible gardener. I can barely keep a house plant alive. My apps are grown like weeds, or trees that sprout in the cracks in concrete. My apps should have “Don’t Mow, Let It Grow” signs in the source code.\nThe thing I’ve always appreciated about Shiny is that it fully supports this method of development. Most Shiny apps start as a simple UI around a piece of code and a few questions.\nImagine a plot and a question: what if we broke this down by ____?\nThe question usually isn’t yours, but one you’re anticipating. You have the plot. And you know that as soon as they see it they’ll wonder, what if we broke this down by ____?\nYou can do that quickly. There’s one place in your code where you change “X” to “Y” or “Z”, hit Run Code and see the new plot. But there’s nothing slick about watching you type and hit enter. More importantly, you’re not letting them have the power of seeing the plot, asking the question, changing X to Y and seeing the new plot.\nThis is what Shiny does. With a few lines of code you have a dropdown and a plot. With selectInput() you create a dropdown with a few choices, they pick those choices, renderPlot() updates, new plot, win!"
   }
 ]
