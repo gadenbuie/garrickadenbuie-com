@@ -53,6 +53,7 @@ $alert-color-scale: -30%;
 $alert-link-scale: 5%;
 
 $dropdown-link-hover-bg: $blue-20;
+$nav-tabs-border-color: var(--slate-20);
 
 /*-- scss:mixins --*/
 @mixin alert-variant($background, $border, $color) {

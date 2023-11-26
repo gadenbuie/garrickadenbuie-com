@@ -53,7 +53,7 @@
         },
         "String": {
             "text-color": "#b9deb9",
-            "background-color": null,
+            "background-color": "inherit",
             "bold": false,
             "italic": false,
             "underline": false
@@ -206,8 +206,8 @@
             "underline": false
         },
         "DecVal": {
-            "text-color": "#fee8eb",
-            "background-color": "#c94150",
+            "text-color": "var(--red-70)",
+            "background-color": "inherit",
             "bold": false,
             "italic": false,
             "underline": false
