@@ -1,0 +1,135 @@
+---
+title: Shiny Modules Can Return Anything
+author: Garrick Aden-Buie
+date: '2023-11-27'
+slug: shiny-modules-return-anything
+
+description: |
+  TK: An epiphany about building flexible shiny modules by letting go of
+  functional input-and-output thinking and embracing the return value.
+
+categories:
+  - R
+  - Shiny
+
+image: index_files/figure-html/social-1.png
+
+editor_options:
+  chunk_output_type: console
+---
+
+Learning shiny modules is a path of epiphanies.
+On the one hand, they're incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there's just a hint of magic.
+
+## Epiphany: Shiny modules are tiny Shiny apps
+
+Shiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps.
+If you're new to Shiny modules, then you might want to take a quick break and read these great articles: [Emily's beginner modules](https://emilyriederer.netlify.app/post/shiny-modules/) or [Mastering Shiny: Shiny modules](https://mastering-shiny.org/scaling-modules.html#scaling-modules).
+
+A Shiny module has the same components as a Shiny app: just as an app has a `ui` and a `server`, a Shiny module has a function that returns UI elements and a `server` function that contains the module's server-side logic.
+You can think of a Shiny module as a mini Shiny app.
+You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.
+
+In fact, a great way to create a Shiny module is to start with a tiny Shiny app that does exactly what you want it to do.
+You can see an example of this in the way [Mastering Shiny introduces Shiny modules](https://mastering-shiny.org/scaling-modules.html#module-basics).
+
+::: {.panel-tabset}
+### App {.fade .show}
+
+```r
+ui <-
+  fluidPage(
+    selectInput("var", "Variable", names(mtcars)),
+    numericInput("bins", "bins", 10, min = 1),
+    plotOutput("hist")
+
+)
+
+server <-
+  function(input, output, session) {
+    data <- reactive(mtcars[[input$var]])
+    output$hist <- renderPlot({
+      hist(data(), breaks = input$bins, main = input$var)
+    }, res = 96)
+
+}
+```
+
+### Module {.fade}
+
+```r
+histogramUI <- function(id) {
+  tagList(
+    selectInput(NS(id, "var"), "Variable", choices = names(mtcars)),
+    numericInput(NS(id, "bins"), "bins", value = 10, min = 1),
+    plotOutput(NS(id, "hist"))
+  )
+}
+
+histogramServer <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    data <- reactive(mtcars[[input$var]])
+    output$hist <- renderPlot({
+      hist(data(), breaks = input$bins, main = input$var)
+    }, res = 96)
+  })
+}
+```
+:::
+
+## Epiphany: Shiny modules are a useful lie
+
+The hardest part of this approach is finding all the places in your UI where you need to wrap an input ID in `ns()`.
+[Colin Fay knows this](https://twitter.com/_ColinFay/status/1196879284532662273).
+
+In fact, `ns()` itself is another common epiphany.
+When I learned Shiny modules, `ns()` seemed like a small piece of magic.
+I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny's magic.
+And when I learned that `ns(id)` uses no more magic than a simple `paste0(namespace, "-", id)` , I remember wondering if everything I had learned about Shiny modules was a lie.
+A _convenient fiction_, as [Jon Harmon put it](https://fosstodon.org/@jonthegeek/111383079879981433).
+
+## Shiny modules are functions?
+
+When Shiny modules are taught, they're often presented in a functional context: a function returns the module's UI, a function contains the server-side logic.
+This is a great starting place.
+But I often think of functions as units of code that take inputs and return outputs.
+
+diagram: input, function, output
+
+Shiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure.
+For example, you don't need to limit yourself to just one UI function for your module (nor your server function either, for that matter).
+
+On the server side, it can be particularly cumbersome to think of the module's server function in the typical way, taking inputs, performing actions, and returning an output.
+Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany and has since unlocked a new way of thinking about Shiny modules: Shiny module functions *can return anything*.
+
+## Epiphany: Shiny modules can return *anything*
+
+
+------------------------------------------------------------------------
+
+## Cutting floor
+
+While I've always appreciated carpenter-related metaphors for software development (and I do like calling myself a software engineer), I also have to admit that my shiny apps are rarely ever constructed from blue prints with precise measurements.
+My shiny apps aren't built as much as they're grown.
+I'm a terrible gardener.
+I can barely keep a house plant alive.
+My apps are grown like weeds, or trees that sprout in the cracks in concrete.
+My apps should have "Don't Mow, Let It Grow" signs in the source code.
+
+The thing I've always appreciated about Shiny is that it fully supports this method of development.
+Most Shiny apps start as a simple UI around a piece of code and a few questions.
+
+Imagine a plot and a question: what if we broke this down by \_\_\_\_?
+
+The question usually isn't yours, but one you're anticipating.
+You have the plot.
+And you know that as soon as they see it they'll wonder, what if we broke this down by \_\_\_\_?
+
+You can do that quickly.
+There's one place in your code where you change "X" to "Y" or "Z", hit Run Code and see the new plot.
+But there's nothing slick about watching you type and hit enter.
+More importantly, you're not letting them have the power of seeing the plot, asking the question, changing X to Y and seeing the new plot.
+
+This is what Shiny does.
+With a few lines of code you have a dropdown and a plot.
+With `selectInput()` you create a dropdown with a few choices, they pick those choices, `renderPlot()` updates, new plot, win!
