@@ -103,6 +103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <script src="https://cdn.counter.dev/script.js" data-id="10454114-dc3f-4c23-a4da-87e7f2c7c58d" data-utcoffset="-4"></script>
+<link rel="stylesheet" href="../../rmarkdown-libs/panelset-0.2.7/panelset.css">
+<script src="../../rmarkdown-libs/panelset-0.2.7/panelset.js"></script>
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
@@ -241,10 +243,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can think of a Shiny module as a mini Shiny app. A Shiny module has the same components as a Shiny app: in the same way an app has a <code>ui</code> and a <code>server</code>, a Shiny module has a function that returns UI elements and a <code>server</code> function that contains the module’s server-side logic. You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.</p>
 <p>In fact, a great way to create a Shiny module is to start with a tiny Shiny app, get the behavior just right, and then convert the tiny app to a reusable module. You can see an example of this in the way <a href="https://mastering-shiny.org/scaling-modules.html#module-basics">Mastering Shiny introduces Shiny modules</a>.</p>
 <p><em>Toggle between <strong>app</strong> and <strong>module</strong> to see how the transformation is mostly a difference in boilerplate.</em></p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">App</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Module</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="panelset">
+<section id="app" class="level4">
+<h4 class="anchored" data-anchor-id="app">App</h4>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span></span>
@@ -268,8 +269,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  ui,</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  server</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+</section>
+<section id="module" class="level4">
+<h4 class="anchored" data-anchor-id="module">Module</h4>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>histogram_ui <span class="ot">&lt;-</span> <span class="cf">function</span>(id) {</span>
@@ -293,8 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">histogram_ui</span>(<span class="st">"hist1"</span>),</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(input, output, session) <span class="fu">histogram_server</span>(<span class="st">"hist1"</span>)</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</section>
 </div>
 </section>
 <section id="epiphany-shiny-modules-are-a-convenient-fiction" class="level3">

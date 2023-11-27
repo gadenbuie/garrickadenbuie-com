@@ -6,17 +6,16 @@
       version="2.0">
 <channel>
 <title>Garrick Aden-Buie</title>
-<link>https://www.garrickadenbuie.com/project/</link>
+<link>https://www.garrickadenbuie.com/project/index.html</link>
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.4.480</generator>
+<generator>quarto-1.3.450</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
-  <link>https://www.garrickadenbuie.com/project/epoxy/</link>
+  <link>https://www.garrickadenbuie.com/project/epoxy/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -28,14 +27,14 @@
 <div class="cell-output-display">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <h1 align="center">
-<a href="http://pkg.garrickadenbuie.com/epoxy/"><img src="https://pkg.garrickadenbuie.com/epoxy/logo.png" align="center" height="250" alt="epoxy logo"></a><br> {epoxy}
+<a href="http://pkg.garrickadenbuie.com/epoxy/"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/pkg.garrickadenbuie.com/epoxy/logo.png" align="center" height="250" alt="epoxy logo"></a><br> {epoxy}
 </h1>
 <p align="center">
 <b>extra-strength <a href="https://glue.tidyverse.org">glue</a></b> for scripts, reports, and apps.
 </p>
 <p align="center">
 <!-- badges: start -->
-<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.r-pkg.org/badges/version/epoxy" alt="CRAN status"></a> <a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge"></a> <a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://app.codecov.io/gh/gadenbuie/epoxy?branch=main"><img src="https://codecov.io/gh/gadenbuie/epoxy/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a> <!-- badges: end -->
+<a href="https://CRAN.R-project.org/package=epoxy"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/www.r-pkg.org/badges/version/epoxy" alt="CRAN status"></a> <a href="https://gadenbuie.r-universe.dev"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/gadenbuie.r-universe.dev/badges/epoxy" alt="epoxy r-universe badge"></a> <a href="https://github.com/gadenbuie/epoxy/actions"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/github.com/gadenbuie/epoxy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://app.codecov.io/gh/gadenbuie/epoxy?branch=main"><img src="https://www.garrickadenbuie.com/project/epoxy/https:/codecov.io/gh/gadenbuie/epoxy/branch/main/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://github.com/gadenbuie/epoxy/blob/main/LICENSE.md" alt="MIT Licensed."><img src="https://www.garrickadenbuie.com/project/epoxy/https:/img.shields.io/badge/License-MIT-blue.svg"></a> <!-- badges: end -->
 </p>
 <section id="epoxy-is-super-glue" class="level2">
 <h2 class="anchored" data-anchor-id="epoxy-is-super-glue">epoxy is super glue</h2>
@@ -116,9 +115,7 @@ font-style: inherit;">"Thomas F. Wilson"</span></span>
 <span id="cb1-12">  ),</span>
 <span id="cb1-13">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">runtime =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">108</span>L</span>
+font-style: inherit;">runtime =</span> 108L</span>
 <span id="cb1-14">)</span></code></pre></div>
 </details>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">```{epoxy}</span>
@@ -202,7 +199,7 @@ font-style: inherit;">library</span>(epoxy)</span></code></pre></div>
 <tr class="even">
 <td style="text-align: left;"><code>epoxy_html</code></td>
 <td style="text-align: left;">HTML</td>
-<td style="text-align: center;"><code>{expr}</code></td>
+<td style="text-align: center;"><code>{{expr}}</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>epoxy_latex</code></td>
@@ -267,15 +264,14 @@ font-style: inherit;">#&gt; But on average the distance traveled was only _42.98
 
 
  ]]></description>
-  <guid>https://www.garrickadenbuie.com/project/epoxy/</guid>
+  <guid>https://www.garrickadenbuie.com/project/epoxy/index.html</guid>
   <pubDate>Wed, 20 Sep 2023 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/epoxy/epoxy-social.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
 <item>
   <title>🧼 cleanrmd</title>
-  <link>https://www.garrickadenbuie.com/project/cleanrmd/</link>
+  <link>https://www.garrickadenbuie.com/project/cleanrmd/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -287,7 +283,7 @@ font-style: inherit;">#&gt; But on average the distance traveled was only _42.98
 <section id="cleanrmd" class="level1">
 <h1>cleanrmd</h1>
 <!-- badges: start -->
-<p><a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/cleanrmd.png" class="img-fluid" alt="cleanrmd status badge"></a> <a href="https://CRAN.R-project.org/package=cleanrmd"><img src="https://www.r-pkg.org/badges/version/cleanrmd.png" class="img-fluid" alt="CRAN status"></a> <a href="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml"><img src="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml/badge.svg" class="img-fluid" alt="R-CMD-check"></a> <!-- badges: end --></p>
+<p><a href="https://gadenbuie.r-universe.dev"><img src="https://www.garrickadenbuie.com/project/cleanrmd/https:/gadenbuie.r-universe.dev/badges/cleanrmd.png" class="img-fluid" alt="cleanrmd status badge"></a> <a href="https://CRAN.R-project.org/package=cleanrmd"><img src="https://www.garrickadenbuie.com/project/cleanrmd/https:/www.r-pkg.org/badges/version/cleanrmd.png" class="img-fluid" alt="CRAN status"></a> <a href="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml"><img src="https://www.garrickadenbuie.com/project/cleanrmd/https:/github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml/badge.svg" class="img-fluid" alt="R-CMD-check"></a> <!-- badges: end --></p>
 <p><strong>cleanrmd</strong> is a no-frills, lightweight HTML format for R Markdown, using class-less CSS.</p>
 <p>This package was greatly inspired by Yuval Greenfield’s blog post: <a href="https://ubershmekel.medium.com/the-next-css-frontier-classless-5e66f3f25fdd">The Next CSS Frontier - Classless</a>.</p>
 <section id="installation" class="level2">
@@ -521,23 +517,22 @@ font-style: inherit;">#&gt; [28] "water"             "water-dark"        "writ"<
 
 
  ]]></description>
-  <guid>https://www.garrickadenbuie.com/project/cleanrmd/</guid>
+  <guid>https://www.garrickadenbuie.com/project/cleanrmd/index.html</guid>
   <pubDate>Mon, 13 Jun 2022 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/cleanrmd/cleanrmd-social.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
 <item>
   <title>🔮 rsthemes</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/project/rsthemes/</link>
+  <link>https://www.garrickadenbuie.com/project/rsthemes/index.html</link>
   <description><![CDATA[ 
-
 
 
 
 <!-- https://buttons.github.io/ -->
 <p><a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/rsthemes" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/rsthemes on GitHub">Star</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/rsthemes/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/rsthemes on GitHub">Fork</a></p>
 <p align="center">
-<img src="https://raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.gif">
+<img src="https://www.garrickadenbuie.com/project/rsthemes/https:/raw.githubusercontent.com/gadenbuie/rsthemes/assets/rsthemes.gif">
 </p><h1 align="center">
 {rsthemes}
 </h1>
@@ -1144,15 +1139,14 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/rsthemes/</guid>
+  <guid>https://www.garrickadenbuie.com/project/rsthemes/index.html</guid>
   <pubDate>Thu, 01 Oct 2020 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/rsthemes/social-card.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
   <title>🍰 shrtcts</title>
-  <link>https://www.garrickadenbuie.com/project/shrtcts/</link>
+  <link>https://www.garrickadenbuie.com/project/shrtcts/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1166,15 +1160,14 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/shrtcts/</guid>
+  <guid>https://www.garrickadenbuie.com/project/shrtcts/index.html</guid>
   <pubDate>Sun, 13 Sep 2020 04:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/shrtcts/reference/figures/shrtcts-card.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>🎡 xaringanExtra</title>
-  <link>https://www.garrickadenbuie.com/project/xaringanExtra/</link>
+  <link>https://www.garrickadenbuie.com/project/xaringanExtra/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1188,15 +1181,14 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/xaringanExtra/</guid>
+  <guid>https://www.garrickadenbuie.com/project/xaringanExtra/index.html</guid>
   <pubDate>Mon, 06 Jul 2020 04:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/xaringanExtra/xaringanExtra-social.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>ℹ️ metathis</title>
-  <link>https://www.garrickadenbuie.com/project/metathis/</link>
+  <link>https://www.garrickadenbuie.com/project/metathis/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1210,15 +1202,14 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/metathis/</guid>
+  <guid>https://www.garrickadenbuie.com/project/metathis/index.html</guid>
   <pubDate>Wed, 11 Sep 2019 04:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/metathis/reference/figures/card.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>⏲️ countdown</title>
-  <link>https://www.garrickadenbuie.com/project/countdown/</link>
+  <link>https://www.garrickadenbuie.com/project/countdown/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1232,15 +1223,14 @@ font-style: inherit;">"base16"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/countdown/</guid>
+  <guid>https://www.garrickadenbuie.com/project/countdown/index.html</guid>
   <pubDate>Tue, 07 May 2019 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/countdown/countdown.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
   <title>🤹 tidyexplain</title>
-  <link>https://www.garrickadenbuie.com/project/tidyexplain/</link>
+  <link>https://www.garrickadenbuie.com/project/tidyexplain/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1332,7 +1322,7 @@ font-style: inherit;">#&gt; 3     4 y4</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All rows from <code>x</code> where there are matching values in <code>y</code>, and all columns from <code>x</code> and <code>y</code>.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/inner-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/inner-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">inner_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1361,7 +1351,7 @@ font-style: inherit;">#&gt; 2     2 x2    y2</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All rows from <code>x</code>, and all columns from <code>x</code> and <code>y</code>. Rows in <code>x</code> with no match in <code>y</code> will have <code>NA</code> values in the new columns.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">left_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1393,7 +1383,7 @@ font-style: inherit;">#&gt; 3     3 x3    &lt;NA&gt;</span></span></code></pre><
 <blockquote class="blockquote">
 <p>… If there are multiple matches between <code>x</code> and <code>y</code>, all combinations of the matches are returned.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join-extra.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/left-join-extra.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">y_extra <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># has multiple rows with the key from `x`</span></span>
@@ -1452,7 +1442,7 @@ font-style: inherit;">#&gt; 4     3 x3    &lt;NA&gt;</span></span></code></pre><
 <blockquote class="blockquote">
 <p>All rows from y, and all columns from <code>x</code> and <code>y</code>. Rows in <code>y</code> with no match in <code>x</code> will have <code>NA</code> values in the new columns.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/right-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/right-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">right_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1484,7 +1474,7 @@ font-style: inherit;">#&gt; 3     4 &lt;NA&gt;  y4</span></span></code></pre></d
 <blockquote class="blockquote">
 <p>All rows and all columns from both <code>x</code> and <code>y</code>. Where there are not matching values, returns <code>NA</code> for the one missing.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/full-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/full-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">full_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1526,7 +1516,7 @@ font-style: inherit;">#&gt; 4     4 &lt;NA&gt;  y4</span></span></code></pre></d
 <blockquote class="blockquote">
 <p>All rows from <code>x</code> where there are matching values in <code>y</code>, keeping just columns from <code>x</code>.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/semi-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/semi-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">semi_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1555,7 +1545,7 @@ font-style: inherit;">#&gt; 2     2 x2</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All rows from <code>x</code> where there are not matching values in <code>y</code>, keeping just columns from <code>x</code>.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/anti-join.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/anti-join.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">anti_join</span>(x, y, <span class="at" style="color: #657422;
@@ -1624,7 +1614,7 @@ font-style: inherit;">#&gt; 2 2     b</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All unique rows from <code>x</code> and <code>y</code>.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">union</span>(x, y)</span>
@@ -1649,7 +1639,7 @@ font-style: inherit;">#&gt; 3 2     a    </span></span>
 <span id="cb10-8"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#&gt; 4 2     b</span></span></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-rev.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-rev.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">union</span>(y, x)</span>
@@ -1680,7 +1670,7 @@ font-style: inherit;">#&gt; 4 2     a</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All rows from <code>x</code> and <code>y</code>, keeping duplicates.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-all.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/union-all.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">union_all</span>(x, y)</span>
@@ -1714,7 +1704,7 @@ font-style: inherit;">#&gt; 5 2     b</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>Common rows in both <code>x</code> and <code>y</code>, keeping just unique rows.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/intersect.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/intersect.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">intersect</span>(x, y)</span>
@@ -1736,7 +1726,7 @@ font-style: inherit;">#&gt; 1 1     a</span></span></code></pre></div>
 <blockquote class="blockquote">
 <p>All rows from <code>x</code> which are not also rows in <code>y</code>, keeping just unique rows.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">setdiff</span>(x, y)</span>
@@ -1755,7 +1745,7 @@ font-style: inherit;">#&gt; 1 1     b    </span></span>
 <span id="cb14-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#&gt; 2 2     a</span></span></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff-rev.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/setdiff-rev.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">setdiff</span>(y, x)</span>
@@ -1782,7 +1772,7 @@ font-style: inherit;">#&gt; 1 2     b</span></span></code></pre></div>
 <li>Each value has its own cell.</li>
 </ol>
 <p>Many of the tools in the <a href="https://tidyverse.org">tidyverse</a> expect data to be formatted as a tidy dataset and the <a href="https://tidyr.tidyverse.org">tidyr</a> package provides functions to help you organize your data into tidy data.</p>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/static/png/original-dfs-tidy.png" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/static/png/original-dfs-tidy.png" class="img-fluid"></p>
 <div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">wide</span>
 <span id="cb16-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1859,7 +1849,7 @@ font-style: inherit;">"val"</span>)</span></code></pre></div>
 <blockquote class="blockquote">
 <p><code>pivot_longer()</code> “lengthens” data, increasing the number of rows and decreasing the number of columns.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-pivoting.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-pivoting.gif" class="img-fluid"></p>
 </section>
 <section id="spread-and-gather" class="level3">
 <h3 class="anchored" data-anchor-id="spread-and-gather">Spread and Gather</h3>
@@ -1883,7 +1873,7 @@ font-style: inherit;">"value"</span>, ...)</span></code></pre></div>
 <blockquote class="blockquote">
 <p>Gather takes multiple columns and collapses into key-value pairs, duplicating all other columns as needed. You use <code>gather()</code> when you notice that your column names are not names of variables, but <em>values</em> of a variable.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-spread-gather.gif" class="img-fluid"></p>
+<p><img src="https://www.garrickadenbuie.com/project/tidyexplain/https:/raw.githubusercontent.com/gadenbuie/tidyexplain/main/images/tidyr-spread-gather.gif" class="img-fluid"></p>
 <div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">gather</span>(wide, key, val, x<span class="sc" style="color: #5E5E5E;
@@ -1941,16 +1931,15 @@ font-style: inherit;">#&gt; 2     2 b     d     f</span></span></code></pre></di
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/tidyexplain/</guid>
+  <guid>https://www.garrickadenbuie.com/project/tidyexplain/index.html</guid>
   <pubDate>Mon, 27 Aug 2018 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/tidyexplain/images/static/png/original-dfs.png" medium="image" type="image/png" height="103" width="144"/>
 </item>
 <item>
   <title>🎨 xaringanthemer</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/project/xaringanthemer/</link>
+  <link>https://www.garrickadenbuie.com/project/xaringanthemer/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -2024,7 +2013,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/xaringanthemer/example_mono_light_1c5253.png" class="img-fluid figure-img"></p>
-<figcaption>xaringanthemer example with mono_light theme</figcaption>
+<figcaption class="figure-caption">xaringanthemer example with mono_light theme</figcaption>
 </figure>
 </div>
 <section id="tab-completion" class="level3">
@@ -2033,7 +2022,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/xaringanthemer/xaringanthemer-rstudio-help.gif" class="img-fluid figure-img"></p>
-<figcaption>xaringanthemer rstudio autocompletion example</figcaption>
+<figcaption class="figure-caption">xaringanthemer rstudio autocompletion example</figcaption>
 </figure>
 </div>
 </section>
@@ -2044,7 +2033,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/xaringanthemer/rmarkdown-template-screenshot.png" class="img-fluid figure-img" width="350"></p>
-<figcaption>rstudio xaringanthemer rmarkdown template</figcaption>
+<figcaption class="figure-caption">rstudio xaringanthemer rmarkdown template</figcaption>
 </figure>
 </div>
 </center>
@@ -2059,15 +2048,14 @@ font-style: inherit;">```</span></span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/xaringanthemer/</guid>
+  <guid>https://www.garrickadenbuie.com/project/xaringanthemer/index.html</guid>
   <pubDate>Sat, 12 May 2018 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/xaringanthemer/examples.gif" medium="image" type="image/gif"/>
 </item>
 <item>
   <title>😂 ermoji</title>
-  <link>https://www.garrickadenbuie.com/project/ermoji/</link>
+  <link>https://www.garrickadenbuie.com/project/ermoji/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -2121,15 +2109,14 @@ font-style: inherit;">"gadenbuie/ermoji"</span>)</span></code></pre></div>
 </section>
 
  ]]></description>
-  <guid>https://www.garrickadenbuie.com/project/ermoji/</guid>
+  <guid>https://www.garrickadenbuie.com/project/ermoji/index.html</guid>
   <pubDate>Tue, 24 Apr 2018 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/ermoji/example-browse.png" medium="image" type="image/png" height="155" width="144"/>
 </item>
 <item>
   <title>🕵️‍♂️ RegExplain</title>
-  <link>https://www.garrickadenbuie.com/project/regexplain/</link>
+  <link>https://www.garrickadenbuie.com/project/regexplain/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -2167,7 +2154,7 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/regexplain/regexplain-selection.gif" class="img-fluid figure-img"></p>
-<figcaption>RegExplain Selection</figcaption>
+<figcaption class="figure-caption">RegExplain Selection</figcaption>
 </figure>
 </div>
 </section>
@@ -2176,7 +2163,7 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/regexplain/regexplain-library.gif" class="img-fluid figure-img"></p>
-<figcaption>RegExplain Library</figcaption>
+<figcaption class="figure-caption">RegExplain Library</figcaption>
 </figure>
 </div>
 </section>
@@ -2185,7 +2172,7 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://www.garrickadenbuie.com/project/regexplain/regexplain-try-this.gif" class="img-fluid figure-img"></p>
-<figcaption>RegExplain Examples</figcaption>
+<figcaption class="figure-caption">RegExplain Examples</figcaption>
 </figure>
 </div>
 </section>
@@ -2300,16 +2287,15 @@ font-style: inherit;">view_regex</span>(t_nested, r_nested)</span></code></pre><
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/regexplain/</guid>
+  <guid>https://www.garrickadenbuie.com/project/regexplain/index.html</guid>
   <pubDate>Wed, 04 Apr 2018 00:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/regexplain/regexplain-gadget-tabs.png" medium="image" type="image/png" height="44" width="144"/>
 </item>
 <item>
   <title>🍑 ggpomological: A Pomological ggplot2 Theme</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/project/ggpomological/</link>
+  <link>https://www.garrickadenbuie.com/project/ggpomological/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -3042,15 +3028,14 @@ font-style: inherit;">"plot-ridges-painted.png"</span>))</span></code></pre></di
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/ggpomological/</guid>
+  <guid>https://www.garrickadenbuie.com/project/ggpomological/index.html</guid>
   <pubDate>Fri, 16 Feb 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/ggpomological/ggpomological.png" medium="image" type="image/png" height="90" width="144"/>
 </item>
 <item>
   <title>📚 MC Test Analysis</title>
-  <link>https://www.garrickadenbuie.com/project/mc-test-analysis/</link>
+  <link>https://www.garrickadenbuie.com/project/mc-test-analysis/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -3302,15 +3287,14 @@ Generate Report
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/mc-test-analysis/</guid>
+  <guid>https://www.garrickadenbuie.com/project/mc-test-analysis/index.html</guid>
   <pubDate>Thu, 06 Jul 2017 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/mc-test-analysis/explore-03-irt.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>🐿️ Sqrrl</title>
-  <link>https://www.garrickadenbuie.com/project/sqrrl/</link>
+  <link>https://www.garrickadenbuie.com/project/sqrrl/index.html</link>
   <description><![CDATA[ 
-
 
 
 
@@ -4580,7 +4564,7 @@ font-style: inherit;">10</span></span></code></pre></div>
 
  ]]></description>
   <category>Project</category>
-  <guid>https://www.garrickadenbuie.com/project/sqrrl/</guid>
+  <guid>https://www.garrickadenbuie.com/project/sqrrl/index.html</guid>
   <pubDate>Sat, 01 Jul 2017 00:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/project/sqrrl/feature.png" medium="image" type="image/png" height="71" width="144"/>
 </item>
