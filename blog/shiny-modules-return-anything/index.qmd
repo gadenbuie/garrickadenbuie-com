@@ -38,7 +38,7 @@ You can see an example of this in the way [Mastering Shiny introduces Shiny modu
 _Toggle between **app** and **module** to see how the transformation is mostly a difference in boilerplate._
 
 ::: {.panelset}
-#### App {.panel}
+#### App
 
 ```r
 library(shiny)
@@ -66,7 +66,7 @@ shinyApp(
 )
 ```
 
-#### Module {.panel}
+#### Module
 
 ```r
 library(shiny)
