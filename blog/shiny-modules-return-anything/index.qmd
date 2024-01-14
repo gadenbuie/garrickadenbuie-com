@@ -23,16 +23,26 @@ editor_options:
 Learning shiny modules is a path of epiphanies.
 On the one hand, they're incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there's just a hint of magic.
 
+As a community, I don' think there's a super clear consensus around when and how to teach Shiny modules.
+Some consider them advanced topics that most Shiny apps don't need; others feel strongly that Shiny modules should be taught from the beginning and that everyone should be using Shiny modules.
+It's similar to how R programmers feel about functions.
+They're incredibly useful and more people could be using them, but there's also a whole range of scripts and apps that are perfectly effective without them.
+
+The end result is that many people learn and re-learn Shiny modules at different stages of the Shiny journey.
+The fun part is that each new thing you learn about modules are tiny epiphanies.
+Here are a few of my favorite 💡 aha moments.
+
 ### Epiphany: Shiny modules are tiny Shiny apps
 
 Shiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps.
 If you're new to Shiny modules, then you might want to take a quick break and read these great articles: [Emily Riederer's _Beginner's guide to Shiny modules_](https://emilyriederer.netlify.app/post/shiny-modules/) or [_Mastering Shiny: Shiny modules_](https://mastering-shiny.org/scaling-modules.html#scaling-modules).
 
-You can think of a Shiny module as a mini Shiny app.
+My first epiphany about modules was that you can think of a Shiny module as a mini Shiny app.
+
 A Shiny module has the same components as a Shiny app: in the same way an app has a `ui` and a `server`, a Shiny module has a function that returns UI elements and a `server` function that contains the module's server-side logic.
 You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.
 
-In fact, a great way to create a Shiny module is to start with a tiny Shiny app, get the behavior just right, and then convert the tiny app to a reusable module.
+In fact, a great way to create a Shiny module is to start with a tiny Shiny app, get the behavior just right, and then wrap the tiny app up into a reusable module.
 You can see an example of this in the way [Mastering Shiny introduces Shiny modules](https://mastering-shiny.org/scaling-modules.html#module-basics).
 
 _Toggle between **app** and **module** to see how the transformation is mostly a difference in boilerplate._
@@ -120,7 +130,7 @@ In the module's server code, Shiny gives you a proxy `input` object with the `"h
 The fiction is that you have to call `input$var` from within `moduleServer()` or the elder `callModule()`.
 You don't -- if you know the module's prefix, you can call `input$hist1-var` anywhere in your apps' server code.
 
-The namespacing mechanism behind modules so simple that I really wish Shiny app authors didn't have to worry about it at all.
+The namespacing mechanism behind modules is so simple that I really wish Shiny app authors didn't have to worry about it at all.
 That you need to use `ns()` in your module's UI function but don't in your module's server function is confusing and only adds to the feeling that some kind of magic is happening behind the scenes.
 
 I'm fairly certain the need for `ns()` in the UI is a historical quirk in that Shiny it was easier to automatically adjust the IDs in the module's `input` object than it would have been to automatically prefix IDs in the UI.
@@ -133,13 +143,20 @@ When Shiny modules are taught, they're often presented in a functional context: 
 This is a great starting place.
 But I often think of functions as units of code that take inputs and return outputs.
 
-diagram: input, function, output
+```{mermaid}
+flowchart LR
+  in[input] ---> fn>function] ---> out(output)
+```
 
 Shiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure.
-For example, you don't need to limit yourself to just one UI function for your module (nor your server function either, for that matter).
 
-On the server side, it can be particularly cumbersome to think of the module's server function in the typical way, taking inputs, performing actions, and returning an output.
-Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany and has since unlocked a new way of thinking about Shiny modules: Shiny module functions *can return anything*.
+In fact, it can be particularly cumbersome to think of the module's server function in the typical way, taking inputs, performing actions, and returning an output, especially when you're accustomed to leaning into Shiny's reactive programming model.
+
+Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany.
+It has since unlocked a new way of thinking about Shiny modules that feels like a balance between encapsulated code while still allowing Shiny's powerful non-local reactivity.
+The epiphany: Shiny module functions *can return anything*.
+
+<!-- For example, you don't need to limit yourself to just one UI function for your module (nor your server function either, for that matter). -->
 
 ### Epiphany: Shiny modules can return *anything*
 
