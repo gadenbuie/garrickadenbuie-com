@@ -10,7 +10,7 @@ project:
     - "colophon/index.*md"
   post-render:
     # - "rsync --recursive --prune-empty-dirs --copy-links --safe-links static/. _site/"
-    - "cp -rn static/. _site/"
+    - "cp -R static/. _site/"
 
 website:
   title: "Garrick Aden-Buie"

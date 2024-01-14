@@ -8,9 +8,6 @@ comments:
     mapping: pathname
     category: Comments
 
-filters:
-  - lightbox
-
 lightbox:
   match: auto
   effect: zoom
