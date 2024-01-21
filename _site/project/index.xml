@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.4.480</generator>
+<generator>quarto-1.4.542</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
@@ -2155,10 +2155,35 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 </section>
 <section id="demo" class="level2">
 <h2 class="anchored" data-anchor-id="demo">Try it out!</h2>
-<iframe src="https://apps.garrickadenbuie.com/regexplain/" style="border: #DDDDDD 2px solid; background-color: #F9F9F9; width: 650px; height: 750px">
-<p>
-<p>Your browser doesn’t support <code>iframes</code> or you have blocker enabled. You can try the regexplain addin live at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>. </iframe><p></p>
-<p>A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>. Clicking the “Cancel” or “Send RegEx To Console” buttons will kill the app. Reload this page to restart the app.</p>
+<div style="width: min(550px, 100%); margin-inline: auto;">
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 550
+
+if (!requireNamespace("regexplain", quietly = TRUE)) {
+  install.packages("regexplain", repos = c(
+    "https://gadenbuie.r-universe.dev",
+    "https://repo.r-wasm.org"
+  ))
+}
+
+library(shiny)
+library(miniUI)
+library(stringr)
+library(regexplain)
+
+
+shinyApp(
+  ui = regexplain:::regexplain_gadget_ui(),
+  server = regexplain:::regexplain_gadget_server(NULL)
+)</code></pre>
+</div>
+<p>The demo version of regexplain is running in your browser, thanks to <a href="https://github.com/posit-dev/shinylive">shinylive for Quarto</a>, <a href="https://github.com/r-wasm">r-wasm</a>, and WASM binaries provided by <a href="https://gadenbuie.r-universe.dev">r-universe.dev</a>. You can also <a href="https://shinylive.io/r/app/#h=0&amp;code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMASwDMACACgEIAnOARwFdr2A5WHADOqKATiMAOmHYBzOAA9UAGyjUI03PW7U4pZQE96AXnoAVLAFUAogEpb9EJIj166oaSjLlGUQQDWUPJCUjJw8kqq6pr07KhEQib0BFIurvTSABakpKhCiAD0BbJQACYUAEY8cBisALRcENQAbnCsQjXlzZrO6Rlg2bn5RXFEtXUA7lBCMBhErLLSvfT2zgC+zs7K1BWsUKwGjEKZ6ga2Wzt7B4ww6tSWAJLnENu7+4cerOqyrM+vV4c5IoVGoIM9NhBjqcAILoVKuHhJIGRUGINHIkHqAD6JVK8lIWJ4jFsuGWHVYrVYSPCwKiEDRiAxdJxZXxWPJlMYfEsABkec9bGA1gBdIA" target="_blank">view the app in a separate window</a> thanks to <a href="https://shinylive.io/r/">shinylive.io</a>.</p>
+<!--
+A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>.
+Clicking the "Cancel" or "Send RegEx To Console" buttons will kill the app.
+Reload this page to restart the app.
+-->
 </section>
 <section id="regexplain-in-action" class="level2">
 <h2 class="anchored" data-anchor-id="regexplain-in-action">RegExplain in Action</h2>
@@ -2203,7 +2228,7 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 </ul>
 <p><a href="regexplain-gadget-tabs.png" data-featherlight="image"> <img src="https://www.garrickadenbuie.com/project/regexplain/ regexplain-gadget-tabs.png " alt=" The panes of regexplain "> </a></p>
 <p>When you’re done, click on the <strong>Send Regex to Console</strong> to send your regex expression to… the console!</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="sc" style="color: #5E5E5E;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span> pattern <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -2245,20 +2270,20 @@ font-style: inherit;">w+))?"</span></span></code></pre></div>
 <section id="view-static-regex-results" class="level2">
 <h2 class="anchored" data-anchor-id="view-static-regex-results">View Static Regex Results</h2>
 <p><em>RegExplain</em> provides the function <code>view_regex()</code> that you can use as a <code>stringr::str_view()</code> replacement. In addition to highlighting matched portions of the text, <code>view_regex()</code> colorizes groups and attempts to colorize the regex expression itself as well.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">text <span class="ot" style="color: #003B4F;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">text <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"breakfast=eggs;lunch=pizza"</span>,</span>
-<span id="cb4-2">          <span class="st" style="color: #20794D;
+<span id="cb5-2">          <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"breakfast=bacon;lunch=spaghetti"</span>,</span>
-<span id="cb4-3">          <span class="st" style="color: #20794D;
+<span id="cb5-3">          <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"no food here"</span>)</span>
-<span id="cb4-4">pattern <span class="ot" style="color: #003B4F;
+<span id="cb5-4">pattern <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -2271,22 +2296,22 @@ background-color: null;
 font-style: inherit;">\\</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">w+).+(ch=s?p)"</span></span>
-<span id="cb4-5"></span>
-<span id="cb4-6"><span class="fu" style="color: #4758AB;
+<span id="cb5-5"></span>
+<span id="cb5-6"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">view_regex</span>(text, pattern)</span></code></pre></div>
 <p><a href="view-regex.png" data-featherlight="image"> <img src="https://www.garrickadenbuie.com/project/regexplain/ view-regex.png " alt=" Example view_regex(text, pattern). "> </a></p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">t_nested <span class="ot" style="color: #003B4F;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">t_nested <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"anestedgroupwithingroupexample"</span></span>
-<span id="cb5-2">r_nested <span class="ot" style="color: #003B4F;
+<span id="cb6-2">r_nested <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"(a(nested)(group(within(group))(example)))"</span></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
+<span id="cb6-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">view_regex</span>(t_nested, r_nested)</span></code></pre></div>
 <p><a href="view-nested.png" data-featherlight="image"> <img src="https://www.garrickadenbuie.com/project/regexplain/ view-nested.png " alt=" Example of nested groups "> </a></p>

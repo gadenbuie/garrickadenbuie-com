@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.480">
+<meta name="generator" content="quarto-1.4.542">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -77,6 +77,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<meta name="shinylive:serviceworker_dir" content="../..">
+<script src="../../site_libs/quarto-contrib/shinylive-0.2.3/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../../site_libs/quarto-contrib/shinylive-0.2.3/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../../site_libs/quarto-contrib/shinylive-0.2.3/shinylive/shinylive.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
@@ -102,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -242,10 +248,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="demo" class="level2">
 <h2 class="anchored" data-anchor-id="demo">Try it out!</h2>
-<iframe src="https://apps.garrickadenbuie.com/regexplain/" style="border: #DDDDDD 2px solid; background-color: #F9F9F9; width: 650px; height: 750px">
-<p>
-<p>Your browser doesn’t support <code>iframes</code> or you have blocker enabled. You can try the regexplain addin live at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>. </iframe><p></p>
-<p>A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>. Clicking the “Cancel” or “Send RegEx To Console” buttons will kill the app. Reload this page to restart the app.</p>
+<div style="width: min(550px, 100%); margin-inline: auto;">
+<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 550
+
+if (!requireNamespace("regexplain", quietly = TRUE)) {
+  install.packages("regexplain", repos = c(
+    "https://gadenbuie.r-universe.dev",
+    "https://repo.r-wasm.org"
+  ))
+}
+
+library(shiny)
+library(miniUI)
+library(stringr)
+library(regexplain)
+
+
+shinyApp(
+  ui = regexplain:::regexplain_gadget_ui(),
+  server = regexplain:::regexplain_gadget_server(NULL)
+)</code></pre>
+</div>
+<p>The demo version of regexplain is running in your browser, thanks to <a href="https://github.com/posit-dev/shinylive">shinylive for Quarto</a>, <a href="https://github.com/r-wasm">r-wasm</a>, and WASM binaries provided by <a href="https://gadenbuie.r-universe.dev">r-universe.dev</a>. You can also <a href="https://shinylive.io/r/app/#h=0&amp;code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMASwDMACACgEIAnOARwFdr2A5WHADOqKATiMAOmHYBzOAA9UAGyjUI03PW7U4pZQE96AXnoAVLAFUAogEpb9EJIj166oaSjLlGUQQDWUPJCUjJw8kqq6pr07KhEQib0BFIurvTSABakpKhCiAD0BbJQACYUAEY8cBisALRcENQAbnCsQjXlzZrO6Rlg2bn5RXFEtXUA7lBCMBhErLLSvfT2zgC+zs7K1BWsUKwGjEKZ6ga2Wzt7B4ww6tSWAJLnENu7+4cerOqyrM+vV4c5IoVGoIM9NhBjqcAILoVKuHhJIGRUGINHIkHqAD6JVK8lIWJ4jFsuGWHVYrVYSPCwKiEDRiAxdJxZXxWPJlMYfEsABkec9bGA1gBdIA" target="_blank">view the app in a separate window</a> thanks to <a href="https://shinylive.io/r/">shinylive.io</a>.</p>
+<!--
+A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>.
+Clicking the "Cancel" or "Send RegEx To Console" buttons will kill the app.
+Reload this page to restart the app.
+-->
 </section>
 <section id="regexplain-in-action" class="level2">
 <h2 class="anchored" data-anchor-id="regexplain-in-action">RegExplain in Action</h2>
@@ -290,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><a href="regexplain-gadget-tabs.png" data-featherlight="image"> <img src=" regexplain-gadget-tabs.png " alt=" The panes of regexplain "> </a></p>
 <p>When you’re done, click on the <strong>Send Regex to Console</strong> to send your regex expression to… the console!</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> pattern <span class="ot">&lt;-</span> <span class="st">"</span><span class="sc">\\</span><span class="st">b(red|orange|yellow|green|blue|purple|white|brown)(?:</span><span class="sc">\\</span><span class="st">s(</span><span class="sc">\\</span><span class="st">w+))?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> pattern <span class="ot">&lt;-</span> <span class="st">"</span><span class="sc">\\</span><span class="st">b(red|orange|yellow|green|blue|purple|white|brown)(?:</span><span class="sc">\\</span><span class="st">s(</span><span class="sc">\\</span><span class="st">w+))?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice that <em>RegExplain</em> handled the extra backslashes needed for storing the RegEx characters <code>\b</code>, <code>\s</code>, and <code>\w</code>. Inside the gadget you can use regular old regular expressions as you found them in the wild (hello, <a href="https://stackoverflow.com/questions/tagged/regex">Stack Overflow</a>!).</p>
 <section id="help-and-cheat-sheet" class="level3">
 <h3 class="anchored" data-anchor-id="help-and-cheat-sheet">Help and Cheat Sheet</h3>
@@ -314,16 +345,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="view-static-regex-results" class="level2">
 <h2 class="anchored" data-anchor-id="view-static-regex-results">View Static Regex Results</h2>
 <p><em>RegExplain</em> provides the function <code>view_regex()</code> that you can use as a <code>stringr::str_view()</code> replacement. In addition to highlighting matched portions of the text, <code>view_regex()</code> colorizes groups and attempts to colorize the regex expression itself as well.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"breakfast=eggs;lunch=pizza"</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"breakfast=bacon;lunch=spaghetti"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"no food here"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">"((</span><span class="sc">\\</span><span class="st">w+)=)(</span><span class="sc">\\</span><span class="st">w+).+(ch=s?p)"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">view_regex</span>(text, pattern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"breakfast=eggs;lunch=pizza"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"breakfast=bacon;lunch=spaghetti"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"no food here"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="st">"((</span><span class="sc">\\</span><span class="st">w+)=)(</span><span class="sc">\\</span><span class="st">w+).+(ch=s?p)"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">view_regex</span>(text, pattern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a href="view-regex.png" data-featherlight="image"> <img src=" view-regex.png " alt=" Example view_regex(text, pattern). "> </a></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>t_nested <span class="ot">&lt;-</span> <span class="st">"anestedgroupwithingroupexample"</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>r_nested <span class="ot">&lt;-</span> <span class="st">"(a(nested)(group(within(group))(example)))"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">view_regex</span>(t_nested, r_nested)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>t_nested <span class="ot">&lt;-</span> <span class="st">"anestedgroupwithingroupexample"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>r_nested <span class="ot">&lt;-</span> <span class="st">"(a(nested)(group(within(group))(example)))"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">view_regex</span>(t_nested, r_nested)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a href="view-nested.png" data-featherlight="image"> <img src=" view-nested.png " alt=" Example of nested groups "> </a></p>
 </section>
 <section id="notes" class="level2">
@@ -606,38 +637,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
-        typesetMath(container);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
         return container.innerHTML
       } else {
-        typesetMath(note);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -646,7 +667,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      typesetMath(note);
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
       return note.innerHTML;
     }
   }

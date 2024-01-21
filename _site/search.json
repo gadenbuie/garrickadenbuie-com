@@ -319,7 +319,7 @@
     "href": "project/regexplain/index.html#demo",
     "title": "🕵️‍♂️ RegExplain",
     "section": "Try it out!",
-    "text": "Try it out!\n\n&lt;p&gt;\n&lt;p&gt;Your browser doesn’t support &lt;code&gt;iframes&lt;/code&gt; or you have blocker enabled. You can try the regexplain addin live at &lt;a href=\"https://apps.garrickadenbuie.com/regexplain\"&gt;https://apps.garrickadenbuie.com/regexplain&lt;/a&gt;. \nA demo version of the app is available online at https://apps.garrickadenbuie.com/regexplain. Clicking the “Cancel” or “Send RegEx To Console” buttons will kill the app. Reload this page to restart the app."
+    "text": "Try it out!\n\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 550\n\nif (!requireNamespace(\"regexplain\", quietly = TRUE)) {\n  install.packages(\"regexplain\", repos = c(\n    \"https://gadenbuie.r-universe.dev\",\n    \"https://repo.r-wasm.org\"\n  ))\n}\n\nlibrary(shiny)\nlibrary(miniUI)\nlibrary(stringr)\nlibrary(regexplain)\n\n\nshinyApp(\n  ui = regexplain:::regexplain_gadget_ui(),\n  server = regexplain:::regexplain_gadget_server(NULL)\n)\n\nThe demo version of regexplain is running in your browser, thanks to shinylive for Quarto, r-wasm, and WASM binaries provided by r-universe.dev. You can also view the app in a separate window thanks to shinylive.io."
   },
   {
     "objectID": "project/regexplain/index.html#regexplain-in-action",
