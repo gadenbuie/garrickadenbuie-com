@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.542">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -229,8 +229,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#shiny-modules-one-epiphany-at-a-time" id="toc-shiny-modules-one-epiphany-at-a-time" class="nav-link active" data-scroll-target="#shiny-modules-one-epiphany-at-a-time">Shiny modules, one epiphany at a time</a>
   <ul class="collapse">
-  <li><a href="#epiphany-shiny-modules-are-tiny-shiny-apps" id="toc-epiphany-shiny-modules-are-tiny-shiny-apps" class="nav-link" data-scroll-target="#epiphany-shiny-modules-are-tiny-shiny-apps">Epiphany: Shiny modules are tiny Shiny apps</a></li>
   <li><a href="#epiphany-shiny-modules-are-a-convenient-fiction" id="toc-epiphany-shiny-modules-are-a-convenient-fiction" class="nav-link" data-scroll-target="#epiphany-shiny-modules-are-a-convenient-fiction">Epiphany: Shiny modules are a convenient fiction</a></li>
+  <li><a href="#epiphany-shiny-modules-are-tiny-shiny-apps" id="toc-epiphany-shiny-modules-are-tiny-shiny-apps" class="nav-link" data-scroll-target="#epiphany-shiny-modules-are-tiny-shiny-apps">Epiphany: Shiny modules are tiny Shiny apps</a></li>
   <li><a href="#shiny-modules-are-functions" id="toc-shiny-modules-are-functions" class="nav-link" data-scroll-target="#shiny-modules-are-functions">Shiny modules are functions?</a></li>
   <li><a href="#epiphany-shiny-modules-can-return-anything" id="toc-epiphany-shiny-modules-can-return-anything" class="nav-link" data-scroll-target="#epiphany-shiny-modules-can-return-anything">Epiphany: Shiny modules can return <em>anything</em></a></li>
   </ul></li>
@@ -248,8 +248,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="shiny-modules-one-epiphany-at-a-time" class="level2">
 <h2 class="anchored" data-anchor-id="shiny-modules-one-epiphany-at-a-time">Shiny modules, one epiphany at a time</h2>
 <p>Learning shiny modules is a path of epiphanies. On the one hand, they’re incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there’s just a hint of magic.</p>
-<p>As a community, I don’ think there’s a super clear consensus around when and how to teach Shiny modules. Some consider them advanced topics that most Shiny apps don’t need; others feel strongly that Shiny modules should be taught from the beginning and that everyone should be using Shiny modules. It’s similar to how R programmers feel about functions. They’re incredibly useful and more people could be using them, but there’s also a whole range of scripts and apps that are perfectly effective without them.</p>
-<p>The end result is that many people learn and re-learn Shiny modules at different stages of the Shiny journey. The fun part is that each new thing you learn about modules are tiny epiphanies. Here are a few of my favorite 💡 aha moments.</p>
+<p>As a community, I don’t think we’ve settled on a super clear consensus around when and how to teach Shiny modules. Some consider them advanced topics that most Shiny apps don’t need; others feel strongly that Shiny modules should be taught from the beginning and that everyone should be using Shiny modules. It’s similar to how R programmers feel about functions. They’re incredibly useful and more people could be using them, but there’s also a whole range of scripts and apps that are perfectly effective without them.</p>
+<p>The end result is that many people learn and re-learn Shiny modules at different stages of their Shiny journey. The fun part is that each new thing you learn about modules are tiny epiphanies. I recently was visited by a surprising, new epiphany of my own, but first I’d like to share a few of my favorite 💡 aha moments.</p>
+<section id="epiphany-shiny-modules-are-a-convenient-fiction" class="level3">
+<h3 class="anchored" data-anchor-id="epiphany-shiny-modules-are-a-convenient-fiction">Epiphany: Shiny modules are a convenient fiction</h3>
+<p>The hardest part of writing a Shiny module is remembering that you need to wrap any input IDs in the UI with <code>ns()</code>. <a href="https://twitter.com/_ColinFay/status/1196879284532662273">Colin Fay knows this</a>. <code>ns()</code> itself is a common source of epiphanies.ß</p>
+<p>When I learned Shiny modules, <code>ns()</code> seemed like a small piece of magic. I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny’s magic. And when I learned that <code>ns(id)</code> uses no more magic than a simple <code>paste0(namespace, "-", id)</code> , I remember wondering if everything I had learned about Shiny modules was a lie. A <em>convenient fiction</em>, as <a href="https://fosstodon.org/@jonthegeek/111383079879981433">Jon Harmon put it</a>.</p>
+<p>In Shiny, UI elements and server logic are created in separate worlds. Neither part knows anything about the other. They are only connected by the small strings we use as identifiers, the input or output IDs. When you call <code>input$var</code> in the server function, you’re hoping for the best that you’ve included <code>selectInput("var", ...)</code> somewhere in your UI.</p>
+<p>But input IDs aren’t special, they’re just strings that you have to type correctly and it’s up to you to make sure they’re unique. It’s the same for the IDs you give your shiny modules when you actually use them in your app. It’s up to you to make sure that <code>histogram_ui("hist1")</code> has a corresponding <code>histogram_server("hist1")</code>.</p>
+<p>The only thing that <code>ns()</code> does is prefix a regular old input ID, <code>"var"</code>, with the module’s ID, <code>"hist1-"</code>, to create a unique ID <code>"hist1-var"</code>. <code>"var"</code> is unique within the module, <code>"hist1"</code> is unique with the app that uses the module, and <code>"hist1-var"</code> is globally unique everywhere in the app.</p>
+<p>In the module’s server code, Shiny gives you a proxy <code>input</code> object with the <code>"hist1-"</code> prefix removed so you can call <code>input$var</code>. The fiction is that you have to call <code>input$var</code> from within <code>moduleServer()</code> or the elder <code>callModule()</code>. You don’t – if you know the module’s prefix, you can call <code>input$`hist1-var`</code> anywhere in your apps’ server code.</p>
+<p>If <code>ns()</code> were a magic trick, it’d be this one<span class="visually-hidden"> where two dogs fall for the disappearing (over the shoulder) ball trick</span>.</p>
+<iframe class="d-block mx-auto" width="342" height="608" src="https://www.youtube.com/embed/IMQv-cF8h60" title="Hilarious Dog Mesmerized By Ball Trick!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+<p>This namespacing mechanism behind modules is so simple that I really wish Shiny app authors didn’t have to worry about it at all. That you need to use <code>ns()</code> in your module’s UI function but don’t in your module’s server function is confusing and only adds to the feeling that some kind of magic is happening behind the scenes.</p>
+<p>I’m fairly certain the need for <code>ns()</code> in the UI is a historical quirk in that Shiny it was easier to automatically adjust the IDs in the module’s <code>input</code> object than it would have been to automatically prefix IDs in the UI. In <a href="https://shiny.posit.co/py">Shiny for Python</a>, <a href="https://shiny.posit.co/py/docs/workflow-modules.html">modules</a> don’t require <code>ns()</code> <em>anywhere</em>.</p>
+</section>
 <section id="epiphany-shiny-modules-are-tiny-shiny-apps" class="level3">
 <h3 class="anchored" data-anchor-id="epiphany-shiny-modules-are-tiny-shiny-apps">Epiphany: Shiny modules are tiny Shiny apps</h3>
 <p>Shiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps. If you’re new to Shiny modules, then you might want to take a quick break and read these great articles: <a href="https://emilyriederer.netlify.app/post/shiny-modules/">Emily Riederer’s <em>Beginner’s guide to Shiny modules</em></a> or <a href="https://mastering-shiny.org/scaling-modules.html#scaling-modules"><em>Mastering Shiny: Shiny modules</em></a>.</p>
@@ -312,16 +326,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </div>
 </section>
-<section id="epiphany-shiny-modules-are-a-convenient-fiction" class="level3">
-<h3 class="anchored" data-anchor-id="epiphany-shiny-modules-are-a-convenient-fiction">Epiphany: Shiny modules are a convenient fiction</h3>
-<p>The hardest part of going from a tiny app to a Shiny module is finding all the places in your UI where you need to wrap an input ID in <code>ns()</code>. <a href="https://twitter.com/_ColinFay/status/1196879284532662273">Colin Fay knows this</a>.</p>
-<p>In fact, <code>ns()</code> itself is another common source of epiphanies. When I learned Shiny modules, <code>ns()</code> seemed like a small piece of magic. I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny’s magic. And when I learned that <code>ns(id)</code> uses no more magic than a simple <code>paste0(namespace, "-", id)</code> , I remember wondering if everything I had learned about Shiny modules was a lie. A <em>convenient fiction</em>, as <a href="https://fosstodon.org/@jonthegeek/111383079879981433">Jon Harmon put it</a>.</p>
-<p>In Shiny, UI elements and server logic are completely disconnected. Neither part knows anything about the other. The only thing that connects them are the small strings we use as identifiers, the input or output IDs. When you call <code>input$var</code> in the server function, you’re hoping for the best that you’ve included <code>selectInput("var", ...)</code> somewhere in your UI.</p>
-<p>But input IDs aren’t special, they’re just strings that you have to type correctly and it’s up to you to make sure they’re unique. It’s the same for the IDs you give your shiny modules when you actually use them in your app. It’s up to you to make sure that <code>histogram_ui("hist1")</code> has a corresponding <code>histogram_server("hist1")</code>.</p>
-<p>The only thing that <code>ns()</code> does is prefix <code>"var"</code> with <code>"hist1-"</code> to create a unique ID <code>"hist1-var"</code>. In the module’s server code, Shiny gives you a proxy <code>input</code> object with the <code>"hist1-"</code> prefix removed so you can call <code>input$var</code>. The fiction is that you have to call <code>input$var</code> from within <code>moduleServer()</code> or the elder <code>callModule()</code>. You don’t – if you know the module’s prefix, you can call <code>input$hist1-var</code> anywhere in your apps’ server code.</p>
-<p>The namespacing mechanism behind modules is so simple that I really wish Shiny app authors didn’t have to worry about it at all. That you need to use <code>ns()</code> in your module’s UI function but don’t in your module’s server function is confusing and only adds to the feeling that some kind of magic is happening behind the scenes.</p>
-<p>I’m fairly certain the need for <code>ns()</code> in the UI is a historical quirk in that Shiny it was easier to automatically adjust the IDs in the module’s <code>input</code> object than it would have been to automatically prefix IDs in the UI. In <a href="https://shiny.posit.co/py">Shiny for Python</a>, <a href="https://shiny.posit.co/py/docs/workflow-modules.html">modules</a> don’t require <code>ns()</code> <em>anywhere</em>.</p>
-</section>
 <section id="shiny-modules-are-functions" class="level3">
 <h3 class="anchored" data-anchor-id="shiny-modules-are-functions">Shiny modules are functions?</h3>
 <p>When Shiny modules are taught, they’re often presented in a functional context: a function returns the module’s UI, a function contains the server-side logic. This is a great starting place. But I often think of functions as units of code that take inputs and return outputs.</p>
@@ -340,6 +344,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Shiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure.</p>
 <p>In fact, it can be particularly cumbersome to think of the module’s server function in the typical way, taking inputs, performing actions, and returning an output, especially when you’re accustomed to leaning into Shiny’s reactive programming model.</p>
+<p>I talked about viewing a module as a small, self-contained Shiny app. But once you put the module inside a larger Shiny app, it’s no longer completely independent. In this new context, you might find that the module should react to an input or state in the larger app. Without modules, you simply connect the two interdependent parts with an observer or a reactive expression.</p>
+<p>But with modules you can’t just reach across the module’s boundary and introduce new reactive connections. Or can you?</p>
 <p>Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany. It has since unlocked a new way of thinking about Shiny modules that feels like a balance between encapsulated code while still allowing Shiny’s powerful non-local reactivity. The epiphany: Shiny module functions <em>can return anything</em>.</p>
 <!-- For example, you don't need to limit yourself to just one UI function for your module (nor your server function either, for that matter). -->
 </section>
@@ -667,7 +673,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
