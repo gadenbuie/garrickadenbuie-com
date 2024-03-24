@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.480">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -107,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -135,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -264,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a class="github-button" href="https://github.com/gadenbuie" data-show-count="true" aria-label="Follow @gadenbuie on GitHub">Follow @gadenbuie</a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/de-iris-my-repos" data-icon="octicon-star" data-show-count="true" aria-label="Star gadenbuie/de-iris-my-repos on GitHub">Star <code>de-iris-my-repos</code></a>&nbsp; <a class="github-button" href="https://github.com/gadenbuie/de-iris-my-repos/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork gadenbuie/de-iris-my-repos on GitHub">Fork <code>de-iris-my-repos</code></a></p>
 <hr>
 <p>Last week, motivated by the Black Lives Matter movement and protests around the United States, <a href="https://www.danielawitten.com/">Daniela Witten</a> wrote a long and insightful <a href="https://twitter.com/daniela_witten/status/1268392721275744256">Twitter thread</a> about the origins of an often-used and completely boring dataset: <code>iris</code>.</p>
-<p></p><div id="tweet-72281"></div><script>tweet={"url":"https:\/\/twitter.com\/daniela_witten\/status\/1268392721275744256","author_name":"Daniela Witten","author_url":"https:\/\/twitter.com\/daniela_witten","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ELike many people, I have spent the last 10 days watching so much tragedy unfold. So much anguish from Black colleagues here on twitter. \u003Cbr\u003E\u003Cbr\u003EAnd so I&#39;ve been trying to think of ways that *I* can improve my tiny corner of the world.  \u003Cbr\u003E\u003Cbr\u003EA thread on why change is hard in academia  1\/\u003C\/p\u003E&mdash; Daniela Witten (@daniela_witten) \u003Ca href=\"https:\/\/twitter.com\/daniela_witten\/status\/1268392721275744256?ref_src=twsrc%5Etfw\"\u003EJune 4, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-72281").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-71683"></div><script>tweet={"url":"https:\/\/twitter.com\/daniela_witten\/status\/1268392721275744256","author_name":"Daniela Witten","author_url":"https:\/\/twitter.com\/daniela_witten","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ELike many people, I have spent the last 10 days watching so much tragedy unfold. So much anguish from Black colleagues here on twitter. \u003Cbr\u003E\u003Cbr\u003EAnd so I&#39;ve been trying to think of ways that *I* can improve my tiny corner of the world.  \u003Cbr\u003E\u003Cbr\u003EA thread on why change is hard in academia  1\/\u003C\/p\u003E&mdash; Daniela Witten (@daniela_witten) \u003Ca href=\"https:\/\/twitter.com\/daniela_witten\/status\/1268392721275744256?ref_src=twsrc%5Etfw\"\u003EJune 4, 2020\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-71683").innerHTML = tweet["html"];</script><p></p>
 <p>I’ve long known about Ronald Fisher’s eugenicist past, but I admit that I have often thoughtlessly turned to <code>iris</code> when needing a small, boring data set to demonstrate a coding or data principle.</p>
 <p>But Daniella and Timothée Poisot are right: <a href="https://armchairecology.blog/iris-dataset/">it’s time to retire <em>iris</em></a>.</p>
 <blockquote class="twitter-tweet blockquote">
@@ -306,7 +307,7 @@ The Iris dataset feels really gross now.
 <p>When you run <code>de_iris_my_repos()</code> it searches your public code for mentions of <code>iris</code> and asks you if you want to open an issue in each repo. If you do, it opens an issue using the template in the screen shot below so that you can remember to remove <code>iris</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="full-example-issue.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-description="" title="An example issue opened by de_iris_my_repos()."><img src="full-example-issue.png" class="img-fluid figure-img" alt="An example issue opened by de_iris_my_repos()."></a></p>
+<p><a href="full-example-issue.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="An example issue opened by de_iris_my_repos()."><img src="full-example-issue.png" class="img-fluid figure-img" alt="An example issue opened by de_iris_my_repos()."></a></p>
 <figcaption>An example issue opened by <code>de_iris_my_repos()</code>.</figcaption>
 </figure>
 </div>
@@ -321,6 +322,9 @@ The Iris dataset feels really gross now.
 </ul>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">An example issue opened by <code>de_iris_my_repos()</code>.</span>
+</div>
 </section>
 </section>
 
@@ -548,6 +552,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.garrickadenbuie\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -582,7 +604,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -597,38 +623,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
-        typesetMath(container);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
         return container.innerHTML
       } else {
-        typesetMath(note);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -637,8 +653,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      typesetMath(note);
-      return note.innerHTML;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -871,13 +894,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
-</div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/lets-move-on-from-iris/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/lets-move-on-from-iris/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

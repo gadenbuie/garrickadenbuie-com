@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/talk/index.xml" rel="self" type="application/rss+xml"/>
 <description>Presentations, talks, and workshops.
 </description>
-<generator>quarto-1.4.480</generator>
+<generator>quarto-1.4.551</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>

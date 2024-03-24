@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.480">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -107,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -135,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -267,6 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As a parent, I loathe daylight saving time. Nothing reveals the shared delusion of time like trying to explain to your children why we moved the clock forward an hour when it means they’ll suddenly need to go to bed while it’s light out or wake up and get ready for school while it’s dark.</p>
 <p>So in this spirit, I started to wonder: what kind of returns are we getting on our daylight saving? Except, rather than try to directly answer that question — since that’s way too hard — I chose to visualize day light hours to see how they align with the modern work day.</p>
 <p>The plot below shows the yearly day light schedule for 2022 in Atlanta, GA where I live. We’ll also take a look at the day light schedule in <a href="#around-the-world">other cities around the world</a> or <a href="#across-the-us">across the United States</a>. At the end of this post, I’ll share the code I used to make the plot below.</p>
+<div>
 <figure role="group" class="figure">
   <img src="us-cities/georgia_atlanta_normal.png" alt="Ribbon plot showing daylight hours from sunrise to sunset in Atlanta, GA for 2022. The plot highlights the shift caused by Daylight Saving Time that where daylight hours are adjusted to be later in the day from March to November." class="figure-img">
   <figcaption class="mt2 lh-copy f6 f5-ns overflow-x-scroll"><strong>Atlanta, GA</strong>. 
@@ -302,6 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </figcaption>
 </figure>
+</div>
 <p>It’s pretty clear from this visualization that in Atlanta, GA, which is very much on the western edge of the U.S. Eastern time zone, year-round standard time is a decent way to live life. What about other cities in the world?</p>
 </section>
 <section id="around-the-world" class="level2">
@@ -32357,7 +32360,11 @@ document.getElementById('us-city-random').addEventListener('click', function(ev)
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> time, <span class="at">color =</span> event) <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><a href="index_files/figure-html/plot-first-looks-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/plot-first-looks-1.png" class="img-fluid" alt="Basic unthemed ggplot2 line plot of sunrise and sunset times for Atlanta, GA. There are six lines, three in the morning for nautical dawn, dawn and sunrise, and three lines in the evening for their corresponding events. Each line has a different color." width="864"></a></p>
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/plot-first-looks-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/plot-first-looks-1.png" class="img-fluid figure-img" alt="Basic unthemed ggplot2 line plot of sunrise and sunset times for Atlanta, GA. There are six lines, three in the morning for nautical dawn, dawn and sunrise, and three lines in the evening for their corresponding events. Each line has a different color." width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -32425,7 +32432,11 @@ document.getElementById('us-city-random').addEventListener('click', function(ev)
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(date, <span class="at">ymin =</span> starts, <span class="at">ymax =</span> ends, <span class="at">fill =</span> pair) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><a href="index_files/figure-html/plot-tidier-sun-times-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/plot-tidier-sun-times-1.png" class="img-fluid" alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times. Unlike the previous plot, this plot has three shaded regions stacked on top of each other with nautical dawn to dusk in the background and sunrise to sunset in the foreground. There are now three colors rather than six." width="864"></a></p>
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/plot-tidier-sun-times-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/plot-tidier-sun-times-1.png" class="img-fluid figure-img" alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times. Unlike the previous plot, this plot has three shaded regions stacked on top of each other with nautical dawn to dusk in the background and sunrise to sunset in the foreground. There are now three colors rather than six." width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <p>It looks terrible, but it’s more or less what we want to see. The y-axis is a little confusing though because it reads from night at the top to day at the bottom. The trick is to recall that we used <code>hms::as_hms()</code> to turn the time of day into an integer number of seconds from midnight. So we can reverse the y-axis with <a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html"><code>scale_y_reverse()</code></a> and then provide our own labels.</p>
@@ -32444,7 +32455,11 @@ document.getElementById('us-city-random').addEventListener('click', function(ev)
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_labels =</span> <span class="st">"%b"</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><a href="index_files/figure-html/plot-tidier-sun-times-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/plot-tidier-sun-times-2-1.png" class="img-fluid" alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times, with better x- and y-axis labels. In this case, the y-axis is reversed and labelled &quot;hours:minutes&quot;. The x-axis labels include only the month abbreviation." width="864"></a></p>
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/plot-tidier-sun-times-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/plot-tidier-sun-times-2-1.png" class="img-fluid figure-img" alt="Basic unthemed ggplot2 ribbon plot of sunrise and sunset times, with better x- and y-axis labels. In this case, the y-axis is reversed and labelled &quot;hours:minutes&quot;. The x-axis labels include only the month abbreviation." width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -32680,7 +32695,11 @@ document.getElementById('us-city-random').addEventListener('click', function(ev)
 <span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">"plot"</span></span>
 <span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><a href="index_files/figure-html/daylight-hours-atlanta-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/daylight-hours-atlanta-1.png" class="img-fluid" alt="A heavily themed and customized ggplot2 plot of daylight hours in Atlanta. The colors are evocative of a sunrise, with dark violet background and soft sand-colored text and foreground colors. The plot highlights the change in timezone from EST to EDT with text labels and arrows pointing to the region where the sunlight hours shift one hour later in the day." width="864"></a></p>
+<div>
+<figure class="figure">
+<p><a href="index_files/figure-html/daylight-hours-atlanta-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/daylight-hours-atlanta-1.png" class="img-fluid figure-img" alt="A heavily themed and customized ggplot2 plot of daylight hours in Atlanta. The colors are evocative of a sunrise, with dark violet background and soft sand-colored text and foreground colors. The plot highlights the change in timezone from EST to EDT with text labels and arrows pointing to the region where the sunlight hours shift one hour later in the day." width="864"></a></p>
+</figure>
+</div>
 </div>
 </div>
 <!-- html_preserve -->
@@ -32997,6 +33016,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.garrickadenbuie\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -33031,7 +33068,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -33046,38 +33087,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
-        typesetMath(container);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
         return container.innerHTML
       } else {
-        typesetMath(note);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -33086,8 +33117,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      typesetMath(note);
-      return note.innerHTML;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -33320,13 +33358,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
-</div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/saving-daylight-time/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/saving-daylight-time/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom"});</script>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

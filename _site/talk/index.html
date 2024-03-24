@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.480">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,6 +69,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -107,6 +108,33 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../_assets/panelset-extras.css">
 <link rel="alternate" type="application/rss+xml" title="Garrick Aden-Buie" href="index.xml" data-external="1"><meta property="og:title" content="Garrick Aden-Buie - Talks and Presentations">
@@ -237,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Conference" data-listing-date-sort="1695182400000" data-listing-file-modified-sort="1699883432410" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
+<div class="quarto-post image-right" data-index="0" data-categories="Conference" data-listing-date-sort="1695182400000" data-listing-file-modified-sort="1699883432000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="155">
 <div class="thumbnail">
 <p><a href="../talk/epoxy-super-glue/index.html" class="no-external"></a></p><a href="../talk/epoxy-super-glue/index.html" class="no-external">
 <p><img src="../talk/epoxy-super-glue/feature.png" class="thumbnail-image"></p>
@@ -267,7 +295,7 @@ Sep 20, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Conference" data-listing-date-sort="1686196800000" data-listing-file-modified-sort="1699883432411" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="75">
+<div class="quarto-post image-right" data-index="1" data-categories="Conference" data-listing-date-sort="1686196800000" data-listing-file-modified-sort="1699883432000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="75">
 <div class="thumbnail">
 <p><a href="../talk/seamless-epoxy/index.html" class="no-external"></a></p><a href="../talk/seamless-epoxy/index.html" class="no-external">
 <p><img src="../talk/seamless-epoxy/feature.png" class="thumbnail-image"></p>
@@ -297,7 +325,7 @@ Jun 8, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Workshop" data-listing-date-sort="1625688000000" data-listing-file-modified-sort="1677331229562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="251">
+<div class="quarto-post image-right" data-index="2" data-categories="Workshop" data-listing-date-sort="1625688000000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="251">
 <div class="thumbnail">
 <p><a href="../talk/presentable-user2021/index.html" class="no-external"></a></p><a href="../talk/presentable-user2021/index.html" class="no-external">
 <p><img src="../talk/presentable-user2021/feature.png" class="thumbnail-image"></p>
@@ -327,7 +355,7 @@ Jul 7, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="Talk" data-listing-date-sort="1617249600000" data-listing-file-modified-sort="1677331229571" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="124">
+<div class="quarto-post image-right" data-index="3" data-categories="Talk" data-listing-date-sort="1617249600000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="124">
 <div class="thumbnail">
 <p><a href="../talk/sliding-in-style-south-coast-ma/index.html" class="no-external"></a></p><a href="../talk/sliding-in-style-south-coast-ma/index.html" class="no-external">
 <p><img src="https://slides.garrickadenbuie.com/sliding-in-style/assets/img/social.png" class="thumbnail-image"></p>
@@ -357,7 +385,7 @@ Apr 1, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Talk" data-listing-date-sort="1615352400000" data-listing-file-modified-sort="1677331229528" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
+<div class="quarto-post image-right" data-index="4" data-categories="Talk" data-listing-date-sort="1615352400000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
 <div class="thumbnail">
 <p><a href="../talk/extra-great-slides-nyhackr/index.html" class="no-external"></a></p><a href="../talk/extra-great-slides-nyhackr/index.html" class="no-external">
 <p><img src="https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png" class="thumbnail-image"></p>
@@ -387,7 +415,7 @@ Mar 10, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Talk" data-listing-date-sort="1613019600000" data-listing-file-modified-sort="1684605249973" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="4">
+<div class="quarto-post image-right" data-index="5" data-categories="Talk" data-listing-date-sort="1613019600000" data-listing-file-modified-sort="1684605249000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="4">
 <div class="thumbnail">
 <p><a href="../talk/toronto-data-workshop/index.html" class="no-external"></a></p><a href="../talk/toronto-data-workshop/index.html" class="no-external">
 <p><img src="https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png" class="thumbnail-image"></p>
@@ -417,7 +445,7 @@ Feb 11, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Conference" data-listing-date-sort="1611205200000" data-listing-file-modified-sort="1677331229590" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="98">
+<div class="quarto-post image-right" data-index="6" data-categories="Conference" data-listing-date-sort="1611205200000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="98">
 <div class="thumbnail">
 <p><a href="../talk/xaringan-playground/index.html" class="no-external"></a></p><a href="../talk/xaringan-playground/index.html" class="no-external">
 <p><img src="../blog/xaringan-playground/xaringan-playground-social.png" class="thumbnail-image"></p>
@@ -447,7 +475,7 @@ Jan 21, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="Conference" data-listing-date-sort="1598587200000" data-listing-file-modified-sort="1677331229521" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="122">
+<div class="quarto-post image-right" data-index="7" data-categories="Conference" data-listing-date-sort="1598587200000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="122">
 <div class="thumbnail">
 <p><a href="../talk/build-your-own-universe/index.html" class="no-external"></a></p><a href="../talk/build-your-own-universe/index.html" class="no-external">
 <p><img src="https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png" class="thumbnail-image"></p>
@@ -477,7 +505,7 @@ Aug 28, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="Conference" data-listing-date-sort="1594180800000" data-listing-file-modified-sort="1677331229531" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="90">
+<div class="quarto-post image-right" data-index="8" data-categories="Conference" data-listing-date-sort="1594180800000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="90">
 <div class="thumbnail">
 <p><a href="../talk/extra-special-xaringan/index.html" class="no-external"></a></p><a href="../talk/extra-special-xaringan/index.html" class="no-external">
 <p><img src="https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png" class="thumbnail-image"></p>
@@ -507,7 +535,7 @@ Jul 8, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="Education" data-listing-date-sort="1589515200000" data-listing-file-modified-sort="1677331229575" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="4">
+<div class="quarto-post image-right" data-index="9" data-categories="Education" data-listing-date-sort="1589515200000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="4">
 <div class="thumbnail">
 <p><a href="../talk/ten-thousand-functions/index.html" class="no-external"></a></p><a href="../talk/ten-thousand-functions/index.html" class="no-external">
 <p><img src="../talk/ten-thousand-functions/ten-thousand-functions.png" class="thumbnail-image"></p>
@@ -537,7 +565,7 @@ May 15, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="Talk" data-listing-date-sort="1582606800000" data-listing-file-modified-sort="1677331229584" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="39">
+<div class="quarto-post image-right" data-index="10" data-categories="Talk" data-listing-date-sort="1582606800000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="39">
 <div class="thumbnail">
 <p><a href="../talk/trug-extra-awesome-xaringan/index.html" class="no-external"></a></p><a href="../talk/trug-extra-awesome-xaringan/index.html" class="no-external">
 <p><img src="https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg" class="thumbnail-image"></p>
@@ -567,7 +595,7 @@ Feb 25, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="Workshop" data-listing-date-sort="1580133600000" data-listing-file-modified-sort="1677331229556" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="232">
+<div class="quarto-post image-right" data-index="11" data-categories="Workshop" data-listing-date-sort="1580133600000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="232">
 <div class="thumbnail">
 <p><a href="../talk/js4shiny/index.html" class="no-external"></a></p><a href="../talk/js4shiny/index.html" class="no-external">
 <p><img src="../talk/js4shiny/feature.jpg" class="thumbnail-image"></p>
@@ -597,7 +625,7 @@ Jan 27, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="Education" data-listing-date-sort="1563508800000" data-listing-file-modified-sort="1677331229524" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="287">
+<div class="quarto-post image-right" data-index="12" data-categories="Education" data-listing-date-sort="1563508800000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="287">
 <div class="thumbnail">
 <p><a href="../talk/drake-intro-biodataclub/index.html" class="no-external"></a></p><a href="../talk/drake-intro-biodataclub/index.html" class="no-external">
 <p><img src="https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg" class="thumbnail-image"></p>
@@ -627,7 +655,7 @@ Jul 19, 2019
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="Education" data-listing-date-sort="1541480400000" data-listing-file-modified-sort="1677331229534" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
+<div class="quarto-post image-right" data-index="13" data-categories="Education" data-listing-date-sort="1541480400000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="23">
 <div class="thumbnail">
 <p><a href="../talk/gentle-ggplot2-usf-asu/index.html" class="no-external"></a></p><a href="../talk/gentle-ggplot2-usf-asu/index.html" class="no-external">
 <p><img src="../talk/gentle-ggplot2-usf-asu/gentle-ggplot2-usf-asu.png" class="thumbnail-image"></p>
@@ -657,7 +685,7 @@ Nov 6, 2018
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="Conference" data-listing-date-sort="1540785600000" data-listing-file-modified-sort="1677331229559" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="quarto-post image-right" data-index="14" data-categories="Conference" data-listing-date-sort="1540785600000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail">
 <p><a href="../talk/moffitt-passive-smart-home/index.html" class="no-external"></a></p><a href="../talk/moffitt-passive-smart-home/index.html" class="no-external">
 <p><img src="../talk/moffitt-passive-smart-home/moffitt-passive-smart-home.png" class="thumbnail-image"></p>
@@ -687,7 +715,7 @@ Oct 29, 2018
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="Conference" data-listing-date-sort="1525665600000" data-listing-file-modified-sort="1677331229553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="525">
+<div class="quarto-post image-right" data-index="15" data-categories="Conference" data-listing-date-sort="1525665600000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="525">
 <div class="thumbnail">
 <p><a href="../talk/isg-2018/index.html" class="no-external"></a></p><a href="../talk/isg-2018/index.html" class="no-external">
 <p><img src="../talk/isg-2018/isg-2018.png" class="thumbnail-image"></p>
@@ -717,7 +745,7 @@ May 7, 2018
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="Education" data-listing-date-sort="1516683600000" data-listing-file-modified-sort="1677331229587" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="quarto-post image-right" data-index="16" data-categories="Education" data-listing-date-sort="1516683600000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail">
 <p><a href="../talk/trug-ggplot2/index.html" class="no-external"></a></p><a href="../talk/trug-ggplot2/index.html" class="no-external">
 <p><img src="../talk/trug-ggplot2/trug-ggplot2-first-slide.png" class="thumbnail-image"></p>
@@ -747,7 +775,7 @@ Jan 23, 2018
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="Conference" data-listing-date-sort="1508904000000" data-listing-file-modified-sort="1677331229550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="68">
+<div class="quarto-post image-right" data-index="17" data-categories="Conference" data-listing-date-sort="1508904000000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="68">
 <div class="thumbnail">
 <p><a href="../talk/informs-2017/index.html" class="no-external"></a></p><a href="../talk/informs-2017/index.html" class="no-external">
 <p><img src="../talk/informs-2017/informs2017.png" class="thumbnail-image"></p>
@@ -777,7 +805,7 @@ Oct 25, 2017
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="Education" data-listing-date-sort="1458878400000" data-listing-file-modified-sort="1677331229537" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="quarto-post image-right" data-index="18" data-categories="Education" data-listing-date-sort="1458878400000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail">
 <p><a href="../talk/getting-started-in-r/index.html" class="no-external"></a></p><a href="../talk/getting-started-in-r/index.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -807,7 +835,7 @@ Mar 25, 2016
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="Conference" data-listing-date-sort="1423198800000" data-listing-file-modified-sort="1677331229540" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="85">
+<div class="quarto-post image-right" data-index="19" data-categories="Conference" data-listing-date-sort="1423198800000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="85">
 <div class="thumbnail">
 <p><a href="../talk/iie-iserc-2015/index.html" class="no-external"></a></p><a href="../talk/iie-iserc-2015/index.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -837,7 +865,7 @@ Feb 6, 2015
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="Education" data-listing-date-sort="1397188800000" data-listing-file-modified-sort="1677331229568" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="quarto-post image-right" data-index="20" data-categories="Education" data-listing-date-sort="1397188800000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail">
 <p><a href="../talk/reproducible-research/index.html" class="no-external"></a></p><a href="../talk/reproducible-research/index.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -867,7 +895,7 @@ Apr 11, 2014
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="Conference" data-listing-date-sort="1381118400000" data-listing-file-modified-sort="1677331229546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="65">
+<div class="quarto-post image-right" data-index="21" data-categories="Conference" data-listing-date-sort="1381118400000" data-listing-file-modified-sort="1677331229000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="65">
 <div class="thumbnail">
 <p><a href="../talk/informs-2013/index.html" class="no-external"></a></p><a href="../talk/informs-2013/index.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -1125,6 +1153,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/www\.garrickadenbuie\.com");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1159,7 +1205,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1174,38 +1224,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    const typesetMath = (el) => {
-      if (window.MathJax) {
-        // MathJax Typeset
-        window.MathJax.typeset([el]);
-      } else if (window.katex) {
-        // KaTeX Render
-        var mathElements = el.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-          var texText = mathElements[i].firstChild;
-          if (mathElements[i].tagName == "SPAN") {
-            window.katex.render(texText.data, mathElements[i], {
-              displayMode: mathElements[i].classList.contains('display'),
-              throwOnError: false,
-              macros: macros,
-              fleqn: false
-            });
-          }
-        }
-      }
-    }
     if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
-        typesetMath(container);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
         return container.innerHTML
       } else {
-        typesetMath(note);
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -1214,8 +1254,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (anchorLink) {
         anchorLink.remove();
       }
-      typesetMath(note);
-      return note.innerHTML;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

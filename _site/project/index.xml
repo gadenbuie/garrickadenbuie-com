@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.4.542</generator>
+<generator>quarto-1.4.551</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
@@ -287,7 +287,11 @@ font-style: inherit;">#&gt; But on average the distance traveled was only _42.98
 <section id="cleanrmd" class="level1">
 <h1>cleanrmd</h1>
 <!-- badges: start -->
-<p><a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/cleanrmd.png" class="img-fluid" alt="cleanrmd status badge"></a> <a href="https://CRAN.R-project.org/package=cleanrmd"><img src="https://www.r-pkg.org/badges/version/cleanrmd.png" class="img-fluid" alt="CRAN status"></a> <a href="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml"><img src="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml/badge.svg" class="img-fluid" alt="R-CMD-check"></a> <!-- badges: end --></p>
+<div>
+<figure class="figure">
+<p><a href="https://gadenbuie.r-universe.dev"><img src="https://gadenbuie.r-universe.dev/badges/cleanrmd.png" class="img-fluid figure-img" alt="cleanrmd status badge"></a> <a href="https://CRAN.R-project.org/package=cleanrmd"><img src="https://www.r-pkg.org/badges/version/cleanrmd.png" class="img-fluid figure-img" alt="CRAN status"></a> <a href="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml"><img src="https://github.com/gadenbuie/cleanrmd/actions/workflows/check-standard.yaml/badge.svg" class="img-fluid figure-img" alt="R-CMD-check"></a> <!-- badges: end --></p>
+</figure>
+</div>
 <p><strong>cleanrmd</strong> is a no-frills, lightweight HTML format for R Markdown, using class-less CSS.</p>
 <p>This package was greatly inspired by Yuval Greenfield’s blog post: <a href="https://ubershmekel.medium.com/the-next-css-frontier-classless-5e66f3f25fdd">The Next CSS Frontier - Classless</a>.</p>
 <section id="installation" class="level2">
@@ -2179,11 +2183,6 @@ shinyApp(
 )</code></pre>
 </div>
 <p>The demo version of regexplain is running in your browser, thanks to <a href="https://github.com/posit-dev/shinylive">shinylive for Quarto</a>, <a href="https://github.com/r-wasm">r-wasm</a>, and WASM binaries provided by <a href="https://gadenbuie.r-universe.dev">r-universe.dev</a>. You can also <a href="https://shinylive.io/r/app/#h=0&amp;code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMASwDMACACgEIAnOARwFdr2A5WHADOqKATiMAOmHYBzOAA9UAGyjUI03PW7U4pZQE96AXnoAVLAFUAogEpb9EJIj166oaSjLlGUQQDWUPJCUjJw8kqq6pr07KhEQib0BFIurvTSABakpKhCiAD0BbJQACYUAEY8cBisALRcENQAbnCsQjXlzZrO6Rlg2bn5RXFEtXUA7lBCMBhErLLSvfT2zgC+zs7K1BWsUKwGjEKZ6ga2Wzt7B4ww6tSWAJLnENu7+4cerOqyrM+vV4c5IoVGoIM9NhBjqcAILoVKuHhJIGRUGINHIkHqAD6JVK8lIWJ4jFsuGWHVYrVYSPCwKiEDRiAxdJxZXxWPJlMYfEsABkec9bGA1gBdIA" target="_blank">view the app in a separate window</a> thanks to <a href="https://shinylive.io/r/">shinylive.io</a>.</p>
-<!--
-A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>.
-Clicking the "Cancel" or "Send RegEx To Console" buttons will kill the app.
-Reload this page to restart the app.
--->
 </section>
 <section id="regexplain-in-action" class="level2">
 <h2 class="anchored" data-anchor-id="regexplain-in-action">RegExplain in Action</h2>
@@ -2393,7 +2392,11 @@ font-style: inherit;">show_col</span>(ggpomological<span class="sc" style="color
 background-color: null;
 font-style: inherit;">:::</span>pomological_palette)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>and a few colors for the plot background and decoration</p>
@@ -2408,7 +2411,11 @@ font-style: inherit;">unlist</span>(ggpomological<span class="sc" style="color: 
 background-color: null;
 font-style: inherit;">:::</span>pomological_base))</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -2491,7 +2498,11 @@ background-color: null;
 font-style: inherit;"># Just your standard Iris plot</span></span>
 <span id="cb5-7">basic_iris_plot</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2505,7 +2516,11 @@ background-color: null;
 font-style: inherit;">scale_color_pomological</span>()</span>
 <span id="cb6-3">basic_iris_plot</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2516,7 +2531,11 @@ font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">theme_pomological</span>()</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2527,7 +2546,11 @@ font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">theme_pomological_plain</span>()</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2541,7 +2564,11 @@ background-color: null;
 font-style: inherit;">theme_pomological_fancy</span>()</span>
 <span id="cb9-3">pomological_iris</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-5.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-demo-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -2639,7 +2666,11 @@ font-style: inherit;">"Homemade Apple"</span>, <span class="dv" style="color: #A
 background-color: null;
 font-style: inherit;">16</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-bar-chart-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-bar-chart-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2749,7 +2780,11 @@ font-style: inherit;">"Homemade Apple"</span>, <span class="dv" style="color: #A
 background-color: null;
 font-style: inherit;">16</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-density-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-density-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2938,7 +2973,11 @@ font-style: inherit;">"Homemade Apple"</span>, <span class="dv" style="color: #A
 background-color: null;
 font-style: inherit;">16</span>)</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-full-bar-stack-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="https://www.garrickadenbuie.com/project/ggpomological/index_files/figure-html/plot-full-bar-stack-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3486,6 +3525,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb2-18">  as_table</span></code></pre></div>
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -3622,6 +3662,7 @@ font-style: inherit;">%&gt;%</span></span>
 
 </div>
 </div>
+</div>
 </section>
 <section id="querying-flights" class="level2">
 <h2 class="anchored" data-anchor-id="querying-flights">Querying <code>flights</code></h2>
@@ -3683,6 +3724,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb4-7">  as_table</span></code></pre></div>
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -3739,6 +3781,7 @@ font-style: inherit;">%&gt;%</span></span>
 </table>
 
 
+</div>
 </div>
 </div>
 <p>Note that <code>sqrrl</code> provides the <code>%+%</code> infix operator, which is essentially just an alias for <code>paste(x, y)</code>.</p>
@@ -3819,6 +3862,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb9-7">  as_table</span></code></pre></div>
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -3882,6 +3926,7 @@ font-style: inherit;">%&gt;%</span></span>
 </table>
 
 
+</div>
 </div>
 </div>
 <p><code>sqrrl</code> also provides a wrapper around the python utility <code>sqlformat</code> that can be used to pretty-print SQL formats.</p>
@@ -4050,6 +4095,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb12-13">  as_table</span></code></pre></div>
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -4113,6 +4159,7 @@ font-style: inherit;">%&gt;%</span></span>
 </table>
 
 
+</div>
 </div>
 </div>
 </section>
@@ -4482,6 +4529,7 @@ font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span></span></code></pre></div>
 <div class="cell-output-display">
+<div>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -4589,6 +4637,7 @@ font-style: inherit;">10</span></span></code></pre></div>
 </table>
 
 
+</div>
 </div>
 </div>
 <p>This query and table select the most popular flights from JFK between June and December of 2013 from the carriers <code>UA</code>, <code>AA</code>, <code>US</code>, and <code>WN</code> that depart JFK after 8:00 AM and have an air time of less than 2 hours.</p>
