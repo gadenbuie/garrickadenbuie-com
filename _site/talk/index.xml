@@ -6,17 +6,18 @@
       version="2.0">
 <channel>
 <title>Garrick Aden-Buie</title>
-<link>https://www.garrickadenbuie.com/talk/index.html</link>
+<link>https://www.garrickadenbuie.com/talk/</link>
 <atom:link href="https://www.garrickadenbuie.com/talk/index.xml" rel="self" type="application/rss+xml"/>
 <description>Presentations, talks, and workshops.
 </description>
-<generator>quarto-1.3.450</generator>
+<generator>quarto-1.4.551</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/epoxy-super-glue/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/epoxy-super-glue/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -39,15 +40,16 @@
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/epoxy-super-glue/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/epoxy-super-glue/</guid>
   <pubDate>Wed, 20 Sep 2023 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/epoxy-super-glue/feature.png" medium="image" type="image/png" height="76" width="144"/>
 </item>
 <item>
   <title>Seamless data-driven reporting with {epoxy}</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/seamless-epoxy/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -70,15 +72,16 @@
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/seamless-epoxy/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/seamless-epoxy/</guid>
   <pubDate>Thu, 08 Jun 2023 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/seamless-epoxy/feature.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Professional, Polished, Presentable</title>
   <dc:creator>Garrick Aden-Buie and Silvia Canelón</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/presentable-user2021/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/presentable-user2021/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -97,15 +100,16 @@
 
  ]]></description>
   <category>Workshop</category>
-  <guid>https://www.garrickadenbuie.com/talk/presentable-user2021/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/presentable-user2021/</guid>
   <pubDate>Wed, 07 Jul 2021 20:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/presentable-user2021/feature.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
 <item>
   <title>Sliding in Style</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -186,15 +190,16 @@ font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span>
 
  ]]></description>
   <category>Talk</category>
-  <guid>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/sliding-in-style-south-coast-ma/</guid>
   <pubDate>Thu, 01 Apr 2021 04:00:00 GMT</pubDate>
   <media:content url="https://slides.garrickadenbuie.com/sliding-in-style/assets/img/social.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Making Extra Great Slides</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -273,15 +278,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Talk</category>
-  <guid>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/</guid>
   <pubDate>Wed, 10 Mar 2021 05:00:00 GMT</pubDate>
   <media:content url="https://slides.garrickadenbuie.com/extra-great-slides/intro/extra-great-slides.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>R Markdown: An Incomplete History</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/toronto-data-workshop/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/toronto-data-workshop/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -298,15 +304,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Talk</category>
-  <guid>https://www.garrickadenbuie.com/talk/toronto-data-workshop/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/toronto-data-workshop/</guid>
   <pubDate>Thu, 11 Feb 2021 05:00:00 GMT</pubDate>
   <media:content url="https://slides.garrickadenbuie.com/toronto-data-workshop/assets/img/toronto-data-workshop_social.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>xaringan Playground</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/xaringan-playground/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/xaringan-playground/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -329,7 +336,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/xaringan-playground/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/xaringan-playground/</guid>
   <pubDate>Thu, 21 Jan 2021 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/blog/xaringan-playground/xaringan-playground-social.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
@@ -337,8 +344,9 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <title>Build Your Own Universe</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <dc:creator>Travis Gerke</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/build-your-own-universe/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/build-your-own-universe/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -361,15 +369,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/build-your-own-universe/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/build-your-own-universe/</guid>
   <pubDate>Fri, 28 Aug 2020 04:00:00 GMT</pubDate>
   <media:content url="https://slides.garrickadenbuie.com/build-your-own-universe/social-card.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Your Slides are So Extra!</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/extra-special-xaringan/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/extra-special-xaringan/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -392,15 +401,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/extra-special-xaringan/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/extra-special-xaringan/</guid>
   <pubDate>Wed, 08 Jul 2020 04:00:00 GMT</pubDate>
   <media:content url="https://slides.garrickadenbuie.com/extra-special-xaringan/images/social-card.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>10,000 Reasons to Love Functions</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/ten-thousand-functions/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/ten-thousand-functions/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -417,15 +427,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/ten-thousand-functions/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/ten-thousand-functions/</guid>
   <pubDate>Fri, 15 May 2020 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/ten-thousand-functions/ten-thousand-functions.png" medium="image" type="image/png" height="75" width="144"/>
 </item>
 <item>
   <title>Extra Awesome xaringan Presentations</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -444,15 +455,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Talk</category>
-  <guid>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/</guid>
   <pubDate>Tue, 25 Feb 2020 05:00:00 GMT</pubDate>
   <media:content url="https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>JavaScript for Shiny Users</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/js4shiny/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/js4shiny/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -467,15 +479,16 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
  ]]></description>
   <category>Workshop</category>
-  <guid>https://www.garrickadenbuie.com/talk/js4shiny/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/js4shiny/</guid>
   <pubDate>Mon, 27 Jan 2020 14:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/js4shiny/feature.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Reproducible Data Workflows With Drake</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -529,15 +542,16 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/</guid>
   <pubDate>Fri, 19 Jul 2019 04:00:00 GMT</pubDate>
   <media:content url="https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Gentle Guide to the Grammar of Graphics with ggplot2</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -547,15 +561,16 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/</guid>
   <pubDate>Tue, 06 Nov 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/gentle-ggplot2-usf-asu.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -564,15 +579,16 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/</guid>
   <pubDate>Mon, 29 Oct 2018 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/moffitt-passive-smart-home.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Unsupervised behavior change detection using passive sensor systems in the homes of older adults</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/isg-2018/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/isg-2018/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -605,15 +621,16 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/isg-2018/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/isg-2018/</guid>
   <pubDate>Mon, 07 May 2018 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/isg-2018/isg-2018.png" medium="image" type="image/png" height="108" width="144"/>
 </item>
 <item>
   <title>A Gentle Guide to the Grammar of Graphics with ggplot2</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/trug-ggplot2/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/trug-ggplot2/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -622,14 +639,15 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/trug-ggplot2/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/trug-ggplot2/</guid>
   <pubDate>Tue, 23 Jan 2018 05:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/trug-ggplot2/trug-ggplot2-first-slide.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>Occupant Activity Profiles from Smart Home Sensor Event Streams</title>
-  <link>https://www.garrickadenbuie.com/talk/informs-2017/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/informs-2017/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -639,15 +657,16 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/informs-2017/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/informs-2017/</guid>
   <pubDate>Wed, 25 Oct 2017 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/informs-2017/informs2017.png" medium="image" type="image/png" height="108" width="144"/>
 </item>
 <item>
   <title>getting staRted in R</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/getting-started-in-r/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/getting-started-in-r/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -656,14 +675,15 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/getting-started-in-r/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/getting-started-in-r/</guid>
   <pubDate>Fri, 25 Mar 2016 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Ambient Intelligence Applications in Healthcare</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/iie-iserc-2015/index.html</link>
+  <link>https://www.garrickadenbuie.com/talk/iie-iserc-2015/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -673,7 +693,7 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
 
  ]]></description>
   <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/iie-iserc-2015/index.html</guid>
+  <guid>https://www.garrickadenbuie.com/talk/iie-iserc-2015/</guid>
   <pubDate>Fri, 06 Feb 2015 05:00:00 GMT</pubDate>
 </item>
 </channel>

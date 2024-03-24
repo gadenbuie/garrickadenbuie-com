@@ -21,6 +21,9 @@ links:
 - icon: info-circle-fill
   name: Usage
   url: /project/regexplain/#overview
+
+filters:
+  - shinylive
 ---
 
 ```{r setup, include=FALSE}
@@ -68,14 +71,43 @@ or for hands-free installation
 
 ## Try it out! {#demo}
 
-<iframe src="https://apps.garrickadenbuie.com/regexplain/" style="border: #DDDDDD 2px solid; background-color: #F9F9F9; width: 650px; height: 750px">
-<p>Your browser doesn't support <code>iframes</code> or you have blocker enabled.
-You can try the regexplain addin live at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>.
-</iframe>
+::: {style="width: min(550px, 100%); margin-inline: auto;"}
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 550
 
-A demo version of the app is available online at <a href="https://apps.garrickadenbuie.com/regexplain">https://apps.garrickadenbuie.com/regexplain</a>.
-Clicking the "Cancel" or "Send RegEx To Console" buttons will kill the app.
-Reload this page to restart the app.
+if (!requireNamespace("regexplain", quietly = TRUE)) {
+  install.packages("regexplain", repos = c(
+    "https://gadenbuie.r-universe.dev",
+    "https://repo.r-wasm.org"
+  ))
+}
+
+library(shiny)
+library(miniUI)
+library(stringr)
+library(regexplain)
+
+
+shinyApp(
+  ui = regexplain:::regexplain_gadget_ui(),
+  server = regexplain:::regexplain_gadget_server(NULL)
+)
+```
+:::
+
+The demo version of regexplain is running in your browser,
+thanks to [shinylive for Quarto][shinylive], [r-wasm], and
+WASM binaries provided by [r-universe.dev][runiverse].
+You can also
+[view the app in a separate window][sl-app]{target="_blank"}
+thanks to [shinylive.io](https://shinylive.io/r/).
+
+[shinylive]: https://github.com/posit-dev/shinylive
+[r-wasm]: https://github.com/r-wasm
+[runiverse]: https://gadenbuie.r-universe.dev
+
 
 ## RegExplain in Action
 
@@ -201,3 +233,5 @@ experience with this addin are entirely my fault and have nothing to do
 with the fine packages this addin is built on. If you do find an issue,
 [please file an issue](https://github.com/gadenbuie/regexplain). Pull
 requests are welcomed!
+
+[sl-app]: https://shinylive.io/r/app/#h=0&code=NobwRAdghgtgpmAXGKAHVA6ASmANGAYwHsIAXOMpMASwDMACACgEIAnOARwFdr2A5WHADOqKATiMAOmHYBzOAA9UAGyjUI03PW7U4pZQE96AXnoAVLAFUAogEpb9EJIj166oaSjLlGUQQDWUPJCUjJw8kqq6pr07KhEQib0BFIurvTSABakpKhCiAD0BbJQACYUAEY8cBisALRcENQAbnCsQjXlzZrO6Rlg2bn5RXFEtXUA7lBCMBhErLLSvfT2zgC+zs7K1BWsUKwGjEKZ6ga2Wzt7B4ww6tSWAJLnENu7+4cerOqyrM+vV4c5IoVGoIM9NhBjqcAILoVKuHhJIGRUGINHIkHqAD6JVK8lIWJ4jFsuGWHVYrVYSPCwKiEDRiAxdJxZXxWPJlMYfEsABkec9bGA1gBdIA
