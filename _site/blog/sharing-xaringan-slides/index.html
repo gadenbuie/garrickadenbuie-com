@@ -117,6 +117,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/applause-button-3.3.2/applause-button.css" rel="stylesheet">
 <script src="../../site_libs/applause-button-3.3.2/applause-button.js"></script>
 <script src="https://cdn.counter.dev/script.js" data-id="10454114-dc3f-4c23-a4da-87e7f2c7c58d" data-utcoffset="-4"></script>
+<link rel="stylesheet" href="../../site_libs/panelset-0.2.7/panelset.css">
+<script src="../../site_libs/panelset-0.2.7/panelset.js"></script>
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
@@ -397,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To take a screenshot, I open my slides in Firefox and select <em>Take a Screenshot</em> from the three-dots menu in the browser URL bar.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Firefox’s Take a Screenshot menu option"><img src="screenshot-firefox-step1.png" class="img-fluid figure-img" alt="Firefox’s Take a Screenshot menu option"></a></p>
+<p><a href="screenshot-firefox-step1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Firefox’s Take a Screenshot menu option"><img src="screenshot-firefox-step1.png" class="img-fluid figure-img" alt="Firefox’s Take a Screenshot menu option"></a></p>
 <figcaption>Firefox’s <strong>Take a Screenshot</strong> menu option</figcaption>
 </figure>
 </div>
@@ -406,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step2.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" data-description="Click
+<p><a href="screenshot-firefox-step2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" data-description="Click
 
 on
 
@@ -432,7 +434,7 @@ slide." title="Firefox’s screenshot feature, step 2. The user needs to click o
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step3.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" data-description="Download
+<p><a href="screenshot-firefox-step3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3" data-description="Download
 
 the
 
@@ -1163,7 +1165,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

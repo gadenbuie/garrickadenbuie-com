@@ -6,7 +6,7 @@ slug: shiny-modules-return-anything
 
 description: |
   An epiphany about building flexible shiny modules by letting go of
-  functional input-and-output thinking and embracing the return value.
+  functional input-and-output thinking and embracing scoped return values.
 
 categories:
   - R
