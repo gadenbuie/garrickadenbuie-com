@@ -54,6 +54,7 @@ $alert-color-scale: -30%;
 $alert-link-scale: 5%;
 
 $dropdown-link-hover-bg: $blue-20;
+$nav-tabs-border-color: var(--slate-20);
 
 /*-- scss:mixins --*/
 @mixin alert-variant($background, $border, $color) {
@@ -75,6 +76,7 @@ $dropdown-link-hover-bg: $blue-20;
 .quarto-title-banner .quarto-title .title {
   font-weight: 400 !important;
   font-size: calc(1.5rem + 1.14vw);
+  color: #bed9de;
 
   #title-block-header.quarto-title-block & {
     margin-bottom: 0.5rem !important;

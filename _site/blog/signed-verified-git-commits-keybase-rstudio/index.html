@@ -114,6 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <script src="https://cdn.counter.dev/script.js" data-id="10454114-dc3f-4c23-a4da-87e7f2c7c58d" data-utcoffset="-4"></script>
+<link rel="stylesheet" href="../../site_libs/panelset-0.2.7/panelset.css">
+<script src="../../site_libs/panelset-0.2.7/panelset.js"></script>
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
@@ -275,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="verified.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="A verified commit on GitHub with the green Verified badge."><img src="verified.png" class="img-fluid figure-img" alt="A verified commit on GitHub with the green Verified badge."></a></p>
+<p><a href="verified.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="A verified commit on GitHub with the green Verified badge."><img src="verified.png" class="img-fluid figure-img" alt="A verified commit on GitHub with the green Verified badge."></a></p>
 <figcaption>A verified commit on GitHub with the green <em>Verified</em> badge.</figcaption>
 </figure>
 </div>
@@ -465,7 +467,7 @@ Date:   Mon Sep 13 09:34:59 2021 -0400
 <p>When you create your next commit in RStudio, you’ll be prompted with a dialog box to enter your passphrase. If you select the <em>Save in Keychain</em> option, you won’t be prompted again; <code>gpg</code> and <code>git</code> will use the passphrase in your Keychain to sign your commit with the GPG key you created with Keybase!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="rstudio-pinentry-mac.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="The pinentry-mac dialog window asking for the GPG key passphrase when signing a commit for the first time."><img src="rstudio-pinentry-mac.png" class="img-fluid figure-img" alt="The pinentry-mac dialog window asking for the GPG key passphrase when signing a commit for the first time."></a></p>
+<p><a href="rstudio-pinentry-mac.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="The pinentry-mac dialog window asking for the GPG key passphrase when signing a commit for the first time."><img src="rstudio-pinentry-mac.png" class="img-fluid figure-img" alt="The pinentry-mac dialog window asking for the GPG key passphrase when signing a commit for the first time."></a></p>
 <figcaption>The <code>pinentry-mac</code> dialog window asking for the GPG key passphrase when signing a commit for the first time.</figcaption>
 </figure>
 </div>
@@ -1099,7 +1101,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

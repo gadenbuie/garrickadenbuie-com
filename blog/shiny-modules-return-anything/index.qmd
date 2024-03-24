@@ -1,0 +1,217 @@
+---
+title: Shiny Modules Can Return Anything
+author: Garrick Aden-Buie
+date: '2023-11-27'
+slug: shiny-modules-return-anything
+
+description: |
+  An epiphany about building flexible shiny modules by letting go of
+  functional input-and-output thinking and embracing scoped return values.
+
+categories:
+  - R
+  - Shiny
+
+image: index_files/figure-html/social-1.png
+
+editor_options:
+  chunk_output_type: console
+---
+
+## Shiny modules, one epiphany at a time
+
+Learning shiny modules is a path of epiphanies.
+On the one hand, they're incredibly simple abstractions, but the outlines of the abstraction are a bit blurred and there's just a hint of magic.
+
+As a community, I don't think we've settled on a super clear consensus around when and how to teach Shiny modules.
+Some consider them advanced topics that most Shiny apps don't need; others feel strongly that Shiny modules should be taught from the beginning and that everyone should be using Shiny modules.
+It's similar to how R programmers feel about functions.
+They're incredibly useful and more people could be using them, but there's also a whole range of scripts and apps that are perfectly effective without them.
+
+The end result is that many people learn and re-learn Shiny modules at different stages of their Shiny journey.
+The fun part is that each new thing you learn about modules are tiny epiphanies.
+I recently was visited by a surprising, new epiphany of my own, but first I'd like to share a few of my favorite 💡 aha moments.
+
+### Epiphany: Shiny modules are a convenient fiction
+
+The hardest part of writing a Shiny module is remembering that you need to wrap any input IDs in the UI with `ns()`.
+[Colin Fay knows this](https://twitter.com/_ColinFay/status/1196879284532662273).
+`ns()` itself is a common source of epiphanies.ß
+
+When I learned Shiny modules, `ns()` seemed like a small piece of magic.
+I assumed whatever it did was complicated and required a deep and intimate understanding of the rest of Shiny's magic.
+And when I learned that `ns(id)` uses no more magic than a simple `paste0(namespace, "-", id)` , I remember wondering if everything I had learned about Shiny modules was a lie.
+A _convenient fiction_, as [Jon Harmon put it](https://fosstodon.org/@jonthegeek/111383079879981433).
+
+In Shiny, UI elements and server logic are created in separate worlds.
+Neither part knows anything about the other.
+They are only connected by the small strings we use as identifiers, the input or output IDs.
+When you call `input$var` in the server function, you're hoping for the best that you've included `selectInput("var", ...)` somewhere in your UI.
+
+But input IDs aren't special, they're just strings that you have to type correctly and it's up to you to make sure they're unique.
+It's the same for the IDs you give your shiny modules when you actually use them in your app.
+It's up to you to make sure that `histogram_ui("hist1")` has a corresponding `histogram_server("hist1")`.
+
+The only thing that `ns()` does is prefix a regular old input ID, `"var"`,
+with the module's ID, `"hist1-"`, to create a unique ID `"hist1-var"`.
+`"var"` is unique within the module,
+`"hist1"` is unique with the app that uses the module,
+and `"hist1-var"` is globally unique everywhere in the app.
+
+In the module's server code, Shiny gives you a proxy `input` object with the `"hist1-"` prefix removed so you can call `input$var`.
+The fiction is that you have to call `input$var` from within `moduleServer()` or the elder `callModule()`.
+You don't -- if you know the module's prefix, you can call `` input$`hist1-var` `` anywhere in your apps' server code.
+
+If `ns()` were a magic trick, it'd be this one<span class="visually-hidden"> where two dogs fall for the disappearing (over the shoulder) ball trick</span>.
+
+<iframe class="d-block mx-auto" width="342" height="608" src="https://www.youtube.com/embed/IMQv-cF8h60" title="Hilarious Dog Mesmerized By Ball Trick!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+This namespacing mechanism behind modules is so simple that I really wish Shiny app authors didn't have to worry about it at all.
+That you need to use `ns()` in your module's UI function but don't in your module's server function is confusing and only adds to the feeling that some kind of magic is happening behind the scenes.
+
+I'm fairly certain the need for `ns()` in the UI is a historical quirk in that Shiny it was easier to automatically adjust the IDs in the module's `input` object than it would have been to automatically prefix IDs in the UI.
+In [Shiny for Python](https://shiny.posit.co/py), [modules](https://shiny.posit.co/py/docs/workflow-modules.html) don't require `ns()` _anywhere_.
+
+
+### Epiphany: Shiny modules are tiny Shiny apps
+
+Shiny modules exist to make parts of a Shiny app easier to understand, or easier to reuse in the same app, or easier to reuse in many Shiny apps.
+If you're new to Shiny modules, then you might want to take a quick break and read these great articles: [Emily Riederer's _Beginner's guide to Shiny modules_](https://emilyriederer.netlify.app/post/shiny-modules/) or [_Mastering Shiny: Shiny modules_](https://mastering-shiny.org/scaling-modules.html#scaling-modules).
+
+My first epiphany about modules was that you can think of a Shiny module as a mini Shiny app.
+
+A Shiny module has the same components as a Shiny app: in the same way an app has a `ui` and a `server`, a Shiny module has a function that returns UI elements and a `server` function that contains the module's server-side logic.
+You could pluck your module out of your big production app, give it the right kind of data or inputs, and have a small little Shiny app.
+
+In fact, a great way to create a Shiny module is to start with a tiny Shiny app, get the behavior just right, and then wrap the tiny app up into a reusable module.
+You can see an example of this in the way [Mastering Shiny introduces Shiny modules](https://mastering-shiny.org/scaling-modules.html#module-basics).
+
+_Toggle between **app** and **module** to see how the transformation is mostly a difference in boilerplate._
+
+::: {.panelset}
+#### App
+
+```r
+library(shiny)
+
+ui <-
+  fluidPage(
+    selectInput("var", "Variable", names(mtcars)),
+    numericInput("bins", "bins", 10, min = 1),
+    plotOutput("hist")
+
+)
+
+server <-
+  function(input, output, session) {
+    data <- reactive(mtcars[[input$var]])
+    output$hist <- renderPlot({
+      hist(data(), breaks = input$bins, main = input$var)
+    }, res = 96)
+
+}
+
+shinyApp(
+  ui,
+  server
+)
+```
+
+#### Module
+
+```r
+library(shiny)
+
+histogram_ui <- function(id) {
+  tagList(
+    selectInput(NS(id, "var"), "Variable", choices = names(mtcars)),
+    numericInput(NS(id, "bins"), "bins", value = 10, min = 1),
+    plotOutput(NS(id, "hist"))
+  )
+}
+
+histogram_server <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    data <- reactive(mtcars[[input$var]])
+    output$hist <- renderPlot({
+      hist(data(), breaks = input$bins, main = input$var)
+    }, res = 96)
+  })
+}
+
+shinyApp(
+  histogram_ui("hist1"),
+  function(input, output, session) histogram_server("hist1")
+)
+```
+:::
+
+
+### Shiny modules are functions?
+
+When Shiny modules are taught, they're often presented in a functional context: a function returns the module's UI, a function contains the server-side logic.
+This is a great starting place.
+But I often think of functions as units of code that take inputs and return outputs.
+
+```{mermaid}
+flowchart LR
+  in[input] ---> fn>function] ---> out(output)
+```
+
+Shiny modules can be these kind of functions, but the reality is that what you are doing with these functions is decidedly not pure.
+
+In fact, it can be particularly cumbersome to think of the module's server
+function in the typical way, taking inputs, performing actions, and returning an output, especially when you're accustomed to leaning into Shiny's reactive programming model.
+
+I talked about viewing a module as a small, self-contained Shiny app.
+But once you put the module inside a larger Shiny app, it's no longer completely independent.
+In this new context, you might find that the module should react to an input or state in the larger app.
+Without modules, you simply connect the two interdependent parts with an observer or a reactive expression.
+
+
+But with modules you can't just reach across the module's boundary and introduce new reactive connections.
+Or can you?
+
+Recently, while working on a Shiny app, I had a realization that truly felt like an epiphany.
+It has since unlocked a new way of thinking about Shiny modules that feels like a balance between encapsulated code while still allowing Shiny's powerful non-local reactivity.
+The epiphany: Shiny module functions *can return anything*.
+
+<!-- For example, you don't need to limit yourself to just one UI function for your module (nor your server function either, for that matter). -->
+
+### Epiphany: Shiny modules can return *anything*
+
+Imagine: an app about passenger volume between train stations.
+The user can pick from a set of stations.
+Not all stations connect with each other.
+Some stations are Express and others are Local,
+so there's also a global control to switch between Express and Local stops.
+
+
+------------------------------------------------------------------------
+
+## Cutting floor
+
+While I've always appreciated carpenter-related metaphors for software development (and I do like calling myself a software engineer), I also have to admit that my shiny apps are rarely ever constructed from blue prints with precise measurements.
+My shiny apps aren't built as much as they're grown.
+I'm a terrible gardener.
+I can barely keep a house plant alive.
+My apps are grown like weeds, or trees that sprout in the cracks in concrete.
+My apps should have "Don't Mow, Let It Grow" signs in the source code.
+
+The thing I've always appreciated about Shiny is that it fully supports this method of development.
+Most Shiny apps start as a simple UI around a piece of code and a few questions.
+
+Imagine a plot and a question: what if we broke this down by \_\_\_\_?
+
+The question usually isn't yours, but one you're anticipating.
+You have the plot.
+And you know that as soon as they see it they'll wonder, what if we broke this down by \_\_\_\_?
+
+You can do that quickly.
+There's one place in your code where you change "X" to "Y" or "Z", hit Run Code and see the new plot.
+But there's nothing slick about watching you type and hit enter.
+More importantly, you're not letting them have the power of seeing the plot, asking the question, changing X to Y and seeing the new plot.
+
+This is what Shiny does.
+With a few lines of code you have a dropdown and a plot.
+With `selectInput()` you create a dropdown with a few choices, they pick those choices, `renderPlot()` updates, new plot, win!

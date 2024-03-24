@@ -27,7 +27,7 @@
   --quarto-hl-cv-color: #99a6ac;
   --quarto-hl-cn-color: #fca4ae;
   --quarto-hl-sc-color: #f9cd91;
-  --quarto-hl-dv-color: #fee8eb;
+  --quarto-hl-dv-color: var(--red-70);
   --quarto-hl-kw-color: #a4a2b6;
 }
 
@@ -80,6 +80,7 @@ code span.fu {
 
 code span.st {
   color: #b9deb9;
+  background-color: inherit;
   font-style: inherit;
 }
 
@@ -188,8 +189,8 @@ code span.sc {
 }
 
 code span.dv {
-  color: #fee8eb;
-  background-color: #c94150;
+  color: var(--red-70);
+  background-color: inherit;
   font-style: inherit;
 }
 
