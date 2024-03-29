@@ -16,7 +16,7 @@ date: 2024-03-29
 ---
 
 ```{=html}
-<img src="{{< meta image >}}" alt="{{< meta image-alt >}}" />
+<img src="{{< meta image >}}" class="mb-4" alt="{{< meta image-alt >}}" />
 ```
 
 ## A blog is a perpetual side-project machine
