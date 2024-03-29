@@ -46,7 +46,7 @@ website:
     border: false
     background: light
     left: >-
-       © 2023 Garrick Aden-Buie
+       © {{< now year >}} Garrick Aden-Buie
     right: >-
       <a class="link-dark me-1" href="/colophon">Made with 💙</a>
       <a class="link-dark" href="/blog/index.xml" title = "RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a>

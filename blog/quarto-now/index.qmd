@@ -1,0 +1,162 @@
+---
+title: Add last rendered or modified time to Quarto
+description: >
+  Introducing `now`, a Quarto extension that adds the time right _now_,
+  anywhere in your document.
+categories:
+  - Quarto
+  - Extensions
+image: feature.png
+image-alt: >
+  An AI-generated pencil-drawn sketch of a dream sequence.
+  A spiral staircase descends into a clock face,
+  surrounded by planets, clouds and stars.
+modified: 2024-03-29
+date: 2024-03-29
+---
+
+```{=html}
+<img src="{{< meta image >}}" alt="{{< meta image-alt >}}" />
+```
+
+## A blog is a perpetual side-project machine
+
+They say that if you copy-paste the same code three times, write a function.
+I've also heard that if you send the same email more than once, turn that email into a blog post.
+
+But all the real work in life happens on Slack.
+So if a friend asks for your advice and you brain dump everything you know about the easiest way to install and manage Python, then you've got a first draft blog post on your hands!
+
+They also say the hardest part of writing is staring at the blank page.
+But they are wrong.
+The hardest part of writing is figuring out how to start a new `.qmd` file in your blog repo without bumping into 3 to 10 other things you have been meaning to do.
+
+Or worse, you might encounter that draft post you've been working on for months.
+Learn from my mistakes: it's okay to stash that post, you can always tell yourself you'll come back to it later!
+
+You can probably tell by now that this is **not** a post about Python tooling for a happy setup.
+It's also not a post about the few CSS tweaks I made while trying to open up this editor.
+
+This post is sponsored by this a bit of YAML that caught my eye in my `_quarto.yml` file in the split second before I closed all my open tabs.
+
+``` yaml
+page-footer:
+    left: >-
+      © 2023 Garrick Aden-Buie
+```
+
+This is not acceptable.
+It has been 2024 for a whole 89 days and that little `© 2023` has been sitting in my page footer the entire time.
+I'm lucky I haven't gotten any angry emails about it!
+
+Now the fix could be easy.
+Consider this: I could change that file, commit it, and push it.
+
+``` patch
+page-footer:
+  left: >-
+-    © 2023 Garrick Aden-Buie
++    © 2024 Garrick Aden-Buie
+```
+
+One GitHub Action, several minutes, and two Netlify notifications later my blog would be back to the future.
+
+But this obviously won't work.
+Time stops for no one.
+What will I do in March of 2025?
+Come back to this file and edit it by hand?
+*Again? Like a caveman?* Hard no.
+
+Wouldn't it be awesome if I could replace that `2023` that should be `2024` with something that turns into the current year whenever my blog rebuilds?
+I could save minutes in the entire lifetime of my blog!
+Imagine replacing the `2023` with something that would update itself automatically, like this:
+
+``` {.yaml shortcodes="false"}
+page-footer:
+  left: >-
+    © {{< now year >}} Garrick Aden-Buie
+```
+
+It would be awesome, but that syntax doesn't exist in Quarto.
+Or it didn't until I my productive procrastination instincts kicked in!
+
+Introducing [now](https://pkg.garrickadenbuie.com/quarto-now), a quarto extension for easily adding the time right now – *err...* the time right now when your Quarto blog or document is rendered.
+
+## Hello, now
+
+To start using now in your own Quarto projects, just install the extension with this command.
+
+``` bash
+quarto add gadenbuie/quarto-now
+```
+
+You can read all about the extension on its (quarto-built) page here: [pkg.garrickadenbuie.com/quarto-now](https://pkg.garrickadenbuie.com/quarto-now).
+Or keep reading this post for a quick intro.
+
+## Using now
+
+now, the extension, comes with two shortcodes you can use just about anywhere: `{{{< now >}}}` and `{{{< modified >}}}`.
+Both work in the same way, except that `{{{< modified >}}}` will show the last modified time of the document, either by using the `modified` metadata field or the last modified timestamp of the file (on macOS and Linux only, sorry).
+
+Here's a quick example of the shortcodes in use.
+Note that in this post I added the `modified` date, which gives me a bit more control over what counts as a "modification".
+
+```{.yaml shortcodes="false"}
+---
+title: Add last rendered or modified time to Quarto
+modified: 2024-03-29
+---
+
+This document was last modified at {{< modified >}}
+and it was last rendered at {{< now >}}.
+```
+
+> This document was last modified at {{< modified >}} and it was last rendered at {{< now >}}.
+
+## Formatting the time output
+
+By default, now uses ISO 8601 (ish) formatting, but that's not usually the most human-readable format.
+now comes with a few built-in aliases for common date and time parts.
+
+| Shortcode                   | Result                  | Format String |
+|:----------------------------|:------------------------|:-------------:|
+| `{{{< now >}}}`             | {{< now >}}             |   `"%F %T"`   |
+| `{{{< now year >}}}`        | {{< now year >}}        |    `"%Y"`     |
+| `{{{< now month >}}}`       | {{< now month >}}       |    `"%B"`     |
+| `{{{< now day >}}}`         | {{< now day >}}         |    `"%d"`     |
+| `{{{< now weekday >}}}`     | {{< now weekday >}}     |    `"%A"`     |
+| `{{{< now hour >}}}`        | {{< now hour >}}        |    `"%I"`     |
+| `{{{< now minute >}}}`      | {{< now minute >}}      |    `"%M"`     |
+| `{{{< now ampm >}}}`        | {{< now ampm >}}        |    `"%p"`     |
+| `{{{< now date >}}}`        | {{< now date >}}        |    `"%x"`     |
+| `{{{< now time >}}}`        | {{< now time >}}        |    `"%X"`     |
+| `{{{< now datetime >}}}`    | {{< now datetime >}}    |    `"%c"`     |
+| `{{{< now isodate >}}}`     | {{< now isodate >}}     |    `"%F"`     |
+| `{{{< now isotime >}}}`     | {{< now isotime >}}     |    `"%T"`     |
+| `{{{< now isodatetime >}}}` | {{< now isodatetime >}} |  `"%FT%T%z"`  |
+| `{{{< now timestamp >}}}`   | {{< now timestamp >}}   |   `"%F %T"`   |
+
+Note that the shortcodes only accept a single format argument,
+so you'd need to write `{{{< modified month >}}} {{{< modified year >}}}`
+instead of `{{{< modified month year >}}}`.
+
+That said, you can always use the format strings supported by Lua's `os.date()` function,
+so `{{{< modified "%B %Y" >}}}` gives you the month and year:
+{{< modified "%B %Y" >}}.
+Note that because the format string has a space, it needs to be quoted `"%B %Y"`.
+
+You can find the complete list of accepted format strings in [the now extension docs](https://pkg.garrickadenbuie.com/quarto-now/#format-strings).
+
+## Have a good day, meow!
+
+This was a fun excursion into the world of Quarto extensions!
+Thanks for reading and I hope you find **now** useful in your own projects.
+May you benefit from my inability to do the thing I'm "supposed to do" (hey, it's my free time!).
+
+
+---
+
+::: small
+The feature image was generated with DALL-E 3 and the following prompt:
+_an m.c. escher style pencil sketch of a dreamy clock face_.
+:::
