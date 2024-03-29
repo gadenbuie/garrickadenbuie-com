@@ -270,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ggpage" class="level2">
 <h2 class="anchored" data-anchor-id="ggpage">Visualizing the report pages with ggpage</h2>
 <p>The LA Times published an widely-shared piece visualizing <a href="https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage">each of the pages of the Mueller report</a>, and Nathan Yau of <a href="https://flowingdata.com">Flowing Data</a> shows <a href="https://flowingdata.com/2019/04/18/redacted/">how to create this image</a> using <code>pdftools::pdf_convert()</code>.</p>
-<p><a href="wsj-redacted-mueller-report.jpg" class="lightbox" data-description="Source:
+<p><a href="wsj-redacted-mueller-report.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-description="Source:
 
 <a href='https://www.latimes.com/projects/la-na-mueller-investigation-report-trump-redaction/#nt=oft-Double%20Chain~Flex%20Feature~~document-841a~~1~yes-art~curated~curatedpage'>
 LA
 
 Times
-</a>" data-gallery="quarto-lightbox-gallery-1"><img src="wsj-redacted-mueller-report.jpg" class="img-fluid"></a></p>
+</a>"><img src="wsj-redacted-mueller-report.jpg" class="img-fluid"></a></p>
 <p>Recently, Emil Hvitfeldt released <span class="pkg"><a href="https://emilhvitfeldt.github.io/ggpage/">ggpage</a></span>, a package that lets you create a page-layout visualization using <span class="pkg"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span>. While the package uses the text content of the document only — so the visualized text layout doesn’t completely match the layout of the original document — it does allow you to highlight text elements, like mentions of any of the recurring cast of characters in <a href="https://www.youtube.com/watch?v=FVFdsl29s_Q">Stupid Watergate</a>.</p>
 <p>The first step is to load the text version of the Mueller report. You can see from the first few lines of the data that the OCR really struggled with the header that appears at the top of each page and has been crossed out with a single line. (The redacted text is less confusing to the OCR because it’s rendered in solid black and generally results in blank space.)</p>
 <div class="cell" data-hash="index_cache/html/load_c319c8919946adc55abea01802fb2299">
@@ -958,7 +958,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2023 Garrick Aden-Buie</p>
+<p>© 2024 Garrick Aden-Buie</p>
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
@@ -968,7 +968,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

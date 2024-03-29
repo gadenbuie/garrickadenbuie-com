@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step2.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" data-description="Click
+<p><a href="screenshot-firefox-step2.png" class="lightbox" data-description="Click
 
 on
 
@@ -424,7 +424,7 @@ the
 
 entire
 
-slide." title="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."><img src="screenshot-firefox-step2.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."></a></p>
+slide." data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."><img src="screenshot-firefox-step2.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."></a></p>
 <figcaption>Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide.</figcaption>
 </figure>
 </div>
@@ -432,7 +432,7 @@ slide." title="Firefox’s screenshot feature, step 2. The user needs to click o
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step3.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" data-description="Download
+<p><a href="screenshot-firefox-step3.png" class="lightbox" data-description="Download
 
 the
 
@@ -452,7 +452,7 @@ your
 
 Downloads
 
-folder." title="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."><img src="screenshot-firefox-step3.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."></a></p>
+folder." data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."><img src="screenshot-firefox-step3.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."></a></p>
 <figcaption>Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image.</figcaption>
 </figure>
 </div>
@@ -1153,7 +1153,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2023 Garrick Aden-Buie</p>
+<p>© 2024 Garrick Aden-Buie</p>
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
@@ -1163,7 +1163,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
