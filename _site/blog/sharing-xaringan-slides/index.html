@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step2.png" class="lightbox" data-description="Click
+<p><a href="screenshot-firefox-step2.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" data-description="Click
 
 on
 
@@ -424,7 +424,7 @@ the
 
 entire
 
-slide." data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."><img src="screenshot-firefox-step2.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."></a></p>
+slide." title="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."><img src="screenshot-firefox-step2.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide."></a></p>
 <figcaption>Firefox’s screenshot feature, step 2. The user needs to click on the slides area to select the entire slide.</figcaption>
 </figure>
 </div>
@@ -432,7 +432,7 @@ slide." data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-ligh
 <div class="firefox-screenshot">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="screenshot-firefox-step3.png" class="lightbox" data-description="Download
+<p><a href="screenshot-firefox-step3.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" data-description="Download
 
 the
 
@@ -452,7 +452,7 @@ your
 
 Downloads
 
-folder." data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."><img src="screenshot-firefox-step3.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."></a></p>
+folder." title="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."><img src="screenshot-firefox-step3.png" class="img-fluid figure-img" alt="Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image."></a></p>
 <figcaption>Firefox’s screenshot feature, step 3. The user needs to select ‘Download’ to save the image.</figcaption>
 </figure>
 </div>
@@ -1163,7 +1163,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
