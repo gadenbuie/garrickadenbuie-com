@@ -25,7 +25,7 @@ links:
     url: https://slides.garrickadenbuie.com/seamless-epoxy/
   - icon: github
     name: Code
-    url: https://github.com/gadenbuie/slides/main/seamless-epoxy
+    url: https://github.com/gadenbuie/slides/tree/gh-pages/bslib-modern-dashboards
   # - icon: play-btn-fill
   #   name: Video
   #   url: https://youtu.be/lm0QYr1C2Sw

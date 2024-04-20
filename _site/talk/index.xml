@@ -11,7 +11,41 @@
 <description>Presentations, talks, and workshops.
 </description>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 18 Apr 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Modern Dashboards with bslib</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://slides.garrickadenbuie.com/bslib-modern-dashboards/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<blockquote class="blockquote">
+<p>If you are a Shiny developer, chances are you’ve created a dashboard app. Dashboards are probably the most popular type of Shiny app, and they allow you to display and interact with data in a visually appealing and intuitive way.</p>
+<p>In this talk, we will show you how bslib can make stunning dashboards with Shiny. Not only is bslib a package that pairs with Shiny to provide up-to-date and themable versions of Bootstrap, but bslib has evolved to include a range of components and layouts that are specifically designed for creating delightful dashboards. Recently, we’ve begun recommending Shiny developers turn to bslib instead of shinydashboard, the long time standard dashboarding package for Shiny.</p>
+<p>We will cover all of the latest exciting developments in bslib, including the recently unveiled new default Shiny look and feel.</p>
+</blockquote>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/</guid>
+  <pubDate>Thu, 18 Apr 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/feature.jpeg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>{epoxy}</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
@@ -677,24 +711,6 @@ font-style: inherit;">install.packages</span>(required_packages)</span></code></
   <category>Education</category>
   <guid>https://www.garrickadenbuie.com/talk/getting-started-in-r/</guid>
   <pubDate>Fri, 25 Mar 2016 04:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Ambient Intelligence Applications in Healthcare</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/iie-iserc-2015/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>In the past century, the world has experienced unprecedented growth in life expectancy concurrent with a growth in elderly population. Between 2010 and 2050, the number of people aged 65 and older is expected to more than double to exceed 88 million by 2050 in the United States. Ambient intelligence merges ubiquitous computing, embedded sensors, and artificial intelligence to monitor, adjust and respond to the environment of the user. This presentation will explore the potential of ambient intelligence for applications in health care, primarily with a focus on senior health care management.</p>
-
-
-
- ]]></description>
-  <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/iie-iserc-2015/</guid>
-  <pubDate>Fri, 06 Feb 2015 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Garrick Aden-Buie">
-<meta name="dcterms.date" content="2023-06-08">
-<meta name="description" content="{epoxy} is a new R package that allows report authors to seamlessly blend prose and data in markdown, HTML, and LaTeX reports.">
+<meta name="dcterms.date" content="2024-04-18">
+<meta name="description" content="bslib is the new shinydashboard! Learn why you should choose blisb for your next Shiny app or dashboard.">
 
-<title>Garrick Aden-Buie - Seamless data-driven reporting with {epoxy}</title>
+<title>Garrick Aden-Buie - Modern Dashboards with bslib</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,20 +80,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
-<meta property="og:title" content="Garrick Aden-Buie - Seamless data-driven reporting with {epoxy}">
-<meta property="og:description" content="{epoxy} is a new R package that allows report authors to seamlessly blend prose and data in markdown, HTML, and LaTeX reports.">
-<meta property="og:image" content="https://www.garrickadenbuie.com/talk/seamless-epoxy/feature.png">
+<meta property="og:title" content="Garrick Aden-Buie - Modern Dashboards with bslib">
+<meta property="og:description" content="bslib is the new shinydashboard! Learn why you should choose blisb for your next Shiny app or dashboard.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/feature.jpeg">
 <meta property="og:site_name" content="Garrick Aden-Buie">
-<meta property="og:image:height" content="710">
-<meta property="og:image:width" content="1261">
-<meta name="twitter:title" content="Garrick Aden-Buie - Seamless data-driven reporting with {epoxy}">
-<meta name="twitter:description" content="{epoxy} is a new R package that allows report authors to seamlessly blend prose and data in markdown, HTML, and LaTeX reports.">
-<meta name="twitter:image" content="https://www.garrickadenbuie.com/talk/seamless-epoxy/feature.png">
+<meta name="twitter:title" content="Garrick Aden-Buie - Modern Dashboards with bslib">
+<meta name="twitter:description" content="bslib is the new shinydashboard! Learn why you should choose blisb for your next Shiny app or dashboard.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/feature.jpeg">
 <meta name="twitter:creator" content="@grrrck">
 <meta name="twitter:site" content="@grrrck">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image-height" content="710">
-<meta name="twitter:image-width" content="1261">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -157,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Seamless data-driven reporting with {epoxy}</h1>
+<h1 class="title">Modern Dashboards with bslib</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Conference</div>
   </div>
@@ -165,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    <p>{epoxy} is a new R package that allows report authors to seamlessly blend prose and data in markdown, HTML, and LaTeX reports.</p>
+    <p><strong>bslib</strong> is the new <strong>shinydashboard</strong>! Learn why you should choose blisb for your next Shiny app or dashboard.</p>
   </div>
 </div>
 
@@ -182,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 8, 2023</p>
+      <p class="date">April 18, 2024</p>
     </div>
   </div>
   
@@ -192,7 +188,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="mt-4 d-flex flex-row flex-wrap gap-1 justify-content-center justify-content-sm-start" role="group" aria-label="Talk Links">
-<a href="https://slides.garrickadenbuie.com/seamless-epoxy/" class="btn btn-secondary"><i class="bi bi-file-slides-fill me-1"></i> Slides</a>
+<a href="https://slides.garrickadenbuie.com/bslib-modern-dashboards/" class="btn btn-secondary"><i class="bi bi-file-slides-fill me-1"></i> Slides</a>
 <a href="https://github.com/gadenbuie/slides/tree/gh-pages/bslib-modern-dashboards" class="btn btn-secondary"><i class="bi bi-github me-1"></i> Code</a>
 </div>
 
@@ -202,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
-<iframe src="https://slides.garrickadenbuie.com/seamless-epoxy/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<iframe src="https://slides.garrickadenbuie.com/bslib-modern-dashboards/" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
 <script>fitvids('.shareagain', {players: 'iframe'});</script>
 </div>
 </div>
@@ -210,7 +206,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
 <blockquote class="blockquote">
-<p>{epoxy} is a new R package that allows report authors to seamless blend prose and data in markdown, HTML, and LaTeX reports. {epoxy} builds on the excellent tools for data-driven reporting provided by R Markdown, Quarto and Shiny, while saving report authors from tedious and repetitive data formatting tasks. This talk will highlight the many ways that {epoxy} can help data scientists in medicine to streamline reports, articles, and Shiny apps.</p>
+<p>If you are a Shiny developer, chances are you’ve created a dashboard app. Dashboards are probably the most popular type of Shiny app, and they allow you to display and interact with data in a visually appealing and intuitive way.</p>
+<p>In this talk, we will show you how bslib can make stunning dashboards with Shiny. Not only is bslib a package that pairs with Shiny to provide up-to-date and themable versions of Bootstrap, but bslib has evolved to include a range of components and layouts that are specifically designed for creating delightful dashboards. Recently, we’ve begun recommending Shiny developers turn to bslib instead of shinydashboard, the long time standard dashboarding package for Shiny.</p>
+<p>We will cover all of the latest exciting developments in bslib, including the recently unveiled new default Shiny look and feel.</p>
 </blockquote>
 
 
@@ -778,7 +776,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://twitter.com/grrrck" title="twitter" target="_blank" rel="noopener"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
-<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/talk/seamless-epoxy/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/talk/seamless-epoxy/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/talk/bslib-modern-dashboards/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/talk/bslib-modern-dashboards/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
 </div>

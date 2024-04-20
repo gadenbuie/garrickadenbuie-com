@@ -1,0 +1,19 @@
+{
+  "hash": "c7613baae3d556916afec5bec55bc18d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Modern Dashboards with bslib\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  **bslib** is the new **shinydashboard**! Learn why you should choose\n  blisb for your next Shiny app or dashboard.\nimage: feature.jpeg\ndate: '2024-04-18'\nslug: bslib-modern-dashboards\n\ntags:\n  - R\n  - Shiny\n  - Dashboards\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Conference ]\nevent: \"ShinyConf 2024\"\nevent_url: https://www.shinyconf.com/shinyconf-2024-agenda\nlocation: Virtual Conference\nlinks:\n  - icon: file-slides-fill\n    name: Slides\n    url: https://slides.garrickadenbuie.com/bslib-modern-dashboards/\n  - icon: github\n    name: Code\n    url: https://github.com/gadenbuie/slides/tree/gh-pages/bslib-modern-dashboards\n  # - icon: play-btn-fill\n  #   name: Video\n  #   url: https://youtu.be/lm0QYr1C2Sw\n---\n\n::: {.cell}\n::: {.cell-output-display}\n\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/bslib-modern-dashboards/\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n\n:::\n:::\n\n\n## Abstract\n\n> If you are a Shiny developer, chances are you've created a dashboard app.\n> Dashboards are probably the most popular type of Shiny app, and they allow you to display and interact with data in a visually appealing and intuitive way.\n>\n> In this talk, we will show you how bslib can make stunning dashboards with Shiny.\n> Not only is bslib a package that pairs with Shiny to provide up-to-date and themable versions of Bootstrap, but bslib has evolved to include a range of components and layouts that are specifically designed for creating delightful dashboards.\n> Recently, we've begun recommending Shiny developers turn to bslib instead of shinydashboard, the long time standard dashboarding package for Shiny.\n>\n> We will cover all of the latest exciting developments in bslib, including the recently unveiled new default Shiny look and feel.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
