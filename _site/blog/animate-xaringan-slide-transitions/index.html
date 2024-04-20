@@ -283,7 +283,7 @@ class: inverse, center, middle, animated, bounceInDown
 <p>The end result will look something like this. Have fun! 😎</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="xaringan-animated.gif" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Animated xaringan slides"><img src="xaringan-animated.gif" class="img-fluid figure-img" alt="Animated xaringan slides"></a></p>
+<p><a href="xaringan-animated.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Animated xaringan slides"><img src="xaringan-animated.gif" class="img-fluid figure-img" alt="Animated xaringan slides"></a></p>
 <figcaption>Animated xaringan slides</figcaption>
 </figure>
 </div>
@@ -871,7 +871,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

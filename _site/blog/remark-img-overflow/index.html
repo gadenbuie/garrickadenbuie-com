@@ -468,7 +468,7 @@ Source
 <p>If you wanted to be certain everything is set up correctly, you could call <code>chrome$view()</code> now and see the slides your browser’s seeing.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="chromote-view.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="The headless Chrome preview of the slides in a Chrome window."><img src="chromote-view.png" class="img-fluid figure-img" alt="The headless Chrome preview of the slides in a Chrome window."></a></p>
+<p><a href="chromote-view.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="The headless Chrome preview of the slides in a Chrome window."><img src="chromote-view.png" class="img-fluid figure-img" alt="The headless Chrome preview of the slides in a Chrome window."></a></p>
 <figcaption>The headless Chrome preview of the slides in a Chrome window.</figcaption>
 </figure>
 </div>
@@ -1141,7 +1141,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

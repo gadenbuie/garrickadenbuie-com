@@ -226,7 +226,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="imagine-this-scenario">Imagine this scenario</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="CoffeeCreamCoffee.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1" title="Good morning coffee by mrmatt on flickr"><img src="CoffeeCreamCoffee.jpg" class="img-fluid figure-img" alt="Good morning coffee by mrmatt on flickr"></a></p>
+<p><a href="CoffeeCreamCoffee.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Good morning coffee by mrmatt on flickr"><img src="CoffeeCreamCoffee.jpg" class="img-fluid figure-img" alt="Good morning coffee by mrmatt on flickr"></a></p>
 <figcaption>Good morning coffee by mrmatt on flickr</figcaption>
 </figure>
 </div>
@@ -898,7 +898,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
