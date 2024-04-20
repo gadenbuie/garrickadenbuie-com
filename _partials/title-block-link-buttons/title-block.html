@@ -26,6 +26,27 @@ $endif$
 
 $title-metadata.html()$
 
+
+$if(event)$
+<div class="quarto-title-meta">
+<div>
+<div class="quarto-title-meta-heading">Event</div>
+<div class="quarto-title-meta-contents">
+<p>$if(event_url)$<a href="$event_url$">$event$</a>$else$$event$$endif$</p>
+</div>
+</div>
+
+$if(location)$
+<div>
+<div class="quarto-title-meta-heading">Location</div>
+<div class="quarto-title-meta-contents">
+<p>$location$</p>
+</div>
+$endif$
+</div>
+</div>
+$endif$
+
 $if(links)$
 <div class="mt-4 d-flex flex-row flex-wrap gap-1 justify-content-center justify-content-sm-start" role="group" aria-label="Talk Links">
 $for(links)$
