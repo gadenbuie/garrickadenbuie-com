@@ -91,7 +91,8 @@ footer {
 }
 
 kbd {
-  padding: 0.1em 0.6em;
+  font-size: 0.7rem;
+  padding: 0.2em 0.6em;
   border: 1px solid $dropdown-border-color;
   font-family: $font-family-monospace;
   background-color: $code-bg;
@@ -102,7 +103,14 @@ kbd {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   display: inline-block;
-  margin: 0 0.1em;
+  margin: 0 0.2em;
   line-height: inherit;
   white-space: nowrap;
+  vertical-align: 1px;
+}
+
+figcaption {
+  padding-right: 1rem;
+  color: var(--bs-tertiary-color);
+  text-align: right;
 }
