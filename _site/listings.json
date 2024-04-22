@@ -49,6 +49,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/blog/shiny-new-bslib-snippet/index.html",
       "/blog/quarto-now/index.html",
       "/blog/remark-img-overflow/index.html",
       "/blog/tweet-archive-in-r/index.html",
@@ -161,6 +162,7 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/shiny-new-bslib-snippet/index.html",
       "/blog/quarto-now/index.html",
       "/blog/remark-img-overflow/index.html",
       "/blog/tweet-archive-in-r/index.html",

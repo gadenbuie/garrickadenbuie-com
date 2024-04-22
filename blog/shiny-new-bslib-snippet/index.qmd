@@ -1,0 +1,153 @@
+---
+title: It's time to add bslib to your `shinyapp` snippet
+description: >
+  `library(shiny)` is better with `library(bslib)`, so let's make it
+  official and update our shinyapp snippet together.
+categories:
+  - R
+  - Shiny
+  - bslib
+image: feature.png
+image-alt: >
+  An RStudio editor window with library(shiny) and library(bslib).
+date: 2024-04-22
+modified: 2024-04-22
+
+editor: {render-on-save: true}
+---
+
+Last week,
+I presented at
+[ShinyConf 2024](https://www.shinyconf.com/shinyconf-2024-agenda)
+about [using bslib to make modern dashboards with Shiny](/talk/bslib-modern-dashboards/index.qmd).
+It was a fun talk to put together and present,
+and the conference itself was full of great talks
+showcasing the broad range of Shiny apps, developers and uses.
+
+My talk focused on the [bslib](https://rstudio.github.io/bslib/) package,
+which was also the main theme of my first year on the Shiny team.
+bslib started out as a way to get the latest versions of Bootstrap
+into existing Shiny apps,
+but over the last couple of years
+the package has grown to include components and layouts
+that make it easier to build modern, responsive Shiny apps,
+especially (but not just!) dashboards.
+
+While writing the talk,
+I remembered an important change I made in my RStudio settings this year:
+adding `library(bslib)` to my `shinyapp` snippet.
+
+[RStudio snippets](https://rstudio.github.io/rstudio-extensions/rstudio_snippets.html)
+are little bits of text (e.g. `shinyapp`)
+that expand into larger blocks of code (e.g. a Shiny app skeleton)
+when you type them and press <kbd>Tab</kbd> or <kbd>Shift</kbd> + <kbd>Tab</kbd>.
+Here's an example with a small snippet I frequently use: `tdv` expands into `library(tidyverse)`.
+
+![**RStudio snippets in action:** I type `tdv`, press <kbd>Tab</kbd> and RStudio replaces `tdv` with `library(tidyverse)`.](snippets.gif)
+
+
+## Before (default snippet)
+
+For years, `shinyapp` has been the fastest way
+to start a quick little Shiny app.
+Here's the default snippet that comes with RStudio:
+
+```r
+snippet shinyapp
+	library(shiny)
+
+	ui <- fluidPage(
+	  ${0}
+	)
+
+	server <- function(input, output, session) {
+
+	}
+
+	shinyApp(ui, server)
+```
+
+It's a great starting point!
+It also includes a neat feature of snippets:
+the `${0}` placeholder marks the cursor location after the snippet expands.
+When you type `shinyapp` and press <kbd>Tab</kbd>,
+the app skeleton is added
+and the cursors is placed in the page function
+so you can start creating your UI right away.
+
+## After (with bslib)
+
+Here's my new `shinyapp` snippet with `library(bslib)` added.
+
+```r
+snippet shinyapp
+	library(shiny)
+	library(bslib)
+
+	ui <- page_${1:sidebar}(
+	  ${0}
+	)
+
+	server <- function(input, output, session) {
+
+	}
+
+	shinyApp(ui, server)
+```
+
+There are two changes:
+
+1. I added `library(bslib)` to the top of the file.
+
+2. I changed `fluidPage()` to `page_sidebar()` by default,
+   but I used `${1:sidebar}` to make it a placeholder in the template.
+   After the text expands, the cursor moves to highlight
+   <mark>`sidebar`</mark> so you can easily replace it with another page layout.
+   Or you can press <kbd>Tab</kbd> to move to the `${0}` position.
+
+To add this snippet to RStudio,
+press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
+to bring up the command palette.
+Then enter **Edit code snippets** and press <kbd>Return</kbd>.
+Scroll down to find the `snippet shinyapp` section
+and replace it with the code you can copy from the block above.
+
+## Bonus: A VSCode snippet
+
+Snippets in VSCode work similarly to RStudio snippets.
+The only difference is that they are stored in JSON files,
+so the format of the snippet is slightly different.
+
+To add your own `shinyapp` snippet to VSCode,
+press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>
+to open the VSCode command palette to run **Snippets: Configure User Snippets**.
+If you have an existing `r.json` snippets file, select that,
+otherwise select **New Global Snippets file** and enter `r.json`.
+
+In the snippets file, add the following JSON.
+(If you already have R snippets, skip the outer `{` braces.)
+
+```json
+{
+	"shinyapp": {
+		"prefix": "shinyapp",
+		"body": [
+			"library(shiny)",
+			"library(bslib)",
+			"",
+			"ui <- page_${1:sidebar}(",
+			"  ${0}",
+			")",
+			"",
+			"server <- function(input, output, session) {",
+			"",
+			"}",
+			"",
+			"shinyApp(ui, server)"
+		]
+	}
+}
+```
+
+Then, when you type `shinyapp` in a `.R` file and press <kbd>Tab</kbd>,
+VSCode will expand the snippet into the bslib version of the Shiny app skeleton.
