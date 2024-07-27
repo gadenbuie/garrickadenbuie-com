@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2017-07-06">
 <meta name="description" content="Apps and reports for multiple-choice test analysis in R with Shiny">
 
-<title>Garrick Aden-Buie - 📚 MC Test Analysis</title>
+<title>📚 MC Test Analysis – Garrick Aden-Buie</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -112,13 +112,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
-<meta property="og:title" content="Garrick Aden-Buie - 📚 MC Test Analysis">
+<meta property="og:title" content="📚 MC Test Analysis – Garrick Aden-Buie">
 <meta property="og:description" content="Apps and reports for multiple-choice test analysis in R with Shiny">
 <meta property="og:image" content="https://www.garrickadenbuie.com/project/mc-test-analysis/explore-03-irt.png">
 <meta property="og:site_name" content="Garrick Aden-Buie">
 <meta property="og:image:height" content="813">
 <meta property="og:image:width" content="1119">
-<meta name="twitter:title" content="Garrick Aden-Buie - 📚 MC Test Analysis">
+<meta name="twitter:title" content="📚 MC Test Analysis – Garrick Aden-Buie">
 <meta name="twitter:description" content="Apps and reports for multiple-choice test analysis in R with Shiny">
 <meta name="twitter:image" content="https://www.garrickadenbuie.com/project/mc-test-analysis/explore-03-irt.png">
 <meta name="twitter:creator" content="@grrrck">
@@ -140,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -304,9 +304,8 @@ Export Report
 </div>
 </a><p><a href="explore-06-report.png" data-featherlight="image"></a></p>
 </div>
+</section>
 <div style="clear:both">
-
-</div></section>
 <section id="report" class="level3">
 <h3 class="anchored" data-anchor-id="report">Report: A Custom Multiple-Choice Test Analysis Report</h3>
 <p>The <code>report()</code> function opens a window in RStudio that allows the user to import their answer key and test results and quickly generate a custom multiple-choice test analysis as a PDF or HTML file. This report includes all of the information in the <code>explore()</code> app, in addition to helpful background information on the various statistics and visualizations in the report.</p>
@@ -335,10 +334,8 @@ Generate Report
 </div>
 </a><p><a href="report-03-generate.png" data-featherlight="image"></a></p>
 </div>
-<div style="clear:both">
-
-</div></section>
 </section>
+<div style="clear:both">
 <section id="data-format" class="level2">
 <h2 class="anchored" data-anchor-id="data-format">Data format</h2>
 <p>The MCTestAnalysis package requires both an <strong>Answer Key</strong> and a table of student responses, in other words the <strong>Test Data</strong>. An example of each table is provided, in the preferred format, in the <a href="https://github.com/gadenbuie/mctestanalysis/tree/master/inst/extdata"><code>inst/extdata</code> folder</a> of the <a href="https://github.com/gadenbuie/mctestanalysis">repo</a>, or from links on the “Import” tab of the <code>explore()</code> or <code>report()</code> interfaces.</p>
@@ -346,7 +343,7 @@ Generate Report
 <section id="answer-key-format" class="level3">
 <h3 class="anchored" data-anchor-id="answer-key-format">Answer Key Format</h3>
 <p>The answer key is a <code>.csv</code> file with columns <strong>Question</strong> and <strong>Answer</strong>, with optional columns <strong>Title</strong> and <strong>Concept</strong>. The table below shows an example answer key with 5 questions.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Question</th>
@@ -392,7 +389,7 @@ Generate Report
 <section id="test-data-format" class="level3">
 <h3 class="anchored" data-anchor-id="test-data-format">Test Data Format</h3>
 <p>The test data is also a <code>.csv</code> file, where the first column is optionally the student ID and each column afterwards records the student’s answer to the test questions. The columns after the student ID need to be in the same order as the answer key. Here are the test responses for the first 5 students to the above example answer key.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">id</th>
@@ -453,6 +450,9 @@ Generate Report
 <p>MCTestAnalysis was built by <a href="https://garrickadenbuie.com">Garrick Aden-Buie</a> and lead by <a href="http://autarkaw.com/">Dr.&nbsp;Autar Kaw</a>. The package was built to be used with <a href="https://cran.r-project.org/">R</a> and <a href="https://www.rstudio.com/products/RStudio/">RStudio</a>, using <a href="http://shiny.rstudio.com/">Shiny</a> for the interactive apps, <a href="https://rmarkdown.rstudio.com/">R Markdown</a> for the custom reports, and <a href="http://ggplot2.tidyverse.org">ggplot2</a> for plots. Many test analysis functions used in this package were made available by other packages and R developers, including the following packages: <a href="http://personality-project.org/r/psych">psych</a>, <a href="https://CRAN.R-project.org/package=psychometric">psychometric</a>, <a href="https://github.com/drizopoulos/ltm">ltm</a>, <a href="http://shiny.rstudio.com">shiny</a>, <a href="http://dplyr.tidyverse.org">dplyr</a>, <a href="http://ggplot2.tidyverse.org">ggplot2</a>, <a href="https://github.com/hadley/reshape">reshape2</a>, <a href="https://rmarkdown.rstudio.com">rmarkdown</a>, <a href="https://rstudio.github.io/DT">DT</a>, <a href="http://tibble.tidyverse.org/">tibble</a>, <a href="https://CRAN.R-project.org/package=gridExtra">gridExtra</a>, <a href="https://CRAN.R-project.org/package=miniUI">miniUI</a>.</p>
 
 
+</section>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -635,18 +635,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -678,7 +667,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/www\.garrickadenbuie\.com");
@@ -686,7 +697,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

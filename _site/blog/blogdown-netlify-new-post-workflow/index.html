@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2019-03-18">
 <meta name="description" content="A workflow for writing new posts built around GitHub pull requests and Netlify deploy previews.">
 
-<title>Garrick Aden-Buie - A Blogdown New Post Workflow with Github and Netlify</title>
+<title>A Blogdown New Post Workflow with Github and Netlify – Garrick Aden-Buie</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -36,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -116,13 +116,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
-<meta property="og:title" content="Garrick Aden-Buie - A Blogdown New Post Workflow with Github and Netlify">
+<meta property="og:title" content="A Blogdown New Post Workflow with Github and Netlify – Garrick Aden-Buie">
 <meta property="og:description" content="A workflow for writing new posts built around GitHub pull requests and Netlify deploy previews.">
 <meta property="og:image" content="https://www.garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/new-post_dropdown_crop.png">
 <meta property="og:site_name" content="Garrick Aden-Buie">
 <meta property="og:image:height" content="304">
 <meta property="og:image:width" content="761">
-<meta name="twitter:title" content="Garrick Aden-Buie - A Blogdown New Post Workflow with Github and Netlify">
+<meta name="twitter:title" content="A Blogdown New Post Workflow with Github and Netlify – Garrick Aden-Buie">
 <meta name="twitter:description" content="A workflow for writing new posts built around GitHub pull requests and Netlify deploy previews.">
 <meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/blogdown-netlify-new-post-workflow/new-post_dropdown_crop.png">
 <meta name="twitter:creator" content="@grrrck">
@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To turn on this feature, select your website from <a href="https://app.netlify.com/account/sites">your list of sites</a> hosted with Netlify. Then click on <strong>Site settings</strong> and find <strong>Build &amp; deploy</strong> on the left menu bar. Under this settings group, click the <em>Edit settings</em> button and select <strong>Automatically build deploy previews for all pull requests</strong> next to <em>Deploy previews</em>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="netlify-deploy-context.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1" title="Enable automatic deploy previews for pull requests in your site’s settings."><img src="netlify-deploy-context.png" class="img-fluid figure-img" alt="Enable automatic deploy previews for pull requests in your site’s settings."></a></p>
+<p><a href="netlify-deploy-context.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Enable automatic deploy previews for pull requests in your site’s settings."><img src="netlify-deploy-context.png" class="img-fluid figure-img" alt="Enable automatic deploy previews for pull requests in your site’s settings."></a></p>
 <figcaption>Enable automatic deploy previews for pull requests in your site’s settings.</figcaption>
 </figure>
 </div>
@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Create a new branch for your post. Give your branch a meaningful name — consider using the slug (short title) for the post. I wrote this post in a branch called <code>post-new-post-workflow</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="new-branch.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Create a New Branch with an informative name, like post-<slug>."><img src="new-branch.png" class="img-fluid figure-img" alt="Create a New Branch with an informative name, like post-<slug>."></a></p>
+<p><a href="new-branch.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Create a New Branch with an informative name, like post-<slug>."><img src="new-branch.png" class="img-fluid figure-img" alt="Create a New Branch with an informative name, like post-<slug>."></a></p>
 <figcaption>Create a New Branch with an informative name, like <code>post-&lt;slug&gt;</code>.</figcaption>
 </figure>
 </div>
@@ -340,14 +340,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Create a new post in your blog using <span class="pkg">blogdown</span>’s <strong>New Post</strong> addin. This is generally the easiest way to get started with a post, although you can also manually call <code>blogdown::new_post()</code> from the R command prompt.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="new-post_dropdown_crop.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3" title="Opening the New Post RStudio addin."><img src="new-post_dropdown_crop.png" class="img-fluid figure-img" alt="Opening the New Post RStudio addin."></a></p>
+<p><a href="new-post_dropdown_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Opening the New Post RStudio addin."><img src="new-post_dropdown_crop.png" class="img-fluid figure-img" alt="Opening the New Post RStudio addin."></a></p>
 <figcaption>Opening the <strong>New Post</strong> RStudio addin.</figcaption>
 </figure>
 </div>
 <p>At this step, the default date of the post is set to the current date. If you’d like to “schedule” your post for a day in the future, you set the date now. (Remind yourself it’s an aspirational goal and not a hard deadline.) (And <a href="#publish">see below</a> for the reason for the scare quotes around <em>schedule</em>. Spoiler: it’s not automatic.)</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="new-post_choose-future-date_crop.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4" title="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)"><img src="new-post_choose-future-date_crop.png" class="img-fluid figure-img" alt="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)"></a></p>
+<p><a href="new-post_choose-future-date_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)"><img src="new-post_choose-future-date_crop.png" class="img-fluid figure-img" alt="Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)"></a></p>
 <figcaption>Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)</figcaption>
 </figure>
 </div>
@@ -357,14 +357,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>to make the post’s date reflect the day your <code>.Rmd</code> was rendered to hugo’s HTML. While I like this idea in theory, you may later need to re-render your post due to changes on your site. If you use your post’s date in your site’s permalinks<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> — for example, with URLs like <code>/2019/03/18/blogdown-netlify-new-post-workflow</code> — then this change may inadvertently change your site’s URLs and invalidate links you’ve previously shared.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="new-post_addin-ready_crop.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="quarto-lightbox-gallery-5" title="Fill out the rest of your post information."><img src="new-post_addin-ready_crop.png" class="img-fluid figure-img" alt="Fill out the rest of your post information."></a></p>
+<p><a href="new-post_addin-ready_crop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Fill out the rest of your post information."><img src="new-post_addin-ready_crop.png" class="img-fluid figure-img" alt="Fill out the rest of your post information."></a></p>
 <figcaption>Fill out the rest of your post information.</figcaption>
 </figure>
 </div>
 <p>Your blank page is ready! Run <code>blogdown::serve_site()</code> and write your post draft, previewing locally as you write.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="blogdown-serve-site.png" class="lightbox" data-glightbox="description: .lightbox-desc-6" data-gallery="quarto-lightbox-gallery-6" title="Writing this post in RStudio with the Source and Viewer panes maximized for “live preview” feel."><img src="blogdown-serve-site.png" class="img-fluid figure-img" alt="Writing this post in RStudio with the Source and Viewer panes maximized for “live preview” feel."></a></p>
+<p><a href="blogdown-serve-site.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Writing this post in RStudio with the Source and Viewer panes maximized for “live preview” feel."><img src="blogdown-serve-site.png" class="img-fluid figure-img" alt="Writing this post in RStudio with the Source and Viewer panes maximized for “live preview” feel."></a></p>
 <figcaption>Writing this post in RStudio with the <em>Source</em> and <em>Viewer</em> panes maximized for “live preview” feel.</figcaption>
 </figure>
 </div>
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>When you do you’ll see a yellow dot next to the most recent commit. When it turns into a green check mark, your preview is ready.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="netlify-pr-preview-complete.png" class="lightbox" data-glightbox="description: .lightbox-desc-7" data-gallery="quarto-lightbox-gallery-7" title="Your deploy preview is ready on Netlify!"><img src="netlify-pr-preview-complete.png" class="img-fluid figure-img" alt="Your deploy preview is ready on Netlify!"></a></p>
+<p><a href="netlify-pr-preview-complete.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Your deploy preview is ready on Netlify!"><img src="netlify-pr-preview-complete.png" class="img-fluid figure-img" alt="Your deploy preview is ready on Netlify!"></a></p>
 <figcaption>Your deploy preview is ready on Netlify!</figcaption>
 </figure>
 </div>
@@ -411,15 +411,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>That’s it! Once you’ve merged your post branch to the master branch, your post is out there in the world, just as soon as Netlify finishes building your site.</p>
 
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Enable automatic deploy previews for pull requests in your site’s settings.</span>
-<span class="glightbox-desc lightbox-desc-2">Create a New Branch with an informative name, like <code>post-&lt;slug&gt;</code>.</span>
-<span class="glightbox-desc lightbox-desc-3">Opening the <strong>New Post</strong> RStudio addin.</span>
-<span class="glightbox-desc lightbox-desc-4">Set the post date to be sometime in the future. (It was 2019-03-15 when I took this picture.)</span>
-<span class="glightbox-desc lightbox-desc-5">Fill out the rest of your post information.</span>
-<span class="glightbox-desc lightbox-desc-6">Writing this post in RStudio with the <em>Source</em> and <em>Viewer</em> panes maximized for “live preview” feel.</span>
-<span class="glightbox-desc lightbox-desc-7">Your deploy preview is ready on Netlify!</span>
-</div>
 </section>
 </section>
 
@@ -616,18 +607,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -659,7 +639,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/www\.garrickadenbuie\.com");
@@ -667,7 +669,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1008,30 +1010,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

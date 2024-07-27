@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.4.551</generator>
+<generator>quarto-1.5.55</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
@@ -185,7 +185,7 @@ font-style: inherit;">"epoxy"</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">library</span>(epoxy)</span></code></pre></div>
 <p>Loading epoxy adds four new <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html">knitr engines</a>, or chunk types. Each type lets you intermix text with R code or data (<code>expr</code> in the table below), and each is geared toward a different output context.</p>
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Engine</th>
@@ -348,6 +348,7 @@ font-style: inherit;">'cleanrmd'</span>)</span></code></pre></div>
 background-color: null;
 font-style: inherit;">output</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span></span>
@@ -357,6 +358,7 @@ font-style: inherit;">  cleanrmd:</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">:html_document_clean</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb4-3"><span class="at" style="color: #657422;
 background-color: null;
@@ -364,6 +366,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">theme</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> no-class</span></span></code></pre></div>
@@ -372,6 +375,7 @@ font-style: inherit;"> no-class</span></span></code></pre></div>
 background-color: null;
 font-style: inherit;">output</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span></span>
@@ -381,6 +385,7 @@ font-style: inherit;">  cleanrmd:</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">:html_document_clean</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb5-3"><span class="at" style="color: #657422;
 background-color: null;
@@ -388,6 +393,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">theme</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
@@ -400,6 +406,7 @@ font-style: inherit;">NULL</span></span></code></pre></div>
 background-color: null;
 font-style: inherit;">output</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span></span>
@@ -409,6 +416,7 @@ font-style: inherit;">  cleanrmd:</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">:html_document_clean</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb6-3"><span class="at" style="color: #657422;
 background-color: null;
@@ -416,6 +424,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mathjax</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> default</span></span>
@@ -425,6 +434,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">use_fontawesome</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
@@ -935,6 +945,7 @@ background-color: null;
 font-style: inherit;"># ~/.Rprofile</span></span>
 <span id="cb9-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">interactive</span>()) {</span>
@@ -1016,6 +1027,7 @@ font-style: inherit;">"{rsthemes}"</span>)</span>
 <p>If you would like to automatically choose the dark or light theme by time of day during each new session, you can call <code>rsthemes::use_theme_auto()</code> in your <code>~/.Rprofile</code>. For best results, use the following template in your <code>~/.Rprofile</code> to declare your preferred dark and light themes and to choose the correct style when your R session reloads.</p>
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">interactive</span>() <span class="sc" style="color: #5E5E5E;
@@ -1060,6 +1072,7 @@ font-style: inherit;">setHook</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"rstudio.sessionInit"</span>, <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(isNewSession) {</span>
 <span id="cb11-8">    <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1985,6 +1998,7 @@ font-style: inherit;">"gadenbuie/xaringanthemer"</span>)</span></code></pre></di
 background-color: null;
 font-style: inherit;">output</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb2-2"><span class="at" style="color: #657422;
 background-color: null;
@@ -1992,6 +2006,7 @@ font-style: inherit;">  xaringan:</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">:moon_reader</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb2-3"><span class="at" style="color: #657422;
 background-color: null;
@@ -1999,6 +2014,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">lib_dir</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> libs</span></span>
@@ -2008,6 +2024,7 @@ font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">css</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> xaringan-themer.css</span></span></code></pre></div>
@@ -3213,9 +3230,8 @@ Export Report
 </div>
 </a><p><a href="explore-06-report.png" data-featherlight="image"></a></p>
 </div>
+</section>
 <div style="clear:both">
-
-</div></section>
 <section id="report" class="level3">
 <h3 class="anchored" data-anchor-id="report">Report: A Custom Multiple-Choice Test Analysis Report</h3>
 <p>The <code>report()</code> function opens a window in RStudio that allows the user to import their answer key and test results and quickly generate a custom multiple-choice test analysis as a PDF or HTML file. This report includes all of the information in the <code>explore()</code> app, in addition to helpful background information on the various statistics and visualizations in the report.</p>
@@ -3244,10 +3260,8 @@ Generate Report
 </div>
 </a><p><a href="report-03-generate.png" data-featherlight="image"></a></p>
 </div>
-<div style="clear:both">
-
-</div></section>
 </section>
+<div style="clear:both">
 <section id="data-format" class="level2">
 <h2 class="anchored" data-anchor-id="data-format">Data format</h2>
 <p>The MCTestAnalysis package requires both an <strong>Answer Key</strong> and a table of student responses, in other words the <strong>Test Data</strong>. An example of each table is provided, in the preferred format, in the <a href="https://github.com/gadenbuie/mctestanalysis/tree/master/inst/extdata"><code>inst/extdata</code> folder</a> of the <a href="https://github.com/gadenbuie/mctestanalysis">repo</a>, or from links on the “Import” tab of the <code>explore()</code> or <code>report()</code> interfaces.</p>
@@ -3255,7 +3269,7 @@ Generate Report
 <section id="answer-key-format" class="level3">
 <h3 class="anchored" data-anchor-id="answer-key-format">Answer Key Format</h3>
 <p>The answer key is a <code>.csv</code> file with columns <strong>Question</strong> and <strong>Answer</strong>, with optional columns <strong>Title</strong> and <strong>Concept</strong>. The table below shows an example answer key with 5 questions.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Question</th>
@@ -3301,7 +3315,7 @@ Generate Report
 <section id="test-data-format" class="level3">
 <h3 class="anchored" data-anchor-id="test-data-format">Test Data Format</h3>
 <p>The test data is also a <code>.csv</code> file, where the first column is optionally the student ID and each column afterwards records the student’s answer to the test questions. The columns after the student ID need to be in the same order as the answer key. Here are the test responses for the first 5 students to the above example answer key.</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">id</th>
@@ -3362,6 +3376,9 @@ Generate Report
 <p>MCTestAnalysis was built by <a href="https://garrickadenbuie.com">Garrick Aden-Buie</a> and lead by <a href="http://autarkaw.com/">Dr.&nbsp;Autar Kaw</a>. The package was built to be used with <a href="https://cran.r-project.org/">R</a> and <a href="https://www.rstudio.com/products/RStudio/">RStudio</a>, using <a href="http://shiny.rstudio.com/">Shiny</a> for the interactive apps, <a href="https://rmarkdown.rstudio.com/">R Markdown</a> for the custom reports, and <a href="http://ggplot2.tidyverse.org">ggplot2</a> for plots. Many test analysis functions used in this package were made available by other packages and R developers, including the following packages: <a href="http://personality-project.org/r/psych">psych</a>, <a href="https://CRAN.R-project.org/package=psychometric">psychometric</a>, <a href="https://github.com/drizopoulos/ltm">ltm</a>, <a href="http://shiny.rstudio.com">shiny</a>, <a href="http://dplyr.tidyverse.org">dplyr</a>, <a href="http://ggplot2.tidyverse.org">ggplot2</a>, <a href="https://github.com/hadley/reshape">reshape2</a>, <a href="https://rmarkdown.rstudio.com">rmarkdown</a>, <a href="https://rstudio.github.io/DT">DT</a>, <a href="http://tibble.tidyverse.org/">tibble</a>, <a href="https://CRAN.R-project.org/package=gridExtra">gridExtra</a>, <a href="https://CRAN.R-project.org/package=miniUI">miniUI</a>.</p>
 
 
+</section>
+</div>
+</div>
 </section>
 
  ]]></description>
@@ -3440,6 +3457,7 @@ font-style: inherit;"># Alias to create nice tables</span></span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(...) knitr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
@@ -3525,8 +3543,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb2-18">  as_table</span></code></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
@@ -3662,7 +3679,6 @@ font-style: inherit;">%&gt;%</span></span>
 
 </div>
 </div>
-</div>
 </section>
 <section id="querying-flights" class="level2">
 <h2 class="anchored" data-anchor-id="querying-flights">Querying <code>flights</code></h2>
@@ -3672,6 +3688,7 @@ font-style: inherit;">%&gt;%</span></span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(query, ...) {</span>
 <span id="cb3-2">  <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3724,8 +3741,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb4-7">  as_table</span></code></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
@@ -3781,7 +3797,6 @@ font-style: inherit;">%&gt;%</span></span>
 </table>
 
 
-</div>
 </div>
 </div>
 <p>Note that <code>sqrrl</code> provides the <code>%+%</code> infix operator, which is essentially just an alias for <code>paste(x, y)</code>.</p>
@@ -3862,8 +3877,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb9-7">  as_table</span></code></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">tailnum</th>
@@ -3928,7 +3942,6 @@ font-style: inherit;">%&gt;%</span></span>
 
 </div>
 </div>
-</div>
 <p><code>sqrrl</code> also provides a wrapper around the python utility <code>sqlformat</code> that can be used to pretty-print SQL formats.</p>
 <div class="cell" data-hash="index_cache/html/flights-avg-arr-delay-query_2102617ed2597b39ae99b0450d0ab1bb">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
@@ -3981,11 +3994,13 @@ background-color: null;
 font-style: inherit;">%&gt;%</span> cat</span></code></pre></div>
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">SELECT</span> tailnum,</span>
 <span id="cb11-2">       <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">avg</span>(arr_delay) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> delay,</span>
 <span id="cb11-3">       <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -3993,24 +4008,32 @@ font-style: inherit;">count</span>(<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span>) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> n</span>
 <span id="cb11-4">  <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">FROM</span> flights</span>
 <span id="cb11-5"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> tailnum</span>
 <span id="cb11-6"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> delay <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">DESC</span></span>
 <span id="cb11-7"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span></span></code></pre></div>
@@ -4095,8 +4118,7 @@ background-color: null;
 font-style: inherit;">%&gt;%</span></span>
 <span id="cb12-13">  as_table</span></code></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">tailnum</th>
@@ -4159,7 +4181,6 @@ font-style: inherit;">%&gt;%</span></span>
 </table>
 
 
-</div>
 </div>
 </div>
 </section>
@@ -4247,19 +4268,23 @@ background-color: null;
 font-style: inherit;">cat</span>()</span></code></pre></div>
 <div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">SELECT</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span></span>
 <span id="cb14-2">  <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">FROM</span> (</span>
 <span id="cb14-3">        <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">SELECT</span> tailnum,</span>
 <span id="cb14-4">               <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">avg</span>(arr_delay) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> delay,</span>
 <span id="cb14-5">               <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -4267,25 +4292,33 @@ font-style: inherit;">count</span>(<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span>) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> n</span>
 <span id="cb14-6">          <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">FROM</span> flights</span>
 <span id="cb14-7">         <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> tailnum</span>
 <span id="cb14-8">         <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> delay <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">DESC</span></span>
 <span id="cb14-9">       ) delay</span>
 <span id="cb14-10"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">WHERE</span> n<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;</span><span class="dv" style="color: #AD0000;
@@ -4293,6 +4326,7 @@ background-color: null;
 font-style: inherit;">100</span></span>
 <span id="cb14-11"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span></span></code></pre></div>
@@ -4439,6 +4473,7 @@ font-style: inherit;">%&gt;%</span></span>
 <span id="cb15-18">  as_table</span></code></pre></div>
 <div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">SELECT</span> `year`,</span>
 <span id="cb16-2">       carrier,</span>
 <span id="cb16-3">       flight,</span>
@@ -4449,35 +4484,44 @@ font-style: inherit;">count</span>(<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span>) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> n,</span>
 <span id="cb16-6">       <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">avg</span>(distance) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> avg_dist,</span>
 <span id="cb16-7">       <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">avg</span>(air_time) <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AS</span> avg_air_time</span>
 <span id="cb16-8">  <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">FROM</span> flights f</span>
 <span id="cb16-9"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">WHERE</span> `month` <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BETWEEN</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">6</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AND</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">12</span></span>
 <span id="cb16-10">   <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AND</span> carrier <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">IN</span> (<span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">"UA"</span>, <span class="ot" style="color: #003B4F;
@@ -4489,6 +4533,7 @@ background-color: null;
 font-style: inherit;">"WN"</span>)</span>
 <span id="cb16-11">   <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AND</span> dep_time<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;=</span><span class="dv" style="color: #AD0000;
@@ -4496,6 +4541,7 @@ background-color: null;
 font-style: inherit;">800</span></span>
 <span id="cb16-12">   <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AND</span> air_time<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;=</span><span class="dv" style="color: #AD0000;
@@ -4503,34 +4549,41 @@ background-color: null;
 font-style: inherit;">120</span></span>
 <span id="cb16-13">   <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">AND</span> origin <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">LIKE</span>(<span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">"JFK"</span>)</span>
 <span id="cb16-14"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> `year`,</span>
 <span id="cb16-15">          carrier,</span>
 <span id="cb16-16">          flight,</span>
 <span id="cb16-17">          dest</span>
 <span id="cb16-18"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">BY</span> n <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">DESC</span></span>
 <span id="cb16-19"> <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">LIMIT</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10</span></span></code></pre></div>
 <div class="cell-output-display">
-<div>
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
@@ -4637,7 +4690,6 @@ font-style: inherit;">10</span></span></code></pre></div>
 </table>
 
 
-</div>
 </div>
 </div>
 <p>This query and table select the most popular flights from JFK between June and December of 2013 from the carriers <code>UA</code>, <code>AA</code>, <code>US</code>, and <code>WN</code> that depart JFK after 8:00 AM and have an air time of less than 2 hours.</p>

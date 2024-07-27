@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/talk/index.xml" rel="self" type="application/rss+xml"/>
 <description>Presentations, talks, and workshops.
 </description>
-<generator>quarto-1.4.551</generator>
+<generator>quarto-1.5.55</generator>
 <lastBuildDate>Thu, 18 Apr 2024 04:00:00 GMT</lastBuildDate>
 <item>
   <title>Modern Dashboards with bslib</title>
