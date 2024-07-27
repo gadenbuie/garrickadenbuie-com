@@ -8,7 +8,11 @@ options(
   blogdown.author = "Garrick Aden-Buie",
   blogdown.subdir = strftime(Sys.time(), "blog/%Y"),
   blogdown.ext = ".Rmd",
-  blogdown.hugo.server = c('-D', '-F', '--navigateToChanged')
+  blogdown.hugo.server = c('-D', '-F', '--navigateToChanged'),
+  repos = c(
+    gadenbuie = "https://gadenbuie.r-universe.dev",
+    CRAN = "https://cloud.r-project.org"
+  )
 )
 
 # General Blog Helpers ----
