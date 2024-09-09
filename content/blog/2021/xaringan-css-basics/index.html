@@ -1,0 +1,313 @@
+---
+title: "CSS basics for xaringan users"
+author: Garrick Aden-Buie
+date: '2021-01-22'
+slug: xaringan-css-basics
+categories:
+  - Blog
+tags:
+  - R
+  - xaringan
+  - Presentation
+  - CSS
+  - Web Development
+description: An introduction to CSS basics for people who want to make slides with xaringan.
+# twitterImage: /path/to/image.png
+# rmd_source: ''
+keywords: rstats
+editor_options:
+  chunk_output_type: console
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs-2.6/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/alpinejs-2.8.0/alpine.min.js"></script>
+
+
+<!-- Links -->
+<div id="todo" class="section level2 lead">
+<h2>TODO</h2>
+<ul>
+<li>lead paragraph</li>
+<li>update post date</li>
+</ul>
+</div>
+<div id="connecting-the-dot-css-xaringan" class="section level2">
+<h2>Connecting the dot: CSS &amp; xaringan</h2>
+<div id="xaringans-markdown-syntax" class="section level3">
+<h3>xaringan’s markdown syntax</h3>
+<p><span class="pkg">xaringan</span>’s markdown syntax isn’t exactly the same as R Markdown’s.
+<!--
+[xaringan]{.pkg} uses the ideas of [rmarkdown]{.pkg} to prepare your slides,
+by running the R code and turning your `slides.Rmd` into a `slides.html` page.
+But if you open up that `slides.html` file,
+you'll find your slide content is still in _markdown_, not HTML.
+This is because the JavaScript library that creates your slides,
+[remarkjs],
+renders that markdown into your slides _in the browser_.
+-->
+One particularly useful feature
+that you may have discovered
+is that you can change the appearance or position of text using special syntax.</p>
+<p>If we write</p>
+<pre><code>You are .special[top-notch]!</code></pre>
+<p>the words inside the brackets — <code>top-notch</code> —
+become <strong>special</strong> in our slides.</p>
+<div class="slide slide--w-50">
+<p>You are <span class="special-fake">top-notch</span>!</p>
+</div>
+<style type="text/css">
+.slide {
+  border: 1px solid var(--text-lightest);
+  border-radius: 4px;
+  padding: 1em;
+  margin: 1em auto;
+  box-shadow: 0px 4px 6px 0px rgba(50,50,93,0.11) , 0px 1px 3px 0px rgba(0,0,0,0.08);
+}
+@media (prefers-color-scheme: dark) {
+  .slide {
+    box-shadow: 0px 4px 6px 0px rgba(121, 129, 154, 0.57) , 0px 1px 3px 0px rgba(255,255,255,0.08);
+  }
+}
+.slide p:last-child {
+  margin-bottom: 0;
+}
+.slide.slide--w-50 {
+  width: 50%;
+  min-width: 400px;
+}
+</style>
+<p>That made <code>top-notch</code> special, but it didn’t make it look any different.
+To actually change the appearance of <code>top-notch</code>,
+we need to use <strong>CSS</strong>.
+<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS">CSS is a programming language for the web</a>
+that changes the appearance of elements on a web page.</p>
+</div>
+<div id="css-rules" class="section level3">
+<h3>CSS Rules</h3>
+<div x-data="{ hl: null }" class="magic-links">
+
+<p>
+A CSS rule tells the browser how to style a specific element on the web page.
+I've written a new CSS rule to make <code>special</code> actually <em>special</em> below.
+You can see that a CSS rule is comprised of a set of components.
+Click on the component name to see it highlighted in the example rule.
+
+<ul x-on:click.away="hl = null">
+  <li>A <a href="javascript:void(0);" title="Highlight a CSS selector in the code below" @click="hl = 'selector'" :class="hl === 'selector' ? 'hl-link' : ''">selector</a> 
+    tells the browser how to find the element on the page.</li>
+  <li>A <a href="javascript:void(0);" title="Highlight a CSS rule in the code below" @click="hl = 'dec'" :class="hl === 'dec' ? 'hl-link' : ''">declaration</a> pairs a <em>property</em> with the <em>value</em> it should take.</li>
+  <li>A <a href="javascript:void(0);" title="Highlight a CSS property in the code below" @click="hl = 'property'" :class="hl === 'property' ? 'hl-link' : ''">property</a> is the name of a stylistic feature...</li>
+  <li>...and each <em>property</em> is assigned a <a href="javascript:void(0);" title="Highlight a CSS value in the code below" @click="hl = 'value'" :class="hl === 'value' ? 'hl-link' : ''">value</a> that modifies the element's appearance.</li>
+</ul>
+</p>
+
+<pre><code><span :class="hl === 'selector' ? 'hl' : ''">.special</span> { <span class="css-note" x-show="hl === 'selector'">&larr; the element with class special</span>
+  font-family: 'Roboto Slab', san-serif;
+  <span :class="hl === 'dec' ? 'hl' : ''"><span :class="hl === 'property' ? 'hl' : ''">color:</span> <span :class="hl === 'value' ? 'hl' : ''">#345865</span>;</span> <span class="css-note" x-show="hl === 'property'">&larr; modify the color property</span><span class="css-note" x-show="hl === 'value'">&larr; a color value</span><span class="css-note" x-show="hl === 'dec'">&larr; a stylistic property-value pair</span>
+  font-weight: bold;
+}</code></pre>
+</div>
+<style type="text/css">
+.special {
+  color: #345865;
+  font-family: 'Roboto Slab', san-serif;
+  font-weight: bold;
+}
+.hl {
+  font-weight: bold;
+  color: #23695d;
+  background-color: #bfdad5;
+  outline: 2px solid #bfdad5;
+  pointer: cursor;
+}
+.magic-links a {
+  text-decoration: underline 1px dashed;
+}
+.magic-links a:hover {
+  text-decoration: underline 1px solid !important;
+}
+.magic-links a.hl-link {
+  color: #514961 !important;
+  background-color: #dbd7e3;
+  text-decoration: none;
+}
+.css-note {
+  color: var(--text-light);
+  z-index: 10;
+}
+</style>
+<p>When the rule above is added to your web page (more on that in a minute),
+it changes the appearance of any <code>special</code> element.
+Now our slide is looking quite special!</p>
+<div class="slide slide--w-50">
+<p>You are <span class="special">top-notch</span>!</p>
+</div>
+</div>
+<div id="css-is-complicated" class="section level3">
+<h3>CSS is complicated</h3>
+<p>The <em>structure</em> of CSS is easy to understand;
+but writing your own rules is <strong>hard</strong>.
+I’m telling you this now because it’s only fair that you know this going in.</p>
+<p>The reality is that, even though CSS is a collection of rules,
+the browser also has to follow many rules to decide how your CSS rules are applied.
+Each of the four components I described above cover deep concepts.</p>
+<p>On the other hand, you can get really far with a few basics.
+And it’s not just acceptable write CSS in one window with Google in the other —
+it’s practically required.
+(By the way, Google is fine but <a href="https://developer.mozilla.org">Mozilla’s web docs on MDN</a> are <em>top-notch</em>!)</p>
+<p>For now,
+we’ll keep it simple,
+but let’s take one more step down the rabbit hole
+and learn just a little bit more about the two big components I described above:
+<a href="#selectors">selectors</a> and <a href="#declarations">declarations</a>.</p>
+<div id="selectors" class="section level4">
+<h4>Selectors</h4>
+<p>As we saw above, a CSS selector lets you target specific elements in your page.
+When you’re first starting with CSS it’s best to keep your CSS selectors simple.
+Stick to two basic princples: target an element by its name or by its class.</p>
+<p>HTML elements are written like this: <code>&lt;li&gt;&lt;/li&gt;</code>.
+The <code>&lt;li&gt;</code> starts the element — in this case an <strong>l</strong>ist <strong>i</strong>tem.
+The <code>&lt;/li&gt;</code> ends the element.
+Anything in between the two <em>tags</em> is part of the HTML element.</p>
+<pre class="html"><code>&lt;li&gt;fabulous&lt;/li&gt;</code></pre>
+<div class="magic-links" x-data="{el: &#39;ul&#39;}">
+<p>
+We just created a <strong>list item</strong> with the word "fabulous" in the list.
+But individual list items don't just float around in the world.
+They're part of a bigger picture, 
+with other list items collected together in the same list.
+Let's say we have a list of affirming adjectives.
+We might put these into an
+<a href="javascript:void(0);" title="Choose an unordered list" @click="el = 'ul'" :class="el === 'ul' ? 'hl-link' : ''">unordered</a>
+or an
+<a href="javascript:void(0);" title="Choose an ordered list" @click="el = 'ol'" :class="el === 'ol' ? 'hl-link' : ''">ordered</a> list. Click to choose one!
+</p>
+
+<div class="flex-col-2">
+<pre><code>&lt;<strong class="primary-accent" x-text="el">ul</strong> class="praise"&gt;
+  &lt;li&gt;fabulous&lt;/li&gt;
+  &lt;li&gt;marvelous&lt;/li&gt;
+  &lt;li&gt;classy&lt;/li&gt;
+&lt;<strong x-text="'/' + el">/ul</strong>&gt;</code></pre>
+<div x-html="`<${el}><li>fabulous</li><li>marvelous</li><li>classy</li></${el}>`"></div>
+</div>
+<style type="text/css">
+.flex-col-2 {
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+}
+.flex-col-2 > * {
+  flex: 1;
+}
+.primary-accent {
+  color: var(--primary-accent);
+}
+</style>
+<p>From this example we learn three things:</p>
+<ol style="list-style-type: decimal">
+<li><p>Tags contain other tags: HTML is tags all the way down.</p></li>
+<li><p>The type of the tag determines the text’s semantics: is the list ordered (<code>&lt;ol&gt;</code>) or unordered (<code>&lt;ul&gt;</code>)?</p></li>
+<li><p>Tags can have attributes, like <code>class="praise"</code>.</p></li>
+</ol>
+<div class="code-aside">
+<p>The goal of a <strong>selector</strong> is to target specific elements in the HTML.
+Just like the <code>.special</code> selector in our first CSS rule,
+we could use <code>.praise</code> to target elements with <code>class="praise"</code>,
+like the <span x-text="el === &#39;ul&#39; ? &#39;unordered&#39; : &#39;ordered&#39;"></span> list above.</p>
+<aside>
+<pre><code>.praise {
+  font-style: italic;
+}</code></pre>
+</aside>
+</div>
+<div class="code-aside">
+<p>We could similarly target
+<span x-text="el === &#39;ul&#39; ? &#39;unordered&#39; : &#39;ordered&#39;"></span> lists
+by using a selector that matches the name of the HTML element:
+<code x-text="el"></code>.
+This kind of selector finds any <code>&lt;<span x-text="el"></span>&gt;</code> element,
+just like <code>.praise</code> targets any element with the class <code>praise</code>.</p>
+<aside>
+<pre><code><span x-text="el"></span> {
+  font-style: italic;
+}</code></pre>
+</aside>
+</div>
+<style type="text/css">
+.code-aside {
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.code-aside > p {
+  flex: 2;
+  padding-right: 2em;
+  min-width: 400px;
+}
+.code-aside > aside {
+  flex: 1;
+}
+.code-aside > aside > pre,
+.code-aside > aside .hljs {
+  background: unset;
+}
+</style>
+</div>
+<div x-data="{ correct: null }" class="magic-links">
+<p>
+<strong>Recap (click to choose your answer):</strong><br>
+Does the <code>.special</code> selector target <a href="javascript:void(0);" title="Click to answer \"special element\"" @click="correct = false" :class="correct === false ? 'hl-link' : ''"><span style="font-family:var(--monospace)">&lt;special&gt;</span> elements</a>
+or elements with the <a href="javascript:void(0);" title="Click to answer \"class\"" @click="correct = true" :class="correct ? 'hl-link' : ''"><span style="font-family:var(--monospace)">special</span> class</a>?
+</p>
+
+<p x-show="correct">&#x1F31F; That's right! <code>.special</code> targets any elements with <code>class="special"</code>.</p>
+<p x-show="correct === false">&#x1F60C; Good try, but no. The <code>.</code> in front of <code>.special</code> indicates that this selector targets <em>classes</em>.</p>
+</div>
+<div id="read-more-about-selectors" class="section level4 read-more">
+<h4>Read more about selectors</h4>
+<p>A great reference for reading more about CSS selectors is the
+<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors">Selectors Tutorial</a>
+from the <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks">CSS Building Blocks page</a>
+on Mozilla’s MDN.</p>
+</div>
+<style type="text/css">
+.read-more {
+  padding: 2em 1em;
+  background-color: #dbd7e3;
+  border: 1px solid #514961;
+}
+.read-more h4 {
+  color: #514961;
+}
+@media (prefers-color-scheme: dark) {
+  .read-more {
+    background-color: #dbd7e320;
+    color: #dbd7e3;
+  }
+  .read-more h4 {
+    color: #dbd7e3;
+  }
+}
+.read-more :first-child {
+  margin-top: 0;
+}
+.read-more :last-child {
+  margin-bottom: 0;
+}
+</style>
+</div>
+<div id="declarations" class="section level3">
+<h3>Declarations</h3>
+<p>Once you’ve figured out how to target certain types of elements on your page,
+the next step in writing a CSS rule is to change some property of those elements.</p>
+</div>
+<div id="where-to-write-a-css-rule" class="section level3">
+<h3>Where to write a CSS rule?</h3>
+</div>
+</div>
+<div id="infinite-moon-reader" class="section level2">
+<h2>Infinite Moon Reader</h2>
+<p>this is cool</p>
+</div>
