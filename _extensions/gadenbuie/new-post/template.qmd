@@ -1,0 +1,16 @@
+---
+title: Title
+description: >
+  Description
+categories:
+  - R
+  - Shiny
+image: feature.png
+image-alt: >
+  An RStudio editor window with library(shiny) and library(bslib).
+date: last-modified
+
+editor: {render-on-save: true}
+---
+
+Write the good stuff here.
