@@ -12,4 +12,4 @@ preview: $(QUARTO_BINARY)
 	$(QUARTO_BINARY) preview
 
 new-post:
-  $(QUARTO_BINARY) use template _extensions/gadenbuie/new-post
+	$(QUARTO_BINARY) use template _extensions/gadenbuie/new-post
