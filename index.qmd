@@ -63,6 +63,16 @@ resources:
     <div class="social-icon-links my-3" aria-hidden="true">
       <a
         class="link-primary"
+        href="https://bsky.app/@grrrck.xyz"
+        title="bluesky"
+        target="_blank"
+        rel="noopener"
+      >
+        <i class="fab fa-bluesky fa-lg fa-fw"></i>
+      </a>
+
+      <a
+        class="link-primary"
         href="https://fosstodon.org/@grrrck"
         title="fosstodon"
         target="_blank"
@@ -89,16 +99,6 @@ resources:
         rel="noopener"
       >
         <i class="fab fa-r-project fa-lg fa-fw"></i>
-      </a>
-
-      <a
-        class="link-primary"
-        href="https://twitter.com/grrrck"
-        title="twitter"
-        target="_blank"
-        rel="noopener"
-      >
-        <i class="fab fa-twitter fa-lg fa-fw"></i>
       </a>
 
       <a
