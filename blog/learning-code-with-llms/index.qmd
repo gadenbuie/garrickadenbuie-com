@@ -1,0 +1,92 @@
+---
+title: "Learning to Code with LLMs"
+description: >
+  A few notes and thoughts on my own experience using LLMs to help me
+  learn and work with new programming languages.
+categories:
+  - LLMs
+  - AI
+  - learning
+  - teaching
+image: feature.png
+image-alt: >
+  A Renaissance-style oil painting of a man eating a bowl of spaghetti, light by a ray
+  of sunlight in a dark room.
+date: last-modified
+---
+
+![An AI-generated image of a man eating spaghetti in the style of a Renaissance oil painting[^will-smith].]({{< meta image >}}){alt=""}
+
+[^will-smith]: We've come a long way from [Will Smith eating spaghetti](https://arstechnica.com/information-technology/2024/02/will-smith-parodies-viral-ai-generated-video-by-actually-eating-spaghetti/).
+
+## Background
+
+I want to share my experience using LLMs for learning to code.
+My background is in R development and data science, but when I joined the Shiny team, my programming world expanded significantly to include Python, TypeScript, and various new programming contexts.
+This transition coincided with the explosion of LLMs in the world - I joined the Shiny team right around when ChatGPT was released by OpenAI.
+
+## Mental Models About LLMs
+
+When we talk about LLMs, people often complete the sentence "LLMs are just..." in various ways:
+
+- A black box
+- A probabilistic pattern matcher
+- A text prediction engine
+- A stochastic parrot
+- A BS generator
+- A fancy autocomplete
+
+While these descriptions are technically true, they're also somewhat reductionist.
+At posit::conf(2024), Joe Chang shared an interesting perspective that really resonated with me.
+He suggested that the "stochastic parrot" mental model, while true and reassuring (it won't take my job!), is actually unhelpful.
+Conversely, thinking of LLMs as "machines that reason" - while technically false and perhaps terrifying - can be more helpful as a mental model.
+
+## How LLMs Actually Work
+
+At their core, LLMs operate on a simple principle: you write some text in a box, and the LLM continues writing more text.
+This creates the perception of having a conversation, but fundamentally, the LLM is just predicting what would be a reasonable continuation of your text.
+
+The LLM's responses are based on all the written text and code it was trained on, which means they're inherently biased towards things that people have written about before the model's training cutoff date.
+
+## What You Can Control
+
+As an LLM user, you have control over two main aspects:
+
+1.  **The Text You Write (Prompting)**: The quality of your prompt has a massive impact on the quality of the response.
+    While "prompt engineering" might sound silly, the words you choose really do matter.
+
+2.  **Your Expectations**: Understanding what LLMs are good at (and what they're not) helps you better interpret and use their responses.
+
+## Practical Examples
+
+### Example 1: The Importance of Specific Prompts
+
+Consider these two prompts:
+
+1.  "Write R code to analyze the mtcars dataset"
+2.  "Help me analyze the relationship between MPG and weight in the mtcars dataset using ggplot2"
+
+The first prompt is too vague and will likely return generic, basic analysis.
+The second prompt, being more specific, will give you more targeted and useful code.
+
+### Example 2: Learning New Syntax
+
+LLMs are particularly helpful when encountering unfamiliar syntax.
+For instance, when dealing with data.table syntax like `:=` or `::`, you can ask the LLM to explain these operators.
+This is especially useful for symbols that are hard to Google.
+
+### Example 3: Handling New Documentation
+
+When working with cutting-edge features or recent updates, you can copy documentation or release notes directly into your prompt and ask the LLM to help you make sense of it.
+This is particularly useful when dealing with content that's beyond the LLM's training cutoff date.
+
+## Useful Mental Models for Working with LLMs
+
+Think of an LLM as:
+
+- A personal intern who needs clear instructions and whose work needs review
+- A rubber duck for pair programming
+- A custom blog post writer who can explain concepts in ways that make sense to you
+
+The key is being specific with your prompts and maintaining reasonable expectations about what you'll get back.
+When used thoughtfully, LLMs can be powerful tools for learning new programming languages and concepts.
