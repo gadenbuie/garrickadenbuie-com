@@ -114,13 +114,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
 <meta property="og:title" content="Remembering what I did this week with LLMs – Garrick Aden-Buie">
 <meta property="og:description" content="Using the GitHub API and {ellmer} to remember what I did this week.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/blog/llm-work-summary/calendar-scribbles.png">
 <meta property="og:site_name" content="Garrick Aden-Buie">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1792">
+<meta property="og:image:alt" content="A generative AI image of a wall calendar behind a desk. The calendar is a mess.
+">
 <meta name="twitter:title" content="Remembering what I did this week with LLMs – Garrick Aden-Buie">
 <meta name="twitter:description" content="Using the GitHub API and {ellmer} to remember what I did this week.">
-<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/llm-work-summary/social-default.png">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/llm-work-summary/calendar-scribbles.png">
 <meta name="twitter:creator" content="@grrrck">
 <meta name="twitter:site" content="@grrrck">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1792">
+<meta name="twitter:image:alt" content="A generative AI image of a wall calendar behind a desk. The calendar is a mess.
+">
 </head>
 
 <body class="nav-fixed">
@@ -389,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>prompt-system.md</strong></pre>
+<pre><strong>_prompt-system.md</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>You are an assistant who keeps track of the work I do each week. Your goal is to</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>faithfully and accurately report the work I do to my boss while making sure that</span>
@@ -412,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>prompt-work-summary.md</strong></pre>
+<pre><strong>_prompt-work-summary.md</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> epoxy</span></span>
@@ -436,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>work_data <span class="sc">|&gt;</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"prompt-work-summary.md"</span>, .engine)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, .engine)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here’s an example of a single work summary using the 15th row.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">work-item</span><span class="dt">&gt;</span></span>
@@ -467,7 +476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>work_summary <span class="ot">&lt;-</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"prompt-work-summary.md"</span>, <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-user-prompt" class="level3">
@@ -476,7 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>prompt.md</strong></pre>
+<pre><strong>_prompt.md</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Summarize my work over the last week for a team update in prose.</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Focus more on pull requests; issues are less important and just provide context.</span>
@@ -501,18 +510,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Finally, we’re ready to put it all together and find out if it works!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"prompt-system.md"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"_prompt-system.md"</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>work_summarized <span class="ot">&lt;-</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat</span>(<span class="fu">interpolate_file</span>(<span class="st">"prompt.md"</span>), <span class="at">echo=</span><span class="cn">FALSE</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat</span>(<span class="fu">interpolate_file</span>(<span class="st">"_prompt.md"</span>), <span class="at">echo=</span><span class="cn">FALSE</span>)</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I'm caching the result so I don't rack up costs while I write this post</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I'm caching the result so I don't rack up costs while writing this post</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(chat, <span class="st">"chat.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I’ve set <code>echo=FALSE</code> so that I can store the result and show it to you with a big reveal, but by default the response streams right into your console.</p>
 <div class="cell">
-<p>Sending my whole work summary plus the prompt took about 23,297 tokens and Claude responded with 606 tokens. Using <a href="https://llmpricecheck.com/calculator/">LLM Price Check</a>, 25k input tokens and 500k output tokens, ends up costing about $0.08 per call to <code>claude-3-sonnet</code> or about $0.13 per call to <code>gpt-4o</code>.</p>
+<p>Sending my whole work summary plus the prompt took about 23,297 tokens and Claude responded with 392 tokens. Using <a href="https://llmpricecheck.com/calculator/">LLM Price Check</a>, 25k input tokens and 500k output tokens, ends up costing about $0.08 per call to <code>claude-3-sonnet</code> or about $0.13 per call to <code>gpt-4o</code>.</p>
 </div>
 <p>Here’s the final output! ellmer has a really neat feature that you can turn any part of the conversation into markdown with <code>contents_markdown()</code>. I’ve used code like what’s listed below to embed the response here in this post.</p>
 <div class="cell">
@@ -533,21 +542,22 @@ My Work Summary
 <div class="callout-body-container callout-body">
 <section id="professional-work" class="level2">
 <h2 class="anchored" data-anchor-id="professional-work">Professional Work</h2>
-<p>This week I made significant contributions across several projects, focusing on improving user experience and fixing critical issues. I worked extensively with Chrome headless mode updates and format tooling integrations.</p>
-<p>In chromote, I added important user-facing improvements including <code>chromote_info()</code> for better debugging support and implemented a user-specific crash dump directory to improve log file organization (<a href="https://github.com/rstudio/chromote/pull/190">#190</a>, <a href="https://github.com/rstudio/chromote/pull/194">#194</a>). These changes help users better understand their Chrome setup and make debugging easier.</p>
-<p>For bslib and Shiny, I improved navbar compatibility and fixed several UI issues. The main focus was on making navbar colors work consistently across Bootstrap 5 and light/dark modes (<a href="https://github.com/rstudio/bslib/pull/1145">#1145</a>). I also fixed a bug with tab insertion in Shiny that was causing issues with web components (<a href="https://github.com/rstudio/shiny/pull/4179">#4179</a>).</p>
-<p>I contributed to the development of the air code formatter by opening issues to improve line breaking behavior and support for empty or short braced expressions (<a href="https://github.com/posit-dev/air/issues/183">#183</a>, <a href="https://github.com/posit-dev/air/issues/186">#186</a>). I also helped integrate air formatting into the shiny-workflows repository to standardize code formatting across projects (<a href="https://github.com/rstudio/shiny-workflows/pull/43">#43</a>).</p>
+<p>This week I made significant contributions across multiple projects, improving functionality and user experience. In py-shinylive, I fixed Windows compatibility by ensuring path separators are consistent, converting backslashes to forward slashes. I also improved the user experience by adding completion signals when package installations finish.</p>
+<p>I worked on several important features in bslib, focusing on navbar compatibility and styling. I refactored the navbar functionality to better match Bootstrap 5’s expectations around background color control and dark/light modes. I also fixed an issue where empty nav links in <code>nav_panel_hidden()</code> were incorrectly getting padding.</p>
+<p>In chromote, I made several improvements to enhance debugging and user experience. I added a <code>chromote_info()</code> helper function to provide useful system and Chrome information, similar to <code>session_info()</code>. I also improved crash handling by setting a user-specific crash dump directory.</p>
+<p>For the air code formatter, I opened several issues to improve functionality around line breaking and braced expression formatting. This included suggestions for selective format suppression and improved handling of empty or short braced expressions.</p>
 </section>
 <section id="personal-work" class="level2">
 <h2 class="anchored" data-anchor-id="personal-work">Personal Work</h2>
-<p>I made substantial improvements to the bluesky-comments Quarto extension:</p>
+<p>I made significant contributions to the bluesky-comments Quarto extension, focusing on improving the user experience and adding new features. The main improvements include:</p>
 <ul>
-<li>Enhanced the content labeling system to be more user-friendly and match Bluesky’s native behavior (<a href="https://github.com/quarto-ext/bluesky-comments/pull/29">#29</a>)</li>
-<li>Added support for displaying images and GIFs in comments (<a href="https://github.com/quarto-ext/bluesky-comments/pull/40">#40</a>)</li>
-<li>Implemented configurable comment thread depth with a show/hide interface (<a href="https://github.com/quarto-ext/bluesky-comments/pull/41">#41</a>)</li>
-<li>Started a CSS refactor to improve maintainability and avoid class name conflicts (<a href="https://github.com/quarto-ext/bluesky-comments/pull/45">#45</a>)</li>
+<li>Refined content labelling UX to be more intuitive and match Bluesky’s native behavior</li>
+<li>Added support for displaying images and GIFs in comments</li>
+<li>Implemented configurable comment thread depth with the <code>n-show-depth</code> option</li>
+<li>Simplified the extension’s documentation and improved its organization</li>
+<li>Started work on CSS improvements to ensure consistent naming and avoid potential conflicts</li>
 </ul>
-<p>I also improved shrtcts by adding <code>shortcut_run()</code> and <code>shortcut_get()</code> functions to make it easier to use shortcuts programmatically (<a href="https://github.com/gadenbuie/shrtcts/pull/26">#26</a>).</p>
+<p>I also updated my shrtcts package to make it easier to run shortcuts by name when using <code>.shrtcts.R</code>, which enables better workflow automation in Positron.</p>
 </section>
 </div>
 </div>
@@ -566,13 +576,13 @@ My Work Summary
 <p>Just to prove that it’s easy to switch models, I’m going to repeat the above process with a local model. This is the same code as above, but this time using <a href="https://ollama.com/">ollama</a> running <code>llama3.1:8b</code> locally.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chat_llama <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"prompt-system.md"</span>),</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"_prompt-system.md"</span>),</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"llama3.1:8b"</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>work_summarized_llama <span class="ot">&lt;-</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  chat_llama<span class="sc">$</span><span class="fu">chat</span>(</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">interpolate_file</span>(<span class="st">"prompt.md"</span>),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">interpolate_file</span>(<span class="st">"_prompt.md"</span>),</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">echo=</span><span class="cn">FALSE</span></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -588,27 +598,20 @@ My Work Summary (llama3.1:8b)
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>It seems like you have a collection of work items related to a Quarto extension for Bluesky comments. I’ll summarize the issues and tasks into three categories: Documentation, Functionality, and CSS/Design.</p>
-<p><strong>Documentation</strong></p>
-<ul>
-<li>Issue 14: Add text about showing attached images in posts</li>
-<li>Issue 35: Correct documentation to reflect that an at-uri is not required</li>
-</ul>
-<p><strong>Functionality</strong></p>
-<ul>
-<li>Issue 1: Make comments header a shortcode with customizable section name (instead of being added automatically)</li>
-<li>Issues 15 and 44: Limit nested comment levels and add an option for comments from YAML front matter</li>
-<li>Issue 14 (again): Show attached images in the post as small thumbnails with lightbox treatment</li>
-</ul>
-<p><strong>CSS/Design</strong></p>
-<ul>
-<li>Issue 43: Take a quick pass at CSS to ensure class names work well, top-level classes have <code>bc-</code> prefix, and other best practices.</li>
-</ul>
-<p>Please confirm if this summary is correct.</p>
+<p>It looks like a summary of GitHub issues related to the Quarto extension “bluesky-comments”. I’ll extract some information and answer your question.</p>
+<p>The extension allows you to embed Bluesky comments in a Quarto document. These are interactive conversations that can be embedded directly within Markdown content.</p>
+<p>From the summary, we can see that various features were proposed or implemented for this extension, such as:</p>
+<ol type="1">
+<li>Displaying attached images in posts</li>
+<li>Limiting nested comment levels</li>
+<li>Showing the contents of comments (which seems to be a work-in-progress)</li>
+<li>Adding CSS classes for better styling (a pending issue)</li>
+</ol>
+<p>There’s also some discussion around customizing the comments section, such as making it optional or adding a header with a customizable title (from YAML front matter).</p>
 </div>
 </div>
 </div>
-<p>The local model is quite a bit slower, but I can run it on my M3 MacBook Air. The summarization quality is no where near what I got from Claude, either, but I didn’t need to pay for the query or send my data to a third-party. At the very least, the local model is a great way to practice setting up the pipeline before I’m ready to pay for queries with Anthropic or others.</p>
+<p>The local model is quite a bit slower, but I can run it on my M3 MacBook Air. The summarization quality is nowhere near what I got from Claude, either, but I didn’t need to pay for the query or send my data to a third-party. (I also didn’t spend much time on this, I probably could get better results with more prompt engineering.) At the very least, the local model is a great way to practice setting up the pipeline before I’m ready to pay for queries with Anthropic or others.</p>
 
 
 </section>

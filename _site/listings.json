@@ -2,9 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/blog/llm-work-summary/prompt-system.html",
-      "/blog/llm-work-summary/prompt-work-summary.html",
-      "/blog/llm-work-summary/prompt.html",
       "/blog/llm-work-summary/index.html",
       "/blog/shiny-new-bslib-snippet/index.html",
       "/blog/quarto-now/index.html",
@@ -119,9 +116,6 @@
   {
     "listing": "/blog/index.html",
     "items": [
-      "/blog/llm-work-summary/prompt-system.html",
-      "/blog/llm-work-summary/prompt-work-summary.html",
-      "/blog/llm-work-summary/prompt.html",
       "/blog/llm-work-summary/index.html",
       "/blog/shiny-new-bslib-snippet/index.html",
       "/blog/quarto-now/index.html",
