@@ -1,0 +1,452 @@
+---
+title: Remembering what I did this week with LLMs
+description: >
+  Using the GitHub API and `{ellmer}` to remember what I did this week.
+categories:
+  - R
+  - LLMs
+  - Personal Data
+  - Productivity
+  - GitHub
+  - ellmer
+# image: feature.png
+# image-alt: >
+#   An RStudio editor window with library(shiny) and library(bslib).
+date: last-modified
+
+editor: {render-on-save: true}
+---
+
+```{r}
+#| label: setup
+#| echo: false
+library(gh)
+
+gh <- memoise::memoise(gh::gh, cache = memoise::cache_filesystem(".github"))
+```
+
+## The object impermanence of work
+
+My least favorite meetings are status meetings.
+I love seeing the people I work with and hearing about what they've been up to,
+but I hate trying to remember what the hell I've been working on.
+
+When I joined the Shiny team,
+we'd have a short daily status meeting
+and you'd think it'd be easy to remember what I did in the last 24 hours.
+But apparently, that's not how I live my life.
+I'm sure I thought of things to say,
+but every daily update I felt like I'd say some variation of
+"I did a bunch of stuff and now I'm... doing more stuff".
+
+My perception of how I work is in short bursts of deep focus time
+punctuated by many short breaks to answer questions
+on Slack or GitHub issues
+or [the Shiny Discord server](https://discord.gg/yMGCamUMnS)
+or [Posit Community](https://community.posit.co)
+or any of the many other places that people post questions and sometimes code.
+
+Between the deep focus work,
+I usually maintain one thread of maintenance tasks,
+like babysitting a CI process,
+or making a small change to fix a bug,
+or [turning screenshots into reproducible bug reports](https://bsky.app/profile/grrrck.xyz/post/3lgdolbiqis25).
+And I also tend to have another more speculative thread going
+for learning something new or playing with a new idea.
+
+I don't recommend my way of working to others.
+Whole books have been written just to say "don't work like this"!
+Software engineers rail against
+[context switching](https://contextkeeper.io/blog/the-real-cost-of-an-interruption-and-context-switching/),
+[interruptions](https://blog.stackblitz.com/posts/flow-state/),
+and [multitasking](https://www.apa.org/topics/research/multitasking).
+
+I compensate for the known perils of my work style in two ways.
+First, even if I do a lot of different things throughout the day,
+there's generally only ever _one task_ that I'm working on at any given moment.
+That task gets all the focus.
+
+Second, I try to leave context behind in my work.
+If I'm working on a pull request,
+that means submitting the PR with enough description that I could
+[forget that I even wrote the PR](https://bsky.app/profile/grrrck.xyz/post/3lfslcgnoh225)
+and most of what I'd need to pick it back up is there in the description or comments.
+If I had some code in front of me when I found the issue or was testing the PR,
+that code ends up in the description.
+If the context is recoverable, it's at least not lost forever in the switching.
+
+But these two strategies combine in a strange way,
+resulting in the **object impermanence of work**:
+_if it's not in front of me, it doesn't exist_.
+
+I just don't keep a running inventory of what I was working on or what I did;
+I know that I can find everything I need to know from the open GitHub issues or PRs.
+Which then are summarized in stand ups as... _stuff_.
+
+## What did I even do this week?
+
+It turns out I _can_ answer the question of what I did this week,
+as long as I'm allowed to run some R code.
+
+```{r}
+#| label: gh-search-query
+#| echo: false
+author <- "gadenbuie"
+date <- Sys.Date() - 7
+search_created <- sprintf("author:%s created:>%sT00:00:00Z", author, date)
+search_closed <- sprintf("author:%s closed:>%sT00:00:00Z", author, date)
+```
+
+Since my entire life is lived on GitHub,
+I can get a pretty good sense of what I've been working on
+by looking at the PRs and issues I opened and closed in a week.
+Even better, this information is readily obtained from GitHub with a search like
+[`` `r search_created` ``](https://github.com/search?q=`r URLencode(search_created)`) or
+[`` `r search_closed` ``](https://github.com/search?q=`r URLencode(search_closed)`).
+And I can create those search queries with R:
+
+```{r}
+#| ref.label: gh-search-query
+#| echo: true
+#| eval: false
+```
+
+But of course I don't want to have to actually click around on GitHub to remember what I was doing.
+what I want is some rectangular data that I can work on in R.
+
+Enter the [`gh` package](https://gh.r-lib.org).
+It's a package that lets you interact with the GitHub API.
+We can use `gh` to run the closed and created search queries and collect all of the results.
+
+```{r}
+library(gh)
+
+created <- gh("/search/issues", q = search_created, .limit = Inf)
+closed <- gh("/search/issues", q = search_closed, .limit = Inf)
+```
+
+Why not do this in one single API request?
+Unfortunately, GitHub search doesn't let you use `OR` for `created:` and `closed:` in the same query, but that's okay, we can put the results together ourselves.
+Each result has an `$items` field that contains a list of issues/pull requests,
+each with a whole bunch of fields.
+I'll use `purrr` to map over the issues and extract the fields I care about.
+
+```{r}
+library(purrr)
+library(dplyr, warn.conflicts = FALSE)
+
+work_data <-
+  c(created$items, closed$items) |>
+  map(function(issue) {
+    tibble(
+      repository = sub("https://api.github.com/repos/", "", issue$repository_url),
+      title = issue$title,
+      created_at = issue$created_at,
+      closed_at = issue$closed_at,
+      url = issue$html_url,
+      state = issue$state,
+      is_issue = is.null(issue$pull_request),
+      body = issue$body
+    )
+  }) |>
+  list_rbind()
+
+work_data
+```
+
+Now that I have a nice rectangular summary of my work over the last week,
+I'll organize it a bit to differentiate between my Posit/Shiny work
+and my personal open-source projects.
+I'll also add an `action` column indicating the primary action this week.
+
+```{r}
+work_data <-
+  work_data |>
+  mutate(
+    personal = grepl("(^gadenbuie)|bluesky-comments", repository),
+    action_at = coalesce(closed_at, created_at),
+    action = recode(state, open = "opened"),
+    action = paste(action, if_else(is_issue, "an issue", "a PR")),
+  ) |>
+  arrange(personal, repository, is_issue, action_at)
+
+# Preview the work data
+work_data |>
+  select(repository, action, action_at, title)
+```
+
+Rectangular data FTW!
+This is great, I have a nice table of all the things I've done this week.
+But it's still a bit hard to read to make sense of it all.
+We've reached the "I did some stuff and it's in this tibble" stage,
+which is admittedly a little better than "I did some stuff".
+
+What I'd love to do is give this to a robot assistant
+who could read it all for me
+and _they_ could summarize my week,
+or at least get me started on a summary.
+Sounds like a great task for a large language model!
+
+## Hiring my executive robot assistant
+
+Now we get to the fun part![^fun-part]
+We're going to use the newly released [ellmer package](https://ellmer.tidyverse.org)
+to send my work summary to a large language model
+and ask it to summarize my week.
+
+[^fun-part]: I know what you're thinking and you're totally right. The **fun part** was getting all this data in a nice tidy tibble! Think of all the things we could do with that tibble. But dplyr isn't the new hotness and this blog needs to meet its buzz word quota, so we're forced to do something extra.
+
+If you're following along at home,
+here's where you'll need to pause and get yourself set up.
+First, install ellmer:
+
+```{r}
+#| eval: false
+install.packages("ellmer")
+```
+
+Second, you'll need access to an LLM.
+The coolest part of ellmer is that it supports a wide range of LLM providers,
+which are all listed in the [Chatbots reference](https://ellmer.tidyverse.org/reference/index.html#chatbots).
+To use your favorite LLM,
+you'll need to set up an account and get an API key.
+But once you've completed that step,
+switching between LLMs is as easy as changing out the `chat_*()` function that you use to start the chat.
+
+For this demo, I'll use Anthropic with [`chat_claude()`](https://ellmer.tidyverse.org/reference/chat_claude.html).
+The help page for `chat_claude()` includes instructions for setting up a developer account, which I've already followed.
+
+```{r}
+#| label: ellmer-setup
+#| echo: false
+Sys.setenv("ANTHROPIC_API_KEY" = keyring::key_get("ANTHROPIC_API_KEY"))
+```
+
+```{r}
+#| label: ellmer-first-run
+library(ellmer)
+
+chat <- chat_claude()
+```
+
+If you prefer OpenAI's ChatGPT, you'd use [`chat_openai()`](https://ellmer.tidyverse.org/reference/chat_openai.html),
+or if you have [ollama](https://ollama.com/) running a local model
+you'd use [`chat_ollama()`](https://ellmer.tidyverse.org/reference/chat_ollama.html).
+
+Once you have a `chat` object, you can use the `$chat()` method to talk to the LLM.
+The answers are streamed back to your R session and the chat is cumulative, so you can keep "talking".
+
+```{r echo=2:3}
+#| label: chat-demo-claude
+#| cache: true
+chat <- chat_claude()
+chat$chat("Say hello three languages.")
+chat$chat("Say goodbye in those same languages.")
+```
+
+Our final task is to give the LLM all of the information we've collected from my GitHub issues
+and then to convince it to summarize it all in a meaningful way.
+I can further refine this task into three distinct components:
+
+1. Use a **system prompt** to vibe check the LLM.
+   System prompts are a good place to store initial instructions
+   that the LLM uses a sort of "light instruction set",
+   like a sort of zero-th prompt.
+
+   I'll use the system prompt to convince the LLM that it's my assistant.
+
+2. Turn the work summary into something a little bit more readable
+   that I can send to the LLM as part of the user prompt.
+
+3. Write up a user prompt that gets the LLM to do what I want
+   (most of the time).
+
+### System prompt
+
+This is the system prompt that I settled on:
+
+```{markdown filename="prompt-system.md"}
+{{< include prompt-system.md >}}
+```
+
+The goal is to try to help the LLM align with the _vibe_ of the task:
+
+* It needs to summarize my work
+* Please don't make things up
+* None of that "Sure, here's your summary of..." fluff.
+
+### Work context
+
+The next step is to get the work summary into a format that's easier for LLMs to work with.
+There's a good chance that I could just throw CSV or a JSON of the `work_data` table at it, but I think I'll get better answers if I format it like text.
+Notice that I've already grouped projects together
+and I've tried to make sure relevant parts of the work data are close to each other.
+I'm going off vibes with this,
+but I expect I'll get better summaries with a little pre-work
+than if I'd ask the LLM to make connections at great distance across the text.
+
+For this task, I'll turn to my favorite string templating package,
+[epoxy](https://pkg.garrickadenbuie.com/epoxy).
+I've created a template that I'll apply to each row of `work_data`:
+
+```{markdown filename="prompt-work-summary.md"}
+{{< include prompt-work-summary.md >}}
+```
+
+I can take `work_data` and pass it to `epoxy::epoxy_use_file()`
+to fill in the templating bits with the values from `work_data`,
+one row at a time.
+
+```{r}
+#| eval: false
+library(epoxy)
+
+work_data |>
+  slice(15) |>
+  epoxy_use_file("prompt-work-summary.md", .engine)
+```
+
+Here's an example of a single work summary using the 15th row.
+
+`````html
+`r epoxy::epoxy_use_file(work_data[15, ], "prompt-work-summary.md")`
+`````
+
+Notice that I've used `<work-item>` and `<work-description>` pseudo-tags
+to give the text a bit of structure.
+
+Now we can put the work summary together into a single text string.
+
+```{r echo=-1}
+library(epoxy)
+
+work_summary <-
+  work_data |>
+  epoxy_use_file("prompt-work-summary.md", .collapse = "\n\n")
+```
+
+### The user prompt
+
+The last step is to give the LLM some instructions about what I want it to write.
+Again, I'll use a prompt file for this task.
+
+```{markdown filename="prompt.md"}
+{{< include prompt.md >}}
+```
+
+For this prompt, I'll use `ellmer::interpolate_file()`,
+which works a lot like `epoxy_use_file()` but comes built-in with ellmer.
+It reads in a file and interpolates the `{{ expr }}` strings,
+which in this case will inject the `work_summary` into the prompt.
+
+## The final result
+
+Finally, we're ready to put it all together and find out if it works!
+
+```{r echo=1:7}
+#| label: prompt-claude
+#| cache: true
+chat <- chat_claude(
+  system_prompt = readLines("prompt-system.md")
+)
+
+work_summarized <-
+  chat$chat(interpolate_file("prompt.md"), echo=FALSE)
+
+# I'm caching the result so I don't rack up costs while I write this post
+saveRDS(chat, "chat.rds")
+```
+
+I've set `echo=FALSE` so that I can store the result
+and show it to you with a big reveal,
+but by default the response streams right into your console.
+
+```{epoxy}
+Sending my whole work summary plus the prompt took about
+{.comma {sum(chat$tokens()[, "input"])}} tokens
+and Claude responded with
+{.comma {sum(chat$tokens()[, "output"])}} tokens.
+Using [LLM Price Check](https://llmpricecheck.com/calculator/),
+25k input tokens and 500k output tokens,
+ends up costing about $0.08 per call to `claude-3-sonnet`
+or about $0.13 per call to `gpt-4o`.
+```
+
+```{r}
+#| label: restore-chat
+#| echo: false
+chat <- readRDS("chat.rds")
+```
+
+Here's the final output!
+ellmer has a really neat feature that you can turn any part of the conversation into markdown
+with `contents_markdown()`.
+I've used code like what's listed below to embed the response here in this post.
+
+```{r}
+#| eval: false
+chat$last_turn() |>
+  contents_markdown()
+```
+
+::: {.callout-tip title="My Work Summary" collapse="false"}
+
+`r contents_markdown(chat$last_turn())`
+
+:::
+
+```{=html}
+<style>
+.callout h2 {
+  margin-top: inherit;
+}
+</style>
+```
+
+I have to admit, that's not a bad summary of my week!
+
+What's cool about this approach is that I could continue to chat with Claude about my week,
+asking follow up questions to have it further remind me about what I did.
+
+Another idea I have now is to run this script in a weekly cron job,
+just before our larger team meeting,
+to make sure that I know what I did this week when I get there.
+Not only that, but this would make a great running summary
+that might come in handy for a performance review or promotion request.
+
+## Using local LLMS
+
+Just to prove that it's easy to switch models,
+I'm going to repeat the above process with a local model.
+This is the same code as above,
+but this time using
+[ollama](https://ollama.com/) running `llama3.1:8b` locally.
+
+```{r}
+#| label: ollama-chat
+
+chat_llama <- chat_ollama(
+  system_prompt = readLines("prompt-system.md"),
+  model = "llama3.1:8b"
+)
+
+work_summarized_llama <-
+  chat_llama$chat(
+    interpolate_file("prompt.md"),
+    echo=FALSE
+  )
+```
+
+::: {.callout-tip title="My Work Summary (llama3.1:8b)" collapse="true"}
+
+`r contents_markdown(chat_llama$last_turn())`
+
+:::
+
+The local model is quite a bit slower,
+but I can run it on my M3 MacBook Air.
+The summarization quality is no where near what I got from Claude, either,
+but I didn't need to pay for the query or send my data to a third-party.
+At the very least,
+the local model is a great way to practice setting up the pipeline
+before I'm ready to pay for queries with Anthropic or others.
