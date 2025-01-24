@@ -51,7 +51,7 @@ website:
       <a class="link-dark me-1" href="/colophon">Made with 💙</a>
       <a class="link-dark" href="/blog/index.xml" title = "RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a>
     center: >-
-      <a class="link-dark" href="https://bsky.app/@grrrck.xyz" title="bluesky" target="_blank" rel="noopener">{{< fa brands bluesky >}}</a>
+      <a class="link-dark" href="https://bsky.app/profile/grrrck.xyz" title="bluesky" target="_blank" rel="noopener">{{< fa brands bluesky >}}</a>
       <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener">{{< fa brands mastodon >}}</a>
       <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener">{{< fa brands github >}}</a>
       <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener">{{< fa brands r-project >}}</a>

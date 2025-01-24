@@ -63,7 +63,7 @@ resources:
     <div class="social-icon-links my-3" aria-hidden="true">
       <a
         class="link-primary"
-        href="https://bsky.app/@grrrck.xyz"
+        href="https://bsky.app/profile/grrrck.xyz"
         title="bluesky"
         target="_blank"
         rel="noopener"
