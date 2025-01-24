@@ -9,9 +9,9 @@ categories:
   - Productivity
   - GitHub
   - ellmer
-# image: feature.png
-# image-alt: >
-#   An RStudio editor window with library(shiny) and library(bslib).
+image: calendar-scribbles.png
+image-alt: >
+  A generative AI image of a wall calendar behind a desk. The calendar is a mess.
 date: last-modified
 
 editor: {render-on-save: true}
@@ -265,8 +265,8 @@ I can further refine this task into three distinct components:
 
 This is the system prompt that I settled on:
 
-```{markdown filename="prompt-system.md"}
-{{< include prompt-system.md >}}
+```{markdown filename="_prompt-system.md"}
+{{< include _prompt-system.md >}}
 ```
 
 The goal is to try to help the LLM align with the _vibe_ of the task:
@@ -289,8 +289,8 @@ For this task, I'll turn to my favorite string templating package,
 [epoxy](https://pkg.garrickadenbuie.com/epoxy).
 I've created a template that I'll apply to each row of `work_data`:
 
-```{markdown filename="prompt-work-summary.md"}
-{{< include prompt-work-summary.md >}}
+```{markdown filename="_prompt-work-summary.md"}
+{{< include _prompt-work-summary.md >}}
 ```
 
 I can take `work_data` and pass it to `epoxy::epoxy_use_file()`
@@ -303,13 +303,13 @@ library(epoxy)
 
 work_data |>
   slice(15) |>
-  epoxy_use_file("prompt-work-summary.md", .engine)
+  epoxy_use_file("_prompt-work-summary.md", .engine)
 ```
 
 Here's an example of a single work summary using the 15th row.
 
 `````html
-`r epoxy::epoxy_use_file(work_data[15, ], "prompt-work-summary.md")`
+`r epoxy::epoxy_use_file(work_data[15, ], "_prompt-work-summary.md")`
 `````
 
 Notice that I've used `<work-item>` and `<work-description>` pseudo-tags
@@ -322,7 +322,7 @@ library(epoxy)
 
 work_summary <-
   work_data |>
-  epoxy_use_file("prompt-work-summary.md", .collapse = "\n\n")
+  epoxy_use_file("_prompt-work-summary.md", .collapse = "\n\n")
 ```
 
 ### The user prompt
@@ -330,8 +330,8 @@ work_summary <-
 The last step is to give the LLM some instructions about what I want it to write.
 Again, I'll use a prompt file for this task.
 
-```{markdown filename="prompt.md"}
-{{< include prompt.md >}}
+```{markdown filename="_prompt.md"}
+{{< include _prompt.md >}}
 ```
 
 For this prompt, I'll use `ellmer::interpolate_file()`,
@@ -344,16 +344,16 @@ which in this case will inject the `work_summary` into the prompt.
 Finally, we're ready to put it all together and find out if it works!
 
 ```{r echo=1:7}
-#| label: prompt-claude
+#| label: _prompt-claude
 #| cache: true
 chat <- chat_claude(
-  system_prompt = readLines("prompt-system.md")
+  system_prompt = readLines("_prompt-system.md")
 )
 
 work_summarized <-
-  chat$chat(interpolate_file("prompt.md"), echo=FALSE)
+  chat$chat(interpolate_file("_prompt.md"), echo=FALSE)
 
-# I'm caching the result so I don't rack up costs while I write this post
+# I'm caching the result so I don't rack up costs while writing this post
 saveRDS(chat, "chat.rds")
 ```
 
@@ -426,13 +426,13 @@ but this time using
 #| label: ollama-chat
 
 chat_llama <- chat_ollama(
-  system_prompt = readLines("prompt-system.md"),
+  system_prompt = readLines("_prompt-system.md"),
   model = "llama3.1:8b"
 )
 
 work_summarized_llama <-
   chat_llama$chat(
-    interpolate_file("prompt.md"),
+    interpolate_file("_prompt.md"),
     echo=FALSE
   )
 ```
@@ -445,8 +445,9 @@ work_summarized_llama <-
 
 The local model is quite a bit slower,
 but I can run it on my M3 MacBook Air.
-The summarization quality is no where near what I got from Claude, either,
+The summarization quality is nowhere near what I got from Claude, either,
 but I didn't need to pay for the query or send my data to a third-party.
+(I also didn't spend much time on this, I probably could get better results with more prompt engineering.)
 At the very least,
 the local model is a great way to practice setting up the pipeline
 before I'm ready to pay for queries with Anthropic or others.
