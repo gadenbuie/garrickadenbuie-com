@@ -237,6 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#the-final-result" id="toc-the-final-result" class="nav-link" data-scroll-target="#the-final-result">The final result</a></li>
   <li><a href="#using-local-llms" id="toc-using-local-llms" class="nav-link" data-scroll-target="#using-local-llms">Using local LLMS</a></li>
+  <li><a href="#final-script" id="toc-final-script" class="nav-link" data-scroll-target="#final-script">Final script</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/llm-work-summary/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/llm-work-summary/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -269,8 +270,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>search_created <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"author:%s created:&gt;%sT00:00:00Z"</span>, author, date)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>search_closed <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"author:%s closed:&gt;%sT00:00:00Z"</span>, author, date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>But of course I don’t want to have to actually click around on GitHub to remember what I was doing. what I want is some rectangular data that I can work on in R.</p>
-<p>Enter the <a href="https://gh.r-lib.org"><code>gh</code> package</a>. It’s a package that lets you interact with the GitHub API. We can use <code>gh</code> to run the closed and created search queries and collect all of the results.</p>
+<p>But of course I don’t want to have to actually click around on GitHub to remember what I was doing. What I want is some rectangular data that I can work on in R.</p>
+<p>Enter the <a href="https://gh.r-lib.org"><code>gh</code> package</a>, a package that lets you interact with the GitHub API. We can use <code>gh</code> to run the created and closed search queries and collect all of the results.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gh)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -284,21 +285,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>work_data <span class="ot">&lt;-</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(created<span class="sc">$</span>items, closed<span class="sc">$</span>items) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="cf">function</span>(issue) {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">repository =</span> <span class="fu">sub</span>(<span class="st">"https://api.github.com/repos/"</span>, <span class="st">""</span>, issue<span class="sc">$</span>repository_url),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> issue<span class="sc">$</span>title,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">created_at =</span> issue<span class="sc">$</span>created_at,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">closed_at =</span> issue<span class="sc">$</span>closed_at,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">url =</span> issue<span class="sc">$</span>html_url,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">state =</span> issue<span class="sc">$</span>state,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">is_issue =</span> <span class="fu">is.null</span>(issue<span class="sc">$</span>pull_request),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">body =</span> issue<span class="sc">$</span>body</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">|&gt;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>()</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>work_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="cf">function</span>(issue) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">repository =</span> <span class="fu">sub</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"https://api.github.com/repos/"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">""</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>          issue<span class="sc">$</span>repository_url</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> issue<span class="sc">$</span>title,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">created_at =</span> issue<span class="sc">$</span>created_at,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">closed_at =</span> issue<span class="sc">$</span>closed_at,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">url =</span> issue<span class="sc">$</span>html_url,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">state =</span> issue<span class="sc">$</span>state,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">is_issue =</span> <span class="fu">is.null</span>(issue<span class="sc">$</span>pull_request),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">body =</span> issue<span class="sc">$</span>body</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">|&gt;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>work_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 83 × 8
    repository              title created_at url   state is_issue body  closed_at
@@ -318,19 +324,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now that I have a nice rectangular summary of my work over the last week, I’ll organize it a bit to differentiate between my Posit/Shiny work and my personal open-source projects. I’ll also add an <code>action</code> column indicating the primary action this week.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>work_data <span class="ot">&lt;-</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">personal =</span> <span class="fu">grepl</span>(<span class="st">"(^gadenbuie)|bluesky-comments"</span>, repository),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">action_at =</span> <span class="fu">coalesce</span>(closed_at, created_at),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">action =</span> <span class="fu">recode</span>(state, <span class="at">open =</span> <span class="st">"opened"</span>),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">action =</span> <span class="fu">paste</span>(action, <span class="fu">if_else</span>(is_issue, <span class="st">"an issue"</span>, <span class="st">"a PR"</span>)),</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(personal, repository, is_issue, action_at)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the work data</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>work_data <span class="sc">|&gt;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(repository, action, action_at, title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>work_data <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">personal =</span> <span class="fu">grepl</span>(<span class="st">"(^gadenbuie)|bluesky-comments"</span>, repository),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">action_at =</span> <span class="fu">coalesce</span>(closed_at, created_at),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">action =</span> <span class="fu">recode</span>(state, <span class="at">open =</span> <span class="st">"opened"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">action =</span> <span class="fu">paste</span>(action, <span class="fu">if_else</span>(is_issue, <span class="st">"an issue"</span>, <span class="st">"a PR"</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(personal, repository, is_issue, action_at)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the work data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>work_data <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(repository, action, action_at, title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 83 × 4
    repository                  action          action_at            title       
@@ -356,19 +363,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now we get to the fun part!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We’re going to use the newly released <a href="https://ellmer.tidyverse.org">ellmer package</a> to send my work summary to a large language model and ask it to summarize my week.</p>
 <p>If you’re following along at home, here’s where you’ll need to pause and get yourself set up. First, install ellmer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ellmer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ellmer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Second, you’ll need access to an LLM. The coolest part of ellmer is that it supports a wide range of LLM providers, which are all listed in the <a href="https://ellmer.tidyverse.org/reference/index.html#chatbots">Chatbots reference</a>. To use your favorite LLM, you’ll need to set up an account and get an API key. But once you’ve completed that step, switching between LLMs is as easy as changing out the <code>chat_*()</code> function that you use to start the chat.</p>
 <p>For this demo, I’ll use Anthropic with <a href="https://ellmer.tidyverse.org/reference/chat_claude.html"><code>chat_claude()</code></a>. The help page for <code>chat_claude()</code> includes instructions for setting up a developer account, which I’ve already followed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you prefer OpenAI’s ChatGPT, you’d use <a href="https://ellmer.tidyverse.org/reference/chat_openai.html"><code>chat_openai()</code></a>, or if you have <a href="https://ollama.com/">ollama</a> running a local model you’d use <a href="https://ellmer.tidyverse.org/reference/chat_ollama.html"><code>chat_ollama()</code></a>.</p>
 <p>Once you have a <code>chat</code> object, you can use the <code>$chat()</code> method to talk to the LLM. The answers are streamed back to your R session and the chat is cumulative, so you can keep “talking”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Say hello three languages."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Say hello three languages."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Here's "hello" in three languages:
 
@@ -376,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 2. Spanish: Hola
 3. French: Bonjour</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Say goodbye in those same languages."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Say goodbye in those same languages."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Here's "goodbye" in those same languages:
 
@@ -400,11 +407,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>_prompt-system.md</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>You are an assistant who keeps track of the work I do each week. Your goal is to</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>faithfully and accurately report the work I do to my boss while making sure that</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>the impact of my work is clearly articulated. You are clear and concise and use</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>direct language, preferring to match the terminology and phrases that I use. You</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>respond directly without any preamble.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>You are an assistant who keeps track of the work I do each week. Your goal is to</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>faithfully and accurately report the work I do to my boss while making sure that</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>the impact of my work is clearly articulated. You are clear and concise and use</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>direct language, preferring to match the terminology and phrases that I use. You</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>respond directly without any preamble.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>The goal is to try to help the LLM align with the <em>vibe</em> of the task:</p>
@@ -423,60 +430,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>_prompt-work-summary.md</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> epoxy</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>&lt;work-item&gt;</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>Action: {action}</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>Title: {title}</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>Type: {ifelse(personal, 'Personal Work', 'Professional Work')}</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>Link: {url}</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>&lt;work-description&gt;</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>{body}</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>&lt;/work-description&gt;</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>&lt;/work-item&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="an">engine:</span><span class="co"> epoxy</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>&lt;work-item&gt;</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>Action: {action}</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>Title: {title}</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Type: {ifelse(personal, 'Personal Work', 'Professional Work')}</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Link: {url}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>&lt;work-description&gt;</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>{body}</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>&lt;/work-description&gt;</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>&lt;/work-item&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>I can take <code>work_data</code> and pass it to <code>epoxy::epoxy_use_file()</code> to fill in the templating bits with the values from <code>work_data</code>, one row at a time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epoxy)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>work_data <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, .engine)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epoxy)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>work_data <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">15</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, .engine)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here’s an example of a single work summary using the 15th row.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">work-item</span><span class="dt">&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Action: closed a PR</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Title: chore: Add `done.` signal when package installation is completed</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Type: Professional Work</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>Link: https://github.com/posit-dev/shinylive/pull/195</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">work-description</span><span class="dt">&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>In #194 we went back to calling</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>```patch</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>- micropip.install(pkg_name)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>+ micropip.install(req)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>because otherwise we lose information like the requested package version.</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>I thought this broke installation of package extras because it appeared that `micropip.install()` doesn't actually install the packages listed in an extra. </span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>It turns out that extras aren't installed when the main package is already installed. In other words, `micropip.install("shiny[theme]")` will _not install_ `brand_yml` and `libsass` because `shiny` is already installed, but `micropip.install("httpx[socks]")` _will install_ `socksio` along with `httpx` because `httpx` isn't initially installed.</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>So in the end, this PR mostly just adjusts a few comments and improves the UX of the console message. As [pointed out on Discord](https://discord.com/channels/1109483223987277844/1318357786379161731/1318536291750641674) the messages say `Installing {req} ...` and the last message seems to hang. This PR adds `done` to each line when the package install finishes.</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">work-description</span><span class="dt">&gt;</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">work-item</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">work-item</span><span class="dt">&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Action: closed a PR</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Title: chore: Add `done.` signal when package installation is completed</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Type: Professional Work</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>Link: https://github.com/posit-dev/shinylive/pull/195</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">work-description</span><span class="dt">&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>In #194 we went back to calling</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>```patch</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>- micropip.install(pkg_name)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>+ micropip.install(req)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>because otherwise we lose information like the requested package version.</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>I thought this broke installation of package extras because it appeared that `micropip.install()` doesn't actually install the packages listed in an extra. </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>It turns out that extras aren't installed when the main package is already installed. In other words, `micropip.install("shiny[theme]")` will _not install_ `brand_yml` and `libsass` because `shiny` is already installed, but `micropip.install("httpx[socks]")` _will install_ `socksio` along with `httpx` because `httpx` isn't initially installed.</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>So in the end, this PR mostly just adjusts a few comments and improves the UX of the console message. As [pointed out on Discord](https://discord.com/channels/1109483223987277844/1318357786379161731/1318536291750641674) the messages say `Installing {req} ...` and the last message seems to hang. This PR adds `done` to each line when the package install finishes.</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">work-description</span><span class="dt">&gt;</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">work-item</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice that I’ve used <code>&lt;work-item&gt;</code> and <code>&lt;work-description&gt;</code> pseudo-tags to give the text a bit of structure.</p>
 <p>Now we can put the work summary together into a single text string.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>work_summary <span class="ot">&lt;-</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>work_summary <span class="ot">&lt;-</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-user-prompt" class="level3">
@@ -487,19 +494,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>_prompt.md</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Summarize my work over the last week for a team update in prose.</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Focus more on pull requests; issues are less important and just provide context.</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Write in prose with full paragraphs.</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Focus on the user impact of the work first and secondarily on the internal impact of dev changes.</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Summarize the work using markdown under two headings:</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>'## Professional Work' and '## Personal Work'.</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Include direct links to any mentioned pull requests using markdown syntax.</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>Use the first-person and try to sound like me.</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>&lt;work-summary&gt;</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>{{ work_summary }}</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>&lt;/work-summary&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Summarize my work over the last week for a team update in prose.</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Focus more on pull requests; issues are less important and just provide context.</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Write in prose with full paragraphs.</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Focus on the user impact of the work first and secondarily on the internal impact of dev changes.</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>Summarize the work using markdown under two headings:</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>'## Professional Work' and '## Personal Work'.</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>Include direct links to any mentioned pull requests using markdown syntax.</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>Use the first-person and try to sound like me.</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>&lt;work-summary&gt;</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>{{ work_summary }}</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>&lt;/work-summary&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>For this prompt, I’ll use <code>ellmer::interpolate_file()</code>, which works a lot like <code>epoxy_use_file()</code> but comes built-in with ellmer. It reads in a file and interpolates the <code>{ expr }</code> strings, which in this case will inject the <code>work_summary</code> into the prompt.</p>
@@ -509,24 +516,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-final-result">The final result</h2>
 <p>Finally, we’re ready to put it all together and find out if it works!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"_prompt-system.md"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>work_summarized <span class="ot">&lt;-</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat</span>(<span class="fu">interpolate_file</span>(<span class="st">"_prompt.md"</span>), <span class="at">echo=</span><span class="cn">FALSE</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I'm caching the result so I don't rack up costs while writing this post</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(chat, <span class="st">"chat.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"_prompt-system.md"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>work_summarized <span class="ot">&lt;-</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  chat<span class="sc">$</span><span class="fu">chat</span>(<span class="fu">interpolate_file</span>(<span class="st">"_prompt.md"</span>), <span class="at">echo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># I'm caching the result so I don't rack up costs while writing</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(chat, <span class="st">"chat.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I’ve set <code>echo=FALSE</code> so that I can store the result and show it to you with a big reveal, but by default the response streams right into your console.</p>
 <div class="cell">
-<p>Sending my whole work summary plus the prompt took about 23,297 tokens and Claude responded with 392 tokens. Using <a href="https://llmpricecheck.com/calculator/">LLM Price Check</a>, 25k input tokens and 500k output tokens, ends up costing about $0.08 per call to <code>claude-3-sonnet</code> or about $0.13 per call to <code>gpt-4o</code>.</p>
+<p>Sending my whole work summary plus the prompt took about 23,297 tokens and Claude responded with 594 tokens. Using <a href="https://llmpricecheck.com/calculator/">LLM Price Check</a>, 25k input tokens and 500k output tokens, ends up costing about $0.08 per call to <code>claude-3-sonnet</code> or about $0.13 per call to <code>gpt-4o</code>.</p>
 </div>
 <p>Here’s the final output! ellmer has a really neat feature that you can turn any part of the conversation into markdown with <code>contents_markdown()</code>. I’ve used code like what’s listed below to embed the response here in this post.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">last_turn</span>() <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contents_markdown</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">last_turn</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contents_markdown</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="My Work Summary">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -542,22 +549,21 @@ My Work Summary
 <div class="callout-body-container callout-body">
 <section id="professional-work" class="level2">
 <h2 class="anchored" data-anchor-id="professional-work">Professional Work</h2>
-<p>This week I made significant contributions across multiple projects, improving functionality and user experience. In py-shinylive, I fixed Windows compatibility by ensuring path separators are consistent, converting backslashes to forward slashes. I also improved the user experience by adding completion signals when package installations finish.</p>
-<p>I worked on several important features in bslib, focusing on navbar compatibility and styling. I refactored the navbar functionality to better match Bootstrap 5’s expectations around background color control and dark/light modes. I also fixed an issue where empty nav links in <code>nav_panel_hidden()</code> were incorrectly getting padding.</p>
-<p>In chromote, I made several improvements to enhance debugging and user experience. I added a <code>chromote_info()</code> helper function to provide useful system and Chrome information, similar to <code>session_info()</code>. I also improved crash handling by setting a user-specific crash dump directory.</p>
-<p>For the air code formatter, I opened several issues to improve functionality around line breaking and braced expression formatting. This included suggestions for selective format suppression and improved handling of empty or short braced expressions.</p>
+<p>I made significant improvements across multiple projects this week. In bslib, I improved navbar compatibility for Bootstrap 5 and light/dark modes through <a href="https://github.com/rstudio/bslib/pull/1145">PR #1145</a>, which brought bslib in line with Bootstrap 5’s expectations around navbar background color control while adding appropriate controls for various scenarios. I also contributed to better code organization by moving navbar options to a dedicated file through <a href="https://github.com/rstudio/bslib/pull/1173">PR #1173</a>.</p>
+<p>In chromote, I enhanced the developer experience by adding the <code>chromote_info()</code> helper function via <a href="https://github.com/rstudio/chromote/pull/190">PR #190</a> to provide useful system and configuration information. I also improved session management by setting user-specific crash dump directories in <a href="https://github.com/rstudio/chromote/pull/194">PR #194</a>.</p>
+<p>For shinylive and Shiny, I made several improvements to enhance stability and user experience. I fixed Windows path handling in shinylive through <a href="https://github.com/posit-dev/py-shinylive/pull/47">PR #47</a> and improved the insertion of nav items in Shiny with <a href="https://github.com/rstudio/shiny/pull/4179">PR #4179</a>.</p>
+<p>I also worked on improving code formatting across our repositories by setting up automated R code formatting with <code>air</code> through <a href="https://github.com/rstudio/shiny-workflows/pull/43">PR #43</a> in the shiny-workflows repository.</p>
 </section>
 <section id="personal-work" class="level2">
 <h2 class="anchored" data-anchor-id="personal-work">Personal Work</h2>
-<p>I made significant contributions to the bluesky-comments Quarto extension, focusing on improving the user experience and adding new features. The main improvements include:</p>
+<p>I made substantial contributions to the bluesky-comments Quarto extension, implementing several key features and improvements:</p>
 <ul>
-<li>Refined content labelling UX to be more intuitive and match Bluesky’s native behavior</li>
-<li>Added support for displaying images and GIFs in comments</li>
-<li>Implemented configurable comment thread depth with the <code>n-show-depth</code> option</li>
-<li>Simplified the extension’s documentation and improved its organization</li>
-<li>Started work on CSS improvements to ensure consistent naming and avoid potential conflicts</li>
+<li>Enhanced content label handling and UI through <a href="https://github.com/quarto-ext/bluesky-comments/pull/29">PR #29</a></li>
+<li>Added support for images and GIFs in <a href="https://github.com/quarto-ext/bluesky-comments/pull/40">PR #40</a></li>
+<li>Implemented nested comment depth control via <a href="https://github.com/quarto-ext/bluesky-comments/pull/41">PR #41</a></li>
+<li>Improved header configuration options in <a href="https://github.com/quarto-ext/bluesky-comments/pull/39">PR #39</a></li>
 </ul>
-<p>I also updated my shrtcts package to make it easier to run shortcuts by name when using <code>.shrtcts.R</code>, which enables better workflow automation in Positron.</p>
+<p>I also enhanced shrtcts to support better workflow integration in Positron through <a href="https://github.com/gadenbuie/shrtcts/pull/26">PR #26</a>, adding <code>shortcut_run()</code> and <code>shortcut_get()</code> functions.</p>
 </section>
 </div>
 </div>
@@ -567,51 +573,192 @@ My Work Summary
   margin-top: inherit;
 }
 </style>
-<p>I have to admit, that’s not a bad summary of my week!</p>
+<p>I have to admit, that’s not a bad summary<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of my week!</p>
 <p>What’s cool about this approach is that I could continue to chat with Claude about my week, asking follow up questions to have it further remind me about what I did.</p>
 <p>Another idea I have now is to run this script in a weekly cron job, just before our larger team meeting, to make sure that I know what I did this week when I get there. Not only that, but this would make a great running summary that might come in handy for a performance review or promotion request.</p>
 </section>
 <section id="using-local-llms" class="level2">
 <h2 class="anchored" data-anchor-id="using-local-llms">Using local LLMS</h2>
-<p>Just to prove that it’s easy to switch models, I’m going to repeat the above process with a local model. This is the same code as above, but this time using <a href="https://ollama.com/">ollama</a> running <code>llama3.1:8b</code> locally.</p>
+<p>Just to prove that it’s easy to switch models, I’m going to repeat the above process with a local model. This is the same code as above, but this time using <a href="https://ollama.com/">ollama</a> to run <a href="https://ollama.com/library/phi4">phi4</a>, a new 14B parameter model from Microsoft.</p>
+<p>Before I show you the results, I have to admit something: they’re … not stellar. I tried a few other local models, and <code>phi4</code> generally did the best. A 14B parameter model isn’t the <em>smallest model</em> on the block, but it’s still pretty small. By comparison, Claude 3.5 Sonnet has roughly <a href="https://aiexpjourney.substack.com/p/the-number-of-parameters-of-gpt-4o">175 billion parameters</a>. The smaller parameter models have almost no chance of acing this task.</p>
+<p>I also found that if I tried to summarize both professional and personal work in the same chat, the local models would get hung up on the personal work and would end up summarizing only that. After playing around with it for a bit, I decided to focus just on the professional work summary, where <code>phi4</code> does okay.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chat_llama <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">readLines</span>(<span class="st">"_prompt-system.md"</span>),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"llama3.1:8b"</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>work_summarized_llama <span class="ot">&lt;-</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  chat_llama<span class="sc">$</span><span class="fu">chat</span>(</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">interpolate_file</span>(<span class="st">"_prompt.md"</span>),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">echo=</span><span class="cn">FALSE</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>professional_work <span class="ot">&lt;-</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  work_data <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>personal) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">epoxy_use_file</span>(<span class="st">"_prompt-work-summary.md"</span>, <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>chat_llama <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> brio<span class="sc">::</span><span class="fu">read_file</span>(<span class="st">"_prompt-system.md"</span>),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"phi4"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_args =</span> <span class="fu">list</span>(<span class="at">temperature =</span> <span class="fl">0.2</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>work_summarized_llama <span class="ot">&lt;-</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  chat_llama<span class="sc">$</span><span class="fu">chat</span>(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">interpolate_file</span>(</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"_prompt.md"</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">work_summary =</span> professional_work</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">echo =</span> <span class="cn">FALSE</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="My Work Summary (llama3.1:8b)">
+<div class="callout callout-style-default callout-tip callout-titled" title="My Work Summary (phi4)">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-My Work Summary (llama3.1:8b)
+My Work Summary (phi4)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>It looks like a summary of GitHub issues related to the Quarto extension “bluesky-comments”. I’ll extract some information and answer your question.</p>
-<p>The extension allows you to embed Bluesky comments in a Quarto document. These are interactive conversations that can be embedded directly within Markdown content.</p>
-<p>From the summary, we can see that various features were proposed or implemented for this extension, such as:</p>
+<section id="summary-of-recent-work" class="level3 callout-body-container callout-body">
+<h3 class="anchored" data-anchor-id="summary-of-recent-work">Summary of Recent Work</h3>
+<section id="professional-activities" class="level4">
+<h4 class="anchored" data-anchor-id="professional-activities">Professional Activities:</h4>
 <ol type="1">
-<li>Displaying attached images in posts</li>
-<li>Limiting nested comment levels</li>
-<li>Showing the contents of comments (which seems to be a work-in-progress)</li>
-<li>Adding CSS classes for better styling (a pending issue)</li>
+<li><strong>Shiny Core CI Snapshots Update:</strong>
+<ul>
+<li>Updated snapshots due to Chrome v132’s deprecation of <code>--headless=old</code> mode.</li>
+<li>Chromote now uses the new <code>--headless</code> mode by default (see <a href="https://github.com/rstudio/chromote/pull/189">Chromote PR #189</a>).</li>
+<li>Reviewed all updated snapshots; no behavior changes detected, except for potential issues with absolute positioning in panel layouts (<code>027-absolutely-positioned-panels</code>).</li>
+</ul></li>
+<li><strong>Shiny Workflows Enhancement:</strong>
+<ul>
+<li>Introduced a new composite workflow <code>rstudio/shiny-workflows/format-r-code</code> to format R code using <code>air</code>.</li>
+<li>This workflow is part of the routine process, activated via <code>inputs.format-r-code</code>, which defaults to <code>false</code>.</li>
+<li>Users can enable it by setting <code>format-r-code: true</code> in their configuration.</li>
+<li>Additional inputs for this workflow include:
+<ul>
+<li><code>version</code>: Specifies the version of <code>air</code> (default: <code>latest</code>).</li>
+<li><code>check</code>: When set to <code>"true"</code>, checks if files change without committing (<code>air format --check</code>).</li>
+<li><code>path</code>: Defines paths for formatting, defaulting to all R files in the repository.</li>
+</ul></li>
+<li>Demonstrated usage in the bslib project (<a href="https://github.com/rstudio/bslib/pull/1167">bslib PR #1167</a>).</li>
+</ul></li>
+<li><strong>Shiny Core CI Snapshots Update (Duplicate Entry):</strong>
+<ul>
+<li>Reiterated update due to Chrome v132 changes, with similar outcomes and considerations as previously noted.</li>
+</ul></li>
 </ol>
-<p>There’s also some discussion around customizing the comments section, such as making it optional or adding a header with a customizable title (from YAML front matter).</p>
+</section>
+<section id="open-source-contributions" class="level4">
+<h4 class="anchored" data-anchor-id="open-source-contributions">Open Source Contributions:</h4>
+<ol type="1">
+<li><strong>Shiny PR #4952:</strong>
+<ul>
+<li>Addressed a bug where <code>shiny::runApp()</code> would fail if the app directory was not writable.</li>
+<li>Implemented a fix that allows apps to run in read-only directories by copying files into a temporary location for execution.</li>
+</ul></li>
+<li><strong>Shiny Core CI Snapshots Update (Duplicate Entry):</strong>
+<ul>
+<li>Repeated update details regarding Chrome v132 and Chromote’s headless mode transition, with no additional changes noted beyond the initial entry.</li>
+</ul></li>
+</ol>
+<p>These activities reflect ongoing efforts to maintain and enhance the Shiny ecosystem, ensuring compatibility with new browser versions and improving developer workflows.</p>
+</section>
+</section>
 </div>
 </div>
-</div>
-<p>The local model is quite a bit slower, but I can run it on my M3 MacBook Air. The summarization quality is nowhere near what I got from Claude, either, but I didn’t need to pay for the query or send my data to a third-party. (I also didn’t spend much time on this, I probably could get better results with more prompt engineering.) At the very least, the local model is a great way to practice setting up the pipeline before I’m ready to pay for queries with Anthropic or others.</p>
+<p>The local model takes quite a bit longer to provide a response, but I <em>can</em> run it on my M3 MacBook Air. The summarization quality is nowhere near what I got from Claude, either, but I didn’t need to pay for the query or send my data to a third-party. (I also didn’t spend much time on this, I probably could get better results with more prompt engineering.) At the very least, the local model is a great way to practice setting up the pipeline before I’m ready to pay for queries with Anthropic or others.</p>
+</section>
+<section id="final-script" class="level2">
+<h2 class="anchored" data-anchor-id="final-script">Final script</h2>
+<p>One last thing: here’s all of the code from the meandering blog post above in one place, with all of the prompts inlined. Amazingly, its less than 100 lines of code.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Query issues and pull requests from this week -------------------------------</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gh)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>author <span class="ot">&lt;-</span> <span class="st">"gadenbuie"</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>start_date <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> <span class="dv">7</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>search_created <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"author:%s created:&gt;%sT00:00:00Z"</span>, author, start_date)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>search_closed <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"author:%s closed:&gt;%sT00:00:00Z"</span>, author, start_date)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>created <span class="ot">&lt;-</span> <span class="fu">gh</span>(<span class="st">"/search/issues"</span>, <span class="at">q =</span> search_created, <span class="at">.limit =</span> <span class="cn">Inf</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>closed <span class="ot">&lt;-</span> <span class="fu">gh</span>(<span class="st">"/search/issues"</span>, <span class="at">q =</span> search_closed, <span class="at">.limit =</span> <span class="cn">Inf</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>work_data <span class="ot">&lt;-</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(created<span class="sc">$</span>items, closed<span class="sc">$</span>items) <span class="sc">|&gt;</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="cf">function</span>(issue) {</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">repository =</span> <span class="fu">sub</span>(</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>          <span class="st">"https://api.github.com/repos/"</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>          <span class="st">""</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>          issue<span class="sc">$</span>repository_url</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> issue<span class="sc">$</span>title,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">created_at =</span> issue<span class="sc">$</span>created_at,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">closed_at =</span> issue<span class="sc">$</span>closed_at,</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">url =</span> issue<span class="sc">$</span>html_url,</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">state =</span> issue<span class="sc">$</span>state,</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">is_issue =</span> <span class="fu">is.null</span>(issue<span class="sc">$</span>pull_request),</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">body =</span> issue<span class="sc">$</span>body</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">|&gt;</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list_rbind</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">personal =</span> <span class="fu">grepl</span>(<span class="st">"(^gadenbuie)|bluesky-comments"</span>, repository),</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">action_at =</span> <span class="fu">coalesce</span>(closed_at, created_at),</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">action =</span> <span class="fu">recode</span>(state, <span class="at">open =</span> <span class="st">"opened"</span>),</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">action =</span> <span class="fu">paste</span>(action, <span class="fu">if_else</span>(is_issue, <span class="st">"an issue"</span>, <span class="st">"a PR"</span>)),</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">arrange</span>(personal, repository, is_issue, action_at)</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the work data summary -----------------------------------------------</span></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epoxy)</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>work_summary <span class="ot">&lt;-</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">epoxy</span>(</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;work-item&gt;</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="st">    Action: {action}</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a><span class="st">    Title: {title}</span></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="st">    Type: {ifelse(personal, 'Personal Work', 'Professional Work')}</span></span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a><span class="st">    Link: {url}</span></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;work-description&gt;</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a><span class="st">    {body}</span></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/work-description&gt;</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/work-item&gt;"</span>,</span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">.collapse =</span> <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize with the LLM ------------------------------------------------------</span></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_claude</span>(</span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">epoxy</span>(</span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You are an assistant who keeps track of the work I do each week. Your goal is to</span></span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="st">    faithfully and accurately report the work I do to my boss while making sure that</span></span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="st">    the impact of my work is clearly articulated. You are clear and concise and use</span></span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a><span class="st">    direct language, preferring to match the terminology and phrases that I use. You</span></span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a><span class="st">    respond directly without any preamble."</span></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(</span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">interpolate</span>(</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Summarize my work over the last week for a team update in prose.</span></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="st">    Focus more on pull requests; issues are less important and just provide context.</span></span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a><span class="st">    Write in prose with full paragraphs.</span></span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a><span class="st">    Focus on the user impact of the work first and secondarily on the internal impact of dev changes.</span></span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a><span class="st">    Summarize the work using markdown under two headings:</span></span>
+<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a><span class="st">    '## Professional Work' and '## Personal Work'.</span></span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a><span class="st">    Include direct links to any mentioned pull requests using markdown syntax.</span></span>
+<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a><span class="st">    Use the first-person and try to sound like me.</span></span>
+<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;work-summary&gt;</span></span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="st">    {{ work_summary }}</span></span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/work-summary&gt;"</span></span>
+<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a><span class="co"># To get the LLM response as markdown:</span></span>
+<span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a><span class="fu">contents_markdown</span>(chat<span class="sc">$</span><span class="fu">last_turn</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -621,6 +768,7 @@ My Work Summary (llama3.1:8b)
 
 <ol>
 <li id="fn1"><p>I know what you’re thinking and you’re totally right. The <strong>fun part</strong> was getting all this data in a nice tidy tibble! Think of all the things we could do with that tibble. But dplyr isn’t the new hotness and this blog needs to meet its buzz word quota, so we’re forced to do something extra.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Does the summary have links to the PRs? This one was hit-or-miss. Sometimes Claude includes these and sometimes they’re omitted. I’m sure a little more prompt massaging could improve the consistency.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
