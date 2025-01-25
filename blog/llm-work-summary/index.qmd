@@ -112,13 +112,15 @@ And I can create those search queries with R:
 ```
 
 But of course I don't want to have to actually click around on GitHub to remember what I was doing.
-what I want is some rectangular data that I can work on in R.
+What I want is some rectangular data that I can work on in R.
 
-Enter the [`gh` package](https://gh.r-lib.org).
-It's a package that lets you interact with the GitHub API.
-We can use `gh` to run the closed and created search queries and collect all of the results.
+Enter the [`gh` package](https://gh.r-lib.org),
+a package that lets you interact with the GitHub API.
+We can use `gh` to run the created and closed search queries
+and collect all of the results.
 
 ```{r}
+#| label: gh-run-query
 library(gh)
 
 created <- gh("/search/issues", q = search_created, .limit = Inf)
@@ -132,25 +134,31 @@ each with a whole bunch of fields.
 I'll use `purrr` to map over the issues and extract the fields I care about.
 
 ```{r}
+#| label: gh-summarize-query
 library(purrr)
 library(dplyr, warn.conflicts = FALSE)
 
 work_data <-
   c(created$items, closed$items) |>
-  map(function(issue) {
-    tibble(
-      repository = sub("https://api.github.com/repos/", "", issue$repository_url),
-      title = issue$title,
-      created_at = issue$created_at,
-      closed_at = issue$closed_at,
-      url = issue$html_url,
-      state = issue$state,
-      is_issue = is.null(issue$pull_request),
-      body = issue$body
-    )
-  }) |>
-  list_rbind()
-
+    map(function(issue) {
+      tibble(
+        repository = sub(
+          "https://api.github.com/repos/",
+          "",
+          issue$repository_url
+        ),
+        title = issue$title,
+        created_at = issue$created_at,
+        closed_at = issue$closed_at,
+        url = issue$html_url,
+        state = issue$state,
+        is_issue = is.null(issue$pull_request),
+        body = issue$body
+      )
+    }) |>
+    list_rbind()
+```
+```{r}
 work_data
 ```
 
@@ -160,16 +168,18 @@ and my personal open-source projects.
 I'll also add an `action` column indicating the primary action this week.
 
 ```{r}
+#| label: gh-organize-query
 work_data <-
   work_data |>
-  mutate(
-    personal = grepl("(^gadenbuie)|bluesky-comments", repository),
-    action_at = coalesce(closed_at, created_at),
-    action = recode(state, open = "opened"),
-    action = paste(action, if_else(is_issue, "an issue", "a PR")),
-  ) |>
-  arrange(personal, repository, is_issue, action_at)
-
+    mutate(
+      personal = grepl("(^gadenbuie)|bluesky-comments", repository),
+      action_at = coalesce(closed_at, created_at),
+      action = recode(state, open = "opened"),
+      action = paste(action, if_else(is_issue, "an issue", "a PR")),
+    ) |>
+    arrange(personal, repository, is_issue, action_at)
+```
+```{r}
 # Preview the work data
 work_data |>
   select(repository, action, action_at, title)
@@ -318,11 +328,12 @@ to give the text a bit of structure.
 Now we can put the work summary together into a single text string.
 
 ```{r echo=-1}
+#| label: work-summary
 library(epoxy)
 
 work_summary <-
   work_data |>
-  epoxy_use_file("_prompt-work-summary.md", .collapse = "\n\n")
+    epoxy_use_file("_prompt-work-summary.md", .collapse = "\n\n")
 ```
 
 ### The user prompt
@@ -344,16 +355,16 @@ which in this case will inject the `work_summary` into the prompt.
 Finally, we're ready to put it all together and find out if it works!
 
 ```{r echo=1:7}
-#| label: _prompt-claude
+#| label: prompt-claude
 #| cache: true
 chat <- chat_claude(
   system_prompt = readLines("_prompt-system.md")
 )
 
 work_summarized <-
-  chat$chat(interpolate_file("_prompt.md"), echo=FALSE)
+  chat$chat(interpolate_file("_prompt.md"), echo = FALSE)
 
-# I'm caching the result so I don't rack up costs while writing this post
+# I'm caching the result so I don't rack up costs while writing
 saveRDS(chat, "chat.rds")
 ```
 
@@ -403,7 +414,9 @@ chat$last_turn() |>
 </style>
 ```
 
-I have to admit, that's not a bad summary of my week!
+I have to admit, that's not a bad summary[^links] of my week!
+
+[^links]: Does the summary have links to the PRs? This one was hit-or-miss. Sometimes Claude includes these and sometimes they're omitted. I'm sure a little more prompt massaging could improve the consistency.
 
 What's cool about this approach is that I could continue to chat with Claude about my week,
 asking follow up questions to have it further remind me about what I did.
@@ -420,34 +433,77 @@ Just to prove that it's easy to switch models,
 I'm going to repeat the above process with a local model.
 This is the same code as above,
 but this time using
-[ollama](https://ollama.com/) running `llama3.1:8b` locally.
+[ollama](https://ollama.com/) to run
+[phi4](https://ollama.com/library/phi4),
+a new 14B parameter model from Microsoft.
+
+Before I show you the results, I have to admit something:
+they're ... not stellar.
+I tried a few other local models,
+and `phi4` generally did the best.
+A 14B parameter model isn't the _smallest model_ on the block,
+but it's still pretty small.
+By comparison,
+Claude 3.5 Sonnet has roughly
+[175 billion parameters](https://aiexpjourney.substack.com/p/the-number-of-parameters-of-gpt-4o).
+The smaller parameter models have almost no chance of acing this task.
+
+I also found that if I tried to summarize
+both professional and personal work in the same chat,
+the local models would get hung up on the personal work
+and would end up summarizing only that.
+After playing around with it for a bit,
+I decided to focus just on the professional work summary,
+where `phi4` does okay.
 
 ```{r}
 #| label: ollama-chat
 
+professional_work <-
+  work_data |>
+    filter(!personal) |>
+    epoxy_use_file("_prompt-work-summary.md", .collapse = "\n\n")
+
 chat_llama <- chat_ollama(
-  system_prompt = readLines("_prompt-system.md"),
-  model = "llama3.1:8b"
+  system_prompt = brio::read_file("_prompt-system.md"),
+  model = "phi4",
+  api_args = list(temperature = 0.2)
 )
 
 work_summarized_llama <-
   chat_llama$chat(
-    interpolate_file("_prompt.md"),
-    echo=FALSE
+    interpolate_file(
+      "_prompt.md",
+      work_summary = professional_work
+    ),
+    echo = FALSE
   )
 ```
 
-::: {.callout-tip title="My Work Summary (llama3.1:8b)" collapse="true"}
+
+::: {.callout-tip title="My Work Summary (phi4)" collapse="true"}
 
 `r contents_markdown(chat_llama$last_turn())`
 
 :::
 
-The local model is quite a bit slower,
-but I can run it on my M3 MacBook Air.
+
+The local model takes quite a bit longer to provide a response,
+but I _can_ run it on my M3 MacBook Air.
 The summarization quality is nowhere near what I got from Claude, either,
 but I didn't need to pay for the query or send my data to a third-party.
 (I also didn't spend much time on this, I probably could get better results with more prompt engineering.)
 At the very least,
 the local model is a great way to practice setting up the pipeline
 before I'm ready to pay for queries with Anthropic or others.
+
+## Final script
+
+One last thing:
+here's all of the code from the meandering blog post above in one place,
+with all of the prompts inlined.
+Amazingly, its less than 100 lines of code.
+
+```r
+{{< include work-summary.R >}}
+```
