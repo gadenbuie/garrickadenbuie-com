@@ -116,6 +116,11 @@ figcaption {
 }
 
 .code-with-filename > div {
-  border: 1px solid var(--bs-border-color, #dee2e6);
+  border: 1px solid var(--quarto-border-color);
   padding: 0.66rem;
+}
+
+pre > code,
+.code-with-filename-file strong {
+  color: var(--bs-body-color);
 }

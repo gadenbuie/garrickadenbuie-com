@@ -97,3 +97,7 @@ div.quarto-post .listing-categories .listing-category,
 .blockquote {
   color: $text-muted;
 }
+
+.code-with-filename .code-with-filename-file {
+  background-color: var(--slate-90);
+}

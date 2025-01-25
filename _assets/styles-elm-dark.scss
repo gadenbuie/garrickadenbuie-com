@@ -46,6 +46,7 @@ $link-color: $blue-50;
 $code-color: $pink-60;
 $code-bg: $black;
 $footer-bg: $black;
+$quarto-border-color: $slate-20;
 
 // Bootstrap Alerts
 $alert-bg-scale: 66%;
@@ -68,6 +69,10 @@ $dropdown-link-hover-bg: $blue-20;
 
 
 /*-- scss:rules --*/
+:root {
+  --quarto-border-color: var(--slate-20);
+}
+
 .quarto-title-banner {
   @extend .border-bottom, .border-2, .bg-black, .border-dark;
 }
@@ -144,4 +149,8 @@ div.quarto-post .listing-categories .listing-category,
   color: $pink-90;
   background-color: $pink-10;
   opacity: 0.6
+}
+
+.quarto-dark .code-with-filename .code-with-filename-file {
+  background-color: var(--slate-10);
 }
