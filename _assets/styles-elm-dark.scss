@@ -148,7 +148,11 @@ div.quarto-post .listing-categories .listing-category,
   border-color: $pink-60;
   color: $pink-90;
   background-color: $pink-10;
-  opacity: 0.6
+  opacity: 0.8
+}
+
+div.quarto-post .listing-categories .listing-category {
+  opacity: 0.6;
 }
 
 .quarto-dark .code-with-filename .code-with-filename-file {
