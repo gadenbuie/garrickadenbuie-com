@@ -65,6 +65,7 @@ code span.at {
 
 code span.ss {
   color: #b9deb9;
+  background-color: transparent;
   font-style: inherit;
 }
 
@@ -80,6 +81,7 @@ code span.fu {
 
 code span.st {
   color: #b9deb9;
+  background-color: transparent;
   font-style: inherit;
 }
 
