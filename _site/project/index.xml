@@ -10,7 +10,7 @@
 <atom:link href="https://www.garrickadenbuie.com/project/index.xml" rel="self" type="application/rss+xml"/>
 <description>All (or most, or at least some) of my projects.
 </description>
-<generator>quarto-1.5.57</generator>
+<generator>quarto-1.6.40</generator>
 <lastBuildDate>Wed, 20 Sep 2023 04:00:00 GMT</lastBuildDate>
 <item>
   <title>{epoxy}</title>
@@ -2177,7 +2177,10 @@ font-style: inherit;">"gadenbuie/regexplain"</span>)</span></code></pre></div>
 <section id="demo" class="level2">
 <h2 class="anchored" data-anchor-id="demo">Try it out!</h2>
 <div style="width: min(550px, 100%); margin-inline: auto;">
-<pre class="shinylive-r" data-engine="r"><code>#| standalone: true
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
 #| components: [viewer]
 #| viewerHeight: 550
 
