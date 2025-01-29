@@ -1,4 +1,4 @@
-QUARTO_VERSION = v1.5.57
+QUARTO_VERSION = v1.6.40
 QUARTO_BINARY = $(HOME)/.local/share/qvm/versions/$(QUARTO_VERSION)/bin/quarto
 
 $(QUARTO_BINARY):
