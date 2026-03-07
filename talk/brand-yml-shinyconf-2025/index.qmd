@@ -7,6 +7,7 @@ description: |
   theming for Shiny apps and other R data science outputs.
 date: '2025-04-10'
 slug: brand-yml-shinyconf-2025
+image: feature.png
 
 tags:
   - R

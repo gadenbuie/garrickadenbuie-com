@@ -10,6 +10,7 @@ description: |
 date: '2025-09-16'
 date_end: '2025-09-16'
 slug: llm-posit-conf-2025
+image: feature.png
 
 tags:
   - R

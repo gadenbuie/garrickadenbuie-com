@@ -7,6 +7,7 @@ description: |
   data workflows and Shiny apps using ellmer, shinychat, and querychat.
 date: '2025-08-19'
 slug: genai-pharma-2025
+image: feature.jpg
 
 tags:
   - R
@@ -19,11 +20,19 @@ tags:
 talk_author: [Garrick Aden-Buie]
 categories: [ Conference ]
 event: "GenAI in Pharma 2025"
+event_url: https://rinpharma.com/docs/blog/posts/2025-07-30-genAI/
 location: Virtual Conference
 links:
+  - icon: youtube
+    name: Video
+    url: https://www.youtube.com/watch?v=w4tTF6QB4ZU
+  - icon: file-slides-fill
+    name: Slides
+    url: http://pkg.garrickadenbuie.com/genAI-2025-llms-meet-shiny/
   - icon: github
     name: Code
     url: https://github.com/gadenbuie/genAI-2025-llms-meet-shiny
+
 ---
 
 ## Abstract

@@ -7,6 +7,7 @@ description: |
   Shiny apps using ellmer, shinychat, and querychat.
 date: '2025-05-16'
 slug: r-exchange-shiny-ai
+image: feature.png
 
 tags:
   - R
@@ -19,7 +20,7 @@ tags:
 talk_author: [Garrick Aden-Buie]
 categories: [ Conference ]
 event: "R Exchange 2025"
-event_url: https://r-exchange.org/
+event_url: https://epi.group/events/r-exchange-25
 location: Virtual Conference
 links:
   - icon: github

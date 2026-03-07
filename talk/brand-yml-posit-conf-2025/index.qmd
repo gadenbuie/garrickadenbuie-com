@@ -7,6 +7,7 @@ description: |
   theming across reports, apps, and websites in R and Python.
 date: '2025-09-18'
 slug: brand-yml-posit-conf-2025
+image: feature.png
 
 tags:
   - R
@@ -22,6 +23,9 @@ event: "posit::conf(2025)"
 event_url: https://posit.co/conference/
 location: Atlanta, GA
 links:
+  - icon: youtube
+    name: Video
+    url: https://youtu.be/DPaoNM8Ux04
   - icon: file-slides-fill
     name: Slides
     url: https://pkg.garrickadenbuie.com/brand-yml-posit-conf-2025
@@ -32,7 +36,7 @@ links:
 
 ```{r echo=FALSE}
 options(htmltools.dir.version = TRUE)
-xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[1]]$url)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[2]]$url)
 ```
 
 ## Abstract

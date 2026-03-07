@@ -7,6 +7,7 @@ description: |
   Quarto reports, and slides from a single YAML configuration file.
 date: '2025-04-17'
 slug: brand-yml-r-for-the-rest-of-us
+image: feature.jpg
 
 tags:
   - R
@@ -21,6 +22,12 @@ event: "R for the Rest of Us"
 event_url: https://rfortherestofus.com/
 location: Virtual
 links:
+  - icon: youtube
+    name: Video
+    url: https://youtu.be/zuhflYFruMw
+  - icon: mic-fill
+    name: Podcast Episode
+    url: https://rfortherestofus.com/2025/06/podcast-episode-27
   - icon: github
     name: Code
     url: https://github.com/gadenbuie/brand-yml-r-for-the-rest-of-us
