@@ -1,0 +1,38 @@
+---
+title: "Next Generation Shiny Apps with {bslib}"
+author:
+  - Garrick Aden-Buie
+description: |
+  A hands-on workshop covering the latest developments in bslib for building
+  modern, themeable Shiny apps and dashboards.
+date: '2024-06-11'
+date_end: '2024-06-11'
+slug: rmedicine-2024-bslib
+
+tags:
+  - R
+  - Shiny
+  - bslib
+  - Dashboards
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Workshop ]
+event: "R/Medicine 2024"
+event_url: https://rconsortium.github.io/RMedicine_website/
+location: Virtual Conference
+links:
+  - icon: house-door-fill
+    name: Website
+    url: https://pkg.garrickadenbuie.com/rmedicine-2024-bslib
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/rmedicine-2024-bslib
+---
+
+## Description
+
+bslib is the new shinydashboard! In this workshop, we cover all of the latest exciting developments in bslib, including the recently unveiled new default Shiny look and feel.
+
+Dashboards are probably the most popular type of Shiny app, and they allow you to display and interact with data in a visually appealing and intuitive way. This workshop shows how bslib can make stunning dashboards with Shiny.
+
+Not only is bslib a package that pairs with Shiny to provide up-to-date and themeable versions of Bootstrap, but bslib has evolved to include a range of components and layouts that are specifically designed for creating delightful dashboards. We've begun recommending Shiny developers turn to bslib instead of shinydashboard, the long time standard dashboarding package for Shiny.

@@ -1,0 +1,33 @@
+---
+title: "Theming Made Easy: brand.yml for R"
+author:
+  - Garrick Aden-Buie
+description: |
+  A live demo of brand.yml, showing how to create beautifully branded Shiny apps,
+  Quarto reports, and slides from a single YAML configuration file.
+date: '2025-04-17'
+slug: brand-yml-r-for-the-rest-of-us
+
+tags:
+  - R
+  - Shiny
+  - brand.yml
+  - Theming
+  - Quarto
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Talk ]
+event: "R for the Rest of Us"
+event_url: https://rfortherestofus.com/
+location: Virtual
+links:
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/brand-yml-r-for-the-rest-of-us
+---
+
+## About
+
+This live demo showcases brand.yml, a Posit project that simplifies theming across R data science outputs. Starting from a set of brand guidelines, we translate colors, typography, and logos into a `_brand.yml` file and use it to style a Shiny app, a Quarto report, and a presentation—all from a single source of truth.
+
+The demo uses a fictional company, Pulse Mobile, to walk through how brand.yml can be applied to create consistent, professional-looking outputs across different formats.
