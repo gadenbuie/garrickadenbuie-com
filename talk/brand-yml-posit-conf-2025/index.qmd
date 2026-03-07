@@ -1,0 +1,48 @@
+---
+title: "Theming Made Easy: Introducing brand.yml"
+author:
+  - Garrick Aden-Buie
+description: |
+  brand.yml is an exciting new project from Posit that radically simplifies
+  theming across reports, apps, and websites in R and Python.
+date: '2025-09-18'
+slug: brand-yml-posit-conf-2025
+image: feature.png
+
+tags:
+  - R
+  - Shiny
+  - brand.yml
+  - Theming
+  - Quarto
+  - "posit::conf"
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "posit::conf(2025)"
+event_url: https://posit.co/conference/
+location: Atlanta, GA
+links:
+  - icon: youtube
+    name: Video
+    url: https://youtu.be/DPaoNM8Ux04
+  - icon: file-slides-fill
+    name: Slides
+    url: https://pkg.garrickadenbuie.com/brand-yml-posit-conf-2025
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/brand-yml-posit-conf-2025
+---
+
+```{r echo=FALSE}
+options(htmltools.dir.version = TRUE)
+xaringanExtra::embed_xaringan(rmarkdown::metadata$links[[2]]$url)
+```
+
+## Abstract
+
+brand.yml is an exciting new project from Posit that radically simplifies theming. Every data science tool supports some form of theme and appearance customization, but each app framework, output format, or visualization tool requires its own special syntax for theming.
+
+The goal of brand.yml is to create a portable and unified interface for brand-related theming that can be used anywhere that data science artifacts are produced. As a collaboration between the Shiny and Quarto teams, brand.yml provides a single interface to setting baseline themes in reports and apps across the R and Python ecosystems.
+
+In this talk, I'll introduce brand.yml and showcase the many ways that brand.yml can bring consistent styles to your data science outputs.

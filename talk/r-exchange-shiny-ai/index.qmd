@@ -1,0 +1,37 @@
+---
+title: "Shiny + AI: Building LLM-Powered Apps in R"
+author:
+  - Garrick Aden-Buie
+description: |
+  A live demo showing how to build custom LLM-empowered data workflows and
+  Shiny apps using ellmer, shinychat, and querychat.
+date: '2025-05-16'
+slug: r-exchange-shiny-ai
+image: feature.png
+
+tags:
+  - R
+  - Shiny
+  - AI
+  - LLM
+  - ellmer
+  - shinychat
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "R Exchange 2025"
+event_url: https://epi.group/events/r-exchange-25
+location: Virtual Conference
+links:
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/r-exchange-shiny-ai
+---
+
+## Abstract
+
+AI tools like Copilot, ChatGPT, Deepseek, and Claude have taken the world by storm. They're powered by Large Language Models (LLMs), models that have a simple premise of generating plausible sounding text and yet are surprisingly versatile. LLMs can be used for all kinds of open-ended tasks, inspiring new approaches and promising productivity gains.
+
+To harness the power of LLMs, you can access them through web APIs and integrate them into your own code. However, working directly with these APIs can be challenging. Fortunately, R packages like {ellmer} and {shinychat} are simplifying LLM integration in R. They handle the complexities of tasks like building chat interfaces and structuring outputs. And with Shiny for R, you can quickly create custom chatbots and seamlessly incorporate them into your web application.
+
+In this talk, I'll show you how easy it is to create LLM-powered apps with R and Shiny, even if you're new to it. I'll give you ideas for your next AI project, explain how to write good prompts to get better results, and show you why R is a great choice for code-first data scientists in 2025.

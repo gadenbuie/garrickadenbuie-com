@@ -1,0 +1,52 @@
+---
+title: "Building the Future of Data Apps: LLMs Meet Shiny"
+author:
+  - Garrick Aden-Buie
+description: |
+  A live demo explaining LLM APIs from zero and building LLM-empowered
+  data workflows and Shiny apps using ellmer, shinychat, and querychat.
+date: '2025-08-19'
+slug: genai-pharma-2025
+image: feature.jpg
+
+tags:
+  - R
+  - Shiny
+  - AI
+  - LLM
+  - ellmer
+  - shinychat
+
+talk_author: [Garrick Aden-Buie]
+categories: [ Conference ]
+event: "GenAI in Pharma 2025"
+event_url: https://rinpharma.com/docs/blog/posts/2025-07-30-genAI/
+location: Virtual Conference
+links:
+  - icon: youtube
+    name: Video
+    url: https://www.youtube.com/watch?v=w4tTF6QB4ZU
+  - icon: file-slides-fill
+    name: Slides
+    url: http://pkg.garrickadenbuie.com/genAI-2025-llms-meet-shiny/
+  - icon: github
+    name: Code
+    url: https://github.com/gadenbuie/genAI-2025-llms-meet-shiny
+
+---
+
+## Abstract
+
+When we think of LLMs (large language models), usually what comes to mind are general purpose chatbots like ChatGPT or code assistants like GitHub Copilot. But as useful as ChatGPT and Copilot are, LLMs have so much more to offer—if you know how to code. In this demo Garrick will explain LLM APIs from zero, and have you building and deploying custom LLM-empowered data workflows and apps in no time.
+
+## Outline
+
+1. ellmer
+2. `live_console()` and `live_browser()`
+3. shinychat: `chat_mod_server()`
+4. Tool Calling
+    - How it works with a `get_weather()` example
+5. querychat demo
+6. A tool to run SQL
+7. A tool to update part of a dashboard
+8. A tool for reactive SQL results

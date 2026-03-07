@@ -1,0 +1,54 @@
+---
+title: "Programming with LLM APIs: A Beginner's Guide in R and Python"
+author:
+  - Garrick Aden-Buie
+  - Joe Cheng
+description: |
+  A full-day workshop introducing participants to LLM APIs using ellmer (R) and
+  chatlas (Python), covering system prompts, tool calling, RAG, and building
+  Shiny apps with LLM-powered chat interfaces.
+date: '2025-09-16'
+date_end: '2025-09-16'
+slug: llm-posit-conf-2025
+image: feature.png
+
+tags:
+  - R
+  - Python
+  - AI
+  - LLM
+  - ellmer
+  - Shiny
+  - "posit::conf"
+
+talk_author:
+  - Joe Cheng
+  - Garrick Aden-Buie
+categories: [ Workshop ]
+event: "posit::conf(2025)"
+event_url: https://posit.co/conference/
+location: Atlanta, GA
+links:
+  - icon: house-door-fill
+    name: Website
+    url: https://posit-conf-2025.github.io/llm
+  - icon: github
+    name: Code
+    url: https://github.com/posit-conf-2025/llm
+---
+
+## Description
+
+Large Language Models (LLMs) open up a world of programmatic possibilities, giving developers easy access to capabilities that would have seemed like science fiction only a few years ago. But for many, the idea of integrating LLM APIs into their workflows feels daunting. This workshop is here to show you otherwise.
+
+We'll introduce you to ellmer (R) and chatlas (Python), two user-friendly packages developed by Posit that make calling LLMs from code surprisingly straightforward. These tools handle the complexities of conversation history, tool calling, vision support, and more, so you can focus on experimentation and creativity. They also integrate nicely with Shiny for R and Python, where you can easily create chat interfaces or build custom web apps around LLM workflows.
+
+Along the way, we'll explore system prompt design, token management, tool calling, and structured output, all while building familiarity with the various models and vendors that are shaping the AI landscape today.
+
+You'll discover that:
+
+- Calling LLMs from code unlocks new possibilities that go far beyond what's achievable with off-the-shelf tools like ChatGPT.
+- It's easier than you think—no advanced AI background required.
+- It's incredibly fun and rewarding to bring your own ideas to life.
+
+This workshop is perfect for those curious about AI but unsure where to start, as well as for seasoned developers looking to learn about Posit's new tools.
