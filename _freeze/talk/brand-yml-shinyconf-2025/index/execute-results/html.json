@@ -1,0 +1,19 @@
+{
+  "hash": "cf66051e62aa37e2940fc0dda16a84b8",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Theming Made Easy: Introducing brand.yml for Shiny\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  An introduction to brand.yml, a new Posit project that radically simplifies\n  theming for Shiny apps and other R data science outputs.\ndate: '2025-04-10'\nslug: brand-yml-shinyconf-2025\nimage: feature.png\n\ntags:\n  - R\n  - Shiny\n  - brand.yml\n  - Theming\n  - ShinyConf\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Conference ]\nevent: \"ShinyConf 2025\"\nevent_url: https://www.shinyconf.com/\nlocation: Virtual Conference\nlinks:\n  - icon: file-slides-fill\n    name: Slides\n    url: https://slides.garrickadenbuie.com/brand-yml-shiny\n  - icon: github\n    name: Code\n    url: https://github.com/gadenbuie/slides/tree/gh-pages/brand-yml-shiny\n---\n\n::: {.cell}\n::: {.cell-output-display}\n\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://slides.garrickadenbuie.com/brand-yml-shiny\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n\n:::\n:::\n\n\n\n## Abstract\n\nEvery data science tool supports some form of theme and appearance customization, but each app framework, output format, or visualization tool requires its own special syntax for theming.\n\nbrand.yml is a new project from Posit that radically simplifies theming. The goal of brand.yml is to create a portable and unified interface for brand-related theming that can be used anywhere that data science artifacts are produced. As a collaboration between the Shiny and Quarto teams, brand.yml provides a single interface to setting baseline themes in reports and apps across the R and Python ecosystems.\n\nIn this talk, we introduce brand.yml and showcase the many ways that brand.yml can bring consistent styles to Shiny apps and other data science outputs.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -10,13 +10,226 @@
 <atom:link href="https://www.garrickadenbuie.com/talk/index.xml" rel="self" type="application/rss+xml"/>
 <description>Presentations, talks, and workshops.
 </description>
-<generator>quarto-1.6.40</generator>
-<lastBuildDate>Thu, 18 Apr 2024 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.30</generator>
+<lastBuildDate>Thu, 18 Sep 2025 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Theming Made Easy: Introducing brand.yml</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/brand-yml-posit-conf-2025/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://pkg.garrickadenbuie.com/brand-yml-posit-conf-2025" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>brand.yml is an exciting new project from Posit that radically simplifies theming. Every data science tool supports some form of theme and appearance customization, but each app framework, output format, or visualization tool requires its own special syntax for theming.</p>
+<p>The goal of brand.yml is to create a portable and unified interface for brand-related theming that can be used anywhere that data science artifacts are produced. As a collaboration between the Shiny and Quarto teams, brand.yml provides a single interface to setting baseline themes in reports and apps across the R and Python ecosystems.</p>
+<p>In this talk, I’ll introduce brand.yml and showcase the many ways that brand.yml can bring consistent styles to your data science outputs.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/brand-yml-posit-conf-2025/</guid>
+  <pubDate>Thu, 18 Sep 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/brand-yml-posit-conf-2025/feature.png" medium="image" type="image/png" height="76" width="144"/>
+</item>
+<item>
+  <title>Programming with LLM APIs: A Beginner’s Guide in R and Python</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <dc:creator>Joe Cheng</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/llm-posit-conf-2025/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>Large Language Models (LLMs) open up a world of programmatic possibilities, giving developers easy access to capabilities that would have seemed like science fiction only a few years ago. But for many, the idea of integrating LLM APIs into their workflows feels daunting. This workshop is here to show you otherwise.</p>
+<p>We’ll introduce you to ellmer (R) and chatlas (Python), two user-friendly packages developed by Posit that make calling LLMs from code surprisingly straightforward. These tools handle the complexities of conversation history, tool calling, vision support, and more, so you can focus on experimentation and creativity. They also integrate nicely with Shiny for R and Python, where you can easily create chat interfaces or build custom web apps around LLM workflows.</p>
+<p>Along the way, we’ll explore system prompt design, token management, tool calling, and structured output, all while building familiarity with the various models and vendors that are shaping the AI landscape today.</p>
+<p>You’ll discover that:</p>
+<ul>
+<li>Calling LLMs from code unlocks new possibilities that go far beyond what’s achievable with off-the-shelf tools like ChatGPT.</li>
+<li>It’s easier than you think—no advanced AI background required.</li>
+<li>It’s incredibly fun and rewarding to bring your own ideas to life.</li>
+</ul>
+<p>This workshop is perfect for those curious about AI but unsure where to start, as well as for seasoned developers looking to learn about Posit’s new tools.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Workshop</category>
+  <guid>https://www.garrickadenbuie.com/talk/llm-posit-conf-2025/</guid>
+  <pubDate>Tue, 16 Sep 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/llm-posit-conf-2025/feature.png" medium="image" type="image/png" height="75" width="144"/>
+</item>
+<item>
+  <title>Building the Future of Data Apps: LLMs Meet Shiny</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/genai-pharma-2025/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>When we think of LLMs (large language models), usually what comes to mind are general purpose chatbots like ChatGPT or code assistants like GitHub Copilot. But as useful as ChatGPT and Copilot are, LLMs have so much more to offer—if you know how to code. In this demo Garrick will explain LLM APIs from zero, and have you building and deploying custom LLM-empowered data workflows and apps in no time.</p>
+</section>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<ol type="1">
+<li>ellmer</li>
+<li><code>live_console()</code> and <code>live_browser()</code></li>
+<li>shinychat: <code>chat_mod_server()</code></li>
+<li>Tool Calling
+<ul>
+<li>How it works with a <code>get_weather()</code> example</li>
+</ul></li>
+<li>querychat demo</li>
+<li>A tool to run SQL</li>
+<li>A tool to update part of a dashboard</li>
+<li>A tool for reactive SQL results</li>
+</ol>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/genai-pharma-2025/</guid>
+  <pubDate>Tue, 19 Aug 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/genai-pharma-2025/feature.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Shiny + AI: Building LLM-Powered Apps in R</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/r-exchange-shiny-ai/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>AI tools like Copilot, ChatGPT, Deepseek, and Claude have taken the world by storm. They’re powered by Large Language Models (LLMs), models that have a simple premise of generating plausible sounding text and yet are surprisingly versatile. LLMs can be used for all kinds of open-ended tasks, inspiring new approaches and promising productivity gains.</p>
+<p>To harness the power of LLMs, you can access them through web APIs and integrate them into your own code. However, working directly with these APIs can be challenging. Fortunately, R packages like {ellmer} and {shinychat} are simplifying LLM integration in R. They handle the complexities of tasks like building chat interfaces and structuring outputs. And with Shiny for R, you can quickly create custom chatbots and seamlessly incorporate them into your web application.</p>
+<p>In this talk, I’ll show you how easy it is to create LLM-powered apps with R and Shiny, even if you’re new to it. I’ll give you ideas for your next AI project, explain how to write good prompts to get better results, and show you why R is a great choice for code-first data scientists in 2025.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/r-exchange-shiny-ai/</guid>
+  <pubDate>Fri, 16 May 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/r-exchange-shiny-ai/feature.png" medium="image" type="image/png" height="65" width="144"/>
+</item>
+<item>
+  <title>Theming Made Easy: brand.yml for R</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/brand-yml-r-for-the-rest-of-us/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="about" class="level2">
+<h2 class="anchored" data-anchor-id="about">About</h2>
+<p>This live demo showcases brand.yml, a Posit project that simplifies theming across R data science outputs. Starting from a set of brand guidelines, we translate colors, typography, and logos into a <code>_brand.yml</code> file and use it to style a Shiny app, a Quarto report, and a presentation—all from a single source of truth.</p>
+<p>The demo uses a fictional company, Pulse Mobile, to walk through how brand.yml can be applied to create consistent, professional-looking outputs across different formats.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Talk</category>
+  <guid>https://www.garrickadenbuie.com/talk/brand-yml-r-for-the-rest-of-us/</guid>
+  <pubDate>Thu, 17 Apr 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/brand-yml-r-for-the-rest-of-us/feature.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Theming Made Easy: Introducing brand.yml for Shiny</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/brand-yml-shinyconf-2025/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="cell">
+<div class="cell-output-display">
+<div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
+<iframe src="https://slides.garrickadenbuie.com/brand-yml-shiny" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen=""></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div>
+</div>
+</div>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>Every data science tool supports some form of theme and appearance customization, but each app framework, output format, or visualization tool requires its own special syntax for theming.</p>
+<p>brand.yml is a new project from Posit that radically simplifies theming. The goal of brand.yml is to create a portable and unified interface for brand-related theming that can be used anywhere that data science artifacts are produced. As a collaboration between the Shiny and Quarto teams, brand.yml provides a single interface to setting baseline themes in reports and apps across the R and Python ecosystems.</p>
+<p>In this talk, we introduce brand.yml and showcase the many ways that brand.yml can bring consistent styles to Shiny apps and other data science outputs.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/brand-yml-shinyconf-2025/</guid>
+  <pubDate>Thu, 10 Apr 2025 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/brand-yml-shinyconf-2025/feature.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Next Generation Shiny Apps with {bslib}</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/rmedicine-2024-bslib/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>bslib is the new shinydashboard! In this workshop, we cover all of the latest exciting developments in bslib, including the recently unveiled new default Shiny look and feel.</p>
+<p>Dashboards are probably the most popular type of Shiny app, and they allow you to display and interact with data in a visually appealing and intuitive way. This workshop shows how bslib can make stunning dashboards with Shiny.</p>
+<p>Not only is bslib a package that pairs with Shiny to provide up-to-date and themeable versions of Bootstrap, but bslib has evolved to include a range of components and layouts that are specifically designed for creating delightful dashboards. We’ve begun recommending Shiny developers turn to bslib instead of shinydashboard, the long time standard dashboarding package for Shiny.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Workshop</category>
+  <guid>https://www.garrickadenbuie.com/talk/rmedicine-2024-bslib/</guid>
+  <pubDate>Tue, 11 Jun 2024 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/rmedicine-2024-bslib/feature.png" medium="image" type="image/png" height="64" width="144"/>
+</item>
 <item>
   <title>Modern Dashboards with bslib</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/bslib-modern-dashboards/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -55,6 +268,7 @@
 
 
 
+
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -83,6 +297,7 @@
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/seamless-epoxy/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -119,6 +334,7 @@
 
 
 
+
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
 <p>The xaringan package brings professional, impressive, and visually appealing slides to the powerful R Markdown ecosystem. Through our hands-on tutorial, you will learn how to design highly effective slides that support presentations for teaching and reporting alike. Over three hours, you will learn how to create an accessible baseline design that matches your institution or organization’s style guide. Together we’ll explore the basics of CSS—the design language of the internet—and how we can leverage CSS to produce elegant slides for effective communication.</p>
@@ -147,6 +363,7 @@
 
 
 
+
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -168,7 +385,7 @@
 <li><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></li>
 <li><a href="https://github.com/gadenbuie/lorem">lorem</a></li>
 </ul>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># On CRAN</span></span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -205,9 +422,9 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"gadenbuie/lorem"</span>)</span></code></pre></div>
+font-style: inherit;">"gadenbuie/lorem"</span>)</span></code></pre></div></div>
 <p>If you use [docker], you can get set up with an [environment for this presentation][docker-image] with:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
@@ -217,7 +434,7 @@ font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-p</span> 8787:8787 <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span></code></pre></div>
+font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span></code></pre></div></div>
 
 
 </section>
@@ -233,6 +450,7 @@ font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/extra-great-slides-nyhackr/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -260,7 +478,7 @@ font-style: inherit;">-e</span> DISABLE_AUTH=true grrrck/sliding-in-style</span>
 <li><a href="https://github.com/jhelvy/xaringanBuilder">xaringanBuilder</a></li>
 <li><a href="https://pkg.garrickadenbuie.com/metathis">metathis</a></li>
 </ul>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># On CRAN</span></span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -305,7 +523,7 @@ font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">install_github</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
+font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div></div>
 
 
 </section>
@@ -321,6 +539,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/toronto-data-workshop/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -347,6 +566,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/xaringan-playground/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -384,6 +604,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
 
 
+
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -412,6 +633,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/extra-special-xaringan/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -448,6 +670,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
 
 
+
 <div class="cell">
 <div class="cell-output-display">
 <div class="shareagain" style="min-width:300px;margin:1em auto;" data-exeternal="1">
@@ -470,6 +693,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <dc:creator>Garrick Aden-Buie</dc:creator>
   <link>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -502,6 +726,7 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
 
 
 
+
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
 <p><a href="https://shiny.rstudio.com">Shiny</a> gives users a powerful toolkit to create <a href="https://shiny.rstudio.com/gallery/">interactive web applications</a>. As a result, Shiny users are also web developers! Inevitably, an intermediate Shiny user will want to create a visualization or user interface that isn’t available in the <code>shiny</code> package. Fortunately, we can use the building blocks of the web – JavaScript, HTML, and CSS – to extend Shiny’s capabilities and create engaging Shiny apps.</p>
@@ -516,201 +741,6 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div>
   <guid>https://www.garrickadenbuie.com/talk/js4shiny/</guid>
   <pubDate>Mon, 27 Jan 2020 14:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/js4shiny/feature.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Reproducible Data Workflows With Drake</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p><strong>drake</strong> is an R package that provides a powerful, flexible workflow management tool for reproducible data analysis pipelines. <strong>drake</strong> alleviates the pain of managing large (and even small) data analyses, speeding up iteration and development while providing reproducibility guarantees that are essential for modern research.</p>
-<p><a href="https://ropensci.github.io/drake/" class="uri">https://ropensci.github.io/drake/</a></p>
-<p>In this session, we’ll learn how to use <strong>drake</strong> to manage a data analysis workflow by writing functions that define the steps of the analysis. We’ll then learn how <strong>drake</strong> can keep track of all of these steps, from start to finish, and intelligently update only the outdated steps when your data or code change.</p>
-<section id="meeting-prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="meeting-prerequisites">Meeting prerequisites</h3>
-<p>We’ll work through a few examples together, so please bring a laptop with the <strong>drake</strong> and <strong>visNetwork</strong> packages installed. (If you don’t have a laptop you can share with someone who does at the session.) You would also benefit from installing the <strong>tidyverse</strong> package for the session. See the <a href="https://pkg.garrickadenbuie.com/drake-intro/requirements/">full requirements here</a>.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">required_packages <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb1-2">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># "tidyverse",  #&lt;&lt; For data processing, etc. (you probably have this)</span></span>
-<span id="cb1-3">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"here"</span>,         <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#&lt;&lt; For sane path management</span></span>
-<span id="cb1-4">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"cowplot"</span>,      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#&lt;&lt; For composing ggplot2 plots</span></span>
-<span id="cb1-5">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"visNetwork"</span>,   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#&lt;&lt; For visualizing drake plans</span></span>
-<span id="cb1-6">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"drake"</span>         <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#&lt;&lt; Because drake</span></span>
-<span id="cb1-7">)</span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">install.packages</span>(required_packages)</span></code></pre></div>
-<p>Note: if you’ve used <strong>drake</strong> before, please ensure that you have version <code>7.0.0</code> or later installed.</p>
-</section>
-<section id="meeting-materials" class="level3">
-<h3 class="anchored" data-anchor-id="meeting-materials">Meeting materials</h3>
-<p>The slides from this talk are available online at <a href="https://pkg.garrickadenbuie.com/drake-intro/" class="uri">https://pkg.garrickadenbuie.com/drake-intro/</a> and the drake source code and RStudio project are in available on GitHub at <a href="https://github.com/gadenbuie/drake-intro" class="uri">https://github.com/gadenbuie/drake-intro</a>. There is also an <a href="https://rstudio.cloud/project/405721">RStudio Cloud project</a> containing the drake project with all of the required dependencies pre-installed that you can use to explore and run the code from the talk.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/drake-intro-biodataclub/</guid>
-  <pubDate>Fri, 19 Jul 2019 04:00:00 GMT</pubDate>
-  <media:content url="https://pkg.garrickadenbuie.com/drake-intro/assets/images/drake-intro-cover.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>A Gentle Guide to the Grammar of Graphics with ggplot2</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>An intruction to data visualization with ggplot2 presented at the “Workshop on Data Analysis Using R” hosted by the ASA student chapter at USF.</p>
-
-
-
- ]]></description>
-  <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/</guid>
-  <pubDate>Tue, 06 Nov 2018 05:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/gentle-ggplot2-usf-asu/gentle-ggplot2-usf-asu.png" medium="image" type="image/png" height="81" width="144"/>
-</item>
-<item>
-  <title>The Passive Smart Home: Unobtrusive At-Home Behavior Monitoring</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-
- ]]></description>
-  <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/</guid>
-  <pubDate>Mon, 29 Oct 2018 04:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/moffitt-passive-smart-home/moffitt-passive-smart-home.png" medium="image" type="image/png" height="81" width="144"/>
-</item>
-<item>
-  <title>Unsupervised behavior change detection using passive sensor systems in the homes of older adults</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/isg-2018/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="abstract" class="level3">
-<h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
-<section id="purpose" class="level4">
-<h4 class="anchored" data-anchor-id="purpose">Purpose</h4>
-<p>Globally and within the United States, we face well-known and documented challenges driven by growth within the elderly segments of our population. The majority of adults over 65 are healthy but managing one or more chronic illnesses, and older adults and their informal caregivers—such as family members and friends—require supportive technologies that assist in monitoring and managing these conditions<sup>1</sup> as they strive to maintain independence at home. An important goal of lifestyle reassurance monitoring is to alert older adults and their caregivers to changes in behavior or routine. In contrast with traditional activity recognition algorithms that require labelled activity data that is both difficult and expensive to collect<sup>2</sup>, we present a method for unsupervised behavior change detection that does not require explicit, higher-level activity labels and is effective when applied to real-world, natural, smart home activity data.</p>
-</section>
-<section id="methods" class="level4">
-<h4 class="anchored" data-anchor-id="methods">Methods</h4>
-<p>In this project, we developed a passive sensor system that has been installed to date in the homes of 14 community-dwelling, older adults (aged 68 and above) who live alone and were of good health at the time of installation. Participants responded to a bi-weekly survey tracking the occurrence of health changes. Included in the sensor network are motion sensors for the generalized detection of presence throughout the home, and magnetic contact sensors for detection of interaction with entrance and exit doors and routinely used objects. All sensors are wireless, use the Z-Wave protocol, and are readily available commercially. The basis of the behavior change algorithm is the use of a bag of event sequence n-grams representation<sup>3</sup> to summarize daily activity patterns in an activity profile and a permutation-based change detection algorithm<sup>4</sup> to compare activity profiles of multiple days (e.g.&nbsp;a baseline period of activity) and individual or grouped activity profiles.</p>
-</section>
-<section id="results-and-discussion" class="level4">
-<h4 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h4>
-<p>The bag of event <em>n</em>-grams method was first validated as a supervised classification problem in which activity profiles were used to identify occupants from 6 homes with identical layouts. Activity profiles based on 4 and 6 weeks of activity led to correct identification of a given occupant for unlabelled days of activity with high accuracy (0.9593, 0.9624) and F1 (0.9590, 0.9621). The algorithm for unsupervised behavior change was applied to the activity data from four participants over a period of one year (one participant) or two years (three participants) who reported health changes ranging from acute episodes of illness to mobility restrictions leading to major surgery. Preliminary results reveal that comparison of activity profiles over time windows of 1 to 4 weeks reliably detects major shifts in behavior or other systematic disturbances such as guests in the home or sensor reliability issues. Linking the output of the algorithm to a notification system will alert family members, caregivers, and system administrators to trigger follow-up and review when such issues arise.</p>
-</section>
-<section id="references" class="level4">
-<h4 class="anchored" data-anchor-id="references">References</h4>
-<ol type="1">
-<li><p>Demiris G, Hensel BK. Technologies for an aging society: A systematic review of “smart home” applications. Yearbook of medical informatics. 2008 Jan;33–40</p></li>
-<li><p>Szewcyzk S, Dwan K, Minor B, Swedlove B, Cook D. Annotating smart environment sensor data for activity learning. Technology and Health Care. 2009 Jan;17(3):161–169.</p></li>
-<li><p>Hamid R, Johnson A, Batta S, Bobick A, Isbell C, Coleman G. Detection and explanation of anomalous activities: Representing activities as bags of event n-grams. Proceedings - 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition, CVPR 2005. 2005;1031–1038.</p></li>
-<li><p>Sprint G, Cook DJ, Schmitter-Edgecombe M. Unsupervised detection and analysis of changes in everyday physical activity data. Journal of Biomedical Informatics. 2016 Oct;63(Supplement C):54–65</p></li>
-</ol>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/isg-2018/</guid>
-  <pubDate>Mon, 07 May 2018 04:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/isg-2018/isg-2018.png" medium="image" type="image/png" height="108" width="144"/>
-</item>
-<item>
-  <title>A Gentle Guide to the Grammar of Graphics with ggplot2</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/trug-ggplot2/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-
- ]]></description>
-  <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/trug-ggplot2/</guid>
-  <pubDate>Tue, 23 Jan 2018 05:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/trug-ggplot2/trug-ggplot2-first-slide.png" medium="image" type="image/png" height="81" width="144"/>
-</item>
-<item>
-  <title>Occupant Activity Profiles from Smart Home Sensor Event Streams</title>
-  <link>https://www.garrickadenbuie.com/talk/informs-2017/</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Faced with a growing elderly population, learning and characterizing activity profiles of smart home occupants will support senior health care management for older adults living in homes augmented by ambient intelligence solutions that combine ubiquitous computing and artificial intelligence. In this work, we explore a bag of n-grams approach for creating occupant-specific activity profiles from event streams collected from passive, embedded sensors in real-world sensor networks in the homes of several older adults.</p>
-
-
-
- ]]></description>
-  <category>Conference</category>
-  <guid>https://www.garrickadenbuie.com/talk/informs-2017/</guid>
-  <pubDate>Wed, 25 Oct 2017 04:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/informs-2017/informs2017.png" medium="image" type="image/png" height="108" width="144"/>
-</item>
-<item>
-  <title>getting staRted in R</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/getting-started-in-r/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-
- ]]></description>
-  <category>Education</category>
-  <guid>https://www.garrickadenbuie.com/talk/getting-started-in-r/</guid>
-  <pubDate>Fri, 25 Mar 2016 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,19 @@
+{
+  "hash": "f3c68a34499f92d8a09a6a833c46e65f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Theming Made Easy: Introducing brand.yml\"\nauthor:\n  - Garrick Aden-Buie\ndescription: |\n  brand.yml is an exciting new project from Posit that radically simplifies\n  theming across reports, apps, and websites in R and Python.\ndate: '2025-09-18'\nslug: brand-yml-posit-conf-2025\nimage: feature.png\n\ntags:\n  - R\n  - Shiny\n  - brand.yml\n  - Theming\n  - Quarto\n  - \"posit::conf\"\n\ntalk_author: [Garrick Aden-Buie]\ncategories: [ Conference ]\nevent: \"posit::conf(2025)\"\nevent_url: https://posit.co/conference/\nlocation: Atlanta, GA\nlinks:\n  - icon: youtube\n    name: Video\n    url: https://youtu.be/DPaoNM8Ux04\n  - icon: file-slides-fill\n    name: Slides\n    url: https://pkg.garrickadenbuie.com/brand-yml-posit-conf-2025\n  - icon: github\n    name: Code\n    url: https://github.com/gadenbuie/brand-yml-posit-conf-2025\n---\n\n::: {.cell}\n::: {.cell-output-display}\n\n```{=html}\n<div class=\"shareagain\" style=\"min-width:300px;margin:1em auto;\" data-exeternal=\"1\">\n<iframe src=\"https://pkg.garrickadenbuie.com/brand-yml-posit-conf-2025\" width=\"1600\" height=\"900\" style=\"border:2px solid currentColor;\" loading=\"lazy\" allowfullscreen></iframe>\n<script>fitvids('.shareagain', {players: 'iframe'});</script>\n</div>\n```\n\n:::\n:::\n\n\n\n## Abstract\n\nbrand.yml is an exciting new project from Posit that radically simplifies theming. Every data science tool supports some form of theme and appearance customization, but each app framework, output format, or visualization tool requires its own special syntax for theming.\n\nThe goal of brand.yml is to create a portable and unified interface for brand-related theming that can be used anywhere that data science artifacts are produced. As a collaboration between the Shiny and Quarto teams, brand.yml provides a single interface to setting baseline themes in reports and apps across the R and Python ecosystems.\n\nIn this talk, I'll introduce brand.yml and showcase the many ways that brand.yml can bring consistent styles to your data science outputs.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<script src=\"../../site_libs/fitvids-2.1.1/fitvids.min.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
