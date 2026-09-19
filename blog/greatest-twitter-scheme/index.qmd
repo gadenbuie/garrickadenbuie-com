@@ -32,7 +32,14 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = TRUE)
 
 I found this tweet today and I was intrigued.
 
-{{< tweet CostcoRiceBag 1032699857117605888 >}}
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+IS IT JUST ME, OR DID I JUST PULL OFF THE GREATEST TWITTER SCHEME OF ALL TIME?????<br><br>
+Read the first word of my tweets to find out....
+</p>
+&mdash; Hadie Mart (<a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a>)
+<a href="https://twitter.com/CostcoRiceBag/status/1032699857117605888">August 23, 2018</a>
+</blockquote>
 
 What exactly had this person pulled off?
 What was this all-caps GREATEST TWITTER SCHEME OF ALL TIME?
@@ -151,7 +158,15 @@ What's really impressive is that, except for a few [Bismillah](https://twitter.c
 [tweeting](https://twitter.com/CostcoRiceBag/status/1023396608426303489).
 I'd love to get into a textual analysis, but it's late so I'll leave you with this:
 
-{{< tweet CostcoRiceBag 997437696476934144 >}}
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Me: I can go to bed late, I get to sleep in tomorrow<br><br>
+* gets woken by a 6am phone call *<br><br>
+Welcome, to another day in the life
+</p>
+&mdash; Hadie Mart (<a href="https://twitter.com/CostcoRiceBag">@CostcoRiceBag</a>)
+<a href="https://twitter.com/CostcoRiceBag/status/997437696476934144">May 18, 2018</a>
+</blockquote>
 
 Rock on! &#x1F918;
 

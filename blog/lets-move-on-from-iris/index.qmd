@@ -64,7 +64,17 @@ wrote a long and insightful
 [Twitter thread][fisher-thread]
 about the origins of an often-used and completely boring dataset: `iris`.
 
-{{< tweet daniela_witten 1268392721275744256 >}}
+<blockquote class="twitter-tweet">
+<p dir="ltr" lang="en">
+Like many people, I have spent the last 10 days watching so much tragedy unfold. So much anguish from Black colleagues here on twitter.
+<br><br>
+And so I've been trying to think of ways that <em>I</em> can improve my tiny corner of the world.
+<br><br>
+A thread on why change is hard in academia&nbsp;&nbsp;1/
+</p>
+&mdash; Daniela Witten (<a href="https://twitter.com/daniela_witten">@daniela_witten</a>)
+<a href="https://twitter.com/daniela_witten/status/1268392721275744256">June 4, 2020</a>
+</blockquote>
 
 I've long known about Ronald Fisher's eugenicist past,
 but I admit that I have often thoughtlessly turned to `iris`
@@ -138,5 +148,4 @@ A few options are available in `de_iris_my_repos()`
 - Set `ask = FALSE` to go ahead and open issues in all repositories
 
 - Use `extensions` to provide a list of file types where `iris` might be found.
-
 
