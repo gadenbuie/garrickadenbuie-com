@@ -40,8 +40,8 @@ links:
     name: Blog post
     url: https://opensource.posit.co/blog/2026-09-15_shinychat-r-0.5.0-python-0.7.1/
   - icon: chat-dots-fill
-    name: Conference session chat
-    url: https://bit.ly/posit-conf-chat
+    name: posit::conf(2026) Concierge App
+    url: https://garrick-posit-posit-conf-chat.share.connect.posit.cloud/
 ---
 
 ## Slides
