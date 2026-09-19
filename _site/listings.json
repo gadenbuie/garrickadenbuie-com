@@ -107,6 +107,8 @@
       "/project/ggpomological/index.html",
       "/project/mc-test-analysis/index.html",
       "/project/sqrrl/index.html",
+      "/talk/shiny-ai-stack-posit-conf-2026/index.html",
+      "/talk/llm-posit-conf-2026/index.html",
       "/talk/brand-yml-posit-conf-2025/index.html",
       "/talk/llm-posit-conf-2025/index.html",
       "/talk/genai-pharma-2025/index.html",
@@ -219,6 +221,8 @@
   {
     "listing": "/talk/index.html",
     "items": [
+      "/talk/shiny-ai-stack-posit-conf-2026/index.html",
+      "/talk/llm-posit-conf-2026/index.html",
       "/talk/brand-yml-posit-conf-2025/index.html",
       "/talk/llm-posit-conf-2025/index.html",
       "/talk/genai-pharma-2025/index.html",

@@ -6,10 +6,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-03-29">
-<meta name="description" content="Introducing now, a Quarto extension that adds the time right now, anywhere in your document.">
+<meta name="author" content="Carson Sievert">
+<meta name="author" content="Garrick Aden-Buie">
+<meta name="dcterms.date" content="2026-09-15">
+<meta name="description" content="A tour of the Shiny AI stack, from polished chat interfaces in shinychat to the LLM plumbing in ellmer and chatlas and domain-specific apps like querychat.">
 
-<title>Add last rendered or modified time to Quarto – Garrick Aden-Buie</title>
+<title>The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath – Garrick Aden-Buie</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -24,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -119,27 +86,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../_assets/panelset-extras.css">
-<meta property="og:title" content="Add last rendered or modified time to Quarto – Garrick Aden-Buie">
-<meta property="og:description" content="Introducing now, a Quarto extension that adds the time right now, anywhere in your document.">
-<meta property="og:image" content="https://www.garrickadenbuie.com/blog/quarto-now/feature.png">
+<meta property="og:title" content="The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath – Garrick Aden-Buie">
+<meta property="og:description" content="A tour of the Shiny AI stack, from polished chat interfaces in shinychat to the LLM plumbing in ellmer and chatlas and domain-specific apps like querychat.">
+<meta property="og:image" content="https://www.garrickadenbuie.com/talk/shiny-ai-stack-posit-conf-2026/feature.png">
 <meta property="og:site_name" content="Garrick Aden-Buie">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1792">
-<meta property="og:image:alt" content="An AI-generated pencil-drawn sketch of a dream sequence. A spiral staircase descends into a clock face, surrounded by planets, clouds and stars.
-">
-<meta name="twitter:title" content="Add last rendered or modified time to Quarto – Garrick Aden-Buie">
-<meta name="twitter:description" content="Introducing now, a Quarto extension that adds the time right now, anywhere in your document.">
-<meta name="twitter:image" content="https://www.garrickadenbuie.com/blog/quarto-now/feature.png">
+<meta property="og:image:height" content="2160">
+<meta property="og:image:width" content="3840">
+<meta name="twitter:title" content="The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath – Garrick Aden-Buie">
+<meta name="twitter:description" content="A tour of the Shiny AI stack, from polished chat interfaces in shinychat to the LLM plumbing in ellmer and chatlas and domain-specific apps like querychat.">
+<meta name="twitter:image" content="https://www.garrickadenbuie.com/talk/shiny-ai-stack-posit-conf-2026/feature.png">
 <meta name="twitter:creator" content="@grrrck">
 <meta name="twitter:site" content="@grrrck">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1792">
-<meta name="twitter:image:alt" content="An AI-generated pencil-drawn sketch of a dream sequence. A spiral staircase descends into a clock face, surrounded by planets, clouds and stars.
-">
+<meta name="twitter:image-height" content="2160">
+<meta name="twitter:image-width" content="3840">
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -304,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -353,217 +316,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Add last rendered or modified time to Quarto</h1>
-                  <div>
-        <div class="description">
-          <p>Introducing <code>now</code>, a Quarto extension that adds the time right <em>now</em>, anywhere in your document.</p>
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Quarto</div>
-                <div class="quarto-category">Extensions</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">March 29, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#a-blog-is-a-perpetual-side-project-machine" id="toc-a-blog-is-a-perpetual-side-project-machine" class="nav-link active" data-scroll-target="#a-blog-is-a-perpetual-side-project-machine">A blog is a perpetual side-project machine</a></li>
-  <li><a href="#hello-now" id="toc-hello-now" class="nav-link" data-scroll-target="#hello-now">Hello, now</a></li>
-  <li><a href="#using-now" id="toc-using-now" class="nav-link" data-scroll-target="#using-now">Using now</a></li>
-  <li><a href="#formatting-the-time-output" id="toc-formatting-the-time-output" class="nav-link" data-scroll-target="#formatting-the-time-output">Formatting the time output</a></li>
-  <li><a href="#have-a-good-day-meow" id="toc-have-a-good-day-meow" class="nav-link" data-scroll-target="#have-a-good-day-meow">Have a good day, meow!</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/quarto-now/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/quarto-now/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Conference</div>
+  </div>
+  </div>
 
-
-
-
-<img src="feature.png" class="mb-4" alt="An AI-generated pencil-drawn sketch of a dream sequence. A spiral
-staircase descends into a clock face, surrounded by planets, clouds and
-stars.
-">
-<section id="a-blog-is-a-perpetual-side-project-machine" class="level2">
-<h2 class="anchored" data-anchor-id="a-blog-is-a-perpetual-side-project-machine">A blog is a perpetual side-project machine</h2>
-<p>They say that if you copy-paste the same code three times, write a function. I’ve also heard that if you send the same email more than once, turn that email into a blog post.</p>
-<p>But all the real work in life happens on Slack. So if a friend asks for your advice and you brain dump everything you know about the easiest way to install and manage Python, then you’ve got a first draft blog post on your hands!</p>
-<p>They also say the hardest part of writing is staring at the blank page. But they are wrong. The hardest part of writing is figuring out how to start a new <code>.qmd</code> file in your blog repo without bumping into 3 to 10 other things you have been meaning to do.</p>
-<p>Or worse, you might encounter that draft post you’ve been working on for months. Learn from my mistakes: it’s okay to stash that post, you can always tell yourself you’ll come back to it later!</p>
-<p>You can probably tell by now that this is <strong>not</strong> a post about Python tooling for a happy setup. It’s also not a post about the few CSS tweaks I made while trying to open up this editor.</p>
-<p>This post is sponsored by this a bit of YAML that caught my eye in my <code>_quarto.yml</code> file in the split second before I closed all my open tabs.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">page-footer</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">    left</span><span class="kw">: </span><span class="ch">&gt;-</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      © 2023 Garrick Aden-Buie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This is not acceptable. It has been 2024 for a whole 89 days and that little <code>© 2023</code> has been sitting in my page footer the entire time. I’m lucky I haven’t gotten any angry emails about it!</p>
-<p>Now the fix could be easy. Consider this: I could change that file, commit it, and push it.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode patch code-with-copy"><code class="sourceCode diff"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>page-footer:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  left: &gt;-</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">-    © 2023 Garrick Aden-Buie</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">+    © 2024 Garrick Aden-Buie</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>One GitHub Action, several minutes, and two Netlify notifications later my blog would be back to the future.</p>
-<p>But this obviously won’t work. Time stops for no one. What will I do in March of 2025? Come back to this file and edit it by hand? <em>Again? Like a caveman?</em> Hard no.</p>
-<p>Wouldn’t it be awesome if I could replace that <code>2023</code> that should be <code>2024</code> with something that turns into the current year whenever my blog rebuilds? I could save minutes in the entire lifetime of my blog! Imagine replacing the <code>2023</code> with something that would update itself automatically, like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">page-footer</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">  left</span><span class="kw">: </span><span class="ch">&gt;-</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    © {{&lt; now year &gt;}} Garrick Aden-Buie</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>It would be awesome, but that syntax doesn’t exist in Quarto. Or it didn’t until I my productive procrastination instincts kicked in!</p>
-<p>Introducing <a href="https://pkg.garrickadenbuie.com/quarto-now">now</a>, a quarto extension for easily adding the time right now – <em>err…</em> the time right now when your Quarto blog or document is rendered.</p>
-</section>
-<section id="hello-now" class="level2">
-<h2 class="anchored" data-anchor-id="hello-now">Hello, now</h2>
-<p>To start using now in your own Quarto projects, just install the extension with this command.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add gadenbuie/quarto-now</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can read all about the extension on its (quarto-built) page here: <a href="https://pkg.garrickadenbuie.com/quarto-now">pkg.garrickadenbuie.com/quarto-now</a>. Or keep reading this post for a quick intro.</p>
-</section>
-<section id="using-now" class="level2">
-<h2 class="anchored" data-anchor-id="using-now">Using now</h2>
-<p>now, the extension, comes with two shortcodes you can use just about anywhere: <code>{{&lt; now &gt;}}</code> and <code>{{&lt; modified &gt;}}</code>. Both work in the same way, except that <code>{{&lt; modified &gt;}}</code> will show the last modified time of the document, either by using the <code>modified</code> metadata field or the last modified timestamp of the file (on macOS and Linux only, sorry).</p>
-<p>Here’s a quick example of the shortcodes in use. Note that in this post I added the <code>modified</code> date, which gives me a bit more control over what counts as a “modification”.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> Add last rendered or modified time to Quarto</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modified</span><span class="kw">:</span><span class="at"> 2024-03-29</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">This document was last modified at {{&lt; modified &gt;}}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">and it was last rendered at {{&lt; now &gt;}}.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<blockquote class="blockquote">
-<p>This document was last modified at 2024-03-29 00:00:00 and it was last rendered at 2026-09-19 11:33:57.</p>
-</blockquote>
-</section>
-<section id="formatting-the-time-output" class="level2">
-<h2 class="anchored" data-anchor-id="formatting-the-time-output">Formatting the time output</h2>
-<p>By default, now uses ISO 8601 (ish) formatting, but that’s not usually the most human-readable format. now comes with a few built-in aliases for common date and time parts.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 36%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Shortcode</th>
-<th style="text-align: left;">Result</th>
-<th style="text-align: center;">Format String</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19 11:33:57</p></td>
-<td style="text-align: center;"><code>"%F %T"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now year &gt;}}</code></td>
-<td style="text-align: left;"><p>2026</p></td>
-<td style="text-align: center;"><code>"%Y"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now month &gt;}}</code></td>
-<td style="text-align: left;"><p>September</p></td>
-<td style="text-align: center;"><code>"%B"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now day &gt;}}</code></td>
-<td style="text-align: left;"><p>19</p></td>
-<td style="text-align: center;"><code>"%d"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now weekday &gt;}}</code></td>
-<td style="text-align: left;"><p>Saturday</p></td>
-<td style="text-align: center;"><code>"%A"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now hour &gt;}}</code></td>
-<td style="text-align: left;"><p>11</p></td>
-<td style="text-align: center;"><code>"%I"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now minute &gt;}}</code></td>
-<td style="text-align: left;"><p>33</p></td>
-<td style="text-align: center;"><code>"%M"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now ampm &gt;}}</code></td>
-<td style="text-align: left;"><p>AM</p></td>
-<td style="text-align: center;"><code>"%p"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now date &gt;}}</code></td>
-<td style="text-align: left;"><p>09/19/26</p></td>
-<td style="text-align: center;"><code>"%x"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now time &gt;}}</code></td>
-<td style="text-align: left;"><p>11:33:57</p></td>
-<td style="text-align: center;"><code>"%X"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now datetime &gt;}}</code></td>
-<td style="text-align: left;"><p>Sat Sep 19 11:33:57 2026</p></td>
-<td style="text-align: center;"><code>"%c"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now isodate &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19</p></td>
-<td style="text-align: center;"><code>"%F"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now isotime &gt;}}</code></td>
-<td style="text-align: left;"><p>11:33:57</p></td>
-<td style="text-align: center;"><code>"%T"</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{{&lt; now isodatetime &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19T11:33:57-0400</p></td>
-<td style="text-align: center;"><code>"%FT%T%z"</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{{&lt; now timestamp &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19 11:33:57</p></td>
-<td style="text-align: center;"><code>"%F %T"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Note that the shortcodes only accept a single format argument, so you’d need to write <code>{{&lt; modified month &gt;}} {{&lt; modified year &gt;}}</code> instead of <code>{{&lt; modified month year &gt;}}</code>.</p>
-<p>That said, you can always use the format strings supported by Lua’s <code>os.date()</code> function, so <code>{{&lt; modified "%B %Y" &gt;}}</code> gives you the month and year: March 2024. Note that because the format string has a space, it needs to be quoted <code>"%B %Y"</code>.</p>
-<p>You can find the complete list of accepted format strings in <a href="https://pkg.garrickadenbuie.com/quarto-now/#format-strings">the now extension docs</a>.</p>
-</section>
-<section id="have-a-good-day-meow" class="level2">
-<h2 class="anchored" data-anchor-id="have-a-good-day-meow">Have a good day, meow!</h2>
-<p>This was a fun excursion into the world of Quarto extensions! Thanks for reading and I hope you find <strong>now</strong> useful in your own projects. May you benefit from my inability to do the thing I’m “supposed to do” (hey, it’s my free time!).</p>
-<hr>
-<div class="small">
-<p>The feature image was generated with DALL-E 3 and the following prompt: <em>an m.c. escher style pencil sketch of a dreamy clock face</em>.</p>
+<div>
+  <div class="description">
+    <p>A tour of the Shiny AI stack, from polished chat interfaces in <a href="https://posit-dev.github.io/shinychat/r/">shinychat</a> to the LLM plumbing in <a href="https://ellmer.tidyverse.org">ellmer</a> and <a href="https://posit-dev.github.io/chatlas/">chatlas</a> and domain-specific apps like <a href="https://posit-dev.github.io/querychat/">querychat</a>.</p>
+  </div>
 </div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Carson Sievert </p>
+             <p>Garrick Aden-Buie </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 15, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+
+<div class="quarto-title-meta">
+<div>
+<div class="quarto-title-meta-heading">Event</div>
+<div class="quarto-title-meta-contents">
+<p><a href="https://conf.posit.co/2026/">posit::conf(2026)</a></p>
+</div>
+</div>
+
+<div>
+<div class="quarto-title-meta-heading">Location</div>
+<div class="quarto-title-meta-contents">
+<p>Houston, TX</p>
+</div>
+</div>
+</div>
+
+<div class="mt-4 d-flex flex-row flex-wrap gap-1 justify-content-center justify-content-sm-start" role="group" aria-label="Talk Links">
+<a href="https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf" class="btn btn-secondary"><i class="bi bi-filetype-pdf me-1"></i> Slides</a>
+<a href="https://opensource.posit.co/blog/2026-09-15_shinychat-r-0.5.0-python-0.7.1/" class="btn btn-secondary"><i class="bi bi-journal-text me-1"></i> Blog post</a>
+<a href="https://garrick-posit-posit-conf-chat.share.connect.posit.cloud/" class="btn btn-secondary"><i class="bi bi-chat-dots-fill me-1"></i> posit::conf(2026) Concierge App</a>
+</div>
+
+</header>
+
+
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<iframe src="https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf" title="The Shiny AI Stack slides" width="100%" height="720" style="border: 0;" loading="lazy">
+</iframe>
+<p>
+<a href="https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf">Open the slides in a new tab</a>
+</p>
+</section>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>LLM-powered chat is becoming a core pattern in modern Shiny apps, but building a good chat experience — with streaming, history, file attachments, editing, and cancellation — is harder than it looks. In this talk, we’ll tour the Shiny AI stack: <a href="https://posit-dev.github.io/shinychat/r/">shinychat</a>’s getting-started API, which gives you a polished chat UI with all of these niceties out of the box, and the lower-level plumbing beneath it (<a href="https://ellmer.tidyverse.org">ellmer</a> and <a href="https://posit-dev.github.io/chatlas/">chatlas</a>) that handles the connection to the LLM.</p>
+<p>We’ll also see how these building blocks power domain-specific applications like <a href="https://posit-dev.github.io/querychat/">querychat</a>, and why they’re designed to be general enough for essentially any LLM-powered Shiny app. Examples are in R, with Python equivalents available for everything we’ll cover.</p>
 
 
 </section>
@@ -982,38 +817,6 @@ stars.
     }
   });
   </script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="dark">
-<script>
-  function loadGiscus() {
-    // Function to get the theme based on body class
-    const getTheme = () => {
-      let baseTheme = document.getElementById('giscus-base-theme').value;
-      let altTheme = document.getElementById('giscus-alt-theme').value;
-      if (authorPrefersDark) {
-          [baseTheme, altTheme] = [altTheme, baseTheme];
-      }
-      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
-    };
-    const script = document.createElement("script");
-    script.src = "https://giscus.app/client.js";
-    script.async = true;
-    script.dataset.repo = "gadenbuie/garrickadenbuie-com";
-    script.dataset.repoId = "MDEwOlJlcG9zaXRvcnkxMjE5NjYxNzQ=";
-    script.dataset.category = "Comments";
-    script.dataset.categoryId = "DIC_kwDOB0UOXs4CAIFZ";
-    script.dataset.mapping = "pathname";
-    script.dataset.reactionsEnabled = "1";
-    script.dataset.emitMetadata = "0";
-    script.dataset.inputPosition = "top";
-    script.dataset.theme = getTheme();
-    script.dataset.lang = "en";
-    script.crossOrigin = "anonymous";
-    // Append the script to the desired div instead of at the end of the body
-    document.getElementById("quarto-content").appendChild(script);
-  }
-  loadGiscus();
-</script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1022,7 +825,7 @@ stars.
 </div>   
     <div class="nav-footer-center">
 <p><a class="link-dark" href="https://bsky.app/profile/grrrck.xyz" title="bluesky" target="_blank" rel="noopener"><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></a> <a class="link-dark" href="https://fosstodon.org/@grrrck" title="mastodon" target="_blank" rel="noopener"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></a> <a class="link-dark" href="https://github.com/gadenbuie" title="github" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="link-dark" href="https://gadenbuie.r-universe.dev" title="r-project" target="_blank" rel="noopener"><i class="fa-brands fa-r-project" aria-label="r-project"></i></a> <a class="link-dark" href="https://keybase.io/grrrck" title="keybase" target="_blank" rel="noopener"><i class="fa-brands fa-keybase" aria-label="keybase"></i></a> <a class="link-dark" href="https://garrickadenbuie.bandcamp.com" title="bandcamp" target="_blank" rel="noopener"><i class="fa-brands fa-bandcamp" aria-label="bandcamp"></i></a> <a class="link-dark" href="http://orcid.org/0000-0002-7111-0077" title="orcid" target="_blank" rel="noopener"><i class="ai  ai-orcid" title="" style="color:"></i></a></p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/blog/quarto-now/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/blog/quarto-now/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/blob/main/talk/shiny-ai-stack-posit-conf-2026/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/edit/main/talk/shiny-ai-stack-posit-conf-2026/index.qmd" class="toc-action"><i class="bi empty"></i>Edit this page</a></li><li><a href="https://github.com/gadenbuie/garrickadenbuie-com/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a class="link-dark me-1" href="../../colophon">Made with 💙</a> <a class="link-dark" href="../../blog/index.xml" title="RSS feed"><i class="bi bi-rss-fill"><span class="visually-hidden">RSS feed</span></i></a></p>
 </div>

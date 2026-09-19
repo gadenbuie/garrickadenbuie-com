@@ -11,7 +11,65 @@
 <description>Presentations, talks, and workshops.
 </description>
 <generator>quarto-1.9.30</generator>
-<lastBuildDate>Thu, 18 Sep 2025 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 15 Sep 2026 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath</title>
+  <dc:creator>Carson Sievert</dc:creator>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/shiny-ai-stack-posit-conf-2026/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<iframe src="https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf" title="The Shiny AI Stack slides" width="100%" height="720" style="border: 0;" loading="lazy">
+</iframe>
+<p>
+<a href="https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf">Open the slides in a new tab</a>
+</p>
+</section>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>LLM-powered chat is becoming a core pattern in modern Shiny apps, but building a good chat experience — with streaming, history, file attachments, editing, and cancellation — is harder than it looks. In this talk, we’ll tour the Shiny AI stack: <a href="https://posit-dev.github.io/shinychat/r/">shinychat</a>’s getting-started API, which gives you a polished chat UI with all of these niceties out of the box, and the lower-level plumbing beneath it (<a href="https://ellmer.tidyverse.org">ellmer</a> and <a href="https://posit-dev.github.io/chatlas/">chatlas</a>) that handles the connection to the LLM.</p>
+<p>We’ll also see how these building blocks power domain-specific applications like <a href="https://posit-dev.github.io/querychat/">querychat</a>, and why they’re designed to be general enough for essentially any LLM-powered Shiny app. Examples are in R, with Python equivalents available for everything we’ll cover.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Conference</category>
+  <guid>https://www.garrickadenbuie.com/talk/shiny-ai-stack-posit-conf-2026/</guid>
+  <pubDate>Tue, 15 Sep 2026 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/shiny-ai-stack-posit-conf-2026/feature.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Programming with LLMs in R and Python</title>
+  <dc:creator>Garrick Aden-Buie</dc:creator>
+  <dc:creator>Sara Altman</dc:creator>
+  <link>https://www.garrickadenbuie.com/talk/llm-posit-conf-2026/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>Large Language Models (LLMs) offer developers unprecedented programmatic capabilities. This workshop introduces <a href="https://ellmer.tidyverse.org">ellmer</a> (R) and <a href="https://posit-dev.github.io/chatlas/">chatlas</a> (Python), Posit packages that simplify LLM API integration, handling conversation complexities and enabling seamless interactions with AI models.</p>
+<p>Participants will explore system prompt design, token management, and tool calling while building familiarity with current AI technologies. The workshop covers LLM integration, Shiny web app development, and touches on advanced topics like dynamic information retrieval, context engineering, and agentic workflows. Attendees will gain hands-on experience through guided exercises, with the choice to work in R or Python.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Workshop</category>
+  <guid>https://www.garrickadenbuie.com/talk/llm-posit-conf-2026/</guid>
+  <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+  <media:content url="https://www.garrickadenbuie.com/talk/llm-posit-conf-2026/feature.png" medium="image" type="image/png" height="75" width="144"/>
+</item>
 <item>
   <title>Theming Made Easy: Introducing brand.yml</title>
   <dc:creator>Garrick Aden-Buie</dc:creator>
@@ -687,60 +745,6 @@ font-style: inherit;">"gadenbuie/countdown"</span>)</span></code></pre></div></d
   <guid>https://www.garrickadenbuie.com/talk/ten-thousand-functions/</guid>
   <pubDate>Fri, 15 May 2020 04:00:00 GMT</pubDate>
   <media:content url="https://www.garrickadenbuie.com/talk/ten-thousand-functions/ten-thousand-functions.png" medium="image" type="image/png" height="75" width="144"/>
-</item>
-<item>
-  <title>Extra Awesome xaringan Presentations</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="description" class="level2">
-<h2 class="anchored" data-anchor-id="description">Description</h2>
-<p>Learn how to make extra awesome <a href="https://slides.yihui.org/xaringan/">xaringan</a> presentations with a few new packages</p>
-<ul>
-<li><a href="https://pkg.garrickadenbuie.com/xaringanthemer">xaringanthemer</a></li>
-<li><a href="https://pkg.garrickadenbuie.com/xaringanExtra">xaringanExtra</a></li>
-<li><a href="https://pkg.garrickadenbuie.com/metathis">metathis</a></li>
-</ul>
-<p>that add the extra touches needed to personalize your slides and make them stand out from the crowd.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Talk</category>
-  <guid>https://www.garrickadenbuie.com/talk/trug-extra-awesome-xaringan/</guid>
-  <pubDate>Tue, 25 Feb 2020 05:00:00 GMT</pubDate>
-  <media:content url="https://gadenbuie.github.io/slides/extra-awesome-xaringan/intro/extra-awesome-xaringan-presentations.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>JavaScript for Shiny Users</title>
-  <dc:creator>Garrick Aden-Buie</dc:creator>
-  <link>https://www.garrickadenbuie.com/talk/js4shiny/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<p><a href="https://shiny.rstudio.com">Shiny</a> gives users a powerful toolkit to create <a href="https://shiny.rstudio.com/gallery/">interactive web applications</a>. As a result, Shiny users are also web developers! Inevitably, an intermediate Shiny user will want to create a visualization or user interface that isn’t available in the <code>shiny</code> package. Fortunately, we can use the building blocks of the web – JavaScript, HTML, and CSS – to extend Shiny’s capabilities and create engaging Shiny apps.</p>
-<p>This two-day, hands-on workshop will introduce Shiny users to JavaScript, the ubiquitous scripting language that powers the modern web. We will explore JavaScript’s syntax and will discover its functional programming style to be refreshingly familiar to <a href="https://tidyverse.org">tidyverse</a> R users. We will learn how to use JavaScript to manipulate HTML and how Shiny uses JavaScript to communicate between the browser and Shiny server. Together, we will build an <code>htmlwidget</code> and learn how to incorporate our own or packaged JavaScript code into Shiny apps and [R Markdown] documents, and how to simultaneously manage JavaScript and R dependencies.</p>
-<p>This workshop is for the Shiny user who boldly waded into the <a href="https://shiny.rstudio.com/articles/#customize">Customizing Shiny</a> section of <a href="https://shiny.rstudio.com/articles/">RStudio’s Shiny Articles</a> and quickly wished they had more experience with JavaScript. This user recognizes the benefits of learning JavaScript, but they are overwhelmed by the sheer number of packages, tutorials, and StackOverflow questions that exist in the world about JavaScript, HTML, and CSS. The goal of this workshop is to meet the Shiny user where they are now to learn the best parts of JavaScript that will provide the most value and facilitate learning and exploration after the workshop.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Workshop</category>
-  <guid>https://www.garrickadenbuie.com/talk/js4shiny/</guid>
-  <pubDate>Mon, 27 Jan 2020 14:00:00 GMT</pubDate>
-  <media:content url="https://www.garrickadenbuie.com/talk/js4shiny/feature.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

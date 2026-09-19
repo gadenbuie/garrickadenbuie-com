@@ -1514,7 +1514,7 @@ font-style: inherit;">This document was last modified at {{&lt; modified &gt;}}<
 background-color: null;
 font-style: inherit;">and it was last rendered at {{&lt; now &gt;}}.</span></span></code></pre></div></div>
 <blockquote class="blockquote">
-<p>This document was last modified at 2024-03-29 00:00:00 and it was last rendered at 2026-09-19 11:30:49.</p>
+<p>This document was last modified at 2024-03-29 00:00:00 and it was last rendered at 2026-09-19 11:33:57.</p>
 </blockquote>
 </section>
 <section id="formatting-the-time-output" class="level2">
@@ -1536,7 +1536,7 @@ font-style: inherit;">and it was last rendered at {{&lt; now &gt;}}.</span></spa
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>{{&lt; now &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19 11:30:49</p></td>
+<td style="text-align: left;"><p>2026-09-19 11:33:57</p></td>
 <td style="text-align: center;"><code>"%F %T"</code></td>
 </tr>
 <tr class="even">
@@ -1566,7 +1566,7 @@ font-style: inherit;">and it was last rendered at {{&lt; now &gt;}}.</span></spa
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>{{&lt; now minute &gt;}}</code></td>
-<td style="text-align: left;"><p>30</p></td>
+<td style="text-align: left;"><p>33</p></td>
 <td style="text-align: center;"><code>"%M"</code></td>
 </tr>
 <tr class="even">
@@ -1581,12 +1581,12 @@ font-style: inherit;">and it was last rendered at {{&lt; now &gt;}}.</span></spa
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>{{&lt; now time &gt;}}</code></td>
-<td style="text-align: left;"><p>11:30:49</p></td>
+<td style="text-align: left;"><p>11:33:57</p></td>
 <td style="text-align: center;"><code>"%X"</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>{{&lt; now datetime &gt;}}</code></td>
-<td style="text-align: left;"><p>Sat Sep 19 11:30:49 2026</p></td>
+<td style="text-align: left;"><p>Sat Sep 19 11:33:57 2026</p></td>
 <td style="text-align: center;"><code>"%c"</code></td>
 </tr>
 <tr class="even">
@@ -1596,17 +1596,17 @@ font-style: inherit;">and it was last rendered at {{&lt; now &gt;}}.</span></spa
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>{{&lt; now isotime &gt;}}</code></td>
-<td style="text-align: left;"><p>11:30:49</p></td>
+<td style="text-align: left;"><p>11:33:57</p></td>
 <td style="text-align: center;"><code>"%T"</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>{{&lt; now isodatetime &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19T11:30:49-0400</p></td>
+<td style="text-align: left;"><p>2026-09-19T11:33:57-0400</p></td>
 <td style="text-align: center;"><code>"%FT%T%z"</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>{{&lt; now timestamp &gt;}}</code></td>
-<td style="text-align: left;"><p>2026-09-19 11:30:49</p></td>
+<td style="text-align: left;"><p>2026-09-19 11:33:57</p></td>
 <td style="text-align: center;"><code>"%F %T"</code></td>
 </tr>
 </tbody>
