@@ -9,7 +9,7 @@ description: |
   [ellmer](https://ellmer.tidyverse.org) and
   [chatlas](https://posit-dev.github.io/chatlas/) and domain-specific apps like
   [querychat](https://posit-dev.github.io/querychat/).
-date: '2026-09-14'
+date: '2026-09-15'
 slug: shiny-ai-stack-posit-conf-2026
 image: feature.png
 
