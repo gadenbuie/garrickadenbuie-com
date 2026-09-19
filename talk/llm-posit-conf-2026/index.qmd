@@ -5,7 +5,9 @@ author:
   - Sara Altman
 description: |
   A full-day workshop introducing participants to programming with large
-  language models in R and Python using ellmer and chatlas.
+  language models in R and Python using
+  [ellmer](https://ellmer.tidyverse.org) and
+  [chatlas](https://posit-dev.github.io/chatlas/).
 date: '2026-09-14'
 date_end: '2026-09-14'
 slug: llm-posit-conf-2026
@@ -40,9 +42,10 @@ links:
 ## Abstract
 
 Large Language Models (LLMs) offer developers unprecedented programmatic
-capabilities. This workshop introduces `ellmer` (R) and `chatlas` (Python),
-Posit packages that simplify LLM API integration, handling conversation
-complexities and enabling seamless interactions with AI models.
+capabilities. This workshop introduces [ellmer](https://ellmer.tidyverse.org)
+(R) and [chatlas](https://posit-dev.github.io/chatlas/) (Python), Posit
+packages that simplify LLM API integration, handling conversation complexities
+and enabling seamless interactions with AI models.
 
 Participants will explore system prompt design, token management, and tool
 calling while building familiarity with current AI technologies. The workshop

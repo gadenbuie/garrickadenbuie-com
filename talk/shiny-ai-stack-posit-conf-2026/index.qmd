@@ -1,0 +1,63 @@
+---
+title: "The Shiny AI Stack: shinychat, querychat, and the LLM Plumbing Beneath"
+author:
+  - Carson Sievert
+  - Garrick Aden-Buie
+description: |
+  A tour of the Shiny AI stack, from polished chat interfaces in
+  [shinychat](https://posit-dev.github.io/shinychat/r/) to the LLM plumbing in
+  [ellmer](https://ellmer.tidyverse.org) and
+  [chatlas](https://posit-dev.github.io/chatlas/) and domain-specific apps like
+  [querychat](https://posit-dev.github.io/querychat/).
+date: '2026-09-14'
+slug: shiny-ai-stack-posit-conf-2026
+image: feature.png
+
+tags:
+  - R
+  - Python
+  - AI
+  - LLM
+  - Shiny
+  - shinychat
+  - querychat
+  - ellmer
+  - chatlas
+  - "posit::conf"
+
+talk_author:
+  - Garrick Aden-Buie
+  - Carson Sievert
+categories: [ Conference ]
+event: "posit::conf(2026)"
+event_url: https://conf.posit.co/2026/
+location: Houston, TX
+links:
+  - icon: filetype-pdf
+    name: Slides
+    url: https://talks.cpsievert.me/20260914/shinychat-posit-conf-26.pdf
+  - icon: journal-text
+    name: Blog post
+    url: https://opensource.posit.co/blog/2026-09-15_shinychat-r-0.5.0-python-0.7.1/
+  - icon: chat-dots-fill
+    name: Conference session chat
+    url: https://bit.ly/posit-conf-chat
+---
+
+## Abstract
+
+LLM-powered chat is becoming a core pattern in modern Shiny apps, but building
+a good chat experience — with streaming, history, file attachments, editing,
+and cancellation — is harder than it looks. In this talk, we'll tour the Shiny
+AI stack: [shinychat](https://posit-dev.github.io/shinychat/r/)'s
+getting-started API, which gives you a polished chat UI with all of these
+niceties out of the box, and the lower-level plumbing beneath it
+([ellmer](https://ellmer.tidyverse.org) and
+[chatlas](https://posit-dev.github.io/chatlas/)) that handles the connection to
+the LLM.
+
+We'll also see how these building blocks power domain-specific applications
+like [querychat](https://posit-dev.github.io/querychat/), and why they're
+designed to be general enough for essentially any LLM-powered Shiny app.
+Examples are in R, with Python equivalents available for everything we'll
+cover.
