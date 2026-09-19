@@ -1,0 +1,52 @@
+---
+title: "Programming with LLMs in R and Python"
+author:
+  - Garrick Aden-Buie
+  - Sara Altman
+description: |
+  A full-day workshop introducing participants to programming with large
+  language models in R and Python using ellmer and chatlas.
+date: '2026-09-14'
+date_end: '2026-09-14'
+slug: llm-posit-conf-2026
+image: feature.png
+
+tags:
+  - R
+  - Python
+  - AI
+  - LLM
+  - ellmer
+  - chatlas
+  - Shiny
+  - "posit::conf"
+
+talk_author:
+  - Garrick Aden-Buie
+  - Sara Altman
+categories: [ Workshop ]
+event: "posit::conf(2026)"
+event_url: https://conf.posit.co/2026/
+location: "Hilton Americas-Houston, Lanier I — Houston, TX"
+links:
+  - icon: house-door-fill
+    name: Website
+    url: https://posit-conf-2026.github.io/llms
+  - icon: github
+    name: Code
+    url: https://github.com/posit-conf-2026/llms
+---
+
+## Abstract
+
+Large Language Models (LLMs) offer developers unprecedented programmatic
+capabilities. This workshop introduces `ellmer` (R) and `chatlas` (Python),
+Posit packages that simplify LLM API integration, handling conversation
+complexities and enabling seamless interactions with AI models.
+
+Participants will explore system prompt design, token management, and tool
+calling while building familiarity with current AI technologies. The workshop
+covers LLM integration, Shiny web app development, and touches on advanced
+topics like dynamic information retrieval, context engineering, and agentic
+workflows. Attendees will gain hands-on experience through guided exercises,
+with the choice to work in R or Python.
